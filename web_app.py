@@ -1,3 +1,4 @@
+import teacher_console
 from flask import Flask, render_template, redirect, url_for, jsonify, request
 from civilization_engine import Civilization
 from advisor_system import generate_advice
@@ -158,6 +159,12 @@ def claim_region():
 import os
 
 import os
+
+
+
+@app.route('/teacher')
+def teacher_dashboard():
+    return "Teacher system connected"
 
 if __name__ == "__main__":
     port = int(os.environ.get("PORT", 5000))
