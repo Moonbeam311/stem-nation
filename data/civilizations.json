@@ -1,0 +1,72 @@
+{
+  "civilizations": [
+    {
+      "name": "Mississippian",
+      "symbol": "^",
+      "region": "North America",
+      "environment": "river",
+      "traits": ["builders", "traders"],
+      "type": "mound builders",
+      "color": "Copper Red",
+      "banner": "Earthwork Serpent",
+      "motto": "From Earth, Strength",
+      "description": "Agricultural civilization known for large earthwork pyramids.",
+      "starter_knowledge": [
+        "Maize Agriculture",
+        "River Trade Networks",
+        "Earthwork Pyramid Construction"
+      ]
+    },
+    {
+      "name": "Susquehannock",
+      "symbol": "T",
+      "region": "Eastern Woodlands",
+      "environment": "forest",
+      "traits": ["warriors", "traders"],
+      "type": "confederacy",
+      "color": "Forest Green",
+      "banner": "Longhouse Council",
+      "motto": "Strength in Council",
+      "description": "Powerful woodland civilization along the Susquehanna River.",
+      "starter_knowledge": [
+        "Three Sisters Agriculture",
+        "Forest Trade Routes",
+        "Longhouse Communities"
+      ]
+    },
+    {
+      "name": "Inca",
+      "symbol": "*",
+      "region": "Andes Mountains",
+      "environment": "highland",
+      "traits": ["engineers", "organizers"],
+      "type": "empire",
+      "color": "Gold",
+      "banner": "Condor Sun",
+      "motto": "Children of the Sun",
+      "description": "Mountain civilization famous for engineering and agriculture.",
+      "starter_knowledge": [
+        "Terrace Agriculture",
+        "Stone Road Systems",
+        "Quipu Record Keeping"
+      ]
+    },
+    {
+      "name": "Phoenician",
+      "symbol": "~",
+      "region": "Mediterranean Coast",
+      "environment": "coastal",
+      "traits": ["navigators", "traders"],
+      "type": "trading civilization",
+      "color": "Tyrian Purple",
+      "banner": "Sea Star",
+      "motto": "The Sea Connects All",
+      "description": "Seafaring merchants who connected ancient trade networks.",
+      "starter_knowledge": [
+        "Shipbuilding",
+        "Navigation Charts",
+        "Mediterranean Trade Routes"
+      ]
+    }
+  ]
+}

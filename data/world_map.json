@@ -1,0 +1,61 @@
+{
+  "regions": [
+
+    {
+      "name": "River Valley",
+      "environment": "river",
+      "resource": "grain",
+      "neighbors": ["Forest Belt", "Central Basin"],
+      "hidden": false
+    },
+
+    {
+      "name": "Forest Belt",
+      "environment": "forest",
+      "resource": "timber",
+      "neighbors": ["River Valley", "Highland Ridge"],
+      "hidden": false
+    },
+
+    {
+      "name": "Highland Ridge",
+      "environment": "highland",
+      "resource": "iron",
+      "neighbors": ["Forest Belt", "Steppe Plains"],
+      "hidden": false
+    },
+
+    {
+      "name": "Central Basin",
+      "environment": "river",
+      "resource": "grain",
+      "neighbors": ["River Valley", "Coastal Sea"],
+      "hidden": false
+    },
+
+    {
+      "name": "Coastal Sea",
+      "environment": "coastal",
+      "resource": "fish",
+      "neighbors": ["Central Basin", "Island Chain"],
+      "hidden": false
+    },
+
+    {
+      "name": "Island Chain",
+      "environment": "coastal",
+      "resource": "trade",
+      "neighbors": ["Coastal Sea"],
+      "hidden": false
+    },
+
+    {
+      "name": "Hy-Brasil",
+      "environment": "island",
+      "resource": "rare knowledge",
+      "neighbors": ["Island Chain"],
+      "hidden": true
+    }
+
+  ]
+}

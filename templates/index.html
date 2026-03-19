@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>STEM Nation Command Center</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #0d1117;
+            color: white;
+            padding: 20px;
+        }
+        h1 { text-align: center; }
+        .section {
+            margin-top: 24px;
+            padding: 16px;
+            border: 1px solid #333;
+            border-radius: 8px;
+            background: #111827;
+        }
+        button {
+            padding: 10px 14px;
+            margin: 4px;
+            cursor: pointer;
+        }
+        .map-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+        }
+        .map-card {
+            padding: 12px;
+            border-radius: 8px;
+            background: #1f2937;
+        }
+        a { color: #93c5fd; }
+    </style>
+</head>
+<body>
+    <h1>STEM Nation Command Center</h1>
+
+    <div class="section">
+        <h2>Turn {{ turn }}</h2>
+        <a href="/advance_turn"><button>Run Turn</button></a>
+        <a href="/map"><button>Open Strategic Map</button></a>
+    </div>
+
+    <div class="section">
+        <h2>Leaderboard</h2>
+        <ol>
+        {% for name, score in leaderboard %}
+            <li>{{ name }} - {{ score }}</li>
+        {% endfor %}
+        </ol>
+    </div>
+
+    <div class="section">
+        <h2>Civilizations</h2>
+        {% for civ in civilizations %}
+        <p>
+            <b>{{ civ.name }}</b><br>
+            Pop: {{ civ.population }} |
+            Food: {{ civ.food }} |
+            Wealth: {{ civ.wealth }} |
+            Tech: {{ civ.technology }} |
+            Stability: {{ civ.stability }} |
+            Influence: {{ civ.influence }}
+        </p>
+        {% endfor %}
+    </div>
+
+    <div class="section">
+        <h2>World Map</h2>
+        <div class="map-grid">
+        {% for region in world_map %}
+            <div class="map-card">
+                <b>{{ region.name }}</b><br>
+                {{ region.owner }}
+            </div>
+        {% endfor %}
+        </div>
+    </div>
+
+    <div class="section">
+        <h2>Current Event</h2>
+        <p>{{ event }}</p>
+    </div>
+
+    <div class="section">
+        <h2>Advisor Council</h2>
+        <ul>
+        {% for advice in advisors %}
+            <li>{{ advice }}</li>
+        {% endfor %}
+        </ul>
+    </div>
+
+    <div class="section">
+        <h2>Chronicle</h2>
+        <ul>
+        {% for entry in chronicle %}
+            <li>{{ entry }}</li>
+        {% endfor %}
+        </ul>
+    </div>
+
+    <div class="section">
+        <h2>Make Decision</h2>
+        {% for civ in civilizations %}
+        <div style="margin-bottom: 14px;">
+            <b>{{ civ.name }}</b><br>
+            <a href="/decision/{{ civ.name }}/expand"><button>Expand</button></a>
+            <a href="/decision/{{ civ.name }}/trade"><button>Trade</button></a>
+            <a href="/decision/{{ civ.name }}/build"><button>Build</button></a>
+            <a href="/decision/{{ civ.name }}/research"><button>Research</button></a>
+        </div>
+        {% endfor %}
+    </div>
+</body>
+</html>

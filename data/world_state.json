@@ -1,0 +1,1522 @@
+{
+  "turn": 38,
+  "civilizations": {
+    "River Alliance": {
+      "name": "River Alliance",
+      "capital": {
+        "x": 10,
+        "y": 10
+      },
+      "influence": 15
+    },
+    "Forest League": {
+      "name": "Forest League",
+      "capital": {
+        "x": 18,
+        "y": 14
+      },
+      "influence": 12
+    },
+    "Highland Order": {
+      "name": "Highland Order",
+      "capital": {
+        "x": 80,
+        "y": 80
+      },
+      "influence": 10
+    }
+  },
+  "territories": {
+    "River Alliance": [
+      [
+        5.866206434424036,
+        6.042656454535166
+      ],
+      [
+        4.454505804871475,
+        22.352546910595052
+      ],
+      [
+        21.08964016824597,
+        6.419070828323914
+      ],
+      [
+        13.672066261761643,
+        -0.1400702741484885
+      ],
+      [
+        6.775384206023492,
+        24.822248923099693
+      ],
+      [
+        4.276277321378439,
+        4.540344929277536
+      ],
+      [
+        22.090383380358546,
+        10.875175325438521
+      ],
+      [
+        18.436302821778725,
+        14.04189517191232
+      ],
+      [
+        12.01920092044745,
+        7.297874845068179
+      ],
+      [
+        12.83087255057665,
+        -1.3799858348691778
+      ],
+      [
+        3.9485996275007036,
+        8.833816246888365
+      ],
+      [
+        12.915264654469684,
+        5.629373642618599
+      ],
+      [
+        5.607258755564676,
+        14.244550416497912
+      ],
+      [
+        24.443431727818652,
+        -0.7034567016427218
+      ],
+      [
+        24.201022329041006,
+        13.700154517868967
+      ],
+      [
+        -2.711812933507705,
+        15.929024304157384
+      ],
+      [
+        15.579460848859075,
+        5.743701167677088
+      ],
+      [
+        -1.3729771999639908,
+        8.801161764967237
+      ],
+      [
+        17.57509108877101,
+        -0.4584411927797838
+      ],
+      [
+        12.32693707774881,
+        11.299939299705724
+      ],
+      [
+        18.034467655177515,
+        21.69984474307744
+      ],
+      [
+        3.6184062705597775,
+        5.291405182521144
+      ],
+      [
+        21.394837540429926,
+        -2.2535687262668436
+      ],
+      [
+        7.9571751393189825,
+        24.57968337941489
+      ],
+      [
+        -1.6537330541552642,
+        22.230786308272144
+      ],
+      [
+        6.704495711656939,
+        8.139384369650212
+      ],
+      [
+        17.07423458780316,
+        0.13711030366533095
+      ],
+      [
+        19.932540980412448,
+        11.509882181893179
+      ],
+      [
+        2.8400440193171406,
+        7.484978743793283
+      ],
+      [
+        24.315753074724924,
+        17.23620448691592
+      ],
+      [
+        13.177174122221121,
+        -3.2073207172561737
+      ],
+      [
+        18.484081344439144,
+        24.153592651016325
+      ],
+      [
+        24.995633380725216,
+        18.761826613824702
+      ],
+      [
+        9.1418454324268,
+        24.733389858348428
+      ],
+      [
+        10.342929812870636,
+        14.646020534163462
+      ],
+      [
+        7.328670642165205,
+        14.70708099779408
+      ],
+      [
+        12.98016004931694,
+        20.006541991002454
+      ],
+      [
+        7.173710097720882,
+        15.136849051070438
+      ],
+      [
+        -0.35928195865072254,
+        1.5478496648694975
+      ],
+      [
+        15.281001970113593,
+        -0.05659540049455458
+      ],
+      [
+        18.129527589694217,
+        17.435725380581186
+      ],
+      [
+        9.931148437371558,
+        15.731455525775846
+      ],
+      [
+        2.8485815555038023,
+        17.565278334778778
+      ],
+      [
+        16.536847367155683,
+        8.340487330816448
+      ],
+      [
+        6.892918781983797,
+        2.0285795325252076
+      ],
+      [
+        9.504152274382982,
+        0.8034262007071433
+      ],
+      [
+        -0.28783731956339764,
+        1.0997080919372895
+      ],
+      [
+        3.2676511558758907,
+        3.0040913125709725
+      ],
+      [
+        11.341512924321613,
+        2.3989804157962693
+      ],
+      [
+        20.128814831438177,
+        4.6751001667240395
+      ],
+      [
+        14.65903168679581,
+        13.425044683982165
+      ],
+      [
+        2.950488252217493,
+        9.88903858132428
+      ],
+      [
+        -1.804175135372267,
+        13.054300220502224
+      ],
+      [
+        21.741245851153856,
+        15.9935688273684
+      ],
+      [
+        12.248760057976419,
+        10.78810041644234
+      ],
+      [
+        21.97304442330021,
+        -0.73939854569403
+      ],
+      [
+        15.069765731497132,
+        11.240987837275242
+      ],
+      [
+        -4.264791826568947,
+        4.400410148407307
+      ],
+      [
+        21.267721717209582,
+        7.346490194317131
+      ],
+      [
+        16.90776526530507,
+        -1.3173392696224813
+      ],
+      [
+        2.667815624499581,
+        11.833491197575913
+      ],
+      [
+        5.849447153456959,
+        3.2071367180768444
+      ],
+      [
+        23.931372625180785,
+        19.69138353801106
+      ],
+      [
+        0.21971963351340484,
+        12.801796378673163
+      ],
+      [
+        -1.5872900571587607,
+        1.130870839576188
+      ]
+    ],
+    "Forest League": [
+      [
+        10.856335347412829,
+        5.651261164820907
+      ],
+      [
+        8.658003204141377,
+        4.432923038552998
+      ],
+      [
+        7.4555770634118,
+        2.9319529979914893
+      ],
+      [
+        23.071300672373805,
+        12.59766710830423
+      ],
+      [
+        28.533981671598728,
+        3.3313264096000914
+      ],
+      [
+        14.616455322006107,
+        11.509388263919472
+      ],
+      [
+        28.893039275304474,
+        6.973201771392783
+      ],
+      [
+        13.616637683354373,
+        3.4043369400038177
+      ],
+      [
+        28.853335084692972,
+        13.712699037964079
+      ],
+      [
+        6.432270330273759,
+        5.205457540091553
+      ],
+      [
+        20.358158802762752,
+        3.690245797418264
+      ],
+      [
+        24.42733199653528,
+        9.826626778934802
+      ],
+      [
+        29.37258256585055,
+        8.093030464063013
+      ],
+      [
+        22.560249615711395,
+        13.304346043731872
+      ],
+      [
+        18.016196075337056,
+        14.408195732112645
+      ],
+      [
+        25.117045370415564,
+        9.99042110890012
+      ],
+      [
+        10.867662215493734,
+        19.284194386721808
+      ],
+      [
+        15.614796164219042,
+        2.0931989277615024
+      ],
+      [
+        25.144392689038256,
+        6.0073246841534
+      ],
+      [
+        29.48280540420519,
+        16.48481667589397
+      ],
+      [
+        18.216188703995165,
+        20.159274898813514
+      ],
+      [
+        24.722965628642246,
+        15.932951891536916
+      ],
+      [
+        12.214355679597167,
+        21.140354938778067
+      ],
+      [
+        11.887596029145254,
+        25.403357621394697
+      ],
+      [
+        17.66656368432924,
+        18.937417108442283
+      ],
+      [
+        21.731397725677624,
+        18.240437214824752
+      ],
+      [
+        22.171135567743786,
+        2.958459208392089
+      ],
+      [
+        17.977431209147408,
+        21.941451330197907
+      ],
+      [
+        19.232720821278416,
+        9.760342261646006
+      ],
+      [
+        15.36359020833017,
+        19.07651515004029
+      ],
+      [
+        9.676070700898055,
+        9.410760523688573
+      ],
+      [
+        23.97107690328019,
+        8.549387240963604
+      ],
+      [
+        29.726676214942053,
+        11.53973796530461
+      ],
+      [
+        6.292752912853135,
+        13.44274059484295
+      ],
+      [
+        15.940407563659711,
+        10.173961574278215
+      ],
+      [
+        20.742832187035663,
+        4.203030639786093
+      ],
+      [
+        15.149524251911064,
+        7.0056582147633835
+      ],
+      [
+        11.044059534546772,
+        7.0312275979487
+      ],
+      [
+        9.32511831367106,
+        4.9979143262814
+      ],
+      [
+        18.50837857389884,
+        9.416416723066877
+      ],
+      [
+        13.362556729858333,
+        16.351602038468062
+      ],
+      [
+        9.623744796127163,
+        6.371599050045568
+      ],
+      [
+        27.681683860042572,
+        9.278956491219702
+      ],
+      [
+        13.575657368042934,
+        7.262743594088422
+      ],
+      [
+        24.539186007259474,
+        17.559978975938463
+      ],
+      [
+        16.952306525024024,
+        23.890186217871754
+      ],
+      [
+        12.039498053313729,
+        9.244093715787239
+      ],
+      [
+        11.788952212716229,
+        8.742315059459253
+      ],
+      [
+        29.770352709266607,
+        12.724205477647264
+      ],
+      [
+        9.164235419154455,
+        8.382325974467296
+      ],
+      [
+        19.4345738071364,
+        5.483157494808735
+      ],
+      [
+        14.387462411942288,
+        6.1715292452850345
+      ],
+      [
+        16.99426969576428,
+        13.848509572831645
+      ],
+      [
+        28.30547162370915,
+        6.03561115368812
+      ],
+      [
+        23.01160766898532,
+        16.428916034761876
+      ],
+      [
+        12.086620715757832,
+        20.334003862340502
+      ],
+      [
+        21.097791435016823,
+        12.298695318924512
+      ],
+      [
+        17.532292507748206,
+        4.140063139719267
+      ],
+      [
+        28.745728146924908,
+        12.887893638141692
+      ],
+      [
+        19.027280803568598,
+        16.337464101963192
+      ],
+      [
+        24.395634137052006,
+        4.906209534690172
+      ],
+      [
+        9.11014434964094,
+        17.6477145830649
+      ],
+      [
+        16.854764582810077,
+        21.79964701278257
+      ],
+      [
+        29.913603397464904,
+        25.770091594813124
+      ],
+      [
+        20.67227444863267,
+        20.904595342738677
+      ],
+      [
+        22.068388233324274,
+        21.45868863979211
+      ],
+      [
+        8.139116442696533,
+        24.498645963300113
+      ],
+      [
+        10.660762123399373,
+        5.538426161005166
+      ],
+      [
+        15.156341723345061,
+        24.8734445279035
+      ],
+      [
+        11.637059613521295,
+        2.0359060272172567
+      ],
+      [
+        6.441846050964232,
+        19.8037108392162
+      ],
+      [
+        6.841662370611729,
+        18.229359408223367
+      ]
+    ],
+    "Highland Order": [
+      [
+        88.4115707953311,
+        83.22752381781439
+      ],
+      [
+        71.00988262346344,
+        86.00074173716075
+      ],
+      [
+        76.00557082640267,
+        82.03675354432515
+      ],
+      [
+        88.84437828392787,
+        75.84917170666998
+      ],
+      [
+        85.07068206851152,
+        83.38375474029816
+      ],
+      [
+        86.77872630423144,
+        76.6711870747391
+      ],
+      [
+        84.74911050813381,
+        73.62252806551516
+      ],
+      [
+        77.18411211042849,
+        76.80268640310301
+      ],
+      [
+        74.12259397077128,
+        86.74271534473974
+      ],
+      [
+        74.4426927383042,
+        86.42029592548819
+      ],
+      [
+        73.86187617473361,
+        78.64833322202205
+      ],
+      [
+        76.54116811115503,
+        72.60275228738826
+      ],
+      [
+        72.4967444729227,
+        70.77153947380542
+      ],
+      [
+        71.8994924541585,
+        73.1947169028605
+      ],
+      [
+        86.45329739626564,
+        88.48955021498702
+      ],
+      [
+        83.34627902429581,
+        81.43482027171206
+      ],
+      [
+        84.17930390000379,
+        83.60678681497032
+      ],
+      [
+        86.62991199482619,
+        76.01279857490718
+      ],
+      [
+        76.36106159434483,
+        70.97643237959264
+      ],
+      [
+        80.8227490948153,
+        71.80275741641644
+      ],
+      [
+        72.9903214729125,
+        82.01116838942617
+      ],
+      [
+        85.39022745906806,
+        84.18634810213626
+      ],
+      [
+        72.48494612336503,
+        70.78266698208536
+      ],
+      [
+        79.5691343910274,
+        85.42533790683117
+      ],
+      [
+        80.76327701463521,
+        88.72404124156775
+      ],
+      [
+        72.99973297121134,
+        86.81570192459537
+      ],
+      [
+        75.90734350539093,
+        75.9842892918112
+      ],
+      [
+        72.70244598118722,
+        70.52994756508396
+      ],
+      [
+        76.51428315864258,
+        88.31340714477567
+      ],
+      [
+        85.54238974195081,
+        83.73057734527434
+      ],
+      [
+        78.33589943074061,
+        82.4301848263727
+      ],
+      [
+        81.55506081196818,
+        78.97216239342632
+      ],
+      [
+        89.19114145589182,
+        89.59752890597903
+      ],
+      [
+        76.56341157680883,
+        87.88054451449449
+      ],
+      [
+        80.33565251897485,
+        83.53486941914119
+      ],
+      [
+        82.60339160992223,
+        77.18286515570003
+      ],
+      [
+        85.28452778031884,
+        78.13973589268939
+      ],
+      [
+        80.07368345814888,
+        80.53475462192694
+      ],
+      [
+        72.46384282677889,
+        79.2910009655883
+      ],
+      [
+        86.47059473179083,
+        73.7235037276731
+      ],
+      [
+        78.61326571657904,
+        75.00382860860432
+      ],
+      [
+        77.06071398666529,
+        79.43370925538824
+      ],
+      [
+        77.78199093121272,
+        88.9069204817235
+      ],
+      [
+        81.23582479806245,
+        88.48723114980142
+      ],
+      [
+        72.13363064166201,
+        71.06175859277833
+      ],
+      [
+        86.827240165662,
+        74.61686765873071
+      ],
+      [
+        75.82876102154958,
+        88.38365969101562
+      ],
+      [
+        75.71315356217184,
+        87.84149371477831
+      ],
+      [
+        79.60892488066841,
+        85.7148769617872
+      ],
+      [
+        73.04042925060705,
+        86.84906492579309
+      ],
+      [
+        82.4871437738232,
+        75.99198608776695
+      ],
+      [
+        74.30313015329875,
+        75.7867007555144
+      ],
+      [
+        79.79706213649332,
+        80.36191555112114
+      ],
+      [
+        75.1219115526129,
+        74.10472966648761
+      ],
+      [
+        87.75876713614466,
+        80.26478442196093
+      ],
+      [
+        71.67750613071887,
+        83.61762365382769
+      ],
+      [
+        78.33740423062487,
+        89.21318927954255
+      ],
+      [
+        87.54273550234922,
+        76.1902595192366
+      ],
+      [
+        74.33272842300534,
+        70.19366446047339
+      ],
+      [
+        84.03838180047613,
+        72.20602071002165
+      ],
+      [
+        83.566335113702,
+        85.51015303326885
+      ],
+      [
+        83.14057592463423,
+        80.99768802134237
+      ],
+      [
+        77.66901491515097,
+        80.39276798909155
+      ],
+      [
+        73.30505357998118,
+        79.29781457241691
+      ],
+      [
+        75.92495953263393,
+        78.07866642986018
+      ],
+      [
+        77.62483386578585,
+        72.2168875838746
+      ],
+      [
+        77.95592692260362,
+        85.5450745875737
+      ],
+      [
+        70.35561163015586,
+        72.1148734488531
+      ],
+      [
+        79.31081237545592,
+        77.86572381345604
+      ],
+      [
+        82.44140623271728,
+        70.91040250072534
+      ],
+      [
+        80.24272928503731,
+        84.94459656152333
+      ],
+      [
+        85.9533132059451,
+        73.09132757784727
+      ],
+      [
+        88.15484743241745,
+        77.62212615615817
+      ],
+      [
+        87.04424468696521,
+        74.39034499688525
+      ],
+      [
+        75.07053278538478,
+        80.29206208037854
+      ],
+      [
+        88.9503623330497,
+        84.71536907949974
+      ],
+      [
+        83.83301316856031,
+        75.41928016778633
+      ],
+      [
+        89.13746332995616,
+        81.11320724103392
+      ]
+    ]
+  },
+  "relationships": {},
+  "contact_stages": {
+    "('Forest League', 'River Alliance')": "war"
+  },
+  "trade_routes": [
+    [
+      "Forest League",
+      "River Alliance"
+    ]
+  ],
+  "conflicts": [],
+  "chronicle": [
+    {
+      "turn": 1,
+      "event": "River Alliance expands its influence."
+    },
+    {
+      "turn": 1,
+      "event": "Forest League expands its influence."
+    },
+    {
+      "turn": 1,
+      "event": "Highland Order expands its influence."
+    },
+    {
+      "turn": 1,
+      "event": "Scouts from River Alliance sighted the lands of Forest League."
+    },
+    {
+      "turn": 2,
+      "event": "River Alliance expands its influence."
+    },
+    {
+      "turn": 2,
+      "event": "Forest League expands its influence."
+    },
+    {
+      "turn": 2,
+      "event": "Highland Order expands its influence."
+    },
+    {
+      "turn": 2,
+      "event": "Envoys from River Alliance and Forest League established first contact."
+    },
+    {
+      "turn": 2,
+      "event": "Trade route established between Forest League and River Alliance."
+    },
+    {
+      "turn": 3,
+      "event": "River Alliance expands its influence."
+    },
+    {
+      "turn": 3,
+      "event": "Forest League expands its influence."
+    },
+    {
+      "turn": 3,
+      "event": "Highland Order expands its influence."
+    },
+    {
+      "turn": 3,
+      "event": "Trade routes opened between River Alliance and Forest League."
+    },
+    {
+      "turn": 4,
+      "event": "River Alliance expands its influence."
+    },
+    {
+      "turn": 4,
+      "event": "Forest League expands its influence."
+    },
+    {
+      "turn": 4,
+      "event": "Highland Order expands its influence."
+    },
+    {
+      "turn": 4,
+      "event": "Border tensions rise between River Alliance and Forest League."
+    },
+    {
+      "turn": 5,
+      "event": "River Alliance expands its influence."
+    },
+    {
+      "turn": 5,
+      "event": "Forest League expands its influence."
+    },
+    {
+      "turn": 5,
+      "event": "Highland Order expands its influence."
+    },
+    {
+      "turn": 5,
+      "event": "War erupts between River Alliance and Forest League!"
+    },
+    {
+      "turn": 6,
+      "event": "River Alliance expands its influence."
+    },
+    {
+      "turn": 6,
+      "event": "Forest League expands its influence."
+    },
+    {
+      "turn": 6,
+      "event": "Highland Order expands its influence."
+    },
+    {
+      "turn": 6,
+      "event": "War erupts between River Alliance and Forest League!"
+    },
+    {
+      "turn": 7,
+      "event": "River Alliance expands its influence."
+    },
+    {
+      "turn": 7,
+      "event": "Forest League expands its influence."
+    },
+    {
+      "turn": 7,
+      "event": "Highland Order expands its influence."
+    },
+    {
+      "turn": 7,
+      "event": "War erupts between River Alliance and Forest League!"
+    },
+    {
+      "turn": 8,
+      "event": "River Alliance expands its influence."
+    },
+    {
+      "turn": 8,
+      "event": "Forest League expands its influence."
+    },
+    {
+      "turn": 8,
+      "event": "Highland Order expands its influence."
+    },
+    {
+      "turn": 8,
+      "event": "War erupts between River Alliance and Forest League!"
+    },
+    {
+      "turn": 9,
+      "event": "River Alliance expands its influence."
+    },
+    {
+      "turn": 9,
+      "event": "Forest League expands its influence."
+    },
+    {
+      "turn": 9,
+      "event": "Highland Order expands its influence."
+    },
+    {
+      "turn": 9,
+      "event": "War erupts between River Alliance and Forest League!"
+    },
+    {
+      "turn": 10,
+      "event": "River Alliance expands its influence."
+    },
+    {
+      "turn": 10,
+      "event": "Forest League expands its influence."
+    },
+    {
+      "turn": 10,
+      "event": "Highland Order expands its influence."
+    },
+    {
+      "turn": 10,
+      "event": "War erupts between River Alliance and Forest League!"
+    },
+    {
+      "turn": 11,
+      "event": "River Alliance expands its influence."
+    },
+    {
+      "turn": 11,
+      "event": "Forest League expands its influence."
+    },
+    {
+      "turn": 11,
+      "event": "Highland Order expands its influence."
+    },
+    {
+      "turn": 11,
+      "event": "War erupts between River Alliance and Forest League!"
+    },
+    {
+      "turn": 12,
+      "event": "River Alliance expands its influence."
+    },
+    {
+      "turn": 12,
+      "event": "Forest League expands its influence."
+    },
+    {
+      "turn": 12,
+      "event": "Highland Order expands its influence."
+    },
+    {
+      "turn": 12,
+      "event": "War erupts between River Alliance and Forest League!"
+    },
+    {
+      "turn": 13,
+      "event": "River Alliance expands its influence."
+    },
+    {
+      "turn": 13,
+      "event": "Forest League expands its influence."
+    },
+    {
+      "turn": 13,
+      "event": "Highland Order expands its influence."
+    },
+    {
+      "turn": 13,
+      "event": "War erupts between River Alliance and Forest League!"
+    },
+    {
+      "turn": 14,
+      "event": "River Alliance expands its influence."
+    },
+    {
+      "turn": 14,
+      "event": "Forest League expands its influence."
+    },
+    {
+      "turn": 14,
+      "event": "Highland Order expands its influence."
+    },
+    {
+      "turn": 14,
+      "event": "War erupts between River Alliance and Forest League!"
+    },
+    {
+      "turn": 15,
+      "event": "River Alliance expands its influence."
+    },
+    {
+      "turn": 15,
+      "event": "Forest League expands its influence."
+    },
+    {
+      "turn": 15,
+      "event": "Highland Order expands its influence."
+    },
+    {
+      "turn": 15,
+      "event": "War erupts between River Alliance and Forest League!"
+    },
+    {
+      "turn": 16,
+      "event": "River Alliance expands its influence."
+    },
+    {
+      "turn": 16,
+      "event": "Forest League expands its influence."
+    },
+    {
+      "turn": 16,
+      "event": "Highland Order expands its influence."
+    },
+    {
+      "turn": 16,
+      "event": "War erupts between River Alliance and Forest League!"
+    },
+    {
+      "turn": 17,
+      "event": "River Alliance expands its influence."
+    },
+    {
+      "turn": 17,
+      "event": "Forest League expands its influence."
+    },
+    {
+      "turn": 17,
+      "event": "Highland Order expands its influence."
+    },
+    {
+      "turn": 17,
+      "event": "War erupts between River Alliance and Forest League!"
+    },
+    {
+      "turn": 18,
+      "event": "River Alliance expands its influence."
+    },
+    {
+      "turn": 18,
+      "event": "Forest League expands its influence."
+    },
+    {
+      "turn": 18,
+      "event": "Highland Order expands its influence."
+    },
+    {
+      "turn": 18,
+      "event": "War erupts between River Alliance and Forest League!"
+    },
+    {
+      "turn": 19,
+      "event": "River Alliance expands its influence."
+    },
+    {
+      "turn": 19,
+      "event": "Forest League expands its influence."
+    },
+    {
+      "turn": 19,
+      "event": "Highland Order expands its influence."
+    },
+    {
+      "turn": 19,
+      "event": "War erupts between River Alliance and Forest League!"
+    },
+    {
+      "turn": 20,
+      "event": "River Alliance expands its influence."
+    },
+    {
+      "turn": 20,
+      "event": "Forest League expands its influence."
+    },
+    {
+      "turn": 20,
+      "event": "Highland Order expands its influence."
+    },
+    {
+      "turn": 20,
+      "event": "War erupts between River Alliance and Forest League!"
+    },
+    {
+      "turn": 21,
+      "event": "River Alliance expands its influence."
+    },
+    {
+      "turn": 21,
+      "event": "Forest League expands its influence."
+    },
+    {
+      "turn": 21,
+      "event": "Highland Order expands its influence."
+    },
+    {
+      "turn": 21,
+      "event": "War erupts between River Alliance and Forest League!"
+    },
+    {
+      "turn": 22,
+      "event": "River Alliance expands its influence."
+    },
+    {
+      "turn": 22,
+      "event": "Forest League expands its influence."
+    },
+    {
+      "turn": 22,
+      "event": "Highland Order expands its influence."
+    },
+    {
+      "turn": 22,
+      "event": "War erupts between River Alliance and Forest League!"
+    },
+    {
+      "turn": 23,
+      "event": "River Alliance expands its influence."
+    },
+    {
+      "turn": 23,
+      "event": "Forest League expands its influence."
+    },
+    {
+      "turn": 23,
+      "event": "Highland Order expands its influence."
+    },
+    {
+      "turn": 23,
+      "event": "War erupts between River Alliance and Forest League!"
+    },
+    {
+      "turn": 24,
+      "event": "River Alliance expands its influence."
+    },
+    {
+      "turn": 24,
+      "event": "Forest League expands its influence."
+    },
+    {
+      "turn": 24,
+      "event": "Highland Order expands its influence."
+    },
+    {
+      "turn": 24,
+      "event": "War erupts between River Alliance and Forest League!"
+    },
+    {
+      "turn": 25,
+      "event": "River Alliance expands its influence."
+    },
+    {
+      "turn": 25,
+      "event": "Forest League expands its influence."
+    },
+    {
+      "turn": 25,
+      "event": "Highland Order expands its influence."
+    },
+    {
+      "turn": 25,
+      "event": "War erupts between River Alliance and Forest League!"
+    },
+    {
+      "turn": 26,
+      "event": "River Alliance expands its influence."
+    },
+    {
+      "turn": 26,
+      "event": "Forest League expands its influence."
+    },
+    {
+      "turn": 26,
+      "event": "Highland Order expands its influence."
+    },
+    {
+      "turn": 26,
+      "event": "War erupts between River Alliance and Forest League!"
+    },
+    {
+      "turn": 27,
+      "event": "River Alliance expands its influence."
+    },
+    {
+      "turn": 27,
+      "event": "Forest League expands its influence."
+    },
+    {
+      "turn": 27,
+      "event": "Highland Order expands its influence."
+    },
+    {
+      "turn": 27,
+      "event": "War erupts between River Alliance and Forest League!"
+    },
+    {
+      "turn": 28,
+      "event": "River Alliance expands its influence."
+    },
+    {
+      "turn": 28,
+      "event": "Forest League expands its influence."
+    },
+    {
+      "turn": 28,
+      "event": "Highland Order expands its influence."
+    },
+    {
+      "turn": 28,
+      "event": "War erupts between River Alliance and Forest League!"
+    },
+    {
+      "turn": 29,
+      "event": "River Alliance expands its influence."
+    },
+    {
+      "turn": 29,
+      "event": "Forest League expands its influence."
+    },
+    {
+      "turn": 29,
+      "event": "Highland Order expands its influence."
+    },
+    {
+      "turn": 29,
+      "event": "War erupts between River Alliance and Forest League!"
+    },
+    {
+      "turn": 30,
+      "event": "River Alliance expands its influence."
+    },
+    {
+      "turn": 30,
+      "event": "Forest League expands its influence."
+    },
+    {
+      "turn": 30,
+      "event": "Highland Order expands its influence."
+    },
+    {
+      "turn": 30,
+      "event": "War erupts between River Alliance and Forest League!"
+    },
+    {
+      "turn": 31,
+      "event": "River Alliance expands its influence."
+    },
+    {
+      "turn": 31,
+      "event": "Forest League expands its influence."
+    },
+    {
+      "turn": 31,
+      "event": "Highland Order expands its influence."
+    },
+    {
+      "turn": 31,
+      "event": "War erupts between River Alliance and Forest League!"
+    },
+    {
+      "turn": 32,
+      "event": "River Alliance expands its influence."
+    },
+    {
+      "turn": 32,
+      "event": "Forest League expands its influence."
+    },
+    {
+      "turn": 32,
+      "event": "Highland Order expands its influence."
+    },
+    {
+      "turn": 32,
+      "event": "War erupts between River Alliance and Forest League!"
+    },
+    {
+      "turn": 33,
+      "event": "River Alliance expands its influence."
+    },
+    {
+      "turn": 33,
+      "event": "Forest League expands its influence."
+    },
+    {
+      "turn": 33,
+      "event": "Highland Order expands its influence."
+    },
+    {
+      "turn": 33,
+      "event": "War erupts between River Alliance and Forest League!"
+    },
+    {
+      "turn": 34,
+      "event": "River Alliance expands its influence."
+    },
+    {
+      "turn": 34,
+      "event": "Forest League expands its influence."
+    },
+    {
+      "turn": 34,
+      "event": "Highland Order expands its influence."
+    },
+    {
+      "turn": 34,
+      "event": "War erupts between River Alliance and Forest League!"
+    },
+    {
+      "turn": 35,
+      "event": "River Alliance expands its influence."
+    },
+    {
+      "turn": 35,
+      "event": "Forest League expands its influence."
+    },
+    {
+      "turn": 35,
+      "event": "Highland Order expands its influence."
+    },
+    {
+      "turn": 35,
+      "event": "War erupts between River Alliance and Forest League!"
+    },
+    {
+      "turn": 36,
+      "event": "River Alliance expands its influence."
+    },
+    {
+      "turn": 36,
+      "event": "Forest League expands its influence."
+    },
+    {
+      "turn": 36,
+      "event": "Highland Order expands its influence."
+    },
+    {
+      "turn": 36,
+      "event": "War erupts between River Alliance and Forest League!"
+    },
+    {
+      "turn": 37,
+      "event": "River Alliance expands its influence."
+    },
+    {
+      "turn": 37,
+      "event": "Forest League expands its influence."
+    },
+    {
+      "turn": 37,
+      "event": "Highland Order expands its influence."
+    },
+    {
+      "turn": 37,
+      "event": "War erupts between River Alliance and Forest League!"
+    },
+    {
+      "turn": 38,
+      "event": "River Alliance expands its influence."
+    },
+    {
+      "turn": 38,
+      "event": "Forest League expands its influence."
+    },
+    {
+      "turn": 38,
+      "event": "Highland Order expands its influence."
+    },
+    {
+      "turn": 38,
+      "event": "War erupts between River Alliance and Forest League!"
+    }
+  ]
+}

@@ -1,0 +1,21 @@
+import random
+
+
+def attempt_exploration(civilizations, world_regions):
+
+    print("\n[Exploration phase triggered]")
+
+    hidden_regions = [r for r in world_regions if r["hidden"]]
+
+    if not hidden_regions:
+        print("No hidden regions remaining.")
+        return
+
+    civ = random.choice(civilizations)
+
+    region = random.choice(hidden_regions)
+
+    region["hidden"] = False
+
+    print("\nEXPLORATION DISCOVERY!")
+    print(f"{civ.name} explorers discovered {region['name']}!")

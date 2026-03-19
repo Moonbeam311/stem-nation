@@ -1,0 +1,35 @@
+{
+  "artifacts": [
+
+    {
+      "name": "Maize Cultivation",
+      "origin": "Mississippian",
+      "category": "agriculture",
+      "description": "Advanced maize farming techniques developed in river valley societies.",
+      "effect": {
+        "food": 10
+      }
+    },
+
+    {
+      "name": "Terrace Farming Manual",
+      "origin": "Inca",
+      "category": "agriculture",
+      "description": "Mountain farmers developed terrace systems to grow crops on steep slopes.",
+      "effect": {
+        "food": 8
+      }
+    },
+
+    {
+      "name": "Navigation Charts",
+      "origin": "Phoenician",
+      "category": "navigation",
+      "description": "Ancient sea charts enabling long-distance maritime trade.",
+      "effect": {
+        "wealth": 8
+      }
+    }
+
+  ]
+}

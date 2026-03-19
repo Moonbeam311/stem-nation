@@ -1,0 +1,131 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>STEM Nation Map</title>
+
+    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css"/>
+
+    <style>
+        body { margin:0; background:black; color:white; }
+        #map { height:100vh; }
+    </style>
+</head>
+
+<body>
+
+<div style="
+position:absolute;
+top:10px;
+left:50%;
+transform:translateX(-50%);
+color:white;
+font-size:28px;
+z-index:1000;
+font-weight:bold;
+">
+🌍 STEM Nation Strategic Map
+</div>
+
+<div style="
+position:absolute;
+top:20px;
+right:20px;
+color:white;
+font-size:24px;
+z-index:1000;
+">
+🧭 N
+</div>
+
+
+<div id="map"></div>
+
+<script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+
+<script>
+var map = L.map('map').setView([20, 0], 2);
+
+// Base map
+L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    attribution: 'Map'
+}).addTo(map);
+
+// SAFE DATA LOAD
+var regions = {{ regions | tojson | safe }};
+
+// Coordinates (fixed positions)
+var coords = [
+    [30, -90],
+    [45, -75],
+    [-10, -70],
+    [35, 10],
+    [0, 0],
+    [10, 40],
+    [-20, 120]
+];
+
+// Color system
+function getColor(owner) {
+    if (owner == "Mississippian") return "green";
+    if (owner == "Susquehannock") return "blue";
+    if (owner == "Inca") return "yellow";
+    if (owner == "Phoenician") return "red";
+    return "gray";
+}
+
+// DRAW REGIONS
+regions.forEach(function(r, i) {
+
+    var circle = L.circle(coords[i], {
+        color: getColor(r.owner),
+        fillColor: getColor(r.owner),
+        fillOpacity: 0.6,
+        radius: 500000
+    }).addTo(map);
+
+    circle.bindPopup(r.name + " — " + r.owner);
+
+    // CLICK = CLAIM
+    circle.on('click', function() {
+        alert("CLICKED: " + r.name);  // DEBUG VISUAL
+
+        fetch('/claim/' + encodeURIComponent(r.name))
+        .then(res => {
+            console.log("CLAIM SENT:", r.name);
+            return res.text();
+        })
+        .then(() => {
+            location.reload();
+        })
+        .catch(err => {
+            console.error("ERROR:", err);
+            alert("ERROR sending claim");
+        });
+    });
+
+});
+</script>
+
+
+<div style="
+position:absolute;
+bottom:20px;
+left:20px;
+background:white;
+padding:10px;
+border-radius:8px;
+color:black;
+font-size:14px;
+z-index:1000;
+">
+<b>Territory Key</b><br>
+🟩 Mississippian<br>
+🟦 Susquehannock<br>
+🟨 Inca<br>
+🟥 Phoenician<br>
+⬛ Unclaimed
+</div>
+
+</body>
+</html>

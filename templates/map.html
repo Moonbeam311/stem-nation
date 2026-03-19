@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>STEM Nation Strategic Map</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css">
+    <style>
+        body { margin: 0; }
+        #map { height: 100vh; width: 100%; }
+        .title-box {
+            position: absolute;
+            top: 12px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 1000;
+            background: rgba(17,24,39,0.9);
+            color: white;
+            padding: 10px 16px;
+            border-radius: 8px;
+            font-family: Arial, sans-serif;
+            font-size: 24px;
+            font-weight: bold;
+        }
+        .compass-box {
+            position: absolute;
+            top: 16px;
+            right: 16px;
+            z-index: 1000;
+            background: rgba(17,24,39,0.9);
+            color: white;
+            padding: 8px 12px;
+            border-radius: 8px;
+            font-family: Arial, sans-serif;
+            font-size: 22px;
+            font-weight: bold;
+        }
+        .legend-box {
+            position: absolute;
+            bottom: 20px;
+            left: 20px;
+            z-index: 1000;
+            background: rgba(255,255,255,0.95);
+            color: black;
+            padding: 12px 14px;
+            border-radius: 8px;
+            font-family: Arial, sans-serif;
+            font-size: 14px;
+            line-height: 1.6;
+        }
+        .selector-box {
+            position: absolute;
+            top: 70px;
+            left: 20px;
+            z-index: 1000;
+            background: rgba(255,255,255,0.95);
+            color: black;
+            padding: 10px 12px;
+            border-radius: 8px;
+            font-family: Arial, sans-serif;
+            font-size: 14px;
+        }
+    </style>
+</head>
+<body>
+    <div class="title-box">STEM Nation Strategic Map</div>
+    <div class="compass-box">N</div>
+
+    <div class="selector-box">
+        <label for="ownerSelect"><b>Active Civilization</b></label><br>
+        <select id="ownerSelect">
+            {% for name in civ_names %}
+            <option value="{{ name }}">{{ name }}</option>
+            {% endfor %}
+        </select>
+    </div>
+
+    <div class="legend-box">
+        <b>Territory Key</b><br>
+        <span style="color: green;">●</span> Mississippian<br>
+        <span style="color: blue;">●</span> Susquehannock<br>
+        <span style="color: gold;">●</span> Inca<br>
+        <span style="color: red;">●</span> Phoenician<br>
+        <span style="color: gray;">●</span> Unclaimed
+    </div>
+
+    <div id="map"></div>
+
+    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+    <script>
+        const map = L.map('map').setView([20, 0], 2);
+
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: 'STEM Nation'
+        }).addTo(map);
+
+        const regions = {{ regions | tojson | safe }};
+        const coords = {
+            "River Valley": [30, -90],
+            "Forest Belt": [40, -75],
+            "Highland Ridge": [-10, -70],
+            "Coastal Sea": [10, 20],
+            "Central Basin": [0, 0],
+            "Trade Crossroads": [25, 40],
+            "Island Chain": [-20, 120]
+        };
+
+        function getColor(owner) {
+            if (owner === "Mississippian") return "green";
+            if (owner === "Susquehannock") return "blue";
+            if (owner === "Inca") return "gold";
+            if (owner === "Phoenician") return "red";
+            return "gray";
+        }
+
+        let layers = [];
+
+        function drawRegions() {
+            layers.forEach(layer => map.removeLayer(layer));
+            layers = [];
+
+            regions.forEach(function(r) {
+                const c = coords[r.name] || [0, 0];
+                const color = getColor(r.owner);
+
+                const circle = L.circle(c, {
+                    color: color,
+                    fillColor: color,
+                    fillOpacity: 0.5,
+                    radius: 800000
+                }).addTo(map);
+
+                circle.bindPopup("<b>" + r.name + "</b><br>" + r.owner);
+
+                circle.on('click', async function() {
+                    const owner = document.getElementById('ownerSelect').value;
+
+                    try {
+                        const res = await fetch('/claim', {
+                            method: 'POST',
+                            headers: { 'Content-Type': 'application/json' },
+                            body: JSON.stringify({
+                                region_name: r.name,
+                                owner: owner
+                            })
+                        });
+
+                        const data = await res.json();
+
+                        if (!res.ok) {
+                            alert(data.error || 'Claim failed');
+                            return;
+                        }
+
+                        r.owner = data.region.owner;
+                        drawRegions();
+                    } catch (err) {
+                        alert('Map interaction failed');
+                        console.error(err);
+                    }
+                });
+
+                layers.push(circle);
+            });
+        }
+
+        drawRegions();
+    </script>
+</body>
+</html>
