@@ -1,3 +1,4 @@
+print('STEM_NATION_LIVE_MARKER')
 import teacher_console
 from flask import Flask, render_template, redirect, url_for, jsonify, request
 from civilization_engine import Civilization
