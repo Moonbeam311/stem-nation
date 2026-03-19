@@ -166,6 +166,12 @@ import os
 def teacher_dashboard():
     return "Teacher system connected"
 
+
+
+@app.route('/test-live')
+def test_live():
+    return "LIVE CODE UPDATED"
+
 if __name__ == "__main__":
     port = int(os.environ.get("PORT", 5000))
     app.run(host="0.0.0.0", port=port)
