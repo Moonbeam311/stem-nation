@@ -1,120 +1,78 @@
-<!DOCTYPE html>
+<!doctype html>
 <html>
 <head>
-    <meta charset="utf-8">
-    <title>STEM Nation Command Center</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background: #0d1117;
-            color: white;
-            padding: 20px;
-        }
-        h1 { text-align: center; }
-        .section {
-            margin-top: 24px;
-            padding: 16px;
-            border: 1px solid #333;
-            border-radius: 8px;
-            background: #111827;
-        }
-        button {
-            padding: 10px 14px;
-            margin: 4px;
-            cursor: pointer;
-        }
-        .map-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 10px;
-        }
-        .map-card {
-            padding: 12px;
-            border-radius: 8px;
-            background: #1f2937;
-        }
-        a { color: #93c5fd; }
-    </style>
+  <meta charset="utf-8">
+  <title>STEM Nation Command Center</title>
+  <style>
+    body { font-family: Arial, sans-serif; margin: 24px; background: #111; color: #eee; }
+    a, a:visited { color: #8ecbff; text-decoration: none; }
+    .topnav a { margin-right: 16px; font-weight: bold; }
+    .grid { display: grid; grid-template-columns: 1.1fr 1fr; gap: 20px; }
+    .card { background: #1b1b1b; border: 1px solid #333; border-radius: 10px; padding: 16px; }
+    .civ { margin-bottom: 14px; padding-bottom: 10px; border-bottom: 1px solid #333; }
+    .btns a { margin-right: 12px; }
+    ul { padding-left: 18px; }
+  </style>
 </head>
 <body>
-    <h1>STEM Nation Command Center</h1>
+  <div class="topnav">
+    <a href="/dashboard">Command Center</a>
+    <a href="/map">Strategic Map</a>
+    <a href="/teacher">Teacher Panel</a>
+    <a href="/lessons">Lessons</a>
+    <a href="/archive">Archive</a>
+    <a href="/advance_turn">Run Turn</a>
+  </div>
 
-    <div class="section">
-        <h2>Turn {{ turn }}</h2>
-        <a href="/advance_turn"><button>Run Turn</button></a>
-        <a href="/map"><button>Open Strategic Map</button></a>
-    </div>
+  <h1>STEM Nation — Command Center</h1>
+  <p><strong>Turn:</strong> {{ turn }} | <strong>Current Event:</strong> {{ event }}</p>
 
-    <div class="section">
-        <h2>Leaderboard</h2>
-        <ol>
+  <div class="grid">
+    <div class="card">
+      <h2>Leaderboard</h2>
+      <ul>
         {% for name, score in leaderboard %}
-            <li>{{ name }} - {{ score }}</li>
+          <li>{{ name }} — {{ score }}</li>
         {% endfor %}
-        </ol>
-    </div>
+      </ul>
 
-    <div class="section">
-        <h2>Civilizations</h2>
-        {% for civ in civilizations %}
-        <p>
-            <b>{{ civ.name }}</b><br>
-            Pop: {{ civ.population }} |
-            Food: {{ civ.food }} |
-            Wealth: {{ civ.wealth }} |
-            Tech: {{ civ.technology }} |
-            Stability: {{ civ.stability }} |
-            Influence: {{ civ.influence }}
-        </p>
-        {% endfor %}
-    </div>
-
-    <div class="section">
-        <h2>World Map</h2>
-        <div class="map-grid">
-        {% for region in world_map %}
-            <div class="map-card">
-                <b>{{ region.name }}</b><br>
-                {{ region.owner }}
-            </div>
-        {% endfor %}
-        </div>
-    </div>
-
-    <div class="section">
-        <h2>Current Event</h2>
-        <p>{{ event }}</p>
-    </div>
-
-    <div class="section">
-        <h2>Advisor Council</h2>
-        <ul>
+      <h2>Advisor Council</h2>
+      <ul>
         {% for advice in advisors %}
-            <li>{{ advice }}</li>
+          <li>{{ advice }}</li>
         {% endfor %}
-        </ul>
+      </ul>
     </div>
 
-    <div class="section">
-        <h2>Chronicle</h2>
-        <ul>
+    <div class="card">
+      <h2>Chronicle</h2>
+      <ul>
         {% for entry in chronicle %}
-            <li>{{ entry }}</li>
+          <li>{{ entry }}</li>
         {% endfor %}
-        </ul>
+      </ul>
     </div>
+  </div>
 
-    <div class="section">
-        <h2>Make Decision</h2>
-        {% for civ in civilizations %}
-        <div style="margin-bottom: 14px;">
-            <b>{{ civ.name }}</b><br>
-            <a href="/decision/{{ civ.name }}/expand"><button>Expand</button></a>
-            <a href="/decision/{{ civ.name }}/trade"><button>Trade</button></a>
-            <a href="/decision/{{ civ.name }}/build"><button>Build</button></a>
-            <a href="/decision/{{ civ.name }}/research"><button>Research</button></a>
+  <div class="card" style="margin-top:20px;">
+    <h2>Civilizations</h2>
+    {% for name, civ in civilizations.items() %}
+      <div class="civ">
+        <h3>{{ name }}</h3>
+        <div>Population: {{ civ.population if civ.population is defined else civ["population"] }}</div>
+        <div>Food: {{ civ.food if civ.food is defined else civ["food"] }}</div>
+        <div>Wealth: {{ civ.wealth if civ.wealth is defined else civ["wealth"] }}</div>
+        <div>Technology: {{ civ.technology if civ.technology is defined else civ["technology"] }}</div>
+        <div>Stability: {{ civ.stability if civ.stability is defined else civ["stability"] }}</div>
+        <div>Influence: {{ civ.influence if civ.influence is defined else civ["influence"] }}</div>
+        <div class="btns" style="margin-top:8px;">
+          <a href="/decision/{{ name }}/expand">Expand</a>
+          <a href="/decision/{{ name }}/trade">Trade</a>
+          <a href="/decision/{{ name }}/build">Build</a>
+          <a href="/decision/{{ name }}/research">Research</a>
         </div>
-        {% endfor %}
-    </div>
+      </div>
+    {% endfor %}
+  </div>
 </body>
 </html>
