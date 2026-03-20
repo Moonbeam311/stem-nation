@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>STEM Nation — Intro</title>
+<style>
+body {
+  background:black;
+  color:white;
+  text-align:center;
+  font-family:Arial;
+}
+button {
+  font-size:20px;
+  padding:10px;
+}
+</style>
+</head>
+
+<body>
+
+<h1>STEM Nation</h1>
+
+<p id="text">Civilization did not begin with us...</p>
+
+<button onclick="startIntro()">▶ Begin Experience</button>
+
+<script>
+let lines = [
+  "Civilization did not begin with us...",
+  "But it will be shaped by us.",
+  "In this world, every decision matters.",
+  "Welcome to STEM Nation."
+];
+
+function startIntro() {
+  let i = 0;
+  let el = document.getElementById("text");
+
+  let interval = setInterval(() => {
+    el.innerText = lines[i];
+    i++;
+    if(i >= lines.length) {
+      clearInterval(interval);
+      setTimeout(() => {
+        window.location.href = "https://stem-nation.onrender.com/";
+      }, 2000);
+    }
+  }, 2500);
+}
+</script>
+
+</body>
+</html>

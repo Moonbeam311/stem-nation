@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>STEM Nation Demo</title>
+</head>
+<body style="background:black;color:white;text-align:center;font-family:Arial">
+
+<h1>STEM Nation — Guided Demo</h1>
+
+<button onclick="startDemo()">▶ Start AI Demo</button>
+
+<audio id="audio" src="demo_voice.mp3"></audio>
+
+<iframe id="frame" src="https://stem-nation.onrender.com/" width="100%" height="600"></iframe>
+
+<script>
+function startDemo() {
+  document.getElementById("audio").play();
+
+  setTimeout(() => {
+    document.getElementById("frame").src = "https://stem-nation.onrender.com/advance_turn";
+  }, 5000);
+
+  setTimeout(() => {
+    document.getElementById("frame").src = "https://stem-nation.onrender.com/map";
+  }, 10000);
+
+  setTimeout(() => {
+    document.getElementById("frame").src = "https://stem-nation.onrender.com/";
+  }, 16000);
+}
+</script>
+
+</body>
+</html>
