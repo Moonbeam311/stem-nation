@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>STEM Nation — Regions</title>
+</head>
+
+<body style="margin:0; display:flex; height:100vh; overflow:hidden; font-family:Segoe UI, Arial;">
+
+<!-- MAP AREA -->
+<div style="flex:3; position:relative;">
+
+<img src="/regions_map.png" style="width:100%; height:100%; object-fit:cover; display:block;">
+
+<!-- CLICKABLE REGIONS (NO TEXT BLOCKS) -->
+
+<div onclick="selectRegion('River Corridor')" style="
+position:absolute; top:35%; left:20%;
+width:25%; height:20%; cursor:pointer;">
+</div>
+
+<div onclick="selectRegion('Forest Belt')" style="
+position:absolute; top:25%; right:15%;
+width:25%; height:20%; cursor:pointer;">
+</div>
+
+<div onclick="selectRegion('Highland Ridge')" style="
+position:absolute; bottom:25%; right:15%;
+width:25%; height:20%; cursor:pointer;">
+</div>
+
+<div onclick="selectRegion('Valley Basin')" style="
+position:absolute; bottom:25%; left:20%;
+width:25%; height:20%; cursor:pointer;">
+</div>
+
+<div onclick="selectRegion('Coastal Exchange')" style="
+position:absolute; top:10%; left:35%;
+width:30%; height:15%; cursor:pointer;">
+</div>
+
+</div>
+
+<!-- PANEL -->
+<div style="
+flex:1;
+background:#111;
+color:white;
+padding:20px;
+display:flex;
+flex-direction:column;
+justify-content:space-between;
+">
+
+<div>
+<div style="font-size:22px; margin-bottom:10px;">
+Where would you settle first?
+</div>
+
+<div style="font-size:14px; color:#cbbda2; margin-bottom:15px;">
+Select a region on the map.
+</div>
+
+<div id="selected" style="margin-bottom:10px;">
+No region selected
+</div>
+
+<div id="status" style="font-size:14px; color:#aaa;"></div>
+</div>
+
+<div style="display:flex; gap:10px;">
+
+<button onclick="skip()" style="
+flex:1;
+padding:12px;
+background:#444;
+color:white;
+border:none;
+cursor:pointer;">
+Skip
+</button>
+
+<button onclick="continueNext()" style="
+flex:1;
+padding:12px;
+background:white;
+color:black;
+border:none;
+cursor:pointer;">
+Continue
+</button>
+
+</div>
+
+</div>
+
+<script>
+let chosen = "";
+
+function selectRegion(name) {
+  chosen = name;
+  document.getElementById("selected").innerText = "Selected: " + name;
+}
+
+function continueNext() {
+  localStorage.setItem("regions_response", chosen);
+  window.location.href = "/module0_orientation.html";
+}
+
+function skip() {
+  window.location.href = "/module0_orientation.html";
+}
+</script>
+
+</body>
+</html>

@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<body style="margin:0;overflow:hidden;font-family:Arial">
+
+<div style="
+width:100vw;height:100vh;
+background:url('/static/intro_scene2.jpg') center center / cover no-repeat;
+display:flex;align-items:flex-end;justify-content:center;
+color:white;font-size:34px;text-align:center;
+padding-bottom:100px;
+">
+
+<div id="text" style="opacity:0;transition:1.5s;white-space:pre-line;">
+Not with answers…
+but with questions.
+</div>
+
+<button id="btn" onclick="next()" style="
+position:absolute;bottom:30px;padding:12px 24px;opacity:0;">
+Continue
+</button>
+
+</div>
+
+<script>
+setTimeout(()=>text.style.opacity=1,1200);
+setTimeout(()=>btn.style.opacity=1,5000);
+function next(){ window.location.href='/intro3'; }
+</script>
+
+</body>
+</html>

@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Module 0 — Resources</title>
+
+  <style>
+    body {
+      opacity: 0;
+      transition: opacity 2s;
+
+      margin: 0;
+      background: black;
+      color: white;
+      font-family: Arial;
+      text-align: center;
+    }
+
+    .container {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+
+    .resources {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 20px;
+      width: 80%;
+      margin-bottom: 30px;
+    }
+
+    .item {
+      border: none;
+      padding: 10px;
+      font-size: 20px;
+      opacity: 0.85;
+    
+      
+      padding: 10px;
+      font-size: 18px;
+      opacity: 0.85;
+    }
+
+    .text {
+      font-size: 24px;
+      max-width: 800px;
+      opacity: 0.9;
+    }
+  </style>
+</head>
+
+<body>
+
+<div class="container">
+
+  <div class="resources">
+    <div class="item">Water Access</div>
+    <div class="item">Food Supply</div>
+    <div class="item">Trade Routes</div>
+    <div class="item">Natural Barriers</div>
+    <div class="item">Population Growth</div>
+    <div class="item">Defense Position</div>
+  </div>
+
+  <div class="text">
+    Every environment provides opportunity... and imposes limits. Every decision will shape survival.
+  </div>
+
+</div>
+
+
+<script>
+window.onload = () => {
+  document.body.style.opacity = 1;
+};
+
+
+}, 4000);
+</script>
+
+<button onclick="nextPage()" style="
+position:absolute;
+bottom:20px;
+right:20px;
+padding:12px 20px;
+font-size:18px;
+background:white;
+border:none;
+cursor:pointer;
+">
+Continue
+</button>
+
+<script>
+function nextPage() {
+  window.location.href = "module0_applied.html";
+}
+</script>
+
+</body>
+
+
+</html>

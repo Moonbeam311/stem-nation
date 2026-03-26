@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Baseline Inquiry — Completion</title>
+
+  <style>
+    body {
+      margin: 0;
+      background: black;
+      color: white;
+      font-family: Arial;
+      text-align: center;
+      opacity: 0;
+      transition: opacity 2s;
+    }
+
+    .container {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      padding: 20px;
+    }
+
+    .line {
+      font-size: 26px;
+      margin: 10px;
+      opacity: 0;
+      transition: opacity 1.5s;
+    }
+
+    input {
+      margin-top: 20px;
+      padding: 10px;
+      width: 60%;
+      font-size: 18px;
+    }
+
+    button {
+      margin-top: 15px;
+      padding: 10px 20px;
+      font-size: 16px;
+      cursor: pointer;
+    }
+
+    .response {
+      margin-top: 30px;
+      font-size: 22px;
+      opacity: 0;
+      transition: opacity 1.5s;
+    }
+  </style>
+</head>
+
+<body>
+
+<div class="container">
+
+  <div id="l1" class="line">You have observed the land.</div>
+  <div id="l2" class="line">You have considered its differences.</div>
+  <div id="l3" class="line">Now, form your own question.</div>
+
+  <input id="userQuestion" placeholder="Type your question here..." />
+
+  <button onclick="submitQuestion()">Submit</button>
+
+  <div id="aiResponse" class="response"></div>
+
+</div>
+
+<script>
+
+// FADE IN PAGE
+window.onload = () => {
+  document.body.style.opacity = 1;
+};
+
+// STAGGER TEXT
+["l1","l2","l3"].forEach((id, i) => {
+  setTimeout(() => {
+    document.getElementById(id).style.opacity = 1;
+  }, i * 2000);
+});
+
+// SIMPLE AI ENCOURAGEMENT
+function submitQuestion() {
+  const responses = [
+    "That’s a strong question. What makes it important?",
+    "Interesting. What would you need to explore that further?",
+    "You're thinking in the right direction.",
+    "That question could shape your decisions.",
+    "Keep going. You're building something important."
+  ];
+
+  const choice = responses[Math.floor(Math.random() * responses.length)];
+
+  const output = document.getElementById("aiResponse");
+  output.innerText = choice;
+  output.style.opacity = 1;
+
+  // DELAY → TRANSITION TO ACADEMY
+  setTimeout(() => {
+    document.body.style.opacity = 0;
+    setTimeout(() => {
+      window.location.href = "academy.html";
+    }, 2000);
+  }, 4000);
+}
+
+</script>
+
+</body>
+</html>

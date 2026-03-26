@@ -1,0 +1,46 @@
+{
+  "worlds": [
+    {
+      "id": "river",
+      "name": "River Alliance",
+      "image": "/static/images/river.png",
+      "atmosphere": "Water remembers what people forget.",
+      "regions": ["Floodplain", "Upper Stream", "Delta Crossing"]
+    },
+    {
+      "id": "forest",
+      "name": "Forest Confederacy",
+      "image": "/static/images/forestt.jpg",
+      "atmosphere": "The forest does not reveal itself to the impatient.",
+      "regions": ["Dense Canopy", "Hidden Grove", "Timber Edge"]
+    },
+    {
+      "id": "mountain",
+      "name": "Highland Dominion",
+      "image": "/static/images/world_mountain.jpg",
+      "atmosphere": "Elevation demands discipline.",
+      "regions": ["Cliff Face", "High Pass", "Stone Valley"]
+    },
+    {
+      "id": "desert",
+      "name": "Desert Caravan",
+      "image": "/static/images/desert.jpg",
+      "atmosphere": "Only those who endure can trade.",
+      "regions": ["Dune Basin", "Oasis Crossing", "Red Stone Rise"]
+    },
+    {
+      "id": "coastal",
+      "name": "Coastal Exchange",
+      "image": "/static/images/coastal.jpg",
+      "atmosphere": "The tide connects what land divides.",
+      "regions": ["Harbor Reach", "Tidal Marsh", "Cliff Coast"]
+    },
+    {
+      "id": "balanced",
+      "name": "Central Union",
+      "image": "/static/images/balanced.jpg",
+      "atmosphere": "Balance is not given. It is maintained.",
+      "regions": ["Central Plains", "Mixed Woodland", "Trade Fork"]
+    }
+  ]
+}

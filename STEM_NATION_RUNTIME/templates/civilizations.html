@@ -1,0 +1,26 @@
+<h2>Civilizations</h2>
+
+<table border="1" style="border-collapse: collapse; width:100%;">
+<tr>
+<th>Name</th>
+<th>Population</th>
+<th>Food</th>
+<th>Wealth</th>
+<th>Technology</th>
+<th>Stability</th>
+</tr>
+
+{% for civ in civilizations %}
+
+<tr>
+<td>{{ civ.name }}</td>
+<td>{{ civ.population }}</td>
+<td>{{ civ.food }}</td>
+<td>{{ civ.wealth }}</td>
+<td>{{ civ.technology }}</td>
+<td>{{ civ.stability }}</td>
+</tr>
+
+{% endfor %}
+
+</table>

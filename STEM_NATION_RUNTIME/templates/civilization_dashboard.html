@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>STEM Nation — Civilization Control</title>
+</head>
+
+<body>
+
+<h1>Your Civilization</h1>
+
+<h2>{{ civilization }}</h2>
+
+<h3>Choose Your Action for This Turn</h3>
+
+<form action="/submit_decision" method="post">
+
+<input type="hidden" name="civilization" value="{{ civilization }}">
+
+<select name="action">
+
+{% for action in actions %}
+<option>{{ action }}</option>
+{% endfor %}
+
+</select>
+
+<br><br>
+
+<button type="submit">Submit Decision</button>
+
+</form>
+
+</body>
+</html>

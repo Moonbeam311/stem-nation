@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>The Academy</title>
+
+  <style>
+    body {
+      opacity: 0;
+      transition: opacity 2s;
+
+      margin: 0;
+      background: black;
+      color: white;
+      font-family: Arial;
+      text-align: center;
+    }
+
+    .container {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+
+    .title {
+      font-size: 48px;
+      margin-bottom: 30px;
+      letter-spacing: 2px;
+    }
+
+    .text {
+      font-size: 26px;
+      max-width: 800px;
+      line-height: 1.6;
+    }
+  </style>
+</head>
+
+<body>
+
+<div class="container">
+
+  <div class="title">
+    The Academy
+  </div>
+
+  <div class="text">
+    This is where civilizations are not built...<br><br>
+    but understood.<br><br>
+
+    This is not a test of memory.<br><br>
+
+    It is a training of thought.
+  </div>
+
+</div>
+
+
+<script>
+window.onload = () => {
+  document.body.style.opacity = 1;
+};
+
+setTimeout(() => {
+  
+document.body.style.opacity = 0;
+setTimeout(() => {
+  window.location.href =
+ "academy_thinking.html";
+}, 2000);
+}, 6000);
+</script>
+</body>
+
+</html>

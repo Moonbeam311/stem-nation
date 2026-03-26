@@ -75,6 +75,9 @@
     {% endfor %}
   </div>
 
+
+
+
 <div id="guide" style="
 position:fixed;
 bottom:20px;
@@ -86,39 +89,54 @@ padding:15px 25px;
 font-size:18px;
 border:2px solid white;
 z-index:9999;
+opacity:0;
+transition:opacity 1s;
 ">
-Welcome to the Command Center...
 </div>
 
 <script>
 let steps = [
   "Welcome to the Command Center...",
   "This is where civilizations are managed.",
-  "Now, observe how decisions shape outcomes.",
-  "We will advance the simulation.",
-  "Now entering the Strategic Map..."
+  "Watch how decisions shape outcomes...",
+  "Advancing simulation...",
+  "Opening strategic map..."
 ];
 
 let i = 0;
 
-function nextStep() {
+function showStep() {
   const box = document.getElementById("guide");
+
   if (!box) return;
 
-  if (i < steps.length) {
-    box.innerText = steps[i];
-    i++;
-  } else {
-    box.style.display = "none";
+  if (i >= steps.length) {
+    box.style.opacity = 0;
+    return;
   }
+
+  box.innerText = steps[i];
+  box.style.opacity = 1;
+
+  i++;
+
+  setTimeout(showStep, 4000);
 }
 
-setInterval(nextStep, 4000);
+/* 🔥 CONTROLLED FLOW */
+setTimeout(() => showStep(), 1500);
 
-// AUTO FLOW
-setTimeout(() => { window.location.href = "/advance_turn"; }, 8000);
-setTimeout(() => { window.location.href = "/map"; }, 14000);
-setTimeout(() => { window.location.href = "/"; }, 20000);
+setTimeout(() => {
+  window.location.href = "/advance_turn";
+}, 8000);
+
+setTimeout(() => {
+  window.location.href = "/map";
+}, 13000);
+
+setTimeout(() => {
+  window.location.href = "/";
+}, 18000);
 </script>
 
 </body>

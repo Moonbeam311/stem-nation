@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Archive — Knowledge Layer 1</title>
+
+  <style>
+    body {
+      margin: 0;
+      background: black;
+      color: white;
+      font-family: Arial;
+      text-align: center;
+    }
+
+    .container {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      padding: 20px;
+    }
+
+    .block {
+      margin: 20px;
+      font-size: 24px;
+      opacity: 0;
+      transition: opacity 1.5s;
+      max-width: 800px;
+    }
+
+    .question {
+      margin-top: 40px;
+      font-size: 26px;
+      opacity: 0;
+      transition: opacity 1.5s;
+    }
+  </style>
+</head>
+
+<body>
+
+<div class="container">
+
+  <div id="b1" class="block">
+    Early civilizations formed near rivers.
+  </div>
+
+  <div id="b2" class="block">
+    Water provided food, transportation, and stability.
+  </div>
+
+  <div id="b3" class="block">
+    Regions without water developed differently.
+  </div>
+
+  <div id="q" class="question">
+    What patterns do you notice?
+  </div>
+
+</div>
+
+<script>
+window.onload = () => {
+  document.body.style.opacity = 1;
+};
+
+const blocks = ["b1","b2","b3"];
+
+blocks.forEach((id, i) => {
+  setTimeout(() => {
+    document.getElementById(id).style.opacity = 1;
+  }, i * 2500);
+});
+
+setTimeout(() => {
+  document.getElementById("q").style.opacity = 1;
+}, 8000);
+</script>
+
+</body>
+</html>

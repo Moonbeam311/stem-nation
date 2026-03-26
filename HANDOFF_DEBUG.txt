@@ -1,0 +1,72 @@
+Current directory: 
+C:\Users\LunaMishoe\Desktop\stem-nation
+ 
+Templates folder: 
+ Volume in drive C is Windows 
+ Volume Serial Number is 920F-3E9A
+
+ Directory of C:\Users\LunaMishoe\Desktop\stem-nation\templates
+
+03/19/2026  06:33 PM    <DIR>          .
+03/19/2026  06:33 PM    <DIR>          ..
+03/19/2026  05:04 PM               374 archive.html
+03/15/2026  09:42 PM               435 civilizations.html
+03/13/2026  10:35 PM               507 civilization_dashboard.html
+03/19/2026  06:33 PM               890 demo.html
+03/19/2026  10:10 PM             3,854 index.html
+03/19/2026  05:04 PM               433 lessons.html
+03/19/2026  05:04 PM             2,884 map.html
+03/19/2026  02:02 PM                25 Procfile.txt
+03/13/2026  09:21 PM               637 student_join.html
+03/19/2026  05:04 PM               474 teacher.html
+              10 File(s)         10,513 bytes
+               2 Dir(s)  57,523,765,248 bytes free
+ 
+Data folder: 
+ Volume in drive C is Windows 
+ Volume Serial Number is 920F-3E9A
+
+ Directory of C:\Users\LunaMishoe\Desktop\stem-nation\data
+
+03/22/2026  11:23 PM    <DIR>          .
+03/22/2026  11:23 PM    <DIR>          ..
+03/14/2026  11:54 PM               805 artifacts.json
+03/15/2026  02:57 PM             2,110 civilizations.json
+03/17/2026  10:37 AM             1,136 territories.json
+03/22/2026  11:23 PM             1,468 worlds.json
+03/14/2026  11:58 PM             1,297 world_map.json
+03/17/2026  12:10 AM            31,243 world_state.json
+               6 File(s)         38,059 bytes
+               2 Dir(s)  57,537,953,792 bytes free
+ 
+Static folder: 
+ Volume in drive C is Windows 
+ Volume Serial Number is 920F-3E9A
+
+ Directory of C:\Users\LunaMishoe\Desktop\stem-nation\static
+
+03/22/2026  11:25 PM    <DIR>          .
+03/22/2026  11:25 PM    <DIR>          ..
+03/19/2026  05:57 PM           494,976 demo_voice.mp3
+03/22/2026  11:27 PM    <DIR>          images
+               1 File(s)        494,976 bytes
+               3 Dir(s)  57,538,043,904 bytes free
+ 
+Static\images folder: 
+ Volume in drive C is Windows 
+ Volume Serial Number is 920F-3E9A
+
+ Directory of C:\Users\LunaMishoe\Desktop\stem-nation\static\images
+
+03/22/2026  11:27 PM    <DIR>          .
+03/22/2026  11:27 PM    <DIR>          ..
+03/22/2026  11:27 PM                12 balanced.jpg
+03/22/2026  11:27 PM                12 coastal.jpg
+03/22/2026  11:27 PM                12 desert.jpg
+               3 File(s)             36 bytes
+               2 Dir(s)  57,537,765,376 bytes free
+ 
+All web_app.py files on system: 
+C:\Users\LunaMishoe\Desktop\stem-nation\web_app.py
+C:\Users\LunaMishoe\Desktop\stem-nation\automan_backups\20260319_080622\web_app.py
+C:\Users\LunaMishoe\Desktop\stem-nation\backups\web_app.py

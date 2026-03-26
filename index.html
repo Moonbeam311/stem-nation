@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>STEM Nation</title>
+
+  <style>
+    body {
+      margin: 0;
+      background: black;
+      color: white;
+      font-family: Arial, sans-serif;
+      text-align: center;
+    }
+
+    .container {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+
+    h1 {
+      font-size: 64px;
+      margin-bottom: 10px;
+      letter-spacing: 2px;
+    }
+
+    .premise {
+      font-size: 26px;
+      margin-bottom: 20px;
+      opacity: 0.9;
+    }
+
+    .tagline {
+      font-size: 16px;
+      margin-bottom: 50px;
+      opacity: 0.7;
+      letter-spacing: 2px;
+    }
+
+    .buttons {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+    }
+
+    button {
+      width: 240px;
+      padding: 16px;
+      font-size: 18px;
+      border: 1px solid white;
+      background: transparent;
+      color: white;
+      cursor: pointer;
+      transition: all 0.3s;
+    }
+
+    button:hover {
+      background: white;
+      color: black;
+    }
+  </style>
+</head>
+
+<body>
+
+<div class="container">
+
+  <h1>STEM Nation</h1>
+
+  <div class="premise">
+    Civilization Did Not Begin With Us
+  </div>
+
+  <div class="tagline">
+    Power • Policy • Code • Consequence
+  </div>
+
+  <div class="buttons">
+    <button onclick="go('student')">Student Experience</button>
+    <button onclick="go('teacher')">Educator Access</button>
+    <button onclick="go('simulation')">Simulation Mode</button>
+    <button onclick="go('partners')">Partnerships & Grants</button>
+  </div>
+
+</div>
+
+<script>
+function go(type) {
+  if (type === "student") {
+    window.location.href = "./intro.html";
+  }
+  else if (type === "teacher") {
+    alert("Teacher dashboard coming soon.");
+  }
+  else if (type === "simulation") {
+    alert("Simulation mode coming soon.");
+  }
+  else if (type === "partners") {
+    alert("Partnerships page coming soon.");
+  }
+}
+</script>
+
+</body>
+</html>

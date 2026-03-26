@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+<body style="background:black; color:white; text-align:center;">
+
+<h1>Select Your World</h1>
+
+<img src="{{ url_for('static', filename='world_forest.jpg') }}" width="200">
+<img src="{{ url_for('static', filename='world_desert.jpg') }}" width="200">
+<img src="{{ url_for('static', filename='world_coastal.jpg') }}" width="200">
+
+<br><br>
+
+<img src="{{ url_for('static', filename='world_river.jpg') }}" width="200">
+<img src="{{ url_for('static', filename='world_mountain.jpg') }}" width="200">
+<img src="{{ url_for('static', filename='world_balanced.jpg') }}" width="200">
+
+<br><br>
+
+<a href="{{ url_for('demo') }}">Start Simulation</a>
+
+</body>
+</html>

@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>The Academy — Decision</title>
+
+  <style>
+    body {
+      margin: 0;
+      background: black;
+      color: white;
+      font-family: Arial;
+      text-align: center;
+    }
+
+    .container {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+
+    .line {
+      font-size: 28px;
+      margin: 10px;
+      opacity: 0;
+      transition: opacity 1.5s;
+    }
+  </style>
+</head>
+
+<body>
+
+<div class="container">
+
+  <div id="l1" class="line">You have observed.</div>
+  <div id="l2" class="line">You have learned how to think.</div>
+  <div id="l3" class="line">You understand the role of the individual.</div>
+  <div id="l4" class="line">Now, you will be required to decide.</div>
+  <div id="l5" class="line">Every decision carries consequence.</div>
+
+</div>
+
+<script>
+window.onload = () => {
+  document.body.style.opacity = 1;
+};
+
+const lines = ["l1","l2","l3","l4","l5"];
+
+lines.forEach((id, i) => {
+  setTimeout(() => {
+    document.getElementById(id).style.opacity = 1;
+  }, i * 2000);
+});
+</script>
+
+
+<script>
+window.onload = () => {
+  document.body.style.opacity = 1;
+};
+
+setTimeout(() => {
+  
+document.body.style.opacity = 0;
+setTimeout(() => {
+  window.location.href =
+ "archive.html";
+}, 2000);
+}, 10000);
+</script>
+</body>
+
+</html>

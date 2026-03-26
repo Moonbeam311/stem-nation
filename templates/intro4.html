@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>STEM Nation — Intro 4</title>
+
+<style>
+html, body {
+  margin:0;
+  padding:0;
+  height:100%;
+  overflow:hidden;
+  background:black;
+  font-family:Segoe UI, Arial;
+}
+
+.bg {
+  width:100%;
+  height:100%;
+  background:url("/static/intro_scene4.jpg") center center / cover no-repeat;
+  position:relative;
+}
+
+.fade {
+  position:absolute;
+  bottom:0;
+  width:100%;
+  height:40%;
+  background:linear-gradient(transparent, rgba(0,0,0,0.85));
+}
+
+.text {
+  position:absolute;
+  bottom:90px;
+  width:100%;
+  text-align:center;
+  color:white;
+  font-size:34px;
+  line-height:1.4;
+  opacity:0;
+  transition:opacity 1.5s ease;
+  white-space:pre-line;
+}
+
+.button {
+  position:absolute;
+  bottom:20px;
+  left:50%;
+  transform:translateX(-50%);
+  padding:12px 28px;
+  font-size:16px;
+  background:white;
+  border:none;
+  cursor:pointer;
+  opacity:0;
+  transition:opacity 1.5s ease;
+}
+</style>
+
+</head>
+
+<body>
+
+<div class="bg">
+  <div class="fade"></div>
+
+  <div id="text" class="text">
+In this system,
+you will learn to observe
+before you act.
+  </div>
+
+  <button id="nextBtn" class="button" onclick="next()">Continue</button>
+</div>
+
+<script>
+
+const textEl = document.getElementById("text");
+const btnEl = document.getElementById("nextBtn");
+
+setTimeout(() => {
+  textEl.style.opacity = "1";
+}, 1200);
+
+setTimeout(() => {
+  btnEl.style.opacity = "1";
+}, 5200);
+
+function next(){
+  window.location.href = "/intro5";
+}
+
+</script>
+
+</body>
+</html>

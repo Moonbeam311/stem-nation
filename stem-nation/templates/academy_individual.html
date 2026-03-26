@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>The Academy — The Individual</title>
+
+  <style>
+    body {
+      margin: 0;
+      background: black;
+      color: white;
+      font-family: Arial;
+      text-align: center;
+    }
+
+    .container {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+
+    .line {
+      font-size: 28px;
+      margin: 10px;
+      opacity: 0;
+      transition: opacity 1.5s;
+    }
+  </style>
+</head>
+
+<body>
+
+<div class="container">
+
+  <div id="l1" class="line">Every system begins with a person.</div>
+  <div id="l2" class="line">Before there is structure…</div>
+  <div id="l3" class="line">before there is organization…</div>
+  <div id="l4" class="line">there is an individual.</div>
+  <div id="l5" class="line">The quality of what follows…</div>
+  <div id="l6" class="line">depends on how that individual thinks.</div>
+
+</div>
+
+<script>
+window.onload = () => {
+  document.body.style.opacity = 1;
+};
+
+const lines = ["l1","l2","l3","l4","l5","l6"];
+
+lines.forEach((id, i) => {
+  setTimeout(() => {
+    document.getElementById(id).style.opacity = 1;
+  }, i * 2000);
+});
+</script>
+
+
+<script>
+window.onload = () => {
+  document.body.style.opacity = 1;
+};
+
+setTimeout(() => {
+  
+document.body.style.opacity = 0;
+setTimeout(() => {
+  window.location.href =
+ "academy_role.html";
+}, 2000);
+}, 7000);
+</script>
+</body>
+
+</html>

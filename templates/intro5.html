@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>STEM Nation — Intro 5</title>
+
+<style>
+html, body {
+  margin:0;
+  padding:0;
+  height:100%;
+  overflow:hidden;
+  background:black;
+  font-family:Segoe UI, Arial;
+}
+
+.bg {
+  width:100%;
+  height:100%;
+  background:url("/static/intro_scene5.jpg") center center / cover no-repeat;
+  position:relative;
+}
+
+.fade {
+  position:absolute;
+  bottom:0;
+  width:100%;
+  height:40%;
+  background:linear-gradient(transparent, rgba(0,0,0,0.9));
+}
+
+.text {
+  position:absolute;
+  bottom:100px;
+  width:100%;
+  text-align:center;
+  color:white;
+  font-size:38px;
+  line-height:1.4;
+  letter-spacing:0.5px;
+  opacity:0;
+  transition:opacity 1.5s ease;
+  white-space:pre-line;
+}
+
+.button {
+  position:absolute;
+  bottom:30px;
+  left:50%;
+  transform:translateX(-50%);
+  padding:14px 32px;
+  font-size:16px;
+  background:white;
+  border:none;
+  cursor:pointer;
+  opacity:0;
+  transition:opacity 1.5s ease;
+}
+</style>
+
+</head>
+
+<body>
+
+<div class="bg">
+  <div class="fade"></div>
+
+  <div id="text" class="text">
+To think
+before you decide.
+  </div>
+
+  <button id="nextBtn" class="button" onclick="next()">Begin Journey</button>
+</div>
+
+<script>
+
+const textEl = document.getElementById("text");
+const btnEl = document.getElementById("nextBtn");
+
+setTimeout(() => {
+  textEl.style.opacity = "1";
+}, 1200);
+
+setTimeout(() => {
+  btnEl.style.opacity = "1";
+}, 5200);
+
+function next(){
+  window.location.href = "/world_select.html";
+}
+
+</script>
+
+</body>
+</html>
