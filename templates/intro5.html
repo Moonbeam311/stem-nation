@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+<body style="margin:0;overflow:hidden;font-family:Arial">
+
+<div style="
+width:100vw;height:100vh;
+background:url('/static/intro_scene5.jpg') center center / cover no-repeat;
+display:flex;align-items:flex-end;justify-content:center;
+color:white;font-size:34px;text-align:center;
+padding-bottom:100px;
+">
+
+<div id="text" style="opacity:0;transition:1.5s;white-space:pre-line;">
+To think
+before you decide.
+</div>
+
+<button style="display:none;">
+Begin Journey
+</button>
+
+</div>
+
+
+
+
+
+
+
+
+
+
+<script>
+window.onload = function() {
+
+  const text = document.getElementById("text");
+
+  setTimeout(() => {
+    if (text) text.style.opacity = 1;
+  }, 420);
+
+  const audio = new Audio("/static/intro5.mp3");
+  audio.volume = 0.28;
+
+  audio.play();
+
+  audio.onended = function() {
+    window.location.href = "/decision_bridge.html";
+  };
+};
+</script>
+
+</body>
+</html>
