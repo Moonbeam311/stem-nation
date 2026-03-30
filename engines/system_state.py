@@ -1,20 +1,10 @@
-# SYSTEM STATE (GLOBAL SESSION MEMORY)
-
-state = {
-    "selected_region": None,
-    "population": 10,
-    "food": 5,
-    "shelter": 5,
+session = {
+    "food": 0,
+    "economy": 0,
+    "stability": 0,
+    "unity": 0,
     "knowledge": 0,
-    "stability": 5
+    "score": 0,
+    "scrolls": [],
+    "totem_level": "base"
 }
-
-
-def update_state(changes):
-    for key, value in changes.items():
-        if key in state:
-            state[key] += value
-
-
-def get_state():
-    return state
