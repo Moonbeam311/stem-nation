@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Baseline Inquiry</title>
+<style>
+body { margin:0; font-family:Arial; overflow:hidden; }
+
+#map {
+ position:fixed;
+ inset:0;
+ background-size:cover;
+ background-position:center;
+}
+
+#ai {
+ position:absolute;
+ left:20px;
+ bottom:40px;
+ background:black;
+ color:white;
+ padding:15px;
+ border-radius:10px;
+}
+
+#question {
+ position:absolute;
+ bottom:40px;
+ left:50%;
+ transform:translateX(-50%);
+ background:black;
+ padding:15px;
+ border-radius:10px;
+}
+
+</style>
+</head>
+<body>
+
+<div id="map"></div>
+<div id="ai"></div>
+
+<div id="question">
+<div id="q"></div>
+<input id="input">
+<button onclick="submit()">Submit</button>
+</div>
+
+<script>
+
+const maps = {
+ forest:"/static/map_forest_blank.png",
+ desert:"/static/map_desert_blank.png",
+ coastal:"/static/map_coastal_blank.png"
+};
+
+let region = "{{region}}";
+
+document.getElementById("map").style.backgroundImage =
+"url('" + maps[region] + "')";
+
+let q = [
+"What do you notice first?",
+"What challenges exist?",
+"What resources stand out?",
+"What patterns do you observe?"
+];
+
+let g = [
+"Look carefully.",
+"Think survival.",
+"Resources matter.",
+"Patterns reveal truth."
+];
+
+let i = 0;
+
+function load(){
+ document.getElementById("q").innerText = q[i];
+ document.getElementById("ai").innerText = g[i];
+}
+
+function submit(){
+ i++;
+ if(i>=q.length){
+   transition();
+   return;
+ }
+ load();
+}
+
+function transition(){
+ document.getElementById("question").style.display="none";
+ document.getElementById("ai").style.display="none";
+
+ let t = document.createElement("div");
+ t.style.position="absolute";
+ t.style.top="40%";
+ t.style.left="50%";
+ t.style.transform="translate(-50%,-50%)";
+ t.style.color="white";
+ t.style.fontSize="28px";
+
+ document.body.appendChild(t);
+
+ t.innerText="You have read the land.";
+
+ setTimeout(()=>{
+   t.innerText="Now you will shape it.";
+ },2000);
+
+ setTimeout(()=>{
+   window.location.href="/academy";
+ },4000);
+}
+
+load();
+
+</script>
+
+</body>
+</html>

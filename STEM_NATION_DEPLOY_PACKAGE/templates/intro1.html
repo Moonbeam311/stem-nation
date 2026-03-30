@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+<body style="margin:0;overflow:hidden;font-family:Arial">
+
+<div style="
+width:100vw;height:100vh;
+background:url('/static/intro_scene1.png') center center / cover no-repeat;
+display:flex;align-items:flex-end;justify-content:center;
+color:white;font-size:34px;text-align:center;
+padding-bottom:100px;
+">
+
+<div id="text" style="opacity:0;transition:1.5s;white-space:pre-line;">
+Every civilization begins with a decision.
+</div>
+
+
+
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<script>
+let started = false;
+
+function startExperience() {
+  if (started) return;
+  started = true;
+
+  const text = document.getElementById("text");
+
+  // show text
+  setTimeout(() => {
+    if (text) text.style.opacity = 1;
+  }, 420);
+
+  const audio = new Audio("/static/intro1.mp3");
+  audio.volume = 0.28;
+
+  audio.play();
+
+  audio.onended = function() {
+    window.location.href = "/intro2";
+  };
+}
+
+// ONE click unlocks everything
+document.body.addEventListener("click", startExperience, { once: true });
+</script>
+
+</body>
+</html>

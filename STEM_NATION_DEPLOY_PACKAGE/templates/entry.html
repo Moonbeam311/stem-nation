@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>STEM Nation</title>
+<style>
+body {
+  margin:0;
+  font-family:Arial;
+  background:black;
+  color:white;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  height:100vh;
+  text-align:center;
+}
+.container { max-width:700px; }
+button {
+  margin:10px;
+  padding:14px 24px;
+  font-size:18px;
+  border:none;
+  border-radius:8px;
+  background:#d5a021;
+  cursor:pointer;
+}
+</style>
+</head>
+<body>
+<div class="container">
+<h1>STEM Nation</h1>
+<p>Choose your path</p>
+
+<button onclick="go('student')">Student Experience</button>
+<button onclick="go('teacher')">Teacher</button>
+<button onclick="go('demo')">Explore Experience</button>
+</div>
+
+<script>
+function go(type){
+  if(type==='student'){ window.location.href='/intro'; }
+  else { alert(type + " flow coming soon"); }
+}
+</script>
+</body>
+</html>
