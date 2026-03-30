@@ -1,4 +1,4 @@
-from system_state import session
+from engines.system_state import session
 
 def apply_decision(decision):
     for key, value in decision["effects"].items():
