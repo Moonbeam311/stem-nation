@@ -100,8 +100,8 @@ def teacher():
 
 @app.route("/map")
 def map_mode():
-    return render_template("map_mode.html")
-
+    return render_template("map.html")
+    
 @app.route("/partners")
 def partners():
     return render_template("partners.html")
