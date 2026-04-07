@@ -74,19 +74,6 @@ def academy_thinking():
 
 @app.route("/academy_decision")
 def academy_decision():
-    
-    decision = {
-        "id": "expand_farming",
-        "effects": {
-            "food": 3,
-            "economy": 1,
-            "stability": -1,
-            "unity": -1
-        }
-    }
-
-    apply_decision(decision)
-
     return render_template("academy_decision.html")
 
 
@@ -109,11 +96,14 @@ def region_river():
     return render_template("region_river.html")
 
 
-@app.route("/decision", methods=["POST"])
 
 @app.route("/hub")
 def hub():
     return render_template("project_hub.html")
 
 if __name__ == "__main__":
+    import os
+    port = int(os.environ.get("PORT", 5000))
+    app.run(host="0.0.0.0", port=port, debug=True)
+
     app.run(debug=True)
