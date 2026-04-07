@@ -1,9 +1,140 @@
-<!doctype html>
-<html><head><meta charset="utf-8"><title>Teacher Panel</title>
-<style>body{font-family:Arial,sans-serif;margin:24px;background:#111;color:#eee}a,a:visited{color:#8ecbff}</style>
-</head><body>
-<a href="/dashboard">← Back to Command Center</a>
-<h1>Teacher Panel</h1>
-<p>This investor demo confirms the teacher layer entry point is live.</p>
-<p>Next connection step: classroom controls, join codes, lesson launches, and reporting.</p>
-</body></html>
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Educator Access</title>
+
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: #0f172a;
+      color: white;
+      padding: 40px 20px;
+      box-sizing: border-box;
+    }
+
+    .container {
+      max-width: 980px;
+      margin: 0 auto;
+    }
+
+    h1 {
+      font-size: 42px;
+      margin-bottom: 10px;
+      color: #f4d35e;
+      text-align: center;
+    }
+
+    .subtitle {
+      text-align: center;
+      font-size: 18px;
+      line-height: 1.6;
+      margin-bottom: 36px;
+      opacity: 0.92;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 18px;
+    }
+
+    .card {
+      background: rgba(255,255,255,0.06);
+      border-radius: 14px;
+      padding: 20px;
+      box-sizing: border-box;
+      border: 1px solid rgba(255,255,255,0.08);
+    }
+
+    .card h2 {
+      font-size: 22px;
+      color: #f4d35e;
+      margin: 0 0 10px 0;
+    }
+
+    .card p {
+      font-size: 15px;
+      line-height: 1.55;
+      margin: 0;
+    }
+
+    .footer-box {
+      margin-top: 30px;
+      text-align: center;
+      background: rgba(255,255,255,0.05);
+      padding: 18px;
+      border-radius: 12px;
+      font-size: 16px;
+      line-height: 1.6;
+    }
+
+    .btn-row {
+      margin-top: 28px;
+      text-align: center;
+    }
+
+    .btn {
+      border: none;
+      border-radius: 10px;
+      background: #d4af37;
+      color: black;
+      padding: 12px 22px;
+      font-size: 16px;
+      font-weight: bold;
+      cursor: pointer;
+      margin: 0 8px;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container">
+    <h1>Educator Access</h1>
+
+    <div class="subtitle">
+      STEM Nation gives educators a structured entry point into the nation-building experience.<br>
+      Explore instructional flow, implementation structure, and classroom-facing access points.
+    </div>
+
+    <div class="grid">
+      <div class="card">
+        <h2>Instructional Entry</h2>
+        <p>
+          Guide students from observation into design, leadership, and consequence through a staged nation-building experience.
+        </p>
+      </div>
+
+      <div class="card">
+        <h2>Curriculum Structure</h2>
+        <p>
+          The platform supports modular learning flow, phase-based progression, and classroom-ready instructional sequencing.
+        </p>
+      </div>
+
+      <div class="card">
+        <h2>Teacher Use</h2>
+        <p>
+          Educators can use the system to frame inquiry, support student decision-making, and connect simulation to reflection and evidence.
+        </p>
+      </div>
+
+      <div class="card">
+        <h2>Implementation Path</h2>
+        <p>
+          STEM Nation can support pilots, classroom integration, project-based learning, and expanded educator-facing deployment models.
+        </p>
+      </div>
+    </div>
+
+    <div class="footer-box">
+      Educator Access is the bridge between classroom instruction and the nation engine. It supports structured rollout, guided facilitation, and deeper student engagement.
+    </div>
+
+    <div class="btn-row">
+      <button class="btn" onclick="window.location.href='/'">Back to Landing</button>
+      <button class="btn" onclick="window.location.href='/hub'">Open Project Hub</button>
+    </div>
+  </div>
+</body>
+</html>
