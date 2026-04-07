@@ -1,5 +1,4 @@
  
-from engines.engine_pipeline import apply_decision
 from flask import Flask, render_template, request
 
 app = Flask(__name__)
@@ -75,8 +74,7 @@ def academy_thinking():
 
 @app.route("/academy_decision")
 def academy_decision():
-    from engines.engine_pipeline import apply_decision
-
+    
     decision = {
         "id": "expand_farming",
         "effects": {
