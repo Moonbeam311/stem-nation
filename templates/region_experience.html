@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Baseline Inquiry</title>
+
+  <style>
+    body { margin:0; overflow:hidden; font-family:Arial, sans-serif; }
+
+    #map {
+      position: fixed;
+      inset: 0;
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+    }
+
+    #ai {
+      position: absolute;
+      left: 26px;
+      bottom: 34px;
+      background: rgba(0,0,0,0.86);
+      color: white;
+      padding: 16px;
+      border-radius: 12px;
+      max-width: 300px;
+      font-size: 16px;
+      line-height: 1.6;
+      z-index: 20;
+      box-sizing: border-box;
+    }
+
+    #questionBox {
+      position: absolute;
+      bottom: 28px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: rgba(0,0,0,0.92);
+      color: white;
+      padding: 18px 20px;
+      border-radius: 14px;
+      width: 420px;
+      text-align: center;
+      z-index: 20;
+      box-sizing: border-box;
+    }
+
+    #q {
+      font-size: 18px;
+      margin-bottom: 10px;
+      line-height: 1.45;
+    }
+
+    #input {
+      width: 92%;
+      padding: 10px;
+      font-size: 16px;
+      border: none;
+      border-radius: 6px;
+      box-sizing: border-box;
+    }
+
+    button {
+      margin-top: 10px;
+      padding: 9px 16px;
+      font-size: 15px;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+
+    .top-bar {
+      position: absolute;
+      top: 16px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 25;
+    }
+
+    .mission-btn {
+      background: rgba(0,0,0,0.72);
+      color: white;
+      padding: 8px 12px;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 15px;
+    }
+
+    #missionPanel {
+      position: absolute;
+      top: 58px;
+      left: 20px;
+      width: 290px;
+      background: rgba(0,0,0,0.88);
+      color: white;
+      padding: 16px;
+      border-radius: 12px;
+      line-height: 1.6;
+      display: none;
+      z-index: 25;
+      box-sizing: border-box;
+    }
+
+    #transition {
+      position: absolute;
+      top: 40%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      color: white;
+      font-size: 28px;
+      text-align: center;
+      display: none;
+      z-index: 30;
+      background: rgba(0,0,0,0.74);
+      padding: 28px 34px;
+      border-radius: 16px;
+      min-width: 320px;
+    }
+
+    #achievement {
+      position: absolute;
+      top: 28%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background: black;
+      color: #f4d35e;
+      padding: 28px 34px;
+      border-radius: 16px;
+      font-size: 24px;
+      display: none;
+      text-align: center;
+      z-index: 31;
+      box-shadow: 0 12px 26px rgba(0,0,0,0.35);
+    }
+  </style>
+</head>
+<body>
+
+  <div id="map"></div>
+
+  <div class="top-bar">
+    <button class="mission-btn" onclick="toggleMission()">Mission</button>
+  </div>
+
+  <div id="missionPanel">
+    <strong>Baseline Inquiry</strong><br><br>
+    Before a civilization rises, it must first understand the land.<br><br>
+    Observe carefully.<br>
+    Think deeply.<br>
+    What you notice now will shape everything that follows.
+  </div>
+
+  <div id="ai"></div>
+
+  <div id="achievement">
+    Achievement Unlocked<br><br>
+    <strong>Land Analyst</strong>
+  </div>
+
+  <div id="transition"></div>
+
+  <div id="questionBox">
+    <div id="q"></div>
+    <input id="input" placeholder="Type your response here">
+    <br>
+    <button id="submitBtn" onclick="submitAnswer()">Submit</button>
+    <button id="skipBtn" onclick="skipAnswer()">Skip</button>
+  </div>
+
+  <script>
+    const regionImages = {
+      river: "/static/map_balanced_blank.png",
+      forest: "/static/map_forest_blank.png",
+      desert: "/static/map_desert_blank.png",
+      coastal: "/static/map_coastal_blank.png",
+      mountain: "/static/map_mountain_blank.png",
+      savanna: "/static/map_balanced_blank.png",
+      balanced: "/static/map_balanced_blank.png"
+    };
+
+    const selectedRegion = "{{ region }}";
+    document.getElementById("map").style.backgroundImage =
+      "url('" + (regionImages[selectedRegion] || regionImages["balanced"]) + "')";
+
+    const questions = [
+      "What do you notice first?",
+      "What challenges might exist here?",
+      "What resources stand out?",
+      "What patterns do you observe?"
+    ];
+
+    const guide = [
+      "Look carefully — where would life begin?",
+      "Think about survival first.",
+      "Resources shape power.",
+      "Patterns reveal how this land behaves."
+    ];
+
+    let i = 0;
+
+    function loadQuestion() {
+      document.getElementById("q").innerText = questions[i];
+      document.getElementById("input").value = "";
+      document.getElementById("ai").innerText = guide[i];
+    }
+
+    function submitAnswer() {
+      i++;
+      if (i >= questions.length) {
+        transitionSequence();
+        return;
+      }
+      loadQuestion();
+    }
+
+    function skipAnswer() {
+      i++;
+      if (i >= questions.length) {
+        transitionSequence();
+        return;
+      }
+      loadQuestion();
+    }
+
+    function transitionSequence() {
+      document.getElementById("questionBox").style.display = "none";
+      document.getElementById("ai").style.display = "none";
+
+      const achievement = document.getElementById("achievement");
+      const transition = document.getElementById("transition");
+
+      achievement.style.display = "block";
+
+      setTimeout(() => {
+        achievement.style.display = "none";
+        transition.style.display = "block";
+        transition.innerText = "You have read the land.";
+      }, 2600);
+
+      setTimeout(() => {
+        transition.innerText = "Now you will shape it.";
+      }, 5000);
+
+      setTimeout(() => {
+        const transition = document.getElementById("transition");
+        transition.style.display = "none";
+        document.getElementById("studentQuestionStage").style.display = "block";
+      }, 7600);
+    }
+
+    function toggleMission() {
+      const panel = document.getElementById("missionPanel");
+      panel.style.display = panel.style.display === "block" ? "none" : "block";
+    }
+
+    loadQuestion();
+  </script>
+
+
+  <div id="studentQuestionStage" style="
+    position:absolute;
+    inset:0;
+    background:rgba(0,0,0,0.92);
+    color:white;
+    display:none;
+    z-index:40;
+    font-family:Arial,sans-serif;
+  ">
+    <div style="
+      max-width:760px;
+      margin:90px auto 0;
+      text-align:center;
+      padding:0 24px;
+      box-sizing:border-box;
+    ">
+      <div style="font-size:30px; margin-bottom:18px;">
+        Now ask one question that matters.
+      </div>
+
+      <div style="
+        font-size:18px;
+        opacity:0.9;
+        line-height:1.7;
+        margin-bottom:18px;
+      ">
+        The quality of those questions<br>
+        shapes everything that follows.
+      </div>
+
+      <div style="font-size:18px; opacity:0.82; line-height:1.6; margin-bottom:28px;">
+        What do you still need to understand<br>
+        before a nation can rise here?
+      </div>
+
+      <textarea id="studentQuestionInput" placeholder="Type your question here..."
+        style="
+          width:100%;
+          min-height:110px;
+          padding:14px;
+          font-size:18px;
+          border:none;
+          border-radius:10px;
+          box-sizing:border-box;
+          resize:vertical;
+        "></textarea>
+
+      <div style="margin-top:24px;">
+        <button id="continueFromQuestion" style="
+          padding:12px 22px;
+          font-size:16px;
+          border:none;
+          border-radius:8px;
+          cursor:pointer;
+        ">Continue</button>
+      </div>
+    </div>
+  </div>
+
+</body>
+</html>
+<button id="continueBtn">Continue</button>
+
+<script>
+document.getElementById("continueBtn").onclick = function () {
+    window.location.href = "/academy_role";
+};
+</script> <a href="/academy_role">
+  <button style="padding:12px 24px; font-size:16px;">
+    Continue
+  </button>
+</a>
