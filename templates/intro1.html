@@ -1,36 +1,52 @@
 <!DOCTYPE html>
 <html>
-<body style="margin:0;overflow:hidden;font-family:Arial">
+<head>
+  <title>STEM Nation — Intro 1</title>
+</head>
+<body style="margin:0;overflow:hidden;font-family:Arial;background:black;">
 
 <div style="
-width:100vw;height:100vh;
+width:100vw;
+height:100vh;
 background:url('/static/intro_scene1.png') center center / cover no-repeat;
-display:flex;align-items:flex-end;justify-content:center;
-color:white;font-size:34px;text-align:center;
+display:flex;
+align-items:flex-end;
+justify-content:center;
+color:white;
+font-size:34px;
+text-align:center;
 padding-bottom:100px;
+position:relative;
+box-sizing:border-box;
 ">
 
-<div id="text" style="opacity:0;transition:1.5s;white-space:pre-line;">
-Every civilization begins with a decision.
+  <div id="tapPrompt" style="
+    position:absolute;
+    top:38px;
+    left:50%;
+    transform:translateX(-50%);
+    background:rgba(0,0,0,0.42);
+    color:white;
+    padding:10px 16px;
+    border-radius:10px;
+    font-size:18px;
+    letter-spacing:1px;
+    opacity:0.95;
+    transition:opacity 0.6s ease;
+  ">
+    Tap here to begin
+  </div>
+
+  <div id="text" style="
+    opacity:0;
+    transition:1.5s;
+    white-space:pre-line;
+    text-shadow:0 2px 10px rgba(0,0,0,0.75);
+  ">
+    Every civilization begins with a decision.
+  </div>
+
 </div>
-
-
-
-</div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 <script>
 let started = false;
@@ -40,8 +56,10 @@ function startExperience() {
   started = true;
 
   const text = document.getElementById("text");
+  const tapPrompt = document.getElementById("tapPrompt");
 
-  // show text
+  if (tapPrompt) tapPrompt.style.opacity = 0;
+
   setTimeout(() => {
     if (text) text.style.opacity = 1;
   }, 420);
@@ -49,14 +67,13 @@ function startExperience() {
   const audio = new Audio("/static/intro1.mp3");
   audio.volume = 0.28;
 
-  audio.play();
+  audio.play().catch(() => {});
 
   audio.onended = function() {
     window.location.href = "/intro2";
   };
 }
 
-// ONE click unlocks everything
 document.body.addEventListener("click", startExperience, { once: true });
 </script>
 
