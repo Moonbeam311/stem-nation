@@ -37,37 +37,28 @@ html, body {
   transition: opacity 1.5s ease;
   white-space: pre-line;
 }
-.btn {
-  position: absolute;
-  bottom: 20px;
-  left: 50%;
-  transform: translateX(-50%);
-  padding: 12px 28px;
-  background: white;
-  border: none;
-  cursor: pointer;
-  opacity: 0;
-  transition: opacity 1.5s ease;
-}
 </style>
 </head>
 <body>
 <div class="bg">
   <div class="fade"></div>
   <div id="text" class="text">Every civilization begins with a decision.</div>
-  <button id="nextBtn" class="btn" onclick="goNext()">Continue</button>
 </div>
+
+<audio id="introAudio" autoplay>
+  <source src="/static/intro1.mp3" type="audio/mpeg">
+</audio>
 
 <script>
 const textEl = document.getElementById("text");
-const btnEl = document.getElementById("nextBtn");
 
-setTimeout(() => { textEl.style.opacity = "1"; }, 1200);
-setTimeout(() => { btnEl.style.opacity = "1"; }, 4200);
+setTimeout(() => {
+  textEl.style.opacity = "1";
+}, 1200);
 
-function goNext() {
+setTimeout(() => {
   window.location.href = "/intro2";
-}
+}, 6500);
 </script>
 </body>
 </html>
