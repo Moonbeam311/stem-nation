@@ -1,88 +1,51 @@
 <!DOCTYPE html>
 <html>
-<head>
-<meta charset="utf-8">
-<title>STEM Nation — Intro 2</title>
-<style>
-html, body {
-  margin: 0;
-  padding: 0;
-  height: 100%;
-  overflow: hidden;
-  background: black;
-  font-family: Segoe UI, Arial, sans-serif;
-}
-.bg {
-  width: 100%;
-  height: 100%;
-  background: url("/static/intro_scene2.jpg") center center / cover no-repeat;
-  position: relative;
-}
-.fade {
-  position: absolute;
-  bottom: 0;
-  width: 100%;
-  height: 40%;
-  background: linear-gradient(transparent, rgba(0,0,0,.85));
-}
-.text {
-  position: absolute;
-  bottom: 90px;
-  width: 100%;
-  text-align: center;
-  color: white;
-  font-size: 34px;
-  line-height: 1.4;
-  opacity: 0;
-  transition: opacity 1.5s ease;
-  white-space: pre-line;
-}
-.btn {
-  position: absolute;
-  bottom: 20px;
-  left: 50%;
-  transform: translateX(-50%);
-  padding: 12px 28px;
-  background: white;
-  border: none;
-  cursor: pointer;
-  opacity: 0;
-  transition: opacity 1.5s ease;
-}
-</style>
-</head>
-<body>
-<div class="bg">
-  <div class="fade"></div>
-  <div id="text" class="text"></div>
-  <button id="nextBtn" class="btn" onclick="goNext()">Continue</button>
+<body style="margin:0;overflow:hidden;font-family:Arial">
+
+<div style="
+width:100vw;height:100vh;
+background:url('/static/intro_scene2.jpg') center center / cover no-repeat;
+display:flex;align-items:flex-end;justify-content:center;
+color:white;font-size:34px;text-align:center;
+padding-bottom:100px;
+">
+
+<div id="text" style="opacity:0;transition:1.5s;white-space:pre-line;">
+Not with answers…
+but with questions.
 </div>
 
+<button style="display:none;">
+Continue
+</button>
+
+</div>
+
+
+
+
+
+
+
 <script>
-const textEl = document.getElementById("text");
-const btnEl = document.getElementById("nextBtn");
+window.onload = function() {
 
-setTimeout(() => {
-  textEl.textContent = "Not with answers…";
-  textEl.style.opacity = "1";
-}, 1200);
+  const text = document.getElementById("text");
 
-setTimeout(() => {
-  textEl.style.opacity = "0";
-}, 3600);
+  setTimeout(() => {
+    if (text) text.style.opacity = 1;
+  }, 420);
 
-setTimeout(() => {
-  textEl.textContent = "but with questions.";
-  textEl.style.opacity = "1";
-}, 5200);
+  const audio = new Audio("/static/intro2.mp3");
+  audio.volume = 0.28;
 
-setTimeout(() => {
-  btnEl.style.opacity = "1";
-}, 7600);
+  audio.play();
 
-function goNext() {
-  window.location.href = "/intro3";
-}
+  audio.onended = function() {
+    window.location.href = "/intro3";
+  };
+};
 </script>
+
 </body>
 </html>
