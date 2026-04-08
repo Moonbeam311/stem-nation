@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Inquiry Part 2 — First Settlement Planning</title>
+
+  <style>
+    body {
+      margin: 0;
+      padding: 40px 20px 60px;
+      font-family: Arial, sans-serif;
+      background-color: #0f172a;
+      color: white;
+      text-align: center;
+    }
+
+    .container {
+      max-width: 900px;
+      margin: 0 auto;
+    }
+
+    .title {
+      font-size: 34px;
+      margin-bottom: 16px;
+    }
+
+    .scene {
+      font-size: 18px;
+      line-height: 1.7;
+      opacity: 0.92;
+      margin-bottom: 24px;
+    }
+
+    .saved-question {
+      max-width: 760px;
+      margin: 0 auto 28px;
+      font-size: 18px;
+      line-height: 1.7;
+      background: rgba(255,255,255,0.06);
+      border-radius: 12px;
+      padding: 18px;
+    }
+
+    .section-title {
+      font-size: 24px;
+      color: #d4af37;
+      margin: 34px 0 14px;
+    }
+
+    .question-block {
+      background: rgba(255,255,255,0.05);
+      border-radius: 12px;
+      padding: 18px;
+      margin: 16px auto;
+      max-width: 760px;
+      text-align: left;
+    }
+
+    .question-label {
+      font-size: 18px;
+      margin-bottom: 10px;
+      line-height: 1.5;
+    }
+
+    textarea {
+      width: 100%;
+      min-height: 90px;
+      padding: 12px;
+      font-size: 16px;
+      border: none;
+      border-radius: 8px;
+      box-sizing: border-box;
+      resize: vertical;
+      font-family: Arial, sans-serif;
+    }
+
+    .continue-btn {
+      margin-top: 34px;
+      padding: 14px 26px;
+      font-size: 17px;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      background-color: #d4af37;
+      color: black;
+      font-weight: bold;
+    }
+
+    .subnote {
+      font-size: 16px;
+      opacity: 0.82;
+      margin-top: 12px;
+      line-height: 1.6;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container">
+
+    <div id="worldTitle" class="title">Settlement Planning</div>
+
+    <div id="worldScene" class="scene">
+      You have observed the land.<br>
+      Now you must begin to shape how people will live within it.
+    </div>
+
+    <div id="savedQuestion" class="saved-question" style="display:none;"></div>
+
+    <div class="section-title">Inquiry Part 2 — Planning the First Settlement</div>
+
+    <div class="scene">
+      Before a nation can rise, its people must decide where to place their first markers,
+      how to use their tools, and where early settlements should begin.
+    </div>
+
+    <div class="question-block">
+      <div class="question-label">
+        1. Where would you place your first settlement, and why would that location matter?
+      </div>
+      <textarea id="settlementPlacement" placeholder="Describe where the first settlement should begin..."></textarea>
+    </div>
+
+    <div class="question-block">
+      <div class="question-label">
+        2. Where would you place your first road or pathway so people, goods, and information can move safely?
+      </div>
+      <textarea id="roadPlacement" placeholder="Describe where the first road or main path should go..."></textarea>
+    </div>
+
+    <div class="question-block">
+      <div class="question-label">
+        3. Where would you place your first market or exchange area, and what would make that location useful?
+      </div>
+      <textarea id="marketPlacement" placeholder="Describe where the first market should be placed..."></textarea>
+    </div>
+
+    <div class="question-block">
+      <div class="question-label">
+        4. What tools would your people need first, and what work would those tools help them do?
+      </div>
+      <textarea id="toolsPlan" placeholder="Describe the first tools your people would need..."></textarea>
+    </div>
+
+    <div class="question-block">
+      <div class="question-label">
+        5. What markers would you place first to help define routes, safe zones, resource areas, or community boundaries?
+      </div>
+      <textarea id="markerPlan" placeholder="Describe what markers would be placed and why..."></textarea>
+    </div>
+
+    <div class="question-block">
+      <div class="question-label">
+        6. Which area would you protect first so your early settlements can survive and grow?
+      </div>
+      <textarea id="protectionPlan" placeholder="Describe the first zone you would protect..."></textarea>
+    </div>
+
+    <button class="continue-btn" onclick="continueToRole()">
+      Continue
+    </button>
+
+    <div class="subnote">
+      These answers will shape how your people move from observation into organization.
+    </div>
+
+  </div>
+
+  <script>
+    const worldContent = {
+      river: {
+        title: "River Nexus",
+        scene: "Water routes, crossings, and fertile edges will shape where settlements rise."
+      },
+      coastal: {
+        title: "Coastal Exchange",
+        scene: "Shorelines create opportunity, trade, and exposure. Placement matters."
+      },
+      forest: {
+        title: "Forest Intelligence",
+        scene: "Dense cover offers protection and resources, but movement and visibility must be planned carefully."
+      },
+      desert: {
+        title: "Desert Adaptation",
+        scene: "Water, shade, routes, and tools will determine whether settlements endure."
+      },
+      mountain: {
+        title: "Mountain Stronghold",
+        scene: "Height offers protection, but roads, markers, and access points become critical."
+      },
+      balanced: {
+        title: "Balanced Core",
+        scene: "No single force dominates this land. Thoughtful placement will decide the strength of the first settlements."
+      }
+    };
+
+    const params = new URLSearchParams(window.location.search);
+    const selectedWorld = params.get("world") || sessionStorage.getItem("selectedRegion") || "balanced";
+    const savedQuestion = sessionStorage.getItem("studentQuestion");
+    const content = worldContent[selectedWorld] || worldContent.balanced;
+
+    document.getElementById("worldTitle").innerText = content.title;
+    document.getElementById("worldScene").innerHTML = content.scene;
+
+    if (savedQuestion) {
+      const box = document.getElementById("savedQuestion");
+      box.style.display = "block";
+      box.innerHTML =
+        'Your guiding question: <span style="color:#ffffff;">"' +
+        savedQuestion.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;") +
+        '"</span>';
+    }
+
+    function continueToRole() {
+      const settlementPlacement = document.getElementById("settlementPlacement").value.trim();
+      const roadPlacement = document.getElementById("roadPlacement").value.trim();
+      const marketPlacement = document.getElementById("marketPlacement").value.trim();
+      const toolsPlan = document.getElementById("toolsPlan").value.trim();
+      const markerPlan = document.getElementById("markerPlan").value.trim();
+      const protectionPlan = document.getElementById("protectionPlan").value.trim();
+
+      if (!settlementPlacement || !roadPlacement || !marketPlacement || !toolsPlan || !markerPlan || !protectionPlan) {
+        alert("Complete all planning questions before continuing.");
+        return;
+      }
+
+      sessionStorage.setItem("settlementPlacement", settlementPlacement);
+      sessionStorage.setItem("roadPlacement", roadPlacement);
+      sessionStorage.setItem("marketPlacement", marketPlacement);
+      sessionStorage.setItem("toolsPlan", toolsPlan);
+      sessionStorage.setItem("markerPlan", markerPlan);
+      sessionStorage.setItem("protectionPlan", protectionPlan);
+
+      window.location.href = "/academy_role";
+    }
+  </script>
+</body>
+</html>

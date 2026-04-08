@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>The Academy — Role</title>
+
+  <style>
+    body {
+      margin: 0;
+      background: black;
+      color: white;
+      font-family: Arial, sans-serif;
+      text-align: center;
+      opacity: 1;
+      transition: opacity 2s ease;
+    }
+
+    .container {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      padding: 0 20px;
+      box-sizing: border-box;
+    }
+
+    .line {
+      font-size: 28px;
+      margin: 10px;
+      opacity: 0;
+      transition: opacity 1.5s;
+      max-width: 900px;
+      line-height: 1.45;
+    }
+  </style>
+</head>
+
+<body>
+
+<div class="container">
+  <div id="l1" class="line">An individual does not exist in isolation.</div>
+  <div id="l2" class="line">Every decision influences something beyond itself.</div>
+  <div id="l3" class="line">Actions affect people, systems, and outcomes.</div>
+  <div id="l4" class="line">This is the beginning of responsibility.</div>
+</div>
+
+
+
+
+<script>
+const lines = ["l1","l2","l3","l4"];
+
+lines.forEach((id, i) => {
+  setTimeout(() => {
+    document.getElementById(id).style.opacity = 1;
+  }, i * 2000);
+});
+
+// after all lines have appeared, hold briefly, then fade out and continue
+setTimeout(() => {
+  document.body.style.opacity = 0;
+  setTimeout(() => {
+    window.location.href = "/academy_decision";
+  }, 2000);
+}, 11000);
+</script>
+
+</body>
+</html>
