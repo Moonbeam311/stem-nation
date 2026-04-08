@@ -1,237 +1,424 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Inquiry Part 2 — First Settlement Planning</title>
+  <title>Phase 2 — Shape the Nation</title>
 
   <style>
     body {
       margin: 0;
-      padding: 40px 20px 60px;
+      overflow: hidden;
       font-family: Arial, sans-serif;
-      background-color: #0f172a;
+      background: black;
       color: white;
+    }
+
+    #map {
+      position: fixed;
+      inset: 0;
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      cursor: crosshair;
+    }
+
+    .title-chip {
+      position: absolute;
+      top: 8px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 30;
+      background: rgba(0,0,0,0.48);
+      border-radius: 8px;
+      padding: 5px 10px;
+      font-size: 16px;
+      font-weight: bold;
       text-align: center;
+      max-width: calc(100% - 16px);
+      box-sizing: border-box;
     }
 
-    .container {
-      max-width: 900px;
-      margin: 0 auto;
+    .toolbar {
+      position: absolute;
+      top: 40px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 30;
+      background: rgba(0,0,0,0.45);
+      padding: 4px 5px;
+      border-radius: 8px;
+      display: flex;
+      gap: 4px;
+      flex-wrap: wrap;
+      justify-content: center;
+      max-width: calc(100% - 16px);
+      box-sizing: border-box;
     }
 
-    .title {
-      font-size: 34px;
-      margin-bottom: 16px;
+    .tool-btn {
+      border: none;
+      border-radius: 6px;
+      background: #d4af37;
+      color: black;
+      padding: 5px 7px;
+      font-size: 11px;
+      font-weight: bold;
+      cursor: pointer;
     }
 
-    .scene {
-      font-size: 18px;
-      line-height: 1.7;
-      opacity: 0.92;
-      margin-bottom: 24px;
+    .tool-btn.active {
+      outline: 2px solid white;
+    }
+
+    .info-toggle {
+      position: absolute;
+      top: 8px;
+      left: 8px;
+      z-index: 31;
+      border: none;
+      border-radius: 7px;
+      background: rgba(0,0,0,0.55);
+      color: white;
+      padding: 5px 8px;
+      font-size: 11px;
+      cursor: pointer;
+    }
+
+    .info-panel {
+      position: absolute;
+      top: 34px;
+      left: 8px;
+      width: 200px;
+      z-index: 30;
+      background: rgba(0,0,0,0.82);
+      border-radius: 9px;
+      padding: 8px;
+      box-sizing: border-box;
+      display: none;
+    }
+
+    .info-panel h3 {
+      margin: 0 0 6px 0;
+      color: #f4d35e;
+      font-size: 14px;
+    }
+
+    .info-panel p {
+      margin: 0 0 6px 0;
+      line-height: 1.35;
+      font-size: 11px;
     }
 
     .saved-question {
-      max-width: 760px;
-      margin: 0 auto 28px;
-      font-size: 18px;
-      line-height: 1.7;
-      background: rgba(255,255,255,0.06);
-      border-radius: 12px;
-      padding: 18px;
+      margin-top: 6px;
+      background: rgba(255,255,255,0.08);
+      padding: 6px;
+      border-radius: 7px;
+      font-size: 11px;
+      line-height: 1.35;
     }
 
-    .section-title {
-      font-size: 24px;
-      color: #d4af37;
-      margin: 34px 0 14px;
+    .badge {
+      margin-top: 6px;
+      padding: 6px;
+      background: rgba(244, 211, 94, 0.14);
+      border: 1px solid rgba(244, 211, 94, 0.45);
+      border-radius: 7px;
+      color: #f4d35e;
+      font-weight: bold;
+      text-align: center;
+      font-size: 11px;
     }
 
-    .question-block {
-      background: rgba(255,255,255,0.05);
-      border-radius: 12px;
-      padding: 18px;
-      margin: 16px auto;
-      max-width: 760px;
-      text-align: left;
+    .decision-box {
+      position: absolute;
+      bottom: 6px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: min(330px, calc(100% - 12px));
+      z-index: 30;
+      background: rgba(0,0,0,0.62);
+      border-radius: 8px;
+      padding: 8px;
+      box-sizing: border-box;
+      text-align: center;
     }
 
-    .question-label {
-      font-size: 18px;
-      margin-bottom: 10px;
-      line-height: 1.5;
+    .decision-question {
+      font-size: 13px;
+      line-height: 1.25;
+      margin-bottom: 4px;
+    }
+
+    .decision-note {
+      font-size: 10px;
+      opacity: 0.88;
+      line-height: 1.25;
+      margin-bottom: 6px;
     }
 
     textarea {
       width: 100%;
-      min-height: 90px;
-      padding: 12px;
-      font-size: 16px;
+      min-height: 34px;
+      max-height: 58px;
       border: none;
-      border-radius: 8px;
+      border-radius: 6px;
       box-sizing: border-box;
       resize: vertical;
+      padding: 5px;
+      font-size: 11px;
       font-family: Arial, sans-serif;
     }
 
-    .continue-btn {
-      margin-top: 34px;
-      padding: 14px 26px;
-      font-size: 17px;
-      border: none;
-      border-radius: 8px;
-      cursor: pointer;
-      background-color: #d4af37;
-      color: black;
-      font-weight: bold;
+    .button-row {
+      margin-top: 6px;
+      display: flex;
+      justify-content: center;
+      gap: 5px;
+      flex-wrap: wrap;
     }
 
-    .subnote {
-      font-size: 16px;
-      opacity: 0.82;
-      margin-top: 12px;
-      line-height: 1.6;
+    .nav-btn {
+      border: none;
+      border-radius: 6px;
+      background: #d4af37;
+      color: black;
+      padding: 6px 8px;
+      font-size: 11px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    .marker {
+      position: absolute;
+      transform: translate(-50%, -50%);
+      font-size: 20px;
+      pointer-events: none;
+      z-index: 15;
+      text-shadow: 0 1px 6px rgba(0,0,0,0.8);
     }
   </style>
 </head>
 
 <body>
-  <div class="container">
 
-    <div id="worldTitle" class="title">Settlement Planning</div>
+  <div id="map"></div>
 
-    <div id="worldScene" class="scene">
-      You have observed the land.<br>
-      Now you must begin to shape how people will live within it.
-    </div>
+  <button class="info-toggle" onclick="toggleInfo()">Info</button>
+
+  <div id="infoPanel" class="info-panel">
+    <h3>Your Mission</h3>
+    <p>
+      Establish a nation that can survive, grow, and remain stable.<br>
+      Every decision you make will shape its future.
+    </p>
 
     <div id="savedQuestion" class="saved-question" style="display:none;"></div>
 
-    <div class="section-title">Inquiry Part 2 — Planning the First Settlement</div>
+    <div class="badge">
+      Badge Unlocked<br><br>
+      Nation Designer
+    </div>
+  </div>
 
-    <div class="scene">
-      Before a nation can rise, its people must decide where to place their first markers,
-      how to use their tools, and where early settlements should begin.
+  <div id="worldTitle" class="title-chip">Phase 2 — Shape the Nation</div>
+
+  <div class="toolbar">
+    <button class="tool-btn active" onclick="setTool('settlement', this)">🏠</button>
+    <button class="tool-btn" onclick="setTool('market', this)">💰</button>
+    <button class="tool-btn" onclick="setTool('defense', this)">🛡</button>
+    <button class="tool-btn" onclick="setTool('farm', this)">🌾</button>
+    <button class="tool-btn" onclick="setTool('road', this)">🛣</button>
+  </div>
+
+  <div class="decision-box">
+    <div id="decisionQuestion" class="decision-question"></div>
+    <div id="decisionNote" class="decision-note">
+      Select a tool, place markers, then answer.
     </div>
 
-    <div class="question-block">
-      <div class="question-label">
-        1. Where would you place your first settlement, and why would that location matter?
-      </div>
-      <textarea id="settlementPlacement" placeholder="Describe where the first settlement should begin..."></textarea>
+    <textarea id="decisionAnswer" placeholder="Type your answer..."></textarea>
+
+    <div class="button-row">
+      <button class="nav-btn" onclick="submitDecision()">Submit</button>
+      <button class="nav-btn" onclick="skipDecision()">Skip</button>
     </div>
-
-    <div class="question-block">
-      <div class="question-label">
-        2. Where would you place your first road or pathway so people, goods, and information can move safely?
-      </div>
-      <textarea id="roadPlacement" placeholder="Describe where the first road or main path should go..."></textarea>
-    </div>
-
-    <div class="question-block">
-      <div class="question-label">
-        3. Where would you place your first market or exchange area, and what would make that location useful?
-      </div>
-      <textarea id="marketPlacement" placeholder="Describe where the first market should be placed..."></textarea>
-    </div>
-
-    <div class="question-block">
-      <div class="question-label">
-        4. What tools would your people need first, and what work would those tools help them do?
-      </div>
-      <textarea id="toolsPlan" placeholder="Describe the first tools your people would need..."></textarea>
-    </div>
-
-    <div class="question-block">
-      <div class="question-label">
-        5. What markers would you place first to help define routes, safe zones, resource areas, or community boundaries?
-      </div>
-      <textarea id="markerPlan" placeholder="Describe what markers would be placed and why..."></textarea>
-    </div>
-
-    <div class="question-block">
-      <div class="question-label">
-        6. Which area would you protect first so your early settlements can survive and grow?
-      </div>
-      <textarea id="protectionPlan" placeholder="Describe the first zone you would protect..."></textarea>
-    </div>
-
-    <button class="continue-btn" onclick="continueToRole()">
-      Continue
-    </button>
-
-    <div class="subnote">
-      These answers will shape how your people move from observation into organization.
-    </div>
-
   </div>
 
   <script>
+    const regionImages = {
+      river: "/static/map_balanced_blank.png",
+      forest: "/static/map_forest_blank.png",
+      desert: "/static/map_desert_blank.png",
+      coastal: "/static/map_coastal_blank.png",
+      mountain: "/static/map_mountain_blank.png",
+      savanna: "/static/map_savanna_blank.png",
+      balanced: "/static/map_balanced_blank.png"
+    };
+
     const worldContent = {
-      river: {
-        title: "River Nexus",
-        scene: "Water routes, crossings, and fertile edges will shape where settlements rise."
+      river: { title: "River Nexus — Shape the Nation" },
+      coastal: { title: "Coastal Exchange — Shape the Nation" },
+      forest: { title: "Forest Intelligence — Shape the Nation" },
+      desert: { title: "Desert Adaptation — Shape the Nation" },
+      mountain: { title: "Mountain Stronghold — Shape the Nation" },
+      balanced: { title: "Balanced Core — Shape the Nation" }
+    };
+
+    const decisionSteps = [
+      {
+        key: "settlement",
+        tool: "settlement",
+        question: "Where will you establish your first settlement?",
+        note: "Place settlement, then explain why."
       },
-      coastal: {
-        title: "Coastal Exchange",
-        scene: "Shorelines create opportunity, trade, and exposure. Placement matters."
+      {
+        key: "market",
+        tool: "market",
+        question: "Where would trade naturally occur?",
+        note: "Place market, then explain growth value."
       },
-      forest: {
-        title: "Forest Intelligence",
-        scene: "Dense cover offers protection and resources, but movement and visibility must be planned carefully."
+      {
+        key: "defense",
+        tool: "defense",
+        question: "What location offers the strongest protection?",
+        note: "Place defense, then explain security."
       },
-      desert: {
-        title: "Desert Adaptation",
-        scene: "Water, shade, routes, and tools will determine whether settlements endure."
+      {
+        key: "farm",
+        tool: "farm",
+        question: "Where should farming begin?",
+        note: "Place farming, then explain survival value."
       },
-      mountain: {
-        title: "Mountain Stronghold",
-        scene: "Height offers protection, but roads, markers, and access points become critical."
-      },
-      balanced: {
-        title: "Balanced Core",
-        scene: "No single force dominates this land. Thoughtful placement will decide the strength of the first settlements."
+      {
+        key: "road",
+        tool: "road",
+        question: "How would you connect key places?",
+        note: "Place road markers, then explain movement."
       }
+    ];
+
+    const toolIcons = {
+      settlement: "🏠",
+      market: "💰",
+      defense: "🛡",
+      farm: "🌾",
+      road: "🛣"
+    };
+
+    let currentTool = "settlement";
+    let currentStep = 0;
+
+    const placedMarkers = {
+      settlement: [],
+      market: [],
+      defense: [],
+      farm: [],
+      road: []
     };
 
     const params = new URLSearchParams(window.location.search);
     const selectedWorld = params.get("world") || sessionStorage.getItem("selectedRegion") || "balanced";
     const savedQuestion = sessionStorage.getItem("studentQuestion");
-    const content = worldContent[selectedWorld] || worldContent.balanced;
 
-    document.getElementById("worldTitle").innerText = content.title;
-    document.getElementById("worldScene").innerHTML = content.scene;
+    const mapElement = document.getElementById("map");
+    mapElement.style.backgroundImage =
+      "url('" + (regionImages[selectedWorld] || regionImages["balanced"]) + "')";
+
+    document.getElementById("worldTitle").innerText =
+      (worldContent[selectedWorld] || worldContent["balanced"]).title;
 
     if (savedQuestion) {
       const box = document.getElementById("savedQuestion");
       box.style.display = "block";
       box.innerHTML =
-        'Your guiding question: <span style="color:#ffffff;">"' +
+        'Guiding question: <span style="color:#ffffff;">"' +
         savedQuestion.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;") +
         '"</span>';
     }
 
-    function continueToRole() {
-      const settlementPlacement = document.getElementById("settlementPlacement").value.trim();
-      const roadPlacement = document.getElementById("roadPlacement").value.trim();
-      const marketPlacement = document.getElementById("marketPlacement").value.trim();
-      const toolsPlan = document.getElementById("toolsPlan").value.trim();
-      const markerPlan = document.getElementById("markerPlan").value.trim();
-      const protectionPlan = document.getElementById("protectionPlan").value.trim();
+    function toggleInfo() {
+      const panel = document.getElementById("infoPanel");
+      panel.style.display = panel.style.display === "block" ? "none" : "block";
+    }
 
-      if (!settlementPlacement || !roadPlacement || !marketPlacement || !toolsPlan || !markerPlan || !protectionPlan) {
-        alert("Complete all planning questions before continuing.");
+    function setTool(tool, el) {
+      currentTool = tool;
+      document.querySelectorAll(".tool-btn").forEach(btn => btn.classList.remove("active"));
+      el.classList.add("active");
+    }
+
+    function syncToolToStep() {
+      const stepTool = decisionSteps[currentStep].tool;
+      currentTool = stepTool;
+
+      document.querySelectorAll(".tool-btn").forEach(btn => {
+        btn.classList.remove("active");
+        if (btn.textContent.includes(toolIcons[stepTool])) {
+          btn.classList.add("active");
+        }
+      });
+    }
+
+    function placeMarker(event) {
+      const rect = mapElement.getBoundingClientRect();
+      const x = event.clientX - rect.left;
+      const y = event.clientY - rect.top;
+
+      const marker = document.createElement("div");
+      marker.className = "marker";
+      marker.innerText = toolIcons[currentTool];
+      marker.style.left = x + "px";
+      marker.style.top = y + "px";
+
+      mapElement.appendChild(marker);
+
+      placedMarkers[currentTool].push({ x, y });
+      sessionStorage.setItem("phase2Markers", JSON.stringify(placedMarkers));
+    }
+
+    function loadStep() {
+      const step = decisionSteps[currentStep];
+      document.getElementById("decisionQuestion").innerText = step.question;
+      document.getElementById("decisionNote").innerText = step.note;
+      document.getElementById("decisionAnswer").value = "";
+      syncToolToStep();
+    }
+
+    function submitDecision() {
+      const step = decisionSteps[currentStep];
+      const answer = document.getElementById("decisionAnswer").value.trim();
+
+      if (!answer) {
+        alert("Type your answer before continuing.");
         return;
       }
 
-      sessionStorage.setItem("settlementPlacement", settlementPlacement);
-      sessionStorage.setItem("roadPlacement", roadPlacement);
-      sessionStorage.setItem("marketPlacement", marketPlacement);
-      sessionStorage.setItem("toolsPlan", toolsPlan);
-      sessionStorage.setItem("markerPlan", markerPlan);
-      sessionStorage.setItem("protectionPlan", protectionPlan);
-
-      window.location.href = "/academy_role";
+      sessionStorage.setItem(step.key + "Note", answer);
+      nextStep();
     }
+
+    function skipDecision() {
+      const step = decisionSteps[currentStep];
+      sessionStorage.setItem(step.key + "Note", "SKIPPED");
+      nextStep();
+    }
+
+    function nextStep() {
+      currentStep++;
+
+      if (currentStep >= decisionSteps.length) {
+        sessionStorage.setItem("selectedRegion", selectedWorld);
+        window.location.href = "/academy_role";
+        return;
+      }
+
+      loadStep();
+    }
+
+    mapElement.addEventListener("click", placeMarker);
+
+    loadStep();
   </script>
+
 </body>
 </html>
