@@ -41,7 +41,7 @@
       width: 420px;
       text-align: center;
       z-index: 20;
-      box-sizing: border-box;
+      box-sizing:border-box;
     }
 
     #q {
@@ -167,6 +167,67 @@
     <button id="skipBtn" onclick="skipAnswer()">Skip</button>
   </div>
 
+  <div id="studentQuestionStage" style="
+    position:absolute;
+    inset:0;
+    background:rgba(0,0,0,0.92);
+    color:white;
+    display:none;
+    z-index:40;
+    font-family:Arial,sans-serif;
+  ">
+    <div style="
+      max-width:760px;
+      margin:90px auto 0;
+      text-align:center;
+      padding:0 24px;
+      box-sizing:border-box;
+    ">
+      <div style="font-size:30px; margin-bottom:18px;">
+        Now ask one question that matters.
+      </div>
+
+      <div style="
+        font-size:18px;
+        opacity:0.9;
+        line-height:1.7;
+        margin-bottom:18px;
+      ">
+        The quality of those questions<br>
+        shapes everything that follows.
+      </div>
+
+      <div style="font-size:18px; opacity:0.82; line-height:1.6; margin-bottom:28px;">
+        What do you still need to understand<br>
+        before a nation can rise here?
+      </div>
+
+      <textarea id="studentQuestionInput" placeholder="Type your question here..."
+        style="
+          width:100%;
+          min-height:110px;
+          padding:14px;
+          font-size:18px;
+          border:none;
+          border-radius:10px;
+          box-sizing:border-box;
+          resize:vertical;
+        "></textarea>
+
+      <div style="margin-top:24px;">
+        <form onsubmit="return continueToAcademyIndividual();">
+          <button type="submit" id="continueFromQuestion" style="
+            padding:12px 22px;
+            font-size:16px;
+            border:none;
+            border-radius:8px;
+            cursor:pointer;
+          ">Continue</button>
+        </form>
+      </div>
+    </div>
+  </div>
+
   <script>
     const regionImages = {
       river: "/static/map_balanced_blank.png",
@@ -242,7 +303,6 @@
       }, 5000);
 
       setTimeout(() => {
-        const transition = document.getElementById("transition");
         transition.style.display = "none";
         document.getElementById("studentQuestionStage").style.display = "block";
       }, 7600);
@@ -253,79 +313,24 @@
       panel.style.display = panel.style.display === "block" ? "none" : "block";
     }
 
+    function continueToAcademyIndividual() {
+      const questionInput = document.getElementById("studentQuestionInput");
+      const question = questionInput.value.trim();
+
+      if (!question) {
+        alert("Type one question before continuing.");
+        questionInput.focus();
+        return false;
+      }
+
+      sessionStorage.setItem("studentQuestion", question);
+      sessionStorage.setItem("selectedRegion", selectedRegion);
+      window.location.href = "/academy_individual?world=" + encodeURIComponent(selectedRegion);
+      return false;
+    }
+
     loadQuestion();
   </script>
 
-
-  <div id="studentQuestionStage" style="
-    position:absolute;
-    inset:0;
-    background:rgba(0,0,0,0.92);
-    color:white;
-    display:none;
-    z-index:40;
-    font-family:Arial,sans-serif;
-  ">
-    <div style="
-      max-width:760px;
-      margin:90px auto 0;
-      text-align:center;
-      padding:0 24px;
-      box-sizing:border-box;
-    ">
-      <div style="font-size:30px; margin-bottom:18px;">
-        Now ask one question that matters.
-      </div>
-
-      <div style="
-        font-size:18px;
-        opacity:0.9;
-        line-height:1.7;
-        margin-bottom:18px;
-      ">
-        The quality of those questions<br>
-        shapes everything that follows.
-      </div>
-
-      <div style="font-size:18px; opacity:0.82; line-height:1.6; margin-bottom:28px;">
-        What do you still need to understand<br>
-        before a nation can rise here?
-      </div>
-
-      <textarea id="studentQuestionInput" placeholder="Type your question here..."
-        style="
-          width:100%;
-          min-height:110px;
-          padding:14px;
-          font-size:18px;
-          border:none;
-          border-radius:10px;
-          box-sizing:border-box;
-          resize:vertical;
-        "></textarea>
-
-      <div style="margin-top:24px;">
-        <button id="continueFromQuestion" style="
-          padding:12px 22px;
-          font-size:16px;
-          border:none;
-          border-radius:8px;
-          cursor:pointer;
-        ">Continue</button>
-      </div>
-    </div>
-  </div>
-
 </body>
 </html>
-<button id="continueBtn">Continue</button>
-
-<script>
-document.getElementById("continueBtn").onclick = function () {
-    window.location.href = "/academy_role";
-};
-</script> <a href="/academy_role">
-  <button style="padding:12px 24px; font-size:16px;">
-    Continue
-  </button>
-</a>
