@@ -108,31 +108,6 @@
       font-size: 11px;
     }
 
-    .ai-guide {
-      position: absolute;
-      top: 140px;
-      left: 8px;
-      width: 220px;
-      z-index: 30;
-      background: rgba(0,0,0,0.82);
-      border-radius: 9px;
-      padding: 8px;
-      box-sizing: border-box;
-    }
-
-    .ai-guide h3 {
-      margin: 0 0 6px 0;
-      color: #f4d35e;
-      font-size: 14px;
-    }
-
-    .ai-guide-text {
-      margin: 0;
-      line-height: 1.4;
-      font-size: 11px;
-      color: white;
-    }
-
     .saved-question {
       margin-top: 6px;
       background: rgba(255,255,255,0.08);
@@ -245,13 +220,6 @@
     </div>
   </div>
 
-  <div class="ai-guide">
-    <h3>AI Guide</h3>
-    <p id="aiGuideText" class="ai-guide-text">
-      Begin where survival can stabilize. Think about water, access, and protection.
-    </p>
-  </div>
-
   <div id="worldTitle" class="title-chip">Phase 2 — Shape the Nation</div>
 
   <div class="toolbar">
@@ -301,36 +269,31 @@
         key: "settlement",
         tool: "settlement",
         question: "Where will you establish your first settlement?",
-        note: "Place settlement, then explain why.",
-        ai: "Begin where survival can stabilize. Think about water, access, and protection."
+        note: "Place settlement, then explain why."
       },
       {
         key: "market",
         tool: "market",
         question: "Where would trade naturally occur?",
-        note: "Place market, then explain growth value.",
-        ai: "Trade grows where movement and exchange naturally converge. Look for connection points."
+        note: "Place market, then explain growth value."
       },
       {
         key: "defense",
         tool: "defense",
         question: "What location offers the strongest protection?",
-        note: "Place defense, then explain security.",
-        ai: "Protection depends on terrain, visibility, and vulnerability. What must be secured first?"
+        note: "Place defense, then explain security."
       },
       {
         key: "farm",
         tool: "farm",
         question: "Where should farming begin?",
-        note: "Place farming, then explain survival value.",
-        ai: "Food creates continuity. Choose land that can sustain life over time, not just once."
+        note: "Place farming, then explain survival value."
       },
       {
         key: "road",
         tool: "road",
         question: "How would you connect key places?",
-        note: "Place road markers, then explain movement.",
-        ai: "Roads connect people, resources, defense, and power. Think about what must stay linked."
+        note: "Place road markers, then explain movement."
       }
     ];
 
@@ -418,12 +381,6 @@
       document.getElementById("decisionQuestion").innerText = step.question;
       document.getElementById("decisionNote").innerText = step.note;
       document.getElementById("decisionAnswer").value = "";
-
-      const aiGuideText = document.getElementById("aiGuideText");
-      if (aiGuideText && step.ai) {
-        aiGuideText.innerText = step.ai;
-      }
-
       syncToolToStep();
     }
 
