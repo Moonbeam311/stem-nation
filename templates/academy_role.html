@@ -1,69 +1,379 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>The Academy — Role</title>
+  <title>Phase 3 — Assign Responsibility</title>
 
   <style>
     body {
       margin: 0;
+      overflow: hidden;
+      font-family: Arial, sans-serif;
       background: black;
       color: white;
-      font-family: Arial, sans-serif;
-      text-align: center;
-      opacity: 1;
-      transition: opacity 2s ease;
     }
 
-    .container {
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      height: 100vh;
-      padding: 0 20px;
+    #map {
+      position: fixed;
+      inset: 0;
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+    }
+
+    .title-chip {
+      position: absolute;
+      top: 8px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 30;
+      background: rgba(0,0,0,0.48);
+      border-radius: 8px;
+      padding: 6px 12px;
+      font-size: 16px;
+      font-weight: bold;
+      text-align: center;
+      max-width: calc(100% - 16px);
       box-sizing: border-box;
     }
 
-    .line {
-      font-size: 28px;
-      margin: 10px;
-      opacity: 0;
-      transition: opacity 1.5s;
-      max-width: 900px;
-      line-height: 1.45;
+    .info-toggle {
+      position: absolute;
+      top: 8px;
+      left: 8px;
+      z-index: 31;
+      border: none;
+      border-radius: 7px;
+      background: rgba(0,0,0,0.55);
+      color: white;
+      padding: 5px 8px;
+      font-size: 11px;
+      cursor: pointer;
+    }
+
+    .info-panel {
+      position: absolute;
+      top: 34px;
+      left: 8px;
+      width: 220px;
+      z-index: 30;
+      background: rgba(0,0,0,0.82);
+      border-radius: 9px;
+      padding: 8px;
+      box-sizing: border-box;
+      display: none;
+    }
+
+    .info-panel h3,
+    .ai-guide h3 {
+      margin: 0 0 6px 0;
+      color: #f4d35e;
+      font-size: 14px;
+    }
+
+    .info-panel p,
+    .ai-guide-text {
+      margin: 0 0 6px 0;
+      line-height: 1.4;
+      font-size: 11px;
+      color: white;
+    }
+
+    .saved-question {
+      margin-top: 6px;
+      background: rgba(255,255,255,0.08);
+      padding: 6px;
+      border-radius: 7px;
+      font-size: 11px;
+      line-height: 1.35;
+    }
+
+    .badge {
+      margin-top: 6px;
+      padding: 6px;
+      background: rgba(244, 211, 94, 0.14);
+      border: 1px solid rgba(244, 211, 94, 0.45);
+      border-radius: 7px;
+      color: #f4d35e;
+      font-weight: bold;
+      text-align: center;
+      font-size: 11px;
+    }
+
+    .ai-guide {
+      position: absolute;
+      top: 170px;
+      left: 8px;
+      width: 220px;
+      z-index: 30;
+      background: rgba(0,0,0,0.82);
+      border-radius: 9px;
+      padding: 8px;
+      box-sizing: border-box;
+    }
+
+    .decision-box {
+      position: absolute;
+      bottom: 8px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: min(360px, calc(100% - 16px));
+      z-index: 30;
+      background: rgba(0,0,0,0.68);
+      border-radius: 8px;
+      padding: 10px;
+      box-sizing: border-box;
+      text-align: center;
+    }
+
+    .decision-question {
+      font-size: 13px;
+      line-height: 1.3;
+      margin-bottom: 5px;
+    }
+
+    .decision-note {
+      font-size: 10px;
+      opacity: 0.88;
+      line-height: 1.25;
+      margin-bottom: 6px;
+    }
+
+    textarea {
+      width: 100%;
+      min-height: 42px;
+      max-height: 72px;
+      border: none;
+      border-radius: 6px;
+      box-sizing: border-box;
+      resize: vertical;
+      padding: 6px;
+      font-size: 11px;
+      font-family: Arial, sans-serif;
+    }
+
+    .button-row {
+      margin-top: 6px;
+      display: flex;
+      justify-content: center;
+      gap: 5px;
+      flex-wrap: wrap;
+    }
+
+    .nav-btn {
+      border: none;
+      border-radius: 6px;
+      background: #d4af37;
+      color: black;
+      padding: 6px 8px;
+      font-size: 11px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    .completion-overlay {
+      position: absolute;
+      inset: 0;
+      background: rgba(0,0,0,0.86);
+      display: none;
+      z-index: 40;
+      color: white;
+      text-align: center;
+      font-family: Arial, sans-serif;
+    }
+
+    .completion-inner {
+      max-width: 720px;
+      margin: 120px auto 0;
+      padding: 0 24px;
+      box-sizing: border-box;
     }
   </style>
 </head>
 
 <body>
 
-<div class="container">
-  <div id="l1" class="line">An individual does not exist in isolation.</div>
-  <div id="l2" class="line">Every decision influences something beyond itself.</div>
-  <div id="l3" class="line">Actions affect people, systems, and outcomes.</div>
-  <div id="l4" class="line">This is the beginning of responsibility.</div>
-</div>
+  <div id="map"></div>
 
+  <button class="info-toggle" onclick="toggleInfo()">Info</button>
 
+  <div id="infoPanel" class="info-panel">
+    <h3>Your Mission</h3>
+    <p>
+      A nation cannot function through place alone.<br>
+      It must also define responsibility, trust, and leadership.
+    </p>
 
+    <div id="savedQuestion" class="saved-question" style="display:none;"></div>
 
-<script>
-const lines = ["l1","l2","l3","l4"];
+    <div class="badge">
+      Badge Unlocked<br><br>
+      Responsibility Architect
+    </div>
+  </div>
 
-lines.forEach((id, i) => {
-  setTimeout(() => {
-    document.getElementById(id).style.opacity = 1;
-  }, i * 2000);
-});
+  <div class="ai-guide">
+    <h3>AI Guide</h3>
+    <p id="aiGuideText" class="ai-guide-text">
+      A nation survives before it thrives. Who ensures daily life can continue?
+    </p>
+  </div>
 
-// after all lines have appeared, hold briefly, then fade out and continue
-setTimeout(() => {
-  document.body.style.opacity = 0;
-  setTimeout(() => {
-    window.location.href = "/academy_decision";
-  }, 2000);
-}, 11000);
-</script>
+  <div id="worldTitle" class="title-chip">Phase 3 — Assign Responsibility</div>
+
+  <div class="decision-box">
+    <div id="decisionQuestion" class="decision-question"></div>
+    <div id="decisionNote" class="decision-note">
+      Define the role clearly, then explain why it matters.
+    </div>
+
+    <textarea id="decisionAnswer" placeholder="Type your answer..."></textarea>
+
+    <div class="button-row">
+      <button class="nav-btn" onclick="submitDecision()">Submit</button>
+      <button class="nav-btn" onclick="skipDecision()">Skip</button>
+    </div>
+  </div>
+
+  <div id="completionOverlay" class="completion-overlay">
+    <div class="completion-inner">
+      <div style="font-size:32px; margin-bottom:20px;">Phase 3 complete.</div>
+      <div style="font-size:18px; line-height:1.7; opacity:0.92;">
+        You have begun defining who carries responsibility<br>
+        within the emerging nation.
+      </div>
+      <div style="margin-top:28px;">
+        <button class="nav-btn" onclick="window.location.href='/academy_decision'">
+          Continue
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const regionImages = {
+      river: "/static/map_balanced_blank.png",
+      forest: "/static/map_forest_blank.png",
+      desert: "/static/map_desert_blank.png",
+      coastal: "/static/map_coastal_blank.png",
+      mountain: "/static/map_mountain_blank.png",
+      savanna: "/static/map_savanna_blank.png",
+      balanced: "/static/map_balanced_blank.png"
+    };
+
+    const worldContent = {
+      river: { title: "River Nexus — Assign Responsibility" },
+      coastal: { title: "Coastal Exchange — Assign Responsibility" },
+      forest: { title: "Forest Intelligence — Assign Responsibility" },
+      desert: { title: "Desert Adaptation — Assign Responsibility" },
+      mountain: { title: "Mountain Stronghold — Assign Responsibility" },
+      balanced: { title: "Balanced Core — Assign Responsibility" }
+    };
+
+    const decisionSteps = [
+      {
+        key: "foodLeader",
+        question: "Who should make sure the people are fed first?",
+        note: "Name the role and explain why it matters.",
+        ai: "A nation survives before it thrives. Who ensures daily life can continue?"
+      },
+      {
+        key: "defenseLeader",
+        question: "Who should organize protection?",
+        note: "Describe the role and its responsibilities.",
+        ai: "Protection is not only strength. It is foresight, coordination, and trust."
+      },
+      {
+        key: "movementLeader",
+        question: "Who should oversee movement and roads?",
+        note: "Explain how this role keeps the nation connected.",
+        ai: "Movement connects people, places, and decisions. Who keeps the nation connected?"
+      },
+      {
+        key: "tradeLeader",
+        question: "Who should guide trade and exchange?",
+        note: "Explain how value and fairness are maintained.",
+        ai: "Exchange depends on order and fairness. Who can manage value between groups?"
+      },
+      {
+        key: "sharedDuty",
+        question: "What responsibility belongs to everyone?",
+        note: "Name the shared duty and explain why all must carry it.",
+        ai: "Some responsibilities belong to everyone. What must the whole society protect together?"
+      }
+    ];
+
+    let currentStep = 0;
+
+    const params = new URLSearchParams(window.location.search);
+    const selectedWorld = params.get("world") || sessionStorage.getItem("selectedRegion") || "balanced";
+    const savedQuestion = sessionStorage.getItem("studentQuestion");
+
+    const mapElement = document.getElementById("map");
+    mapElement.style.backgroundImage =
+      "url('" + (regionImages[selectedWorld] || regionImages["balanced"]) + "')";
+
+    document.getElementById("worldTitle").innerText =
+      (worldContent[selectedWorld] || worldContent["balanced"]).title;
+
+    if (savedQuestion) {
+      const box = document.getElementById("savedQuestion");
+      box.style.display = "block";
+      box.innerHTML =
+        'Guiding question: <span style="color:#ffffff;">"' +
+        savedQuestion.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;") +
+        '"</span>';
+    }
+
+    function toggleInfo() {
+      const panel = document.getElementById("infoPanel");
+      panel.style.display = panel.style.display === "block" ? "none" : "block";
+    }
+
+    function loadStep() {
+      const step = decisionSteps[currentStep];
+      document.getElementById("decisionQuestion").innerText = step.question;
+      document.getElementById("decisionNote").innerText = step.note;
+      document.getElementById("decisionAnswer").value = "";
+
+      const aiGuideText = document.getElementById("aiGuideText");
+      if (aiGuideText && step.ai) {
+        aiGuideText.innerText = step.ai;
+      }
+    }
+
+    function submitDecision() {
+      const step = decisionSteps[currentStep];
+      const answer = document.getElementById("decisionAnswer").value.trim();
+
+      if (!answer) {
+        alert("Type your answer before continuing.");
+        return;
+      }
+
+      sessionStorage.setItem(step.key, answer);
+      nextStep();
+    }
+
+    function skipDecision() {
+      const step = decisionSteps[currentStep];
+      sessionStorage.setItem(step.key, "SKIPPED");
+      nextStep();
+    }
+
+    function nextStep() {
+      currentStep++;
+
+      if (currentStep >= decisionSteps.length) {
+        document.querySelector(".decision-box").style.display = "none";
+        document.getElementById("completionOverlay").style.display = "block";
+        return;
+      }
+
+      loadStep();
+    }
+
+    loadStep();
+  </script>
 
 </body>
 </html>
