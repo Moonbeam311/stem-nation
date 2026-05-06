@@ -77,18 +77,6 @@
       color: black;
     }
 
-    .audio-note {
-      position: absolute;
-      left: 22px;
-      bottom: 26px;
-      z-index: 3;
-      font-size: 10px;
-      opacity: 0;
-      letter-spacing: 1.3px;
-      text-transform: uppercase;
-      transition: opacity 0.8s ease;
-    }
-
     @keyframes slowCamera {
       0% {
         transform: scale(1.03) translate3d(-0.8%, 0.3%, 0);
@@ -104,38 +92,18 @@
 </head>
 
 <body>
-  <div class="scene" onclick="startAudio()">
+  <div class="scene">
     <div class="camera"></div>
     <div class="shade"></div>
 
     <div id="text" class="text">Every civilization begins with a decision.</div>
 
     <button id="skip" class="skip" onclick="skipNext(event)">Skip</button>
-    <div id="audioNote" class="audio-note">Tap for audio</div>
-
-    <audio id="audio" preload="auto">
-      <source src="/static/intro1.mp3" type="audio/mpeg">
-    </audio>
   </div>
 
   <script>
     const textEl = document.getElementById("text");
-    const skipEl = document.getElementById("skip");
-    const audioNoteEl = document.getElementById("audioNote");
-    const audioEl = document.getElementById("audio");
-
-    let audioStarted = false;
-
-    function startAudio() {
-      if (audioStarted) return;
-      audioStarted = true;
-      audioEl.currentTime = 0;
-      audioEl.volume = 0.72;
-      audioEl.play().then(() => {
-        audioNoteEl.style.opacity = 0;
-      }).catch(() => {
-        audioStarted = false;
-        audioNoteEl.style.opacity = 0.55;
+    const skipEl = document.getElementById("skip");).catch(() => {
       });
     }
 
@@ -149,7 +117,6 @@
     }
 
     window.addEventListener("load", () => {
-      setTimeout(() => startAudio(), 150);
 
       setTimeout(() => {
         textEl.style.opacity = 1;
@@ -162,7 +129,6 @@
       setTimeout(() => {
         textEl.style.opacity = 0;
         skipEl.style.opacity = 0;
-        audioNoteEl.style.opacity = 0;
       }, 3800);
 
       setTimeout(() => {
