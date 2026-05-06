@@ -23,9 +23,9 @@
 
     .camera {
       position: absolute;
-      inset: -5%;
+      inset: -4%;
       background: url('/static/intro_scene4.jpg') center center / cover no-repeat;
-      animation: slowCamera 9s ease-in-out forwards;
+      animation: slowCamera 5.8s ease-in-out forwards;
       transform-origin: center;
     }
 
@@ -33,43 +33,43 @@
       position: absolute;
       inset: 0;
       background:
-        radial-gradient(circle at center, rgba(0,0,0,0.08), rgba(0,0,0,0.45)),
-        linear-gradient(to top, rgba(0,0,0,0.86), rgba(0,0,0,0.18), rgba(0,0,0,0.4));
+        radial-gradient(circle at center, rgba(0,0,0,0.06), rgba(0,0,0,0.42)),
+        linear-gradient(to top, rgba(0,0,0,0.86), rgba(0,0,0,0.16), rgba(0,0,0,0.35));
       z-index: 1;
     }
 
     .text {
       position: absolute;
       left: 50%;
-      bottom: 120px;
+      bottom: 118px;
       transform: translateX(-50%);
       z-index: 2;
-      width: min(940px, 86vw);
-      font-size: clamp(28px, 4.3vw, 48px);
-      line-height: 1.26;
+      width: min(920px, 88vw);
+      font-size: clamp(30px, 4.8vw, 52px);
+      line-height: 1.18;
       text-align: center;
       white-space: pre-line;
       opacity: 0;
-      transition: opacity 1.8s ease;
+      transition: opacity 0.8s ease;
       text-shadow: 0 4px 22px rgba(0,0,0,0.95);
     }
 
     .skip {
       position: absolute;
-      right: 26px;
-      bottom: 24px;
+      right: 24px;
+      bottom: 22px;
       z-index: 3;
-      padding: 9px 16px;
-      border: 1px solid rgba(255,255,255,0.35);
+      padding: 8px 14px;
+      border: 1px solid rgba(255,255,255,0.28);
       border-radius: 999px;
-      background: rgba(0,0,0,0.32);
-      color: rgba(255,255,255,0.78);
-      font-size: 12px;
-      letter-spacing: 1.5px;
+      background: rgba(0,0,0,0.25);
+      color: rgba(255,255,255,0.68);
+      font-size: 11px;
+      letter-spacing: 1.3px;
       text-transform: uppercase;
       cursor: pointer;
       opacity: 0;
-      transition: opacity 1.5s ease, background 0.2s ease;
+      transition: opacity 0.8s ease, background 0.2s ease;
     }
 
     .skip:hover {
@@ -79,25 +79,25 @@
 
     .audio-note {
       position: absolute;
-      left: 24px;
-      bottom: 28px;
+      left: 22px;
+      bottom: 26px;
       z-index: 3;
-      font-size: 11px;
+      font-size: 10px;
       opacity: 0;
-      letter-spacing: 1.5px;
+      letter-spacing: 1.3px;
       text-transform: uppercase;
-      transition: opacity 1.5s ease;
+      transition: opacity 0.8s ease;
     }
 
     @keyframes slowCamera {
       0% {
-        transform: scale(1.035) translate3d(-1.0%, 0.4%, 0);
+        transform: scale(1.03) translate3d(-0.8%, 0.3%, 0);
       }
       50% {
-        transform: scale(1.08) translate3d(1.0%, -0.5%, 0);
+        transform: scale(1.065) translate3d(0.8%, -0.4%, 0);
       }
       100% {
-        transform: scale(1.12) translate3d(0.3%, -1.0%, 0);
+        transform: scale(1.09) translate3d(0.2%, -0.8%, 0);
       }
     }
   </style>
@@ -108,12 +108,11 @@
     <div class="camera"></div>
     <div class="shade"></div>
 
-    <div id="text" class="text">In this system,
-you will learn to observe
-before you act.</div>
+    <div id="text" class="text">In this world,
+you observe before you act.</div>
 
     <button id="skip" class="skip" onclick="skipNext(event)">Skip</button>
-    <div id="audioNote" class="audio-note">Tap screen if audio is blocked</div>
+    <div id="audioNote" class="audio-note">Tap for audio</div>
 
     <audio id="audio" preload="auto">
       <source src="/static/intro4.mp3" type="audio/mpeg">
@@ -131,7 +130,8 @@ before you act.</div>
     function startAudio() {
       if (audioStarted) return;
       audioStarted = true;
-      audioEl.volume = 0.68;
+      audioEl.currentTime = 0;
+      audioEl.volume = 0.72;
       audioEl.play().then(() => {
         audioNoteEl.style.opacity = 0;
       }).catch(() => {
@@ -150,25 +150,25 @@ before you act.</div>
     }
 
     window.addEventListener("load", () => {
-      startAudio();
+      setTimeout(() => startAudio(), 150);
 
       setTimeout(() => {
         textEl.style.opacity = 1;
-      }, 1400);
+      }, 400);
 
       setTimeout(() => {
-        skipEl.style.opacity = 0.45;
-      }, 2800);
+        skipEl.style.opacity = 0.38;
+      }, 1200);
 
       setTimeout(() => {
         textEl.style.opacity = 0;
         skipEl.style.opacity = 0;
         audioNoteEl.style.opacity = 0;
-      }, 6800);
+      }, 3800);
 
       setTimeout(() => {
         goNext();
-      }, 8200);
+      }, 5200);
     });
   </script>
 </body>
