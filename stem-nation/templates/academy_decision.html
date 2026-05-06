@@ -1,15 +1,17 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>The Academy — Decision</title>
+  <title>Week 1 — First Settlement Decision</title>
 
   <style>
     body {
       margin: 0;
       background: black;
       color: white;
-      font-family: Arial;
+      font-family: Arial, sans-serif;
       text-align: center;
+      opacity: 0;
+      transition: opacity 1.5s;
     }
 
     .container {
@@ -17,12 +19,54 @@
       flex-direction: column;
       justify-content: center;
       align-items: center;
-      height: 100vh;
+      min-height: 100vh;
+      padding: 40px;
+      box-sizing: border-box;
+    }
+
+    .week-label {
+      font-size: 14px;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      opacity: 0.65;
+      margin-bottom: 24px;
     }
 
     .line {
       font-size: 28px;
       margin: 10px;
+      opacity: 0;
+      transition: opacity 1.5s;
+      max-width: 940px;
+      line-height: 1.35;
+    }
+
+    .decision-question {
+      margin-top: 32px;
+      font-size: 22px;
+      opacity: 0;
+      transition: opacity 1.5s;
+      max-width: 880px;
+      line-height: 1.45;
+      color: #d9c27a;
+      font-weight: bold;
+    }
+
+    .artifact-note {
+      margin-top: 22px;
+      font-size: 16px;
+      opacity: 0;
+      transition: opacity 1.5s;
+      max-width: 820px;
+      line-height: 1.45;
+      color: #d9c27a;
+    }
+
+    .continue-note {
+      margin-top: 28px;
+      font-size: 13px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
       opacity: 0;
       transition: opacity 1.5s;
     }
@@ -33,43 +77,48 @@
 
 <div class="container">
 
-  <div id="l1" class="line">You have observed.</div>
-  <div id="l2" class="line">You have learned how to think.</div>
-  <div id="l3" class="line">You understand the role of the individual.</div>
-  <div id="l4" class="line">Now, you will be required to decide.</div>
-  <div id="l5" class="line">Every decision carries consequence.</div>
+  <div class="week-label">Week 1 · Day 1 · First Decision</div>
+
+  <div id="l1" class="line">You have observed the land.</div>
+  <div id="l2" class="line">You have studied its strengths.</div>
+  <div id="l3" class="line">You have considered its risks.</div>
+  <div id="l4" class="line">Now your people need a place to begin.</div>
+  <div id="l5" class="line">Every settlement decision carries consequence.</div>
+
+  <div id="decision" class="decision-question">
+    Where will your people settle first — and what evidence supports your choice?
+  </div>
+
+  <div id="artifact" class="artifact-note">
+    Begin your Settlement Recommendation Portfolio: identify the region, explain the advantage, name the risk, and defend the decision.
+  </div>
+
+  <div id="continue" class="continue-note">
+    Continuing to the strategic map...
+  </div>
 
 </div>
 
 <script>
 window.onload = () => {
   document.body.style.opacity = 1;
-};
 
-const lines = ["l1","l2","l3","l4","l5"];
+  const lines = ["l1","l2","l3","l4","l5","decision","artifact","continue"];
 
-lines.forEach((id, i) => {
+  lines.forEach((id, i) => {
+    setTimeout(() => {
+      document.getElementById(id).style.opacity = 1;
+    }, i * 1700);
+  });
+
   setTimeout(() => {
-    document.getElementById(id).style.opacity = 1;
-  }, i * 2000);
-});
-</script>
-
-
-<script>
-window.onload = () => {
-  document.body.style.opacity = 1;
+    document.body.style.opacity = 0;
+    setTimeout(() => {
+      window.location.href = "/map";
+    }, 1800);
+  }, 14500);
 };
-
-setTimeout(() => {
-  
-document.body.style.opacity = 0;
-setTimeout(() => {
-  window.location.href =
- "archive.html";
-}, 2000);
-}, 10000);
 </script>
-</body>
 
+</body>
 </html>
