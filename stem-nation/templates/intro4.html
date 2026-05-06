@@ -18,7 +18,6 @@
       height: 100vh;
       overflow: hidden;
       color: white;
-      cursor: pointer;
     }
 
     .camera {
@@ -27,13 +26,14 @@
       background: url('/static/intro_scene4.jpg') center center / cover no-repeat;
       animation: slowCamera 5.8s ease-in-out forwards;
       transform-origin: center;
+      z-index: 0;
     }
 
     .shade {
       position: absolute;
       inset: 0;
       background:
-        radial-gradient(circle at center, rgba(0,0,0,0.06), rgba(0,0,0,0.42)),
+        radial-gradient(circle at center, rgba(0,0,0,0.04), rgba(0,0,0,0.42)),
         linear-gradient(to top, rgba(0,0,0,0.86), rgba(0,0,0,0.16), rgba(0,0,0,0.35));
       z-index: 1;
     }
@@ -104,9 +104,7 @@ you observe before you act.</div>
 
   <script>
     const textEl = document.getElementById("text");
-    const skipEl = document.getElementById("skip");).catch(() => {
-      });
-    }
+    const skipEl = document.getElementById("skip");
 
     function goNext() {
       window.location.href = "/intro5";
@@ -118,7 +116,6 @@ you observe before you act.</div>
     }
 
     window.addEventListener("load", () => {
-
       setTimeout(() => {
         textEl.style.opacity = 1;
       }, 400);
