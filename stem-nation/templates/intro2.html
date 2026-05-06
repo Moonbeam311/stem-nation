@@ -18,13 +18,14 @@
       height: 100vh;
       overflow: hidden;
       color: white;
+      cursor: pointer;
     }
 
     .camera {
       position: absolute;
-      inset: -4%;
+      inset: -5%;
       background: url('/static/intro_scene2.jpg') center center / cover no-repeat;
-      animation: slowCamera 18s ease-in-out forwards;
+      animation: slowCamera 9s ease-in-out forwards;
       transform-origin: center;
     }
 
@@ -32,69 +33,71 @@
       position: absolute;
       inset: 0;
       background:
-        linear-gradient(to top, rgba(0,0,0,0.82), rgba(0,0,0,0.18), rgba(0,0,0,0.35));
+        radial-gradient(circle at center, rgba(0,0,0,0.08), rgba(0,0,0,0.45)),
+        linear-gradient(to top, rgba(0,0,0,0.86), rgba(0,0,0,0.18), rgba(0,0,0,0.4));
       z-index: 1;
     }
 
     .text {
       position: absolute;
       left: 50%;
-      bottom: 145px;
+      bottom: 120px;
       transform: translateX(-50%);
       z-index: 2;
-      width: min(900px, 86vw);
-      font-size: clamp(26px, 4vw, 44px);
-      line-height: 1.28;
+      width: min(940px, 86vw);
+      font-size: clamp(28px, 4.3vw, 48px);
+      line-height: 1.26;
       text-align: center;
       white-space: pre-line;
       opacity: 0;
-      transition: opacity 1.5s ease;
-      text-shadow: 0 4px 18px rgba(0,0,0,0.9);
+      transition: opacity 1.8s ease;
+      text-shadow: 0 4px 22px rgba(0,0,0,0.95);
     }
 
-    .btn {
+    .skip {
       position: absolute;
-      right: 34px;
-      bottom: 30px;
+      right: 26px;
+      bottom: 24px;
       z-index: 3;
-      padding: 13px 24px;
-      border: 1px solid rgba(255,255,255,0.65);
+      padding: 9px 16px;
+      border: 1px solid rgba(255,255,255,0.35);
       border-radius: 999px;
-      background: rgba(0,0,0,0.62);
-      color: white;
-      font-size: 15px;
-      letter-spacing: 1px;
+      background: rgba(0,0,0,0.32);
+      color: rgba(255,255,255,0.78);
+      font-size: 12px;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
       cursor: pointer;
       opacity: 0;
-      transition: opacity 1.2s ease, transform 0.2s ease, background 0.2s ease;
+      transition: opacity 1.5s ease, background 0.2s ease;
     }
 
-    .btn:hover {
-      transform: translateY(-2px);
+    .skip:hover {
       background: rgba(212,175,55,0.82);
       color: black;
     }
 
     .audio-note {
       position: absolute;
-      left: 28px;
-      bottom: 34px;
+      left: 24px;
+      bottom: 28px;
       z-index: 3;
-      font-size: 12px;
-      opacity: 0.55;
-      letter-spacing: 1px;
+      font-size: 11px;
+      opacity: 0;
+      letter-spacing: 1.5px;
       text-transform: uppercase;
+      transition: opacity 1.5s ease;
     }
 
     @keyframes slowCamera {
       0% {
-        transform: scale(1.04) translate3d(-1.2%, 0, 0);
+        transform: scale(1.035) translate3d(-1.0%, 0.4%, 0);
       }
       50% {
-        transform: scale(1.1) translate3d(1.2%, -0.8%, 0);
+        transform: scale(1.08) translate3d(1.0%, -0.5%, 0);
       }
       100% {
-        transform: scale(1.14) translate3d(0.4%, -1.2%, 0);
+        transform: scale(1.12) translate3d(0.3%, -1.0%, 0);
       }
     }
   </style>
@@ -108,8 +111,8 @@
     <div id="text" class="text">Not with answers…
 but with questions.</div>
 
-    <button id="btn" class="btn" onclick="next(event)">Continue</button>
-    <div class="audio-note">Tap screen if audio is blocked</div>
+    <button id="skip" class="skip" onclick="skipNext(event)">Skip</button>
+    <div id="audioNote" class="audio-note">Tap screen if audio is blocked</div>
 
     <audio id="audio" preload="auto">
       <source src="/static/intro2.mp3" type="audio/mpeg">
@@ -118,7 +121,8 @@ but with questions.</div>
 
   <script>
     const textEl = document.getElementById("text");
-    const btnEl = document.getElementById("btn");
+    const skipEl = document.getElementById("skip");
+    const audioNoteEl = document.getElementById("audioNote");
     const audioEl = document.getElementById("audio");
 
     let audioStarted = false;
@@ -126,22 +130,45 @@ but with questions.</div>
     function startAudio() {
       if (audioStarted) return;
       audioStarted = true;
-      audioEl.volume = 0.72;
-      audioEl.play().catch(() => {
+      audioEl.volume = 0.68;
+      audioEl.play().then(() => {
+        audioNoteEl.style.opacity = 0;
+      }).catch(() => {
         audioStarted = false;
+        audioNoteEl.style.opacity = 0.55;
       });
+    }
+
+    function goNext() {
+      window.location.href = "/intro3";
+    }
+
+    function skipNext(event) {
+      if (event) event.stopPropagation();
+      goNext();
     }
 
     window.addEventListener("load", () => {
       startAudio();
-      setTimeout(() => textEl.style.opacity = 1, 1200);
-      setTimeout(() => btnEl.style.opacity = 1, 6200);
-    });
 
-    function next(event) {
-      if (event) event.stopPropagation();
-      window.location.href = "/intro3";
-    }
+      setTimeout(() => {
+        textEl.style.opacity = 1;
+      }, 1400);
+
+      setTimeout(() => {
+        skipEl.style.opacity = 0.45;
+      }, 2800);
+
+      setTimeout(() => {
+        textEl.style.opacity = 0;
+        skipEl.style.opacity = 0;
+        audioNoteEl.style.opacity = 0;
+      }, 6800);
+
+      setTimeout(() => {
+        goNext();
+      }, 8200);
+    });
   </script>
 </body>
 </html>
