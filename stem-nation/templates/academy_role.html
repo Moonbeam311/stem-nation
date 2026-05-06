@@ -1,15 +1,17 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>The Academy — Role</title>
+  <title>Week 1 — Observation Becomes Responsibility</title>
 
   <style>
     body {
       margin: 0;
       background: black;
       color: white;
-      font-family: Arial;
+      font-family: Arial, sans-serif;
       text-align: center;
+      opacity: 0;
+      transition: opacity 1.5s;
     }
 
     .container {
@@ -17,7 +19,17 @@
       flex-direction: column;
       justify-content: center;
       align-items: center;
-      height: 100vh;
+      min-height: 100vh;
+      padding: 40px;
+      box-sizing: border-box;
+    }
+
+    .week-label {
+      font-size: 14px;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      opacity: 0.65;
+      margin-bottom: 24px;
     }
 
     .line {
@@ -25,6 +37,18 @@
       margin: 10px;
       opacity: 0;
       transition: opacity 1.5s;
+      max-width: 920px;
+      line-height: 1.35;
+    }
+
+    .artifact-note {
+      margin-top: 34px;
+      font-size: 16px;
+      opacity: 0;
+      transition: opacity 1.5s;
+      max-width: 820px;
+      line-height: 1.45;
+      color: #d9c27a;
     }
   </style>
 </head>
@@ -33,42 +57,41 @@
 
 <div class="container">
 
-  <div id="l1" class="line">An individual does not exist in isolation.</div>
-  <div id="l2" class="line">Every decision influences something beyond itself.</div>
-  <div id="l3" class="line">Actions affect people, systems, and outcomes.</div>
-  <div id="l4" class="line">This is the beginning of responsibility.</div>
+  <div class="week-label">Week 1 · Day 1 · Observation → Responsibility</div>
+
+  <div id="l1" class="line">An individual does not observe in isolation.</div>
+  <div id="l2" class="line">Every decision reaches beyond the person who makes it.</div>
+  <div id="l3" class="line">A river can feed a people.</div>
+  <div id="l4" class="line">A mountain can protect them.</div>
+  <div id="l5" class="line">A poor choice of land can weaken everything that follows.</div>
+  <div id="l6" class="line">This is the beginning of responsibility.</div>
+
+  <div id="artifact" class="artifact-note">
+    Prepare your Terrain Analysis Report: Which land feature creates the greatest advantage, and which creates the greatest risk?
+  </div>
 
 </div>
 
 <script>
 window.onload = () => {
   document.body.style.opacity = 1;
-};
 
-const lines = ["l1","l2","l3","l4"];
+  const lines = ["l1","l2","l3","l4","l5","l6","artifact"];
 
-lines.forEach((id, i) => {
+  lines.forEach((id, i) => {
+    setTimeout(() => {
+      document.getElementById(id).style.opacity = 1;
+    }, i * 1800);
+  });
+
   setTimeout(() => {
-    document.getElementById(id).style.opacity = 1;
-  }, i * 2000);
-});
-</script>
-
-
-<script>
-window.onload = () => {
-  document.body.style.opacity = 1;
+    document.body.style.opacity = 0;
+    setTimeout(() => {
+      window.location.href = "/academy_decision";
+    }, 1800);
+  }, 13000);
 };
-
-setTimeout(() => {
-  
-document.body.style.opacity = 0;
-setTimeout(() => {
-  window.location.href =
- "academy_decision.html";
-}, 2000);
-}, 8000);
 </script>
-</body>
 
+</body>
 </html>
