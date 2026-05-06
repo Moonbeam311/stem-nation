@@ -49,15 +49,6 @@ def world_select():
 
 
 # =========================
-# 🔥 CONNECT TO NEW BUILD
-# =========================
-@app.route("/region_experience")
-def region_experience():
-    region = request.args.get("region", "forest")
-    return render_template("region_experience.html", region=region)
-
-
-# =========================
 # ACADEMY (ZIP)
 # =========================
 @app.route("/academy_individual")
@@ -105,5 +96,3 @@ if __name__ == "__main__":
     import os
     port = int(os.environ.get("PORT", 5000))
     app.run(host="0.0.0.0", port=port, debug=True)
-
-    app.run(debug=True)
