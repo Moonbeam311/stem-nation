@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Simulation Mode</title>
+  <title>Week 1 — Strategic Map & Founding Archive</title>
 
   <style>
     body {
@@ -14,8 +14,17 @@
     }
 
     .container {
-      max-width: 980px;
+      max-width: 1080px;
       margin: 0 auto;
+    }
+
+    .week-label {
+      text-align: center;
+      font-size: 14px;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      opacity: 0.72;
+      margin-bottom: 12px;
     }
 
     h1 {
@@ -33,9 +42,32 @@
       opacity: 0.92;
     }
 
+    .map-panel {
+      background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(244,211,94,0.28);
+      border-radius: 18px;
+      padding: 24px;
+      margin-bottom: 24px;
+      text-align: center;
+    }
+
+    .map-title {
+      color: #f4d35e;
+      font-size: 24px;
+      margin-bottom: 12px;
+    }
+
+    .map-placeholder {
+      border: 1px dashed rgba(244,211,94,0.55);
+      border-radius: 16px;
+      padding: 28px;
+      line-height: 1.7;
+      background: rgba(0,0,0,0.18);
+    }
+
     .grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
       gap: 18px;
     }
 
@@ -48,7 +80,7 @@
     }
 
     .card h2 {
-      font-size: 22px;
+      font-size: 21px;
       color: #f4d35e;
       margin: 0 0 10px 0;
     }
@@ -63,10 +95,11 @@
       margin-top: 30px;
       text-align: center;
       background: rgba(255,255,255,0.05);
-      padding: 18px;
+      padding: 20px;
       border-radius: 12px;
       font-size: 16px;
       line-height: 1.6;
+      border: 1px solid rgba(244,211,94,0.18);
     }
 
     .btn-row {
@@ -83,57 +116,79 @@
       font-size: 16px;
       font-weight: bold;
       cursor: pointer;
-      margin: 0 8px;
+      margin: 8px;
+    }
+
+    .btn.secondary {
+      background: transparent;
+      color: #f4d35e;
+      border: 1px solid #d4af37;
     }
   </style>
 </head>
 
 <body>
   <div class="container">
-    <h1>Simulation Mode</h1>
+    <div class="week-label">Week 1 · Module 0 · Cartography & Orientation</div>
+
+    <h1>Strategic Map & Founding Archive</h1>
 
     <div class="subtitle">
-      Simulation Mode is the strategic systems layer of STEM Nation.<br>
-      Explore how decisions, structures, and outcomes interact across the nation engine.
+      Your first civilization decision begins with the land.<br>
+      Use observation, evidence, and terrain reasoning to defend where your people should settle.
+    </div>
+
+    <div class="map-panel">
+      <div class="map-title">Settlement Recommendation Portfolio</div>
+      <div class="map-placeholder">
+        <strong>Student Task:</strong><br>
+        Identify your chosen region, explain its strongest advantage, name its greatest risk,
+        and describe how your people will survive the first stage of civilization.
+        <br><br>
+        <em>This screen is the Week 1 bridge between map observation and the future live simulation engine.</em>
+      </div>
     </div>
 
     <div class="grid">
       <div class="card">
-        <h2>Strategic View</h2>
+        <h2>1. Observe the Land</h2>
         <p>
-          Enter the systems-facing layer where decisions affect growth, stability, movement, and long-term national development.
+          What did the map reveal? Look for water, food sources, movement paths, barriers, and dangerous terrain.
         </p>
       </div>
 
       <div class="card">
-        <h2>Decision Flow</h2>
+        <h2>2. Identify Resources</h2>
         <p>
-          Simulation Mode connects leadership choices to consequences, reinforcing how actions shape national outcomes over time.
+          Decide which resources matter first: food, shelter, defense, trade access, or room to grow.
         </p>
       </div>
 
       <div class="card">
-        <h2>Systems Thinking</h2>
+        <h2>3. Name the Risk</h2>
         <p>
-          Students and facilitators can examine relationships among food, economy, defense, movement, and national organization.
+          Every region has weakness. Explain the challenge your people must overcome to survive.
         </p>
       </div>
 
       <div class="card">
-        <h2>Expansion Layer</h2>
+        <h2>4. Defend the Decision</h2>
         <p>
-          This mode prepares the pathway for deeper simulation, map-state logic, scoring, and future nation engine extensions.
+          Use evidence from the map to justify your settlement choice. Strong leaders explain their reasoning.
         </p>
       </div>
     </div>
 
     <div class="footer-box">
-      Simulation Mode is the bridge between individual decisions and larger national systems. It supports strategic thinking, consequence, and structured expansion.
+      <strong>Founding Civilization Archive:</strong><br>
+      Combine your First Observation Notes, Terrain Analysis Report, and Settlement Recommendation Portfolio.
+      This becomes the first official record of your civilization.
     </div>
 
     <div class="btn-row">
-      <button class="btn" onclick="window.location.href='/'">Back to Landing</button>
+      <button class="btn secondary" onclick="window.location.href='/world_select.html'">Return to World Select</button>
       <button class="btn" onclick="window.location.href='/hub'">Open Project Hub</button>
+      <button class="btn secondary" onclick="window.location.href='/'">Back to Landing</button>
     </div>
   </div>
 </body>
