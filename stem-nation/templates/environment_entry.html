@@ -164,7 +164,7 @@
     <div id="motion" class="motion"></div>
 
     <div class="content">
-      <div class="label">Week 1 · Environment Entry</div>
+      <div class="label">Week 1 · Baseline Inquiry</div>
       <h1 id="title">Environment</h1>
       <div id="description" class="description"></div>
 
@@ -173,8 +173,8 @@
       <div id="question" class="question"></div>
 
       <div class="btn-row">
-        <button class="btn" onclick="enterAcademy()">Enter This Environment</button>
-        <button class="btn secondary" onclick="window.location.href='/world_select.html'">Choose Another Environment</button>
+        <button class="btn" onclick="enterAcademy()">Continue Investigation</button>
+        <button class="btn secondary" onclick="window.location.href='/world_select.html'">Investigate Another Environment</button>
       </div>
     </div>
   </div>
@@ -188,42 +188,42 @@
         image: "/static/world_river.jpg",
         description: "Water moves through the land. Fertile soil gathers near the banks. Food, travel, and danger all begin here.",
         resources: ["running water", "fertile soil", "fish", "reeds", "flood risk"],
-        question: "What would your people gain from settling near the river — and what danger would they have to respect?"
+        question: "What does the river offer — and what might it take away?"
       },
       forest: {
         title: "Forest Belt",
         image: "/static/world_forest.jpg",
         description: "Trees surround the path. Animals move through the shadows. Shelter, timber, medicine, and hidden danger live here.",
         resources: ["timber", "wildlife", "berries", "shelter", "limited movement"],
-        question: "What can the forest provide that open land cannot — and how might it slow your civilization down?"
+        question: "What does the forest protect — and what does it hide?"
       },
       desert: {
         title: "Desert Route",
         image: "/static/world_desert.jpg",
         description: "Heat rises from the ground. Water is rare. Those who survive here must master distance, discipline, and trade.",
         resources: ["sunlight", "salt", "stone", "oasis routes", "water scarcity"],
-        question: "Why would anyone choose a harsh desert — and what kind of leader could survive it?"
+        question: "What would survival require in a land with little water?"
       },
       mountain: {
         title: "Highland Ridge",
         image: "/static/world_mountain.jpg",
         description: "The land rises into stone. Movement is difficult, but defense is strong. Minerals may sleep beneath the cliffs.",
         resources: ["stone", "minerals", "high ground", "defense", "limited farming"],
-        question: "Would you trade easy farming for protection and high ground?"
+        question: "What does high ground make possible — and what does it make difficult?"
       },
       coastal: {
         title: "Coastal Exchange",
         image: "/static/world_coastal.jpg",
         description: "Waves strike the shore. Fish, travel, and outside contact are close. The sea offers opportunity and threat.",
         resources: ["fish", "shells", "boats", "trade access", "storm risk"],
-        question: "How could the coast connect your people to the world — and what could arrive from beyond the water?"
+        question: "What can arrive from the sea?"
       },
       balanced: {
         title: "Valley Basin",
         image: "/static/world_balanced.jpg",
         description: "The land is balanced: open space, nearby resources, and room to grow. But balance still requires strategy.",
         resources: ["grassland", "mixed resources", "settlement space", "moderate food", "unclear advantage"],
-        question: "Is balance a strength — or does your civilization need a sharper advantage?"
+        question: "Is balance enough to survive?"
       }
     };
 
