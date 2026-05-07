@@ -4,58 +4,225 @@
   <title>Week 1 — The Individual & Observation</title>
 
   <style>
-    body {
+    html, body {
       margin: 0;
-      background: black;
+      width: 100%;
+      min-height: 100%;
+      background:
+        radial-gradient(circle at center, rgba(212,175,55,0.16), transparent 44%),
+        radial-gradient(circle at center, rgba(255,255,255,0.045), transparent 58%),
+        linear-gradient(135deg, #050505 0%, #11182b 52%, #050505 100%);
       color: white;
       font-family: Arial, sans-serif;
       text-align: center;
+      overflow: hidden;
+    }
+
+    body {
       opacity: 0;
-      transition: opacity 1.5s;
+      transition: opacity 1.2s ease;
+    }
+
+    .academy-line {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 3px;
+      background: linear-gradient(90deg, transparent, #d4af37, transparent);
+      opacity: 0.75;
     }
 
     .container {
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
       min-height: 100vh;
-      padding: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 42px;
       box-sizing: border-box;
+      position: relative;
+    }
+
+    .academy-seal {
+      position: absolute;
+      width: min(560px, 78vw);
+      height: min(560px, 78vw);
+      opacity: 0.26;
+      z-index: 0;
+      animation: sealBreath 14s ease-in-out infinite;
+      pointer-events: none;
+    }
+
+    .academy-haze {
+      position: absolute;
+      inset: -20%;
+      z-index: 0;
+      pointer-events: none;
+      background:
+        radial-gradient(circle at 30% 35%, rgba(212,175,55,0.07), transparent 32%),
+        radial-gradient(circle at 70% 60%, rgba(95,130,170,0.06), transparent 34%);
+      filter: blur(18px);
+      opacity: 0.45;
+      animation: hazeDrift 22s ease-in-out infinite alternate;
+    }
+
+    .academy-particles {
+      position: absolute;
+      inset: 0;
+      z-index: 1;
+      pointer-events: none;
+      overflow: hidden;
+    }
+
+    .academy-particles span {
+      position: absolute;
+      width: 3px;
+      height: 3px;
+      border-radius: 50%;
+      background: rgba(212,175,55,0.42);
+      box-shadow: 0 0 12px rgba(212,175,55,0.28);
+      animation: particleFloat 18s linear infinite;
+      opacity: 0;
+    }
+
+    .academy-particles span:nth-child(1) { left: 12%; top: 72%; animation-delay: 0s; }
+    .academy-particles span:nth-child(2) { left: 22%; top: 80%; animation-delay: 3s; }
+    .academy-particles span:nth-child(3) { left: 41%; top: 76%; animation-delay: 6s; }
+    .academy-particles span:nth-child(4) { left: 63%; top: 82%; animation-delay: 2s; }
+    .academy-particles span:nth-child(5) { left: 78%; top: 73%; animation-delay: 8s; }
+    .academy-particles span:nth-child(6) { left: 88%; top: 84%; animation-delay: 5s; }
+
+    .reflection-card {
+      position: relative;
+      z-index: 2;
+    }
+
+    @keyframes sealBreath {
+      0%, 100% {
+        transform: scale(0.985);
+        opacity: 0.30;
+      }
+      50% {
+        transform: scale(1.015);
+        opacity: 0.20;
+      }
+    }
+
+    @keyframes hazeDrift {
+      0% {
+        transform: translate(-1.5%, -1%) scale(1);
+      }
+      100% {
+        transform: translate(1.5%, 1%) scale(1.04);
+      }
+    }
+
+    @keyframes particleFloat {
+      0% {
+        transform: translateY(0) translateX(0);
+        opacity: 0;
+      }
+      18% {
+        opacity: 0.28;
+      }
+      78% {
+        opacity: 0.18;
+      }
+      100% {
+        transform: translateY(-78vh) translateX(22px);
+        opacity: 0;
+      }
+    }
+
+    .reflection-card {
+      width: min(920px, 92vw);
+      padding: clamp(26px, 5vw, 48px);
+      border-radius: 20px;
+      background: rgba(0,0,0,0.28);
+      border: 1px solid rgba(212,175,55,0.18);
+      box-shadow: 0 18px 60px rgba(0,0,0,0.45);
+    }
+
+    .academy-label {
+      font-size: 12px;
+      letter-spacing: 4px;
+      text-transform: uppercase;
+      color: #d4af37;
+      opacity: 0.86;
+      margin-bottom: 10px;
     }
 
     .week-label {
-      font-size: 14px;
-      letter-spacing: 3px;
+      font-size: 13px;
+      letter-spacing: 2px;
       text-transform: uppercase;
-      opacity: 0.65;
-      margin-bottom: 24px;
+      opacity: 0.62;
+      margin-bottom: 28px;
     }
 
     .line {
-      font-size: 28px;
-      margin: 10px;
+      font-size: clamp(24px, 3.2vw, 36px);
+      margin: 11px auto;
       opacity: 0;
-      transition: opacity 1.5s;
-      max-width: 900px;
-      line-height: 1.35;
+      transition: opacity 1.1s ease, transform 1.1s ease;
+      transform: translateY(8px);
+      max-width: 850px;
+      line-height: 1.28;
+      text-shadow: 0 4px 20px rgba(0,0,0,0.85);
+    }
+
+    .line.show {
+      opacity: 1;
+      transform: translateY(0);
     }
 
     .artifact-note {
-      margin-top: 34px;
-      font-size: 16px;
+      margin: 34px auto 0;
+      font-size: clamp(15px, 1.7vw, 18px);
       opacity: 0;
-      transition: opacity 1.5s;
-      max-width: 780px;
+      transition: opacity 1.1s ease, transform 1.1s ease;
+      transform: translateY(8px);
+      max-width: 760px;
       line-height: 1.45;
       color: #d9c27a;
+      border-top: 1px solid rgba(212,175,55,0.18);
+      padding-top: 22px;
+    }
+
+    .artifact-note.show {
+      opacity: 1;
+      transform: translateY(0);
     }
   </style>
 </head>
 
 <body>
+<div class="academy-line"></div>
 
 <div class="container">
+  <div class="academy-haze" aria-hidden="true"></div>
+  <div class="academy-particles" aria-hidden="true">
+    <span></span><span></span><span></span><span></span><span></span><span></span>
+  </div>
+
+  <svg class="academy-seal" viewBox="0 0 500 500" aria-hidden="true">
+    <circle cx="250" cy="250" r="210" fill="none" stroke="#d4af37" stroke-width="2"/>
+    <circle cx="250" cy="250" r="145" fill="none" stroke="#d4af37" stroke-width="1" opacity="0.75"/>
+    <circle cx="250" cy="250" r="8" fill="#d4af37"/>
+    <line x1="250" y1="40" x2="250" y2="110" stroke="#d4af37" stroke-width="2"/>
+    <line x1="250" y1="390" x2="250" y2="460" stroke="#d4af37" stroke-width="2"/>
+    <line x1="40" y1="250" x2="110" y2="250" stroke="#d4af37" stroke-width="2"/>
+    <line x1="390" y1="250" x2="460" y2="250" stroke="#d4af37" stroke-width="2"/>
+    <line x1="104" y1="104" x2="154" y2="154" stroke="#d4af37" stroke-width="1"/>
+    <line x1="396" y1="104" x2="346" y2="154" stroke="#d4af37" stroke-width="1"/>
+    <line x1="104" y1="396" x2="154" y2="346" stroke="#d4af37" stroke-width="1"/>
+    <line x1="396" y1="396" x2="346" y2="346" stroke="#d4af37" stroke-width="1"/>
+    <path d="M250 80 C330 160 330 340 250 420 C170 340 170 160 250 80Z" fill="none" stroke="#d4af37" stroke-width="1" opacity="0.55"/>
+    <path d="M80 250 C160 170 340 170 420 250 C340 330 160 330 80 250Z" fill="none" stroke="#d4af37" stroke-width="1" opacity="0.55"/>
+  </svg>
+
+  <div class="reflection-card">
+  <div class="academy-label">The Academy</div>
 
   <div class="week-label">Week 1 · Module 0 · Cartography & Orientation</div>
 
@@ -70,6 +237,7 @@
     Begin your First Observation Notes: What did the land reveal before you made a decision?
   </div>
 
+  </div>
 </div>
 
 <script>
@@ -80,7 +248,7 @@ window.onload = () => {
 
   lines.forEach((id, i) => {
     setTimeout(() => {
-      document.getElementById(id).style.opacity = 1;
+      document.getElementById(id).classList.add("show");
     }, i * 1800);
   });
 
