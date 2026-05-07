@@ -46,8 +46,8 @@
       height: 100vh;
       display: flex;
       flex-direction: column;
-      justify-content: flex-end;
-      padding: 48px;
+      justify-content: flex-start;
+      padding: 24px;
       box-sizing: border-box;
     }
 
@@ -60,9 +60,9 @@
     }
 
     h1 {
-      font-size: clamp(38px, 6vw, 76px);
+      font-size: clamp(26px, 3.5vw, 42px);
       line-height: 1;
-      margin: 0 0 16px;
+      margin: 0 0 8px;
       color: #f4d35e;
       text-shadow: 0 6px 26px rgba(0,0,0,0.92);
     }
@@ -126,6 +126,29 @@
       border: 1px solid rgba(255,255,255,0.35);
     }
 
+
+    .hidden-observation-text {
+      display: none;
+    }
+
+    .corner-actions {
+      position: absolute;
+      right: 24px;
+      bottom: 22px;
+      z-index: 6;
+      margin: 0;
+    }
+
+    .corner-actions .btn {
+      padding: 10px 16px;
+      font-size: 13px;
+      opacity: 0.9;
+    }
+
+    .corner-actions .btn.secondary {
+      opacity: 0.72;
+    }
+
     .motion {
       position: absolute;
       inset: 0;
@@ -141,6 +164,108 @@
       background: rgba(244,211,94,0.55);
       border-radius: 50%;
       animation: drift 8s linear infinite;
+    }
+
+
+
+    .tool-panel {
+      position: absolute;
+      left: 22px;
+      bottom: 22px;
+      z-index: 6;
+      background: rgba(0,0,0,0.42);
+      border: 1px solid rgba(244,211,94,0.28);
+      border-radius: 16px;
+      padding: 10px;
+      width: auto;
+      max-width: min(560px, 92vw);
+      box-sizing: border-box;
+      backdrop-filter: blur(5px);
+    }
+
+    .tool-panel.collapsed .tool-body {
+      display: none;
+    }
+
+    .tool-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      cursor: pointer;
+      user-select: none;
+    }
+
+    .tool-header h3 {
+      margin: 0;
+      color: #f4d35e;
+      font-size: 14px;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+    }
+
+    .collapse-note {
+      font-size: 11px;
+      opacity: 0.7;
+    }
+
+    .tool-panel p {
+      margin: 8px 0 10px;
+      font-size: 12px;
+      line-height: 1.3;
+      opacity: 0.78;
+    }
+
+    .tool-grid {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 7px;
+    }
+
+    .tool {
+      border: 1px solid rgba(255,255,255,0.22);
+      background: rgba(255,255,255,0.08);
+      color: white;
+      border-radius: 999px;
+      width: 38px;
+      height: 38px;
+      padding: 0;
+      font-size: 20px;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .tool.active {
+      background: #d4af37;
+      color: black;
+      border-color: #d4af37;
+      font-weight: bold;
+    }
+
+    .placed-marker {
+      position: absolute;
+      z-index: 5;
+      transform: translate(-50%, -50%);
+      background: rgba(212,175,55,0.92);
+      color: black;
+      border-radius: 999px;
+      width: 36px;
+      height: 36px;
+      font-size: 20px;
+      font-weight: bold;
+      box-shadow: 0 8px 22px rgba(0,0,0,0.55);
+      pointer-events: none;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .marker-count {
+      margin-top: 8px;
+      font-size: 11px;
+      opacity: 0.72;
     }
 
     @keyframes livingCamera {
@@ -163,17 +288,35 @@
     <div class="shade"></div>
     <div id="motion" class="motion"></div>
 
+    <div id="toolPanel" class="tool-panel">
+      <div class="tool-header" onclick="toggleTools()">
+        <h3>Inquiry Tools</h3>
+        <span class="collapse-note">tap to hide/show</span>
+      </div>
+      <div class="tool-body">
+        <p>Choose a tool, then click the land.</p>
+        <div class="tool-grid">
+          <button class="tool active" data-tool="Settlement" data-symbol="🏠" title="Settlement">🏠</button>
+          <button class="tool" data-tool="Farm" data-symbol="🌾" title="Farm / Food">🌾</button>
+          <button class="tool" data-tool="Trade Route" data-symbol="🛤️" title="Trade Route">🛤️</button>
+          <button class="tool" data-tool="Resource" data-symbol="💎" title="Resource">💎</button>
+          <button class="tool" data-tool="Risk" data-symbol="⚠️" title="Risk">⚠️</button>
+        </div>
+        <div id="markerCount" class="marker-count">Markers placed: 0</div>
+      </div>
+    </div>
+
     <div class="content">
       <div class="label">Week 1 · Baseline Inquiry</div>
       <h1 id="title">Environment</h1>
-      <div id="description" class="description"></div>
+      <div id="description" class="description hidden-observation-text"></div>
 
-      <div id="resources" class="resources"></div>
+      <div id="resources" class="resources hidden-observation-text"></div>
 
-      <div id="question" class="question"></div>
+      <div id="question" class="question hidden-observation-text"></div>
 
-      <div class="btn-row">
-        <button class="btn" onclick="enterAcademy()">Continue Investigation</button>
+      <div class="btn-row corner-actions">
+        <button class="btn" onclick="enterAcademy()">Continue to Academy</button>
         <button class="btn secondary" onclick="window.location.href='/world_select.html'">Investigate Another Environment</button>
       </div>
     </div>
@@ -252,6 +395,44 @@
       p.style.animationDuration = (6 + Math.random() * 7) + "s";
       motion.appendChild(p);
     }
+
+
+
+    function toggleTools() {
+      document.getElementById("toolPanel").classList.toggle("collapsed");
+    }
+
+    let selectedTool = "Settlement";
+    let selectedSymbol = "🏠";
+    let markerTotal = 0;
+
+    document.querySelectorAll(".tool").forEach(button => {
+      button.addEventListener("click", (event) => {
+        event.stopPropagation();
+        document.querySelectorAll(".tool").forEach(btn => btn.classList.remove("active"));
+        button.classList.add("active");
+        selectedTool = button.dataset.tool;
+        selectedSymbol = button.dataset.symbol || selectedTool;
+      });
+    });
+
+    document.querySelector(".scene").addEventListener("click", (event) => {
+      if (event.target.closest(".tool-panel") || event.target.closest(".btn-row")) {
+        return;
+      }
+
+      const marker = document.createElement("div");
+      marker.className = "placed-marker";
+      marker.textContent = selectedSymbol;
+      marker.title = selectedTool;
+      marker.style.left = event.clientX + "px";
+      marker.style.top = event.clientY + "px";
+      document.querySelector(".scene").appendChild(marker);
+
+      markerTotal += 1;
+      document.getElementById("markerCount").textContent = "Markers placed: " + markerTotal;
+    });
+
 
     function enterAcademy() {
       window.location.href = "/academy_individual?world=" + encodeURIComponent(world);
