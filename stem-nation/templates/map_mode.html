@@ -256,6 +256,20 @@
       opacity: 0.9;
     }
 
+    .archive-saved-status {
+      margin-top: 10px;
+      text-align: center;
+      font-size: 13px;
+      color: #9fe6a0;
+      opacity: 0;
+      transition: opacity 0.5s ease;
+      letter-spacing: 0.4px;
+    }
+
+    .archive-saved-status.show {
+      opacity: 0.95;
+    }
+
     .btn.locked {
       opacity: 0.45;
       cursor: not-allowed;
@@ -450,6 +464,10 @@
       <div id="completionStatus" class="completion-status">
         Complete all 5 fields to unlock the Project Hub.
       </div>
+
+      <div id="archiveSavedStatus" class="archive-saved-status">
+        Archive saved locally.
+      </div>
     </form>
 
 
@@ -472,6 +490,23 @@ const STORAGE_KEY = "STEM_NATION_SETTLEMENT_DEFENSE_V1";
 
 const openHubBtn = document.getElementById("openHubBtn");
 const completionStatus = document.getElementById("completionStatus");
+const archiveSavedStatus = document.getElementById("archiveSavedStatus");
+let archiveSavedTimer = null;
+
+function showArchiveSavedStatus() {
+  if (!archiveSavedStatus) return;
+
+  archiveSavedStatus.classList.add("show");
+  archiveSavedStatus.textContent = "Archive saved locally.";
+
+  if (archiveSavedTimer) {
+    clearTimeout(archiveSavedTimer);
+  }
+
+  archiveSavedTimer = setTimeout(() => {
+    archiveSavedStatus.classList.remove("show");
+  }, 1600);
+}
 
 function saveSettlementDefense() {
   const record = {};
@@ -482,6 +517,7 @@ function saveSettlementDefense() {
 
   record.savedAt = new Date().toISOString();
   localStorage.setItem(STORAGE_KEY, JSON.stringify(record));
+  showArchiveSavedStatus();
 }
 
 function loadSettlementDefense() {
