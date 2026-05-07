@@ -167,6 +167,27 @@
     }
 
 
+    .audio-start {
+      position: absolute;
+      left: 24px;
+      top: 24px;
+      z-index: 8;
+      border: 1px solid rgba(244,211,94,0.55);
+      border-radius: 999px;
+      background: rgba(0,0,0,0.48);
+      color: #f4d35e;
+      padding: 9px 14px;
+      font-size: 12px;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      cursor: pointer;
+      backdrop-filter: blur(4px);
+      opacity: 0.86;
+    }
+
+    .audio-start.hidden {
+      display: none;
+    }
 
     .tool-panel {
       position: absolute;
@@ -350,8 +371,13 @@
     <div id="bg" class="bg"></div>
     <div class="shade"></div>
     <div id="motion" class="motion"></div>
+    <button id="audioStart" class="audio-start" onclick="playBridgeAudio(event)">Play Guide Audio</button>
 
-    <div id="toolPanel" class="tool-panel">
+    <audio id="bridgeAudio" preload="auto">
+      <source src="/static/environment_bridge_demo.mp3" type="audio/mpeg">
+    </audio>
+
+<div id="toolPanel" class="tool-panel">
       <div class="tool-header" onclick="toggleTools()">
         <h3>Inquiry Tools</h3>
         <span class="collapse-note">tap to hide/show</span>
@@ -387,6 +413,7 @@
         </div>
 
         <div id="markerCount" class="marker-count">Markers placed: 0</div>
+        <div id="readinessMessage" class="marker-count">Place at least 3 markers and explain one decision before continuing.</div>
       </div>
     </div>
 
@@ -400,7 +427,7 @@
       <div id="question" class="question hidden-observation-text"></div>
 
       <div class="btn-row corner-actions">
-        <button class="btn" onclick="enterAcademy()">Continue to Academy</button>
+        <button class="btn" onclick="checkReadiness()">Continue to Academy</button>
         <button class="btn secondary" onclick="window.location.href='/world_select.html'">Investigate Another Environment</button>
       </div>
     </div>
@@ -573,6 +600,61 @@
       if (event) event.stopPropagation();
       document.getElementById("legend").classList.toggle("show");
     }
+
+
+    function checkReadiness() {
+      const reasoning = document.getElementById("reasoningBox").value.trim();
+      const message = document.getElementById("readinessMessage");
+
+      if (markerTotal < 3 && reasoning.length < 12) {
+        message.textContent = "Before continuing: place at least 3 markers and explain one decision.";
+        message.style.color = "#f4d35e";
+        return;
+      }
+
+      if (markerTotal < 3) {
+        message.textContent = "Place at least 3 markers before continuing.";
+        message.style.color = "#f4d35e";
+        return;
+      }
+
+      if (reasoning.length < 12) {
+        message.textContent = "Explain at least one decision before continuing.";
+        message.style.color = "#f4d35e";
+        return;
+      }
+
+      message.textContent = "Baseline inquiry complete. Continue to the Academy.";
+      message.style.color = "#9be28f";
+
+      setTimeout(() => {
+        enterAcademy();
+      }, 450);
+    }
+
+
+
+    function playBridgeAudio(event) {
+      if (event) event.stopPropagation();
+
+      const audio = document.getElementById("bridgeAudio");
+      const button = document.getElementById("audioStart");
+
+      audio.currentTime = 0;
+      audio.volume = 0.88;
+
+      audio.play().then(() => {
+        button.classList.add("hidden");
+      }).catch(() => {
+        button.textContent = "Tap to Play Guide";
+      });
+    }
+
+    window.addEventListener("load", () => {
+      setTimeout(() => {
+        playBridgeAudio();
+      }, 600);
+    });
 
     function enterAcademy() {
       window.location.href = "/academy_individual?world=" + encodeURIComponent(world);
