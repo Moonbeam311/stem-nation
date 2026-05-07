@@ -82,6 +82,61 @@
       color: #f0df9a;
     }
 
+    .saved-defense {
+      margin-top: 28px;
+      background: rgba(0,0,0,0.34);
+      border: 1px solid rgba(212,175,55,0.28);
+      border-radius: 18px;
+      padding: 24px;
+    }
+
+    .saved-defense h2 {
+      color: #d4af37;
+      margin-top: 0;
+      text-align: center;
+    }
+
+    .saved-defense-empty {
+      text-align: center;
+      opacity: 0.82;
+      line-height: 1.6;
+    }
+
+    .defense-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 14px;
+      margin-top: 18px;
+    }
+
+    .defense-item {
+      border: 1px solid rgba(212,175,55,0.16);
+      border-radius: 14px;
+      padding: 16px;
+      background: rgba(255,255,255,0.05);
+    }
+
+    .defense-item .label {
+      color: #f0df9a;
+      font-size: 12px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      margin-bottom: 8px;
+    }
+
+    .defense-item .answer {
+      line-height: 1.55;
+      white-space: pre-wrap;
+      opacity: 0.95;
+    }
+
+    .saved-time {
+      margin-top: 14px;
+      text-align: center;
+      font-size: 13px;
+      opacity: 0.68;
+    }
+
     .btn-row {
       margin-top: 30px;
       text-align: center;
@@ -140,10 +195,66 @@
       </div>
     </div>
 
+    <div id="savedDefense" class="saved-defense">
+      <h2>Saved Settlement Decision Defense</h2>
+      <div id="savedDefenseContent" class="saved-defense-empty">
+        No saved settlement defense found yet. Return to the Strategic Map and complete the five required fields.
+      </div>
+    </div>
+
     <div class="btn-row">
       <a class="btn" href="/map">Return to Strategic Map</a>
       <a class="btn" href="/">Back to Landing</a>
     </div>
   </div>
+<script>
+const STORAGE_KEY = "STEM_NATION_SETTLEMENT_DEFENSE_V1";
+
+const labels = {
+  chosenRegion: "Chosen Region",
+  strongestAdvantage: "Strongest Advantage",
+  greatestRisk: "Greatest Risk",
+  landEvidence: "Evidence From the Land",
+  survivalPlan: "Survival Plan"
+};
+
+function renderSavedDefense() {
+  const container = document.getElementById("savedDefenseContent");
+  if (!container) return;
+
+  const raw = localStorage.getItem(STORAGE_KEY);
+  if (!raw) return;
+
+  try {
+    const record = JSON.parse(raw);
+    const fields = Object.keys(labels);
+
+    const hasAnyAnswer = fields.some((id) => record[id] && record[id].trim().length > 0);
+    if (!hasAnyAnswer) return;
+
+    const items = fields.map((id) => {
+      const answer = record[id] || "";
+      return `
+        <div class="defense-item">
+          <div class="label">${labels[id]}</div>
+          <div class="answer">${answer.replace(/</g, "&lt;").replace(/>/g, "&gt;")}</div>
+        </div>
+      `;
+    }).join("");
+
+    const savedTime = record.savedAt
+      ? `<div class="saved-time">Saved locally: ${new Date(record.savedAt).toLocaleString()}</div>`
+      : "";
+
+    container.className = "defense-grid";
+    container.innerHTML = items + savedTime;
+  } catch (error) {
+    console.log("Could not render saved settlement defense.", error);
+  }
+}
+
+renderSavedDefense();
+</script>
+
 </body>
 </html>
