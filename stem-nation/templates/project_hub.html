@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>STEM Nation — Project Hub</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background:
+        radial-gradient(circle at center, rgba(212,175,55,0.12), transparent 42%),
+        linear-gradient(135deg, #050505 0%, #11182b 55%, #050505 100%);
+      color: white;
+      min-height: 100vh;
+      padding: 42px 20px;
+      box-sizing: border-box;
+    }
+
+    .container {
+      max-width: 980px;
+      margin: 0 auto;
+      text-align: center;
+    }
+
+    .label {
+      font-size: 13px;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: #d4af37;
+      opacity: 0.85;
+      margin-bottom: 14px;
+    }
+
+    h1 {
+      font-size: clamp(36px, 5vw, 58px);
+      margin: 0 0 14px;
+      color: #f0df9a;
+    }
+
+    .subtitle {
+      font-size: 18px;
+      line-height: 1.6;
+      opacity: 0.9;
+      max-width: 760px;
+      margin: 0 auto 34px;
+    }
+
+    .panel {
+      background: rgba(0,0,0,0.36);
+      border: 1px solid rgba(212,175,55,0.28);
+      border-radius: 20px;
+      padding: 28px;
+      box-shadow: 0 18px 62px rgba(0,0,0,0.42);
+      text-align: left;
+    }
+
+    .panel h2 {
+      color: #d4af37;
+      margin-top: 0;
+      text-align: center;
+    }
+
+    .panel p {
+      line-height: 1.6;
+      font-size: 16px;
+    }
+
+    .artifact-list {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 14px;
+      margin-top: 22px;
+    }
+
+    .artifact {
+      border: 1px solid rgba(212,175,55,0.18);
+      border-radius: 14px;
+      padding: 16px;
+      background: rgba(255,255,255,0.05);
+    }
+
+    .artifact strong {
+      color: #f0df9a;
+    }
+
+    .btn-row {
+      margin-top: 30px;
+      text-align: center;
+    }
+
+    .btn {
+      display: inline-block;
+      text-decoration: none;
+      border-radius: 999px;
+      border: 1px solid rgba(212,175,55,0.55);
+      color: #f0df9a;
+      padding: 13px 22px;
+      margin: 8px;
+      background: rgba(0,0,0,0.30);
+      letter-spacing: 1px;
+    }
+
+    .btn:hover {
+      background: rgba(212,175,55,0.12);
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container">
+    <div class="label">STEM Nation · Founding Archive</div>
+
+    <h1>Project Hub</h1>
+
+    <div class="subtitle">
+      Your civilization has crossed from observation into decision. This hub will hold the first official artifacts of your founding archive.
+    </div>
+
+    <div class="panel">
+      <h2>Week 1 Founding Record</h2>
+
+      <p>
+        This page is a temporary project hub placeholder. The next build phase can connect student entries, archive records, and simulation outputs here.
+      </p>
+
+      <div class="artifact-list">
+        <div class="artifact">
+          <strong>First Observation Notes</strong><br>
+          What the land revealed before a decision was made.
+        </div>
+
+        <div class="artifact">
+          <strong>Settlement Decision Defense</strong><br>
+          Region, advantage, risk, evidence, and survival plan.
+        </div>
+
+        <div class="artifact">
+          <strong>Founding Archive</strong><br>
+          The first record of your civilization’s reasoning.
+        </div>
+      </div>
+    </div>
+
+    <div class="btn-row">
+      <a class="btn" href="/map">Return to Strategic Map</a>
+      <a class="btn" href="/">Back to Landing</a>
+    </div>
+  </div>
+</body>
+</html>
