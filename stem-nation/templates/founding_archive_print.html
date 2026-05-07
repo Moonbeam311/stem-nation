@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Printable Founding Archive</title>
+
+  <style>
+    body {
+      margin: 0;
+      font-family: Georgia, "Times New Roman", serif;
+      background: #f7f2e7;
+      color: #111;
+      padding: 40px;
+      box-sizing: border-box;
+    }
+
+    .page {
+      max-width: 850px;
+      margin: 0 auto;
+      background: white;
+      border: 1px solid #d4af37;
+      padding: 42px;
+      box-shadow: 0 14px 40px rgba(0,0,0,0.18);
+    }
+
+    .header {
+      text-align: center;
+      border-bottom: 2px solid #d4af37;
+      padding-bottom: 18px;
+      margin-bottom: 28px;
+    }
+
+    .label {
+      font-family: Arial, sans-serif;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      font-size: 12px;
+      color: #8a6d1d;
+      margin-bottom: 8px;
+    }
+
+    h1 {
+      margin: 0;
+      font-size: 34px;
+    }
+
+    .subtitle {
+      margin-top: 10px;
+      font-family: Arial, sans-serif;
+      font-size: 14px;
+      color: #555;
+    }
+
+    .field {
+      margin: 24px 0;
+      page-break-inside: avoid;
+    }
+
+    .field h2 {
+      font-family: Arial, sans-serif;
+      color: #8a6d1d;
+      font-size: 16px;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      border-bottom: 1px solid #ddd;
+      padding-bottom: 6px;
+      margin-bottom: 10px;
+    }
+
+    .answer {
+      min-height: 38px;
+      line-height: 1.6;
+      white-space: pre-wrap;
+      font-size: 16px;
+    }
+
+    .empty {
+      color: #777;
+      font-style: italic;
+    }
+
+    .footer {
+      margin-top: 36px;
+      border-top: 1px solid #d4af37;
+      padding-top: 14px;
+      font-family: Arial, sans-serif;
+      font-size: 12px;
+      color: #555;
+      text-align: center;
+    }
+
+    .btn-row {
+      max-width: 850px;
+      margin: 22px auto;
+      text-align: center;
+      font-family: Arial, sans-serif;
+    }
+
+    .btn {
+      border: 1px solid #8a6d1d;
+      background: #d4af37;
+      color: #111;
+      padding: 12px 20px;
+      border-radius: 999px;
+      cursor: pointer;
+      font-weight: bold;
+      margin: 6px;
+      text-decoration: none;
+      display: inline-block;
+    }
+
+    .btn.secondary {
+      background: transparent;
+      color: #8a6d1d;
+    }
+
+    @media print {
+      body {
+        background: white;
+        padding: 0;
+      }
+
+      .page {
+        box-shadow: none;
+        border: none;
+        max-width: none;
+      }
+
+      .btn-row {
+        display: none;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="page">
+    <div class="header">
+      <div class="label">STEM Nation · Founding Archive</div>
+      <h1>Settlement Decision Defense</h1>
+      <div id="savedTime" class="subtitle">Saved record loading...</div>
+    </div>
+
+    <div class="field">
+      <h2>Chosen Region</h2>
+      <div id="chosenRegion" class="answer empty">No response recorded.</div>
+    </div>
+
+    <div class="field">
+      <h2>Strongest Advantage</h2>
+      <div id="strongestAdvantage" class="answer empty">No response recorded.</div>
+    </div>
+
+    <div class="field">
+      <h2>Greatest Risk</h2>
+      <div id="greatestRisk" class="answer empty">No response recorded.</div>
+    </div>
+
+    <div class="field">
+      <h2>Evidence From the Land</h2>
+      <div id="landEvidence" class="answer empty">No response recorded.</div>
+    </div>
+
+    <div class="field">
+      <h2>Survival Plan</h2>
+      <div id="survivalPlan" class="answer empty">No response recorded.</div>
+    </div>
+
+    <div class="footer">
+      Generated from STEM Nation Project Hub · Printable classroom artifact
+    </div>
+  </div>
+
+  <div class="btn-row">
+    <button class="btn" onclick="window.print()">Print / Save as PDF</button>
+    <a class="btn secondary" href="/hub">Return to Project Hub</a>
+  </div>
+
+<script>
+const STORAGE_KEY = "STEM_NATION_SETTLEMENT_DEFENSE_V1";
+
+function safeSetText(id, value) {
+  const el = document.getElementById(id);
+  if (!el) return;
+
+  if (value && value.trim().length > 0) {
+    el.textContent = value;
+    el.classList.remove("empty");
+  }
+}
+
+function loadPrintableArchive() {
+  const raw = localStorage.getItem(STORAGE_KEY);
+  const savedTime = document.getElementById("savedTime");
+
+  if (!raw) {
+    if (savedTime) {
+      savedTime.textContent = "No saved local record found.";
+    }
+    return;
+  }
+
+  try {
+    const record = JSON.parse(raw);
+
+    safeSetText("chosenRegion", record.chosenRegion || "");
+    safeSetText("strongestAdvantage", record.strongestAdvantage || "");
+    safeSetText("greatestRisk", record.greatestRisk || "");
+    safeSetText("landEvidence", record.landEvidence || "");
+    safeSetText("survivalPlan", record.survivalPlan || "");
+
+    if (savedTime) {
+      savedTime.textContent = record.savedAt
+        ? `Saved locally: ${new Date(record.savedAt).toLocaleString()}`
+        : "Saved local record";
+    }
+  } catch (error) {
+    if (savedTime) {
+      savedTime.textContent = "Could not load saved local record.";
+    }
+  }
+}
+
+loadPrintableArchive();
+</script>
+
+</body>
+</html>

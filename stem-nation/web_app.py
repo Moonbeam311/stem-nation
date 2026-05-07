@@ -100,6 +100,11 @@ def region_river():
 
 
 
+
+@app.route("/founding_archive_print")
+def founding_archive_print():
+    return render_template("founding_archive_print.html")
+
 @app.route("/hub")
 def hub():
     return render_template("project_hub.html")
