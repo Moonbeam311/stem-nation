@@ -100,11 +100,24 @@
 but with questions.</div>
 
     <button id="skip" class="skip" onclick="skipNext(event)">Skip</button>
+
+    <audio id="voice" preload="auto">
+      <source src="/static/intro2_demo.mp3" type="audio/mpeg">
+    </audio>
   </div>
 
   <script>
     const textEl = document.getElementById("text");
     const skipEl = document.getElementById("skip");
+    const voiceEl = document.getElementById("voice");
+
+    function playVoice() {
+      voiceEl.currentTime = 0;
+      voiceEl.volume = 0.88;
+      voiceEl.play().catch(() => {
+        // Browser may block autoplay until user interacts.
+      });
+    }
 
     function goNext() {
       window.location.href = "/intro3";
@@ -116,6 +129,7 @@ but with questions.</div>
     }
 
     window.addEventListener("load", () => {
+      setTimeout(() => playVoice(), 120);
       setTimeout(() => {
         textEl.style.opacity = 1;
       }, 400);
