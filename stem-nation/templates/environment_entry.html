@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Environment Entry</title>
+
+  <style>
+    html, body {
+      margin: 0;
+      width: 100%;
+      min-height: 100%;
+      overflow: hidden;
+      font-family: Arial, sans-serif;
+      background: black;
+      color: white;
+    }
+
+    .scene {
+      position: relative;
+      width: 100vw;
+      height: 100vh;
+      overflow: hidden;
+    }
+
+    .bg {
+      position: absolute;
+      inset: -5%;
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      animation: livingCamera 12s ease-in-out forwards;
+      z-index: 0;
+    }
+
+    .shade {
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(circle at center, rgba(0,0,0,0.05), rgba(0,0,0,0.45)),
+        linear-gradient(to top, rgba(0,0,0,0.92), rgba(0,0,0,0.25), rgba(0,0,0,0.52));
+      z-index: 1;
+    }
+
+    .content {
+      position: relative;
+      z-index: 2;
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      padding: 48px;
+      box-sizing: border-box;
+    }
+
+    .label {
+      font-size: 13px;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      opacity: 0.72;
+      margin-bottom: 10px;
+    }
+
+    h1 {
+      font-size: clamp(38px, 6vw, 76px);
+      line-height: 1;
+      margin: 0 0 16px;
+      color: #f4d35e;
+      text-shadow: 0 6px 26px rgba(0,0,0,0.92);
+    }
+
+    .description {
+      max-width: 860px;
+      font-size: clamp(18px, 2.3vw, 27px);
+      line-height: 1.35;
+      margin-bottom: 22px;
+      text-shadow: 0 4px 18px rgba(0,0,0,0.95);
+    }
+
+    .resources {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      max-width: 940px;
+      margin-bottom: 20px;
+    }
+
+    .resource {
+      background: rgba(0,0,0,0.46);
+      border: 1px solid rgba(244,211,94,0.45);
+      color: #f4d35e;
+      border-radius: 999px;
+      padding: 8px 13px;
+      font-size: 14px;
+      letter-spacing: 0.5px;
+    }
+
+    .question {
+      max-width: 860px;
+      padding: 16px 18px;
+      border-left: 4px solid #d4af37;
+      background: rgba(0,0,0,0.38);
+      font-size: 18px;
+      line-height: 1.45;
+      margin-bottom: 22px;
+    }
+
+    .btn-row {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .btn {
+      border: none;
+      border-radius: 999px;
+      background: #d4af37;
+      color: black;
+      padding: 12px 22px;
+      font-size: 15px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    .btn.secondary {
+      background: rgba(0,0,0,0.42);
+      color: white;
+      border: 1px solid rgba(255,255,255,0.35);
+    }
+
+    .motion {
+      position: absolute;
+      inset: 0;
+      z-index: 2;
+      pointer-events: none;
+      opacity: 0.55;
+    }
+
+    .particle {
+      position: absolute;
+      width: 5px;
+      height: 5px;
+      background: rgba(244,211,94,0.55);
+      border-radius: 50%;
+      animation: drift 8s linear infinite;
+    }
+
+    @keyframes livingCamera {
+      0% { transform: scale(1.02) translate3d(-1%, 0, 0); }
+      50% { transform: scale(1.08) translate3d(1%, -0.8%, 0); }
+      100% { transform: scale(1.12) translate3d(0.4%, -1.2%, 0); }
+    }
+
+    @keyframes drift {
+      0% { transform: translateY(35vh) translateX(0); opacity: 0; }
+      20% { opacity: 0.65; }
+      100% { transform: translateY(-85vh) translateX(60px); opacity: 0; }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="scene">
+    <div id="bg" class="bg"></div>
+    <div class="shade"></div>
+    <div id="motion" class="motion"></div>
+
+    <div class="content">
+      <div class="label">Week 1 · Environment Entry</div>
+      <h1 id="title">Environment</h1>
+      <div id="description" class="description"></div>
+
+      <div id="resources" class="resources"></div>
+
+      <div id="question" class="question"></div>
+
+      <div class="btn-row">
+        <button class="btn" onclick="enterAcademy()">Enter This Environment</button>
+        <button class="btn secondary" onclick="window.location.href='/world_select.html'">Choose Another Environment</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const world = "{{ world }}";
+
+    const environments = {
+      river: {
+        title: "River Corridor",
+        image: "/static/world_river.jpg",
+        description: "Water moves through the land. Fertile soil gathers near the banks. Food, travel, and danger all begin here.",
+        resources: ["running water", "fertile soil", "fish", "reeds", "flood risk"],
+        question: "What would your people gain from settling near the river — and what danger would they have to respect?"
+      },
+      forest: {
+        title: "Forest Belt",
+        image: "/static/world_forest.jpg",
+        description: "Trees surround the path. Animals move through the shadows. Shelter, timber, medicine, and hidden danger live here.",
+        resources: ["timber", "wildlife", "berries", "shelter", "limited movement"],
+        question: "What can the forest provide that open land cannot — and how might it slow your civilization down?"
+      },
+      desert: {
+        title: "Desert Route",
+        image: "/static/world_desert.jpg",
+        description: "Heat rises from the ground. Water is rare. Those who survive here must master distance, discipline, and trade.",
+        resources: ["sunlight", "salt", "stone", "oasis routes", "water scarcity"],
+        question: "Why would anyone choose a harsh desert — and what kind of leader could survive it?"
+      },
+      mountain: {
+        title: "Highland Ridge",
+        image: "/static/world_mountain.jpg",
+        description: "The land rises into stone. Movement is difficult, but defense is strong. Minerals may sleep beneath the cliffs.",
+        resources: ["stone", "minerals", "high ground", "defense", "limited farming"],
+        question: "Would you trade easy farming for protection and high ground?"
+      },
+      coastal: {
+        title: "Coastal Exchange",
+        image: "/static/world_coastal.jpg",
+        description: "Waves strike the shore. Fish, travel, and outside contact are close. The sea offers opportunity and threat.",
+        resources: ["fish", "shells", "boats", "trade access", "storm risk"],
+        question: "How could the coast connect your people to the world — and what could arrive from beyond the water?"
+      },
+      balanced: {
+        title: "Valley Basin",
+        image: "/static/world_balanced.jpg",
+        description: "The land is balanced: open space, nearby resources, and room to grow. But balance still requires strategy.",
+        resources: ["grassland", "mixed resources", "settlement space", "moderate food", "unclear advantage"],
+        question: "Is balance a strength — or does your civilization need a sharper advantage?"
+      }
+    };
+
+    const data = environments[world] || environments.river;
+
+    document.getElementById("title").textContent = data.title;
+    document.getElementById("description").textContent = data.description;
+    document.getElementById("question").textContent = data.question;
+    document.getElementById("bg").style.backgroundImage = `url('${data.image}')`;
+
+    const resourceBox = document.getElementById("resources");
+    data.resources.forEach(item => {
+      const span = document.createElement("span");
+      span.className = "resource";
+      span.textContent = item;
+      resourceBox.appendChild(span);
+    });
+
+    const motion = document.getElementById("motion");
+    for (let i = 0; i < 18; i++) {
+      const p = document.createElement("div");
+      p.className = "particle";
+      p.style.left = Math.random() * 100 + "vw";
+      p.style.top = (20 + Math.random() * 80) + "vh";
+      p.style.animationDelay = (Math.random() * 7) + "s";
+      p.style.animationDuration = (6 + Math.random() * 7) + "s";
+      motion.appendChild(p);
+    }
+
+    function enterAcademy() {
+      window.location.href = "/academy_individual?world=" + encodeURIComponent(world);
+    }
+  </script>
+</body>
+</html>

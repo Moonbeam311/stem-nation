@@ -48,6 +48,13 @@ def world_select():
     return render_template("world_select.html")
 
 
+
+@app.route("/environment_entry")
+def environment_entry():
+    world = request.args.get("world", "river")
+    return render_template("environment_entry.html", world=world)
+
+
 # =========================
 # ACADEMY (ZIP)
 # =========================
