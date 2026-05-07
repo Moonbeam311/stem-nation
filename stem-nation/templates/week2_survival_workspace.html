@@ -1,0 +1,465 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Week 2 — Survival Decision Workspace</title>
+
+  <style>
+    html, body {
+      margin: 0;
+      width: 100%;
+      min-height: 100%;
+      background:
+        radial-gradient(circle at center, rgba(212,175,55,0.11), transparent 44%),
+        radial-gradient(circle at 50% 70%, rgba(72,120,72,0.14), transparent 54%),
+        linear-gradient(135deg, #050505 0%, #101827 52%, #050505 100%);
+      color: white;
+      font-family: Arial, sans-serif;
+      overflow-x: hidden;
+    }
+
+    .academy-line {
+      height: 3px;
+      background: linear-gradient(90deg, transparent, #d4af37, transparent);
+      opacity: 0.82;
+    }
+
+    .container {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 46px 22px;
+      box-sizing: border-box;
+    }
+
+    .label {
+      text-align: center;
+      font-size: 13px;
+      letter-spacing: 4px;
+      text-transform: uppercase;
+      color: #d4af37;
+      opacity: 0.9;
+      margin-bottom: 12px;
+    }
+
+    h1 {
+      text-align: center;
+      font-size: clamp(36px, 5vw, 60px);
+      color: #f0df9a;
+      margin: 0 0 14px;
+      line-height: 1.08;
+    }
+
+    .subtitle {
+      max-width: 860px;
+      margin: 0 auto 30px;
+      text-align: center;
+      font-size: 18px;
+      line-height: 1.6;
+      opacity: 0.92;
+    }
+
+    .panel {
+      background: rgba(0,0,0,0.34);
+      border: 1px solid rgba(212,175,55,0.28);
+      border-radius: 22px;
+      padding: 28px;
+      box-shadow: 0 18px 70px rgba(0,0,0,0.50);
+      margin-bottom: 24px;
+    }
+
+    .panel h2 {
+      text-align: center;
+      color: #d4af37;
+      margin-top: 0;
+      margin-bottom: 16px;
+    }
+
+    .brief {
+      line-height: 1.65;
+      font-size: 16px;
+      max-width: 920px;
+      margin: 0 auto;
+      text-align: center;
+    }
+
+    .survival-rules {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+      gap: 12px;
+      margin-top: 20px;
+    }
+
+    .rule-chip {
+      background: rgba(212,175,55,0.09);
+      border: 1px solid rgba(212,175,55,0.22);
+      border-radius: 999px;
+      padding: 10px 12px;
+      text-align: center;
+      color: #f0df9a;
+      font-size: 14px;
+    }
+
+    .reference-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(245px, 1fr));
+      gap: 16px;
+      margin-top: 20px;
+    }
+
+    .reference-card {
+      background: rgba(255,255,255,0.055);
+      border: 1px solid rgba(255,255,255,0.09);
+      border-radius: 16px;
+      padding: 18px;
+      line-height: 1.55;
+    }
+
+    .reference-card h3 {
+      margin: 0 0 10px;
+      color: #f0df9a;
+      font-size: 20px;
+    }
+
+    .reference-card p {
+      margin: 7px 0;
+      font-size: 14px;
+    }
+
+    .decision-form {
+      background: rgba(0,0,0,0.28);
+      border: 1px solid rgba(212,175,55,0.28);
+      border-radius: 22px;
+      padding: 28px;
+      box-sizing: border-box;
+    }
+
+    .decision-form h2 {
+      color: #d4af37;
+      text-align: center;
+      margin: 0 0 10px;
+      font-size: 26px;
+    }
+
+    .form-instruction {
+      text-align: center;
+      margin: 0 auto 24px;
+      max-width: 880px;
+      line-height: 1.55;
+      opacity: 0.9;
+    }
+
+    .field-group {
+      margin-bottom: 18px;
+    }
+
+    .field-group label {
+      display: block;
+      font-weight: bold;
+      color: #f0df9a;
+      margin-bottom: 8px;
+      letter-spacing: 0.4px;
+    }
+
+    .field-group textarea {
+      width: 100%;
+      box-sizing: border-box;
+      border-radius: 10px;
+      border: 1px solid rgba(212,175,55,0.30);
+      background: rgba(255,255,255,0.08);
+      color: white;
+      padding: 12px 14px;
+      font-size: 15px;
+      font-family: Arial, sans-serif;
+      line-height: 1.45;
+      min-height: 86px;
+      resize: vertical;
+      outline: none;
+    }
+
+    .field-group textarea:focus {
+      border-color: #d4af37;
+      box-shadow: 0 0 0 3px rgba(212,175,55,0.14);
+    }
+
+    .completion-status {
+      margin-top: 12px;
+      text-align: center;
+      color: #f0df9a;
+      font-size: 14px;
+      letter-spacing: 0.5px;
+      opacity: 0.9;
+    }
+
+    .saved-status {
+      margin-top: 10px;
+      text-align: center;
+      font-size: 13px;
+      color: #9fe6a0;
+      opacity: 0;
+      transition: opacity 0.5s ease;
+      letter-spacing: 0.4px;
+    }
+
+    .saved-status.show {
+      opacity: 0.95;
+    }
+
+    .btn-row {
+      margin-top: 28px;
+      text-align: center;
+    }
+
+    .btn {
+      border: 1px solid rgba(212,175,55,0.55);
+      border-radius: 999px;
+      background: rgba(0,0,0,0.32);
+      color: #f0df9a;
+      padding: 13px 22px;
+      font-size: 15px;
+      cursor: pointer;
+      margin: 8px;
+      text-decoration: none;
+      display: inline-block;
+      letter-spacing: 0.5px;
+    }
+
+    .btn.primary {
+      background: #d4af37;
+      color: #111;
+      font-weight: bold;
+    }
+
+    .btn.locked {
+      opacity: 0.45;
+      cursor: not-allowed;
+      filter: grayscale(0.35);
+    }
+
+    .btn:hover {
+      background: rgba(212,175,55,0.13);
+    }
+
+    .btn.primary:hover {
+      background: #f0df9a;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="academy-line"></div>
+
+  <div class="container">
+    <div class="label">STEM Nation · Week 2</div>
+
+    <h1>Survival Decision Workspace</h1>
+
+    <div class="subtitle">
+      Your civilization has a founding place. Now you must decide how people survive the first pressure of food, shelter, labor, scarcity, and risk.
+    </div>
+
+    <div class="panel">
+      <h2>Survival Mission Brief</h2>
+      <p class="brief">
+        You cannot do everything at once. Early civilizations survive by choosing priorities.
+        Your job is to create a first survival plan that explains how your people will stay alive long enough to grow.
+      </p>
+
+      <div class="survival-rules">
+        <div class="rule-chip">Food First</div>
+        <div class="rule-chip">Shelter</div>
+        <div class="rule-chip">Labor</div>
+        <div class="rule-chip">Scarcity</div>
+        <div class="rule-chip">Risk</div>
+        <div class="rule-chip">Consequence</div>
+      </div>
+    </div>
+
+    <div class="panel">
+      <h2>Survival Reference Board</h2>
+
+      <div class="reference-grid">
+        <div class="reference-card">
+          <h3>Food Pressure</h3>
+          <p><strong>Question:</strong> What will people eat first?</p>
+          <p><strong>Tradeoff:</strong> gathering is fast, farming is slower, hunting has risk.</p>
+        </div>
+
+        <div class="reference-card">
+          <h3>Shelter Pressure</h3>
+          <p><strong>Question:</strong> What protects people immediately?</p>
+          <p><strong>Tradeoff:</strong> quick shelters may be weak; strong shelters take labor.</p>
+        </div>
+
+        <div class="reference-card">
+          <h3>Labor Pressure</h3>
+          <p><strong>Question:</strong> Who does what?</p>
+          <p><strong>Tradeoff:</strong> every worker assigned to one task is unavailable for another.</p>
+        </div>
+
+        <div class="reference-card">
+          <h3>Scarcity Pressure</h3>
+          <p><strong>Question:</strong> What happens when resources are limited?</p>
+          <p><strong>Tradeoff:</strong> unfair distribution can weaken trust and unity.</p>
+        </div>
+
+        <div class="reference-card">
+          <h3>Risk Pressure</h3>
+          <p><strong>Question:</strong> What danger comes first?</p>
+          <p><strong>Tradeoff:</strong> ignoring risk may save time now but cost more later.</p>
+        </div>
+
+        <div class="reference-card">
+          <h3>Consequence Pressure</h3>
+          <p><strong>Question:</strong> What will this choice make possible or impossible?</p>
+          <p><strong>Tradeoff:</strong> survival choices shape future growth.</p>
+        </div>
+      </div>
+    </div>
+
+    <form id="survivalDecisionForm" class="decision-form">
+      <h2>First Survival Plan</h2>
+      <p class="form-instruction">
+        Complete all five fields. Your civilization cannot advance until the first survival plan is clear.
+      </p>
+
+      <div class="field-group">
+        <label for="foodPlan">Food Plan</label>
+        <textarea id="foodPlan" name="foodPlan" required placeholder="Example: We will gather edible plants near the settlement, fish from the river, and begin planting crops for later."></textarea>
+      </div>
+
+      <div class="field-group">
+        <label for="shelterPlan">Shelter Plan</label>
+        <textarea id="shelterPlan" name="shelterPlan" required placeholder="Example: We will build temporary shelters first, then stronger homes once food is stable."></textarea>
+      </div>
+
+      <div class="field-group">
+        <label for="laborAssignment">Labor Assignment</label>
+        <textarea id="laborAssignment" name="laborAssignment" required placeholder="Example: Some people gather food, some build shelter, some watch for danger, and some record supplies."></textarea>
+      </div>
+
+      <div class="field-group">
+        <label for="scarcityRule">Scarcity Rule</label>
+        <textarea id="scarcityRule" name="scarcityRule" required placeholder="Example: Food will be shared by need first, while extra supplies are stored for emergencies."></textarea>
+      </div>
+
+      <div class="field-group">
+        <label for="riskResponse">First Risk Response</label>
+        <textarea id="riskResponse" name="riskResponse" required placeholder="Example: The first risk is flooding, so we will build above the riverbank and watch the water level."></textarea>
+      </div>
+
+      <div id="survivalCompletionStatus" class="completion-status">
+        Complete all 5 fields to unlock the survival archive.
+      </div>
+
+      <div id="survivalSavedStatus" class="saved-status">
+        Survival plan saved locally.
+      </div>
+
+      <div class="btn-row">
+        <button id="openSurvivalArchiveBtn" class="btn primary locked" type="button" disabled>Open Survival Archive</button>
+        <a class="btn" href="/week2_survival_intro">Back to Week 2 Intro</a>
+        <a class="btn" href="/hub">Review Founding Archive</a>
+      </div>
+    </form>
+  </div>
+
+<script>
+const requiredFields = [
+  "foodPlan",
+  "shelterPlan",
+  "laborAssignment",
+  "scarcityRule",
+  "riskResponse"
+];
+
+const STORAGE_KEY = "STEM_NATION_SURVIVAL_DECISION_V1";
+
+const openSurvivalArchiveBtn = document.getElementById("openSurvivalArchiveBtn");
+const completionStatus = document.getElementById("survivalCompletionStatus");
+const savedStatus = document.getElementById("survivalSavedStatus");
+let savedTimer = null;
+
+function showSavedStatus() {
+  if (!savedStatus) return;
+
+  savedStatus.classList.add("show");
+  savedStatus.textContent = "Survival plan saved locally.";
+
+  if (savedTimer) {
+    clearTimeout(savedTimer);
+  }
+
+  savedTimer = setTimeout(() => {
+    savedStatus.classList.remove("show");
+  }, 1600);
+}
+
+function saveSurvivalDecision() {
+  const record = {};
+  requiredFields.forEach((id) => {
+    const field = document.getElementById(id);
+    record[id] = field ? field.value : "";
+  });
+
+  record.savedAt = new Date().toISOString();
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(record));
+  showSavedStatus();
+}
+
+function loadSurvivalDecision() {
+  const raw = localStorage.getItem(STORAGE_KEY);
+  if (!raw) return;
+
+  try {
+    const record = JSON.parse(raw);
+    requiredFields.forEach((id) => {
+      const field = document.getElementById(id);
+      if (field && record[id]) {
+        field.value = record[id];
+      }
+    });
+  } catch (error) {
+    console.log("Could not load saved survival decision record.", error);
+  }
+}
+
+function updateCompletionStatus() {
+  const completed = requiredFields.filter((id) => {
+    const field = document.getElementById(id);
+    return field && field.value.trim().length > 0;
+  }).length;
+
+  if (completionStatus) {
+    completionStatus.textContent = `Completed ${completed} of ${requiredFields.length} required fields.`;
+  }
+
+  if (openSurvivalArchiveBtn) {
+    const isComplete = completed === requiredFields.length;
+    openSurvivalArchiveBtn.disabled = !isComplete;
+    openSurvivalArchiveBtn.classList.toggle("locked", !isComplete);
+  }
+}
+
+requiredFields.forEach((id) => {
+  const field = document.getElementById(id);
+  if (field) {
+    field.addEventListener("input", () => {
+      saveSurvivalDecision();
+      updateCompletionStatus();
+    });
+  }
+});
+
+if (openSurvivalArchiveBtn) {
+  openSurvivalArchiveBtn.addEventListener("click", () => {
+    if (!openSurvivalArchiveBtn.disabled) {
+      window.location.href = "/week2_survival_archive";
+    }
+  });
+}
+
+loadSurvivalDecision();
+updateCompletionStatus();
+</script>
+
+</body>
+</html>
