@@ -18,7 +18,7 @@ scripts = {
         "A river can feed a people. A mountain can protect them. "
         "A poor choice of land can weaken everything that follows. "
         "This is the beginning of responsibility. "
-        "Prepare your Terrain Analysis Report. Which land feature creates the greatest advantage, and which creates the greatest risk?"
+        "Carry this forward. What you observe will shape what you choose."
     ),
     "academy_decision_demo.mp3": (
         "You have observed the land. "
