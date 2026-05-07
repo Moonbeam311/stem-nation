@@ -468,8 +468,38 @@ const requiredFields = [
   "survivalPlan"
 ];
 
+const STORAGE_KEY = "STEM_NATION_SETTLEMENT_DEFENSE_V1";
+
 const openHubBtn = document.getElementById("openHubBtn");
 const completionStatus = document.getElementById("completionStatus");
+
+function saveSettlementDefense() {
+  const record = {};
+  requiredFields.forEach((id) => {
+    const field = document.getElementById(id);
+    record[id] = field ? field.value : "";
+  });
+
+  record.savedAt = new Date().toISOString();
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(record));
+}
+
+function loadSettlementDefense() {
+  const raw = localStorage.getItem(STORAGE_KEY);
+  if (!raw) return;
+
+  try {
+    const record = JSON.parse(raw);
+    requiredFields.forEach((id) => {
+      const field = document.getElementById(id);
+      if (field && record[id]) {
+        field.value = record[id];
+      }
+    });
+  } catch (error) {
+    console.log("Could not load saved settlement defense record.", error);
+  }
+}
 
 function updateCompletionStatus() {
   const completed = requiredFields.filter((id) => {
@@ -491,7 +521,11 @@ function updateCompletionStatus() {
 requiredFields.forEach((id) => {
   const field = document.getElementById(id);
   if (field) {
-    field.addEventListener("input", updateCompletionStatus);
+    field.addEventListener("input", () => {
+      saveSettlementDefense();
+      loadSettlementDefense();
+updateCompletionStatus();
+    });
   }
 });
 
@@ -503,6 +537,7 @@ if (openHubBtn) {
   });
 }
 
+loadSettlementDefense();
 updateCompletionStatus();
 </script>
 
