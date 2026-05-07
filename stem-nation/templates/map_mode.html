@@ -65,6 +65,89 @@
       background: rgba(0,0,0,0.18);
     }
 
+
+    .mission-brief {
+      background: rgba(0,0,0,0.26);
+      border: 1px solid rgba(244,211,94,0.24);
+      border-radius: 18px;
+      padding: 24px;
+      margin-bottom: 24px;
+      line-height: 1.65;
+    }
+
+    .mission-brief h2,
+    .region-reference-board h2 {
+      color: #f4d35e;
+      margin: 0 0 10px 0;
+      text-align: center;
+      font-size: 26px;
+    }
+
+    .mission-brief p,
+    .region-reference-board .board-note {
+      margin: 8px auto;
+      max-width: 900px;
+      font-size: 16px;
+      line-height: 1.55;
+      opacity: 0.9;
+      text-align: center;
+    }
+
+    .decision-rules {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+      gap: 12px;
+      margin-top: 18px;
+    }
+
+    .rule-chip {
+      background: rgba(244,211,94,0.09);
+      border: 1px solid rgba(244,211,94,0.22);
+      border-radius: 999px;
+      padding: 10px 12px;
+      text-align: center;
+      color: #f0df9a;
+      font-size: 14px;
+    }
+
+    .region-reference-board {
+      margin: 26px 0;
+      background: rgba(255,255,255,0.045);
+      border: 1px solid rgba(244,211,94,0.22);
+      border-radius: 18px;
+      padding: 24px;
+    }
+
+    .region-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(245px, 1fr));
+      gap: 16px;
+    }
+
+    .region-card {
+      background: rgba(0,0,0,0.24);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 14px;
+      padding: 18px;
+      box-sizing: border-box;
+    }
+
+    .region-card h3 {
+      color: #f4d35e;
+      margin: 0 0 10px 0;
+      font-size: 20px;
+    }
+
+    .region-card p {
+      margin: 7px 0;
+      font-size: 14px;
+      line-height: 1.5;
+    }
+
+    .region-card strong {
+      color: #f0df9a;
+    }
+
     .grid {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
@@ -215,14 +298,85 @@
       Use observation, evidence, and terrain reasoning to defend where your people should settle.
     </div>
 
+
+    <div class="mission-brief">
+      <h2>Mission Brief: Choose the First Settlement Site</h2>
+      <p>
+        Your objective is to choose the first starting location for your civilization. You are not choosing the “perfect” land.
+        You are choosing the strongest beginning based on survival, resources, movement, defense, risk, and long-term growth.
+      </p>
+      <p>
+        Study the reference regions below. Each region offers advantages and risks. Your job is to make a reasoned choice and defend it with evidence.
+      </p>
+
+      <div class="decision-rules">
+        <div class="rule-chip">Survival</div>
+        <div class="rule-chip">Resources</div>
+        <div class="rule-chip">Movement</div>
+        <div class="rule-chip">Defense</div>
+        <div class="rule-chip">Growth</div>
+        <div class="rule-chip">Risk</div>
+      </div>
+    </div>
+
+    <div class="region-reference-board">
+      <h2>Settlement Region Reference Board</h2>
+      <p class="board-note">
+        Use these possible starting zones as your reference. Your final answer should explain which region gives your people the strongest beginning and what problem they must overcome.
+      </p>
+
+      <div class="region-grid">
+        <div class="region-card">
+          <h3>River Corridor</h3>
+          <p><strong>Possible Advantage:</strong> fresh water, farming, fishing, travel, trade routes.</p>
+          <p><strong>Possible Risk:</strong> flooding, disease, competition from other groups.</p>
+          <p><strong>Best For:</strong> food production and early population growth.</p>
+        </div>
+
+        <div class="region-card">
+          <h3>Forest Edge</h3>
+          <p><strong>Possible Advantage:</strong> wood, shelter, animals, tools, concealment.</p>
+          <p><strong>Possible Risk:</strong> limited visibility, harder movement, hidden danger.</p>
+          <p><strong>Best For:</strong> building materials and protected early survival.</p>
+        </div>
+
+        <div class="region-card">
+          <h3>Highland Ridge</h3>
+          <p><strong>Possible Advantage:</strong> defense, visibility, protection from flooding.</p>
+          <p><strong>Possible Risk:</strong> less farming land, harder travel, exposure to weather.</p>
+          <p><strong>Best For:</strong> security and watching movement across the land.</p>
+        </div>
+
+        <div class="region-card">
+          <h3>Coastal Bay</h3>
+          <p><strong>Possible Advantage:</strong> fishing, travel, trade, contact with other groups.</p>
+          <p><strong>Possible Risk:</strong> storms, exposure, invasion routes, saltwater limits.</p>
+          <p><strong>Best For:</strong> exchange, movement, and maritime growth.</p>
+        </div>
+
+        <div class="region-card">
+          <h3>Open Plain</h3>
+          <p><strong>Possible Advantage:</strong> farming space, expansion, visibility, herd movement.</p>
+          <p><strong>Possible Risk:</strong> weak natural defense, drought, exposure.</p>
+          <p><strong>Best For:</strong> agriculture, population spread, and future city growth.</p>
+        </div>
+
+        <div class="region-card">
+          <h3>Balanced Crossroads</h3>
+          <p><strong>Possible Advantage:</strong> access to several resources and movement routes.</p>
+          <p><strong>Possible Risk:</strong> more competition, harder to defend, divided priorities.</p>
+          <p><strong>Best For:</strong> trade, diplomacy, and flexible development.</p>
+        </div>
+      </div>
+    </div>
+
     <div class="map-panel">
       <div class="map-title">Settlement Recommendation Portfolio</div>
       <div class="map-placeholder">
         <strong>Student Task:</strong><br>
         Identify your chosen region, explain its strongest advantage, name its greatest risk,
         and describe how your people will survive the first stage of civilization.
-        <br><br>
-        <em>This screen is the Week 1 bridge between map observation and the future live simulation engine.</em>
+
       </div>
     </div>
 
@@ -270,27 +424,27 @@
 
       <div class="field-group">
         <label for="chosenRegion">Chosen Region</label>
-        <input id="chosenRegion" name="chosenRegion" type="text" required placeholder="Example: River corridor, coastal edge, highland pass...">
+        <input id="chosenRegion" name="chosenRegion" type="text" required placeholder="Example: River Corridor — close to water, farming land, and travel routes.">
       </div>
 
       <div class="field-group">
         <label for="strongestAdvantage">Strongest Advantage</label>
-        <textarea id="strongestAdvantage" name="strongestAdvantage" required placeholder="What makes this location valuable for survival, movement, food, defense, or growth?"></textarea>
+        <textarea id="strongestAdvantage" name="strongestAdvantage" required placeholder="Example: The river gives fresh water, fish, farming soil, and a route for travel or trade."></textarea>
       </div>
 
       <div class="field-group">
         <label for="greatestRisk">Greatest Risk</label>
-        <textarea id="greatestRisk" name="greatestRisk" required placeholder="What danger, weakness, or challenge must your people manage?"></textarea>
+        <textarea id="greatestRisk" name="greatestRisk" required placeholder="Example: The river may flood, attract other groups, or spread sickness if we settle too close."></textarea>
       </div>
 
       <div class="field-group">
         <label for="landEvidence">Evidence From the Land</label>
-        <textarea id="landEvidence" name="landEvidence" required placeholder="What did you see in the map or terrain that supports your choice?"></textarea>
+        <textarea id="landEvidence" name="landEvidence" required placeholder="Example: I noticed water nearby, open land for crops, and paths that could connect to other regions."></textarea>
       </div>
 
       <div class="field-group">
         <label for="survivalPlan">Survival Plan</label>
-        <textarea id="survivalPlan" name="survivalPlan" required placeholder="How will your people survive the first stage of civilization in this location?"></textarea>
+        <textarea id="survivalPlan" name="survivalPlan" required placeholder="Example: We will build slightly above the riverbank, farm near the water, store food, and watch for floods."></textarea>
       </div>
 
       <div id="completionStatus" class="completion-status">
