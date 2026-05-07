@@ -22,12 +22,12 @@ scripts = {
     ),
     "academy_decision_demo.mp3": (
         "You have observed the land. "
-        "You have studied its strengths. "
-        "You have considered its risks. "
-        "Now your people need a place to begin. "
+        "You have answered the first questions. "
+        "You have studied advantage, risk, and possibility. "
+        "Now observation becomes action. "
+        "The strategic map will ask your civilization to choose where it begins. "
         "Every settlement decision carries consequence. "
-        "Where will your people settle first, and what evidence supports your choice? "
-        "Begin your Settlement Recommendation Portfolio. Identify the region, explain the advantage, name the risk, and defend the decision."
+        "Enter the map prepared to defend your choice with evidence from the land."
     ),
 }
 
