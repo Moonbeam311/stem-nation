@@ -24,7 +24,7 @@
       position: absolute;
       inset: -4%;
       background: url('/static/intro_scene4.jpg') center center / cover no-repeat;
-      animation: slowCamera 5.8s ease-in-out forwards;
+      animation: slowCamera 5200ms ease-in-out forwards;
       transform-origin: center;
       z-index: 0;
     }
@@ -50,30 +50,46 @@
       text-align: center;
       white-space: pre-line;
       opacity: 0;
-      transition: opacity 0.8s ease;
+      transition: opacity 0.45s ease;
       text-shadow: 0 4px 22px rgba(0,0,0,0.95);
     }
 
-    .skip {
+    .skip, .start {
       position: absolute;
-      right: 24px;
-      bottom: 22px;
       z-index: 3;
       padding: 8px 14px;
       border: 1px solid rgba(255,255,255,0.28);
       border-radius: 999px;
-      background: rgba(0,0,0,0.25);
-      color: rgba(255,255,255,0.68);
+      background: rgba(0,0,0,0.32);
+      color: rgba(255,255,255,0.78);
       font-size: 11px;
       letter-spacing: 1.3px;
       text-transform: uppercase;
       cursor: pointer;
-      opacity: 0;
-      transition: opacity 0.8s ease, background 0.2s ease;
+      transition: opacity 0.5s ease, background 0.2s ease;
     }
 
-    .skip:hover {
+    .skip {
+      right: 24px;
+      bottom: 22px;
+      opacity: 0.35;
+    }
+
+    .start {
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%, -50%);
+      opacity: 0;
+      display: none;
+      font-size: 14px;
+      padding: 12px 22px;
       background: rgba(212,175,55,0.82);
+      color: black;
+      border-color: rgba(212,175,55,0.95);
+    }
+
+    .skip:hover, .start:hover {
+      background: rgba(212,175,55,0.9);
       color: black;
     }
 
@@ -99,7 +115,8 @@
     <div id="text" class="text">In this world,
 you observe before you act.</div>
 
-    <button id="skip" class="skip" onclick="skipNext(event)">Skip</button>
+    <button id="start" class="start" onclick="manualStart()">Start Audio</button>
+    <button id="skip" class="skip" onclick="goNext()">Skip</button>
 
     <audio id="voice" preload="auto">
       <source src="/static/intro4_demo.mp3" type="audio/mpeg">
@@ -108,44 +125,54 @@ you observe before you act.</div>
 
   <script>
     const textEl = document.getElementById("text");
-    const skipEl = document.getElementById("skip");
+    const startEl = document.getElementById("start");
     const voiceEl = document.getElementById("voice");
 
-    function playVoice() {
-      voiceEl.currentTime = 0;
-      voiceEl.volume = 0.88;
-      voiceEl.play().catch(() => {
-        // Browser may block autoplay until user interacts.
-      });
+    let started = false;
+    let finished = false;
+
+    function showText() {
+      textEl.style.opacity = 1;
+    }
+
+    function finishScene() {
+      if (finished) return;
+      finished = true;
+      textEl.style.opacity = 0;
+      setTimeout(goNext, 500);
     }
 
     function goNext() {
       window.location.href = "/intro5";
     }
 
-    function skipNext(event) {
-      if (event) event.stopPropagation();
-      goNext();
+    function beginScene() {
+      if (started) return;
+      started = true;
+      startEl.style.display = "none";
+      voiceEl.currentTime = 0;
+      voiceEl.volume = 0.9;
+
+      voiceEl.play().then(() => {
+        setTimeout(showText, 120);
+        setTimeout(finishScene, 4400);
+      }).catch(() => {
+        started = false;
+        startEl.style.display = "block";
+        startEl.style.opacity = 1;
+      });
+    }
+
+    function manualStart() {
+      beginScene();
     }
 
     window.addEventListener("load", () => {
-      setTimeout(() => playVoice(), 120);
-      setTimeout(() => {
-        textEl.style.opacity = 1;
-      }, 400);
+      setTimeout(beginScene, 120);
+    });
 
-      setTimeout(() => {
-        skipEl.style.opacity = 0.38;
-      }, 1200);
-
-      setTimeout(() => {
-        textEl.style.opacity = 0;
-        skipEl.style.opacity = 0;
-      }, 3800);
-
-      setTimeout(() => {
-        goNext();
-      }, 5200);
+    voiceEl.addEventListener("ended", () => {
+      setTimeout(finishScene, 350);
     });
   </script>
 </body>
