@@ -295,6 +295,36 @@
       display: block;
     }
 
+
+    .ai-guide {
+      margin-top: 10px;
+      padding: 10px;
+      border-radius: 12px;
+      background: rgba(0,0,0,0.36);
+      border: 1px solid rgba(244,211,94,0.22);
+      font-size: 12px;
+      line-height: 1.35;
+    }
+
+    .ai-guide strong {
+      color: #f4d35e;
+    }
+
+    .ai-guide textarea {
+      width: 100%;
+      min-height: 52px;
+      margin-top: 8px;
+      border-radius: 10px;
+      border: 1px solid rgba(255,255,255,0.20);
+      background: rgba(0,0,0,0.34);
+      color: white;
+      padding: 8px;
+      box-sizing: border-box;
+      font-family: Arial, sans-serif;
+      font-size: 12px;
+      resize: vertical;
+    }
+
     .marker-count {
       margin-top: 8px;
       font-size: 11px;
@@ -347,6 +377,13 @@
           🛤️ Trade Route<br>
           💎 Resource<br>
           ⚠️ Risk
+        </div>
+
+        <div id="aiGuide" class="ai-guide">
+          <div><strong>Clue:</strong> <span id="guideClue"></span></div>
+          <div><strong>Look for:</strong> <span id="guideLook"></span></div>
+          <div><strong>Reasoning:</strong> <span id="guidePrompt"></span></div>
+          <textarea id="reasoningBox" placeholder="Explain your thinking before moving on..."></textarea>
         </div>
 
         <div id="markerCount" class="marker-count">Markers placed: 0</div>
@@ -454,6 +491,42 @@
     let markerTotal = 0;
     const placedMarkers = [];
 
+    const guidance = {
+      "Settlement": {
+        clue: "People usually settle where survival needs are close together.",
+        look: "water, food, shelter, open space, and protection",
+        prompt: "Why might this be a strong place for people to begin living?"
+      },
+      "Farm": {
+        clue: "Food systems need land, water, sunlight, and access.",
+        look: "flat land, riverbanks, open spaces, grassland, and soil",
+        prompt: "What makes this place useful for growing or gathering food?"
+      },
+      "Trade Route": {
+        clue: "Trade routes often follow the easiest path through the land.",
+        look: "rivers, valleys, coastline, passes, and open corridors",
+        prompt: "Why might people move goods or ideas through this path?"
+      },
+      "Resource": {
+        clue: "Resources are not always obvious. Some are visible; others must be predicted.",
+        look: "trees, water, stone, fish, minerals, animals, and fertile land",
+        prompt: "What resource do you notice or predict here?"
+      },
+      "Risk": {
+        clue: "Every environment offers something, but also demands something.",
+        look: "flooding, storms, predators, drought, cliffs, or blocked movement",
+        prompt: "What danger could threaten survival here?"
+      }
+    };
+
+    function updateGuidance() {
+      const guide = guidance[selectedTool] || guidance["Settlement"];
+      document.getElementById("guideClue").textContent = guide.clue;
+      document.getElementById("guideLook").textContent = guide.look;
+      document.getElementById("guidePrompt").textContent = guide.prompt;
+      document.getElementById("reasoningBox").placeholder = guide.prompt;
+    }
+
     document.querySelectorAll(".tool").forEach(button => {
       button.addEventListener("click", (event) => {
         event.stopPropagation();
@@ -461,6 +534,7 @@
         button.classList.add("active");
         selectedTool = button.dataset.tool;
         selectedSymbol = button.dataset.symbol || selectedTool;
+        updateGuidance();
       });
     });
 
