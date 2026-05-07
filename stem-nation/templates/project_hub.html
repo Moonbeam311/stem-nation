@@ -211,6 +211,7 @@
     <div class="btn-row">
       <button id="downloadArchiveBtn" class="btn disabled" type="button">Download Text Archive</button>
       <a class="btn" href="/founding_archive_print">Printable / Save as PDF</a>
+      <button id="clearArchiveBtn" class="btn secondary" type="button">Clear / Reset Archive</button>
       <a class="btn" href="/map">Return to Strategic Map</a>
       <a class="btn" href="/">Back to Landing</a>
     </div>
@@ -319,6 +320,20 @@ renderSavedDefense();
 const downloadArchiveBtn = document.getElementById("downloadArchiveBtn");
 if (downloadArchiveBtn) {
   downloadArchiveBtn.addEventListener("click", downloadFoundingArchive);
+}
+
+const clearArchiveBtn = document.getElementById("clearArchiveBtn");
+if (clearArchiveBtn) {
+  clearArchiveBtn.addEventListener("click", () => {
+    const confirmed = window.confirm(
+      "Clear the saved Founding Archive from this browser? This cannot be undone."
+    );
+
+    if (!confirmed) return;
+
+    localStorage.removeItem(STORAGE_KEY);
+    window.location.reload();
+  });
 }
 </script>
 
