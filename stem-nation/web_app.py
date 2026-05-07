@@ -101,6 +101,11 @@ def region_river():
 
 
 
+
+@app.route("/founding_complete")
+def founding_complete():
+    return render_template("founding_complete.html")
+
 @app.route("/founding_archive_print")
 def founding_archive_print():
     return render_template("founding_archive_print.html")
