@@ -262,6 +262,39 @@
       justify-content: center;
     }
 
+
+    .tool-actions {
+      display: flex;
+      gap: 7px;
+      margin-top: 9px;
+      flex-wrap: wrap;
+    }
+
+    .mini-action {
+      border: 1px solid rgba(255,255,255,0.20);
+      background: rgba(0,0,0,0.30);
+      color: rgba(255,255,255,0.86);
+      border-radius: 999px;
+      padding: 6px 9px;
+      font-size: 11px;
+      cursor: pointer;
+    }
+
+    .legend {
+      display: none;
+      margin-top: 9px;
+      padding: 9px;
+      border-radius: 12px;
+      background: rgba(0,0,0,0.35);
+      border: 1px solid rgba(244,211,94,0.20);
+      font-size: 12px;
+      line-height: 1.7;
+    }
+
+    .legend.show {
+      display: block;
+    }
+
     .marker-count {
       margin-top: 8px;
       font-size: 11px;
@@ -302,6 +335,20 @@
           <button class="tool" data-tool="Resource" data-symbol="💎" title="Resource">💎</button>
           <button class="tool" data-tool="Risk" data-symbol="⚠️" title="Risk">⚠️</button>
         </div>
+
+        <div class="tool-actions">
+          <button class="mini-action" onclick="undoLastMarker(event)">Undo</button>
+          <button class="mini-action" onclick="toggleLegend(event)">Legend</button>
+        </div>
+
+        <div id="legend" class="legend">
+          🏠 Settlement<br>
+          🌾 Food / Farm<br>
+          🛤️ Trade Route<br>
+          💎 Resource<br>
+          ⚠️ Risk
+        </div>
+
         <div id="markerCount" class="marker-count">Markers placed: 0</div>
       </div>
     </div>
@@ -405,6 +452,7 @@
     let selectedTool = "Settlement";
     let selectedSymbol = "🏠";
     let markerTotal = 0;
+    const placedMarkers = [];
 
     document.querySelectorAll(".tool").forEach(button => {
       button.addEventListener("click", (event) => {
@@ -428,11 +476,29 @@
       marker.style.left = event.clientX + "px";
       marker.style.top = event.clientY + "px";
       document.querySelector(".scene").appendChild(marker);
+      placedMarkers.push(marker);
 
       markerTotal += 1;
       document.getElementById("markerCount").textContent = "Markers placed: " + markerTotal;
     });
 
+
+
+    function undoLastMarker(event) {
+      if (event) event.stopPropagation();
+
+      const marker = placedMarkers.pop();
+      if (marker) {
+        marker.remove();
+        markerTotal = Math.max(0, markerTotal - 1);
+        document.getElementById("markerCount").textContent = "Markers placed: " + markerTotal;
+      }
+    }
+
+    function toggleLegend(event) {
+      if (event) event.stopPropagation();
+      document.getElementById("legend").classList.toggle("show");
+    }
 
     function enterAcademy() {
       window.location.href = "/academy_individual?world=" + encodeURIComponent(world);
