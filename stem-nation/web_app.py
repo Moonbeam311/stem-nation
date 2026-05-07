@@ -102,6 +102,11 @@ def region_river():
 
 
 
+
+@app.route("/week2_survival_intro")
+def week2_survival_intro():
+    return render_template("week2_survival_intro.html")
+
 @app.route("/founding_complete")
 def founding_complete():
     return render_template("founding_complete.html")
