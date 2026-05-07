@@ -62,6 +62,11 @@ def environment_entry():
 def academy_individual():
     return render_template("academy_individual.html")
 
+
+@app.route("/academy_memory_preview")
+def academy_memory_preview():
+    return render_template("academy_memory_preview.html")
+
 @app.route("/academy_role")
 def academy_role():
     return render_template("academy_role.html")
