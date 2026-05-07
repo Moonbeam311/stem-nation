@@ -157,6 +157,12 @@
     .btn:hover {
       background: rgba(212,175,55,0.12);
     }
+
+    .btn.disabled {
+      opacity: 0.45;
+      cursor: not-allowed;
+      pointer-events: none;
+    }
   </style>
 </head>
 
@@ -203,6 +209,7 @@
     </div>
 
     <div class="btn-row">
+      <button id="downloadArchiveBtn" class="btn disabled" type="button">Download Founding Archive</button>
       <a class="btn" href="/map">Return to Strategic Map</a>
       <a class="btn" href="/">Back to Landing</a>
     </div>
@@ -220,6 +227,7 @@ const labels = {
 
 function renderSavedDefense() {
   const container = document.getElementById("savedDefenseContent");
+  const downloadArchiveBtn = document.getElementById("downloadArchiveBtn");
   if (!container) return;
 
   const raw = localStorage.getItem(STORAGE_KEY);
@@ -248,12 +256,69 @@ function renderSavedDefense() {
 
     container.className = "defense-grid";
     container.innerHTML = items + savedTime;
+
+    if (downloadArchiveBtn) {
+      downloadArchiveBtn.classList.remove("disabled");
+    }
   } catch (error) {
     console.log("Could not render saved settlement defense.", error);
   }
 }
 
+function downloadFoundingArchive() {
+  const raw = localStorage.getItem(STORAGE_KEY);
+  if (!raw) return;
+
+  try {
+    const record = JSON.parse(raw);
+
+    const content = [
+      "STEM Nation — Founding Archive",
+      "Settlement Decision Defense",
+      "",
+      `Saved Locally: ${record.savedAt ? new Date(record.savedAt).toLocaleString() : "Not recorded"}`,
+      "",
+      "Chosen Region:",
+      record.chosenRegion || "",
+      "",
+      "Strongest Advantage:",
+      record.strongestAdvantage || "",
+      "",
+      "Greatest Risk:",
+      record.greatestRisk || "",
+      "",
+      "Evidence From the Land:",
+      record.landEvidence || "",
+      "",
+      "Survival Plan:",
+      record.survivalPlan || "",
+      "",
+      "---",
+      "Generated from STEM Nation Project Hub"
+    ].join("\n");
+
+    const blob = new Blob([content], { type: "text/plain" });
+    const url = URL.createObjectURL(blob);
+
+    const link = document.createElement("a");
+    link.href = url;
+    link.download = "STEM_Nation_Founding_Archive.txt";
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+
+    URL.revokeObjectURL(url);
+  } catch (error) {
+    console.log("Could not export Founding Archive.", error);
+  }
+}
+
 renderSavedDefense();
+
+const downloadArchiveBtn = document.getElementById("downloadArchiveBtn");
+if (downloadArchiveBtn) {
+  downloadArchiveBtn.addEventListener("click", downloadFoundingArchive);
+}
 </script>
 
 </body>
