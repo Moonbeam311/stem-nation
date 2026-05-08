@@ -84,6 +84,16 @@ def academy_decision():
 # =========================
 # SAFE PLACEHOLDERS
 # =========================
+
+
+@app.route("/teacher_resource_attach")
+def teacher_resource_attach():
+    return render_template("teacher_resource_attach.html")
+
+@app.route("/teacher_resource_library")
+def teacher_resource_library():
+    return render_template("teacher_resource_library.html")
+
 @app.route("/teacher")
 def teacher():
     return render_template("teacher.html")
