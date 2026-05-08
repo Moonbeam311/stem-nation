@@ -176,6 +176,7 @@
     <div class="btn-row">
       <button id="downloadSurvivalArchiveBtn" class="btn">Download Survival Archive</button>
       <a class="btn" href="/week2_survival_print">Printable / Save as PDF</a>
+      <button id="resetSurvivalArchiveBtn" class="btn">Clear / Reset Survival Archive</button>
       <a class="btn primary" href="/week2_survival_workspace">Return to Survival Workspace</a>
       <a class="btn" href="/week2_survival_intro">Week 2 Intro</a>
       <a class="btn" href="/hub">Week 1 Founding Archive</a>
@@ -290,6 +291,21 @@ const downloadBtn = document.getElementById("downloadSurvivalArchiveBtn");
 
 if (downloadBtn) {
   downloadBtn.addEventListener("click", downloadSurvivalArchive);
+}
+
+const resetSurvivalArchiveBtn = document.getElementById("resetSurvivalArchiveBtn");
+
+if (resetSurvivalArchiveBtn) {
+  resetSurvivalArchiveBtn.addEventListener("click", () => {
+    const confirmed = window.confirm(
+      "Clear the saved Week 2 Survival Archive from this browser? This cannot be undone."
+    );
+
+    if (!confirmed) return;
+
+    localStorage.removeItem(STORAGE_KEY);
+    window.location.reload();
+  });
 }
 </script>
 
