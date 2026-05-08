@@ -86,6 +86,11 @@ def academy_decision():
 # =========================
 
 
+
+@app.route("/teacher_facilitation_engine")
+def teacher_facilitation_engine():
+    return render_template("teacher_facilitation_engine.html")
+
 @app.route("/teacher_resource_attach")
 def teacher_resource_attach():
     return render_template("teacher_resource_attach.html")
