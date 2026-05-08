@@ -356,6 +356,7 @@
 
       <div class="btn-row">
         <button id="openSurvivalArchiveBtn" class="btn primary locked" type="button" disabled>Open Survival Archive</button>
+        <button id="clearSurvivalDraftBtn" class="btn" type="button">Clear Draft / Start Over</button>
         <a class="btn" href="/week2_survival_intro">Back to Week 2 Intro</a>
         <a class="btn" href="/hub">Review Founding Archive</a>
       </div>
@@ -454,6 +455,34 @@ if (openSurvivalArchiveBtn) {
     if (!openSurvivalArchiveBtn.disabled) {
       window.location.href = "/week2_survival_archive";
     }
+  });
+}
+
+const clearSurvivalDraftBtn = document.getElementById("clearSurvivalDraftBtn");
+
+if (clearSurvivalDraftBtn) {
+  clearSurvivalDraftBtn.addEventListener("click", () => {
+
+    const confirmed = window.confirm(
+      "Clear the current Week 2 survival draft and start over?"
+    );
+
+    if (!confirmed) return;
+
+    localStorage.removeItem(STORAGE_KEY);
+
+    requiredFields.forEach((id) => {
+      const field = document.getElementById(id);
+      if (field) {
+        field.value = "";
+      }
+    });
+
+    if (savedStatus) {
+      savedStatus.classList.remove("show");
+    }
+
+    updateCompletionStatus();
   });
 }
 
