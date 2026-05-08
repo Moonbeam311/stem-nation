@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Teacher Dashboard</title>
+
+  <style>
+    html, body {
+      margin: 0;
+      width: 100%;
+      min-height: 100%;
+      background:
+        radial-gradient(circle at center, rgba(212,175,55,0.10), transparent 46%),
+        linear-gradient(135deg, #050505 0%, #101827 55%, #050505 100%);
+      color: white;
+      font-family: Arial, sans-serif;
+      overflow-x: hidden;
+    }
+
+    .academy-line {
+      height: 3px;
+      background: linear-gradient(90deg, transparent, #d4af37, transparent);
+      opacity: 0.82;
+    }
+
+    .container {
+      max-width: 1320px;
+      margin: 0 auto;
+      padding: 42px 22px 70px;
+      box-sizing: border-box;
+    }
+
+    .label {
+      text-align: center;
+      font-size: 13px;
+      letter-spacing: 4px;
+      text-transform: uppercase;
+      color: #d4af37;
+      margin-bottom: 12px;
+    }
+
+    h1 {
+      text-align: center;
+      font-size: clamp(42px, 6vw, 76px);
+      color: #f0df9a;
+      margin: 0 0 18px;
+      line-height: 1.04;
+    }
+
+    .subtitle {
+      max-width: 980px;
+      margin: 0 auto 40px;
+      text-align: center;
+      font-size: 20px;
+      line-height: 1.7;
+      opacity: 0.94;
+    }
+
+    .section {
+      background: rgba(0,0,0,0.34);
+      border: 1px solid rgba(212,175,55,0.20);
+      border-radius: 22px;
+      padding: 28px;
+      margin-bottom: 26px;
+      box-shadow: 0 14px 50px rgba(0,0,0,0.45);
+    }
+
+    .section h2 {
+      margin-top: 0;
+      color: #d4af37;
+      font-size: 28px;
+      margin-bottom: 18px;
+    }
+
+    .section p,
+    .section li {
+      line-height: 1.75;
+      font-size: 16px;
+      opacity: 0.95;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 18px;
+    }
+
+    .card {
+      background: rgba(255,255,255,0.055);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 16px;
+      padding: 20px;
+    }
+
+    .card h3 {
+      margin-top: 0;
+      color: #f0df9a;
+      font-size: 20px;
+    }
+
+    .status {
+      display: inline-block;
+      border-radius: 999px;
+      padding: 6px 12px;
+      margin-top: 10px;
+      background: rgba(212,175,55,0.16);
+      border: 1px solid rgba(212,175,55,0.30);
+      color: #f0df9a;
+      font-size: 13px;
+    }
+
+    .planned {
+      color: #d4af37;
+      font-size: 14px;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      opacity: 0.85;
+      margin-top: 14px;
+    }
+
+    .note {
+      margin-top: 16px;
+      font-size: 14px;
+      line-height: 1.6;
+      opacity: 0.76;
+    }
+
+    .btn-row {
+      margin-top: 26px;
+      text-align: center;
+    }
+
+    .btn {
+      display: inline-block;
+      text-decoration: none;
+      border-radius: 999px;
+      border: 1px solid rgba(212,175,55,0.55);
+      color: #f0df9a;
+      padding: 12px 20px;
+      margin: 6px;
+      background: rgba(0,0,0,0.32);
+      letter-spacing: 0.5px;
+    }
+
+    .btn.primary {
+      background: #d4af37;
+      color: #111;
+      font-weight: bold;
+    }
+
+    .btn:hover {
+      background: rgba(212,175,55,0.14);
+    }
+
+    .btn.primary:hover {
+      background: #f0df9a;
+    }
+
+  </style>
+</head>
+
+<body>
+
+<div class="academy-line"></div>
+
+<div class="container">
+
+  <div class="label">STEM Nation · Educator Orchestration Layer</div>
+
+  <h1>Teacher Dashboard</h1>
+
+  <div class="subtitle">
+    The Teacher Dashboard is the future educator-side coordination system for managing classroom pacing, civilization tracking, archive review, facilitation flow, instructional resources, and lesson orchestration across STEM Nation.
+  </div>
+
+  <!-- Overview -->
+
+  <div class="section">
+
+    <h2>Dashboard Overview</h2>
+
+    <p>
+      The Teacher Dashboard is designed to become the central educator operating layer that connects lessons, facilitation, resources, artifacts, pacing, and future classroom analytics into one coordinated system.
+    </p>
+
+    <div class="planned">
+      Prototype Orchestration Architecture · No Live Student Database Yet
+    </div>
+
+  </div>
+
+  <!-- Classroom Snapshot -->
+
+  <div class="section">
+
+    <h2>Classroom / Session Snapshot</h2>
+
+    <div class="grid">
+
+      <div class="card">
+        <h3>Active Civilization Teams</h3>
+
+        <p>
+          Future dashboard area for tracking civilizations, group progress, decision stages, and collaboration flow.
+        </p>
+
+        <div class="status">Planned Tracking System</div>
+      </div>
+
+      <div class="card">
+        <h3>Lesson Progress</h3>
+
+        <p>
+          Future pacing visibility for Module 0, Week 1, Week 2, and future civilization-growth stages.
+        </p>
+
+        <div class="status">Prototype Only</div>
+      </div>
+
+      <div class="card">
+        <h3>Participation Monitoring</h3>
+
+        <p>
+          Future support for identifying disengagement, uneven participation, or facilitation intervention needs.
+        </p>
+
+        <div class="status">Planned Facilitation Layer</div>
+      </div>
+
+    </div>
+
+  </div>
+
+  <!-- Archive Tracking -->
+
+  <div class="section">
+
+    <h2>Archive & Artifact Tracking</h2>
+
+    <div class="grid">
+
+      <div class="card">
+        <h3>Week 1 Founding Archive</h3>
+
+        <p>
+          Future dashboard area for reviewing strategic settlement reasoning, evidence use, and archive exports.
+        </p>
+
+        <div class="status">Archive Review Planned</div>
+      </div>
+
+      <div class="card">
+        <h3>Week 2 Survival Archive</h3>
+
+        <p>
+          Future dashboard area for reviewing scarcity planning, tradeoff reasoning, and consequence analysis.
+        </p>
+
+        <div class="status">Artifact Tracking Planned</div>
+      </div>
+
+      <div class="card">
+        <h3>Evidence & Reflection Checks</h3>
+
+        <p>
+          Future teacher-side visibility into evidence usage, systems thinking depth, and reflection quality.
+        </p>
+
+        <div class="status">Reasoning Review Layer</div>
+      </div>
+
+    </div>
+
+  </div>
+
+  <!-- Facilitation -->
+
+  <div class="section">
+
+    <h2>Facilitation & Teacher Guidance</h2>
+
+    <div class="grid">
+
+      <div class="card">
+        <h3>Suggested Teacher Moves</h3>
+
+        <ul>
+          <li>Pause & Probe</li>
+          <li>Evidence Challenge</li>
+          <li>Compare Civilizations</li>
+          <li>Consequence Prediction</li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <h3>Facilitation Alerts</h3>
+
+        <p>
+          Future system for highlighting misconception risks, pacing slowdowns, or discussion opportunities.
+        </p>
+
+        <div class="status">Planned Facilitation Intelligence</div>
+      </div>
+
+      <div class="card">
+        <h3>Differentiation Supports</h3>
+
+        <p>
+          Future dashboard area for sentence starters, scaffolded prompts, extension tasks, and pacing supports.
+        </p>
+
+        <div class="status">Planned Instructional Support</div>
+      </div>
+
+    </div>
+
+  </div>
+
+  <!-- Resource Systems -->
+
+  <div class="section">
+
+    <h2>Resource & Packet Systems</h2>
+
+    <div class="grid">
+
+      <div class="card">
+        <h3>Resource Library</h3>
+
+        <p>
+          Organize lesson plans, primary sources, Archives & Government Records, maps, media, and instructional materials.
+        </p>
+      </div>
+
+      <div class="card">
+        <h3>Resource Attachment Workflow</h3>
+
+        <p>
+          Attach instructional resources directly to simulation stages and inquiry moments.
+        </p>
+      </div>
+
+      <div class="card">
+        <h3>Packet Builder</h3>
+
+        <p>
+          Assemble classroom packets containing facilitation guidance, archives, resources, and lesson sequencing.
+        </p>
+      </div>
+
+    </div>
+
+  </div>
+
+  <!-- Future Data -->
+
+  <div class="section">
+
+    <h2>Future Data & AI Layers</h2>
+
+    <p>
+      Future educator-side systems may eventually support live classroom tracking, archive analytics, AI-assisted pacing support, standards alignment, lesson suggestions, and artifact review assistance.
+    </p>
+
+    <div class="note">
+      These systems are intentionally deferred until the human instructional architecture and teacher workflow systems are fully stabilized.
+    </div>
+
+  </div>
+
+  <!-- Navigation -->
+
+  <div class="btn-row">
+    <a class="btn primary" href="/teacher">Return to Teacher Command Center</a>
+    <a class="btn" href="/teacher_resource_library">Teacher Resource Library</a>
+    <a class="btn" href="/teacher_resource_attach">Resource Attachment Workflow</a>
+    <a class="btn" href="/teacher_facilitation_engine">Teacher Facilitation Engine</a>
+    <a class="btn" href="/teacher_packet_builder">Teacher Packet Builder</a>
+    <a class="btn" href="/teacher_lesson_builder">Teacher Lesson Builder</a>
+  </div>
+
+</div>
+
+</body>
+</html>

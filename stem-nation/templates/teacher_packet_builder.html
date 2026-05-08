@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Teacher Packet Builder</title>
+
+  <style>
+    html, body {
+      margin: 0;
+      width: 100%;
+      min-height: 100%;
+      background:
+        radial-gradient(circle at center, rgba(212,175,55,0.10), transparent 46%),
+        linear-gradient(135deg, #050505 0%, #101827 55%, #050505 100%);
+      color: white;
+      font-family: Arial, sans-serif;
+      overflow-x: hidden;
+    }
+
+    .academy-line {
+      height: 3px;
+      background: linear-gradient(90deg, transparent, #d4af37, transparent);
+      opacity: 0.82;
+    }
+
+    .container {
+      max-width: 1260px;
+      margin: 0 auto;
+      padding: 42px 22px 70px;
+      box-sizing: border-box;
+    }
+
+    .label {
+      text-align: center;
+      font-size: 13px;
+      letter-spacing: 4px;
+      text-transform: uppercase;
+      color: #d4af37;
+      margin-bottom: 12px;
+    }
+
+    h1 {
+      text-align: center;
+      font-size: clamp(40px, 6vw, 74px);
+      color: #f0df9a;
+      margin: 0 0 18px;
+      line-height: 1.04;
+    }
+
+    .subtitle {
+      max-width: 960px;
+      margin: 0 auto 40px;
+      text-align: center;
+      font-size: 20px;
+      line-height: 1.7;
+      opacity: 0.94;
+    }
+
+    .section {
+      background: rgba(0,0,0,0.34);
+      border: 1px solid rgba(212,175,55,0.20);
+      border-radius: 22px;
+      padding: 28px;
+      margin-bottom: 26px;
+      box-shadow: 0 14px 50px rgba(0,0,0,0.45);
+    }
+
+    .section h2 {
+      margin-top: 0;
+      color: #d4af37;
+      font-size: 28px;
+      margin-bottom: 18px;
+    }
+
+    .section p,
+    .section li {
+      line-height: 1.75;
+      font-size: 16px;
+      opacity: 0.95;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 18px;
+    }
+
+    .card {
+      background: rgba(255,255,255,0.055);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 16px;
+      padding: 20px;
+    }
+
+    .card h3 {
+      margin-top: 0;
+      color: #f0df9a;
+      font-size: 20px;
+    }
+
+    .tag {
+      display: inline-block;
+      border-radius: 999px;
+      border: 1px solid rgba(212,175,55,0.28);
+      padding: 6px 12px;
+      margin: 5px;
+      font-size: 13px;
+      color: #f0df9a;
+      background: rgba(255,255,255,0.05);
+    }
+
+    .planned {
+      color: #d4af37;
+      font-size: 14px;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      opacity: 0.85;
+      margin-top: 14px;
+    }
+
+    .note {
+      margin-top: 16px;
+      font-size: 14px;
+      line-height: 1.6;
+      opacity: 0.76;
+    }
+
+    .btn-row {
+      margin-top: 26px;
+      text-align: center;
+    }
+
+    .btn {
+      display: inline-block;
+      text-decoration: none;
+      border-radius: 999px;
+      border: 1px solid rgba(212,175,55,0.55);
+      color: #f0df9a;
+      padding: 12px 20px;
+      margin: 6px;
+      background: rgba(0,0,0,0.32);
+      letter-spacing: 0.5px;
+    }
+
+    .btn.primary {
+      background: #d4af37;
+      color: #111;
+      font-weight: bold;
+    }
+
+    .btn:hover {
+      background: rgba(212,175,55,0.14);
+    }
+
+    .btn.primary:hover {
+      background: #f0df9a;
+    }
+
+  </style>
+</head>
+
+<body>
+
+<div class="academy-line"></div>
+
+<div class="container">
+
+  <div class="label">STEM Nation · Classroom Packet System</div>
+
+  <h1>Teacher Packet Builder</h1>
+
+  <div class="subtitle">
+    The Teacher Packet Builder is the future classroom assembly system for combining resources, facilitation guidance, lesson framing, and student archive artifacts into structured instructional packets.
+  </div>
+
+  <!-- Core Purpose -->
+
+  <div class="section">
+
+    <h2>Packet Builder Purpose</h2>
+
+    <p>
+      Teachers should eventually be able to build customized classroom packets that combine lesson plans, primary sources, maps, facilitation guidance, discussion prompts, archive artifacts, and district-alignment notes into a single instructional workflow.
+    </p>
+
+    <div class="planned">
+      Prototype Classroom Assembly Architecture · No Real File Bundling Yet
+    </div>
+
+  </div>
+
+  <!-- Packet Types -->
+
+  <div class="section">
+
+    <h2>Example Packet Types</h2>
+
+    <div class="grid">
+
+      <div class="card">
+        <h3>Week 1 Founding Packet</h3>
+
+        <ul>
+          <li>Module 0 framing</li>
+          <li>Cartography prompts</li>
+          <li>Strategic Map Defense guidance</li>
+          <li>Founding Archive instructions</li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <h3>Week 2 Survival Packet</h3>
+
+        <ul>
+          <li>Survival inquiry prompts</li>
+          <li>Scarcity discussion materials</li>
+          <li>Teacher facilitation guidance</li>
+          <li>Survival Archive workflow</li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <h3>Combined Civilization Packet</h3>
+
+        <ul>
+          <li>Week 1 + Week 2 continuity</li>
+          <li>Evidence-based discussion supports</li>
+          <li>Cross-week reflection prompts</li>
+          <li>Archive comparison activities</li>
+        </ul>
+      </div>
+
+    </div>
+
+  </div>
+
+  <!-- Resource Assembly -->
+
+  <div class="section">
+
+    <h2>Packet Resource Assembly</h2>
+
+    <div class="grid">
+
+      <div class="card">
+        <h3>Instructional Resources</h3>
+
+        <ul>
+          <li>Lesson plans</li>
+          <li>Primary sources</li>
+          <li>Archives & Government Records</li>
+          <li>Maps & geography materials</li>
+          <li>Media & visuals</li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <h3>Teacher Facilitation Supports</h3>
+
+        <ul>
+          <li>Teacher moves</li>
+          <li>Discussion prompts</li>
+          <li>Misconception checks</li>
+          <li>Differentiation strategies</li>
+          <li>Evidence-review guidance</li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <h3>Student Artifacts</h3>
+
+        <ul>
+          <li>Founding Archive</li>
+          <li>Survival Archive</li>
+          <li>Printable export references</li>
+          <li>Reflection prompts</li>
+          <li>Archive review checkpoints</li>
+        </ul>
+      </div>
+
+    </div>
+
+  </div>
+
+  <!-- Planned Outputs -->
+
+  <div class="section">
+
+    <h2>Planned Packet Outputs</h2>
+
+    <div class="grid">
+
+      <div class="card">
+        <h3>Teacher Packet</h3>
+
+        <p>
+          Includes pacing, facilitation notes, misconceptions, evidence checks, and instructional supports.
+        </p>
+      </div>
+
+      <div class="card">
+        <h3>Student Packet</h3>
+
+        <p>
+          Includes maps, evidence prompts, primary sources, reflection questions, and archive guidance.
+        </p>
+      </div>
+
+      <div class="card">
+        <h3>District Alignment Packet</h3>
+
+        <p>
+          Future packet variation containing standards alignment, objectives, assessment language, and implementation notes.
+        </p>
+      </div>
+
+    </div>
+
+  </div>
+
+  <!-- AI Support -->
+
+  <div class="section">
+
+    <h2>Future AI-Assisted Packet Support</h2>
+
+    <p>
+      Future educator-side AI systems may eventually help generate packet drafts, pacing suggestions, differentiated prompts, archive reflections, and standards-alignment recommendations.
+    </p>
+
+    <div class="note">
+      AI assistance is intentionally deferred until the human instructional architecture is fully stabilized.
+    </div>
+
+  </div>
+
+  <!-- Navigation -->
+
+  <div class="btn-row">
+    <a class="btn primary" href="/teacher">Return to Teacher Command Center</a>
+    <a class="btn" href="/teacher_resource_library">Teacher Resource Library</a>
+    <a class="btn" href="/teacher_resource_attach">Resource Attachment Workflow</a>
+    <a class="btn" href="/teacher_facilitation_engine">Teacher Facilitation Engine</a>
+  </div>
+
+</div>
+
+</body>
+</html>
