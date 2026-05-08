@@ -105,6 +105,11 @@ def region_river():
 
 
 
+
+@app.route("/week2_survival_print")
+def week2_survival_print():
+    return render_template("week2_survival_print.html")
+
 @app.route("/week2_survival_archive")
 def week2_survival_archive():
     return render_template("week2_survival_archive.html")
