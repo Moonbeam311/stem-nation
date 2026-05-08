@@ -1,140 +1,460 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Educator Access</title>
+  <title>STEM Nation — Teacher Command Center</title>
 
   <style>
-    body {
+    html, body {
       margin: 0;
-      font-family: Arial, sans-serif;
-      background: #0f172a;
+      width: 100%;
+      min-height: 100%;
+      background:
+        radial-gradient(circle at center, rgba(212,175,55,0.10), transparent 45%),
+        linear-gradient(135deg, #050505 0%, #101827 55%, #050505 100%);
       color: white;
-      padding: 40px 20px;
-      box-sizing: border-box;
+      font-family: Arial, sans-serif;
+      overflow-x: hidden;
+    }
+
+    .academy-line {
+      height: 3px;
+      background: linear-gradient(90deg, transparent, #d4af37, transparent);
+      opacity: 0.82;
     }
 
     .container {
-      max-width: 980px;
+      max-width: 1180px;
       margin: 0 auto;
+      padding: 42px 22px 70px;
+      box-sizing: border-box;
+    }
+
+    .label {
+      text-align: center;
+      font-size: 13px;
+      letter-spacing: 4px;
+      text-transform: uppercase;
+      color: #d4af37;
+      margin-bottom: 12px;
     }
 
     h1 {
-      font-size: 42px;
-      margin-bottom: 10px;
-      color: #f4d35e;
       text-align: center;
+      font-size: clamp(42px, 6vw, 76px);
+      color: #f0df9a;
+      margin: 0 0 18px;
+      line-height: 1.02;
     }
 
     .subtitle {
+      max-width: 920px;
+      margin: 0 auto 40px;
       text-align: center;
-      font-size: 18px;
-      line-height: 1.6;
-      margin-bottom: 36px;
-      opacity: 0.92;
+      font-size: 20px;
+      line-height: 1.7;
+      opacity: 0.94;
+    }
+
+    .section {
+      background: rgba(0,0,0,0.34);
+      border: 1px solid rgba(212,175,55,0.20);
+      border-radius: 22px;
+      padding: 28px;
+      margin-bottom: 26px;
+      box-shadow: 0 14px 50px rgba(0,0,0,0.45);
+    }
+
+    .section h2 {
+      margin-top: 0;
+      color: #d4af37;
+      font-size: 28px;
+      margin-bottom: 18px;
+    }
+
+    .section p,
+    .section li {
+      line-height: 1.75;
+      font-size: 16px;
+      opacity: 0.95;
     }
 
     .grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
       gap: 18px;
     }
 
     .card {
-      background: rgba(255,255,255,0.06);
-      border-radius: 14px;
-      padding: 20px;
-      box-sizing: border-box;
+      background: rgba(255,255,255,0.055);
       border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 16px;
+      padding: 20px;
     }
 
-    .card h2 {
-      font-size: 22px;
-      color: #f4d35e;
-      margin: 0 0 10px 0;
+    .card h3 {
+      margin-top: 0;
+      color: #f0df9a;
+      font-size: 20px;
     }
 
-    .card p {
-      font-size: 15px;
-      line-height: 1.55;
-      margin: 0;
+    .flow {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-top: 14px;
     }
 
-    .footer-box {
-      margin-top: 30px;
-      text-align: center;
-      background: rgba(255,255,255,0.05);
-      padding: 18px;
-      border-radius: 12px;
-      font-size: 16px;
-      line-height: 1.6;
+    .flow-step {
+      background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(212,175,55,0.16);
+      border-radius: 999px;
+      padding: 10px 16px;
+      color: #f0df9a;
+      font-size: 14px;
     }
 
     .btn-row {
-      margin-top: 28px;
-      text-align: center;
+      margin-top: 18px;
     }
 
     .btn {
-      border: none;
-      border-radius: 10px;
+      display: inline-block;
+      text-decoration: none;
+      border-radius: 999px;
+      border: 1px solid rgba(212,175,55,0.55);
+      color: #f0df9a;
+      padding: 12px 20px;
+      margin: 6px;
+      background: rgba(0,0,0,0.32);
+      letter-spacing: 0.5px;
+    }
+
+    .btn.primary {
       background: #d4af37;
-      color: black;
-      padding: 12px 22px;
-      font-size: 16px;
+      color: #111;
       font-weight: bold;
-      cursor: pointer;
-      margin: 0 8px;
+    }
+
+    .btn:hover {
+      background: rgba(212,175,55,0.14);
+    }
+
+    .btn.primary:hover {
+      background: #f0df9a;
+    }
+
+    ul {
+      padding-left: 20px;
+    }
+
+    .note {
+      margin-top: 16px;
+      font-size: 14px;
+      opacity: 0.76;
+      line-height: 1.6;
     }
   </style>
 </head>
 
 <body>
-  <div class="container">
-    <h1>Educator Access</h1>
 
-    <div class="subtitle">
-      STEM Nation gives educators a structured entry point into the nation-building experience.<br>
-      Explore instructional flow, implementation structure, and classroom-facing access points.
+<div class="academy-line"></div>
+
+<div class="container">
+
+  <div class="label">STEM Nation · Educator Experience</div>
+
+  <h1>Teacher Command Center</h1>
+
+  <div class="subtitle">
+    STEM Nation is not just a lesson. It is a guided civilization simulation experience where students move through observation, responsibility, decision, survival, consequence, reflection, and growth.
+  </div>
+
+  <!-- Teacher Orientation -->
+
+  <div class="section">
+    <h2>Start Here — Teacher Orientation</h2>
+
+    <p>
+      The teacher serves as the facilitator of the civilization experience — not simply the lecturer. STEM Nation is designed as a guided inquiry and civilization simulation system. Students move through structured decision pathways while educators guide discussion, evidence, reflection, and consequence analysis.
+    </p>
+
+    <div class="flow">
+      <div class="flow-step">Observe</div>
+      <div class="flow-step">Question</div>
+      <div class="flow-step">Decide</div>
+      <div class="flow-step">Consequence</div>
+      <div class="flow-step">Reflect</div>
+      <div class="flow-step">Build</div>
     </div>
 
-    <div class="grid">
-      <div class="card">
-        <h2>Instructional Entry</h2>
-        <p>
-          Guide students from observation into design, leadership, and consequence through a staged nation-building experience.
-        </p>
-      </div>
-
-      <div class="card">
-        <h2>Curriculum Structure</h2>
-        <p>
-          The platform supports modular learning flow, phase-based progression, and classroom-ready instructional sequencing.
-        </p>
-      </div>
-
-      <div class="card">
-        <h2>Teacher Use</h2>
-        <p>
-          Educators can use the system to frame inquiry, support student decision-making, and connect simulation to reflection and evidence.
-        </p>
-      </div>
-
-      <div class="card">
-        <h2>Implementation Path</h2>
-        <p>
-          STEM Nation can support pilots, classroom integration, project-based learning, and expanded educator-facing deployment models.
-        </p>
-      </div>
+    <div class="note">
+      The platform is designed to reduce teacher prep while increasing student inquiry, collaboration, and systems thinking.
     </div>
 
-    <div class="footer-box">
-      Educator Access is the bridge between classroom instruction and the nation engine. It supports structured rollout, guided facilitation, and deeper student engagement.
-    </div>
-
-    <div class="btn-row">
-      <button class="btn" onclick="window.location.href='/'">Back to Landing</button>
-      <button class="btn" onclick="window.location.href='/hub'">Open Project Hub</button>
+    <div class="note">
+      <strong>Baseline Inquiry:</strong> Module 0 is intentionally framed as observation and orientation rather than an obvious pre-assessment. Students first observe environments, ask questions, and gather evidence before making final settlement decisions.
     </div>
   </div>
+
+  
+  <!-- Essential Question -->
+
+  <div class="section">
+    <h2>Essential Question & Enduring Understandings</h2>
+
+    <div class="grid">
+
+      <div class="card">
+        <h3>Essential Question</h3>
+
+        <p>
+          How does geography influence survival, decision-making, power, and the long-term growth of civilization?
+        </p>
+      </div>
+
+      <div class="card">
+        <h3>Enduring Understandings</h3>
+
+        <ul>
+          <li>Civilizations develop through interconnected systems.</li>
+          <li>Geography shapes opportunity, limitation, movement, and risk.</li>
+          <li>Survival decisions create long-term consequences.</li>
+          <li>Observation and inquiry are foundational to leadership.</li>
+        </ul>
+      </div>
+
+    </div>
+  </div>
+
+
+  <!-- Quick Launch -->
+
+  <div class="section">
+    <h2>Quick Launch Links</h2>
+
+    <div class="btn-row">
+      <a class="btn primary" href="/">Launch Student Experience</a>
+      <a class="btn" href="/hub">Week 1 Founding Archive</a>
+      <a class="btn" href="/week2_survival_archive">Week 2 Survival Archive</a>
+      <a class="btn" href="/week2_survival_complete">Week 2 Completion</a>
+    </div>
+  </div>
+
+  <!-- Pacing Guide -->
+
+  <div class="section">
+    <h2>Pacing Guide</h2>
+
+    <div class="grid">
+
+      <div class="card">
+        <h3>45-Minute Classroom</h3>
+        <p>
+          Use one major decision cycle. Focus on observation, discussion, and one completed archive artifact.
+        </p>
+      </div>
+
+      <div class="card">
+        <h3>90-Minute Block</h3>
+        <p>
+          Complete the full Week 1 or Week 2 flow with discussion pauses, archive review, and reflection.
+        </p>
+      </div>
+
+      <div class="card">
+        <h3>3-Hour Afterschool</h3>
+        <p>
+          Combine multiple decision phases with team collaboration, export/print artifacts, and presentations.
+        </p>
+      </div>
+
+      <div class="card">
+        <h3>8-Hour Intensive / Daycamp</h3>
+        <p>
+          Run the simulation as a civilization lab with multiple turns, role systems, archive building, and presentations.
+        </p>
+      </div>
+
+    </div>
+  </div>
+
+  
+  <!-- Auto District Alignment -->
+
+  <div class="section">
+    <h2>Auto District Alignment <span style="font-size:15px; opacity:0.7;">(Planned System)</span></h2>
+
+    <p>
+      One of the long-term goals of STEM Nation is reducing educator workload by helping teachers automatically align simulation lessons to district and state expectations.
+    </p>
+
+    <div class="grid">
+
+      <div class="card">
+        <h3>Future Teacher Inputs</h3>
+
+        <ul>
+          <li>District / School System</li>
+          <li>State</li>
+          <li>Grade Band</li>
+          <li>Subject / Course</li>
+          <li>Standards Framework</li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <h3>Planned Alignment Outputs</h3>
+
+        <ul>
+          <li>Standards-aligned objectives</li>
+          <li>Pacing adaptation suggestions</li>
+          <li>Assessment language</li>
+          <li>Artifact mapping</li>
+          <li>Lesson implementation guidance</li>
+        </ul>
+      </div>
+
+    </div>
+
+    <div class="note">
+      Current prototype status: conceptual educator-side architecture only. Live district standards automation, curriculum parsing, and standards-generation systems are planned for future development phases.
+    </div>
+
+    <div class="note">
+      Original educator-side vision: allow teachers to spend less time manually aligning lessons and more time facilitating inquiry, discussion, and systems thinking.
+    </div>
+  </div>
+
+
+  <!-- Week 1 -->
+
+  <div class="section">
+    <h2>Week 1 Lesson Plan — Module 0: Cartography & Orientation</h2>
+
+    <p>
+      Students move from observation into responsibility and settlement defense. The goal is not simply choosing land, but defending a founding decision using evidence from the environment.
+    </p>
+
+    <ul>
+      <li>Students move through observation before final settlement defense.</li>
+      <li>Students generate questions and evidence from the environment.</li>
+      <li>Students complete the Strategic Map Defense.</li>
+      <li>Students create a Founding Archive artifact.</li>
+      <li>Teacher facilitates discussion around geography, sustainability, consequence, and leadership.</li>
+    </ul>
+
+    <div class="note">
+      Suggested pause points: after observation, before settlement defense, and during archive review.
+    </div>
+
+    <div class="note">
+      Week 1 currently uses the active Academy pathway rather than the older region_experience pathway. The Academy sequence is the locked instructional foundation for the current build.
+    </div>
+  </div>
+
+  <!-- Week 2 -->
+
+  <div class="section">
+    <h2>Week 2 Lesson Plan — Survival & Consequence</h2>
+
+    <p>
+      Students now confront survival pressure. The focus shifts from choosing land to surviving on it through labor organization, resource management, and risk response.
+    </p>
+
+    <ul>
+      <li>Students create a first survival plan.</li>
+      <li>Students address food, shelter, scarcity, and labor.</li>
+      <li>Students export or print a Survival Archive.</li>
+      <li>Teacher facilitates tradeoff and consequence discussion.</li>
+    </ul>
+
+    <div class="note">
+      Strong discussion prompt: “What causes civilizations to fail even when they choose strong land?”
+    </div>
+
+    <div class="note">
+      Teachers are encouraged to pause frequently for student-generated questions, debate, and consequence prediction before students finalize survival responses.
+    </div>
+  </div>
+
+  <!-- Artifact Workflow -->
+
+  <div class="section">
+    <h2>Artifact Collection Workflow</h2>
+
+    <ul>
+      <li>Students can export text archives locally.</li>
+      <li>Students can print or Save-as-PDF from printable archive pages.</li>
+      <li>Teachers can collect archives digitally or physically.</li>
+      <li>Suggested naming convention: StudentName_Week1_FoundingArchive.pdf</li>
+      <li>Suggested naming convention: StudentName_Week2_SurvivalArchive.pdf</li>
+    </ul>
+
+    <div class="note">
+      Current prototype saves locally in the browser using localStorage. Teacher cloud collection systems are planned for future phases.
+    </div>
+  </div>
+
+  <!-- Assessment -->
+
+  <div class="section">
+    <h2>Assessment & Reflection</h2>
+
+    <div class="grid">
+
+      <div class="card">
+        <h3>Evidence & Reasoning</h3>
+        <p>
+          Does the student support decisions using observations from the environment?
+        </p>
+      </div>
+
+      <div class="card">
+        <h3>Risk Awareness</h3>
+        <p>
+          Does the student recognize tradeoffs, dangers, and long-term consequences?
+        </p>
+      </div>
+
+      <div class="card">
+        <h3>Systems Thinking</h3>
+        <p>
+          Does the student connect geography, survival, labor, and sustainability together?
+        </p>
+      </div>
+
+      <div class="card">
+        <h3>Reflection</h3>
+        <p>
+          Can the student explain why civilizations succeed or fail?
+        </p>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Implementation -->
+
+  <div class="section">
+    <h2>Implementation Notes</h2>
+
+    <ul>
+      <li>Week 1 and Week 2 student routes are currently locked and stable.</li>
+      <li>The current prototype uses browser-based local saves.</li>
+      <li>Printable archives support teacher portfolio collection.</li>
+      <li>The system is designed for classroom, afterschool, and intensive implementation models.</li>
+      <li>Future phases will include teacher dashboards, cloud saves, scoring systems, and live civilization simulation layers.</li>
+    </ul>
+  </div>
+
+  <div class="btn-row" style="text-align:center;">
+    <a class="btn primary" href="/">Return to Landing</a>
+    <a class="btn" href="/hub">Open Week 1 Archive</a>
+    <a class="btn" href="/week2_survival_archive">Open Week 2 Archive</a>
+  </div>
+
+</div>
+
 </body>
 </html>
