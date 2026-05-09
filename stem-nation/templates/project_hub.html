@@ -654,6 +654,41 @@ function initializeCivilizationStateFromDefense(record) {
     state.metrics.stability -= 5;
   }
 
+  const hasBalancedEvent = state.activeEvents.some(
+    (entry) => entry.id === "BALANCED_GROWTH_EVENT"
+  );
+
+  if (
+    record &&
+    record.chosenRegion &&
+    (
+      record.chosenRegion.toLowerCase().includes("balanced") ||
+      record.chosenRegion.toLowerCase().includes("valley")
+    ) &&
+    !hasBalancedEvent
+  ) {
+    state.activeEvents.push({
+      id: "BALANCED_GROWTH_EVENT",
+      turn: 1,
+      era: "Founding Era",
+      title: "Balanced Regional Growth",
+      summary: "Balanced terrain supports stable food systems, social cohesion, and manageable early expansion.",
+      savedAt: new Date().toISOString()
+    });
+
+    state.alerts.push({
+      id: "BALANCED_FOUNDATION_ALERT",
+      turn: 1,
+      era: "Founding Era",
+      title: "Stable Foundation Established",
+      summary: "Your civilization begins with balanced regional conditions and reduced environmental pressure."
+    });
+
+    state.metrics.food += 3;
+    state.metrics.stability += 3;
+    state.metrics.unity += 3;
+  }
+
   const hasFoundingArchive = state.archives.some((entry) => entry.id === "FOUNDING_ARCHIVE_WEEK_1");
 
   if (record && !hasFoundingArchive) {
