@@ -590,6 +590,38 @@ function initializeCivilizationStateFromDefense(record) {
     state.metrics.food -= 5;
   }
 
+  const hasDesertEvent = state.activeEvents.some(
+    (entry) => entry.id === "DESERT_SCARCITY_EVENT"
+  );
+
+  if (
+    record &&
+    record.chosenRegion &&
+    record.chosenRegion.toLowerCase().includes("desert") &&
+    !hasDesertEvent
+  ) {
+    state.activeEvents.push({
+      id: "DESERT_SCARCITY_EVENT",
+      turn: 1,
+      era: "Founding Era",
+      title: "Water Scarcity Pressure",
+      summary: "Limited water access creates food instability, but survival trade networks begin emerging across the region.",
+      savedAt: new Date().toISOString()
+    });
+
+    state.alerts.push({
+      id: "DESERT_SURVIVAL_ALERT",
+      turn: 1,
+      era: "Founding Era",
+      title: "Harsh Climate Survival Conditions",
+      summary: "Desert civilizations must carefully manage food, water, and expansion routes."
+    });
+
+    state.metrics.food -= 5;
+    state.metrics.stability -= 5;
+    state.metrics.wealth += 5;
+  }
+
   const hasFoundingArchive = state.archives.some((entry) => entry.id === "FOUNDING_ARCHIVE_WEEK_1");
 
   if (record && !hasFoundingArchive) {
