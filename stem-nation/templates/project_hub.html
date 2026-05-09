@@ -238,6 +238,31 @@
       margin-top: 6px;
     }
 
+    .civilization-alerts-panel {
+      margin-top: 24px;
+      border-top: 1px solid rgba(212,175,55,0.18);
+      padding-top: 18px;
+    }
+
+    .civilization-alerts-panel h3 {
+      color: #d4af37;
+      text-align: center;
+      margin: 0 0 14px;
+    }
+
+    .alert-entry {
+      border: 1px solid rgba(255,180,80,0.22);
+      border-radius: 14px;
+      padding: 14px;
+      background: rgba(255,180,80,0.06);
+      margin-bottom: 12px;
+      line-height: 1.55;
+    }
+
+    .alert-entry strong {
+      color: #ffd27a;
+    }
+
     .btn-row {
       margin-top: 30px;
       text-align: center;
@@ -461,6 +486,21 @@ function renderCivilizationStatus() {
   const metrics = state.metrics || {};
   const decisionLog = state.decisionLog || [];
   const archives = state.archives || [];
+  const alerts = state.alerts || [];
+
+  const alertHtml = alerts.length
+    ? alerts.slice().reverse().map((entry) => `
+      <div class="alert-entry">
+        <strong>${entry.title || "Civilization Alert"}</strong><br>
+        ${entry.summary || ""}
+      </div>
+    `).join("")
+    : `
+      <div class="saved-defense-empty">
+        No active civilization alerts.
+      </div>
+    `;
+
   const archiveHtml = archives.length
     ? archives.slice().reverse().map((entry) => `
       <div class="archive-entry">
@@ -530,6 +570,11 @@ function renderCivilizationStatus() {
     <div class="civilization-archive-summary">
       <h3>Archive Summary</h3>
       ${archiveHtml}
+    </div>
+
+    <div class="civilization-alerts-panel">
+      <h3>Active Alerts</h3>
+      ${alertHtml}
     </div>
   `;
 }
