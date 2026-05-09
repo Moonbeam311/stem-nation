@@ -375,6 +375,7 @@
       <button id="downloadArchiveBtn" class="btn disabled" type="button">Download Text Archive</button>
       <a class="btn" href="/founding_archive_print">Printable / Save as PDF</a>
       <button id="clearArchiveBtn" class="btn secondary" type="button">Clear / Reset Archive</button>
+      <button id="advanceTurnBtn" class="btn primary" type="button">Advance Turn</button>
       <a class="btn primary" href="/founding_complete">Complete Week 1</a>
       <a class="btn secondary" href="/academy_individual">Return to Academy / Restart Week 1 Flow</a>
       <a class="btn" href="/map">Return to Strategic Map</a>
@@ -460,6 +461,42 @@ function saveCivilizationState(state) {
 
   localStorage.setItem(CIV_STATE_KEY, JSON.stringify(nextState));
   return nextState;
+}
+
+function getEraForTurn(turn) {
+  if (turn >= 7) return "Expansion Era";
+  if (turn >= 4) return "Survival Era";
+  return "Founding Era";
+}
+
+function advanceTurn() {
+  let state = loadCivilizationState();
+
+  const nextTurn = (state.currentTurn || 1) + 1;
+  const nextEra = getEraForTurn(nextTurn);
+
+  state.currentTurn = nextTurn;
+  state.era = nextEra;
+
+  state.decisionLog.push({
+    id: `TURN_ADVANCED_${nextTurn}`,
+    turn: nextTurn,
+    era: nextEra,
+    title: `Turn ${nextTurn} advanced`,
+    summary: `The civilization has moved into Turn ${nextTurn} of the ${nextEra}.`,
+    savedAt: new Date().toISOString()
+  });
+
+  state.alerts.push({
+    id: `TURN_${nextTurn}_STATUS_ALERT`,
+    turn: nextTurn,
+    era: nextEra,
+    title: "New Turn Started",
+    summary: `Review food, stability, unity, territory, knowledge, and wealth before making the next major decision.`
+  });
+
+  saveCivilizationState(state);
+  renderCivilizationStatus();
 }
 
 function initializeCivilizationStateFromDefense(record) {
@@ -929,6 +966,11 @@ renderCivilizationStatus();
 const downloadArchiveBtn = document.getElementById("downloadArchiveBtn");
 if (downloadArchiveBtn) {
   downloadArchiveBtn.addEventListener("click", downloadFoundingArchive);
+}
+
+const advanceTurnBtn = document.getElementById("advanceTurnBtn");
+if (advanceTurnBtn) {
+  advanceTurnBtn.addEventListener("click", advanceTurn);
 }
 
 const clearArchiveBtn = document.getElementById("clearArchiveBtn");
