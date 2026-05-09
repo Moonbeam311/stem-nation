@@ -468,6 +468,37 @@ function initializeCivilizationStateFromDefense(record) {
     });
   }
 
+  const hasRiverFloodEvent = state.activeEvents.some(
+    (entry) => entry.id === "RIVER_FLOOD_RISK_EVENT"
+  );
+
+  if (
+    record &&
+    record.chosenRegion &&
+    record.chosenRegion.toLowerCase().includes("river") &&
+    !hasRiverFloodEvent
+  ) {
+    state.activeEvents.push({
+      id: "RIVER_FLOOD_RISK_EVENT",
+      turn: 1,
+      era: "Founding Era",
+      title: "River Flood Risk",
+      summary: "Seasonal river flooding threatens stability while improving agricultural potential.",
+      savedAt: new Date().toISOString()
+    });
+
+    state.alerts.push({
+      id: "RIVER_FLOOD_ALERT",
+      turn: 1,
+      era: "Founding Era",
+      title: "Environmental Pressure Detected",
+      summary: "River flooding conditions may destabilize nearby settlements if expansion is not carefully managed."
+    });
+
+    state.metrics.food += 5;
+    state.metrics.stability -= 5;
+  }
+
   const hasFoundingArchive = state.archives.some((entry) => entry.id === "FOUNDING_ARCHIVE_WEEK_1");
 
   if (record && !hasFoundingArchive) {
