@@ -700,6 +700,7 @@ if (clearArchiveBtn) {
     if (!confirmed) return;
 
     localStorage.removeItem(STORAGE_KEY);
+    localStorage.removeItem(CIV_STATE_KEY);
     window.location.reload();
   });
 }
