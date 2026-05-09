@@ -316,6 +316,46 @@
       cursor: not-allowed;
       pointer-events: none;
     }
+
+    .governance-action-panel {
+      margin-top: 28px;
+    }
+
+    .governance-intro {
+      text-align: center;
+      opacity: 0.85;
+    }
+
+    .governance-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+      gap: 14px;
+      margin-top: 18px;
+    }
+
+    .governance-btn {
+      border: 1px solid rgba(212,175,55,0.28);
+      border-radius: 14px;
+      background: rgba(255,255,255,0.05);
+      color: #f0df9a;
+      padding: 16px;
+      cursor: pointer;
+      text-align: left;
+      font-size: 16px;
+      line-height: 1.35;
+    }
+
+    .governance-btn span {
+      display: block;
+      color: white;
+      opacity: 0.78;
+      font-size: 13px;
+      margin-top: 8px;
+    }
+
+    .governance-btn:hover {
+      background: rgba(212,175,55,0.12);
+    }
   </style>
 </head>
 
@@ -360,6 +400,48 @@
 
       <div id="civilizationStatusContent" class="saved-defense-empty">
         Civilization state not initialized yet.
+      </div>
+
+    </div>
+
+    <div id="governanceActionPanel" class="panel governance-action-panel">
+
+      <h2>Governance Actions</h2>
+
+      <p class="governance-intro">
+        Choose one strategic action to shape your civilization before advancing the next turn.
+      </p>
+
+      <div class="governance-grid">
+        <button class="governance-btn" type="button" data-action="expand_farms">
+          Expand Farms
+          <span>Increase food production, but use more territory.</span>
+        </button>
+
+        <button class="governance-btn" type="button" data-action="build_granaries">
+          Build Granaries
+          <span>Protect food reserves and improve stability.</span>
+        </button>
+
+        <button class="governance-btn" type="button" data-action="open_trade">
+          Open Trade Routes
+          <span>Increase wealth, but expose the civilization to outside pressure.</span>
+        </button>
+
+        <button class="governance-btn" type="button" data-action="invest_knowledge">
+          Invest in Knowledge
+          <span>Improve knowledge systems while consuming wealth.</span>
+        </button>
+
+        <button class="governance-btn" type="button" data-action="stabilize_population">
+          Stabilize Population
+          <span>Improve unity and stability, but slow expansion.</span>
+        </button>
+
+        <button class="governance-btn" type="button" data-action="strengthen_defense">
+          Strengthen Defense
+          <span>Improve stability and territory control, but reduce wealth.</span>
+        </button>
       </div>
 
     </div>
@@ -585,6 +667,74 @@ function applyCrisisDetection(state) {
   });
 
   return state;
+}
+
+const governanceActions = {
+  expand_farms: {
+    title: "Expanded Farms",
+    summary: "The civilization expanded food production while placing greater pressure on available territory.",
+    effects: { food: 6, territory: -2, stability: -1 }
+  },
+  build_granaries: {
+    title: "Built Granaries",
+    summary: "The civilization protected food reserves and improved public confidence.",
+    effects: { food: 3, stability: 3, wealth: -2 }
+  },
+  open_trade: {
+    title: "Opened Trade Routes",
+    summary: "The civilization expanded exchange networks, gaining wealth while increasing outside exposure.",
+    effects: { wealth: 6, knowledge: 2, stability: -2 }
+  },
+  invest_knowledge: {
+    title: "Invested in Knowledge",
+    summary: "The civilization strengthened learning systems and technical capacity while consuming wealth.",
+    effects: { knowledge: 6, wealth: -3, unity: 1 }
+  },
+  stabilize_population: {
+    title: "Stabilized Population",
+    summary: "The civilization focused on social order, cooperation, and internal stability.",
+    effects: { unity: 4, stability: 4, territory: -2 }
+  },
+  strengthen_defense: {
+    title: "Strengthened Defense",
+    summary: "The civilization improved defensive readiness and territorial control while consuming wealth.",
+    effects: { stability: 4, territory: 3, wealth: -3 }
+  }
+};
+
+function applyGovernanceAction(action) {
+  const actionConfig = governanceActions[action];
+  if (!actionConfig) return;
+
+  let state = loadCivilizationState();
+  const metrics = state.metrics || {};
+
+  Object.entries(actionConfig.effects).forEach(([metric, delta]) => {
+    metrics[metric] = clampMetric((metrics[metric] || 0) + delta);
+  });
+
+  state.metrics = metrics;
+
+  state.decisionLog.push({
+    id: `GOVERNANCE_${action.toUpperCase()}_${Date.now()}`,
+    turn: state.currentTurn || 1,
+    era: state.era || "Founding Era",
+    title: actionConfig.title,
+    summary: actionConfig.summary,
+    savedAt: new Date().toISOString()
+  });
+
+  state.alerts.push({
+    id: `GOVERNANCE_${action.toUpperCase()}_ALERT_${Date.now()}`,
+    turn: state.currentTurn || 1,
+    era: state.era || "Founding Era",
+    title: "Governance Action Applied",
+    summary: actionConfig.summary
+  });
+
+  state = applyCrisisDetection(state);
+  saveCivilizationState(state);
+  renderCivilizationStatus();
 }
 
 function advanceTurn() {
@@ -1097,6 +1247,12 @@ const downloadArchiveBtn = document.getElementById("downloadArchiveBtn");
 if (downloadArchiveBtn) {
   downloadArchiveBtn.addEventListener("click", downloadFoundingArchive);
 }
+
+document.querySelectorAll(".governance-btn").forEach((button) => {
+  button.addEventListener("click", () => {
+    applyGovernanceAction(button.dataset.action);
+  });
+});
 
 const advanceTurnBtn = document.getElementById("advanceTurnBtn");
 if (advanceTurnBtn) {
