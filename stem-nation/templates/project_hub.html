@@ -176,6 +176,37 @@
       margin-bottom: 20px;
     }
 
+    .civilization-decision-log {
+      margin-top: 24px;
+      border-top: 1px solid rgba(212,175,55,0.18);
+      padding-top: 18px;
+    }
+
+    .civilization-decision-log h3 {
+      color: #d4af37;
+      text-align: center;
+      margin: 0 0 14px;
+    }
+
+    .decision-log-entry {
+      border: 1px solid rgba(212,175,55,0.14);
+      border-radius: 14px;
+      padding: 14px;
+      background: rgba(255,255,255,0.04);
+      margin-bottom: 12px;
+      line-height: 1.55;
+    }
+
+    .decision-log-entry strong {
+      color: #f0df9a;
+    }
+
+    .decision-log-entry .meta {
+      font-size: 12px;
+      opacity: 0.68;
+      margin-top: 6px;
+    }
+
     .btn-row {
       margin-top: 30px;
       text-align: center;
@@ -397,6 +428,16 @@ function renderCivilizationStatus() {
   const state = loadCivilizationState();
 
   const metrics = state.metrics || {};
+  const decisionLog = state.decisionLog || [];
+  const decisionLogHtml = decisionLog.length
+    ? decisionLog.slice().reverse().map((entry) => `
+      <div class="decision-log-entry">
+        <strong>${entry.title || "Civilization Decision"}</strong><br>
+        ${entry.summary || ""}
+        <div class="meta">${entry.era || state.era} · Turn ${entry.turn || state.currentTurn}</div>
+      </div>
+    `).join("")
+    : `<div class="saved-defense-empty">No civilization decisions recorded yet.</div>`;
 
   container.className = "";
 
@@ -437,6 +478,11 @@ function renderCivilizationStatus() {
         <div class="metric-label">Wealth</div>
         <div class="metric-value">${metrics.wealth ?? 0}</div>
       </div>
+    </div>
+
+    <div class="civilization-decision-log">
+      <h3>Decision Log</h3>
+      ${decisionLogHtml}
     </div>
   `;
 }
