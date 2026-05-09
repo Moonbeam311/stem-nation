@@ -455,6 +455,19 @@ function initializeCivilizationStateFromDefense(record) {
     });
   }
 
+  const hasFoundingAlert = state.alerts.some((entry) => entry.id === "FOUNDING_SETTLEMENT_ALERT");
+
+  if (record && !hasFoundingAlert) {
+    state.alerts.push({
+      id: "FOUNDING_SETTLEMENT_ALERT",
+      turn: 1,
+      era: "Founding Era",
+      title: "Founding Conditions Activated",
+      summary: `Your civilization has entered the Founding Era in ${record.chosenRegion || "an unknown region"}. Future decisions will begin shaping food, stability, unity, territory, knowledge, and wealth.`,
+      savedAt: record.savedAt || new Date().toISOString()
+    });
+  }
+
   const hasFoundingArchive = state.archives.some((entry) => entry.id === "FOUNDING_ARCHIVE_WEEK_1");
 
   if (record && !hasFoundingArchive) {
