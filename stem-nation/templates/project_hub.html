@@ -351,6 +351,8 @@ function renderSavedDefense() {
 
   try {
     const record = JSON.parse(raw);
+    const civilizationState = initializeCivilizationStateFromDefense(record);
+    console.log("V34 civilization state synchronized.", civilizationState);
     const fields = Object.keys(labels);
 
     const hasAnyAnswer = fields.some((id) => record[id] && record[id].trim().length > 0);
