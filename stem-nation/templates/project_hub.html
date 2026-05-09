@@ -137,6 +137,45 @@
       opacity: 0.68;
     }
 
+    .civilization-status-panel {
+      margin-top: 28px;
+    }
+
+    .civilization-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 14px;
+      margin-top: 18px;
+    }
+
+    .civilization-metric {
+      border: 1px solid rgba(212,175,55,0.16);
+      border-radius: 14px;
+      padding: 16px;
+      background: rgba(255,255,255,0.05);
+      text-align: center;
+    }
+
+    .civilization-metric .metric-label {
+      color: #d4af37;
+      font-size: 12px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      margin-bottom: 10px;
+    }
+
+    .civilization-metric .metric-value {
+      font-size: 28px;
+      color: #f0df9a;
+      font-weight: bold;
+    }
+
+    .civilization-summary {
+      text-align: center;
+      line-height: 1.7;
+      margin-bottom: 20px;
+    }
+
     .btn-row {
       margin-top: 30px;
       text-align: center;
@@ -199,6 +238,16 @@
           The first record of your civilization’s reasoning.
         </div>
       </div>
+    </div>
+
+    <div id="civilizationStatusPanel" class="panel civilization-status-panel">
+
+      <h2>Civilization Command Center</h2>
+
+      <div id="civilizationStatusContent" class="saved-defense-empty">
+        Civilization state not initialized yet.
+      </div>
+
     </div>
 
     <div id="savedDefense" class="saved-defense">
@@ -341,6 +390,57 @@ const labels = {
   survivalPlan: "Survival Plan"
 };
 
+function renderCivilizationStatus() {
+  const container = document.getElementById("civilizationStatusContent");
+  if (!container) return;
+
+  const state = loadCivilizationState();
+
+  const metrics = state.metrics || {};
+
+  container.className = "";
+
+  container.innerHTML = `
+    <div class="civilization-summary">
+      <strong>${state.civilizationName}</strong><br>
+      ${state.era} · Turn ${state.currentTurn}<br>
+      Founding Region: ${state.foundingRegion || "Unknown"}
+    </div>
+
+    <div class="civilization-grid">
+      <div class="civilization-metric">
+        <div class="metric-label">Food</div>
+        <div class="metric-value">${metrics.food ?? 0}</div>
+      </div>
+
+      <div class="civilization-metric">
+        <div class="metric-label">Stability</div>
+        <div class="metric-value">${metrics.stability ?? 0}</div>
+      </div>
+
+      <div class="civilization-metric">
+        <div class="metric-label">Knowledge</div>
+        <div class="metric-value">${metrics.knowledge ?? 0}</div>
+      </div>
+
+      <div class="civilization-metric">
+        <div class="metric-label">Unity</div>
+        <div class="metric-value">${metrics.unity ?? 0}</div>
+      </div>
+
+      <div class="civilization-metric">
+        <div class="metric-label">Territory</div>
+        <div class="metric-value">${metrics.territory ?? 0}</div>
+      </div>
+
+      <div class="civilization-metric">
+        <div class="metric-label">Wealth</div>
+        <div class="metric-value">${metrics.wealth ?? 0}</div>
+      </div>
+    </div>
+  `;
+}
+
 function renderSavedDefense() {
   const container = document.getElementById("savedDefenseContent");
   const downloadArchiveBtn = document.getElementById("downloadArchiveBtn");
@@ -431,6 +531,7 @@ function downloadFoundingArchive() {
   }
 }
 
+renderCivilizationStatus();
 renderSavedDefense();
 
 const downloadArchiveBtn = document.getElementById("downloadArchiveBtn");
