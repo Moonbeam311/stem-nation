@@ -469,6 +469,44 @@ function getEraForTurn(turn) {
   return "Founding Era";
 }
 
+function clampMetric(value) {
+  return Math.max(0, Math.min(100, value));
+}
+
+function applyTurnDrift(state) {
+  const metrics = state.metrics || {};
+  const driftNotes = [];
+
+  if (metrics.food >= 55) {
+    metrics.unity = clampMetric((metrics.unity || 0) + 1);
+    driftNotes.push("Food surplus strengthened unity (+1).");
+  }
+
+  if (metrics.food <= 45) {
+    metrics.stability = clampMetric((metrics.stability || 0) - 1);
+    driftNotes.push("Food pressure weakened stability (-1).");
+  }
+
+  if (metrics.stability <= 45) {
+    metrics.unity = clampMetric((metrics.unity || 0) - 1);
+    driftNotes.push("Low stability weakened unity (-1).");
+  }
+
+  if (metrics.unity >= 55) {
+    metrics.stability = clampMetric((metrics.stability || 0) + 1);
+    driftNotes.push("High unity strengthened stability (+1).");
+  }
+
+  if (metrics.knowledge >= 55) {
+    metrics.wealth = clampMetric((metrics.wealth || 0) + 1);
+    driftNotes.push("Knowledge growth improved wealth (+1).");
+  }
+
+  state.metrics = metrics;
+  state.lastDriftSummary = driftNotes;
+  return state;
+}
+
 function advanceTurn() {
   let state = loadCivilizationState();
 
@@ -477,6 +515,7 @@ function advanceTurn() {
 
   state.currentTurn = nextTurn;
   state.era = nextEra;
+  state = applyTurnDrift(state);
 
   state.decisionLog.push({
     id: `TURN_ADVANCED_${nextTurn}`,
@@ -494,6 +533,16 @@ function advanceTurn() {
     title: "New Turn Started",
     summary: `Review food, stability, unity, territory, knowledge, and wealth before making the next major decision.`
   });
+
+  if (state.lastDriftSummary && state.lastDriftSummary.length) {
+    state.alerts.push({
+      id: `TURN_${nextTurn}_DRIFT_ALERT`,
+      turn: nextTurn,
+      era: nextEra,
+      title: "Metric Drift Applied",
+      summary: state.lastDriftSummary.join(" ")
+    });
+  }
 
   saveCivilizationState(state);
   renderCivilizationStatus();
