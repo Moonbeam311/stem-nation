@@ -356,6 +356,12 @@
     .governance-btn:hover {
       background: rgba(212,175,55,0.12);
     }
+
+    .governance-btn.disabled {
+      opacity: 0.45;
+      cursor: not-allowed;
+      pointer-events: none;
+    }
   </style>
 </head>
 
@@ -486,6 +492,7 @@ const defaultCivilizationState = {
   decisionLog: [],
   archives: [],
   activeEvents: [],
+  governanceActionUsedThisTurn: false,
   createdAt: null,
   updatedAt: null
 };
@@ -702,11 +709,40 @@ const governanceActions = {
   }
 };
 
+function setGovernanceButtonsDisabled(disabled) {
+  document.querySelectorAll(".governance-btn").forEach((button) => {
+    button.disabled = disabled;
+
+    if (disabled) {
+      button.classList.add("disabled");
+    } else {
+      button.classList.remove("disabled");
+    }
+  });
+}
+
 function applyGovernanceAction(action) {
   const actionConfig = governanceActions[action];
   if (!actionConfig) return;
 
+  setGovernanceButtonsDisabled(true);
+
   let state = loadCivilizationState();
+
+  if (state.governanceActionUsedThisTurn) {
+    state.alerts.push({
+      id: `GOVERNANCE_LOCK_${Date.now()}`,
+      turn: state.currentTurn || 1,
+      era: state.era || "Founding Era",
+      title: "Governance Locked",
+      summary: "Only one governance action may be used per turn."
+    });
+
+    saveCivilizationState(state);
+    renderCivilizationStatus();
+    return;
+  }
+
   const metrics = state.metrics || {};
 
   Object.entries(actionConfig.effects).forEach(([metric, delta]) => {
@@ -732,6 +768,8 @@ function applyGovernanceAction(action) {
     summary: actionConfig.summary
   });
 
+  state.governanceActionUsedThisTurn = true;
+
   state = applyCrisisDetection(state);
   saveCivilizationState(state);
   renderCivilizationStatus();
@@ -745,6 +783,8 @@ function advanceTurn() {
 
   state.currentTurn = nextTurn;
   state.era = nextEra;
+  state.governanceActionUsedThisTurn = false;
+
   state = applyTurnDrift(state);
   state = applyCrisisDetection(state);
 
@@ -777,6 +817,8 @@ function advanceTurn() {
 
   saveCivilizationState(state);
   renderCivilizationStatus();
+
+  setGovernanceButtonsDisabled(false);
 }
 
 function initializeCivilizationStateFromDefense(record) {
