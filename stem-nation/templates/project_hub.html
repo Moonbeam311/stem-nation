@@ -526,6 +526,38 @@ function initializeCivilizationStateFromDefense(record) {
     state.metrics.stability -= 5;
   }
 
+  const hasForestEvent = state.activeEvents.some(
+    (entry) => entry.id === "FOREST_RESOURCE_EVENT"
+  );
+
+  if (
+    record &&
+    record.chosenRegion &&
+    record.chosenRegion.toLowerCase().includes("forest") &&
+    !hasForestEvent
+  ) {
+    state.activeEvents.push({
+      id: "FOREST_RESOURCE_EVENT",
+      turn: 1,
+      era: "Founding Era",
+      title: "Forest Resource Abundance",
+      summary: "Dense forests provide timber, wildlife, medicinal resources, and knowledge opportunities for early expansion.",
+      savedAt: new Date().toISOString()
+    });
+
+    state.alerts.push({
+      id: "FOREST_WILDFIRE_ALERT",
+      turn: 1,
+      era: "Founding Era",
+      title: "Wildfire Risk Detected",
+      summary: "Dry environmental conditions may threaten stability if forest growth is unmanaged."
+    });
+
+    state.metrics.wealth += 5;
+    state.metrics.knowledge += 5;
+    state.metrics.stability -= 5;
+  }
+
   const hasFoundingArchive = state.archives.some((entry) => entry.id === "FOUNDING_ARCHIVE_WEEK_1");
 
   if (record && !hasFoundingArchive) {
