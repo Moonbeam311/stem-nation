@@ -220,6 +220,118 @@
   </div>
 <script>
 const STORAGE_KEY = "STEM_NATION_SETTLEMENT_DEFENSE_V1";
+const CIV_STATE_KEY = "STEM_NATION_CIVILIZATION_STATE_V34";
+
+const defaultCivilizationState = {
+  version: "V34",
+  civilizationName: "Unnamed Civilization",
+  foundingRegion: "",
+  currentTurn: 1,
+  era: "Founding Era",
+  metrics: {
+    food: 50,
+    stability: 50,
+    knowledge: 50,
+    unity: 50,
+    territory: 50,
+    wealth: 50
+  },
+  alerts: [],
+  decisionLog: [],
+  archives: [],
+  activeEvents: [],
+  createdAt: null,
+  updatedAt: null
+};
+
+function loadCivilizationState() {
+  const raw = localStorage.getItem(CIV_STATE_KEY);
+
+  if (!raw) {
+    return {
+      ...defaultCivilizationState,
+      metrics: { ...defaultCivilizationState.metrics },
+      alerts: [...defaultCivilizationState.alerts],
+      decisionLog: [...defaultCivilizationState.decisionLog],
+      archives: [...defaultCivilizationState.archives],
+      activeEvents: [...defaultCivilizationState.activeEvents]
+    };
+  }
+
+  try {
+    const saved = JSON.parse(raw);
+
+    return {
+      ...defaultCivilizationState,
+      ...saved,
+      metrics: {
+        ...defaultCivilizationState.metrics,
+        ...(saved.metrics || {})
+      },
+      alerts: saved.alerts || [],
+      decisionLog: saved.decisionLog || [],
+      archives: saved.archives || [],
+      activeEvents: saved.activeEvents || []
+    };
+  } catch (error) {
+    console.log("Could not load V34 civilization state.", error);
+    return {
+      ...defaultCivilizationState,
+      metrics: { ...defaultCivilizationState.metrics },
+      alerts: [],
+      decisionLog: [],
+      archives: [],
+      activeEvents: []
+    };
+  }
+}
+
+function saveCivilizationState(state) {
+  const now = new Date().toISOString();
+  const nextState = {
+    ...state,
+    version: "V34",
+    createdAt: state.createdAt || now,
+    updatedAt: now
+  };
+
+  localStorage.setItem(CIV_STATE_KEY, JSON.stringify(nextState));
+  return nextState;
+}
+
+function initializeCivilizationStateFromDefense(record) {
+  let state = loadCivilizationState();
+
+  if (record && record.chosenRegion && !state.foundingRegion) {
+    state.foundingRegion = record.chosenRegion.trim();
+  }
+
+  const hasFoundingDecision = state.decisionLog.some((entry) => entry.id === "FOUNDING_SETTLEMENT_DEFENSE");
+
+  if (record && !hasFoundingDecision) {
+    state.decisionLog.push({
+      id: "FOUNDING_SETTLEMENT_DEFENSE",
+      turn: 1,
+      era: "Founding Era",
+      title: "Settlement Decision Defense completed",
+      summary: `Civilization selected ${record.chosenRegion || "an unknown region"} and defended its founding settlement strategy.`,
+      savedAt: record.savedAt || new Date().toISOString()
+    });
+  }
+
+  const hasFoundingArchive = state.archives.some((entry) => entry.id === "FOUNDING_ARCHIVE_WEEK_1");
+
+  if (record && !hasFoundingArchive) {
+    state.archives.push({
+      id: "FOUNDING_ARCHIVE_WEEK_1",
+      title: "Week 1 Founding Archive",
+      type: "Settlement Defense",
+      savedAt: record.savedAt || new Date().toISOString()
+    });
+  }
+
+  return saveCivilizationState(state);
+}
 
 const labels = {
   chosenRegion: "Chosen Region",
