@@ -558,6 +558,38 @@ function initializeCivilizationStateFromDefense(record) {
     state.metrics.stability -= 5;
   }
 
+  const hasMountainEvent = state.activeEvents.some(
+    (entry) => entry.id === "MOUNTAIN_DEFENSE_EVENT"
+  );
+
+  if (
+    record &&
+    record.chosenRegion &&
+    record.chosenRegion.toLowerCase().includes("mountain") &&
+    !hasMountainEvent
+  ) {
+    state.activeEvents.push({
+      id: "MOUNTAIN_DEFENSE_EVENT",
+      turn: 1,
+      era: "Founding Era",
+      title: "Mountain Defensive Advantage",
+      summary: "High terrain strengthens protection and territorial awareness, but harsh conditions limit early food production.",
+      savedAt: new Date().toISOString()
+    });
+
+    state.alerts.push({
+      id: "MOUNTAIN_WINTER_ALERT",
+      turn: 1,
+      era: "Founding Era",
+      title: "Harsh Terrain Pressure",
+      summary: "Mountain settlements must prepare for difficult winters, limited farming, and slower expansion."
+    });
+
+    state.metrics.territory += 5;
+    state.metrics.stability += 5;
+    state.metrics.food -= 5;
+  }
+
   const hasFoundingArchive = state.archives.some((entry) => entry.id === "FOUNDING_ARCHIVE_WEEK_1");
 
   if (record && !hasFoundingArchive) {
