@@ -477,6 +477,24 @@ function applyTurnDrift(state) {
   const metrics = state.metrics || {};
   const driftNotes = [];
 
+  metrics.food = clampMetric((metrics.food || 0) - 1);
+  driftNotes.push("Passive food consumption occurred (-1).");
+
+  if (metrics.food <= 40) {
+    metrics.stability = clampMetric((metrics.stability || 0) - 1);
+    driftNotes.push("Food scarcity created stability pressure (-1).");
+  }
+
+  if (metrics.unity >= 53) {
+    metrics.stability = clampMetric((metrics.stability || 0) + 1);
+    driftNotes.push("Strong unity supported stability recovery (+1).");
+  }
+
+  if (metrics.knowledge >= 53) {
+    metrics.wealth = clampMetric((metrics.wealth || 0) + 1);
+    driftNotes.push("Knowledge systems improved wealth (+1).");
+  }
+
   if (metrics.food >= 55) {
     metrics.unity = clampMetric((metrics.unity || 0) + 1);
     driftNotes.push("Food surplus strengthened unity (+1).");
@@ -507,6 +525,68 @@ function applyTurnDrift(state) {
   return state;
 }
 
+function applyCrisisDetection(state) {
+  const metrics = state.metrics || {};
+  const turn = state.currentTurn || 1;
+  const era = state.era || "Founding Era";
+
+  const crisisRules = [
+    {
+      id: "FOOD_CRISIS",
+      metric: "food",
+      threshold: 35,
+      title: "Food Crisis Emerging",
+      summary: "Food reserves have fallen into dangerous territory. The civilization faces hunger, migration pressure, and instability."
+    },
+    {
+      id: "STABILITY_CRISIS",
+      metric: "stability",
+      threshold: 35,
+      title: "Political Unrest Emerging",
+      summary: "Stability has fallen into dangerous territory. Leadership, order, and public trust are under pressure."
+    },
+    {
+      id: "UNITY_CRISIS",
+      metric: "unity",
+      threshold: 35,
+      title: "Social Fragmentation Emerging",
+      summary: "Unity has fallen into dangerous territory. Internal division may weaken cooperation and collective survival."
+    },
+    {
+      id: "WEALTH_CRISIS",
+      metric: "wealth",
+      threshold: 35,
+      title: "Economic Strain Emerging",
+      summary: "Wealth has fallen into dangerous territory. Trade, production, and long-term development are at risk."
+    }
+  ];
+
+  crisisRules.forEach((rule) => {
+    const alreadyActive = state.activeEvents.some((entry) => entry.id === rule.id);
+
+    if ((metrics[rule.metric] || 0) <= rule.threshold && !alreadyActive) {
+      state.activeEvents.push({
+        id: rule.id,
+        turn,
+        era,
+        title: rule.title,
+        summary: rule.summary,
+        savedAt: new Date().toISOString()
+      });
+
+      state.alerts.push({
+        id: `${rule.id}_ALERT`,
+        turn,
+        era,
+        title: "Civilization Crisis Detected",
+        summary: rule.summary
+      });
+    }
+  });
+
+  return state;
+}
+
 function advanceTurn() {
   let state = loadCivilizationState();
 
@@ -516,6 +596,7 @@ function advanceTurn() {
   state.currentTurn = nextTurn;
   state.era = nextEra;
   state = applyTurnDrift(state);
+  state = applyCrisisDetection(state);
 
   state.decisionLog.push({
     id: `TURN_ADVANCED_${nextTurn}`,
