@@ -207,6 +207,37 @@
       margin-top: 6px;
     }
 
+    .civilization-archive-summary {
+      margin-top: 24px;
+      border-top: 1px solid rgba(212,175,55,0.18);
+      padding-top: 18px;
+    }
+
+    .civilization-archive-summary h3 {
+      color: #d4af37;
+      text-align: center;
+      margin: 0 0 14px;
+    }
+
+    .archive-entry {
+      border: 1px solid rgba(212,175,55,0.14);
+      border-radius: 14px;
+      padding: 14px;
+      background: rgba(255,255,255,0.04);
+      margin-bottom: 12px;
+      line-height: 1.55;
+    }
+
+    .archive-entry strong {
+      color: #f0df9a;
+    }
+
+    .archive-entry .meta {
+      font-size: 12px;
+      opacity: 0.68;
+      margin-top: 6px;
+    }
+
     .btn-row {
       margin-top: 30px;
       text-align: center;
@@ -429,6 +460,17 @@ function renderCivilizationStatus() {
 
   const metrics = state.metrics || {};
   const decisionLog = state.decisionLog || [];
+  const archives = state.archives || [];
+  const archiveHtml = archives.length
+    ? archives.slice().reverse().map((entry) => `
+      <div class="archive-entry">
+        <strong>${entry.title || "Civilization Archive"}</strong><br>
+        ${entry.type || "Archive Record"}
+        <div class="meta">${entry.savedAt ? new Date(entry.savedAt).toLocaleString() : "Saved locally"}</div>
+      </div>
+    `).join("")
+    : `<div class="saved-defense-empty">No civilization archive records available yet.</div>`;
+
   const decisionLogHtml = decisionLog.length
     ? decisionLog.slice().reverse().map((entry) => `
       <div class="decision-log-entry">
@@ -483,6 +525,11 @@ function renderCivilizationStatus() {
     <div class="civilization-decision-log">
       <h3>Decision Log</h3>
       ${decisionLogHtml}
+    </div>
+
+    <div class="civilization-archive-summary">
+      <h3>Archive Summary</h3>
+      ${archiveHtml}
     </div>
   `;
 }
