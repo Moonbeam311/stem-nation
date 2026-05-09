@@ -622,6 +622,38 @@ function initializeCivilizationStateFromDefense(record) {
     state.metrics.wealth += 5;
   }
 
+  const hasCoastalEvent = state.activeEvents.some(
+    (entry) => entry.id === "COASTAL_TRADE_EVENT"
+  );
+
+  if (
+    record &&
+    record.chosenRegion &&
+    record.chosenRegion.toLowerCase().includes("coastal") &&
+    !hasCoastalEvent
+  ) {
+    state.activeEvents.push({
+      id: "COASTAL_TRADE_EVENT",
+      turn: 1,
+      era: "Founding Era",
+      title: "Coastal Trade Expansion",
+      summary: "Access to waterways opens early trade, mobility, and wealth opportunities while increasing storm exposure.",
+      savedAt: new Date().toISOString()
+    });
+
+    state.alerts.push({
+      id: "COASTAL_STORM_ALERT",
+      turn: 1,
+      era: "Founding Era",
+      title: "Storm Exposure Detected",
+      summary: "Coastal settlements must balance trade growth with flood defenses, storms, and maritime risk."
+    });
+
+    state.metrics.wealth += 5;
+    state.metrics.territory += 5;
+    state.metrics.stability -= 5;
+  }
+
   const hasFoundingArchive = state.archives.some((entry) => entry.id === "FOUNDING_ARCHIVE_WEEK_1");
 
   if (record && !hasFoundingArchive) {
