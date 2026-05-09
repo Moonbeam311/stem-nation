@@ -250,6 +250,33 @@
       margin: 0 0 14px;
     }
 
+    .civilization-events-panel {
+      margin-top: 24px;
+      border-top: 1px solid rgba(212,175,55,0.18);
+      padding-top: 18px;
+    }
+
+    .civilization-events-panel h3 {
+      color: #d4af37;
+      text-align: center;
+      margin: 0 0 14px;
+    }
+
+    .event-entry {
+      border: 1px solid rgba(120,180,255,0.18);
+      border-radius: 12px;
+      padding: 12px;
+      margin-bottom: 12px;
+      background: rgba(120,180,255,0.06);
+      line-height: 1.5;
+    }
+
+    .event-entry .meta {
+      margin-top: 6px;
+      font-size: 0.84rem;
+      opacity: 0.7;
+    }
+
     .alert-entry {
       border: 1px solid rgba(255,180,80,0.22);
       border-radius: 14px;
@@ -531,6 +558,21 @@ function renderCivilizationStatus() {
   const decisionLog = state.decisionLog || [];
   const archives = state.archives || [];
   const alerts = state.alerts || [];
+  const activeEvents = state.activeEvents || [];
+
+  const activeEventsHtml = activeEvents.length
+    ? activeEvents.slice().reverse().map((entry) => `
+      <div class="event-entry">
+        <strong>${entry.title || "Civilization Event"}</strong><br>
+        ${entry.summary || ""}
+        <div class="meta">${entry.era || state.era} · Turn ${entry.turn || state.currentTurn}</div>
+      </div>
+    `).join("")
+    : `
+      <div class="saved-defense-empty">
+        No active world events.
+      </div>
+    `;
 
   const alertHtml = alerts.length
     ? alerts.slice().reverse().map((entry) => `
@@ -614,6 +656,11 @@ function renderCivilizationStatus() {
     <div class="civilization-archive-summary">
       <h3>Archive Summary</h3>
       ${archiveHtml}
+    </div>
+
+    <div class="civilization-events-panel">
+      <h3>Active World Events</h3>
+      ${activeEventsHtml}
     </div>
 
     <div class="civilization-alerts-panel">
