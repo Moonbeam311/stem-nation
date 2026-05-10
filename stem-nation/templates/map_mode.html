@@ -1442,6 +1442,146 @@
     font-weight:bold;
 }
 
+
+.archive-log-panel{
+    max-width:1200px;
+    margin:20px auto;
+    padding:18px;
+    border-radius:18px;
+    border:2px solid rgba(244,211,94,0.35);
+    background:
+      radial-gradient(circle at top, rgba(244,211,94,0.12), transparent 45%),
+      rgba(0,0,0,0.52);
+    animation:revealRise 0.45s ease-out;
+}
+
+.archive-log-label{
+    color:#f4d35e;
+    letter-spacing:4px;
+    font-size:12px;
+    margin-bottom:10px;
+}
+
+.archive-log-content{
+    display:grid;
+    gap:12px;
+}
+
+.archive-entry{
+    padding:14px;
+    border-radius:14px;
+    border:1px solid rgba(255,255,255,0.14);
+    background:rgba(255,255,255,0.07);
+}
+
+.archive-entry-title{
+    color:#f0df9a;
+    font-weight:bold;
+    margin-bottom:6px;
+}
+
+.archive-entry-summary{
+    opacity:0.9;
+    line-height:1.4;
+}
+
+.archive-entry-date{
+    margin-top:8px;
+    opacity:0.65;
+    font-size:12px;
+}
+
+
+.archive-type-badge{
+    display:inline-block;
+    margin-bottom:8px;
+    padding:5px 9px;
+    border-radius:999px;
+    background:rgba(91,192,222,0.16);
+    border:1px solid rgba(91,192,222,0.42);
+    color:#bdefff;
+    font-size:12px;
+    font-weight:bold;
+}
+
+
+.archive-filter-controls{
+    display:flex;
+    flex-wrap:wrap;
+    gap:10px;
+    margin:12px 0 16px;
+}
+
+.archive-filter-btn{
+    padding:9px 12px;
+    border-radius:999px;
+    border:1px solid rgba(255,255,255,0.16);
+    background:rgba(255,255,255,0.07);
+    color:white;
+    cursor:pointer;
+    font-size:13px;
+    font-weight:bold;
+}
+
+.archive-filter-btn.active,
+.archive-filter-btn:hover{
+    border-color:#f4d35e;
+    background:rgba(244,211,94,0.18);
+    color:#f0df9a;
+}
+
+
+.archive-summary-panel{
+    margin:12px 0 18px;
+    padding:16px;
+    border-radius:16px;
+    border:1px solid rgba(244,211,94,0.35);
+    background:rgba(244,211,94,0.08);
+}
+
+.archive-summary-label{
+    color:#f4d35e;
+    letter-spacing:3px;
+    font-size:12px;
+    margin-bottom:12px;
+    font-weight:bold;
+}
+
+.archive-summary-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit, minmax(120px, 1fr));
+    gap:10px;
+    margin-bottom:14px;
+}
+
+.archive-summary-card{
+    padding:12px;
+    border-radius:12px;
+    background:rgba(255,255,255,0.07);
+    border:1px solid rgba(255,255,255,0.12);
+    text-align:center;
+}
+
+.archive-summary-number{
+    color:#f0df9a;
+    font-size:24px;
+    font-weight:bold;
+}
+
+.archive-summary-name{
+    font-size:12px;
+    opacity:0.82;
+}
+
+.archive-reflection-prompt{
+    padding:12px;
+    border-radius:12px;
+    background:rgba(91,192,222,0.12);
+    border:1px solid rgba(91,192,222,0.35);
+    color:#bdefff;
+    font-weight:bold;
+}
+
 </style>
 </head>
 
@@ -1566,11 +1706,82 @@
     <button type="button" id="eventAskBtn" class="event-btn">❓ Ask Question</button>
     <button type="button" id="eventRespondBtn" class="event-btn">⚖️ Respond</button>
     <button type="button" id="eventArchiveBtn" class="event-btn">📜 Record</button>
+    <button type="button" id="eventEvidenceBtn" class="event-btn">📝 Evidence Note</button>
   </div>
 
 </div>
 
 
+
+
+
+<div id="archiveLogPanel" class="archive-log-panel hidden">
+
+  <div class="archive-log-label">
+    CIVILIZATION ARCHIVE
+  </div>
+
+  
+
+<div id="archiveSummaryPanel" class="archive-summary-panel hidden">
+
+  <div class="archive-summary-label">
+    ARCHIVE SUMMARY
+  </div>
+
+  <div class="archive-summary-grid">
+
+    <div class="archive-summary-card">
+      <div class="archive-summary-number" id="archiveTotalCount">0</div>
+      <div class="archive-summary-name">Total Records</div>
+    </div>
+
+    <div class="archive-summary-card">
+      <div class="archive-summary-number" id="archiveQuestionCount">0</div>
+      <div class="archive-summary-name">Questions</div>
+    </div>
+
+    <div class="archive-summary-card">
+      <div class="archive-summary-number" id="archiveResponseCount">0</div>
+      <div class="archive-summary-name">Responses</div>
+    </div>
+
+    <div class="archive-summary-card">
+      <div class="archive-summary-number" id="archiveEvidenceCount">0</div>
+      <div class="archive-summary-name">Evidence</div>
+    </div>
+
+    <div class="archive-summary-card">
+      <div class="archive-summary-number" id="archiveEventCount">0</div>
+      <div class="archive-summary-name">Events</div>
+    </div>
+
+  </div>
+
+  <div id="archiveReflectionPrompt" class="archive-reflection-prompt">
+    Which record best explains how your civilization adapted this turn?
+  </div>
+
+</div>
+
+
+<div id="archiveFilterControls" class="archive-filter-controls">
+
+  <button type="button" class="archive-filter-btn active" data-filter="all">All</button>
+  <button type="button" class="archive-filter-btn" data-filter="question">❓ Questions</button>
+  <button type="button" class="archive-filter-btn" data-filter="response">⚖️ Responses</button>
+  <button type="button" class="archive-filter-btn" data-filter="evidence">📝 Evidence</button>
+  <button type="button" class="archive-filter-btn" data-filter="event">📜 Events</button>
+  <button type="button" class="archive-filter-btn" data-filter="founding">🏛️ Founding</button>
+
+</div>
+
+
+<div id="archiveLogContent" class="archive-log-content">
+    No archive records yet.
+  </div>
+
+</div>
 
 
 <div id="actionResponsePanel" class="action-response-panel hidden">
@@ -2487,10 +2698,127 @@ function showActionResponse(message) {
   content.innerHTML = message;
 }
 
+
+
+function getArchiveTypeBadge(entry) {
+  const type = entry.type || "";
+
+  if (type === "question") return "❓ Question";
+  if (type === "response") return "⚖️ Response";
+  if (type === "evidence") return "📝 Evidence";
+  if (type === "event") return "📜 Event";
+
+  if ((entry.title || "").toLowerCase().includes("founding")) {
+    return "🏛️ Founding Archive";
+  }
+
+  return "📜 Archive";
+}
+
+
+
+function updateArchiveSummary(archives) {
+  const panel = document.getElementById("archiveSummaryPanel");
+  const total = document.getElementById("archiveTotalCount");
+  const questions = document.getElementById("archiveQuestionCount");
+  const responses = document.getElementById("archiveResponseCount");
+  const evidence = document.getElementById("archiveEvidenceCount");
+  const events = document.getElementById("archiveEventCount");
+  const prompt = document.getElementById("archiveReflectionPrompt");
+
+  if (!panel || !total || !questions || !responses || !evidence || !events) return;
+
+  const list = archives || [];
+
+  const questionCount = list.filter((entry) => entry.type === "question").length;
+  const responseCount = list.filter((entry) => entry.type === "response").length;
+  const evidenceCount = list.filter((entry) => entry.type === "evidence").length;
+  const eventCount = list.filter((entry) => entry.type === "event" || !entry.type).length;
+
+  panel.classList.remove("hidden");
+
+  total.textContent = list.length;
+  questions.textContent = questionCount;
+  responses.textContent = responseCount;
+  evidence.textContent = evidenceCount;
+  events.textContent = eventCount;
+
+  if (prompt) {
+    if (questionCount === 0) {
+      prompt.textContent = "What question should your council ask before the next turn?";
+    } else if (evidenceCount === 0) {
+      prompt.textContent = "What evidence should your civilization record before responding?";
+    } else if (responseCount === 0) {
+      prompt.textContent = "How should your council respond to the strongest evidence?";
+    } else {
+      prompt.textContent = "Which record best explains how your civilization adapted this turn?";
+    }
+  }
+}
+
+
+function renderArchiveLog(filter = "all") {
+  const panel = document.getElementById("archiveLogPanel");
+  const content = document.getElementById("archiveLogContent");
+
+  if (!panel || !content) return;
+
+  const state = loadCivilizationState();
+  const archives = state.archives || [];
+
+  updateArchiveSummary(archives);
+
+  panel.classList.remove("hidden");
+
+  const filteredArchives = archives.filter((entry) => {
+    const type = entry.type || "";
+
+    if (filter === "all") return true;
+    if (filter === "founding") return (entry.title || "").toLowerCase().includes("founding");
+
+    return type === filter;
+  });
+
+  if (!filteredArchives.length) {
+    content.innerHTML = "No archive records for this filter.";
+    return;
+  }
+
+  content.innerHTML = filteredArchives.slice().reverse().map((entry) => `
+    <div class="archive-entry">
+      <div class="archive-type-badge">${getArchiveTypeBadge(entry)}</div>
+      <div class="archive-entry-title">${entry.title || "Archive Record"}</div>
+      <div class="archive-entry-summary">${entry.summary || "No summary recorded."}</div>
+      <div class="archive-entry-date">${entry.savedAt || ""}</div>
+    </div>
+  `).join("");
+}
+
+
+
+function wireArchiveFilters() {
+  const buttons = document.querySelectorAll(".archive-filter-btn");
+
+  buttons.forEach((button) => {
+    button.addEventListener("click", () => {
+      const filter = button.dataset.filter || "all";
+
+      buttons.forEach((item) => item.classList.remove("active"));
+      button.classList.add("active");
+
+      renderArchiveLog(filter);
+    });
+  });
+}
+
+wireArchiveFilters();
+
+
 function wireEventActionButtons() {
   const askBtn = document.getElementById("eventAskBtn");
   const respondBtn = document.getElementById("eventRespondBtn");
   const recordBtn = document.getElementById("eventArchiveBtn");
+  const evidenceBtn = document.getElementById("eventEvidenceBtn");
   const inquiryPrompt = document.getElementById("dynamicInquiryPrompt");
 
   if (askBtn) {
@@ -2501,10 +2829,24 @@ function wireEventActionButtons() {
         inquiryPrompt.textContent = question;
       }
 
+      const state = loadCivilizationState();
+      state.archives = state.archives || [];
+      state.archives.push({
+        id: `STUDENT_QUESTION_${Date.now()}`,
+        title: "Student Question",
+        summary: question,
+        type: "question",
+        turn: state.worldTurn || state.currentTurn || 1,
+        savedAt: new Date().toISOString()
+      });
+      saveCivilizationState(state);
+
       showActionResponse(`
         <div>❓ <strong>Question Recorded</strong></div>
         <div>${question}</div>
       `);
+
+      renderArchiveLog();
     });
   }
 
@@ -2521,12 +2863,54 @@ function wireEventActionButtons() {
         savedAt: new Date().toISOString()
       });
 
+      state.archives = state.archives || [];
+      state.archives.push({
+        id: `COUNCIL_RESPONSE_${Date.now()}`,
+        title: "Council Response Prepared",
+        summary: "The council reviewed the event and prepared a cautious response.",
+        type: "response",
+        turn: state.worldTurn || state.currentTurn || 1,
+        savedAt: new Date().toISOString()
+      });
+
       saveCivilizationState(state);
 
       showActionResponse(`
         <div>⚖️ <strong>Council Response Prepared</strong></div>
         <div>The council reviewed the event and prepared a cautious response.</div>
       `);
+
+      renderArchiveLog();
+    });
+  }
+
+
+  if (evidenceBtn) {
+    evidenceBtn.addEventListener("click", () => {
+      const state = loadCivilizationState();
+      const eventTitle = document.getElementById("dynamicEventTitle")?.textContent || "World Event";
+      const eventSummary = document.getElementById("dynamicEventDescription")?.textContent || "A world event was observed.";
+
+      const evidenceSummary = `Evidence noted for ${eventTitle}: ${eventSummary}`;
+
+      state.archives = state.archives || [];
+      state.archives.push({
+        id: `EVIDENCE_NOTE_${Date.now()}`,
+        title: "Evidence Note",
+        summary: evidenceSummary,
+        type: "evidence",
+        turn: state.worldTurn || state.currentTurn || 1,
+        savedAt: new Date().toISOString()
+      });
+
+      saveCivilizationState(state);
+
+      showActionResponse(`
+        <div>📝 <strong>Evidence Note Added</strong></div>
+        <div>${evidenceSummary}</div>
+      `);
+
+      renderArchiveLog();
     });
   }
 
@@ -2550,6 +2934,8 @@ function wireEventActionButtons() {
         <div>📜 <strong>Archive Record Added</strong></div>
         <div>This world event has been recorded in the civilization archive.</div>
       `);
+
+      renderArchiveLog();
     });
   }
 }
@@ -2566,6 +2952,10 @@ overlayButtons.forEach((button) => {
     if (!overlay) return;
 
     overlay.classList.toggle("hidden");
+
+    if (overlayId === "archiveOverlay") {
+      renderArchiveLog();
+    }
   });
 });
 
