@@ -298,10 +298,1438 @@
       color: #f4d35e;
       border: 1px solid #d4af37;
     }
-  </style>
+  
+.mission-header{
+    text-align:center;
+    margin-bottom:30px;
+}
+
+.mission-label{
+    color:#f4d35e;
+    letter-spacing:3px;
+    font-size:14px;
+    margin-bottom:10px;
+}
+
+.mission-title{
+    font-size:42px;
+    margin-bottom:12px;
+}
+
+.mission-subtitle{
+    max-width:700px;
+    margin:auto;
+    line-height:1.6;
+    opacity:0.9;
+}
+
+
+.civilization-panel{
+    margin:30px auto;
+    max-width:800px;
+}
+
+.meter{
+    margin-bottom:18px;
+}
+
+.meter span{
+    display:block;
+    margin-bottom:6px;
+}
+
+.meter-bar{
+    width:100%;
+    height:18px;
+    background:#222;
+    border-radius:10px;
+    overflow:hidden;
+}
+
+.meter-fill{
+    height:100%;
+}
+
+.food-fill{
+    width:70%;
+    background:#4caf50;
+}
+
+.defense-fill{
+    width:45%;
+    background:#d9534f;
+}
+
+.knowledge-fill{
+    width:30%;
+    background:#5bc0de;
+}
+
+
+.advisor-alert{
+    border:2px solid #f4d35e;
+    padding:20px;
+    border-radius:14px;
+    margin:30px 0;
+    background:rgba(0,0,0,0.4);
+}
+
+.advisor-alert h2{
+    margin-top:0;
+    color:#f4d35e;
+}
+
+
+.consequence-box{
+    margin-top:30px;
+    padding:20px;
+    border-radius:14px;
+    background:#1c1c1c;
+    border:2px solid #4caf50;
+}
+
+.civilization-update{
+    margin-top:25px;
+    padding:20px;
+    border-radius:14px;
+    border:2px solid #5bc0de;
+    background:rgba(0,0,0,0.35);
+}
+
+.hidden{
+    display:none;
+}
+
+
+.mission-complete-panel{
+    margin:35px auto;
+    max-width:900px;
+    padding:28px;
+    border-radius:18px;
+    border:2px solid #d4af37;
+    background:
+      radial-gradient(circle at top, rgba(244,211,94,0.18), transparent 45%),
+      rgba(0,0,0,0.55);
+    box-shadow:0 0 28px rgba(244,211,94,0.25);
+    text-align:center;
+}
+
+.mission-complete-label{
+    color:#f4d35e;
+    letter-spacing:4px;
+    font-size:13px;
+    margin-bottom:10px;
+}
+
+.mission-complete-title{
+    font-size:34px;
+    margin:0 0 22px;
+    color:#f0df9a;
+}
+
+.unlock-section{
+    display:grid;
+    grid-template-columns:repeat(auto-fit, minmax(190px, 1fr));
+    gap:16px;
+    margin:24px 0;
+}
+
+.unlock-card{
+    padding:18px;
+    border-radius:14px;
+    background:rgba(255,255,255,0.08);
+    border:1px solid rgba(244,211,94,0.35);
+}
+
+.unlock-icon{
+    font-size:34px;
+    margin-bottom:10px;
+}
+
+.unlock-title{
+    font-weight:bold;
+}
+
+.next-mission-preview{
+    margin-top:26px;
+    padding:20px;
+    border-radius:14px;
+    background:rgba(91,192,222,0.12);
+    border:1px solid rgba(91,192,222,0.45);
+}
+
+.next-mission-label{
+    color:#5bc0de;
+    letter-spacing:3px;
+    font-size:12px;
+    margin-bottom:8px;
+}
+
+.next-mission-title{
+    font-size:24px;
+    font-weight:bold;
+    margin-bottom:10px;
+}
+
+
+.survival-priority-challenge{
+    margin:35px auto;
+    padding:28px;
+    border-radius:18px;
+    border:2px solid rgba(91,192,222,0.45);
+    background:
+      radial-gradient(circle at top, rgba(91,192,222,0.12), transparent 40%),
+      rgba(0,0,0,0.45);
+}
+
+.challenge-label{
+    color:#5bc0de;
+    letter-spacing:4px;
+    font-size:12px;
+    margin-bottom:12px;
+}
+
+.priority-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit, minmax(150px, 1fr));
+    gap:14px;
+    margin-top:24px;
+}
+
+.priority-card{
+    padding:18px;
+    border-radius:14px;
+    border:1px solid rgba(255,255,255,0.18);
+    background:rgba(255,255,255,0.06);
+    color:white;
+    cursor:pointer;
+    transition:all 0.2s ease;
+    font-size:16px;
+}
+
+.priority-card:hover{
+    transform:translateY(-2px);
+    border-color:#5bc0de;
+}
+
+.priority-card.selected{
+    border:2px solid #5bc0de;
+    background:rgba(91,192,222,0.22);
+    box-shadow:0 0 18px rgba(91,192,222,0.22);
+}
+
+.priority-status{
+    margin-top:18px;
+    opacity:0.9;
+}
+
+.priority-bonus{
+    margin-top:18px;
+    padding:14px;
+    border-radius:12px;
+    background:rgba(76,175,80,0.18);
+    border:1px solid rgba(76,175,80,0.4);
+    color:#b8f5c0;
+    font-weight:bold;
+}
+
+
+.interactive-region-board{
+    display:grid;
+    grid-template-columns:repeat(auto-fit, minmax(190px, 1fr));
+    gap:18px;
+    margin:32px auto;
+}
+
+.region-card{
+    padding:20px;
+    border-radius:16px;
+    background:rgba(255,255,255,0.07);
+    border:1px solid rgba(255,255,255,0.16);
+    cursor:pointer;
+    transition:all 0.22s ease;
+    text-align:center;
+}
+
+.region-card:hover{
+    transform:translateY(-4px) scale(1.02);
+    border-color:#f4d35e;
+    box-shadow:0 0 22px rgba(244,211,94,0.22);
+}
+
+.region-card.selected{
+    border:2px solid #f4d35e;
+    background:rgba(244,211,94,0.16);
+    box-shadow:0 0 26px rgba(244,211,94,0.3);
+}
+
+.region-icon{
+    font-size:38px;
+    margin-bottom:10px;
+}
+
+.region-name{
+    font-size:18px;
+    font-weight:bold;
+    color:#f0df9a;
+    margin-bottom:10px;
+}
+
+.region-bonus{
+    color:#b8f5c0;
+    margin-bottom:6px;
+}
+
+.region-risk{
+    color:#ffd27f;
+    font-size:14px;
+}
+
+.region-selection-feedback{
+    margin:18px auto 28px;
+    padding:14px;
+    border-radius:12px;
+    border:1px solid rgba(244,211,94,0.45);
+    background:rgba(244,211,94,0.12);
+    color:#f0df9a;
+    font-weight:bold;
+    text-align:center;
+}
+
+
+.toggle-reference-board{
+    margin:24px auto;
+    padding:14px 22px;
+    border-radius:12px;
+    border:1px solid rgba(244,211,94,0.5);
+    background:rgba(244,211,94,0.12);
+    color:#f0df9a;
+    cursor:pointer;
+    font-weight:bold;
+}
+
+.reference-board-wrapper{
+    margin-top:20px;
+}
+
+
+.strategic-terrain-map{
+    margin:34px auto;
+    max-width:900px;
+    padding:26px;
+    border-radius:20px;
+    border:2px solid rgba(244,211,94,0.35);
+    background:
+      linear-gradient(135deg, rgba(27,65,43,0.55), rgba(20,35,68,0.55)),
+      rgba(0,0,0,0.45);
+    box-shadow:0 0 28px rgba(0,0,0,0.35);
+    text-align:center;
+}
+
+.map-title{
+    font-size:26px;
+    color:#f0df9a;
+    font-weight:bold;
+    margin-bottom:6px;
+}
+
+.map-subtitle{
+    opacity:0.85;
+    margin-bottom:22px;
+}
+
+.terrain-map-grid{
+    display:grid;
+    grid-template-columns:repeat(3, 1fr);
+    gap:14px;
+}
+
+.terrain-zone{
+    min-height:90px;
+    border-radius:16px;
+    border:1px solid rgba(255,255,255,0.18);
+    color:white;
+    font-size:17px;
+    cursor:pointer;
+    transition:all 0.2s ease;
+    background:rgba(255,255,255,0.08);
+}
+
+.terrain-zone:hover{
+    transform:scale(1.03);
+    border-color:#f4d35e;
+    box-shadow:0 0 20px rgba(244,211,94,0.25);
+}
+
+.terrain-zone.selected{
+    border:2px solid #f4d35e;
+    box-shadow:0 0 28px rgba(244,211,94,0.4);
+}
+
+.river-zone{ background:rgba(45,127,184,0.35); }
+.forest-zone{ background:rgba(34,116,61,0.35); }
+.highland-zone{ background:rgba(111,98,82,0.45); }
+.coastal-zone{ background:rgba(51,153,153,0.35); }
+.plain-zone{ background:rgba(151,132,45,0.35); }
+.crossroads-zone{ background:rgba(142,104,177,0.35); }
+
+.settlement-marker{
+    margin:22px auto 0;
+    padding:14px;
+    max-width:260px;
+    border-radius:14px;
+    border:1px solid rgba(244,211,94,0.55);
+    background:rgba(244,211,94,0.16);
+    color:#f0df9a;
+    font-weight:bold;
+}
+
+.terrain-map-feedback{
+    margin:18px auto 0;
+    color:#b8f5c0;
+    font-weight:bold;
+}
+
+
+.mission-command-panel{
+    margin:30px auto;
+    max-width:900px;
+    border-radius:18px;
+    border:2px solid rgba(91,192,222,0.35);
+    background:rgba(0,0,0,0.45);
+    overflow:hidden;
+    box-shadow:0 0 26px rgba(0,0,0,0.35);
+}
+
+.command-tabs{
+    display:flex;
+    flex-wrap:wrap;
+    background:rgba(255,255,255,0.06);
+}
+
+.command-tab{
+    flex:1;
+    min-width:120px;
+    padding:14px;
+    border:0;
+    background:transparent;
+    color:white;
+    cursor:pointer;
+    font-weight:bold;
+}
+
+.command-tab.active{
+    background:rgba(91,192,222,0.22);
+    color:#f0df9a;
+    border-bottom:2px solid #5bc0de;
+}
+
+.command-panel-body{
+    padding:24px;
+    text-align:left;
+}
+
+.command-panel h2{
+    margin-top:0;
+    color:#f0df9a;
+}
+
+
+@keyframes softPulse{
+    0%{ box-shadow:0 0 0 rgba(244,211,94,0.0); }
+    50%{ box-shadow:0 0 26px rgba(244,211,94,0.35); }
+    100%{ box-shadow:0 0 0 rgba(244,211,94,0.0); }
+}
+
+@keyframes markerDrop{
+    0%{ transform:translateY(-18px) scale(0.92); opacity:0; }
+    70%{ transform:translateY(4px) scale(1.04); opacity:1; }
+    100%{ transform:translateY(0) scale(1); opacity:1; }
+}
+
+@keyframes revealRise{
+    0%{ transform:translateY(18px); opacity:0; }
+    100%{ transform:translateY(0); opacity:1; }
+}
+
+@keyframes alertPulse{
+    0%{ border-color:rgba(244,211,94,0.35); }
+    50%{ border-color:rgba(244,211,94,0.95); }
+    100%{ border-color:rgba(244,211,94,0.35); }
+}
+
+@keyframes unlockGlow{
+    0%{ transform:scale(0.96); opacity:0; }
+    70%{ transform:scale(1.03); opacity:1; }
+    100%{ transform:scale(1); opacity:1; }
+}
+
+.meter-fill{
+    transition:width 0.7s ease;
+}
+
+.terrain-zone.selected{
+    animation:softPulse 1.5s ease-in-out infinite;
+}
+
+.settlement-marker{
+    animation:markerDrop 0.55s ease-out;
+}
+
+.mission-complete-panel{
+    animation:revealRise 0.65s ease-out;
+}
+
+.mission-complete-panel:not(.hidden) .unlock-card{
+    animation:unlockGlow 0.5s ease-out both;
+}
+
+.mission-complete-panel:not(.hidden) .unlock-card:nth-child(1){
+    animation-delay:0.1s;
+}
+
+.mission-complete-panel:not(.hidden) .unlock-card:nth-child(2){
+    animation-delay:0.25s;
+}
+
+.mission-complete-panel:not(.hidden) .unlock-card:nth-child(3){
+    animation-delay:0.4s;
+}
+
+.advisor-alert{
+    animation:alertPulse 2.2s ease-in-out infinite;
+}
+
+.consequence-box:not(.hidden),
+.civilization-update:not(.hidden),
+.priority-bonus:not(.hidden),
+.region-selection-feedback:not(.hidden),
+.terrain-map-feedback:not(.hidden){
+    animation:revealRise 0.45s ease-out;
+}
+
+
+.civilization-growth-panel{
+    margin:30px auto;
+    max-width:900px;
+    padding:26px;
+    border-radius:20px;
+    border:2px solid rgba(76,175,80,0.35);
+    background:
+      radial-gradient(circle at top, rgba(76,175,80,0.16), transparent 45%),
+      rgba(0,0,0,0.45);
+    text-align:center;
+    box-shadow:0 0 26px rgba(0,0,0,0.35);
+}
+
+.growth-label{
+    color:#b8f5c0;
+    letter-spacing:4px;
+    font-size:12px;
+    margin-bottom:12px;
+}
+
+.growth-stage-icon{
+    font-size:52px;
+    margin-bottom:10px;
+}
+
+.growth-stage-title{
+    font-size:26px;
+    font-weight:bold;
+    color:#f0df9a;
+    margin-bottom:8px;
+}
+
+.growth-stage-description{
+    opacity:0.88;
+    margin-bottom:20px;
+}
+
+.growth-track{
+    display:grid;
+    grid-template-columns:repeat(5, 1fr);
+    gap:10px;
+}
+
+.growth-step{
+    padding:10px;
+    border-radius:12px;
+    background:rgba(255,255,255,0.07);
+    border:1px solid rgba(255,255,255,0.14);
+    font-size:13px;
+}
+
+.growth-step.active{
+    background:rgba(76,175,80,0.22);
+    border-color:#4caf50;
+    color:#b8f5c0;
+    font-weight:bold;
+}
+
+
+.region-consequence-preview{
+    margin:22px auto;
+    padding:20px;
+    max-width:640px;
+    border-radius:16px;
+    border:1px solid rgba(244,211,94,0.5);
+    background:rgba(0,0,0,0.42);
+    text-align:left;
+    animation:revealRise 0.45s ease-out;
+}
+
+.preview-label{
+    color:#f4d35e;
+    letter-spacing:3px;
+    font-size:12px;
+    margin-bottom:8px;
+}
+
+.region-consequence-preview h3{
+    margin:0 0 12px;
+    color:#f0df9a;
+}
+
+.preview-bonus{
+    color:#b8f5c0;
+    margin-bottom:8px;
+}
+
+.preview-risk{
+    color:#ffd27f;
+    margin-bottom:8px;
+}
+
+.preview-impact{
+    color:#5bc0de;
+    font-weight:bold;
+}
+
+
+.zone-settlement-slot{
+    margin-top:10px;
+    min-height:26px;
+    font-size:24px;
+}
+
+.zone-settlement-slot.active{
+    animation:markerDrop 0.55s ease-out;
+}
+
+
+.zone-infrastructure-slot{
+    margin-top:8px;
+    min-height:24px;
+    font-size:20px;
+    opacity:0.95;
+}
+
+.zone-infrastructure-slot.active{
+    animation:revealRise 0.5s ease-out;
+}
+
+
+.living-gameboard{
+    display:grid;
+    grid-template-columns:260px 1fr 260px;
+    gap:18px;
+    max-width:1200px;
+    margin:30px auto;
+    padding:18px;
+    border-radius:24px;
+    border:2px solid rgba(244,211,94,0.35);
+    background:
+      radial-gradient(circle at center, rgba(91,192,222,0.12), transparent 45%),
+      rgba(0,0,0,0.48);
+    box-shadow:0 0 34px rgba(0,0,0,0.45);
+}
+
+.advisor-panel,
+.civilization-panel-right{
+    padding:18px;
+    border-radius:18px;
+    background:rgba(255,255,255,0.07);
+    border:1px solid rgba(255,255,255,0.14);
+}
+
+.panel-title{
+    color:#f0df9a;
+    font-weight:bold;
+    letter-spacing:2px;
+    margin-bottom:12px;
+}
+
+.advisor-message{
+    line-height:1.5;
+    opacity:0.9;
+    margin-bottom:18px;
+}
+
+.inquiry-box{
+    padding:14px;
+    border-radius:14px;
+    background:rgba(91,192,222,0.13);
+    border:1px solid rgba(91,192,222,0.45);
+}
+
+.inquiry-label{
+    color:#5bc0de;
+    font-size:11px;
+    letter-spacing:2px;
+    margin-bottom:8px;
+}
+
+.world-board{
+    min-height:360px;
+    border-radius:22px;
+    border:2px solid rgba(76,175,80,0.35);
+    background:
+      linear-gradient(135deg, rgba(34,116,61,0.28), rgba(45,127,184,0.24)),
+      rgba(0,0,0,0.35);
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    text-align:center;
+    position:relative;
+    overflow:hidden;
+}
+
+.world-board::before{
+    content:"";
+    position:absolute;
+    inset:-40%;
+    background:
+      radial-gradient(circle, rgba(244,211,94,0.08), transparent 40%);
+    animation:worldDrift 9s linear infinite;
+}
+
+@keyframes worldDrift{
+    0%{ transform:translateX(-5%) translateY(-3%) rotate(0deg); }
+    50%{ transform:translateX(5%) translateY(3%) rotate(8deg); }
+    100%{ transform:translateX(-5%) translateY(-3%) rotate(0deg); }
+}
+
+.world-board-header,
+.world-board-subtitle{
+    position:relative;
+    z-index:1;
+}
+
+.world-board-header{
+    color:#f0df9a;
+    font-size:30px;
+    font-weight:bold;
+    letter-spacing:2px;
+}
+
+.world-board-subtitle{
+    margin-top:10px;
+    opacity:0.88;
+}
+
+.status-item{
+    padding:10px;
+    margin-bottom:10px;
+    border-radius:12px;
+    background:rgba(0,0,0,0.25);
+}
+
+@media (max-width:900px){
+    .living-gameboard{
+        grid-template-columns:1fr;
+    }
+}
+
+
+.board-terrain-layer{
+    position:relative;
+    z-index:2;
+    display:grid;
+    grid-template-columns:repeat(3, minmax(120px, 1fr));
+    gap:12px;
+    width:92%;
+    margin-top:24px;
+}
+
+.board-terrain-tile{
+    min-height:92px;
+    border-radius:18px;
+    border:1px solid rgba(255,255,255,0.18);
+    color:white;
+    font-size:26px;
+    cursor:pointer;
+    transition:all 0.2s ease;
+    background:rgba(255,255,255,0.08);
+}
+
+.board-terrain-tile span{
+    display:block;
+    font-size:13px;
+    margin-top:6px;
+}
+
+.board-terrain-tile:hover{
+    transform:translateY(-3px) scale(1.02);
+    border-color:#f4d35e;
+    box-shadow:0 0 22px rgba(244,211,94,0.25);
+}
+
+.board-terrain-tile.selected{
+    border:2px solid #f4d35e;
+    box-shadow:0 0 26px rgba(244,211,94,0.35);
+    animation:softPulse 1.5s ease-in-out infinite;
+}
+
+.river-tile{ background:rgba(45,127,184,0.35); }
+.forest-tile{ background:rgba(34,116,61,0.35); }
+.highland-tile{ background:rgba(111,98,82,0.45); }
+.coastal-tile{ background:rgba(51,153,153,0.35); }
+.plain-tile{ background:rgba(151,132,45,0.35); }
+.crossroads-tile{ background:rgba(142,104,177,0.35); }
+
+.board-settlement-slot{
+    min-height:22px;
+    font-size:22px;
+    margin-top:6px;
+}
+
+.board-infrastructure-slot{
+    min-height:20px;
+    font-size:18px;
+    margin-top:4px;
+}
+
+.board-world-feedback{
+    position:relative;
+    z-index:2;
+    margin-top:18px;
+    padding:12px 16px;
+    border-radius:14px;
+    background:rgba(244,211,94,0.13);
+    border:1px solid rgba(244,211,94,0.45);
+    color:#f0df9a;
+    font-weight:bold;
+}
+
+
+.overlay-control-bar{
+    max-width:1200px;
+    margin:20px auto;
+    display:flex;
+    gap:12px;
+    flex-wrap:wrap;
+    justify-content:center;
+}
+
+.overlay-toggle-btn{
+    padding:12px 18px;
+    border-radius:12px;
+    border:1px solid rgba(244,211,94,0.45);
+    background:rgba(244,211,94,0.12);
+    color:#f0df9a;
+    font-weight:bold;
+    cursor:pointer;
+}
+
+.overlay-toggle-btn:hover{
+    background:rgba(244,211,94,0.22);
+}
+
+.board-overlay{
+    max-width:900px;
+    margin:14px auto;
+    padding:20px;
+    border-radius:16px;
+    border:1px solid rgba(91,192,222,0.45);
+    background:rgba(0,0,0,0.58);
+    animation:revealRise 0.35s ease-out;
+}
+
+.overlay-title{
+    color:#f0df9a;
+    font-weight:bold;
+    margin-bottom:10px;
+    letter-spacing:1px;
+}
+
+.overlay-content{
+    line-height:1.5;
+    opacity:0.92;
+}
+
+
+.compact-mission-panel{
+    max-width:1200px;
+    margin:20px auto;
+    padding:22px;
+    border-radius:20px;
+    border:2px solid rgba(244,211,94,0.35);
+    background:rgba(0,0,0,0.52);
+    box-shadow:0 0 24px rgba(0,0,0,0.32);
+}
+
+.compact-mission-label{
+    color:#f4d35e;
+    letter-spacing:4px;
+    font-size:12px;
+    margin-bottom:8px;
+}
+
+.compact-mission-panel h2{
+    margin:0 0 10px;
+    color:#f0df9a;
+}
+
+.compact-objectives{
+    display:grid;
+    grid-template-columns:repeat(auto-fit, minmax(160px, 1fr));
+    gap:12px;
+    margin-top:18px;
+}
+
+.compact-objectives div{
+    padding:12px;
+    border-radius:12px;
+    background:rgba(255,255,255,0.07);
+    border:1px solid rgba(255,255,255,0.12);
+}
+
+
+.dynamic-event-panel{
+    max-width:1200px;
+    margin:20px auto;
+    padding:22px;
+    border-radius:20px;
+    border:2px solid rgba(217,83,79,0.45);
+    background:
+      radial-gradient(circle at top, rgba(217,83,79,0.16), transparent 45%),
+      rgba(0,0,0,0.55);
+    box-shadow:0 0 24px rgba(217,83,79,0.22);
+    animation:revealRise 0.45s ease-out;
+}
+
+.event-label{
+    color:#ffb3ad;
+    letter-spacing:4px;
+    font-size:12px;
+    margin-bottom:8px;
+}
+
+.event-title{
+    color:#f0df9a;
+    font-size:24px;
+    font-weight:bold;
+    margin-bottom:8px;
+}
+
+.event-description{
+    opacity:0.92;
+    margin-bottom:18px;
+}
+
+.event-actions{
+    display:flex;
+    gap:12px;
+    flex-wrap:wrap;
+}
+
+.event-btn{
+    padding:12px 16px;
+    border-radius:12px;
+    border:1px solid rgba(255,255,255,0.18);
+    background:rgba(255,255,255,0.08);
+    color:white;
+    font-weight:bold;
+    cursor:pointer;
+}
+
+.event-btn:hover{
+    border-color:#f4d35e;
+    background:rgba(244,211,94,0.14);
+}
+
+
+.world-time-panel{
+    max-width:1200px;
+    margin:20px auto;
+    padding:18px;
+    border-radius:18px;
+    border:2px solid rgba(91,192,222,0.35);
+    background:rgba(0,0,0,0.52);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    gap:18px;
+    flex-wrap:wrap;
+}
+
+.time-block{
+    min-width:150px;
+    padding:14px;
+    border-radius:14px;
+    background:rgba(255,255,255,0.07);
+    text-align:center;
+}
+
+.time-label{
+    color:#5bc0de;
+    font-size:11px;
+    letter-spacing:3px;
+    margin-bottom:6px;
+}
+
+.time-value{
+    color:#f0df9a;
+    font-size:22px;
+    font-weight:bold;
+}
+
+.advance-turn-btn{
+    padding:14px 20px;
+    border-radius:14px;
+    border:1px solid rgba(244,211,94,0.45);
+    background:rgba(244,211,94,0.14);
+    color:#f0df9a;
+    font-weight:bold;
+    cursor:pointer;
+}
+
+.advance-turn-btn:hover{
+    background:rgba(244,211,94,0.24);
+}
+
+
+.legacy-content-shell{
+    max-width:1200px;
+    margin:20px auto;
+}
+
+.toggle-legacy-btn{
+    width:100%;
+    padding:16px 20px;
+    border-radius:16px;
+    border:1px solid rgba(244,211,94,0.45);
+    background:rgba(244,211,94,0.12);
+    color:#f0df9a;
+    font-weight:bold;
+    cursor:pointer;
+}
+
+.toggle-legacy-btn:hover{
+    background:rgba(244,211,94,0.22);
+}
+
+.legacy-content-wrapper{
+    margin-top:20px;
+    animation:revealRise 0.35s ease-out;
+}
+
+
+.world-atmosphere-layer{
+    position:absolute;
+    inset:0;
+    pointer-events:none;
+    z-index:1;
+    opacity:0;
+    transition:opacity 0.6s ease, background 0.6s ease;
+}
+
+.world-atmosphere-layer.rain{
+    opacity:0.45;
+    background:
+      repeating-linear-gradient(
+        115deg,
+        rgba(91,192,222,0.0) 0px,
+        rgba(91,192,222,0.0) 8px,
+        rgba(91,192,222,0.25) 10px
+      );
+}
+
+.world-atmosphere-layer.dry{
+    opacity:0.35;
+    background:rgba(204,153,51,0.22);
+}
+
+.world-atmosphere-layer.storm{
+    opacity:0.5;
+    background:
+      radial-gradient(circle at top, rgba(217,83,79,0.24), transparent 45%),
+      rgba(0,0,0,0.25);
+}
+
+.world-atmosphere-layer.harvest{
+    opacity:0.32;
+    background:rgba(244,211,94,0.18);
+}
+
+.world-atmosphere-layer.cold{
+    opacity:0.38;
+    background:rgba(180,220,255,0.18);
+}
+
+
+.status-label{
+    margin-bottom:6px;
+    font-weight:bold;
+}
+
+.status-bar{
+    height:12px;
+    border-radius:10px;
+    background:rgba(255,255,255,0.12);
+    overflow:hidden;
+}
+
+.status-fill{
+    height:100%;
+    width:0%;
+    border-radius:10px;
+    background:#f4d35e;
+    transition:width 0.7s ease;
+}
+
+
+.season-feedback-panel{
+    max-width:1200px;
+    margin:20px auto;
+    padding:18px;
+    border-radius:18px;
+    border:2px solid rgba(76,175,80,0.35);
+    background:
+      radial-gradient(circle at top, rgba(76,175,80,0.14), transparent 45%),
+      rgba(0,0,0,0.52);
+    animation:revealRise 0.45s ease-out;
+}
+
+.season-feedback-label{
+    color:#b8f5c0;
+    letter-spacing:4px;
+    font-size:12px;
+    margin-bottom:8px;
+}
+
+.season-feedback-text{
+    color:#f0df9a;
+    line-height:1.5;
+    font-weight:bold;
+}
+
+
+.action-response-panel{
+    max-width:1200px;
+    margin:20px auto;
+    padding:18px;
+    border-radius:18px;
+    border:2px solid rgba(91,192,222,0.35);
+    background:
+      radial-gradient(circle at top, rgba(91,192,222,0.14), transparent 45%),
+      rgba(0,0,0,0.52);
+    animation:revealRise 0.45s ease-out;
+}
+
+.action-response-label{
+    color:#5bc0de;
+    letter-spacing:4px;
+    font-size:12px;
+    margin-bottom:8px;
+}
+
+.action-response-content{
+    color:#f0df9a;
+    line-height:1.5;
+    font-weight:bold;
+}
+
+</style>
 </head>
 
+
 <body>
+
+
+<div class="living-gameboard">
+
+  <aside class="advisor-panel">
+    <div class="panel-title">Advisor Council</div>
+
+    <div class="advisor-message">
+      Observe the terrain carefully. Every civilization decision changes the future.
+    </div>
+
+    <div class="inquiry-box">
+      <div class="inquiry-label">INQUIRY PROMPT</div>
+
+      <div id="dynamicInquiryPrompt">
+        Why might civilizations settle near dangerous environments?
+      </div>
+    </div>
+  </aside>
+
+  <main class="world-board">
+
+    <div class="world-board-header">
+      STEM NATION WORLD BOARD
+    </div>
+
+    <div class="world-board-subtitle">
+      Observe · Interact · Ask · Record · Respond · Evolve
+    </div>
+
+    
+<div id="worldAtmosphereLayer" class="world-atmosphere-layer"></div>
+
+
+<div id="boardTerrainLayer" class="board-terrain-layer">
+
+      <button type="button" class="board-terrain-tile river-tile" data-region="River Corridor">
+        🌊<span>River</span><div class="board-settlement-slot"></div><div class="board-infrastructure-slot"></div>
+      </button>
+
+      <button type="button" class="board-terrain-tile forest-tile" data-region="Forest Edge">
+        🌲<span>Forest</span><div class="board-settlement-slot"></div><div class="board-infrastructure-slot"></div>
+      </button>
+
+      <button type="button" class="board-terrain-tile highland-tile" data-region="Highland Ridge">
+        ⛰️<span>Highland</span><div class="board-settlement-slot"></div><div class="board-infrastructure-slot"></div>
+      </button>
+
+      <button type="button" class="board-terrain-tile coastal-tile" data-region="Coastal Bay">
+        ⚓<span>Coast</span><div class="board-settlement-slot"></div><div class="board-infrastructure-slot"></div>
+      </button>
+
+      <button type="button" class="board-terrain-tile plain-tile" data-region="Open Plain">
+        🌾<span>Plain</span><div class="board-settlement-slot"></div><div class="board-infrastructure-slot"></div>
+      </button>
+
+      <button type="button" class="board-terrain-tile crossroads-tile" data-region="Balanced Crossroads">
+        🛤️<span>Crossroads</span><div class="board-settlement-slot"></div><div class="board-infrastructure-slot"></div>
+      </button>
+
+    </div>
+
+    <div id="boardWorldFeedback" class="board-world-feedback hidden">
+      Select terrain to begin settlement review.
+    </div>
+
+  </main>
+
+  <aside class="civilization-panel-right">
+
+    <div class="panel-title">Civilization Status</div>
+
+    <div class="status-item">
+      <div class="status-label">🌾 Food</div>
+      <div class="status-bar"><div id="boardFoodMeter" class="status-fill"></div></div>
+    </div>
+
+    <div class="status-item">
+      <div class="status-label">🛡️ Stability</div>
+      <div class="status-bar"><div id="boardStabilityMeter" class="status-fill"></div></div>
+    </div>
+
+    <div class="status-item">
+      <div class="status-label">🧠 Knowledge</div>
+      <div class="status-bar"><div id="boardKnowledgeMeter" class="status-fill"></div></div>
+    </div>
+
+    <div class="status-item">
+      <div class="status-label">🤝 Wealth / Trade</div>
+      <div class="status-bar"><div id="boardWealthMeter" class="status-fill"></div></div>
+    </div>
+
+  </aside>
+
+</div>
+
+
+
+
+
+
+<div id="dynamicEventPanel" class="dynamic-event-panel">
+
+  <div class="event-label">
+    LIVE WORLD EVENT
+  </div>
+
+  <div id="dynamicEventTitle" class="event-title">
+    Heavy Rainfall Detected
+  </div>
+
+  <div id="dynamicEventDescription" class="event-description">
+    Scouts report rising river levels near nearby settlement zones.
+  </div>
+
+  <div class="event-actions">
+    <button type="button" id="eventAskBtn" class="event-btn">❓ Ask Question</button>
+    <button type="button" id="eventRespondBtn" class="event-btn">⚖️ Respond</button>
+    <button type="button" id="eventArchiveBtn" class="event-btn">📜 Record</button>
+  </div>
+
+</div>
+
+
+
+
+<div id="actionResponsePanel" class="action-response-panel hidden">
+
+  <div class="action-response-label">
+    STUDENT RESPONSE
+  </div>
+
+  <div id="actionResponseContent" class="action-response-content">
+    Choose Ask, Respond, or Record to interact with the world event.
+  </div>
+
+</div>
+
+
+<div id="seasonFeedbackPanel" class="season-feedback-panel hidden">
+
+  <div class="season-feedback-label">
+    SEASON EFFECT
+  </div>
+
+  <div id="seasonFeedbackText" class="season-feedback-text">
+    Seasonal effects will appear here after advancing time.
+  </div>
+
+</div>
+
+
+<div id="worldTimePanel" class="world-time-panel">
+
+  <div class="time-block">
+    <div class="time-label">TURN</div>
+    <div id="worldTurnDisplay" class="time-value">1</div>
+  </div>
+
+  <div class="time-block">
+    <div class="time-label">SEASON</div>
+    <div id="worldSeasonDisplay" class="time-value">Early Rainfall</div>
+  </div>
+
+  <button type="button" id="advanceTurnBtn" class="advance-turn-btn">
+    ⏭ Advance Turn
+  </button>
+
+</div>
+
+
+<div id="compactMissionPanel" class="compact-mission-panel">
+
+  <div class="compact-mission-label">ACTIVE MISSION</div>
+
+  <h2>Mission 1 · Claim the Land</h2>
+
+  <p>
+    Observe the World Board. Choose a settlement region. Record why your people can survive there.
+  </p>
+
+  <div class="compact-objectives">
+    <div>👁️ Observe terrain</div>
+    <div>📍 Place settlement</div>
+    <div>❓ Ask a question</div>
+    <div>📜 Record evidence</div>
+    <div>⚖️ Defend the decision</div>
+  </div>
+
+</div>
+
+<div class="overlay-control-bar">
+
+  <button type="button" class="overlay-toggle-btn" data-overlay="regionIntelOverlay">
+    🌍 Region Intel
+  </button>
+
+  <button type="button" class="overlay-toggle-btn" data-overlay="advisorOverlay">
+    🧠 Advisor
+  </button>
+
+  <button type="button" class="overlay-toggle-btn" data-overlay="archiveOverlay">
+    📜 Archive
+  </button>
+
+</div>
+
+<div id="regionIntelOverlay" class="board-overlay hidden">
+  <div class="overlay-title">Strategic Region Intelligence</div>
+
+  <div class="overlay-content">
+    Terrain, survival, defense, trade, and environmental risks influence civilization growth.
+  </div>
+</div>
+
+<div id="advisorOverlay" class="board-overlay hidden">
+  <div class="overlay-title">Advisor Council</div>
+
+  <div class="overlay-content">
+    Strong civilizations ask questions before making irreversible decisions.
+  </div>
+</div>
+
+<div id="archiveOverlay" class="board-overlay hidden">
+  <div class="overlay-title">Founding Archive</div>
+
+  <div class="overlay-content">
+    Your civilization archive records every major decision and consequence.
+  </div>
+</div>
+
+
+
+<div class="legacy-content-shell">
+
+  <button type="button" id="toggleLegacyContentBtn" class="toggle-legacy-btn">
+    📚 Show Legacy Mission Details
+  </button>
+
+  <div id="legacyContentWrapper" class="legacy-content-wrapper hidden">
+<div class="mission-header">
+
+  <div class="mission-label">
+    MISSION 1
+  </div>
+
+  <h1 class="mission-title">
+    CLAIM THE LAND
+  </h1>
+
+  <div class="mission-subtitle">
+    Your civilization has arrived in an unfamiliar region.
+    Food, water, safety, and survival depend on where you settle.
+  </div>
+
+</div>
+
+<div class="civilization-panel">
+
+  <div class="meter">
+    <span>Food</span>
+    <div class="meter-bar">
+      <div id="foodMeter" class="meter-fill food-fill"></div>
+    </div>
+  </div>
+
+  <div class="meter">
+    <span>Defense</span>
+    <div class="meter-bar">
+      <div id="defenseMeter" class="meter-fill defense-fill"></div>
+    </div>
+  </div>
+
+  <div class="meter">
+    <span>Knowledge</span>
+    <div class="meter-bar">
+      <div id="knowledgeMeter" class="meter-fill knowledge-fill"></div>
+    </div>
+  </div>
+
+</div>
+
+
   <div class="container">
     <div class="week-label">Week 1 · Module 0 · Cartography & Orientation</div>
 
@@ -334,7 +1762,198 @@
     </div>
 
     <div class="region-reference-board">
-      <h2>Settlement Region Reference Board</h2>
+      <h2>
+
+
+
+<div id="civilizationGrowthPanel" class="civilization-growth-panel">
+
+  <div class="growth-label">CIVILIZATION GROWTH</div>
+
+  <div id="growthStageIcon" class="growth-stage-icon">⛺</div>
+
+  <div id="growthStageTitle" class="growth-stage-title">
+    Survivor Camp
+  </div>
+
+  <div id="growthStageDescription" class="growth-stage-description">
+    Your people have not yet formed a permanent settlement.
+  </div>
+
+  <div class="growth-track">
+    <div class="growth-step active">Camp</div>
+    <div class="growth-step">Village</div>
+    <div class="growth-step">Town</div>
+    <div class="growth-step">City</div>
+    <div class="growth-step">Nation</div>
+  </div>
+
+</div>
+
+<div id="missionCommandPanel" class="mission-command-panel">
+
+  <div class="command-tabs">
+    <button type="button" class="command-tab active" data-panel="missionPanel">Mission</button>
+    <button type="button" class="command-tab" data-panel="terrainPanel">Terrain</button>
+    <button type="button" class="command-tab" data-panel="councilPanel">Council</button>
+    <button type="button" class="command-tab" data-panel="archivePanel">Archive</button>
+    <button type="button" class="command-tab" data-panel="unlocksPanel">Unlocks</button>
+  </div>
+
+  <div class="command-panel-body">
+
+    <div id="missionPanel" class="command-panel active">
+      <h2>Mission Objective</h2>
+      <p>
+        Claim the strongest starting land for your civilization.
+        Balance food, defense, resources, movement, risk, and long-term growth.
+      </p>
+    </div>
+
+    <div id="terrainPanel" class="command-panel hidden">
+      <h2>Terrain Intel</h2>
+      <p>
+        Terrain affects survival. Rivers support food and movement.
+        Highlands improve defense. Forests support shelter.
+        Plains support farming. Coasts support trade.
+      </p>
+    </div>
+
+    <div id="councilPanel" class="command-panel hidden">
+      <h2>Council Task</h2>
+      <p>
+        Choose three survival priorities and defend your settlement choice with evidence.
+      </p>
+    </div>
+
+    <div id="archivePanel" class="command-panel hidden">
+      <h2>Founding Archive</h2>
+      <p>
+        Your settlement defense becomes the first official record of your civilization.
+      </p>
+    </div>
+
+    <div id="unlocksPanel" class="command-panel hidden">
+      <h2>Unlock Path</h2>
+      <ul>
+        <li>Founding Archive</li>
+        <li>Civilization Command Center</li>
+        <li>Survival Planning</li>
+        <li>Next Mission: Survive the First Season</li>
+      </ul>
+    </div>
+
+  </div>
+
+</div>
+
+<div id="strategicTerrainMap" class="strategic-terrain-map">
+
+  <div class="map-title">Strategic Terrain Map</div>
+  <div class="map-subtitle">Select where your first settlement will stand.</div>
+
+  <div class="terrain-map-grid">
+
+    <button type="button" class="terrain-zone river-zone" data-region="River Corridor">🌊 River<div class="zone-settlement-slot"></div><div class="zone-infrastructure-slot"></div></button>
+    <button type="button" class="terrain-zone forest-zone" data-region="Forest Edge">🌲 Forest<div class="zone-settlement-slot"></div><div class="zone-infrastructure-slot"></div></button>
+    <button type="button" class="terrain-zone highland-zone" data-region="Highland Ridge">⛰️ Highland<div class="zone-settlement-slot"></div><div class="zone-infrastructure-slot"></div></button>
+    <button type="button" class="terrain-zone coastal-zone" data-region="Coastal Bay">⚓ Coast<div class="zone-settlement-slot"></div><div class="zone-infrastructure-slot"></div></button>
+    <button type="button" class="terrain-zone plain-zone" data-region="Open Plain">🌾 Plain<div class="zone-settlement-slot"></div><div class="zone-infrastructure-slot"></div></button>
+    <button type="button" class="terrain-zone crossroads-zone" data-region="Balanced Crossroads">🛤️ Crossroads<div class="zone-settlement-slot"></div><div class="zone-infrastructure-slot"></div></button>
+
+  </div>
+
+  
+<div id="regionConsequencePreview" class="region-consequence-preview hidden">
+
+  <div class="preview-label">REGION CONSEQUENCE PREVIEW</div>
+
+  <h3 id="previewRegionName">Region Selected</h3>
+
+  <div id="previewRegionBonus" class="preview-bonus">
+    Bonus will appear here.
+  </div>
+
+  <div id="previewRegionRisk" class="preview-risk">
+    Risk will appear here.
+  </div>
+
+  <div id="previewMetricImpact" class="preview-impact">
+    Metric impact will appear here.
+  </div>
+
+</div>
+
+<div id="settlementMarker" class="settlement-marker hidden">
+    📍 Settlement Placed
+  </div>
+
+  <div id="terrainMapFeedback" class="terrain-map-feedback hidden">
+    Terrain selected.
+  </div>
+
+</div>
+
+<div id="interactiveRegionBoard" class="interactive-region-board">
+
+  <div class="region-card" data-region="River Corridor">
+    <div class="region-icon">🌊</div>
+    <div class="region-name">River Corridor</div>
+    <div class="region-bonus">+ Food Production</div>
+    <div class="region-risk">⚠ Flood Risk</div>
+  </div>
+
+  <div class="region-card" data-region="Forest Edge">
+    <div class="region-icon">🌲</div>
+    <div class="region-name">Forest Edge</div>
+    <div class="region-bonus">+ Shelter & Wood</div>
+    <div class="region-risk">⚠ Hidden Threats</div>
+  </div>
+
+  <div class="region-card" data-region="Highland Ridge">
+    <div class="region-icon">⛰️</div>
+    <div class="region-name">Highland Ridge</div>
+    <div class="region-bonus">+ Defense & Visibility</div>
+    <div class="region-risk">⚠ Limited Farming</div>
+  </div>
+
+  <div class="region-card" data-region="Coastal Bay">
+    <div class="region-icon">⚓</div>
+    <div class="region-name">Coastal Bay</div>
+    <div class="region-bonus">+ Trade & Fishing</div>
+    <div class="region-risk">⚠ Storm Exposure</div>
+  </div>
+
+  <div class="region-card" data-region="Open Plain">
+    <div class="region-icon">🌾</div>
+    <div class="region-name">Open Plain</div>
+    <div class="region-bonus">+ Agriculture & Growth</div>
+    <div class="region-risk">⚠ Weak Defense</div>
+  </div>
+
+  <div class="region-card" data-region="Balanced Crossroads">
+    <div class="region-icon">🛤️</div>
+    <div class="region-name">Balanced Crossroads</div>
+    <div class="region-bonus">+ Flexibility & Trade</div>
+    <div class="region-risk">⚠ Competition Pressure</div>
+  </div>
+
+</div>
+
+<div id="regionSelectionFeedback" class="region-selection-feedback hidden">
+  Region selected for strategic review.
+</div>
+
+
+
+<button id="toggleReferenceBoard" class="toggle-reference-board">
+  Show Strategic Region Reference Board
+</button>
+
+<div id="referenceBoardWrapper" class="reference-board-wrapper hidden" style="display:none;">
+
+Settlement Region Reference Board
+</h2>
       <p class="board-note">
         Use these possible starting zones as your reference. Your final answer should explain which region gives your people the strongest beginning and what problem they must overcome.
       </p>
@@ -385,7 +2004,9 @@
     </div>
 
     <div class="map-panel">
-      <div class="map-title">Settlement Recommendation Portfolio</div>
+      <div class="map-title"></div>
+
+Settlement Recommendation Portfolio</div>
       <div class="map-placeholder">
         <strong>Student Task:</strong><br>
         Identify your chosen region, explain its strongest advantage, name its greatest risk,
@@ -430,7 +2051,52 @@
       This becomes the first official record of your civilization.
     </div>
 
-    <form id="settlementForm" class="decision-form">
+    
+
+<div id="survivalPriorityChallenge" class="survival-priority-challenge">
+
+  <div class="challenge-label">COUNCIL CHALLENGE</div>
+
+  <h2>Choose Your First 3 Survival Priorities</h2>
+
+  <p>
+    Your people cannot solve every problem at once.
+    Select the three priorities your civilization should protect first.
+  </p>
+
+  <div class="priority-grid">
+    <button type="button" class="priority-card" data-priority="Water">💧 Water</button>
+    <button type="button" class="priority-card" data-priority="Food">🌾 Food</button>
+    <button type="button" class="priority-card" data-priority="Shelter">🏕️ Shelter</button>
+    <button type="button" class="priority-card" data-priority="Defense">🛡️ Defense</button>
+    <button type="button" class="priority-card" data-priority="Movement">🧭 Movement</button>
+    <button type="button" class="priority-card" data-priority="Trade">🤝 Trade</button>
+  </div>
+
+  <div id="priorityStatus" class="priority-status">
+    Select 3 priorities to strengthen council reasoning.
+  </div>
+
+  <div id="priorityBonus" class="priority-bonus hidden">
+    Council Reasoning Improved: +1 Knowledge
+  </div>
+
+</div>
+
+<div class="advisor-alert">
+
+  <h2>Advisor Warning</h2>
+
+  <p>
+    Scouts report nearby water access,
+    but the region may flood during heavy storms.
+    Your council must determine whether
+    the advantages outweigh the risks.
+  </p>
+
+</div>
+
+<form id="settlementForm" class="decision-form">
       <h2>Settlement Decision Defense</h2>
       <p class="form-instruction">
         Complete each field before opening the Project Hub. Your civilization cannot advance until the founding choice is supported by evidence.
@@ -473,7 +2139,90 @@
 
     <div class="btn-row">
       <button class="btn secondary" onclick="window.location.href='/world_select.html'">Return to World Select</button>
-      <button id="openHubBtn" class="btn locked" disabled>Open Project Hub</button>
+      
+
+<div id="automanStateCheck" class="automan-state-check hidden">
+  <h2>AUT0MAN State Check</h2>
+  <pre id="automanStateOutput"></pre>
+</div>
+
+
+
+  </div>
+
+</div>
+<div id="missionCompletePanel" class="mission-complete-panel hidden">
+
+  <div class="mission-complete-label">
+    MISSION COMPLETE
+  </div>
+
+  <h2 class="mission-complete-title">
+    CLAIM THE LAND
+  </h2>
+
+  <div class="unlock-section">
+
+    <div class="unlock-card">
+      <div class="unlock-icon">📜</div>
+      <div class="unlock-title">Founding Archive Unlocked</div>
+    </div>
+
+    <div class="unlock-card">
+      <div class="unlock-icon">🏛️</div>
+      <div class="unlock-title">Civilization Command Center Unlocked</div>
+    </div>
+
+    <div class="unlock-card">
+      <div class="unlock-icon">🌾</div>
+      <div class="unlock-title">Survival Planning Unlocked</div>
+    </div>
+
+  </div>
+
+  <div class="next-mission-preview">
+
+    <div class="next-mission-label">
+      NEXT AVAILABLE MISSION
+    </div>
+
+    <div class="next-mission-title">
+      SURVIVE THE FIRST SEASON
+    </div>
+
+    <div class="next-mission-description">
+      Food shortages, environmental pressure, and population stability
+      will now begin affecting your civilization.
+    </div>
+
+  </div>
+
+</div>
+
+<div id="consequenceBox" class="consequence-box hidden">
+
+  <h2>Settlement Consequence</h2>
+
+  <p>
+    Your founding council has recorded the first settlement decision.
+    Your civilization gains early survival knowledge, but the land also reveals new risks.
+  </p>
+
+</div>
+
+<div id="civilizationUpdate" class="civilization-update hidden">
+
+  <h2>Civilization Updated</h2>
+
+  <ul>
+    <li>+1 Founding Archive</li>
+    <li>+1 Survival Planning</li>
+    <li>Risk Identified: Environmental Challenge</li>
+  </ul>
+
+</div>
+
+<button id="openHubBtn" class="btn locked" disabled>Open Project Hub</button>
       <button class="btn secondary" onclick="window.location.href='/'">Back to Landing</button>
     </div>
   </div>
@@ -485,6 +2234,202 @@ const requiredFields = [
   "landEvidence",
   "survivalPlan"
 ];
+
+
+const CIV_STATE_KEY = "STEM_NATION_CIVILIZATION_STATE_V34";
+
+const defaultCivilizationState = {
+  version: "V34",
+  civilizationName: "Unnamed Civilization",
+  foundingRegion: "",
+  currentTurn: 1,
+  era: "Founding Era",
+  metrics: {
+    food: 50,
+    stability: 50,
+    knowledge: 50,
+    unity: 50,
+    territory: 50,
+    wealth: 50
+  },
+  alerts: [],
+  decisionLog: [],
+  archives: [],
+  activeEvents: [],
+  governanceActionUsedThisTurn: false,
+  createdAt: null,
+  updatedAt: null
+};
+
+function loadCivilizationState() {
+  const saved = localStorage.getItem(CIV_STATE_KEY);
+
+  if (!saved) {
+    return {
+      ...defaultCivilizationState,
+      metrics: { ...defaultCivilizationState.metrics },
+      alerts: [],
+      decisionLog: [],
+      archives: [],
+      activeEvents: []
+    };
+  }
+
+  try {
+    const parsed = JSON.parse(saved);
+
+    const merged = {
+      ...defaultCivilizationState,
+      ...parsed,
+      metrics: {
+        ...defaultCivilizationState.metrics,
+        ...(parsed.metrics || {})
+      },
+      alerts: parsed.alerts || [],
+      decisionLog: parsed.decisionLog || [],
+      archives: parsed.archives || [],
+      activeEvents: parsed.activeEvents || []
+    };
+
+    if (
+      merged.mission1ClaimLandComplete &&
+      (!merged.civilizationStage || merged.civilizationStage === "camp")
+    ) {
+      merged.civilizationStage = "village";
+    }
+
+    return merged;
+  } catch (error) {
+    return {
+      ...defaultCivilizationState,
+      metrics: { ...defaultCivilizationState.metrics },
+      alerts: [],
+      decisionLog: [],
+      archives: [],
+      activeEvents: []
+    };
+  }
+}
+
+function saveCivilizationState(state) {
+  state.updatedAt = new Date().toISOString();
+
+  if (!state.createdAt) {
+    state.createdAt = state.updatedAt;
+  }
+
+  localStorage.setItem(CIV_STATE_KEY, JSON.stringify(state));
+}
+
+
+
+
+function getInfrastructureForRegion(regionName) {
+  const infrastructure = {
+    "River Corridor": "🌾 🚣 ⚠️",
+    "Forest Edge": "🪵 🛖 👁️",
+    "Highland Ridge": "🗼 🛡️ 🔥",
+    "Coastal Bay": "⚓ 🐟 🌊",
+    "Open Plain": "🌾 🛤️ 🐂",
+    "Balanced Crossroads": "🛤️ 🤝 🏪"
+  };
+
+  return infrastructure[regionName] || "🛖";
+}
+
+
+function applyRegionConsequences(state, regionName) {
+  if (!state.metrics) return;
+
+  switch(regionName) {
+
+    case "River Corridor":
+      state.metrics.food = Math.min(100, state.metrics.food + 10);
+      state.activeEvents.push("Flood Risk Identified");
+      break;
+
+    case "Forest Edge":
+      state.metrics.stability = Math.min(100, state.metrics.stability + 8);
+      state.activeEvents.push("Hidden Threat Detected");
+      break;
+
+    case "Highland Ridge":
+      state.metrics.stability = Math.min(100, state.metrics.stability + 12);
+      state.metrics.food = Math.max(0, state.metrics.food - 4);
+      state.activeEvents.push("Mountain Isolation");
+      break;
+
+    case "Coastal Bay":
+      state.metrics.trade = (state.metrics.trade || 0) + 10;
+      state.activeEvents.push("Storm Exposure Warning");
+      break;
+
+    case "Open Plain":
+      state.metrics.food = Math.min(100, state.metrics.food + 14);
+      state.metrics.stability = Math.max(0, state.metrics.stability - 5);
+      state.activeEvents.push("Open Defense Weakness");
+      break;
+
+    case "Balanced Crossroads":
+      state.metrics.trade = (state.metrics.trade || 0) + 6;
+      state.metrics.knowledge = Math.min(100, state.metrics.knowledge + 5);
+      state.activeEvents.push("Regional Competition Pressure");
+      break;
+  }
+}
+
+
+function updateCivilizationGrowthDisplay(state) {
+  const icon = document.getElementById("growthStageIcon");
+  const title = document.getElementById("growthStageTitle");
+  const description = document.getElementById("growthStageDescription");
+  const steps = document.querySelectorAll(".growth-step");
+
+  if (!icon || !title || !description) return;
+
+  const stage = state?.civilizationStage || "camp";
+
+  if (stage === "village") {
+    icon.textContent = "🛖";
+    title.textContent = "Founding Settlement";
+    description.textContent = "Your people have claimed land and begun forming the first permanent settlement.";
+
+    steps.forEach((step, index) => {
+      step.classList.toggle("active", index <= 1);
+    });
+  } else {
+    icon.textContent = "⛺";
+    title.textContent = "Survivor Camp";
+    description.textContent = "Your people have not yet formed a permanent settlement.";
+
+    steps.forEach((step, index) => {
+      step.classList.toggle("active", index === 0);
+    });
+  }
+}
+
+function updateCivilizationMeters(state) {
+  const foodMeter = document.getElementById("foodMeter");
+  const defenseMeter = document.getElementById("defenseMeter");
+  const knowledgeMeter = document.getElementById("knowledgeMeter");
+
+  const metrics = state.metrics || {};
+
+  if (foodMeter) foodMeter.style.width = `${metrics.food || 0}%`;
+  if (defenseMeter) foodMeter.title = `Food: ${metrics.food || 0}`;
+  if (defenseMeter) defenseMeter.style.width = `${metrics.stability || 0}%`;
+  if (knowledgeMeter) knowledgeMeter.style.width = `${metrics.knowledge || 0}%`;
+
+  const boardFoodMeter = document.getElementById("boardFoodMeter");
+  const boardStabilityMeter = document.getElementById("boardStabilityMeter");
+  const boardKnowledgeMeter = document.getElementById("boardKnowledgeMeter");
+  const boardWealthMeter = document.getElementById("boardWealthMeter");
+
+  if (boardFoodMeter) boardFoodMeter.style.width = `${metrics.food || 0}%`;
+  if (boardStabilityMeter) boardStabilityMeter.style.width = `${metrics.stability || 0}%`;
+  if (boardKnowledgeMeter) boardKnowledgeMeter.style.width = `${metrics.knowledge || 0}%`;
+  if (boardWealthMeter) boardWealthMeter.style.width = `${metrics.wealth || metrics.trade || 0}%`;
+}
 
 const STORAGE_KEY = "STEM_NATION_SETTLEMENT_DEFENSE_V1";
 
@@ -507,6 +2452,364 @@ function showArchiveSavedStatus() {
     archiveSavedStatus.classList.remove("show");
   }, 1600);
 }
+
+
+
+
+const toggleReferenceBoard = document.getElementById("toggleReferenceBoard");
+const referenceBoardWrapper = document.getElementById("referenceBoardWrapper");
+
+if (toggleReferenceBoard && referenceBoardWrapper) {
+  toggleReferenceBoard.addEventListener("click", () => {
+    referenceBoardWrapper.classList.toggle("hidden");
+
+    const isHidden = referenceBoardWrapper.classList.contains("hidden");
+
+    referenceBoardWrapper.style.display = isHidden ? "none" : "block";
+    toggleReferenceBoard.textContent = isHidden
+      ? "Show Strategic Region Reference Board"
+      : "Hide Strategic Region Reference Board";
+  });
+}
+
+
+
+
+
+
+function showActionResponse(message) {
+  const panel = document.getElementById("actionResponsePanel");
+  const content = document.getElementById("actionResponseContent");
+
+  if (!panel || !content) return;
+
+  panel.classList.remove("hidden");
+  content.innerHTML = message;
+}
+
+function wireEventActionButtons() {
+  const askBtn = document.getElementById("eventAskBtn");
+  const respondBtn = document.getElementById("eventRespondBtn");
+  const recordBtn = document.getElementById("eventArchiveBtn");
+  const inquiryPrompt = document.getElementById("dynamicInquiryPrompt");
+
+  if (askBtn) {
+    askBtn.addEventListener("click", () => {
+      const question = "What evidence should your council gather before responding to this event?";
+
+      if (inquiryPrompt) {
+        inquiryPrompt.textContent = question;
+      }
+
+      showActionResponse(`
+        <div>❓ <strong>Question Recorded</strong></div>
+        <div>${question}</div>
+      `);
+    });
+  }
+
+  if (respondBtn) {
+    respondBtn.addEventListener("click", () => {
+      const state = loadCivilizationState();
+      state.alerts = state.alerts || [];
+      state.alerts.push({
+        id: `EVENT_RESPONSE_${Date.now()}`,
+        turn: state.worldTurn || state.currentTurn || 1,
+        era: state.era || "Founding Era",
+        title: "Council Response Prepared",
+        summary: "The council reviewed the world event and prepared a cautious response.",
+        savedAt: new Date().toISOString()
+      });
+
+      saveCivilizationState(state);
+
+      showActionResponse(`
+        <div>⚖️ <strong>Council Response Prepared</strong></div>
+        <div>The council reviewed the event and prepared a cautious response.</div>
+      `);
+    });
+  }
+
+  if (recordBtn) {
+    recordBtn.addEventListener("click", () => {
+      const state = loadCivilizationState();
+      const title = document.getElementById("dynamicEventTitle")?.textContent || "World Event";
+      const summary = document.getElementById("dynamicEventDescription")?.textContent || "A world event was recorded.";
+
+      state.archives = state.archives || [];
+      state.archives.push({
+        id: `WORLD_EVENT_ARCHIVE_${Date.now()}`,
+        title,
+        summary,
+        savedAt: new Date().toISOString()
+      });
+
+      saveCivilizationState(state);
+
+      showActionResponse(`
+        <div>📜 <strong>Archive Record Added</strong></div>
+        <div>This world event has been recorded in the civilization archive.</div>
+      `);
+    });
+  }
+}
+
+wireEventActionButtons();
+
+const overlayButtons = document.querySelectorAll(".overlay-toggle-btn");
+
+overlayButtons.forEach((button) => {
+  button.addEventListener("click", () => {
+    const overlayId = button.dataset.overlay;
+    const overlay = document.getElementById(overlayId);
+
+    if (!overlay) return;
+
+    overlay.classList.toggle("hidden");
+  });
+});
+
+const commandTabs = document.querySelectorAll(".command-tab");
+const commandPanels = document.querySelectorAll(".command-panel");
+
+commandTabs.forEach((tab) => {
+  tab.addEventListener("click", () => {
+    const targetPanelId = tab.dataset.panel;
+
+    commandTabs.forEach((item) => item.classList.remove("active"));
+    commandPanels.forEach((panel) => {
+      panel.classList.add("hidden");
+      panel.classList.remove("active");
+    });
+
+    tab.classList.add("active");
+
+    const targetPanel = document.getElementById(targetPanelId);
+    if (targetPanel) {
+      targetPanel.classList.remove("hidden");
+      targetPanel.classList.add("active");
+    }
+  });
+});
+
+
+const regionPreviewData = {
+  "River Corridor": {
+    bonus: "+ Food Production",
+    risk: "Flood Risk",
+    impact: "+10 Food · Event: Flood Risk Identified"
+  },
+  "Forest Edge": {
+    bonus: "+ Shelter & Wood",
+    risk: "Hidden Threats",
+    impact: "+8 Stability · Event: Hidden Threat Detected"
+  },
+  "Highland Ridge": {
+    bonus: "+ Defense & Visibility",
+    risk: "Limited Farming",
+    impact: "+12 Stability · -4 Food · Event: Mountain Isolation"
+  },
+  "Coastal Bay": {
+    bonus: "+ Trade & Fishing",
+    risk: "Storm Exposure",
+    impact: "+10 Trade · Event: Storm Exposure Warning"
+  },
+  "Open Plain": {
+    bonus: "+ Agriculture & Growth",
+    risk: "Weak Defense",
+    impact: "+14 Food · -5 Stability · Event: Open Defense Weakness"
+  },
+  "Balanced Crossroads": {
+    bonus: "+ Flexibility & Trade",
+    risk: "Competition Pressure",
+    impact: "+6 Trade · +5 Knowledge · Event: Regional Competition Pressure"
+  }
+};
+
+function showRegionConsequencePreview(regionName) {
+  const preview = document.getElementById("regionConsequencePreview");
+  const name = document.getElementById("previewRegionName");
+  const bonus = document.getElementById("previewRegionBonus");
+  const risk = document.getElementById("previewRegionRisk");
+  const impact = document.getElementById("previewMetricImpact");
+
+  const data = regionPreviewData[regionName];
+
+  if (!preview || !name || !bonus || !risk || !impact || !data) return;
+
+  preview.classList.remove("hidden");
+  name.textContent = regionName;
+  bonus.textContent = `Bonus: ${data.bonus}`;
+  risk.textContent = `Risk: ${data.risk}`;
+  impact.textContent = `Metric Impact: ${data.impact}`;
+}
+
+
+const boardTerrainTiles = document.querySelectorAll(".board-terrain-tile");
+const boardWorldFeedback = document.getElementById("boardWorldFeedback");
+
+boardTerrainTiles.forEach((tile) => {
+  tile.addEventListener("click", (event) => {
+    tile = event.currentTarget;
+
+    boardTerrainTiles.forEach((item) => {
+      item.classList.remove("selected");
+
+      const settlementSlot = item.querySelector(".board-settlement-slot");
+      const infrastructureSlot = item.querySelector(".board-infrastructure-slot");
+
+      if (settlementSlot) settlementSlot.textContent = "";
+      if (infrastructureSlot) infrastructureSlot.textContent = "";
+    });
+
+    tile.classList.add("selected");
+
+    const selectedRegion = tile.dataset.region;
+
+    const settlementSlot = tile.querySelector(".board-settlement-slot");
+    const infrastructureSlot = tile.querySelector(".board-infrastructure-slot");
+
+    if (settlementSlot) settlementSlot.textContent = "🛖";
+    if (infrastructureSlot) infrastructureSlot.textContent = getInfrastructureForRegion(selectedRegion);
+
+    const chosenRegionField = document.getElementById("chosenRegion");
+    if (chosenRegionField) chosenRegionField.value = selectedRegion;
+
+    if (boardWorldFeedback) {
+      boardWorldFeedback.classList.remove("hidden");
+      boardWorldFeedback.textContent = `${selectedRegion} selected on the World Board. Settlement and infrastructure placed.`;
+    }
+
+    showRegionConsequencePreview(selectedRegion);
+    saveSettlementDefense();
+    updateCompletionStatus();
+  });
+});
+
+const terrainZones = document.querySelectorAll(".terrain-zone");
+const settlementMarker = document.getElementById("settlementMarker");
+const terrainMapFeedback = document.getElementById("terrainMapFeedback");
+
+terrainZones.forEach((zone) => {
+  zone.addEventListener("click", () => {
+    terrainZones.forEach((item) => {
+      item.classList.remove("selected");
+      const slot = item.querySelector(".zone-settlement-slot");
+      if (slot) {
+        slot.textContent = "";
+        slot.classList.remove("active");
+      }
+
+      const infrastructureSlot = item.querySelector(".zone-infrastructure-slot");
+      if (infrastructureSlot) {
+        infrastructureSlot.textContent = "";
+        infrastructureSlot.classList.remove("active");
+      }
+    });
+
+    zone.classList.add("selected");
+
+    const activeSlot = zone.querySelector(".zone-settlement-slot");
+    if (activeSlot) {
+      activeSlot.textContent = "🛖";
+      activeSlot.classList.add("active");
+    }
+
+    const activeInfrastructureSlot = zone.querySelector(".zone-infrastructure-slot");
+    if (activeInfrastructureSlot) {
+      activeInfrastructureSlot.textContent = getInfrastructureForRegion(zone.dataset.region);
+      activeInfrastructureSlot.classList.add("active");
+    }
+
+    const selectedRegion = zone.dataset.region;
+    const chosenRegionField = document.getElementById("chosenRegion");
+
+    if (chosenRegionField) {
+      chosenRegionField.value = selectedRegion;
+    }
+
+    if (settlementMarker) {
+      settlementMarker.classList.remove("hidden");
+      settlementMarker.textContent = `📍 Settlement placed: ${selectedRegion}`;
+    }
+
+    if (terrainMapFeedback) {
+      terrainMapFeedback.classList.remove("hidden");
+      terrainMapFeedback.textContent = `${selectedRegion} terrain selected. Council review updated.`;
+    }
+
+    showRegionConsequencePreview(selectedRegion);
+
+    saveSettlementDefense();
+    updateCompletionStatus();
+  });
+});
+
+const regionCards = document.querySelectorAll(".region-card");
+const regionSelectionFeedback = document.getElementById("regionSelectionFeedback");
+
+regionCards.forEach((card) => {
+  card.addEventListener("click", () => {
+    regionCards.forEach((item) => item.classList.remove("selected"));
+    card.classList.add("selected");
+
+    const selectedRegion = card.dataset.region;
+    const chosenRegionField = document.getElementById("chosenRegion");
+
+    if (chosenRegionField) {
+      chosenRegionField.value = selectedRegion;
+    }
+
+    if (regionSelectionFeedback) {
+      regionSelectionFeedback.classList.remove("hidden");
+      regionSelectionFeedback.textContent = `${selectedRegion} selected for strategic review.`;
+    }
+
+    saveSettlementDefense();
+    updateCompletionStatus();
+  });
+});
+
+const selectedPriorities = new Set();
+const priorityCards = document.querySelectorAll(".priority-card");
+const priorityStatus = document.getElementById("priorityStatus");
+const priorityBonus = document.getElementById("priorityBonus");
+
+priorityCards.forEach((card) => {
+  card.addEventListener("click", () => {
+    const value = card.dataset.priority;
+
+    if (selectedPriorities.has(value)) {
+      selectedPriorities.delete(value);
+      card.classList.remove("selected");
+    } else {
+      if (selectedPriorities.size >= 3) {
+        return;
+      }
+
+      selectedPriorities.add(value);
+      card.classList.add("selected");
+    }
+
+    if (priorityStatus) {
+      priorityStatus.textContent = `Selected ${selectedPriorities.size} of 3 priorities.`;
+    }
+
+    if (priorityBonus) {
+      priorityBonus.classList.toggle("hidden", selectedPriorities.size !== 3);
+    }
+
+    const state = loadCivilizationState();
+
+    if (selectedPriorities.size === 3 && !state.survivalPriorityChallengeComplete) {
+      state.metrics.knowledge = Math.min(100, state.metrics.knowledge + 1);
+      state.survivalPriorityChallengeComplete = true;
+      state.survivalPriorities = Array.from(selectedPriorities);
+      saveCivilizationState(state);
+      updateCivilizationMeters(state);
+    }
+  });
+});
 
 function saveSettlementDefense() {
   const record = {};
@@ -551,6 +2854,46 @@ function updateCompletionStatus() {
     const isComplete = completed === requiredFields.length;
     openHubBtn.disabled = !isComplete;
     openHubBtn.classList.toggle("locked", !isComplete);
+
+  const consequenceBox = document.getElementById("consequenceBox");
+  const civilizationUpdate = document.getElementById("civilizationUpdate");
+
+  if (consequenceBox && civilizationUpdate) {
+    consequenceBox.classList.toggle("hidden", !isComplete);
+    civilizationUpdate.classList.toggle("hidden", !isComplete);
+  }
+
+  const missionCompletePanel = document.getElementById("missionCompletePanel");
+
+  if (missionCompletePanel) {
+    missionCompletePanel.classList.toggle("hidden", !isComplete);
+  }
+
+  if (isComplete) {
+    const state = loadCivilizationState();
+
+    if (!state.mission1ClaimLandComplete) {
+      state.metrics.food = Math.min(100, state.metrics.food + 5);
+      state.metrics.knowledge = Math.min(100, state.metrics.knowledge + 10);
+      state.metrics.stability = Math.min(100, state.metrics.stability + 3);
+
+      const chosenRegionField = document.getElementById("chosenRegion");
+      const chosenRegion = chosenRegionField ? chosenRegionField.value : "";
+      applyRegionConsequences(state, chosenRegion);
+
+      state.foundingArchive = 1;
+      state.survivalPlanning = 1;
+      state.environmentalRisk = 1;
+
+      state.mission1ClaimLandComplete = true;
+      state.civilizationStage = "village";
+    }
+
+    saveCivilizationState(state);
+    updateCivilizationMeters(state);
+    updateCivilizationGrowthDisplay(state);
+  }
+
   }
 }
 
@@ -560,6 +2903,22 @@ requiredFields.forEach((id) => {
     field.addEventListener("input", () => {
       saveSettlementDefense();
       loadSettlementDefense();
+
+const currentCivilizationState = loadCivilizationState();
+updateCivilizationMeters(currentCivilizationState);
+updateCivilizationGrowthDisplay(currentCivilizationState);
+updateWorldTimeDisplay(currentCivilizationState);
+updateWorldAtmosphere(currentCivilizationState);
+updateDynamicWorldEvent(currentCivilizationState);
+
+const automanStateCheck = document.getElementById("automanStateCheck");
+const automanStateOutput = document.getElementById("automanStateOutput");
+
+if (automanStateCheck && automanStateOutput) {
+  automanStateCheck.classList.remove("hidden");
+  automanStateOutput.textContent = JSON.stringify(currentCivilizationState, null, 2);
+}
+
 updateCompletionStatus();
     });
   }
