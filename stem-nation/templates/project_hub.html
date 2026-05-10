@@ -721,6 +721,68 @@ function setGovernanceButtonsDisabled(disabled) {
   });
 }
 
+function applyDynamicConsequences(state, action) {
+  const turn = state.currentTurn || 1;
+  const era = state.era || "Founding Era";
+
+  const addEvent = (id, title, summary) => {
+    const alreadyExists = state.activeEvents.some((entry) => entry.id === id);
+
+    if (!alreadyExists) {
+      state.activeEvents.push({
+        id,
+        turn,
+        era,
+        title,
+        summary,
+        savedAt: new Date().toISOString()
+      });
+    }
+  };
+
+  if (action === "expand_farms" && state.metrics.food >= 60) {
+    addEvent(
+      "AGRICULTURAL_EXPANSION_EVENT",
+      "Agricultural Expansion",
+      "Rapid farming growth is increasing food production but may strain surrounding land and waterways."
+    );
+  }
+
+  if (action === "open_trade" && state.metrics.wealth >= 60) {
+    addEvent(
+      "TRADE_NETWORK_EVENT",
+      "Trade Network Expansion",
+      "Trade activity is accelerating wealth growth while increasing foreign influence and dependency."
+    );
+  }
+
+  if (action === "invest_knowledge" && state.metrics.knowledge >= 60) {
+    addEvent(
+      "KNOWLEDGE_RENAISSANCE_EVENT",
+      "Knowledge Renaissance",
+      "Learning systems and innovation centers are accelerating civilization advancement."
+    );
+  }
+
+  if (action === "strengthen_defense" && state.metrics.stability >= 60) {
+    addEvent(
+      "MILITARIZATION_EVENT",
+      "Militarization Pressure",
+      "Defensive expansion is improving security while increasing political pressure and militarization."
+    );
+  }
+
+  if (action === "stabilize_population" && state.metrics.unity >= 60) {
+    addEvent(
+      "SOCIAL_COHESION_EVENT",
+      "Social Cohesion Strengthened",
+      "Strong civic unity is stabilizing internal cooperation and long-term resilience."
+    );
+  }
+
+  return state;
+}
+
 function applyGovernanceAction(action) {
   const actionConfig = governanceActions[action];
   if (!actionConfig) return;
@@ -770,6 +832,7 @@ function applyGovernanceAction(action) {
 
   state.governanceActionUsedThisTurn = true;
 
+  state = applyDynamicConsequences(state, action);
   state = applyCrisisDetection(state);
   saveCivilizationState(state);
   renderCivilizationStatus();
@@ -1070,6 +1133,68 @@ const labels = {
   survivalPlan: "Survival Plan"
 };
 
+function generatePressureIndicators(metrics) {
+  const indicators = [];
+
+  const addIndicator = (level, title, summary) => {
+    indicators.push({
+      level,
+      title,
+      summary
+    });
+  };
+
+  if ((metrics.food || 0) <= 45) {
+    addIndicator(
+      "HIGH RISK",
+      "Food Pressure Rising",
+      "Food reserves are declining and may destabilize the civilization if recovery does not occur."
+    );
+  }
+
+  if ((metrics.wealth || 0) <= 45) {
+    addIndicator(
+      "MODERATE RISK",
+      "Economic Strain Building",
+      "Wealth reserves are weakening and may slow expansion, trade, or recovery."
+    );
+  }
+
+  if ((metrics.stability || 0) <= 45) {
+    addIndicator(
+      "HIGH RISK",
+      "Political Instability Detected",
+      "Government stability is weakening and may lead to unrest or fragmentation."
+    );
+  }
+
+  if ((metrics.unity || 0) <= 45) {
+    addIndicator(
+      "CRITICAL PRESSURE",
+      "Social Fragmentation Risk",
+      "Low unity is threatening cooperation and long-term civilization cohesion."
+    );
+  }
+
+  if ((metrics.knowledge || 0) >= 60) {
+    addIndicator(
+      "LOW RISK",
+      "Innovation Momentum",
+      "Strong knowledge systems are improving adaptation and long-term resilience."
+    );
+  }
+
+  if ((metrics.stability || 0) >= 65 && (metrics.unity || 0) >= 55) {
+    addIndicator(
+      "LOW RISK",
+      "Stable Governance Conditions",
+      "The civilization currently maintains strong internal order and social cohesion."
+    );
+  }
+
+  return indicators;
+}
+
 function renderCivilizationStatus() {
   const container = document.getElementById("civilizationStatusContent");
   if (!container) return;
@@ -1081,6 +1206,21 @@ function renderCivilizationStatus() {
   const archives = state.archives || [];
   const alerts = state.alerts || [];
   const activeEvents = state.activeEvents || [];
+
+  const pressureIndicators = generatePressureIndicators(metrics);
+
+  const pressureHtml = pressureIndicators.length
+    ? pressureIndicators.map((entry) => `
+      <div class="event-entry">
+        <strong>${entry.level} · ${entry.title}</strong><br>
+        ${entry.summary}
+      </div>
+    `).join("")
+    : `
+      <div class="saved-defense-empty">
+        No major civilization pressures detected.
+      </div>
+    `;
 
   const activeEventsHtml = activeEvents.length
     ? activeEvents.slice().reverse().map((entry) => `
@@ -1183,6 +1323,11 @@ function renderCivilizationStatus() {
     <div class="civilization-events-panel">
       <h3>Active World Events</h3>
       ${activeEventsHtml}
+    </div>
+
+    <div class="civilization-events-panel">
+      <h3>Civilization Pressure Analysis</h3>
+      ${pressureHtml}
     </div>
 
     <div class="civilization-alerts-panel">
