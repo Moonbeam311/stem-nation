@@ -1644,6 +1644,32 @@
     display:block;
 }
 
+
+.mission-results-shell{
+    max-width:1200px;
+    margin:20px auto;
+}
+
+.toggle-results-btn{
+    width:100%;
+    padding:16px 20px;
+    border-radius:16px;
+    border:1px solid rgba(76,175,80,0.45);
+    background:rgba(76,175,80,0.12);
+    color:#b8f5c0;
+    font-weight:bold;
+    cursor:pointer;
+}
+
+.toggle-results-btn:hover{
+    background:rgba(76,175,80,0.22);
+}
+
+.mission-results-wrapper{
+    margin-top:18px;
+    animation:revealRise 0.35s ease-out;
+}
+
 </style>
 </head>
 
@@ -1920,6 +1946,10 @@
 <div id="archiveLogContent" class="archive-log-content">
     No archive records yet.
   </div>
+
+  <button type="button" id="showMoreArchiveBtn" class="student-input-btn archive-show-more-btn hidden">
+    Show More Records
+  </button>
 
 </div>
 
@@ -2502,6 +2532,14 @@ Settlement Recommendation Portfolio</div>
   </div>
 
 </div>
+
+<div class="mission-results-shell">
+
+  <button type="button" id="toggleMissionResultsBtn" class="toggle-results-btn">
+    🏁 Show Mission Results
+  </button>
+
+  <div id="missionResultsWrapper" class="mission-results-wrapper hidden">
 <div id="missionCompletePanel" class="mission-complete-panel hidden">
 
   <div class="mission-complete-label">
@@ -2570,6 +2608,11 @@ Settlement Recommendation Portfolio</div>
     <li>+1 Survival Planning</li>
     <li>Risk Identified: Environmental Challenge</li>
   </ul>
+
+</div>
+
+
+  </div>
 
 </div>
 
@@ -2840,6 +2883,11 @@ function showActionResponse(message) {
 
 
 
+
+let archiveVisibleLimit = 6;
+let archiveCurrentFilter = "all";
+
+
 function getArchiveTypeBadge(entry) {
   const type = entry.type || "";
 
@@ -2922,6 +2970,44 @@ function updateArchiveSummary(archives) {
 
 
 
+
+
+function hideArchivePanel() {
+  const archivePanel = document.getElementById("archiveLogPanel");
+  if (archivePanel) {
+    archivePanel.classList.add("hidden");
+    archivePanel.style.display = "none";
+  }
+}
+
+
+function showOnlyStudentPanel(activePanelId) {
+  hideArchivePanel();
+
+  const panelIds = [
+    "studentQuestionPanel",
+    "studentResponsePanel",
+    "studentEvidencePanel",
+    "studentReflectionPanel"
+  ];
+
+  panelIds.forEach((id) => {
+    const panel = document.getElementById(id);
+
+    if (!panel) return;
+
+    if (id === activePanelId) {
+      panel.classList.remove("hidden");
+      panel.style.display = "block";
+      panel.scrollIntoView({ behavior: "smooth", block: "center" });
+    } else {
+      panel.classList.add("hidden");
+      panel.style.display = "none";
+    }
+  });
+}
+
+
 function hideStudentInputPanels() {
   const panels = [
     "studentQuestionPanel",
@@ -2940,11 +3026,14 @@ function hideStudentInputPanels() {
 }
 
 
-function renderArchiveLog(filter = "all") {
+function renderArchiveLog(filter = archiveCurrentFilter) {
   hideStudentInputPanels();
+
+  archiveCurrentFilter = filter;
 
   const panel = document.getElementById("archiveLogPanel");
   const content = document.getElementById("archiveLogContent");
+  const showMoreBtn = document.getElementById("showMoreArchiveBtn");
 
   if (!panel || !content) return;
 
@@ -2954,6 +3043,7 @@ function renderArchiveLog(filter = "all") {
   updateArchiveSummary(archives);
 
   panel.classList.remove("hidden");
+  panel.style.display = "block";
 
   const filteredArchives = archives.filter((entry) => {
     const type = entry.type || "";
@@ -2966,10 +3056,13 @@ function renderArchiveLog(filter = "all") {
 
   if (!filteredArchives.length) {
     content.innerHTML = "No archive records for this filter.";
+    if (showMoreBtn) showMoreBtn.classList.add("hidden");
     return;
   }
 
-  content.innerHTML = filteredArchives.slice().reverse().map((entry) => `
+  const visibleRecords = filteredArchives.slice().reverse().slice(0, archiveVisibleLimit);
+
+  content.innerHTML = visibleRecords.map((entry) => `
     <div class="archive-entry">
       <div class="archive-type-badge">${getArchiveTypeBadge(entry)}</div>
       <div class="archive-entry-title">${entry.title || "Archive Record"}</div>
@@ -2977,8 +3070,28 @@ function renderArchiveLog(filter = "all") {
       <div class="archive-entry-date">${entry.savedAt || ""}</div>
     </div>
   `).join("");
+
+  if (showMoreBtn) {
+    if (filteredArchives.length > archiveVisibleLimit) {
+      showMoreBtn.classList.remove("hidden");
+      showMoreBtn.textContent = `Show More Records (${filteredArchives.length - archiveVisibleLimit} remaining)`;
+    } else {
+      showMoreBtn.classList.add("hidden");
+    }
+  }
 }
 
+
+
+
+const showMoreArchiveBtn = document.getElementById("showMoreArchiveBtn");
+
+if (showMoreArchiveBtn) {
+  showMoreArchiveBtn.addEventListener("click", () => {
+    archiveVisibleLimit += 6;
+    renderArchiveLog(archiveCurrentFilter);
+  });
+}
 
 
 function wireArchiveFilters() {
@@ -3017,13 +3130,7 @@ function showStudentReflectionPanel() {
     dock.appendChild(panel);
   }
 
-  if (questionPanel) questionPanel.classList.add("hidden");
-  if (responsePanel) responsePanel.classList.add("hidden");
-  if (evidencePanel) evidencePanel.classList.add("hidden");
-
-  panel.classList.remove("hidden");
-  panel.style.display = "block";
-  panel.scrollIntoView({ behavior: "smooth", block: "center" });
+  showOnlyStudentPanel("studentReflectionPanel");
   input.focus();
 }
 
@@ -3094,12 +3201,7 @@ function showStudentEvidencePanel() {
     dock.appendChild(panel);
   }
 
-  if (questionPanel) questionPanel.classList.add("hidden");
-  if (responsePanel) responsePanel.classList.add("hidden");
-
-  panel.classList.remove("hidden");
-  panel.style.display = "block";
-  panel.scrollIntoView({ behavior: "smooth", block: "center" });
+  showOnlyStudentPanel("studentEvidencePanel");
   input.focus();
 }
 
@@ -3157,12 +3259,7 @@ function showStudentResponsePanel() {
     dock.appendChild(panel);
   }
 
-  if (questionPanel) {
-    questionPanel.classList.add("hidden");
-  }
-
-  panel.classList.remove("hidden");
-  panel.scrollIntoView({ behavior: "smooth", block: "center" });
+  showOnlyStudentPanel("studentResponsePanel");
   input.focus();
 }
 
@@ -3220,12 +3317,7 @@ function showStudentQuestionPanel() {
     dock.appendChild(panel);
   }
 
-  if (responsePanel) {
-    responsePanel.classList.add("hidden");
-  }
-
-  panel.classList.remove("hidden");
-  panel.scrollIntoView({ behavior: "smooth", block: "center" });
+  showOnlyStudentPanel("studentQuestionPanel");
   input.focus();
 }
 
@@ -3781,6 +3873,21 @@ if (openHubBtn) {
 
 loadSettlementDefense();
 updateCompletionStatus();
+
+const toggleMissionResultsBtn = document.getElementById("toggleMissionResultsBtn");
+const missionResultsWrapper = document.getElementById("missionResultsWrapper");
+
+if (toggleMissionResultsBtn && missionResultsWrapper) {
+  toggleMissionResultsBtn.addEventListener("click", () => {
+    missionResultsWrapper.classList.toggle("hidden");
+
+    const isHidden = missionResultsWrapper.classList.contains("hidden");
+    toggleMissionResultsBtn.textContent = isHidden
+      ? "🏁 Show Mission Results"
+      : "🏁 Hide Mission Results";
+  });
+}
+
 </script>
 
 </body>
