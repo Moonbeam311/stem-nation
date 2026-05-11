@@ -1582,6 +1582,68 @@
     font-weight:bold;
 }
 
+
+.student-input-panel{
+    max-width:1200px;
+    margin:20px auto;
+    padding:18px;
+    border-radius:18px;
+    border:2px solid rgba(91,192,222,0.35);
+    background:
+      radial-gradient(circle at top, rgba(91,192,222,0.14), transparent 45%),
+      rgba(0,0,0,0.52);
+    animation:revealRise 0.45s ease-out;
+}
+
+.student-input-label{
+    color:#5bc0de;
+    letter-spacing:4px;
+    font-size:12px;
+    margin-bottom:10px;
+    font-weight:bold;
+}
+
+.student-input-textarea{
+    width:100%;
+    min-height:90px;
+    resize:vertical;
+    border-radius:14px;
+    border:1px solid rgba(255,255,255,0.16);
+    background:rgba(0,0,0,0.32);
+    color:white;
+    padding:14px;
+    font-size:15px;
+    box-sizing:border-box;
+}
+
+.student-input-btn{
+    margin-top:12px;
+    padding:12px 16px;
+    border-radius:12px;
+    border:1px solid rgba(244,211,94,0.45);
+    background:rgba(244,211,94,0.14);
+    color:#f0df9a;
+    font-weight:bold;
+    cursor:pointer;
+}
+
+.student-input-btn:hover{
+    background:rgba(244,211,94,0.24);
+}
+
+
+.student-input-dock{
+    max-width:1200px;
+    margin:20px auto;
+}
+
+
+.reflection-open-btn{
+    margin-top:12px;
+    width:100%;
+    display:block;
+}
+
 </style>
 </head>
 
@@ -1715,6 +1777,74 @@
 
 
 
+
+
+
+
+<div id="studentReflectionPanel" class="student-input-panel hidden">
+
+  <div class="student-input-label">
+    STUDENT REFLECTION
+  </div>
+
+  <textarea id="studentReflectionInput" class="student-input-textarea"
+    placeholder="Type your reflection: Which record best explains how your civilization adapted this turn?"></textarea>
+
+  <button type="button" id="saveStudentReflectionBtn" class="student-input-btn">
+    Save Reflection to Archive
+  </button>
+
+</div>
+
+
+<div id="studentEvidencePanel" class="student-input-panel hidden">
+
+  <div class="student-input-label">
+    STUDENT EVIDENCE NOTE
+  </div>
+
+  <textarea id="studentEvidenceInput" class="student-input-textarea"
+    placeholder="Type the evidence your council observed from the world event, map, terrain, or season..."></textarea>
+
+  <button type="button" id="saveStudentEvidenceBtn" class="student-input-btn">
+    Save Evidence to Archive
+  </button>
+
+</div>
+
+
+<div id="studentResponsePanel" class="student-input-panel hidden">
+
+  <div class="student-input-label">
+    COUNCIL RESPONSE STRATEGY
+  </div>
+
+  <textarea id="studentResponseInput" class="student-input-textarea"
+    placeholder="Type how your council will respond to this world event..."></textarea>
+
+  <button type="button" id="saveStudentResponseBtn" class="student-input-btn">
+    Save Response to Archive
+  </button>
+
+</div>
+
+
+<div id="studentQuestionPanel" class="student-input-panel hidden">
+
+  <div class="student-input-label">
+    STUDENT QUESTION
+  </div>
+
+  <textarea id="studentQuestionInput" class="student-input-textarea"
+    placeholder="Type the question your council should ask about this event..."></textarea>
+
+  <button type="button" id="saveStudentQuestionBtn" class="student-input-btn">
+    Save Question to Archive
+  </button>
+
+</div>
+
+
 <div id="archiveLogPanel" class="archive-log-panel hidden">
 
   <div class="archive-log-label">
@@ -1756,11 +1886,20 @@
       <div class="archive-summary-name">Events</div>
     </div>
 
+    <div class="archive-summary-card">
+      <div class="archive-summary-number" id="archiveReflectionCount">0</div>
+      <div class="archive-summary-name">Reflections</div>
+    </div>
+
   </div>
 
   <div id="archiveReflectionPrompt" class="archive-reflection-prompt">
     Which record best explains how your civilization adapted this turn?
   </div>
+
+  <button type="button" id="openStudentReflectionBtn" class="student-input-btn reflection-open-btn">
+    ✍️ Write Reflection
+  </button>
 
 </div>
 
@@ -1772,6 +1911,7 @@
   <button type="button" class="archive-filter-btn" data-filter="response">⚖️ Responses</button>
   <button type="button" class="archive-filter-btn" data-filter="evidence">📝 Evidence</button>
   <button type="button" class="archive-filter-btn" data-filter="event">📜 Events</button>
+  <button type="button" class="archive-filter-btn" data-filter="reflection">✍️ Reflections</button>
   <button type="button" class="archive-filter-btn" data-filter="founding">🏛️ Founding</button>
 
 </div>
@@ -2707,6 +2847,7 @@ function getArchiveTypeBadge(entry) {
   if (type === "response") return "⚖️ Response";
   if (type === "evidence") return "📝 Evidence";
   if (type === "event") return "📜 Event";
+  if (type === "reflection") return "✍️ Reflection";
 
   if ((entry.title || "").toLowerCase().includes("founding")) {
     return "🏛️ Founding Archive";
@@ -2724,6 +2865,7 @@ function updateArchiveSummary(archives) {
   const responses = document.getElementById("archiveResponseCount");
   const evidence = document.getElementById("archiveEvidenceCount");
   const events = document.getElementById("archiveEventCount");
+  const reflections = document.getElementById("archiveReflectionCount");
   const prompt = document.getElementById("archiveReflectionPrompt");
 
   if (!panel || !total || !questions || !responses || !evidence || !events) return;
@@ -2734,6 +2876,7 @@ function updateArchiveSummary(archives) {
   const responseCount = list.filter((entry) => entry.type === "response").length;
   const evidenceCount = list.filter((entry) => entry.type === "evidence").length;
   const eventCount = list.filter((entry) => entry.type === "event" || !entry.type).length;
+  const reflectionCount = list.filter((entry) => entry.type === "reflection").length;
 
   panel.classList.remove("hidden");
 
@@ -2742,6 +2885,7 @@ function updateArchiveSummary(archives) {
   responses.textContent = responseCount;
   evidence.textContent = evidenceCount;
   events.textContent = eventCount;
+  if (reflections) reflections.textContent = reflectionCount;
 
   if (prompt) {
     if (questionCount === 0) {
@@ -2754,10 +2898,51 @@ function updateArchiveSummary(archives) {
       prompt.textContent = "Which record best explains how your civilization adapted this turn?";
     }
   }
+
+  let reflectionButton = document.getElementById("openStudentReflectionBtn");
+
+  if (!reflectionButton && prompt) {
+    reflectionButton = document.createElement("button");
+    reflectionButton.type = "button";
+    reflectionButton.id = "openStudentReflectionBtn";
+    reflectionButton.className = "student-input-btn reflection-open-btn";
+    reflectionButton.textContent = "✍️ Write Reflection";
+    prompt.insertAdjacentElement("afterend", reflectionButton);
+
+    reflectionButton.addEventListener("click", () => {
+      showStudentReflectionPanel();
+
+      showActionResponse(`
+        <div>✍️ <strong>Reflection Opened</strong></div>
+        <div>Write your own reflection, then save it to the archive.</div>
+      `);
+    });
+  }
+}
+
+
+
+function hideStudentInputPanels() {
+  const panels = [
+    "studentQuestionPanel",
+    "studentResponsePanel",
+    "studentEvidencePanel",
+    "studentReflectionPanel"
+  ];
+
+  panels.forEach((id) => {
+    const panel = document.getElementById(id);
+    if (panel) {
+      panel.classList.add("hidden");
+      panel.style.display = "none";
+    }
+  });
 }
 
 
 function renderArchiveLog(filter = "all") {
+  hideStudentInputPanels();
+
   const panel = document.getElementById("archiveLogPanel");
   const content = document.getElementById("archiveLogContent");
 
@@ -2814,6 +2999,296 @@ function wireArchiveFilters() {
 wireArchiveFilters();
 
 
+
+
+
+
+function showStudentReflectionPanel() {
+  const dock = document.getElementById("studentInputDock");
+  const panel = document.getElementById("studentReflectionPanel");
+  const questionPanel = document.getElementById("studentQuestionPanel");
+  const responsePanel = document.getElementById("studentResponsePanel");
+  const evidencePanel = document.getElementById("studentEvidencePanel");
+  const input = document.getElementById("studentReflectionInput");
+
+  if (!panel || !input) return;
+
+  if (dock && panel.parentElement !== dock) {
+    dock.appendChild(panel);
+  }
+
+  if (questionPanel) questionPanel.classList.add("hidden");
+  if (responsePanel) responsePanel.classList.add("hidden");
+  if (evidencePanel) evidencePanel.classList.add("hidden");
+
+  panel.classList.remove("hidden");
+  panel.style.display = "block";
+  panel.scrollIntoView({ behavior: "smooth", block: "center" });
+  input.focus();
+}
+
+const openStudentReflectionBtn = document.getElementById("openStudentReflectionBtn");
+const saveStudentReflectionBtn = document.getElementById("saveStudentReflectionBtn");
+
+if (openStudentReflectionBtn) {
+  openStudentReflectionBtn.addEventListener("click", () => {
+    showStudentReflectionPanel();
+
+    showActionResponse(`
+      <div>✍️ <strong>Reflection Opened</strong></div>
+      <div>Write your own reflection, then save it to the archive.</div>
+    `);
+  });
+}
+
+if (saveStudentReflectionBtn) {
+  saveStudentReflectionBtn.addEventListener("click", () => {
+    const input = document.getElementById("studentReflectionInput");
+    const reflection = input ? input.value.trim() : "";
+
+    if (!reflection) {
+      showActionResponse(`
+        <div>✍️ <strong>Reflection Needed</strong></div>
+        <div>Type your reflection before saving.</div>
+      `);
+      return;
+    }
+
+    const state = loadCivilizationState();
+    const prompt = document.getElementById("archiveReflectionPrompt")?.textContent || "Reflection Prompt";
+
+    state.archives = state.archives || [];
+    state.archives.push({
+      id: `STUDENT_REFLECTION_CUSTOM_${Date.now()}`,
+      title: "Student Reflection",
+      summary: `${prompt}: ${reflection}`,
+      type: "reflection",
+      turn: state.worldTurn || state.currentTurn || 1,
+      savedAt: new Date().toISOString()
+    });
+
+    saveCivilizationState(state);
+
+    if (input) input.value = "";
+
+    showActionResponse(`
+      <div>✍️ <strong>Student Reflection Saved</strong></div>
+      <div>${reflection}</div>
+    `);
+
+    renderArchiveLog();
+  });
+}
+
+
+function showStudentEvidencePanel() {
+  const dock = document.getElementById("studentInputDock");
+  const panel = document.getElementById("studentEvidencePanel");
+  const questionPanel = document.getElementById("studentQuestionPanel");
+  const responsePanel = document.getElementById("studentResponsePanel");
+  const input = document.getElementById("studentEvidenceInput");
+
+  if (!panel || !input) return;
+
+  if (dock && panel.parentElement !== dock) {
+    dock.appendChild(panel);
+  }
+
+  if (questionPanel) questionPanel.classList.add("hidden");
+  if (responsePanel) responsePanel.classList.add("hidden");
+
+  panel.classList.remove("hidden");
+  panel.style.display = "block";
+  panel.scrollIntoView({ behavior: "smooth", block: "center" });
+  input.focus();
+}
+
+const saveStudentEvidenceBtn = document.getElementById("saveStudentEvidenceBtn");
+
+if (saveStudentEvidenceBtn) {
+  saveStudentEvidenceBtn.addEventListener("click", () => {
+    const input = document.getElementById("studentEvidenceInput");
+    const evidence = input ? input.value.trim() : "";
+
+    if (!evidence) {
+      showActionResponse(`
+        <div>📝 <strong>Evidence Needed</strong></div>
+        <div>Type your evidence note before saving.</div>
+      `);
+      return;
+    }
+
+    const state = loadCivilizationState();
+    const eventTitle = document.getElementById("dynamicEventTitle")?.textContent || "World Event";
+
+    state.archives = state.archives || [];
+    state.archives.push({
+      id: `STUDENT_EVIDENCE_CUSTOM_${Date.now()}`,
+      title: "Evidence Note",
+      summary: `${eventTitle}: ${evidence}`,
+      type: "evidence",
+      turn: state.worldTurn || state.currentTurn || 1,
+      savedAt: new Date().toISOString()
+    });
+
+    saveCivilizationState(state);
+
+    if (input) input.value = "";
+
+    showActionResponse(`
+      <div>📝 <strong>Student Evidence Saved</strong></div>
+      <div>${evidence}</div>
+    `);
+
+    renderArchiveLog();
+  });
+}
+
+
+function showStudentResponsePanel() {
+  const dock = document.getElementById("studentInputDock");
+  const panel = document.getElementById("studentResponsePanel");
+  const questionPanel = document.getElementById("studentQuestionPanel");
+  const input = document.getElementById("studentResponseInput");
+
+  if (!panel || !input) return;
+
+  if (dock && panel.parentElement !== dock) {
+    dock.appendChild(panel);
+  }
+
+  if (questionPanel) {
+    questionPanel.classList.add("hidden");
+  }
+
+  panel.classList.remove("hidden");
+  panel.scrollIntoView({ behavior: "smooth", block: "center" });
+  input.focus();
+}
+
+const saveStudentResponseBtn = document.getElementById("saveStudentResponseBtn");
+
+if (saveStudentResponseBtn) {
+  saveStudentResponseBtn.addEventListener("click", () => {
+    const input = document.getElementById("studentResponseInput");
+    const response = input ? input.value.trim() : "";
+
+    if (!response) {
+      showActionResponse(`
+        <div>⚖️ <strong>Response Needed</strong></div>
+        <div>Type your council response strategy before saving.</div>
+      `);
+      return;
+    }
+
+    const state = loadCivilizationState();
+    const eventTitle = document.getElementById("dynamicEventTitle")?.textContent || "World Event";
+
+    state.archives = state.archives || [];
+    state.archives.push({
+      id: `STUDENT_RESPONSE_CUSTOM_${Date.now()}`,
+      title: "Council Response",
+      summary: `${eventTitle}: ${response}`,
+      type: "response",
+      turn: state.worldTurn || state.currentTurn || 1,
+      savedAt: new Date().toISOString()
+    });
+
+    saveCivilizationState(state);
+
+    if (input) input.value = "";
+
+    showActionResponse(`
+      <div>⚖️ <strong>Student Response Saved</strong></div>
+      <div>${response}</div>
+    `);
+
+    renderArchiveLog();
+  });
+}
+
+
+function showStudentQuestionPanel() {
+  const dock = document.getElementById("studentInputDock");
+  const panel = document.getElementById("studentQuestionPanel");
+  const responsePanel = document.getElementById("studentResponsePanel");
+  const input = document.getElementById("studentQuestionInput");
+
+  if (!panel || !input) return;
+
+  if (dock && panel.parentElement !== dock) {
+    dock.appendChild(panel);
+  }
+
+  if (responsePanel) {
+    responsePanel.classList.add("hidden");
+  }
+
+  panel.classList.remove("hidden");
+  panel.scrollIntoView({ behavior: "smooth", block: "center" });
+  input.focus();
+}
+
+const saveStudentQuestionBtn = document.getElementById("saveStudentQuestionBtn");
+
+if (saveStudentQuestionBtn) {
+  saveStudentQuestionBtn.addEventListener("click", () => {
+    const input = document.getElementById("studentQuestionInput");
+    const question = input ? input.value.trim() : "";
+
+    if (!question) {
+      showActionResponse(`
+        <div>❓ <strong>Question Needed</strong></div>
+        <div>Type your council question before saving.</div>
+      `);
+      return;
+    }
+
+    const state = loadCivilizationState();
+    state.archives = state.archives || [];
+    state.archives.push({
+      id: `STUDENT_QUESTION_CUSTOM_${Date.now()}`,
+      title: "Student Question",
+      summary: question,
+      type: "question",
+      turn: state.worldTurn || state.currentTurn || 1,
+      savedAt: new Date().toISOString()
+    });
+
+    saveCivilizationState(state);
+
+    if (input) input.value = "";
+
+    showActionResponse(`
+      <div>❓ <strong>Student Question Saved</strong></div>
+      <div>${question}</div>
+    `);
+
+    renderArchiveLog();
+  });
+}
+
+
+
+function moveStudentInputPanelsToDock() {
+  const dock = document.getElementById("studentInputDock");
+  const questionPanel = document.getElementById("studentQuestionPanel");
+  const responsePanel = document.getElementById("studentResponsePanel");
+
+  if (!dock) return;
+
+  if (questionPanel && questionPanel.parentElement !== dock) {
+    dock.appendChild(questionPanel);
+  }
+
+  if (responsePanel && responsePanel.parentElement !== dock) {
+    dock.appendChild(responsePanel);
+  }
+}
+
+moveStudentInputPanelsToDock();
+
+
 function wireEventActionButtons() {
   const askBtn = document.getElementById("eventAskBtn");
   const respondBtn = document.getElementById("eventRespondBtn");
@@ -2823,94 +3298,70 @@ function wireEventActionButtons() {
 
   if (askBtn) {
     askBtn.addEventListener("click", () => {
-      const question = "What evidence should your council gather before responding to this event?";
+      const suggestedQuestion = "What evidence should your council gather before responding to this event?";
 
       if (inquiryPrompt) {
-        inquiryPrompt.textContent = question;
+        inquiryPrompt.textContent = suggestedQuestion;
       }
 
-      const state = loadCivilizationState();
-      state.archives = state.archives || [];
-      state.archives.push({
-        id: `STUDENT_QUESTION_${Date.now()}`,
-        title: "Student Question",
-        summary: question,
-        type: "question",
-        turn: state.worldTurn || state.currentTurn || 1,
-        savedAt: new Date().toISOString()
-      });
-      saveCivilizationState(state);
+      showStudentQuestionPanel();
 
       showActionResponse(`
-        <div>❓ <strong>Question Recorded</strong></div>
-        <div>${question}</div>
+        <div>❓ <strong>Question Prompt Opened</strong></div>
+        <div>Type your own council question, then save it to the archive.</div>
       `);
-
-      renderArchiveLog();
     });
   }
 
   if (respondBtn) {
     respondBtn.addEventListener("click", () => {
-      const state = loadCivilizationState();
-      state.alerts = state.alerts || [];
-      state.alerts.push({
-        id: `EVENT_RESPONSE_${Date.now()}`,
-        turn: state.worldTurn || state.currentTurn || 1,
-        era: state.era || "Founding Era",
-        title: "Council Response Prepared",
-        summary: "The council reviewed the world event and prepared a cautious response.",
-        savedAt: new Date().toISOString()
-      });
+      let panel = document.getElementById("studentResponsePanel");
+      let input = document.getElementById("studentResponseInput");
+      const eventPanel = document.getElementById("dynamicEventPanel");
 
-      state.archives = state.archives || [];
-      state.archives.push({
-        id: `COUNCIL_RESPONSE_${Date.now()}`,
-        title: "Council Response Prepared",
-        summary: "The council reviewed the event and prepared a cautious response.",
-        type: "response",
-        turn: state.worldTurn || state.currentTurn || 1,
-        savedAt: new Date().toISOString()
-      });
+      if (!panel && eventPanel) {
+        panel = document.createElement("div");
+        panel.id = "studentResponsePanel";
+        panel.className = "student-input-panel";
+        panel.innerHTML = `
+          <div class="student-input-label">COUNCIL RESPONSE STRATEGY</div>
+          <textarea id="studentResponseInput" class="student-input-textarea"
+            placeholder="Type how your council will respond to this world event..."></textarea>
+          <button type="button" id="saveStudentResponseBtn" class="student-input-btn">
+            Save Response to Archive
+          </button>
+        `;
+        eventPanel.insertAdjacentElement("afterend", panel);
+        input = document.getElementById("studentResponseInput");
+      }
 
-      saveCivilizationState(state);
+      if (panel && eventPanel && panel.parentElement !== eventPanel.parentElement) {
+        eventPanel.insertAdjacentElement("afterend", panel);
+      }
+
+      if (panel) {
+        panel.classList.remove("hidden");
+        panel.style.display = "block";
+        panel.scrollIntoView({ behavior: "smooth", block: "center" });
+      }
+
+      if (input) input.focus();
 
       showActionResponse(`
-        <div>⚖️ <strong>Council Response Prepared</strong></div>
-        <div>The council reviewed the event and prepared a cautious response.</div>
+        <div>⚖️ <strong>Response Strategy Opened</strong></div>
+        <div>Type your council response strategy, then save it to the archive.</div>
       `);
-
-      renderArchiveLog();
     });
   }
 
-
   if (evidenceBtn) {
     evidenceBtn.addEventListener("click", () => {
-      const state = loadCivilizationState();
-      const eventTitle = document.getElementById("dynamicEventTitle")?.textContent || "World Event";
-      const eventSummary = document.getElementById("dynamicEventDescription")?.textContent || "A world event was observed.";
-
-      const evidenceSummary = `Evidence noted for ${eventTitle}: ${eventSummary}`;
-
-      state.archives = state.archives || [];
-      state.archives.push({
-        id: `EVIDENCE_NOTE_${Date.now()}`,
-        title: "Evidence Note",
-        summary: evidenceSummary,
-        type: "evidence",
-        turn: state.worldTurn || state.currentTurn || 1,
-        savedAt: new Date().toISOString()
-      });
-
-      saveCivilizationState(state);
+      showStudentEvidencePanel();
 
       showActionResponse(`
-        <div>📝 <strong>Evidence Note Added</strong></div>
-        <div>${evidenceSummary}</div>
+        <div>📝 <strong>Evidence Note Opened</strong></div>
+        <div>Type your own evidence note, then save it to the archive.</div>
       `);
-
-      renderArchiveLog();
     });
   }
 
@@ -2954,7 +3405,13 @@ overlayButtons.forEach((button) => {
     overlay.classList.toggle("hidden");
 
     if (overlayId === "archiveOverlay") {
+      hideStudentInputPanels();
       renderArchiveLog();
+
+      const archivePanel = document.getElementById("archiveLogPanel");
+      if (archivePanel) {
+        archivePanel.scrollIntoView({ behavior: "smooth", block: "start" });
+      }
     }
   });
 });
