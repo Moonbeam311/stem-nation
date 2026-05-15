@@ -1469,6 +1469,113 @@ PHASE 6 STEP 5 — STEM NATION FULL STUDENT RESET
 Student-side local test data reset only.
 Does NOT touch teacher/admin/database systems.
 ========================================================= -->
+
+
+<!-- =========================================================
+PHASE 6 STEP 7 — STEM NATION RESUME STUDENT PROGRESS V1
+Detects saved student progress and routes learner back to active map mode.
+========================================================= -->
+<section id="studentResumePanel" class="student-resume-panel" style="display:none;">
+  <h3>Continue Student Progress</h3>
+
+  <p id="studentResumeStatus">
+    Saved student progress detected on this device.
+  </p>
+
+  <button id="continueStudentProgressBtn" class="continue-progress-btn" type="button">
+    CONTINUE STUDENT PROGRESS
+  </button>
+</section>
+
+<style>
+.student-resume-panel {
+  margin: 32px auto;
+  padding: 18px;
+  max-width: 720px;
+  border: 1px solid rgba(80, 200, 120, 0.45);
+  border-radius: 14px;
+  background: rgba(0, 40, 20, 0.45);
+  color: #f5f1dc;
+}
+
+.student-resume-panel h3 {
+  margin-top: 0;
+  color: #9ff0b8;
+  letter-spacing: 0.04em;
+}
+
+.continue-progress-btn {
+  background: #176b3a;
+  color: white;
+  border: none;
+  padding: 12px 18px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.continue-progress-btn:hover {
+  opacity: 0.88;
+}
+</style>
+
+<script>
+/* STEM_NATION_RESUME_STUDENT_PROGRESS_V1 */
+(function () {
+  const SETTLEMENT_KEY = "STEM_NATION_SETTLEMENT_DEFENSE_V1";
+  const CIV_STATE_KEY_RESUME = "STEM_NATION_CIVILIZATION_STATE_V34";
+  const AUTOSAVE_META_KEY_RESUME = "STEM_NATION_AUTOSAVE_META_V1";
+
+  const panel = document.getElementById("studentResumePanel");
+  const status = document.getElementById("studentResumeStatus");
+  const continueBtn = document.getElementById("continueStudentProgressBtn");
+
+  function safeParse(key) {
+    const raw = localStorage.getItem(key);
+    if (!raw) return null;
+
+    try {
+      return JSON.parse(raw);
+    } catch (err) {
+      console.warn("Invalid saved progress ignored:", key);
+      return null;
+    }
+  }
+
+  function hasStudentProgress() {
+    const settlement = safeParse(SETTLEMENT_KEY);
+    const civState = safeParse(CIV_STATE_KEY_RESUME);
+    const autosaveMeta = safeParse(AUTOSAVE_META_KEY_RESUME);
+
+    return Boolean(settlement || civState || autosaveMeta);
+  }
+
+  function getResumeMessage() {
+    const autosaveMeta = safeParse(AUTOSAVE_META_KEY_RESUME);
+
+    if (autosaveMeta && autosaveMeta.lastSavedAt) {
+      try {
+        return "Saved student progress detected. Last autosave: " +
+          new Date(autosaveMeta.lastSavedAt).toLocaleString() + ".";
+      } catch (err) {
+        return "Saved student progress detected on this device.";
+      }
+    }
+
+    return "Saved student progress detected on this device.";
+  }
+
+  if (panel && status && continueBtn && hasStudentProgress()) {
+    status.textContent = getResumeMessage();
+    panel.style.display = "block";
+
+    continueBtn.addEventListener("click", function () {
+      window.location.href = "/map";
+    });
+  }
+})();
+</script>
+
 <section id="studentResetPanel" class="student-reset-panel">
   <h3>Student Mode Reset</h3>
   <p>
