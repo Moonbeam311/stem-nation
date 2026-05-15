@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Teacher Demo Mode · STEM Nation</title>
+  <style>
+    html, body {
+      margin: 0;
+      min-height: 100%;
+      background:
+        radial-gradient(circle at center, rgba(212,175,55,0.10), transparent 46%),
+        linear-gradient(135deg, #050505 0%, #101827 55%, #050505 100%);
+      color: white;
+      font-family: Arial, sans-serif;
+    }
+
+    .academy-line {
+      height: 3px;
+      background: linear-gradient(90deg, transparent, #d4af37, transparent);
+      opacity: 0.82;
+    }
+
+    .container {
+      max-width: 1180px;
+      margin: 0 auto;
+      padding: 46px 22px 70px;
+    }
+
+    .label {
+      text-align: center;
+      font-size: 13px;
+      letter-spacing: 4px;
+      text-transform: uppercase;
+      color: #d4af37;
+      margin-bottom: 12px;
+    }
+
+    h1 {
+      text-align: center;
+      font-size: clamp(38px, 6vw, 70px);
+      color: #f0df9a;
+      margin: 0 0 18px;
+    }
+
+    .subtitle {
+      max-width: 900px;
+      margin: 0 auto 34px;
+      text-align: center;
+      font-size: 19px;
+      line-height: 1.65;
+      opacity: 0.94;
+    }
+
+    .panel {
+      background: rgba(0,0,0,0.38);
+      border: 1px solid rgba(212,175,55,0.22);
+      border-radius: 22px;
+      padding: 28px;
+      margin-bottom: 24px;
+      box-shadow: 0 14px 50px rgba(0,0,0,0.45);
+    }
+
+    .panel h2 {
+      color: #d4af37;
+      margin-top: 0;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 16px;
+      margin-top: 18px;
+    }
+
+    .card {
+      background: rgba(255,255,255,0.055);
+      border: 1px solid rgba(255,255,255,0.10);
+      border-radius: 16px;
+      padding: 20px;
+    }
+
+    .card h3 {
+      margin-top: 0;
+      color: #f0df9a;
+    }
+
+    .btn-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      justify-content: center;
+      margin-top: 24px;
+    }
+
+    .btn {
+      display: inline-block;
+      text-decoration: none;
+      color: #111;
+      background: #d4af37;
+      padding: 12px 18px;
+      border-radius: 10px;
+      font-weight: bold;
+    }
+
+    .btn.secondary {
+      color: #f0df9a;
+      background: transparent;
+      border: 1px solid rgba(212,175,55,0.45);
+    }
+  </style>
+</head>
+
+<body>
+  <div class="academy-line"></div>
+
+  <div class="container">
+    <div class="label">STEM Nation · Teacher Demo Mode</div>
+
+    <h1>Teacher Demo Mode</h1>
+
+    <div class="subtitle">
+      Use this page to guide a live classroom or investor demonstration without editing code.
+      Launch the student map, open the command center, reset demo clutter, and return to the teacher dashboard.
+    </div>
+
+    <div class="panel">
+      <h2>Demo Flow</h2>
+
+      <div class="grid">
+        <div class="card">
+          <h3>1 · Launch Student Map</h3>
+          <p>Begin the live student experience at the strategic map.</p>
+        </div>
+
+        <div class="card">
+          <h3>2 · Observe Student Decisions</h3>
+          <p>Have students select terrain, record evidence, and defend settlement reasoning.</p>
+        </div>
+
+        <div class="card">
+          <h3>3 · Open Command Center</h3>
+          <p>Review saved civilization status, archive records, alerts, and turn history.</p>
+        </div>
+
+        <div class="card">
+          <h3>4 · Clean or Reset Demo</h3>
+          <p>Use the hub cleanup tools to clear clutter while preserving the student-state system.</p>
+        </div>
+      </div>
+
+      <div class="btn-row">
+        <a class="btn" href="/map">Launch Student Map</a>
+        <a class="btn" href="/hub">Open Command Center</a>
+        <a class="btn secondary" href="/classroom_launch">Classroom Launch Panel</a>
+        <a class="btn secondary" href="/teacher_dashboard">Teacher Dashboard</a>
+        <a class="btn secondary" href="/">Landing</a>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

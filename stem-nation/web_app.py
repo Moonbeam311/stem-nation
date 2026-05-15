@@ -117,6 +117,20 @@ def teacher_resource_library():
 @app.route("/teacher")
 def teacher():
     return render_template("teacher.html")
+
+
+# =========================================================
+# PHASE 7 STEP 1 — STEM NATION TEACHER DEMO ROUTES V1
+# =========================================================
+# STEM_NATION_TEACHER_DEMO_ROUTES_V1
+@app.route("/teacher_demo")
+def teacher_demo():
+    return render_template("teacher_demo.html")
+
+@app.route("/classroom_launch")
+def classroom_launch():
+    return render_template("classroom_launch.html")
+
 @app.route("/map")
 def map_mode():
     return render_template("map_mode.html")

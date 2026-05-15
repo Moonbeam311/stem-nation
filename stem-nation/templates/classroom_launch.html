@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Classroom Launch Controls · STEM Nation</title>
+  <style>
+    html, body {
+      margin: 0;
+      min-height: 100%;
+      background:
+        radial-gradient(circle at center, rgba(80,180,255,0.10), transparent 44%),
+        linear-gradient(135deg, #050505 0%, #0e1a2b 55%, #050505 100%);
+      color: white;
+      font-family: Arial, sans-serif;
+    }
+
+    .academy-line {
+      height: 3px;
+      background: linear-gradient(90deg, transparent, #d4af37, transparent);
+      opacity: 0.82;
+    }
+
+    .container {
+      max-width: 1180px;
+      margin: 0 auto;
+      padding: 46px 22px 70px;
+    }
+
+    .label {
+      text-align: center;
+      font-size: 13px;
+      letter-spacing: 4px;
+      text-transform: uppercase;
+      color: #d4af37;
+      margin-bottom: 12px;
+    }
+
+    h1 {
+      text-align: center;
+      font-size: clamp(38px, 6vw, 70px);
+      color: #f0df9a;
+      margin: 0 0 18px;
+    }
+
+    .subtitle {
+      max-width: 900px;
+      margin: 0 auto 34px;
+      text-align: center;
+      font-size: 19px;
+      line-height: 1.65;
+      opacity: 0.94;
+    }
+
+    .panel {
+      background: rgba(0,0,0,0.38);
+      border: 1px solid rgba(212,175,55,0.22);
+      border-radius: 22px;
+      padding: 28px;
+      margin-bottom: 24px;
+      box-shadow: 0 14px 50px rgba(0,0,0,0.45);
+    }
+
+    .panel h2 {
+      color: #d4af37;
+      margin-top: 0;
+    }
+
+    .launch-list {
+      line-height: 1.8;
+      font-size: 17px;
+    }
+
+    .btn-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      justify-content: center;
+      margin-top: 24px;
+    }
+
+    .btn {
+      display: inline-block;
+      text-decoration: none;
+      color: #111;
+      background: #d4af37;
+      padding: 12px 18px;
+      border-radius: 10px;
+      font-weight: bold;
+    }
+
+    .btn.secondary {
+      color: #f0df9a;
+      background: transparent;
+      border: 1px solid rgba(212,175,55,0.45);
+    }
+  </style>
+</head>
+
+<body>
+  <div class="academy-line"></div>
+
+  <div class="container">
+    <div class="label">STEM Nation · Classroom Launch Controls</div>
+
+    <h1>Classroom Launch Panel</h1>
+
+    <div class="subtitle">
+      A teacher-facing control page for starting the student simulation, guiding the room,
+      and returning to the command center during instruction.
+    </div>
+
+    <div class="panel">
+      <h2>Recommended Classroom Sequence</h2>
+
+      <ol class="launch-list">
+        <li>Open the Student Map and ask students to observe terrain first.</li>
+        <li>Have students select a settlement region and defend their reasoning.</li>
+        <li>Return to the Command Center to view saved civilization evidence.</li>
+        <li>Use Demo Cleanup Options only when preparing for a fresh demonstration.</li>
+        <li>Use Student Mode Reset only when beginning a completely new browser session.</li>
+      </ol>
+
+      <div class="btn-row">
+        <a class="btn" href="/map">Start Student Map</a>
+        <a class="btn" href="/hub">Open Command Center</a>
+        <a class="btn secondary" href="/teacher_demo">Teacher Demo Mode</a>
+        <a class="btn secondary" href="/teacher_dashboard">Teacher Dashboard</a>
+        <a class="btn secondary" href="/">Landing</a>
+      </div>
+    </div>
+  </div>
+</body>
+</html>
