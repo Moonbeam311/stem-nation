@@ -141,6 +141,24 @@
       color: #ffaaa0;
       font-weight: bold;
     }
+  
+    /* =========================================================
+       PHASE 9 STEP 1 — STEM NATION SESSION PRESETS V1
+       ========================================================= */
+    .preset-panel {
+      border: 1px solid rgba(212,175,55,0.28);
+      background:
+        radial-gradient(circle at top left, rgba(212,175,55,0.12), transparent 35%),
+        rgba(255,255,255,0.045);
+    }
+
+    .preset-help {
+      font-size: 14px;
+      line-height: 1.6;
+      opacity: 0.86;
+      margin-top: 8px;
+    }
+
   </style>
 </head>
 
@@ -155,6 +173,35 @@
     <div class="subtitle">
       Set the classroom session focus, guide student activity, and preserve the instructional frame locally for the demo.
     </div>
+
+    
+    <!-- =========================================================
+    PHASE 9 STEP 1 — STEM NATION SESSION PRESETS V1
+    Guided lesson mode presets for teacher-led classroom launch.
+    ========================================================= -->
+    <div class="panel preset-panel">
+      <h2>Guided Lesson Presets</h2>
+
+      <label for="sessionPresetSelect">Choose Session Preset</label>
+      <select id="sessionPresetSelect">
+        <option value="week1_settlement">Week 1 · Settlement Decision Lab</option>
+        <option value="week1_evidence">Week 1 · Evidence & Reflection</option>
+        <option value="teacher_demo">Teacher Live Demo</option>
+        <option value="investor_walkthrough">Investor Walkthrough</option>
+        <option value="independent_work">Independent Student Work</option>
+        <option value="discussion_debrief">Discussion / Debrief</option>
+      </select>
+
+      <div class="btn-row">
+        <button id="applyPresetBtn" type="button">Apply Preset</button>
+      </div>
+
+      <div class="preset-help">
+        Presets fill the session name, mode, mission focus, and teacher prompt.
+        You can still edit the fields before starting the session.
+      </div>
+    </div>
+
 
     <div class="panel">
       <h2>Session Setup</h2>
@@ -192,6 +239,7 @@
   </div>
 
 <script>
+/* STEM_NATION_SESSION_PRESETS_V1 */
 /* STEM_NATION_TEACHER_SESSION_STATE_V1 */
 (function () {
   const CLASS_SESSION_KEY = "STEM_NATION_CLASS_SESSION_V1";
@@ -201,6 +249,70 @@
   const missionFocus = document.getElementById("missionFocus");
   const teacherPrompt = document.getElementById("teacherPrompt");
   const statusBox = document.getElementById("sessionStatusBox");
+
+  const sessionPresetSelect = document.getElementById("sessionPresetSelect");
+  const applyPresetBtn = document.getElementById("applyPresetBtn");
+
+  const SESSION_PRESETS = {
+    week1_settlement: {
+      sessionName: "Week 1 · Settlement Decision Lab",
+      sessionMode: "guided",
+      missionFocus: "Mission 1 · Claim the Land",
+      teacherPrompt: "Observe the terrain carefully. Every civilization decision changes the future."
+    },
+    week1_evidence: {
+      sessionName: "Week 1 · Evidence & Reflection",
+      sessionMode: "discussion",
+      missionFocus: "Evidence Review · Settlement Defense",
+      teacherPrompt: "Use evidence from the land to explain why your civilization can survive there."
+    },
+    teacher_demo: {
+      sessionName: "Teacher Live Demo",
+      sessionMode: "demo",
+      missionFocus: "Live Demonstration · Observe, Decide, Defend",
+      teacherPrompt: "Watch how one decision changes food, stability, knowledge, unity, territory, and wealth."
+    },
+    investor_walkthrough: {
+      sessionName: "Investor Walkthrough",
+      sessionMode: "demo",
+      missionFocus: "Platform Walkthrough · Student Decision System",
+      teacherPrompt: "Follow the student journey from map observation to saved evidence and command center review."
+    },
+    independent_work: {
+      sessionName: "Independent Student Work",
+      sessionMode: "independent",
+      missionFocus: "Independent Map Reasoning",
+      teacherPrompt: "Work independently. Choose carefully, record evidence, and defend your decision."
+    },
+    discussion_debrief: {
+      sessionName: "Discussion / Debrief",
+      sessionMode: "discussion",
+      missionFocus: "Classroom Debrief · Consequence and Reflection",
+      teacherPrompt: "Discuss how settlement choices created benefits, risks, and long-term consequences."
+    }
+  };
+
+  function applySessionPreset() {
+    if (!sessionPresetSelect) return;
+
+    const preset = SESSION_PRESETS[sessionPresetSelect.value];
+    if (!preset) return;
+
+    sessionName.value = preset.sessionName;
+    sessionMode.value = preset.sessionMode;
+    missionFocus.value = preset.missionFocus;
+    teacherPrompt.value = preset.teacherPrompt;
+
+    renderSession({
+      sessionName: preset.sessionName,
+      sessionMode: preset.sessionMode,
+      missionFocus: preset.missionFocus,
+      teacherPrompt: preset.teacherPrompt,
+      status: "preset ready",
+      updatedAt: new Date().toISOString()
+    });
+  }
+
 
   function readSession() {
     const raw = localStorage.getItem(CLASS_SESSION_KEY);
@@ -271,6 +383,11 @@
   const existing = readSession();
   hydrateForm(existing);
   renderSession(existing);
+
+
+  if (applyPresetBtn) {
+    applyPresetBtn.addEventListener("click", applySessionPreset);
+  }
 
   document.getElementById("startSessionBtn").addEventListener("click", function () {
     writeSession("active");
