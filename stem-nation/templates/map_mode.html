@@ -3890,5 +3890,144 @@ if (toggleMissionResultsBtn && missionResultsWrapper) {
 
 </script>
 
+
+
+<!-- =========================================================
+PHASE 6 STEP 6 — STEM NATION AUTOSAVE ENGINE V1
+========================================================= -->
+
+<script>
+/* STEM_NATION_AUTOSAVE_ENGINE_V1 */
+
+const AUTOSAVE_META_KEY = "STEM_NATION_AUTOSAVE_META_V1";
+
+function updateAutosaveMeta() {
+
+  const meta = {
+    lastSavedAt: new Date().toISOString(),
+    currentPage: window.location.pathname,
+    civilizationStateKey: CIV_STATE_KEY,
+    settlementKey: STORAGE_KEY
+  };
+
+  localStorage.setItem(
+    AUTOSAVE_META_KEY,
+    JSON.stringify(meta)
+  );
+
+  showAutosaveBanner(meta.lastSavedAt);
+}
+
+function showAutosaveBanner(timestamp) {
+
+  let banner = document.getElementById("autosaveBanner");
+
+  if (!banner) {
+    banner = document.createElement("div");
+    banner.id = "autosaveBanner";
+
+    banner.style.position = "fixed";
+    banner.style.bottom = "12px";
+    banner.style.right = "12px";
+    banner.style.padding = "10px 14px";
+    banner.style.background = "rgba(0,0,0,0.85)";
+    banner.style.border = "1px solid rgba(255,215,0,0.35)";
+    banner.style.borderRadius = "10px";
+    banner.style.color = "#f5f1dc";
+    banner.style.fontSize = "12px";
+    banner.style.zIndex = "99999";
+    banner.style.transition = "opacity 0.4s ease";
+
+    document.body.appendChild(banner);
+  }
+
+  banner.innerHTML =
+    "Autosaved: " +
+    new Date(timestamp).toLocaleTimeString();
+
+  banner.style.opacity = "1";
+
+  setTimeout(() => {
+    banner.style.opacity = "0.35";
+  }, 2500);
+}
+
+function validateStoredJSON(key) {
+
+  const raw = localStorage.getItem(key);
+
+  if (!raw) return true;
+
+  try {
+    JSON.parse(raw);
+    return true;
+  } catch (err) {
+
+    console.warn(
+      "Corrupted STEM Nation save detected:",
+      key
+    );
+
+    localStorage.removeItem(key);
+
+    return false;
+  }
+}
+
+function runSaveRecoveryAudit() {
+
+  validateStoredJSON(STORAGE_KEY);
+  validateStoredJSON(CIV_STATE_KEY);
+  validateStoredJSON(AUTOSAVE_META_KEY);
+}
+
+function runAutosaveHeartbeat() {
+
+  updateAutosaveMeta();
+
+  if (typeof saveSettlementDefense === "function") {
+    try {
+      saveSettlementDefense();
+    } catch (err) {
+      console.warn("Settlement autosave skipped:", err);
+    }
+  }
+
+  if (typeof saveCivilizationState === "function") {
+    try {
+
+      const latestState =
+        loadCivilizationState();
+
+      saveCivilizationState(latestState);
+
+    } catch (err) {
+      console.warn("Civilization autosave skipped:", err);
+    }
+  }
+}
+
+runSaveRecoveryAudit();
+
+setInterval(() => {
+  runAutosaveHeartbeat();
+}, 30000);
+
+window.addEventListener("beforeunload", () => {
+  runAutosaveHeartbeat();
+});
+
+document.addEventListener("visibilitychange", () => {
+  if (document.visibilityState === "hidden") {
+    runAutosaveHeartbeat();
+  }
+});
+
+console.log(
+  "STEM_NATION_AUTOSAVE_ENGINE_V1 ACTIVE"
+);
+</script>
+
+
 </body>
 </html>
