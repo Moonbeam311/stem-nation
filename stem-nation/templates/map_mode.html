@@ -4029,5 +4029,133 @@ console.log(
 </script>
 
 
+
+
+<!-- =========================================================
+PHASE 6 STEP 8 — STEM NATION PROGRESS HUD V1
+Displays student save status and progress indicators.
+========================================================= -->
+
+<script>
+/* STEM_NATION_PROGRESS_HUD_V1 */
+
+(function () {
+  const HUD_AUTOSAVE_META_KEY = "STEM_NATION_AUTOSAVE_META_V1";
+  const HUD_SETTLEMENT_KEY = "STEM_NATION_SETTLEMENT_DEFENSE_V1";
+  const HUD_CIV_STATE_KEY = "STEM_NATION_CIVILIZATION_STATE_V34";
+
+  function safeReadJSON(key) {
+    const raw = localStorage.getItem(key);
+    if (!raw) return null;
+
+    try {
+      return JSON.parse(raw);
+    } catch (err) {
+      return null;
+    }
+  }
+
+  function buildStudentProgressHud() {
+    let hud = document.getElementById("studentProgressHud");
+
+    if (!hud) {
+      hud = document.createElement("div");
+      hud.id = "studentProgressHud";
+      hud.innerHTML = `
+        <div class="student-progress-title">Student Progress</div>
+        <div id="studentHudSaveStatus">Save: Checking...</div>
+        <div id="studentHudLastSaved">Last Saved: —</div>
+        <div id="studentHudSettlement">Settlement: —</div>
+        <div id="studentHudCivilization">Civilization: —</div>
+        <div id="studentHudPage">Page: —</div>
+      `;
+      document.body.appendChild(hud);
+    }
+
+    hud.style.position = "fixed";
+    hud.style.top = "12px";
+    hud.style.right = "12px";
+    hud.style.width = "230px";
+    hud.style.padding = "12px 14px";
+    hud.style.background = "rgba(0, 0, 0, 0.82)";
+    hud.style.border = "1px solid rgba(255, 215, 0, 0.35)";
+    hud.style.borderRadius = "12px";
+    hud.style.color = "#f5f1dc";
+    hud.style.fontSize = "12px";
+    hud.style.lineHeight = "1.55";
+    hud.style.zIndex = "99998";
+    hud.style.boxShadow = "0 8px 24px rgba(0,0,0,0.35)";
+
+    const title = hud.querySelector(".student-progress-title");
+    if (title) {
+      title.style.fontWeight = "700";
+      title.style.color = "#ffd76a";
+      title.style.marginBottom = "6px";
+      title.style.letterSpacing = "0.04em";
+      title.style.textTransform = "uppercase";
+    }
+
+    return hud;
+  }
+
+  function formatSavedTime(meta) {
+    if (!meta || !meta.lastSavedAt) return "—";
+
+    try {
+      return new Date(meta.lastSavedAt).toLocaleTimeString();
+    } catch (err) {
+      return "—";
+    }
+  }
+
+  function updateStudentProgressHud() {
+    buildStudentProgressHud();
+
+    const meta = safeReadJSON(HUD_AUTOSAVE_META_KEY);
+    const settlement = safeReadJSON(HUD_SETTLEMENT_KEY);
+    const civ = safeReadJSON(HUD_CIV_STATE_KEY);
+
+    const saveStatus = document.getElementById("studentHudSaveStatus");
+    const lastSaved = document.getElementById("studentHudLastSaved");
+    const settlementStatus = document.getElementById("studentHudSettlement");
+    const civilizationStatus = document.getElementById("studentHudCivilization");
+    const pageStatus = document.getElementById("studentHudPage");
+
+    if (saveStatus) {
+      saveStatus.textContent = "Save: Active";
+    }
+
+    if (lastSaved) {
+      lastSaved.textContent = "Last Saved: " + formatSavedTime(meta);
+    }
+
+    if (settlementStatus) {
+      settlementStatus.textContent =
+        "Settlement: " + (settlement ? "Saved" : "Not Started");
+    }
+
+    if (civilizationStatus) {
+      civilizationStatus.textContent =
+        "Civilization: " + (civ ? "Saved" : "Not Started");
+    }
+
+    if (pageStatus) {
+      pageStatus.textContent = "Page: " + window.location.pathname;
+    }
+  }
+
+  buildStudentProgressHud();
+  updateStudentProgressHud();
+
+  setInterval(updateStudentProgressHud, 5000);
+
+  window.addEventListener("storage", updateStudentProgressHud);
+  window.addEventListener("focus", updateStudentProgressHud);
+
+  console.log("STEM_NATION_PROGRESS_HUD_V1 ACTIVE");
+})();
+</script>
+
+
 </body>
 </html>
