@@ -4157,5 +4157,117 @@ Displays student save status and progress indicators.
 </script>
 
 
+
+
+<!-- =========================================================
+PHASE 8 STEP 4 — STEM NATION STUDENT SESSION DISPLAY V1
+Displays active teacher-guided class session on the student map.
+========================================================= -->
+
+<script>
+/* STEM_NATION_STUDENT_SESSION_DISPLAY_V1 */
+(function () {
+  const STUDENT_SESSION_KEY = "STEM_NATION_CLASS_SESSION_V1";
+
+  function safeReadSession() {
+    const raw = localStorage.getItem(STUDENT_SESSION_KEY);
+    if (!raw) return null;
+
+    try {
+      return JSON.parse(raw);
+    } catch (err) {
+      console.warn("Invalid teacher class session ignored.", err);
+      return null;
+    }
+  }
+
+  function buildSessionBanner() {
+    let banner = document.getElementById("studentClassSessionBanner");
+
+    if (!banner) {
+      banner = document.createElement("div");
+      banner.id = "studentClassSessionBanner";
+      banner.innerHTML = `
+        <div id="studentSessionTitle" class="student-session-title">Class Session</div>
+        <div id="studentSessionStatus">Status: —</div>
+        <div id="studentSessionMission">Mission: —</div>
+        <div id="studentSessionPrompt">Prompt: —</div>
+      `;
+      document.body.appendChild(banner);
+    }
+
+    banner.style.position = "fixed";
+    banner.style.left = "12px";
+    banner.style.bottom = "12px";
+    banner.style.width = "320px";
+    banner.style.maxWidth = "calc(100vw - 24px)";
+    banner.style.padding = "12px 14px";
+    banner.style.background = "rgba(0, 0, 0, 0.84)";
+    banner.style.border = "1px solid rgba(212, 175, 55, 0.42)";
+    banner.style.borderRadius = "12px";
+    banner.style.color = "#f5f1dc";
+    banner.style.fontSize = "12px";
+    banner.style.lineHeight = "1.55";
+    banner.style.zIndex = "99997";
+    banner.style.boxShadow = "0 8px 24px rgba(0,0,0,0.38)";
+
+    const title = banner.querySelector(".student-session-title");
+    if (title) {
+      title.style.fontWeight = "700";
+      title.style.color = "#ffd76a";
+      title.style.marginBottom = "6px";
+      title.style.letterSpacing = "0.04em";
+      title.style.textTransform = "uppercase";
+    }
+
+    return banner;
+  }
+
+  function updateSessionBanner() {
+    const session = safeReadSession();
+    const banner = buildSessionBanner();
+
+    const title = document.getElementById("studentSessionTitle");
+    const status = document.getElementById("studentSessionStatus");
+    const mission = document.getElementById("studentSessionMission");
+    const prompt = document.getElementById("studentSessionPrompt");
+
+    if (!session) {
+      banner.style.display = "none";
+      return;
+    }
+
+    banner.style.display = "block";
+
+    if (title) {
+      title.textContent = session.sessionName || "Class Session";
+    }
+
+    if (status) {
+      status.textContent = "Status: " + String(session.status || "unknown").toUpperCase();
+    }
+
+    if (mission) {
+      mission.textContent = "Mission: " + (session.missionFocus || "Not Set");
+    }
+
+    if (prompt) {
+      prompt.textContent = "Prompt: " + (session.teacherPrompt || "Observe. Ask. Decide. Record.");
+    }
+  }
+
+  buildSessionBanner();
+  updateSessionBanner();
+
+  setInterval(updateSessionBanner, 5000);
+
+  window.addEventListener("storage", updateSessionBanner);
+  window.addEventListener("focus", updateSessionBanner);
+
+  console.log("STEM_NATION_STUDENT_SESSION_DISPLAY_V1 ACTIVE");
+})();
+</script>
+
+
 </body>
 </html>
