@@ -1462,5 +1462,133 @@ if (clearArchiveBtn) {
 }
 </script>
 
+
+
+<!-- =========================================================
+PHASE 6 STEP 5 — STEM NATION FULL STUDENT RESET
+Student-side local test data reset only.
+Does NOT touch teacher/admin/database systems.
+========================================================= -->
+<section id="studentResetPanel" class="student-reset-panel">
+  <h3>Student Mode Reset</h3>
+  <p>
+    Clear test data on this device and restart the student experience.
+    Teacher/admin systems are not affected.
+  </p>
+
+  <button id="resetStudentModeBtn" class="danger-btn" type="button">
+    RESET STUDENT MODE
+  </button>
+
+  <div id="resetWarning" class="reset-warning" style="display:none;">
+    <p>
+      WARNING: This will erase saved student simulation progress on this device.
+    </p>
+
+    <button id="confirmResetBtn" class="confirm-reset-btn" type="button">
+      CONFIRM RESET
+    </button>
+
+    <button id="cancelResetBtn" class="cancel-reset-btn" type="button">
+      CANCEL
+    </button>
+  </div>
+</section>
+
+<style>
+.student-reset-panel {
+  margin: 32px auto;
+  padding: 18px;
+  max-width: 720px;
+  border: 1px solid rgba(255, 215, 0, 0.35);
+  border-radius: 14px;
+  background: rgba(0, 0, 0, 0.45);
+  color: #f5f1dc;
+}
+
+.student-reset-panel h3 {
+  margin-top: 0;
+  color: #ffd76a;
+  letter-spacing: 0.04em;
+}
+
+.danger-btn {
+  background: #8b0000;
+  color: white;
+  border: none;
+  padding: 12px 18px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.danger-btn:hover {
+  opacity: 0.85;
+}
+
+.reset-warning {
+  margin-top: 16px;
+  padding: 14px;
+  border: 1px solid rgba(255, 80, 80, 0.65);
+  border-radius: 10px;
+  background: rgba(80, 0, 0, 0.35);
+}
+
+.confirm-reset-btn {
+  background: #b00000;
+  color: white;
+  border: none;
+  padding: 10px 14px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: bold;
+  margin-right: 8px;
+}
+
+.cancel-reset-btn {
+  background: #333;
+  color: white;
+  border: 1px solid #777;
+  padding: 10px 14px;
+  border-radius: 8px;
+  cursor: pointer;
+}
+</style>
+
+<script>
+/* STEM_NATION_FULL_STUDENT_RESET */
+(function () {
+  const resetBtn = document.getElementById("resetStudentModeBtn");
+  const warningBox = document.getElementById("resetWarning");
+  const confirmResetBtn = document.getElementById("confirmResetBtn");
+  const cancelResetBtn = document.getElementById("cancelResetBtn");
+
+  function resetStudentMode() {
+    localStorage.clear();
+    sessionStorage.clear();
+
+    document.cookie.split(";").forEach(function(cookie) {
+      document.cookie = cookie
+        .replace(/^ +/, "")
+        .replace(/=.*/, "=;expires=" + new Date().toUTCString() + ";path=/");
+    });
+
+    window.location.href = "/";
+  }
+
+  if (resetBtn && warningBox && confirmResetBtn && cancelResetBtn) {
+    resetBtn.addEventListener("click", function () {
+      warningBox.style.display = "block";
+    });
+
+    cancelResetBtn.addEventListener("click", function () {
+      warningBox.style.display = "none";
+    });
+
+    confirmResetBtn.addEventListener("click", resetStudentMode);
+  }
+})();
+</script>
+
 </body>
 </html>
