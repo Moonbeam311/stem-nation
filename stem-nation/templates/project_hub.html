@@ -1576,6 +1576,233 @@ Detects saved student progress and routes learner back to active map mode.
 })();
 </script>
 
+
+
+<!-- =========================================================
+PHASE 6 STEP 10 — STEM NATION DEMO CLEANUP V1
+Selective demo reset controls for local student test data.
+========================================================= -->
+<section id="demoCleanupPanel" class="demo-cleanup-panel">
+  <h3>Demo Cleanup Options</h3>
+
+  <p>
+    Clean selected test records while preserving the broader student save system.
+  </p>
+
+  <div class="demo-cleanup-grid">
+    <button id="clearArchivesOnlyBtn" class="cleanup-btn" type="button">
+      Clear Archive Only
+    </button>
+
+    <button id="clearAlertsOnlyBtn" class="cleanup-btn" type="button">
+      Clear Alerts Only
+    </button>
+
+    <button id="clearTurnHistoryOnlyBtn" class="cleanup-btn" type="button">
+      Clear Turn History Only
+    </button>
+
+    <button id="clearActiveEventsOnlyBtn" class="cleanup-btn" type="button">
+      Clear Active Events Only
+    </button>
+
+    <button id="demoSoftResetBtn" class="cleanup-btn warning" type="button">
+      Demo Soft Reset
+    </button>
+  </div>
+
+  <p id="demoCleanupStatus" class="demo-cleanup-status">
+    No cleanup action taken yet.
+  </p>
+</section>
+
+<style>
+.demo-cleanup-panel {
+  margin: 32px auto;
+  padding: 18px;
+  max-width: 720px;
+  border: 1px solid rgba(120, 180, 255, 0.38);
+  border-radius: 14px;
+  background: rgba(0, 20, 50, 0.45);
+  color: #f5f1dc;
+}
+
+.demo-cleanup-panel h3 {
+  margin-top: 0;
+  color: #9fc8ff;
+  letter-spacing: 0.04em;
+}
+
+.demo-cleanup-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 10px;
+  margin-top: 14px;
+}
+
+.cleanup-btn {
+  background: #1f4f7a;
+  color: white;
+  border: 1px solid rgba(255,255,255,0.18);
+  padding: 11px 12px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.cleanup-btn:hover {
+  opacity: 0.88;
+}
+
+.cleanup-btn.warning {
+  background: #7a4a1f;
+}
+
+.demo-cleanup-status {
+  margin-top: 12px;
+  font-size: 13px;
+  opacity: 0.86;
+}
+</style>
+
+<script>
+/* STEM_NATION_DEMO_CLEANUP_V1 */
+(function () {
+  const CLEANUP_CIV_STATE_KEY = "STEM_NATION_CIVILIZATION_STATE_V34";
+  const CLEANUP_AUTOSAVE_META_KEY = "STEM_NATION_AUTOSAVE_META_V1";
+
+  const status = document.getElementById("demoCleanupStatus");
+
+  function readState() {
+    const raw = localStorage.getItem(CLEANUP_CIV_STATE_KEY);
+    if (!raw) return null;
+
+    try {
+      return JSON.parse(raw);
+    } catch (err) {
+      console.warn("Could not parse civilization state for cleanup.", err);
+      return null;
+    }
+  }
+
+  function writeState(state, message) {
+    const now = new Date().toISOString();
+
+    state.updatedAt = now;
+
+    localStorage.setItem(
+      CLEANUP_CIV_STATE_KEY,
+      JSON.stringify(state)
+    );
+
+    localStorage.setItem(
+      CLEANUP_AUTOSAVE_META_KEY,
+      JSON.stringify({
+        lastSavedAt: now,
+        currentPage: window.location.pathname,
+        cleanupAction: message
+      })
+    );
+
+    if (status) {
+      status.textContent = message + " Refreshing command center...";
+    }
+
+    setTimeout(function () {
+      window.location.reload();
+    }, 450);
+  }
+
+  function cleanupState(mutator, message) {
+    const state = readState();
+
+    if (!state) {
+      if (status) {
+        status.textContent = "No saved civilization state found.";
+      }
+      return;
+    }
+
+    mutator(state);
+    writeState(state, message);
+  }
+
+  function confirmCleanup(message) {
+    return window.confirm(message + " This cannot be undone for the current browser test data.");
+  }
+
+  const clearArchivesOnlyBtn = document.getElementById("clearArchivesOnlyBtn");
+  const clearAlertsOnlyBtn = document.getElementById("clearAlertsOnlyBtn");
+  const clearTurnHistoryOnlyBtn = document.getElementById("clearTurnHistoryOnlyBtn");
+  const clearActiveEventsOnlyBtn = document.getElementById("clearActiveEventsOnlyBtn");
+  const demoSoftResetBtn = document.getElementById("demoSoftResetBtn");
+
+  if (clearArchivesOnlyBtn) {
+    clearArchivesOnlyBtn.addEventListener("click", function () {
+      if (!confirmCleanup("Clear archive records only?")) return;
+
+      cleanupState(function (state) {
+        state.archives = [];
+      }, "Archive records cleared.");
+    });
+  }
+
+  if (clearAlertsOnlyBtn) {
+    clearAlertsOnlyBtn.addEventListener("click", function () {
+      if (!confirmCleanup("Clear active alerts only?")) return;
+
+      cleanupState(function (state) {
+        state.alerts = [];
+      }, "Alerts cleared.");
+    });
+  }
+
+  if (clearTurnHistoryOnlyBtn) {
+    clearTurnHistoryOnlyBtn.addEventListener("click", function () {
+      if (!confirmCleanup("Clear turn and governance history only?")) return;
+
+      cleanupState(function (state) {
+        state.decisionLog = (state.decisionLog || []).filter(function (entry) {
+          return entry.id === "FOUNDING_SETTLEMENT_DEFENSE";
+        });
+
+        state.currentTurn = 1;
+        state.era = "Founding Era";
+        state.governanceActionUsedThisTurn = false;
+      }, "Turn history cleared and civilization returned to Founding Era.");
+    });
+  }
+
+  if (clearActiveEventsOnlyBtn) {
+    clearActiveEventsOnlyBtn.addEventListener("click", function () {
+      if (!confirmCleanup("Clear active world events only?")) return;
+
+      cleanupState(function (state) {
+        state.activeEvents = [];
+      }, "Active world events cleared.");
+    });
+  }
+
+  if (demoSoftResetBtn) {
+    demoSoftResetBtn.addEventListener("click", function () {
+      if (!confirmCleanup("Run demo soft reset?")) return;
+
+      cleanupState(function (state) {
+        state.currentTurn = 1;
+        state.era = "Founding Era";
+        state.alerts = [];
+        state.archives = [];
+        state.activeEvents = [];
+        state.decisionLog = (state.decisionLog || []).filter(function (entry) {
+          return entry.id === "FOUNDING_SETTLEMENT_DEFENSE";
+        });
+        state.governanceActionUsedThisTurn = false;
+      }, "Demo soft reset complete.");
+    });
+  }
+})();
+</script>
+
 <section id="studentResetPanel" class="student-reset-panel">
   <h3>Student Mode Reset</h3>
   <p>
