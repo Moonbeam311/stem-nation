@@ -171,6 +171,78 @@
       opacity: 0.88;
     }
 
+  
+    /* =========================================================
+       PHASE 7 STEP 4 — STEM NATION TEACHER CONTROL PANEL POLISH V1
+       ========================================================= */
+    .teacher-control-shell {
+      border: 1px solid rgba(212,175,55,0.34);
+      background:
+        radial-gradient(circle at top right, rgba(212,175,55,0.14), transparent 34%),
+        rgba(0,0,0,0.44);
+    }
+
+    .teacher-control-header {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: center;
+      gap: 14px;
+      margin-bottom: 18px;
+    }
+
+    .teacher-control-header h2 {
+      margin-bottom: 4px;
+    }
+
+    .live-demo-badge {
+      display: inline-block;
+      border: 1px solid rgba(120, 255, 180, 0.46);
+      background: rgba(0, 80, 40, 0.35);
+      color: #9ff0b8;
+      padding: 8px 12px;
+      border-radius: 999px;
+      font-size: 13px;
+      font-weight: bold;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .teacher-quick-launch-bar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin: 18px 0 22px;
+      padding: 14px;
+      border: 1px solid rgba(255,255,255,0.10);
+      border-radius: 16px;
+      background: rgba(255,255,255,0.045);
+    }
+
+    .teacher-quick-launch-bar a {
+      display: inline-block;
+      text-decoration: none;
+      color: #111;
+      background: #d4af37;
+      padding: 10px 13px;
+      border-radius: 10px;
+      font-weight: bold;
+      font-size: 14px;
+    }
+
+    .teacher-quick-launch-bar a.secondary {
+      color: #f0df9a;
+      background: transparent;
+      border: 1px solid rgba(212,175,55,0.45);
+    }
+
+    .teacher-control-note {
+      margin-top: 12px;
+      font-size: 14px;
+      line-height: 1.65;
+      opacity: 0.86;
+    }
+
   </style>
 </head>
 
@@ -401,12 +473,31 @@
     <!-- =========================================================
     PHASE 7 STEP 1 — STEM NATION TEACHER DEMO MODE V1
     ========================================================= -->
-    <div class="section" id="teacherDemoControls">
-      <h2>Teacher Demo Mode / Classroom Launch Controls</h2>
+    <div class="section teacher-control-shell" id="teacherDemoControls">
+      <!-- STEM_NATION_TEACHER_CONTROL_PANEL_POLISH_V1 -->
+      <div class="teacher-control-header">
+        <div>
+          <h2>Teacher Demo Mode / Classroom Launch Controls</h2>
+          <p>
+            Launch the live student simulation, open the civilization command center,
+            and manage classroom demonstration flow from one teacher-facing control area.
+          </p>
+        </div>
 
-      <p>
-        Launch the live student simulation, open the civilization command center,
-        and manage classroom demonstration flow from one teacher-facing control area.
+        <span id="liveDemoBadge" class="live-demo-badge">Live Demo Ready</span>
+      </div>
+
+      <div id="teacherQuickLaunchBar" class="teacher-quick-launch-bar">
+        <a href="/teacher_demo">Teacher Demo</a>
+        <a href="/classroom_launch">Classroom Launch</a>
+        <a href="/map">Student Map</a>
+        <a href="/hub">Command Center</a>
+        <a class="secondary" href="/">Landing</a>
+      </div>
+
+      <p class="teacher-control-note">
+        Recommended flow: launch the Student Map first, let students make and save decisions,
+        then return to the Command Center to review evidence, alerts, and civilization progress.
       </p>
 
       <div class="grid">
