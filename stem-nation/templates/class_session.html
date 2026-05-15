@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Class Session Controls · STEM Nation</title>
+  <style>
+    html, body {
+      margin: 0;
+      min-height: 100%;
+      background:
+        radial-gradient(circle at center, rgba(212,175,55,0.10), transparent 46%),
+        linear-gradient(135deg, #050505 0%, #101827 55%, #050505 100%);
+      color: white;
+      font-family: Arial, sans-serif;
+    }
+
+    .academy-line {
+      height: 3px;
+      background: linear-gradient(90deg, transparent, #d4af37, transparent);
+      opacity: 0.82;
+    }
+
+    .container {
+      max-width: 1120px;
+      margin: 0 auto;
+      padding: 46px 22px 70px;
+    }
+
+    .label {
+      text-align: center;
+      font-size: 13px;
+      letter-spacing: 4px;
+      text-transform: uppercase;
+      color: #d4af37;
+      margin-bottom: 12px;
+    }
+
+    h1 {
+      text-align: center;
+      font-size: clamp(38px, 6vw, 68px);
+      color: #f0df9a;
+      margin: 0 0 18px;
+    }
+
+    .subtitle {
+      max-width: 900px;
+      margin: 0 auto 34px;
+      text-align: center;
+      font-size: 19px;
+      line-height: 1.65;
+      opacity: 0.94;
+    }
+
+    .panel {
+      background: rgba(0,0,0,0.42);
+      border: 1px solid rgba(212,175,55,0.24);
+      border-radius: 22px;
+      padding: 28px;
+      margin-bottom: 24px;
+      box-shadow: 0 14px 50px rgba(0,0,0,0.45);
+    }
+
+    .panel h2 {
+      color: #d4af37;
+      margin-top: 0;
+    }
+
+    label {
+      display: block;
+      margin-top: 14px;
+      margin-bottom: 6px;
+      color: #f0df9a;
+      font-weight: bold;
+    }
+
+    input, textarea, select {
+      width: 100%;
+      box-sizing: border-box;
+      border-radius: 10px;
+      border: 1px solid rgba(212,175,55,0.32);
+      background: rgba(255,255,255,0.08);
+      color: white;
+      padding: 12px;
+      font-size: 15px;
+    }
+
+    textarea {
+      min-height: 90px;
+      resize: vertical;
+    }
+
+    .btn-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-top: 22px;
+    }
+
+    button, .btn {
+      display: inline-block;
+      text-decoration: none;
+      color: #111;
+      background: #d4af37;
+      border: none;
+      padding: 12px 16px;
+      border-radius: 10px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    button.secondary, .btn.secondary {
+      color: #f0df9a;
+      background: transparent;
+      border: 1px solid rgba(212,175,55,0.45);
+    }
+
+    button.warning {
+      color: white;
+      background: #7a2f2f;
+    }
+
+    .status-box {
+      margin-top: 18px;
+      padding: 16px;
+      border-radius: 14px;
+      background: rgba(255,255,255,0.055);
+      border: 1px solid rgba(255,255,255,0.10);
+      line-height: 1.7;
+    }
+
+    .status-active {
+      color: #9ff0b8;
+      font-weight: bold;
+    }
+
+    .status-paused {
+      color: #ffd76a;
+      font-weight: bold;
+    }
+
+    .status-ended {
+      color: #ffaaa0;
+      font-weight: bold;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="academy-line"></div>
+
+  <div class="container">
+    <div class="label">STEM Nation · Teacher-Guided Session State</div>
+
+    <h1>Class Session Controls</h1>
+
+    <div class="subtitle">
+      Set the classroom session focus, guide student activity, and preserve the instructional frame locally for the demo.
+    </div>
+
+    <div class="panel">
+      <h2>Session Setup</h2>
+
+      <label for="sessionName">Session Name</label>
+      <input id="sessionName" type="text" value="Week 1 · Settlement Decision Lab">
+
+      <label for="sessionMode">Session Mode</label>
+      <select id="sessionMode">
+        <option value="guided">Guided Classroom Mode</option>
+        <option value="demo">Investor / Demo Mode</option>
+        <option value="independent">Independent Student Mode</option>
+        <option value="discussion">Discussion / Reflection Mode</option>
+      </select>
+
+      <label for="missionFocus">Active Mission Focus</label>
+      <input id="missionFocus" type="text" value="Mission 1 · Claim the Land">
+
+      <label for="teacherPrompt">Teacher Prompt</label>
+      <textarea id="teacherPrompt">Observe the terrain carefully. Every civilization decision changes the future.</textarea>
+
+      <div class="btn-row">
+        <button id="startSessionBtn" type="button">Start Session</button>
+        <button id="pauseSessionBtn" class="secondary" type="button">Pause Session</button>
+        <button id="endSessionBtn" class="warning" type="button">End Session</button>
+        <a class="btn secondary" href="/map">Open Student Map</a>
+        <a class="btn secondary" href="/hub">Open Command Center</a>
+        <a class="btn secondary" href="/teacher_dashboard">Teacher Dashboard</a>
+      </div>
+
+      <div id="sessionStatusBox" class="status-box">
+        No active class session loaded yet.
+      </div>
+    </div>
+  </div>
+
+<script>
+/* STEM_NATION_TEACHER_SESSION_STATE_V1 */
+(function () {
+  const CLASS_SESSION_KEY = "STEM_NATION_CLASS_SESSION_V1";
+
+  const sessionName = document.getElementById("sessionName");
+  const sessionMode = document.getElementById("sessionMode");
+  const missionFocus = document.getElementById("missionFocus");
+  const teacherPrompt = document.getElementById("teacherPrompt");
+  const statusBox = document.getElementById("sessionStatusBox");
+
+  function readSession() {
+    const raw = localStorage.getItem(CLASS_SESSION_KEY);
+    if (!raw) return null;
+
+    try {
+      return JSON.parse(raw);
+    } catch (err) {
+      console.warn("Invalid class session data ignored.", err);
+      localStorage.removeItem(CLASS_SESSION_KEY);
+      return null;
+    }
+  }
+
+  function writeSession(status) {
+    const now = new Date().toISOString();
+
+    const existing = readSession();
+
+    const payload = {
+      sessionName: sessionName.value.trim() || "Untitled STEM Nation Session",
+      sessionMode: sessionMode.value,
+      missionFocus: missionFocus.value.trim() || "Mission Focus Not Set",
+      teacherPrompt: teacherPrompt.value.trim() || "Observe. Ask. Decide. Record.",
+      status: status,
+      createdAt: existing && existing.createdAt ? existing.createdAt : now,
+      updatedAt: now
+    };
+
+    localStorage.setItem(CLASS_SESSION_KEY, JSON.stringify(payload));
+    renderSession(payload);
+  }
+
+  function renderSession(session) {
+    if (!statusBox) return;
+
+    if (!session) {
+      statusBox.innerHTML = "No active class session loaded yet.";
+      return;
+    }
+
+    const statusClass =
+      session.status === "active"
+        ? "status-active"
+        : session.status === "paused"
+          ? "status-paused"
+          : "status-ended";
+
+    statusBox.innerHTML = `
+      <strong>${session.sessionName}</strong><br>
+      Status: <span class="${statusClass}">${session.status.toUpperCase()}</span><br>
+      Mode: ${session.sessionMode}<br>
+      Mission: ${session.missionFocus}<br>
+      Teacher Prompt: ${session.teacherPrompt}<br>
+      Updated: ${new Date(session.updatedAt).toLocaleString()}
+    `;
+  }
+
+  function hydrateForm(session) {
+    if (!session) return;
+
+    sessionName.value = session.sessionName || sessionName.value;
+    sessionMode.value = session.sessionMode || sessionMode.value;
+    missionFocus.value = session.missionFocus || missionFocus.value;
+    teacherPrompt.value = session.teacherPrompt || teacherPrompt.value;
+  }
+
+  const existing = readSession();
+  hydrateForm(existing);
+  renderSession(existing);
+
+  document.getElementById("startSessionBtn").addEventListener("click", function () {
+    writeSession("active");
+  });
+
+  document.getElementById("pauseSessionBtn").addEventListener("click", function () {
+    writeSession("paused");
+  });
+
+  document.getElementById("endSessionBtn").addEventListener("click", function () {
+    writeSession("ended");
+  });
+})();
+</script>
+</body>
+</html>

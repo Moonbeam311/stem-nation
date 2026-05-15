@@ -131,6 +131,20 @@ def teacher_demo():
 def classroom_launch():
     return render_template("classroom_launch.html")
 
+
+
+# =========================================================
+# PHASE 8 STEP 1 — STEM NATION CLASS SESSION ROUTES V1
+# =========================================================
+# STEM_NATION_CLASS_SESSION_ROUTES_V1
+@app.route("/class_session")
+def class_session():
+    return render_template("class_session.html")
+
+@app.route("/session_control")
+def session_control():
+    return render_template("session_control.html")
+
 @app.route("/map")
 def map_mode():
     return render_template("map_mode.html")

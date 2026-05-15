@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Session Control · STEM Nation</title>
+  <style>
+    html, body {
+      margin: 0;
+      min-height: 100%;
+      background:
+        radial-gradient(circle at center, rgba(120,255,180,0.08), transparent 44%),
+        linear-gradient(135deg, #050505 0%, #101827 55%, #050505 100%);
+      color: white;
+      font-family: Arial, sans-serif;
+    }
+
+    .academy-line {
+      height: 3px;
+      background: linear-gradient(90deg, transparent, #d4af37, transparent);
+      opacity: 0.82;
+    }
+
+    .container {
+      max-width: 1000px;
+      margin: 0 auto;
+      padding: 46px 22px 70px;
+    }
+
+    .label {
+      text-align: center;
+      font-size: 13px;
+      letter-spacing: 4px;
+      text-transform: uppercase;
+      color: #d4af37;
+      margin-bottom: 12px;
+    }
+
+    h1 {
+      text-align: center;
+      font-size: clamp(38px, 6vw, 68px);
+      color: #f0df9a;
+      margin: 0 0 18px;
+    }
+
+    .panel {
+      background: rgba(0,0,0,0.42);
+      border: 1px solid rgba(212,175,55,0.24);
+      border-radius: 22px;
+      padding: 28px;
+      margin-top: 30px;
+      box-shadow: 0 14px 50px rgba(0,0,0,0.45);
+      line-height: 1.75;
+    }
+
+    .btn-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-top: 22px;
+      justify-content: center;
+    }
+
+    .btn {
+      display: inline-block;
+      text-decoration: none;
+      color: #111;
+      background: #d4af37;
+      padding: 12px 16px;
+      border-radius: 10px;
+      font-weight: bold;
+    }
+
+    .btn.secondary {
+      color: #f0df9a;
+      background: transparent;
+      border: 1px solid rgba(212,175,55,0.45);
+    }
+
+    .session-status {
+      color: #9ff0b8;
+      font-weight: bold;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="academy-line"></div>
+
+  <div class="container">
+    <div class="label">STEM Nation · Session Control View</div>
+
+    <h1>Session Control</h1>
+
+    <div id="sessionDisplay" class="panel">
+      Loading class session...
+    </div>
+
+    <div class="btn-row">
+      <a class="btn" href="/class_session">Edit Class Session</a>
+      <a class="btn secondary" href="/map">Student Map</a>
+      <a class="btn secondary" href="/hub">Command Center</a>
+      <a class="btn secondary" href="/teacher_dashboard">Teacher Dashboard</a>
+    </div>
+  </div>
+
+<script>
+/* STEM_NATION_TEACHER_SESSION_STATE_V1 */
+(function () {
+  const CLASS_SESSION_KEY = "STEM_NATION_CLASS_SESSION_V1";
+  const display = document.getElementById("sessionDisplay");
+
+  function readSession() {
+    const raw = localStorage.getItem(CLASS_SESSION_KEY);
+    if (!raw) return null;
+
+    try {
+      return JSON.parse(raw);
+    } catch (err) {
+      return null;
+    }
+  }
+
+  const session = readSession();
+
+  if (!session) {
+    display.innerHTML = "No class session has been started yet.";
+    return;
+  }
+
+  display.innerHTML = `
+    <strong>${session.sessionName}</strong><br>
+    Status: <span class="session-status">${String(session.status || "unknown").toUpperCase()}</span><br>
+    Mode: ${session.sessionMode || "Not Set"}<br>
+    Mission Focus: ${session.missionFocus || "Not Set"}<br>
+    Teacher Prompt: ${session.teacherPrompt || "Not Set"}<br>
+    Updated: ${session.updatedAt ? new Date(session.updatedAt).toLocaleString() : "Not Saved"}
+  `;
+})();
+</script>
+</body>
+</html>
