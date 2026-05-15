@@ -362,7 +362,51 @@
       cursor: not-allowed;
       pointer-events: none;
     }
-  </style>
+  
+/* =========================================================
+PHASE 8 STEP 7 — STEM NATION COMMAND SESSION DISPLAY V1
+========================================================= */
+.command-session-panel {
+  border: 1px solid rgba(120, 255, 180, 0.34);
+  background:
+    radial-gradient(circle at top right, rgba(120,255,180,0.10), transparent 34%),
+    rgba(0,0,0,0.42);
+}
+
+.command-session-content {
+  line-height: 1.7;
+  font-size: 15px;
+}
+
+.command-session-status {
+  display: inline-block;
+  padding: 4px 9px;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: bold;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.command-session-status.active {
+  color: #9ff0b8;
+  border: 1px solid rgba(120, 255, 180, 0.45);
+  background: rgba(0, 80, 40, 0.30);
+}
+
+.command-session-status.paused {
+  color: #ffd76a;
+  border: 1px solid rgba(255, 215, 106, 0.45);
+  background: rgba(120, 90, 0, 0.26);
+}
+
+.command-session-status.ended {
+  color: #ffaaa0;
+  border: 1px solid rgba(255, 170, 160, 0.45);
+  background: rgba(120, 30, 30, 0.28);
+}
+
+</style>
 </head>
 
 <body>
@@ -397,6 +441,20 @@
           <strong>Founding Archive</strong><br>
           The first record of your civilization’s reasoning.
         </div>
+      </div>
+    </div>
+
+    
+
+    <!-- =========================================================
+    PHASE 8 STEP 7 — STEM NATION COMMAND SESSION DISPLAY V1
+    Displays active teacher-guided class session on the Command Center.
+    ========================================================= -->
+    <div id="commandClassSessionPanel" class="panel command-session-panel" style="display:none;">
+      <h2>Active Class Session</h2>
+
+      <div id="commandClassSessionContent" class="command-session-content">
+        No active class session loaded.
       </div>
     </div>
 
@@ -1921,6 +1979,72 @@ Selective demo reset controls for local student test data.
 
     confirmResetBtn.addEventListener("click", resetStudentMode);
   }
+})();
+</script>
+
+
+
+<script>
+/* STEM_NATION_COMMAND_SESSION_DISPLAY_V1 */
+(function () {
+  const COMMAND_SESSION_KEY = "STEM_NATION_CLASS_SESSION_V1";
+
+  const panel = document.getElementById("commandClassSessionPanel");
+  const content = document.getElementById("commandClassSessionContent");
+
+  function safeReadSession() {
+    const raw = localStorage.getItem(COMMAND_SESSION_KEY);
+    if (!raw) return null;
+
+    try {
+      return JSON.parse(raw);
+    } catch (err) {
+      console.warn("Invalid command center class session ignored.", err);
+      return null;
+    }
+  }
+
+  function escapeText(value) {
+    return String(value || "")
+      .replace(/&/g, "&amp;")
+      .replace(/</g, "&lt;")
+      .replace(/>/g, "&gt;");
+  }
+
+  function renderCommandSession() {
+    if (!panel || !content) return;
+
+    const session = safeReadSession();
+
+    if (!session) {
+      panel.style.display = "none";
+      content.innerHTML = "No active class session loaded.";
+      return;
+    }
+
+    const status = String(session.status || "unknown").toLowerCase();
+    const safeStatusClass = ["active", "paused", "ended"].includes(status) ? status : "paused";
+
+    panel.style.display = "block";
+
+    content.innerHTML = `
+      <strong>${escapeText(session.sessionName || "Class Session")}</strong><br>
+      Status: <span class="command-session-status ${safeStatusClass}">${escapeText(status.toUpperCase())}</span><br>
+      Mode: ${escapeText(session.sessionMode || "Not Set")}<br>
+      Mission Focus: ${escapeText(session.missionFocus || "Not Set")}<br>
+      Teacher Prompt: ${escapeText(session.teacherPrompt || "Observe. Ask. Decide. Record.")}<br>
+      Updated: ${session.updatedAt ? new Date(session.updatedAt).toLocaleString() : "Not Saved"}
+    `;
+  }
+
+  renderCommandSession();
+
+  setInterval(renderCommandSession, 5000);
+
+  window.addEventListener("storage", renderCommandSession);
+  window.addEventListener("focus", renderCommandSession);
+
+  console.log("STEM_NATION_COMMAND_SESSION_DISPLAY_V1 ACTIVE");
 })();
 </script>
 
