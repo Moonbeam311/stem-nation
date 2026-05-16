@@ -119,7 +119,7 @@
     }
 
     .status-box {
-      margin-top: 18px;
+      margin-top: 82px;
       padding: 16px;
       border-radius: 14px;
       background: rgba(255,255,255,0.055);
@@ -240,6 +240,37 @@
     }
 
   </style>
+
+<style>
+.session-health-indicator {
+  position: fixed;
+  top: 18px;
+  right: 18px;
+  z-index: 9999;
+  padding: 7px 10px;
+  border-radius: 999px;
+  border: 1px solid rgba(218,165,32,0.45);
+  background: rgba(8,12,22,0.92);
+  color: #f7e7b0;
+  font-weight: 700;
+  max-width: 210px;
+  font-size: 0.78rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  box-shadow: 0 0 14px rgba(0,0,0,0.3);
+}
+.session-health-indicator.active {
+  color: #b7ffcf;
+}
+.session-health-indicator.idle {
+  color: #ffd76a;
+}
+.session-health-indicator.missing {
+  color: #ffb3b3;
+}
+</style>
+
 </head>
 
 <body>
@@ -747,6 +778,60 @@
   renderTimeline(readTimeline());
 
   console.log("STEM_NATION_TEACHER_TIMELINE_V1 ACTIVE");
+})();
+</script>
+
+
+<!-- STEM_NATION_SESSION_HEALTH_INDICATOR_V1 -->
+<div id="sessionHealthIndicator" class="session-health-indicator missing">
+  Session Health: Checking...
+</div>
+
+
+<script>
+// STEM_NATION_SESSION_HEALTH_INDICATOR_V1
+(function installSessionHealthIndicator() {
+  const KEY = "STEM_NATION_CLASS_TIMELINE_V1";
+  const el = document.getElementById("sessionHealthIndicator");
+  if (!el) return;
+
+  function renderHealth() {
+    const raw = localStorage.getItem(KEY);
+
+    el.classList.remove("active", "idle", "missing");
+
+    if (!raw) {
+      el.classList.add("missing");
+      el.textContent = "Session Health: No Timeline";
+      return;
+    }
+
+    try {
+      const state = JSON.parse(raw);
+      const title = state.title || state.activeStepTitle || "Timeline Active";
+      const updated = state.updatedAt || state.updated || state.lastUpdated;
+
+      el.classList.add("active");
+      el.textContent = `Session Health: Active · ${title}`;
+
+      if (updated) {
+        const age = Date.now() - new Date(updated).getTime();
+        if (!Number.isNaN(age) && age > 1000 * 60 * 30) {
+          el.classList.remove("active");
+          el.classList.add("idle");
+          el.textContent = `Session Health: Idle · ${title}`;
+        }
+      }
+
+    } catch (err) {
+      el.classList.add("missing");
+      el.textContent = "Session Health: Timeline Error";
+    }
+  }
+
+  renderHealth();
+  window.addEventListener("storage", renderHealth);
+  setInterval(renderHealth, 1500);
 })();
 </script>
 
