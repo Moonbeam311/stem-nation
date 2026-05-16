@@ -1670,7 +1670,60 @@
     animation:revealRise 0.35s ease-out;
 }
 
+
+.student-timeline-toggle {
+  width: 100%;
+  border: none;
+  border-radius: 10px;
+  padding: 8px 10px;
+  background: rgba(218, 165, 32, 0.22);
+  color: #ffd76a;
+  font-weight: 700;
+  cursor: pointer;
+}
+.student-timeline-display.collapsed .student-timeline-body {
+  display: none;
+}
+
+
+.student-progress-toggle {
+  width: 100%;
+  border: none;
+  border-radius: 10px;
+  padding: 8px 10px;
+  background: rgba(218, 165, 32, 0.22);
+  color: #ffd76a;
+  font-weight: 700;
+  cursor: pointer;
+}
+#studentProgressHud.collapsed .student-progress-body {
+  display: none;
+}
+
 </style>
+
+<style>
+.student-timeline-display {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  z-index: 9999;
+  max-width: 340px;
+  padding: 14px 16px;
+  border: 1px solid rgba(218, 165, 32, 0.55);
+  border-radius: 14px;
+  background: rgba(8, 12, 22, 0.88);
+  color: #f7e7b0;
+  box-shadow: 0 0 18px rgba(0,0,0,0.35);
+  font-family: system-ui, sans-serif;
+}
+.student-timeline-display strong {
+  display: block;
+  margin-bottom: 8px;
+  color: #ffd76a;
+}
+</style>
+
 </head>
 
 
@@ -4062,14 +4115,24 @@ Displays student save status and progress indicators.
       hud = document.createElement("div");
       hud.id = "studentProgressHud";
       hud.innerHTML = `
-        <div class="student-progress-title">Student Progress</div>
-        <div id="studentHudSaveStatus">Save: Checking...</div>
-        <div id="studentHudLastSaved">Last Saved: —</div>
-        <div id="studentHudSettlement">Settlement: —</div>
-        <div id="studentHudCivilization">Civilization: —</div>
-        <div id="studentHudPage">Page: —</div>
+        <button id="studentProgressToggle" class="student-progress-toggle" type="button">Student Progress</button>
+        <div id="studentProgressBody" class="student-progress-body">
+          <div class="student-progress-title">Student Progress</div>
+          <div id="studentHudSaveStatus">Save: Checking...</div>
+          <div id="studentHudLastSaved">Last Saved: —</div>
+          <div id="studentHudSettlement">Settlement: —</div>
+          <div id="studentHudCivilization">Civilization: —</div>
+          <div id="studentHudPage">Page: —</div>
+        </div>
       `;
       document.body.appendChild(hud);
+    hud.classList.add("collapsed");
+    const progressToggle = document.getElementById("studentProgressToggle");
+    if (progressToggle) {
+      progressToggle.addEventListener("click", function () {
+        hud.classList.toggle("collapsed");
+      });
+    }
     }
 
     hud.style.position = "fixed";
@@ -4268,6 +4331,63 @@ Displays active teacher-guided class session on the student map.
 })();
 </script>
 
+
+
+<!-- STEM_NATION_STUDENT_TIMELINE_DISPLAY_V1 -->
+<div id="studentTimelineDisplay" class="student-timeline-display collapsed">
+  <button id="studentTimelineToggle" class="student-timeline-toggle" type="button">
+    Live Lesson Step
+  </button>
+  <div id="studentTimelineBody" class="student-timeline-body">
+    <strong id="studentTimelineTitle">Live Lesson Step: Not started</strong>
+    <div id="studentTimelineMove">Teacher Move: Waiting for teacher timeline command.</div>
+  </div>
+</div>
+
+
+<script>
+// STEM_NATION_STUDENT_TIMELINE_DISPLAY_V1
+(function syncStudentTimelineDisplay() {
+  const title = document.getElementById("studentTimelineTitle");
+  const move = document.getElementById("studentTimelineMove");
+  const panel = document.getElementById("studentTimelineDisplay");
+  const toggle = document.getElementById("studentTimelineToggle");
+
+  if (!title || !move || !panel || !toggle) return;
+
+  toggle.addEventListener("click", function () {
+    panel.classList.toggle("collapsed");
+  });
+
+  function renderTimelineStep() {
+    const raw = localStorage.getItem("STEM_NATION_CLASS_TIMELINE_V1");
+
+    if (!raw) {
+      title.textContent = "Live Lesson Step: Not started";
+      move.textContent = "Teacher Move: Waiting for teacher timeline command.";
+      return;
+    }
+
+    try {
+      const state = JSON.parse(raw);
+      const step = state.activeStep || state.currentStep || state.step || {};
+      const stepNumber = step.number || step.step || state.activeStepNumber || state.currentStepIndex || "";
+      const stepTitle = step.title || step.name || state.activeStepTitle || "Active Step";
+      const teacherMove = step.teacherMove || step.teacher_move || state.teacherMove || state.move || "Follow the teacher's current direction.";
+
+      title.textContent = `Live Lesson Step: ${stepNumber ? stepNumber + " · " : ""}${stepTitle}`;
+      move.textContent = `Teacher Move: ${teacherMove}`;
+    } catch (err) {
+      title.textContent = "Live Lesson Step: Timeline data unavailable";
+      move.textContent = "Teacher Move: Ask teacher to refresh the class timeline.";
+    }
+  }
+
+  renderTimelineStep();
+  window.addEventListener("storage", renderTimelineStep);
+  setInterval(renderTimelineStep, 1000);
+})();
+</script>
 
 </body>
 </html>
