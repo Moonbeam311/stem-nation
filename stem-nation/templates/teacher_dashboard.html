@@ -266,6 +266,51 @@
 }
 </style>
 
+
+<style>
+.timeline-state-audit-panel {
+  border: 1px solid rgba(255,215,106,0.45);
+  border-radius: 16px;
+  padding: 16px;
+  margin-top: 18px;
+  background: rgba(20,16,10,0.86);
+  color: #f7e7b0;
+}
+
+.timeline-state-audit-panel h3 {
+  color: #ffd76a;
+  margin-top: 0;
+}
+
+.timeline-state-audit-panel pre {
+  white-space: pre-wrap;
+  max-height: 180px;
+  overflow: auto;
+  background: rgba(0,0,0,0.28);
+  padding: 10px;
+  border-radius: 10px;
+}
+
+.timeline-state-audit-panel button {
+  border: none;
+  border-radius: 10px;
+  padding: 8px 12px;
+  margin-right: 8px;
+  cursor: pointer;
+  font-weight: 700;
+}
+
+#timelineAuditRefreshBtn {
+  background: rgba(218,165,32,0.25);
+  color: #ffd76a;
+}
+
+#timelineAuditResetBtn {
+  background: rgba(160,40,40,0.75);
+  color: #fff0f0;
+}
+</style>
+
 </head>
 
 <body>
@@ -552,6 +597,20 @@
   </p>
 </section>
 
+<!-- STEM_NATION_TIMELINE_STATE_AUDIT_PANEL_V1 -->
+<section id="timelineStateAuditPanel" class="timeline-state-audit-panel">
+  <h3>Timeline Reset / Session State Audit</h3>
+  <p id="timelineAuditSummary">Timeline Key: Checking...</p>
+  <p id="timelineAuditActiveStep">Active Step: —</p>
+  <p id="timelineAuditUpdated">Updated: —</p>
+
+  <button id="timelineAuditRefreshBtn" type="button">Refresh Audit</button>
+  <button id="timelineAuditResetBtn" type="button">Reset Timeline State</button>
+
+  <pre id="timelineAuditRaw">No timeline state loaded.</pre>
+</section>
+
+
         </div>
 
         <div class="card">
@@ -672,6 +731,73 @@
   renderStatus();
   window.addEventListener("storage", renderStatus);
   setInterval(renderStatus, 1000);
+
+})();
+</script>
+
+
+<script>
+// STEM_NATION_TIMELINE_STATE_AUDIT_PANEL_V1
+(function installTimelineStateAuditPanel() {
+
+  const KEY = "STEM_NATION_CLASS_TIMELINE_V1";
+
+  const summary = document.getElementById("timelineAuditSummary");
+  const activeStep = document.getElementById("timelineAuditActiveStep");
+  const updated = document.getElementById("timelineAuditUpdated");
+  const rawBox = document.getElementById("timelineAuditRaw");
+  const refreshBtn = document.getElementById("timelineAuditRefreshBtn");
+  const resetBtn = document.getElementById("timelineAuditResetBtn");
+
+  if (!summary || !activeStep || !updated || !rawBox || !refreshBtn || !resetBtn) return;
+
+  function renderAudit() {
+    const raw = localStorage.getItem(KEY);
+
+    if (!raw) {
+      summary.textContent = "Timeline Key: Missing";
+      activeStep.textContent = "Active Step: Not started";
+      updated.textContent = "Updated: —";
+      rawBox.textContent = "No timeline state found in localStorage.";
+      return;
+    }
+
+    try {
+      const state = JSON.parse(raw);
+      const step = state.activeStep || state.currentStep || state.step || {};
+      const number = step.number || step.step || state.activeStepNumber || "";
+      const title = step.title || step.name || state.activeStepTitle || "Active Step";
+      const stamp = state.updated || state.updatedAt || state.lastUpdated || "Timestamp unavailable";
+
+      summary.textContent = "Timeline Key: Present";
+      activeStep.textContent = `Active Step: ${number ? number + " · " : ""}${title}`;
+      updated.textContent = `Updated: ${stamp}`;
+      rawBox.textContent = JSON.stringify(state, null, 2);
+
+    } catch (err) {
+      summary.textContent = "Timeline Key: Present but unreadable";
+      activeStep.textContent = "Active Step: Error";
+      updated.textContent = "Updated: —";
+      rawBox.textContent = raw;
+    }
+  }
+
+  refreshBtn.addEventListener("click", renderAudit);
+
+  resetBtn.addEventListener("click", function () {
+    const confirmed = window.confirm(
+      "Reset the live class timeline state? This clears STEM_NATION_CLASS_TIMELINE_V1 for this browser."
+    );
+
+    if (!confirmed) return;
+
+    localStorage.removeItem(KEY);
+    renderAudit();
+  });
+
+  renderAudit();
+  window.addEventListener("storage", renderAudit);
+  setInterval(renderAudit, 1500);
 
 })();
 </script>
