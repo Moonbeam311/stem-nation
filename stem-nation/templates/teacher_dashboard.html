@@ -244,6 +244,28 @@
     }
 
   </style>
+
+<style>
+.teacher-dashboard-timeline-status {
+  border: 1px solid rgba(218,165,32,0.45);
+  border-radius: 16px;
+  padding: 18px;
+  margin: 22px 0;
+  background: rgba(8,12,22,0.88);
+  color: #f7e7b0;
+  box-shadow: 0 0 18px rgba(0,0,0,0.25);
+}
+
+.teacher-dashboard-timeline-status h2 {
+  margin-top: 0;
+  color: #ffd76a;
+}
+
+.teacher-dashboard-timeline-status .status-line {
+  margin: 8px 0;
+}
+</style>
+
 </head>
 
 <body>
@@ -509,6 +531,27 @@
           <h3>Class Session Controls</h3>
           <p>Set session status, teacher prompt, instructional mode, and active mission focus.</p>
           <a class="launch-link" href="/class_session">Open Class Session Controls</a>
+
+<!-- STEM_NATION_TEACHER_DASHBOARD_TIMELINE_STATUS_V1 -->
+<section id="teacherDashboardTimelineStatus" class="teacher-dashboard-timeline-status">
+  <h2>Live Timeline Status</h2>
+  <div id="teacherDashboardTimelineStep" class="status-line">
+    Current Step: Not started
+  </div>
+  <div id="teacherDashboardTeacherMove" class="status-line">
+    Teacher Move: Waiting for class session timeline.
+  </div>
+  <div id="teacherDashboardStudentMove" class="status-line">
+    Student Move: Waiting for class session timeline.
+  </div>
+  <div id="teacherDashboardTimelineUpdated" class="status-line">
+    Updated: —
+  </div>
+  <p>
+    <a href="/class_session">Open Class Session Controls</a>
+  </p>
+</section>
+
         </div>
 
         <div class="card">
@@ -546,6 +589,92 @@
         STEM_NATION_TEACHER_DEMO_MODE_V1 · STEM_NATION_CLASSROOM_LAUNCH_V1
       </p>
     </div>
+
+
+<script>
+// STEM_NATION_TEACHER_DASHBOARD_TIMELINE_STATUS_V1
+(function syncTeacherDashboardTimelineStatus() {
+
+  const stepEl = document.getElementById("teacherDashboardTimelineStep");
+  const teacherMoveEl = document.getElementById("teacherDashboardTeacherMove");
+  const studentMoveEl = document.getElementById("teacherDashboardStudentMove");
+  const updatedEl = document.getElementById("teacherDashboardTimelineUpdated");
+
+  if (!stepEl || !teacherMoveEl || !studentMoveEl || !updatedEl) return;
+
+  function renderStatus() {
+    const raw = localStorage.getItem("STEM_NATION_CLASS_TIMELINE_V1");
+
+    if (!raw) {
+      stepEl.textContent = "Current Step: Not started";
+      teacherMoveEl.textContent = "Teacher Move: Waiting for class session timeline.";
+      studentMoveEl.textContent = "Student Move: Waiting for class session timeline.";
+      updatedEl.textContent = "Updated: —";
+      return;
+    }
+
+    try {
+      const state = JSON.parse(raw);
+      const step = state.activeStep || state.currentStep || state.step || {};
+
+      const number =
+        step.number ||
+        step.step ||
+        state.activeStepNumber ||
+        state.currentStepIndex ||
+        "";
+
+      const title =
+        step.title ||
+        step.name ||
+        state.activeStepTitle ||
+        "Active Step";
+
+      const teacherMove =
+        step.teacherMove ||
+        step.teacher_move ||
+        state.teacherMove ||
+        state.move ||
+        "Follow the current class timeline.";
+
+      const studentMove =
+        step.studentMove ||
+        step.student_move ||
+        state.studentMove ||
+        "Students follow the teacher-directed timeline step.";
+
+      const updated =
+        state.updated ||
+        state.updatedAt ||
+        state.lastUpdated ||
+        new Date().toLocaleString();
+
+      stepEl.textContent =
+        `Current Step: ${number ? number + " · " : ""}${title}`;
+
+      teacherMoveEl.textContent =
+        `Teacher Move: ${teacherMove}`;
+
+      studentMoveEl.textContent =
+        `Student Move: ${studentMove}`;
+
+      updatedEl.textContent =
+        `Updated: ${updated}`;
+
+    } catch (err) {
+      stepEl.textContent = "Current Step: Timeline unavailable";
+      teacherMoveEl.textContent = "Teacher Move: Refresh class session controls.";
+      studentMoveEl.textContent = "Student Move: Refresh class session controls.";
+      updatedEl.textContent = "Updated: —";
+    }
+  }
+
+  renderStatus();
+  window.addEventListener("storage", renderStatus);
+  setInterval(renderStatus, 1000);
+
+})();
+</script>
 
 </body>
 </html>
