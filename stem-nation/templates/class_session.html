@@ -152,7 +152,31 @@
         rgba(255,255,255,0.045);
     }
 
-    .preset-help {
+    
+    .preset-button-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 10px;
+      margin-top: 16px;
+    }
+
+    .preset-choice-btn {
+      text-align: left;
+      color: #f0df9a;
+      background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(212,175,55,0.34);
+      padding: 12px;
+      border-radius: 12px;
+      line-height: 1.35;
+    }
+
+    .preset-choice-btn strong {
+      display: block;
+      color: #d4af37;
+      margin-bottom: 4px;
+    }
+
+.preset-help {
       font-size: 14px;
       line-height: 1.6;
       opacity: 0.86;
@@ -196,12 +220,48 @@
         <button id="applyPresetBtn" type="button">Apply Preset</button>
       </div>
 
+      <!-- STEM_NATION_VISIBLE_PRESET_BUTTONS_V1 -->
+      <div id="presetButtonGrid" class="preset-button-grid">
+        <button class="preset-choice-btn" type="button" data-preset="week1_settlement">
+          <strong>Week 1 · Settlement</strong>
+          Guided map decision lab
+        </button>
+
+        <button class="preset-choice-btn" type="button" data-preset="week1_evidence">
+          <strong>Evidence & Reflection</strong>
+          Review settlement reasoning
+        </button>
+
+        <button class="preset-choice-btn" type="button" data-preset="teacher_demo">
+          <strong>Teacher Live Demo</strong>
+          Walk the class through the system
+        </button>
+
+        <button class="preset-choice-btn" type="button" data-preset="investor_walkthrough">
+          <strong>Investor Walkthrough</strong>
+          Show the student journey
+        </button>
+
+        <button class="preset-choice-btn" type="button" data-preset="independent_work">
+          <strong>Independent Work</strong>
+          Student self-guided reasoning
+        </button>
+
+        <button class="preset-choice-btn" type="button" data-preset="discussion_debrief">
+          <strong>Discussion / Debrief</strong>
+          Consequence and reflection talk
+        </button>
+      </div>
+
+      <div id="activePresetNotice" class="status-box">
+        No preset applied yet.
+      </div>
+
       <div class="preset-help">
         Presets fill the session name, mode, mission focus, and teacher prompt.
         You can still edit the fields before starting the session.
       </div>
     </div>
-
 
     <div class="panel">
       <h2>Session Setup</h2>
@@ -241,6 +301,7 @@
 <script>
 /* STEM_NATION_SESSION_PRESETS_V1 */
 /* STEM_NATION_TEACHER_SESSION_STATE_V1 */
+/* STEM_NATION_DIRECT_PRESET_BUTTONS_V3 */
 (function () {
   const CLASS_SESSION_KEY = "STEM_NATION_CLASS_SESSION_V1";
 
@@ -249,9 +310,9 @@
   const missionFocus = document.getElementById("missionFocus");
   const teacherPrompt = document.getElementById("teacherPrompt");
   const statusBox = document.getElementById("sessionStatusBox");
-
   const sessionPresetSelect = document.getElementById("sessionPresetSelect");
   const applyPresetBtn = document.getElementById("applyPresetBtn");
+  const activePresetNotice = document.getElementById("activePresetNotice");
 
   const SESSION_PRESETS = {
     week1_settlement: {
@@ -292,28 +353,6 @@
     }
   };
 
-  function applySessionPreset() {
-    if (!sessionPresetSelect) return;
-
-    const preset = SESSION_PRESETS[sessionPresetSelect.value];
-    if (!preset) return;
-
-    sessionName.value = preset.sessionName;
-    sessionMode.value = preset.sessionMode;
-    missionFocus.value = preset.missionFocus;
-    teacherPrompt.value = preset.teacherPrompt;
-
-    renderSession({
-      sessionName: preset.sessionName,
-      sessionMode: preset.sessionMode,
-      missionFocus: preset.missionFocus,
-      teacherPrompt: preset.teacherPrompt,
-      status: "preset ready",
-      updatedAt: new Date().toISOString()
-    });
-  }
-
-
   function readSession() {
     const raw = localStorage.getItem(CLASS_SESSION_KEY);
     if (!raw) return null;
@@ -327,9 +366,78 @@
     }
   }
 
+  function renderSession(session) {
+    if (!statusBox) return;
+
+    if (!session) {
+      statusBox.innerHTML = "No active class session loaded yet.";
+      return;
+    }
+
+    const statusValue = String(session.status || "unknown").toLowerCase();
+
+    const statusClass =
+      statusValue === "active"
+        ? "status-active"
+        : statusValue === "paused"
+          ? "status-paused"
+          : "status-ended";
+
+    statusBox.innerHTML = `
+      <strong>${session.sessionName}</strong><br>
+      Status: <span class="${statusClass}">${String(session.status || "unknown").toUpperCase()}</span><br>
+      Mode: ${session.sessionMode}<br>
+      Mission: ${session.missionFocus}<br>
+      Teacher Prompt: ${session.teacherPrompt}<br>
+      Updated: ${session.updatedAt ? new Date(session.updatedAt).toLocaleString() : new Date().toLocaleString()}
+    `;
+  }
+
+  function hydrateForm(session) {
+    if (!session) return;
+
+    sessionName.value = session.sessionName || sessionName.value;
+    sessionMode.value = session.sessionMode || sessionMode.value;
+    missionFocus.value = session.missionFocus || missionFocus.value;
+    teacherPrompt.value = session.teacherPrompt || teacherPrompt.value;
+  }
+
+  function applySessionPreset(presetKey) {
+    const key = presetKey || (sessionPresetSelect ? sessionPresetSelect.value : "week1_settlement");
+    const preset = SESSION_PRESETS[key];
+
+    if (!preset) {
+      console.warn("Preset not found:", key);
+      return;
+    }
+
+    sessionName.value = preset.sessionName;
+    sessionMode.value = preset.sessionMode;
+    missionFocus.value = preset.missionFocus;
+    teacherPrompt.value = preset.teacherPrompt;
+
+    const previewPayload = {
+      sessionName: preset.sessionName,
+      sessionMode: preset.sessionMode,
+      missionFocus: preset.missionFocus,
+      teacherPrompt: preset.teacherPrompt,
+      status: "preset ready",
+      updatedAt: new Date().toISOString()
+    };
+
+    if (activePresetNotice) {
+      activePresetNotice.innerHTML = `
+        <strong>Preset Ready:</strong> ${preset.sessionName}<br>
+        Mode: ${preset.sessionMode}<br>
+        Mission: ${preset.missionFocus}
+      `;
+    }
+
+    renderSession(previewPayload);
+  }
+
   function writeSession(status) {
     const now = new Date().toISOString();
-
     const existing = readSession();
 
     const payload = {
@@ -346,60 +454,51 @@
     renderSession(payload);
   }
 
-  function renderSession(session) {
-    if (!statusBox) return;
-
-    if (!session) {
-      statusBox.innerHTML = "No active class session loaded yet.";
-      return;
-    }
-
-    const statusClass =
-      session.status === "active"
-        ? "status-active"
-        : session.status === "paused"
-          ? "status-paused"
-          : "status-ended";
-
-    statusBox.innerHTML = `
-      <strong>${session.sessionName}</strong><br>
-      Status: <span class="${statusClass}">${session.status.toUpperCase()}</span><br>
-      Mode: ${session.sessionMode}<br>
-      Mission: ${session.missionFocus}<br>
-      Teacher Prompt: ${session.teacherPrompt}<br>
-      Updated: ${new Date(session.updatedAt).toLocaleString()}
-    `;
-  }
-
-  function hydrateForm(session) {
-    if (!session) return;
-
-    sessionName.value = session.sessionName || sessionName.value;
-    sessionMode.value = session.sessionMode || sessionMode.value;
-    missionFocus.value = session.missionFocus || missionFocus.value;
-    teacherPrompt.value = session.teacherPrompt || teacherPrompt.value;
-  }
-
   const existing = readSession();
   hydrateForm(existing);
   renderSession(existing);
 
-
   if (applyPresetBtn) {
-    applyPresetBtn.addEventListener("click", applySessionPreset);
+    applyPresetBtn.addEventListener("click", function () {
+      applySessionPreset();
+    });
   }
 
-  document.getElementById("startSessionBtn").addEventListener("click", function () {
-    writeSession("active");
+  document.querySelectorAll(".preset-choice-btn").forEach(function (btn) {
+    btn.addEventListener("click", function () {
+      const presetKey = btn.getAttribute("data-preset");
+
+      if (sessionPresetSelect && presetKey) {
+        sessionPresetSelect.value = presetKey;
+      }
+
+      applySessionPreset(presetKey);
+    });
   });
 
-  document.getElementById("pauseSessionBtn").addEventListener("click", function () {
-    writeSession("paused");
-  });
+  const startBtn = document.getElementById("startSessionBtn");
+  const pauseBtn = document.getElementById("pauseSessionBtn");
+  const endBtn = document.getElementById("endSessionBtn");
 
-  document.getElementById("endSessionBtn").addEventListener("click", function () {
-    writeSession("ended");
-  });
+  if (startBtn) {
+    startBtn.addEventListener("click", function () {
+      writeSession("active");
+    });
+  }
+
+  if (pauseBtn) {
+    pauseBtn.addEventListener("click", function () {
+      writeSession("paused");
+    });
+  }
+
+  if (endBtn) {
+    endBtn.addEventListener("click", function () {
+      writeSession("ended");
+    });
+  }
+
+  console.log("STEM_NATION_DIRECT_PRESET_BUTTONS_V3 ACTIVE");
 })();
 </script>
 </body>
