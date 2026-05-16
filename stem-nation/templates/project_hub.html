@@ -407,6 +407,38 @@ PHASE 8 STEP 7 — STEM NATION COMMAND SESSION DISPLAY V1
 }
 
 </style>
+
+<style>
+.command-center-timeline {
+  position: fixed;
+  bottom: 24px;
+  left: 24px;
+  z-index: 9999;
+  width: 320px;
+  background: rgba(8,12,22,0.92);
+  border: 1px solid rgba(218,165,32,0.45);
+  border-radius: 14px;
+  padding: 12px;
+  box-shadow: 0 0 18px rgba(0,0,0,0.35);
+  color: #f7e7b0;
+}
+
+.command-center-timeline-toggle {
+  width: 100%;
+  border: none;
+  border-radius: 10px;
+  padding: 8px 10px;
+  cursor: pointer;
+  font-weight: 700;
+  background: rgba(218,165,32,0.22);
+  color: #ffd76a;
+}
+
+.command-center-timeline.collapsed .command-center-timeline-body {
+  display: none;
+}
+</style>
+
 </head>
 
 <body>
@@ -2045,6 +2077,107 @@ Selective demo reset controls for local student test data.
   window.addEventListener("focus", renderCommandSession);
 
   console.log("STEM_NATION_COMMAND_SESSION_DISPLAY_V1 ACTIVE");
+})();
+</script>
+
+
+<!-- STEM_NATION_COMMAND_CENTER_TIMELINE_V1 -->
+<div id="commandCenterTimeline" class="command-center-timeline collapsed">
+  <button id="commandCenterTimelineToggle"
+          class="command-center-timeline-toggle"
+          type="button">
+    Live Class Session
+  </button>
+
+  <div class="command-center-timeline-body">
+    <strong id="commandCenterTimelineTitle">
+      Live Lesson Step: Not started
+    </strong>
+
+    <div id="commandCenterTimelineMove">
+      Teacher Move: Waiting for teacher timeline command.
+    </div>
+  </div>
+</div>
+
+
+<script>
+// STEM_NATION_COMMAND_CENTER_TIMELINE_V1
+(function syncCommandCenterTimeline() {
+
+  const panel = document.getElementById("commandCenterTimeline");
+  const toggle = document.getElementById("commandCenterTimelineToggle");
+  const title = document.getElementById("commandCenterTimelineTitle");
+  const move = document.getElementById("commandCenterTimelineMove");
+
+  if (!panel || !toggle || !title || !move) return;
+
+  toggle.addEventListener("click", function () {
+    panel.classList.toggle("collapsed");
+  });
+
+  function renderTimeline() {
+
+    const raw = localStorage.getItem("STEM_NATION_CLASS_TIMELINE_V1");
+
+    if (!raw) {
+      title.textContent = "Live Lesson Step: Not started";
+      move.textContent = "Teacher Move: Waiting for teacher timeline command.";
+      return;
+    }
+
+    try {
+
+      const state = JSON.parse(raw);
+
+      const step =
+        state.activeStep ||
+        state.currentStep ||
+        state.step ||
+        {};
+
+      const number =
+        step.number ||
+        step.step ||
+        state.activeStepNumber ||
+        "";
+
+      const stepTitle =
+        step.title ||
+        step.name ||
+        state.activeStepTitle ||
+        "Active Step";
+
+      const teacherMove =
+        step.teacherMove ||
+        step.teacher_move ||
+        state.teacherMove ||
+        state.move ||
+        "Follow teacher direction.";
+
+      title.textContent =
+        `Live Lesson Step: ${number ? number + " · " : ""}${stepTitle}`;
+
+      move.textContent =
+        `Teacher Move: ${teacherMove}`;
+
+    } catch (err) {
+
+      title.textContent =
+        "Live Lesson Step: Timeline unavailable";
+
+      move.textContent =
+        "Teacher Move: Refresh class session.";
+
+    }
+  }
+
+  renderTimeline();
+
+  window.addEventListener("storage", renderTimeline);
+
+  setInterval(renderTimeline, 1000);
+
 })();
 </script>
 
