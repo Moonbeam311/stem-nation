@@ -183,6 +183,62 @@
       margin-top: 8px;
     }
 
+  
+    /* =========================================================
+       PHASE 10 STEP 1 — STEM NATION TEACHER TIMELINE V1
+       ========================================================= */
+    .timeline-panel {
+      border: 1px solid rgba(120, 255, 180, 0.28);
+      background:
+        radial-gradient(circle at top right, rgba(120,255,180,0.10), transparent 34%),
+        rgba(0,0,0,0.42);
+    }
+
+    .timeline-step-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+      gap: 10px;
+      margin-top: 16px;
+    }
+
+    .timeline-step-btn {
+      text-align: left;
+      color: #f5f1dc;
+      background: rgba(255,255,255,0.055);
+      border: 1px solid rgba(120,255,180,0.26);
+      padding: 12px;
+      border-radius: 12px;
+      line-height: 1.35;
+    }
+
+    .timeline-step-btn.active {
+      border-color: rgba(212,175,55,0.78);
+      background: rgba(212,175,55,0.16);
+      color: #f0df9a;
+    }
+
+    .timeline-step-btn strong {
+      display: block;
+      color: #d4af37;
+      margin-bottom: 4px;
+    }
+
+    .timeline-control-bar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 16px;
+    }
+
+    .timeline-status-box {
+      margin-top: 18px;
+      border: 1px solid rgba(120,255,180,0.28);
+      border-radius: 12px;
+      padding: 14px;
+      background: rgba(0,0,0,0.30);
+      line-height: 1.6;
+    }
+
   </style>
 </head>
 
@@ -296,6 +352,58 @@
         No active class session loaded yet.
       </div>
     </div>
+
+
+    <!-- =========================================================
+    PHASE 10 STEP 1 — STEM NATION TEACHER TIMELINE V1
+    Live instructional flow for teacher-guided classroom pacing.
+    ========================================================= -->
+    <div id="teacherTimelinePanel" class="panel timeline-panel">
+      <h2>Live Instruction Timeline</h2>
+
+      <div class="preset-help">
+        Move the class through the live lesson flow. This timeline is saved locally
+        and can guide the teacher while students work on the map and command center.
+      </div>
+
+      <div id="timelineStepGrid" class="timeline-step-grid">
+        <button class="timeline-step-btn" type="button" data-step="launch">
+          <strong>1 · Launch Session</strong>
+          Set purpose and activate the room.
+        </button>
+
+        <button class="timeline-step-btn" type="button" data-step="observe">
+          <strong>2 · Observe Terrain</strong>
+          Students study regions, risks, and resources.
+        </button>
+
+        <button class="timeline-step-btn" type="button" data-step="decide">
+          <strong>3 · Student Decision</strong>
+          Students choose a settlement strategy.
+        </button>
+
+        <button class="timeline-step-btn" type="button" data-step="defend">
+          <strong>4 · Evidence Defense</strong>
+          Students explain and defend their reasoning.
+        </button>
+
+        <button class="timeline-step-btn" type="button" data-step="reflect">
+          <strong>5 · Reflection / Debrief</strong>
+          Class reviews consequence and next moves.
+        </button>
+      </div>
+
+      <div id="timelineControlBar" class="timeline-control-bar">
+        <button id="prevTimelineStepBtn" class="secondary" type="button">Previous Step</button>
+        <button id="nextTimelineStepBtn" type="button">Next Step</button>
+        <button id="resetTimelineBtn" class="warning" type="button">Reset Timeline</button>
+      </div>
+
+      <div id="timelineStatusBox" class="timeline-status-box">
+        No live instruction step selected yet.
+      </div>
+    </div>
+
   </div>
 
 <script>
@@ -501,5 +609,146 @@
   console.log("STEM_NATION_DIRECT_PRESET_BUTTONS_V3 ACTIVE");
 })();
 </script>
+
+
+<script>
+/* STEM_NATION_TEACHER_TIMELINE_V1 */
+(function () {
+  const TIMELINE_KEY = "STEM_NATION_CLASS_TIMELINE_V1";
+
+  const timelineSteps = [
+    {
+      key: "launch",
+      title: "Launch Session",
+      teacherMove: "Frame the purpose, name the mission, and activate the session.",
+      studentMove: "Listen for the mission goal and prepare to observe the world."
+    },
+    {
+      key: "observe",
+      title: "Observe Terrain",
+      teacherMove: "Prompt students to identify risks, resources, movement paths, and settlement pressures.",
+      studentMove: "Study the map, compare regions, and ask questions about survival."
+    },
+    {
+      key: "decide",
+      title: "Student Decision",
+      teacherMove: "Direct students to select a region and commit to a settlement decision.",
+      studentMove: "Choose a settlement region and explain the first reason for survival."
+    },
+    {
+      key: "defend",
+      title: "Evidence Defense",
+      teacherMove: "Ask students to support decisions with evidence from terrain, water, food, defense, or trade.",
+      studentMove: "Record evidence and defend the settlement strategy."
+    },
+    {
+      key: "reflect",
+      title: "Reflection / Debrief",
+      teacherMove: "Lead a discussion on consequences, tradeoffs, and what the civilization should do next.",
+      studentMove: "Reflect on risk, benefit, and how the decision shaped the future."
+    }
+  ];
+
+  const statusBox = document.getElementById("timelineStatusBox");
+  const stepButtons = Array.from(document.querySelectorAll(".timeline-step-btn"));
+  const prevBtn = document.getElementById("prevTimelineStepBtn");
+  const nextBtn = document.getElementById("nextTimelineStepBtn");
+  const resetBtn = document.getElementById("resetTimelineBtn");
+
+  function readTimeline() {
+    const raw = localStorage.getItem(TIMELINE_KEY);
+    if (!raw) return null;
+
+    try {
+      return JSON.parse(raw);
+    } catch (err) {
+      console.warn("Invalid timeline data ignored.", err);
+      localStorage.removeItem(TIMELINE_KEY);
+      return null;
+    }
+  }
+
+  function writeTimeline(stepKey) {
+    const index = timelineSteps.findIndex(function (step) {
+      return step.key === stepKey;
+    });
+
+    if (index < 0) return;
+
+    const step = timelineSteps[index];
+
+    const payload = {
+      activeStep: step.key,
+      activeIndex: index,
+      title: step.title,
+      teacherMove: step.teacherMove,
+      studentMove: step.studentMove,
+      updatedAt: new Date().toISOString()
+    };
+
+    localStorage.setItem(TIMELINE_KEY, JSON.stringify(payload));
+    renderTimeline(payload);
+  }
+
+  function renderTimeline(payload) {
+    stepButtons.forEach(function (btn) {
+      btn.classList.remove("active");
+      if (payload && btn.getAttribute("data-step") === payload.activeStep) {
+        btn.classList.add("active");
+      }
+    });
+
+    if (!statusBox) return;
+
+    if (!payload) {
+      statusBox.innerHTML = "No live instruction step selected yet.";
+      return;
+    }
+
+    statusBox.innerHTML = `
+      <strong>Current Step:</strong> ${payload.activeIndex + 1} · ${payload.title}<br>
+      <strong>Teacher Move:</strong> ${payload.teacherMove}<br>
+      <strong>Student Move:</strong> ${payload.studentMove}<br>
+      <strong>Updated:</strong> ${new Date(payload.updatedAt).toLocaleString()}
+    `;
+  }
+
+  stepButtons.forEach(function (btn) {
+    btn.addEventListener("click", function () {
+      writeTimeline(btn.getAttribute("data-step"));
+    });
+  });
+
+  if (prevBtn) {
+    prevBtn.addEventListener("click", function () {
+      const current = readTimeline();
+      const currentIndex = current && Number.isInteger(current.activeIndex) ? current.activeIndex : 0;
+      const nextIndex = Math.max(0, currentIndex - 1);
+      writeTimeline(timelineSteps[nextIndex].key);
+    });
+  }
+
+  if (nextBtn) {
+    nextBtn.addEventListener("click", function () {
+      const current = readTimeline();
+      const currentIndex = current && Number.isInteger(current.activeIndex) ? current.activeIndex : -1;
+      const nextIndex = Math.min(timelineSteps.length - 1, currentIndex + 1);
+      writeTimeline(timelineSteps[nextIndex].key);
+    });
+  }
+
+  if (resetBtn) {
+    resetBtn.addEventListener("click", function () {
+      localStorage.removeItem(TIMELINE_KEY);
+      renderTimeline(null);
+    });
+  }
+
+  renderTimeline(readTimeline());
+
+  console.log("STEM_NATION_TEACHER_TIMELINE_V1 ACTIVE");
+})();
+</script>
+
 </body>
 </html>
