@@ -196,6 +196,56 @@
   </div>
 </section>
 
+
+<!-- STEM_NATION_PRINT_TEACHER_EVALUATION_FEEDBACK_V1 -->
+<section class="print-section" id="teacherEvaluationPrintSection">
+  <h2>Teacher Evaluation / Feedback</h2>
+
+  <div class="print-grid">
+    <div class="print-item">
+      <div class="print-label">Observation Quality:</div>
+      <div id="printEvalObservationQuality" class="print-answer">—</div>
+    </div>
+    <div class="print-item">
+      <div class="print-label">Evidence Use:</div>
+      <div id="printEvalEvidenceUse" class="print-answer">—</div>
+    </div>
+    <div class="print-item">
+      <div class="print-label">Risk Awareness:</div>
+      <div id="printEvalRiskAwareness" class="print-answer">—</div>
+    </div>
+    <div class="print-item">
+      <div class="print-label">Settlement Logic:</div>
+      <div id="printEvalSettlementLogic" class="print-answer">—</div>
+    </div>
+    <div class="print-item">
+      <div class="print-label">Systems Thinking:</div>
+      <div id="printEvalSystemsThinking" class="print-answer">—</div>
+    </div>
+    <div class="print-item">
+      <div class="print-label">Collaboration / Discussion:</div>
+      <div id="printEvalCollaboration" class="print-answer">—</div>
+    </div>
+    <div class="print-item">
+      <div class="print-label">Strengths / Positive Feedback:</div>
+      <div id="printEvalStrengths" class="print-answer">—</div>
+    </div>
+    <div class="print-item">
+      <div class="print-label">Next Steps / Growth Guidance:</div>
+      <div id="printEvalNextSteps" class="print-answer">—</div>
+    </div>
+    <div class="print-item">
+      <div class="print-label">Additional Teacher Notes:</div>
+      <div id="printEvalNotes" class="print-answer">—</div>
+    </div>
+    <div class="print-item">
+      <div class="print-label">Evaluation Saved At:</div>
+      <div id="printEvalSavedAt" class="print-answer">—</div>
+    </div>
+  </div>
+</section>
+
+
 <section class="print-section" id="comparisonResponsePrintSection">
   <h2>Region Comparison Response</h2>
   <div class="print-grid">
@@ -351,6 +401,46 @@ loadPrintableArchive();
       comparison.savedAt ? new Date(comparison.savedAt).toLocaleString() : ""
     );
   }
+})();
+</script>
+
+
+<script>
+// STEM_NATION_PRINT_TEACHER_EVALUATION_FEEDBACK_V1
+(function renderTeacherEvaluationForPrint() {
+  function readJSON(key) {
+    const raw = localStorage.getItem(key);
+    if (!raw) return null;
+
+    try {
+      return JSON.parse(raw);
+    } catch (err) {
+      console.warn("Printable archive ignored invalid JSON:", key, err);
+      return null;
+    }
+  }
+
+  function setText(id, value) {
+    const el = document.getElementById(id);
+    if (el) el.textContent = value || "—";
+  }
+
+  const evaluation = readJSON("STEM_NATION_TEACHER_EVALUATION_FEEDBACK_V1");
+  if (!evaluation) return;
+
+  setText("printEvalObservationQuality", evaluation.observationQuality);
+  setText("printEvalEvidenceUse", evaluation.evidenceUse);
+  setText("printEvalRiskAwareness", evaluation.riskAwareness);
+  setText("printEvalSettlementLogic", evaluation.settlementLogic);
+  setText("printEvalSystemsThinking", evaluation.systemsThinking);
+  setText("printEvalCollaboration", evaluation.collaboration);
+  setText("printEvalStrengths", evaluation.strengths);
+  setText("printEvalNextSteps", evaluation.nextSteps);
+  setText("printEvalNotes", evaluation.notes);
+  setText(
+    "printEvalSavedAt",
+    evaluation.savedAt ? new Date(evaluation.savedAt).toLocaleString() : ""
+  );
 })();
 </script>
 

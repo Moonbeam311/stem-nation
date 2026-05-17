@@ -557,6 +557,68 @@ PHASE 8 STEP 7 — STEM NATION COMMAND SESSION DISPLAY V1
 }
 </style>
 
+
+<style>
+.teacher-evaluation-panel {
+  margin-top: 28px;
+  background: rgba(0,0,0,0.34);
+  border: 1px solid rgba(255,215,106,0.32);
+  border-radius: 18px;
+  padding: 24px;
+}
+
+.teacher-evaluation-panel h2 {
+  color: #ffd76a;
+  margin-top: 0;
+  text-align: center;
+}
+
+.teacher-evaluation-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+  gap: 14px;
+  margin-top: 18px;
+}
+
+.teacher-evaluation-grid label {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  font-size: 12px;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: #bdefff;
+}
+
+.teacher-evaluation-grid select,
+.teacher-evaluation-panel textarea {
+  border-radius: 10px;
+  border: 1px solid rgba(255,255,255,0.14);
+  background: rgba(0,0,0,0.28);
+  color: #f7e7b0;
+  padding: 10px;
+}
+
+.teacher-evaluation-panel textarea {
+  width: 100%;
+  min-height: 76px;
+  margin-top: 8px;
+  resize: vertical;
+  box-sizing: border-box;
+}
+
+.teacher-evaluation-notes {
+  margin-top: 16px;
+}
+
+#teacherEvaluationSaveStatus {
+  margin-top: 14px;
+  text-align: center;
+  color: #b8f5c0;
+  font-size: 13px;
+}
+</style>
+
 </head>
 
 <body>
@@ -2234,6 +2296,99 @@ Selective demo reset controls for local student test data.
 </section>
 
 
+
+<!-- STEM_NATION_TEACHER_EVALUATION_FEEDBACK_LAYER_V1 -->
+<section id="teacherEvaluationPanel" class="teacher-evaluation-panel">
+  <h2>Teacher Evaluation / Feedback</h2>
+  <p>
+    Review the student’s founding archive, settlement defense, and region comparison response.
+  </p>
+
+  <div class="teacher-evaluation-grid">
+    <label>
+      Observation Quality
+      <select id="evalObservationQuality">
+        <option value="">Select score</option>
+        <option value="4 · Strong">4 · Strong</option>
+        <option value="3 · Proficient">3 · Proficient</option>
+        <option value="2 · Developing">2 · Developing</option>
+        <option value="1 · Beginning">1 · Beginning</option>
+      </select>
+    </label>
+
+    <label>
+      Evidence Use
+      <select id="evalEvidenceUse">
+        <option value="">Select score</option>
+        <option value="4 · Strong">4 · Strong</option>
+        <option value="3 · Proficient">3 · Proficient</option>
+        <option value="2 · Developing">2 · Developing</option>
+        <option value="1 · Beginning">1 · Beginning</option>
+      </select>
+    </label>
+
+    <label>
+      Risk Awareness
+      <select id="evalRiskAwareness">
+        <option value="">Select score</option>
+        <option value="4 · Strong">4 · Strong</option>
+        <option value="3 · Proficient">3 · Proficient</option>
+        <option value="2 · Developing">2 · Developing</option>
+        <option value="1 · Beginning">1 · Beginning</option>
+      </select>
+    </label>
+
+    <label>
+      Settlement Logic
+      <select id="evalSettlementLogic">
+        <option value="">Select score</option>
+        <option value="4 · Strong">4 · Strong</option>
+        <option value="3 · Proficient">3 · Proficient</option>
+        <option value="2 · Developing">2 · Developing</option>
+        <option value="1 · Beginning">1 · Beginning</option>
+      </select>
+    </label>
+
+    <label>
+      Systems Thinking
+      <select id="evalSystemsThinking">
+        <option value="">Select score</option>
+        <option value="4 · Strong">4 · Strong</option>
+        <option value="3 · Proficient">3 · Proficient</option>
+        <option value="2 · Developing">2 · Developing</option>
+        <option value="1 · Beginning">1 · Beginning</option>
+      </select>
+    </label>
+
+    <label>
+      Collaboration / Discussion
+      <select id="evalCollaboration">
+        <option value="">Select score</option>
+        <option value="4 · Strong">4 · Strong</option>
+        <option value="3 · Proficient">3 · Proficient</option>
+        <option value="2 · Developing">2 · Developing</option>
+        <option value="1 · Beginning">1 · Beginning</option>
+      </select>
+    </label>
+  </div>
+
+  <div class="teacher-evaluation-notes">
+    <label for="evalTeacherStrengths">Teacher Strengths / Positive Feedback</label>
+    <textarea id="evalTeacherStrengths" placeholder="What did the student do well?"></textarea>
+
+    <label for="evalTeacherNextSteps">Teacher Next Steps / Growth Guidance</label>
+    <textarea id="evalTeacherNextSteps" placeholder="What should the student improve or revise next?"></textarea>
+
+    <label for="evalTeacherNotes">Additional Teacher Notes</label>
+    <textarea id="evalTeacherNotes" placeholder="Optional teacher comments."></textarea>
+  </div>
+
+  <div id="teacherEvaluationSaveStatus">
+    Teacher evaluation not saved yet.
+  </div>
+</section>
+
+
 <section id="comparisonResponseReview" class="comparison-response-review">
   <h2>Region Comparison Response</h2>
 
@@ -2487,6 +2642,80 @@ Selective demo reset controls for local student test data.
   }
 
   loadIdentity();
+})();
+</script>
+
+
+<script>
+// STEM_NATION_TEACHER_EVALUATION_FEEDBACK_LAYER_V1
+(function installTeacherEvaluationFeedbackLayer() {
+  const KEY = "STEM_NATION_TEACHER_EVALUATION_FEEDBACK_V1";
+
+  const fields = {
+    observationQuality: document.getElementById("evalObservationQuality"),
+    evidenceUse: document.getElementById("evalEvidenceUse"),
+    riskAwareness: document.getElementById("evalRiskAwareness"),
+    settlementLogic: document.getElementById("evalSettlementLogic"),
+    systemsThinking: document.getElementById("evalSystemsThinking"),
+    collaboration: document.getElementById("evalCollaboration"),
+    strengths: document.getElementById("evalTeacherStrengths"),
+    nextSteps: document.getElementById("evalTeacherNextSteps"),
+    notes: document.getElementById("evalTeacherNotes")
+  };
+
+  const status = document.getElementById("teacherEvaluationSaveStatus");
+
+  if (!status || Object.values(fields).some((field) => !field)) return;
+
+  function saveEvaluation() {
+    const payload = {
+      observationQuality: fields.observationQuality.value,
+      evidenceUse: fields.evidenceUse.value,
+      riskAwareness: fields.riskAwareness.value,
+      settlementLogic: fields.settlementLogic.value,
+      systemsThinking: fields.systemsThinking.value,
+      collaboration: fields.collaboration.value,
+      strengths: fields.strengths.value.trim(),
+      nextSteps: fields.nextSteps.value.trim(),
+      notes: fields.notes.value.trim(),
+      savedAt: new Date().toISOString()
+    };
+
+    localStorage.setItem(KEY, JSON.stringify(payload));
+    status.textContent = "Teacher evaluation saved: " + new Date(payload.savedAt).toLocaleTimeString();
+  }
+
+  function loadEvaluation() {
+    const raw = localStorage.getItem(KEY);
+    if (!raw) return;
+
+    try {
+      const data = JSON.parse(raw);
+
+      fields.observationQuality.value = data.observationQuality || "";
+      fields.evidenceUse.value = data.evidenceUse || "";
+      fields.riskAwareness.value = data.riskAwareness || "";
+      fields.settlementLogic.value = data.settlementLogic || "";
+      fields.systemsThinking.value = data.systemsThinking || "";
+      fields.collaboration.value = data.collaboration || "";
+      fields.strengths.value = data.strengths || "";
+      fields.nextSteps.value = data.nextSteps || "";
+      fields.notes.value = data.notes || "";
+
+      if (data.savedAt) {
+        status.textContent = "Teacher evaluation loaded: " + new Date(data.savedAt).toLocaleTimeString();
+      }
+    } catch (err) {
+      console.warn("Teacher evaluation ignored.", err);
+    }
+  }
+
+  Object.values(fields).forEach((field) => {
+    field.addEventListener("input", saveEvaluation);
+    field.addEventListener("change", saveEvaluation);
+  });
+
+  loadEvaluation();
 })();
 </script>
 
