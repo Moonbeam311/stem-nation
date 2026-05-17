@@ -1906,6 +1906,37 @@
 }
 
 
+
+/* STEM_NATION_REGION_FOCUS_SYNC_AND_ATMOSPHERE_TEXT_FIX_V1 */
+.atmosphere-signal {
+  color: transparent;
+  text-indent: -9999px;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+.atmosphere-signal::after {
+  text-indent: 0;
+}
+
+
+
+/* STEM_NATION_TEACHER_FOCUS_INTEL_AND_ATMOSPHERE_VISIBILITY_FIX_V2 */
+.atmosphere-signal {
+  font-size: 0 !important;
+  line-height: 0 !important;
+  color: transparent !important;
+  text-indent: -9999px !important;
+  overflow: hidden !important;
+  white-space: nowrap !important;
+}
+
+.atmosphere-signal::before,
+.atmosphere-signal::after {
+  text-indent: 0 !important;
+}
+
+
 .status-label{
     margin-bottom:6px;
     font-weight:bold;
@@ -2236,6 +2267,23 @@
   display: none;
 }
 
+
+/* STEM_NATION_ATMOSPHERE_SIGNAL_TEXT_SUPPRESSION_V3 */
+.atmosphere-signal {
+  display: block !important;
+  color: transparent !important;
+  font-size: 0 !important;
+  line-height: 0 !important;
+  overflow: hidden !important;
+}
+
+.atmosphere-signal::before,
+.atmosphere-signal::after {
+  color: inherit;
+  font-size: initial;
+  line-height: normal;
+}
+
 </style>
 
 <style>
@@ -2326,45 +2374,46 @@
 
     
 <!-- STEM_NATION_LIVING_WORLD_ATMOSPHERE_MARKERS_V1 -->
+<!-- STEM_NATION_ATMOSPHERE_SIGNAL_ARIA_ONLY_FIX_V4 -->
 <div id="worldAtmosphereLayer" class="world-atmosphere-layer" aria-label="Living World Atmosphere Layer">
 
   <div class="atmosphere-zone atmosphere-river" data-atmosphere-zone="River Corridor">
-    <span class="atmosphere-signal water-signal">Moving Water</span>
-    <span class="atmosphere-signal mist-signal">Mist</span>
-    <span class="atmosphere-signal bird-signal">Birds</span>
-    <span class="atmosphere-signal flood-signal">Flood Risk</span>
+    <span class="atmosphere-signal water-signal" aria-label="Moving Water"></span>
+    <span class="atmosphere-signal mist-signal" aria-label="Mist"></span>
+    <span class="atmosphere-signal bird-signal" aria-label="Birds"></span>
+    <span class="atmosphere-signal flood-signal" aria-label="Flood Risk"></span>
   </div>
 
   <div class="atmosphere-zone atmosphere-forest" data-atmosphere-zone="Forest Edge">
-    <span class="atmosphere-signal fog-signal">Drifting Fog</span>
-    <span class="atmosphere-signal tree-signal">Tree Sway</span>
-    <span class="atmosphere-signal wildlife-signal">Wildlife</span>
-    <span class="atmosphere-signal visibility-signal">Reduced Visibility</span>
+    <span class="atmosphere-signal fog-signal" aria-label="Drifting Fog"></span>
+    <span class="atmosphere-signal tree-signal" aria-label="Tree Sway"></span>
+    <span class="atmosphere-signal wildlife-signal" aria-label="Wildlife"></span>
+    <span class="atmosphere-signal visibility-signal" aria-label="Reduced Visibility"></span>
   </div>
 
   <div class="atmosphere-zone atmosphere-coast" data-atmosphere-zone="Coastal Bay">
-    <span class="atmosphere-signal tide-signal">Moving Tides</span>
-    <span class="atmosphere-signal seagull-signal">Seagulls</span>
-    <span class="atmosphere-signal storm-signal">Storm Pressure</span>
-    <span class="atmosphere-signal ship-signal">Future Trade Ships</span>
+    <span class="atmosphere-signal tide-signal" aria-label="Moving Tides"></span>
+    <span class="atmosphere-signal seagull-signal" aria-label="Seagulls"></span>
+    <span class="atmosphere-signal storm-signal" aria-label="Storm Pressure"></span>
+    <span class="atmosphere-signal ship-signal" aria-label="Future Trade Ships"></span>
   </div>
 
   <div class="atmosphere-zone atmosphere-highland" data-atmosphere-zone="Highland Ridge">
-    <span class="atmosphere-signal snow-signal">Snow / Wind</span>
-    <span class="atmosphere-signal movement-signal">Difficult Movement</span>
-    <span class="atmosphere-signal defense-signal">Elevated Defense</span>
+    <span class="atmosphere-signal snow-signal" aria-label="Snow / Wind"></span>
+    <span class="atmosphere-signal movement-signal" aria-label="Difficult Movement"></span>
+    <span class="atmosphere-signal defense-signal" aria-label="Elevated Defense"></span>
   </div>
 
   <div class="atmosphere-zone atmosphere-plain" data-atmosphere-zone="Open Plain">
-    <span class="atmosphere-signal grass-signal">Grass Sway</span>
-    <span class="atmosphere-signal migration-signal">Migration Movement</span>
-    <span class="atmosphere-signal exposure-signal">Exposure Danger</span>
+    <span class="atmosphere-signal grass-signal" aria-label="Grass Sway"></span>
+    <span class="atmosphere-signal migration-signal" aria-label="Migration Movement"></span>
+    <span class="atmosphere-signal exposure-signal" aria-label="Exposure Danger"></span>
   </div>
 
   <div class="atmosphere-zone atmosphere-crossroads" data-atmosphere-zone="Balanced Crossroads">
-    <span class="atmosphere-signal road-signal">Road Activity</span>
-    <span class="atmosphere-signal caravan-signal">Future Caravans</span>
-    <span class="atmosphere-signal trade-signal">Trade Movement</span>
+    <span class="atmosphere-signal road-signal" aria-label="Road Activity"></span>
+    <span class="atmosphere-signal caravan-signal" aria-label="Future Caravans"></span>
+    <span class="atmosphere-signal trade-signal" aria-label="Trade Movement"></span>
   </div>
 
 </div>
@@ -5171,6 +5220,9 @@ Displays active teacher-guided class session on the student map.
     clueEl.textContent = data.clue;
   }
 
+
+  window.STEM_NATION_APPLY_REGION_FOCUS = applyFocus;
+
   document.querySelectorAll(".board-terrain-tile, .terrain-zone, .region-card").forEach((el) => {
     el.addEventListener("click", function () {
       updateIntel(el.dataset.region);
@@ -5311,6 +5363,123 @@ Displays active teacher-guided class session on the student map.
   if (resetBtn) {
     resetBtn.addEventListener("click", clearFocus);
   }
+})();
+</script>
+
+
+
+<script>
+// STEM_NATION_TEACHER_FOCUS_INTEL_AND_ATMOSPHERE_VISIBILITY_FIX_V2
+(function installGlobalRegionIntelUpdater() {
+  const intel = {
+    "River Corridor": {
+      name: "🌊 River Corridor",
+      description: "Fresh water, fertile soil, fish, and travel routes make the river powerful, but rising water can flood early settlements.",
+      advantage: "Water, food, farming, fishing, and travel.",
+      risk: "Flooding, exposed banks, and settlement loss.",
+      clue: "Watch how water shapes movement, farming, and danger."
+    },
+    "Forest Edge": {
+      name: "🌲 Forest Edge",
+      description: "Trees provide shelter, tools, fuel, and protection, but thick cover can hide danger and limit visibility.",
+      advantage: "Shelter, wood, fuel, tools, and cover.",
+      risk: "Reduced visibility, hidden threats, and slower movement.",
+      clue: "Look for what the forest gives and what it hides."
+    },
+    "Highland Ridge": {
+      name: "⛰️ Highland Ridge",
+      description: "High ground improves defense and long-distance observation, but steep terrain makes farming, travel, and supplies harder.",
+      advantage: "Defense, lookout points, and protection.",
+      risk: "Difficult movement, limited farming, and supply strain.",
+      clue: "Notice how elevation protects people but slows survival."
+    },
+    "Coastal Bay": {
+      name: "⚓ Coastal Bay",
+      description: "The coast supports fishing, navigation, and future trade, but storms, exposure, and invasion routes create constant risk.",
+      advantage: "Fishing, travel, navigation, and future trade.",
+      risk: "Storms, exposure, and outside threats.",
+      clue: "Watch how the sea connects people and brings danger."
+    },
+    "Open Plain": {
+      name: "🌾 Open Plain",
+      description: "Open land supports farming, movement, and animal herds, but exposure makes defense and shelter more difficult.",
+      advantage: "Farming, movement, grazing, and expansion.",
+      risk: "Exposure, weak defense, and limited shelter.",
+      clue: "Look for how open space helps growth but increases vulnerability."
+    },
+    "Balanced Crossroads": {
+      name: "🛤️ Balanced Crossroads",
+      description: "Roads connect people, goods, and ideas, but trade routes also bring conflict, competition, and outside pressure.",
+      advantage: "Trade, communication, alliances, and movement.",
+      risk: "Conflict, competition, and pressure from outsiders.",
+      clue: "Watch how connection creates wealth and tension."
+    }
+  };
+
+  window.STEM_NATION_UPDATE_REGION_INTEL = function(region) {
+    const data = intel[region];
+    if (!data) return;
+
+    const nameEl = document.getElementById("regionIntelName");
+    const descEl = document.getElementById("regionIntelDescription");
+    const advEl = document.getElementById("regionIntelAdvantage");
+    const riskEl = document.getElementById("regionIntelRisk");
+    const clueEl = document.getElementById("regionIntelClue");
+
+    if (nameEl) nameEl.textContent = data.name;
+    if (descEl) descEl.textContent = data.description;
+    if (advEl) advEl.textContent = data.advantage;
+    if (riskEl) riskEl.textContent = data.risk;
+    if (clueEl) clueEl.textContent = data.clue;
+  };
+})();
+</script>
+
+<script>
+// STEM_NATION_MAP_TIMELINE_REGION_FOCUS_SYNC_V1
+(function syncTimelineRegionFocusToMap() {
+  const KEY = "STEM_NATION_CLASS_TIMELINE_V1";
+  let lastRegion = "";
+
+  function focusRegionFromTimeline() {
+    const raw = localStorage.getItem(KEY);
+    if (!raw) return;
+
+    try {
+      const state = JSON.parse(raw);
+      const region = state.focusRegion || "";
+
+      if (!region || region === lastRegion) return;
+      lastRegion = region;
+
+      if (window.STEM_NATION_APPLY_REGION_FOCUS) {
+        window.STEM_NATION_APPLY_REGION_FOCUS(region);
+      }
+
+      if (window.STEM_NATION_UPDATE_REGION_INTEL) {
+        window.STEM_NATION_UPDATE_REGION_INTEL(region);
+      }
+
+      const target = document.querySelector(`[data-region="${region}"]`);
+      if (target) {
+        target.classList.add("region-focused");
+      }
+
+      const feedback = document.getElementById("boardWorldFeedback");
+      if (feedback) {
+        feedback.classList.remove("hidden");
+        feedback.textContent = `Teacher Focus: ${region}`;
+      }
+
+    } catch (err) {
+      console.warn("Timeline region focus sync skipped.", err);
+    }
+  }
+
+  focusRegionFromTimeline();
+  window.addEventListener("storage", focusRegionFromTimeline);
+  window.addEventListener("focus", focusRegionFromTimeline);
+  setInterval(focusRegionFromTimeline, 1000);
 })();
 </script>
 

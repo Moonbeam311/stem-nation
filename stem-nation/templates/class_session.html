@@ -647,34 +647,40 @@
 (function () {
   const TIMELINE_KEY = "STEM_NATION_CLASS_TIMELINE_V1";
 
+  // STEM_NATION_TEACHER_TIMELINE_REGION_FOCUS_V1
   const timelineSteps = [
     {
       key: "launch",
       title: "Launch Session",
+      focusRegion: "",
       teacherMove: "Frame the purpose, name the mission, and activate the session.",
       studentMove: "Listen for the mission goal and prepare to observe the world."
     },
     {
       key: "observe",
       title: "Observe Terrain",
+      focusRegion: "River Corridor",
       teacherMove: "Prompt students to identify risks, resources, movement paths, and settlement pressures.",
       studentMove: "Study the map, compare regions, and ask questions about survival."
     },
     {
       key: "decide",
       title: "Student Decision",
+      focusRegion: "Balanced Crossroads",
       teacherMove: "Direct students to select a region and commit to a settlement decision.",
       studentMove: "Choose a settlement region and explain the first reason for survival."
     },
     {
       key: "defend",
       title: "Evidence Defense",
+      focusRegion: "",
       teacherMove: "Ask students to support decisions with evidence from terrain, water, food, defense, or trade.",
       studentMove: "Record evidence and defend the settlement strategy."
     },
     {
       key: "reflect",
       title: "Reflection / Debrief",
+      focusRegion: "",
       teacherMove: "Lead a discussion on consequences, tradeoffs, and what the civilization should do next.",
       studentMove: "Reflect on risk, benefit, and how the decision shaped the future."
     }
@@ -712,6 +718,7 @@
       activeStep: step.key,
       activeIndex: index,
       title: step.title,
+      focusRegion: step.focusRegion || "",
       teacherMove: step.teacherMove,
       studentMove: step.studentMove,
       updatedAt: new Date().toISOString()
