@@ -1656,9 +1656,39 @@ function downloadFoundingArchive() {
   try {
     const record = JSON.parse(raw);
 
-    const content = [
-      "STEM Nation — Founding Archive",
-      "Settlement Decision Defense",
+    // STEM_NATION_DOWNLOAD_ARCHIVE_TEACHER_EVALUATION_V1
+    function readOptionalJSON(key) {
+      try {
+        return JSON.parse(localStorage.getItem(key) || "null");
+      } catch (err) {
+        return null;
+      }
+    }
+
+    const identity = readOptionalJSON("STEM_NATION_STUDENT_IDENTITY_ARCHIVE_V1");
+    const comparison = readOptionalJSON("STEM_NATION_STUDENT_COMPARISON_RESPONSE_V1");
+    const evaluation = readOptionalJSON("STEM_NATION_TEACHER_EVALUATION_FEEDBACK_V1");
+
+    const identitySection = [
+      "STUDENT INFORMATION",
+      "===================",
+      "",
+      "Student Name:",
+      identity ? (identity.studentName || "") : "",
+      "",
+      "Class / Period:",
+      identity ? (identity.studentClass || "") : "",
+      "",
+      "Teacher:",
+      identity ? (identity.teacherName || "") : "",
+      "",
+      "Archive Date:",
+      identity ? (identity.archiveDate || "") : ""
+    ];
+
+    const settlementSection = [
+      "SETTLEMENT DECISION DEFENSE",
+      "===========================",
       "",
       `Saved Locally: ${record.savedAt ? new Date(record.savedAt).toLocaleString() : "Not recorded"}`,
       "",
@@ -1675,7 +1705,91 @@ function downloadFoundingArchive() {
       record.landEvidence || "",
       "",
       "Survival Plan:",
-      record.survivalPlan || "",
+      record.survivalPlan || ""
+    ];
+
+    const comparisonSection = comparison ? [
+      "REGION COMPARISON RESPONSE",
+      "==========================",
+      "",
+      "Compared Regions:",
+      Array.isArray(comparison.regions) ? comparison.regions.join(" vs ") : "",
+      "",
+      "Stronger Beginning:",
+      comparison.strongerRegion || "",
+      "",
+      "Advantage / Evidence:",
+      comparison.advantageEvidence || "",
+      "",
+      "Risk / Tradeoff:",
+      comparison.riskTradeoff || "",
+      "",
+      "Comparison Saved At:",
+      comparison.savedAt ? new Date(comparison.savedAt).toLocaleString() : ""
+    ] : [
+      "REGION COMPARISON RESPONSE",
+      "==========================",
+      "",
+      "No comparison response saved yet."
+    ];
+
+    const evaluationSection = evaluation ? [
+      "TEACHER EVALUATION / FEEDBACK",
+      "=============================",
+      "",
+      "Observation Quality:",
+      evaluation.observationQuality || "",
+      "",
+      "Evidence Use:",
+      evaluation.evidenceUse || "",
+      "",
+      "Risk Awareness:",
+      evaluation.riskAwareness || "",
+      "",
+      "Settlement Logic:",
+      evaluation.settlementLogic || "",
+      "",
+      "Systems Thinking:",
+      evaluation.systemsThinking || "",
+      "",
+      "Collaboration / Discussion:",
+      evaluation.collaboration || "",
+      "",
+      "Strengths / Positive Feedback:",
+      evaluation.strengths || "",
+      "",
+      "Next Steps / Growth Guidance:",
+      evaluation.nextSteps || "",
+      "",
+      "Additional Teacher Notes:",
+      evaluation.notes || "",
+      "",
+      "Evaluation Saved At:",
+      evaluation.savedAt ? new Date(evaluation.savedAt).toLocaleString() : ""
+    ] : [
+      "TEACHER EVALUATION / FEEDBACK",
+      "=============================",
+      "",
+      "No teacher evaluation saved yet."
+    ];
+
+    const content = [
+      "STEM Nation — Founding Archive",
+      "Printable / Downloadable Classroom Artifact",
+      "",
+      ...identitySection,
+      "",
+      "---",
+      "",
+      ...settlementSection,
+      "",
+      "---",
+      "",
+      ...comparisonSection,
+      "",
+      "---",
+      "",
+      ...evaluationSection,
       "",
       "---",
       "Generated from STEM Nation Civilization Command Center"
