@@ -2674,6 +2674,11 @@
     📜 Archive
   </button>
 
+  <!-- STEM_NATION_STUDENT_MAP_RESET_VIEW_BUTTON_V1 -->
+  <button type="button" id="resetStudentMapViewBtn" class="overlay-toggle-btn">
+    🧹 Reset View
+  </button>
+
 </div>
 
 <div id="regionIntelOverlay" class="board-overlay hidden">
@@ -4568,14 +4573,14 @@ function showAutosaveBanner(timestamp) {
     banner.id = "autosaveBanner";
 
     banner.style.position = "fixed";
-    banner.style.bottom = "12px";
+    banner.style.top = "82px";
     banner.style.right = "12px";
     banner.style.padding = "10px 14px";
     banner.style.background = "rgba(0,0,0,0.85)";
     banner.style.border = "1px solid rgba(255,215,0,0.35)";
     banner.style.borderRadius = "10px";
     banner.style.color = "#f5f1dc";
-    banner.style.fontSize = "12px";
+    banner.style.fontSize = "10px";
     banner.style.zIndex = "99999";
     banner.style.transition = "opacity 0.4s ease";
 
@@ -4817,6 +4822,10 @@ Displays active teacher-guided class session on the student map.
 
 <script>
 /* STEM_NATION_STUDENT_SESSION_DISPLAY_V1 */
+/* STEM_NATION_CLASS_SESSION_BUTTON_TOP_LEFT_OPPOSITE_PROGRESS_V1 */
+/* STEM_NATION_STUDENT_SESSION_BANNER_COLLAPSED_FIX_V1 */
+/* STEM_NATION_STUDENT_SESSION_BANNER_TOP_LEFT_FIX_V1 */
+/* STEM_NATION_STUDENT_SESSION_BANNER_COMPACT_FIX_V1 */
 (function () {
   const STUDENT_SESSION_KEY = "STEM_NATION_CLASS_SESSION_V1";
 
@@ -4838,29 +4847,64 @@ Displays active teacher-guided class session on the student map.
     if (!banner) {
       banner = document.createElement("div");
       banner.id = "studentClassSessionBanner";
+      banner.classList.add("collapsed");
       banner.innerHTML = `
-        <div id="studentSessionTitle" class="student-session-title">Class Session</div>
-        <div id="studentSessionStatus">Status: —</div>
-        <div id="studentSessionMission">Mission: —</div>
-        <div id="studentSessionPrompt">Prompt: —</div>
+        <button id="studentSessionToggleBtn" type="button">Class Session</button>
+        <div id="studentSessionBody">
+          <div id="studentSessionTitle" class="student-session-title">Class Session</div>
+          <div id="studentSessionStatus">Status: —</div>
+          <div id="studentSessionMission">Mission: —</div>
+          <div id="studentSessionPrompt">Prompt: —</div>
+        </div>
       `;
       document.body.appendChild(banner);
     }
 
     banner.style.position = "fixed";
     banner.style.left = "12px";
-    banner.style.bottom = "12px";
-    banner.style.width = "320px";
-    banner.style.maxWidth = "calc(100vw - 24px)";
-    banner.style.padding = "12px 14px";
+    banner.style.top = "12px";
+    banner.style.width = "230px";
+    banner.style.maxWidth = "150px";
+    banner.style.padding = "6px 8px";
     banner.style.background = "rgba(0, 0, 0, 0.84)";
     banner.style.border = "1px solid rgba(212, 175, 55, 0.42)";
     banner.style.borderRadius = "12px";
     banner.style.color = "#f5f1dc";
-    banner.style.fontSize = "12px";
+    banner.style.fontSize = "11px";
     banner.style.lineHeight = "1.55";
-    banner.style.zIndex = "99997";
+    banner.style.zIndex = "9998";
     banner.style.boxShadow = "0 8px 24px rgba(0,0,0,0.38)";
+    banner.style.maxHeight = "160px";
+    banner.style.overflow = "auto";
+
+    const toggleBtn = document.getElementById("studentSessionToggleBtn");
+    const body = document.getElementById("studentSessionBody");
+
+    if (toggleBtn && body && !toggleBtn.dataset.bound) {
+      toggleBtn.dataset.bound = "true";
+      toggleBtn.style.width = "100%";
+      toggleBtn.style.border = "none";
+      toggleBtn.style.borderRadius = "10px";
+      toggleBtn.style.padding = "7px 9px";
+      toggleBtn.style.background = "rgba(212, 175, 55, 0.2)";
+      toggleBtn.style.color = "#ffd76a";
+      toggleBtn.style.fontWeight = "700";
+      toggleBtn.style.cursor = "pointer";
+
+      body.style.display = "none";
+      body.style.marginTop = "6px";
+      body.style.maxHeight = "90px";
+      body.style.overflow = "auto";
+
+      toggleBtn.addEventListener("click", function () {
+        const hidden = body.style.display === "none";
+        body.style.display = hidden ? "block" : "none";
+      });
+    }
+    banner.style.maxHeight = "130px";
+    banner.style.overflow = "auto";
+    banner.style.maxHeight = "150px";
+    banner.style.overflow = "auto";
 
     const title = banner.querySelector(".student-session-title");
     if (title) {
@@ -5083,6 +5127,67 @@ Displays active teacher-guided class session on the student map.
     });
   });
 
+})();
+</script>
+
+
+<script>
+// STEM_NATION_STUDENT_MAP_RESET_VIEW_BUTTON_V1
+(function installStudentMapResetViewButton() {
+  const resetBtn = document.getElementById("resetStudentMapViewBtn");
+  if (!resetBtn) return;
+
+  function hideById(id) {
+    const el = document.getElementById(id);
+    if (el && !el.classList.contains("hidden")) {
+      el.classList.add("hidden");
+    }
+  }
+
+  function collapseById(id) {
+    const el = document.getElementById(id);
+    if (el && !el.classList.contains("collapsed")) {
+      el.classList.add("collapsed");
+    }
+  }
+
+  resetBtn.addEventListener("click", function () {
+    // Collapse floating status panels.
+    collapseById("studentTimelineDisplay");
+    collapseById("studentProgressHud");
+
+    // Collapse class session body if present.
+    const sessionBody = document.getElementById("studentSessionBody");
+    if (sessionBody) {
+      sessionBody.style.display = "none";
+    }
+
+    // Hide board overlays and student input panels.
+    [
+      "regionIntelOverlay",
+      "advisorOverlay",
+      "archiveOverlay",
+      "studentReflectionPanel",
+      "studentEvidencePanel",
+      "studentResponsePanel",
+      "studentQuestionPanel",
+      "actionResponsePanel",
+      "seasonFeedbackPanel"
+    ].forEach(hideById);
+
+    // Clear visual focus only. Do not erase saved work.
+    document.querySelectorAll(".board-terrain-tile, .terrain-zone, .region-card").forEach((el) => {
+      el.classList.remove("selected", "focused", "dimmed");
+    });
+
+    const feedback = document.getElementById("boardWorldFeedback");
+    if (feedback) {
+      feedback.classList.add("hidden");
+      feedback.textContent = "Select terrain to begin settlement review.";
+    }
+
+    console.log("STEM_NATION_STUDENT_MAP_RESET_VIEW_BUTTON_V1 reset complete");
+  });
 })();
 </script>
 
