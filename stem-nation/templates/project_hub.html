@@ -506,6 +506,57 @@ PHASE 8 STEP 7 — STEM NATION COMMAND SESSION DISPLAY V1
 }
 </style>
 
+
+<style>
+.student-identity-archive-panel {
+  margin-top: 24px;
+  padding: 22px;
+  border-radius: 18px;
+  border: 1px solid rgba(255,215,106,0.28);
+  background:
+    radial-gradient(circle at top left, rgba(255,215,106,0.08), transparent 40%),
+    rgba(255,255,255,0.04);
+}
+
+.student-identity-archive-panel h2 {
+  margin-top: 0;
+  color: #ffd76a;
+  text-align: center;
+}
+
+.student-identity-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 14px;
+  margin-top: 18px;
+}
+
+.student-identity-grid label {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: #bdefff;
+}
+
+.student-identity-grid input {
+  border-radius: 10px;
+  border: 1px solid rgba(255,255,255,0.14);
+  background: rgba(0,0,0,0.28);
+  color: #f7e7b0;
+  padding: 10px;
+}
+
+#studentIdentitySaveStatus {
+  margin-top: 14px;
+  text-align: center;
+  color: #b8f5c0;
+  font-size: 13px;
+}
+</style>
+
 </head>
 
 <body>
@@ -2150,6 +2201,39 @@ Selective demo reset controls for local student test data.
 
 
 <!-- STEM_NATION_HUB_COMPARISON_RESPONSE_REVIEW_V1 -->
+
+<!-- STEM_NATION_STUDENT_IDENTITY_ARCHIVE_FIELDS_V1 -->
+<section id="studentIdentityArchivePanel" class="student-identity-archive-panel">
+  <h2>Student Identity Archive</h2>
+
+  <div class="student-identity-grid">
+    <label>
+      Student Name
+      <input id="archiveStudentName" type="text" placeholder="Enter student name">
+    </label>
+
+    <label>
+      Class / Period
+      <input id="archiveStudentClass" type="text" placeholder="Example: Period 2">
+    </label>
+
+    <label>
+      Teacher
+      <input id="archiveTeacherName" type="text" placeholder="Enter teacher name">
+    </label>
+
+    <label>
+      Archive Date
+      <input id="archiveDateField" type="date">
+    </label>
+  </div>
+
+  <div id="studentIdentitySaveStatus">
+    Identity archive fields not saved yet.
+  </div>
+</section>
+
+
 <section id="comparisonResponseReview" class="comparison-response-review">
   <h2>Region Comparison Response</h2>
 
@@ -2338,6 +2422,71 @@ Selective demo reset controls for local student test data.
   renderResponse();
   window.addEventListener("storage", renderResponse);
   window.addEventListener("focus", renderResponse);
+})();
+</script>
+
+
+<script>
+// STEM_NATION_STUDENT_IDENTITY_ARCHIVE_FIELDS_V1
+(function installStudentIdentityArchiveFields() {
+  const KEY = "STEM_NATION_STUDENT_IDENTITY_ARCHIVE_V1";
+
+  const studentName = document.getElementById("archiveStudentName");
+  const studentClass = document.getElementById("archiveStudentClass");
+  const teacherName = document.getElementById("archiveTeacherName");
+  const archiveDate = document.getElementById("archiveDateField");
+  const status = document.getElementById("studentIdentitySaveStatus");
+
+  if (!studentName || !studentClass || !teacherName || !archiveDate || !status) return;
+
+  function saveIdentity() {
+    const payload = {
+      studentName: studentName.value.trim(),
+      studentClass: studentClass.value.trim(),
+      teacherName: teacherName.value.trim(),
+      archiveDate: archiveDate.value,
+      savedAt: new Date().toISOString()
+    };
+
+    localStorage.setItem(KEY, JSON.stringify(payload));
+
+    status.textContent =
+      "Identity archive saved: " +
+      new Date(payload.savedAt).toLocaleTimeString();
+  }
+
+  function loadIdentity() {
+    const raw = localStorage.getItem(KEY);
+    if (!raw) return;
+
+    try {
+      const data = JSON.parse(raw);
+
+      studentName.value = data.studentName || "";
+      studentClass.value = data.studentClass || "";
+      teacherName.value = data.teacherName || "";
+      archiveDate.value = data.archiveDate || "";
+
+      if (data.savedAt) {
+        status.textContent =
+          "Identity archive loaded: " +
+          new Date(data.savedAt).toLocaleTimeString();
+      }
+    } catch (err) {
+      console.warn("Student identity archive ignored.", err);
+    }
+  }
+
+  [studentName, studentClass, teacherName, archiveDate].forEach((field) => {
+    field.addEventListener("input", saveIdentity);
+    field.addEventListener("change", saveIdentity);
+  });
+
+  if (!archiveDate.value) {
+    archiveDate.value = new Date().toISOString().split("T")[0];
+  }
+
+  loadIdentity();
 })();
 </script>
 

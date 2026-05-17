@@ -130,6 +130,41 @@
       }
     }
   </style>
+
+<style>
+/* STEM_NATION_PRINT_ARCHIVE_STUDENT_IDENTITY_AND_COMPARISON_V1 */
+.print-section {
+  margin-top: 22px;
+  border-top: 1px solid rgba(0,0,0,0.16);
+  padding-top: 18px;
+}
+
+.print-section h2 {
+  font-size: 18px;
+  margin: 0 0 12px;
+}
+
+.print-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 10px;
+}
+
+.print-item {
+  margin-bottom: 10px;
+}
+
+.print-label {
+  font-weight: bold;
+  margin-bottom: 4px;
+}
+
+.print-answer {
+  white-space: pre-wrap;
+  line-height: 1.45;
+}
+</style>
+
 </head>
 
 <body>
@@ -137,6 +172,56 @@
     <div class="header">
       <div class="label">STEM Nation · Founding Archive</div>
       <h1>Settlement Decision Defense</h1>
+
+<!-- STEM_NATION_PRINT_ARCHIVE_STUDENT_IDENTITY_AND_COMPARISON_V1 -->
+<section class="print-section" id="studentIdentityPrintSection">
+  <h2>Student Information</h2>
+  <div class="print-grid">
+    <div class="print-item">
+      <div class="print-label">Student Name:</div>
+      <div id="printStudentName" class="print-answer">—</div>
+    </div>
+    <div class="print-item">
+      <div class="print-label">Class / Period:</div>
+      <div id="printStudentClass" class="print-answer">—</div>
+    </div>
+    <div class="print-item">
+      <div class="print-label">Teacher:</div>
+      <div id="printTeacherName" class="print-answer">—</div>
+    </div>
+    <div class="print-item">
+      <div class="print-label">Archive Date:</div>
+      <div id="printArchiveDate" class="print-answer">—</div>
+    </div>
+  </div>
+</section>
+
+<section class="print-section" id="comparisonResponsePrintSection">
+  <h2>Region Comparison Response</h2>
+  <div class="print-grid">
+    <div class="print-item">
+      <div class="print-label">Compared Regions:</div>
+      <div id="printComparedRegions" class="print-answer">—</div>
+    </div>
+    <div class="print-item">
+      <div class="print-label">Stronger Beginning:</div>
+      <div id="printStrongerRegion" class="print-answer">—</div>
+    </div>
+    <div class="print-item">
+      <div class="print-label">Advantage / Evidence:</div>
+      <div id="printComparisonAdvantage" class="print-answer">—</div>
+    </div>
+    <div class="print-item">
+      <div class="print-label">Risk / Tradeoff:</div>
+      <div id="printComparisonRisk" class="print-answer">—</div>
+    </div>
+    <div class="print-item">
+      <div class="print-label">Comparison Saved At:</div>
+      <div id="printComparisonSavedAt" class="print-answer">—</div>
+    </div>
+  </div>
+</section>
+
       <div id="savedTime" class="subtitle">Saved record loading...</div>
     </div>
 
@@ -221,6 +306,52 @@ function loadPrintableArchive() {
 }
 
 loadPrintableArchive();
+</script>
+
+
+<script>
+// STEM_NATION_PRINT_ARCHIVE_STUDENT_IDENTITY_AND_COMPARISON_V1
+(function renderStudentIdentityAndComparisonForPrint() {
+  function readJSON(key) {
+    const raw = localStorage.getItem(key);
+    if (!raw) return null;
+
+    try {
+      return JSON.parse(raw);
+    } catch (err) {
+      console.warn("Printable archive ignored invalid JSON:", key, err);
+      return null;
+    }
+  }
+
+  function setText(id, value) {
+    const el = document.getElementById(id);
+    if (el) el.textContent = value || "—";
+  }
+
+  const identity = readJSON("STEM_NATION_STUDENT_IDENTITY_ARCHIVE_V1");
+  if (identity) {
+    setText("printStudentName", identity.studentName);
+    setText("printStudentClass", identity.studentClass);
+    setText("printTeacherName", identity.teacherName);
+    setText("printArchiveDate", identity.archiveDate);
+  }
+
+  const comparison = readJSON("STEM_NATION_STUDENT_COMPARISON_RESPONSE_V1");
+  if (comparison) {
+    setText(
+      "printComparedRegions",
+      Array.isArray(comparison.regions) ? comparison.regions.join(" vs ") : ""
+    );
+    setText("printStrongerRegion", comparison.strongerRegion);
+    setText("printComparisonAdvantage", comparison.advantageEvidence);
+    setText("printComparisonRisk", comparison.riskTradeoff);
+    setText(
+      "printComparisonSavedAt",
+      comparison.savedAt ? new Date(comparison.savedAt).toLocaleString() : ""
+    );
+  }
+})();
 </script>
 
 </body>
