@@ -1707,6 +1707,92 @@
 }
 
 
+
+/* STEM_NATION_THEATER_MODE_ENTRY_OVERLAY_V1 */
+.theater-entry-overlay{
+    position:fixed;
+    inset:0;
+    z-index:999999;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    flex-direction:column;
+    text-align:center;
+    background:
+      radial-gradient(circle at center, rgba(244,211,94,0.08), transparent 38%),
+      linear-gradient(to bottom, rgba(0,0,0,0.82), rgba(0,0,0,0.94));
+    backdrop-filter:blur(3px);
+    transition:opacity 1.2s ease, visibility 1.2s ease;
+}
+
+.theater-entry-overlay.hide{
+    opacity:0;
+    visibility:hidden;
+    pointer-events:none;
+}
+
+.theater-entry-content{
+    max-width:760px;
+    padding:40px;
+    animation:theaterRise 1.2s ease;
+}
+
+.theater-entry-label{
+    color:#f4d35e;
+    letter-spacing:6px;
+    font-size:12px;
+    margin-bottom:18px;
+    text-transform:uppercase;
+}
+
+.theater-entry-title{
+    font-size:clamp(32px, 5vw, 64px);
+    line-height:1.1;
+    font-weight:800;
+    color:white;
+    margin-bottom:24px;
+    text-shadow:0 0 24px rgba(244,211,94,0.18);
+}
+
+.theater-entry-text{
+    font-size:18px;
+    line-height:1.8;
+    color:#f3f3f3;
+    max-width:680px;
+    margin:0 auto 34px;
+    opacity:0.92;
+}
+
+.theater-entry-button{
+    padding:16px 34px;
+    border-radius:999px;
+    border:1px solid rgba(244,211,94,0.45);
+    background:rgba(244,211,94,0.12);
+    color:#f4d35e;
+    font-size:16px;
+    font-weight:bold;
+    cursor:pointer;
+    transition:all 0.25s ease;
+}
+
+.theater-entry-button:hover{
+    transform:translateY(-2px) scale(1.03);
+    background:rgba(244,211,94,0.2);
+    box-shadow:0 0 24px rgba(244,211,94,0.25);
+}
+
+@keyframes theaterRise{
+    from{
+        opacity:0;
+        transform:translateY(30px);
+    }
+    to{
+        opacity:1;
+        transform:translateY(0);
+    }
+}
+
+
 .status-label{
     margin-bottom:6px;
     font-weight:bold;
@@ -2065,6 +2151,36 @@
 
 
 <body>
+
+
+<!-- STEM_NATION_THEATER_MODE_ENTRY_OVERLAY_V1 -->
+<div id="theaterEntryOverlay" class="theater-entry-overlay">
+
+  <div class="theater-entry-content">
+
+    <div class="theater-entry-label">
+      STEM Nation · Living Civilization Board
+    </div>
+
+    <div class="theater-entry-title">
+      You Are Entering A Living World
+    </div>
+
+    <div class="theater-entry-text">
+      The land already remembers movement, struggle, trade, weather, survival, and consequence.
+      <br><br>
+      Observe carefully.
+      Every civilization decision changes the future.
+    </div>
+
+    <button id="beginObservationBtn" class="theater-entry-button">
+      Begin Observation
+    </button>
+
+  </div>
+
+</div>
+
 
 
 <div class="living-gameboard">
@@ -4765,6 +4881,34 @@ Displays active teacher-guided class session on the student map.
   renderTimelineStep();
   window.addEventListener("storage", renderTimelineStep);
   setInterval(renderTimelineStep, 1000);
+})();
+</script>
+
+
+<script>
+/* STEM_NATION_THEATER_MODE_ENTRY_OVERLAY_V1 */
+(function(){
+
+  const overlay = document.getElementById("theaterEntryOverlay");
+  const button = document.getElementById("beginObservationBtn");
+
+  if(!overlay || !button) return;
+
+  function enterWorld(){
+      overlay.classList.add("hide");
+
+      try{
+          localStorage.setItem(
+              "STEM_NATION_THEATER_MODE_LAST_ENTRY",
+              new Date().toISOString()
+          );
+      }catch(err){
+          console.warn("Unable to store theater entry timestamp.", err);
+      }
+  }
+
+  button.addEventListener("click", enterWorld);
+
 })();
 </script>
 
