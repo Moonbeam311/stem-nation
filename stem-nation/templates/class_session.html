@@ -318,6 +318,45 @@
 }
 </style>
 
+
+<style>
+.timeline-region-focus-presets {
+  margin-top: 16px;
+  padding: 14px;
+  border-radius: 16px;
+  border: 1px solid rgba(91,192,222,0.36);
+  background:
+    radial-gradient(circle at top left, rgba(91,192,222,0.10), transparent 44%),
+    rgba(5,12,20,0.62);
+}
+
+.timeline-region-focus-presets h3 {
+  margin-top: 0;
+  color: #bdefff;
+}
+
+.timeline-region-preset-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.timeline-region-preset-btn {
+  border: 1px solid rgba(255,255,255,0.14);
+  border-radius: 999px;
+  padding: 8px 12px;
+  background: rgba(255,255,255,0.08);
+  color: #f7e7b0;
+  cursor: pointer;
+  font-weight: 700;
+}
+
+.timeline-region-preset-btn:hover {
+  border-color: rgba(91,192,222,0.85);
+  background: rgba(91,192,222,0.16);
+}
+</style>
+
 </head>
 
 <body>
@@ -479,6 +518,40 @@
 
       
 <!-- STEM_NATION_TEACHER_REGION_FOCUS_SELECTOR_V1 -->
+
+<!-- STEM_NATION_TIMELINE_REGION_FOCUS_PRESETS_V1 -->
+<div id="timelineRegionFocusPresets" class="timeline-region-focus-presets">
+  <h3>Timeline Focus Presets</h3>
+  <p>
+    Use these quick teacher moves to focus the Living World Board during discussion.
+  </p>
+
+  <div class="timeline-region-preset-grid">
+    <button type="button" class="timeline-region-preset-btn" data-preset-region="" data-preset-title="Observe All Regions">
+      🌍 Observe All
+    </button>
+    <button type="button" class="timeline-region-preset-btn" data-preset-region="River Corridor" data-preset-title="Water & Flood Risk">
+      🌊 Water / Flood
+    </button>
+    <button type="button" class="timeline-region-preset-btn" data-preset-region="Forest Edge" data-preset-title="Shelter & Visibility">
+      🌲 Shelter / Visibility
+    </button>
+    <button type="button" class="timeline-region-preset-btn" data-preset-region="Highland Ridge" data-preset-title="Defense & Movement">
+      ⛰️ Defense / Movement
+    </button>
+    <button type="button" class="timeline-region-preset-btn" data-preset-region="Coastal Bay" data-preset-title="Trade & Storm Risk">
+      ⚓ Trade / Storm
+    </button>
+    <button type="button" class="timeline-region-preset-btn" data-preset-region="Open Plain" data-preset-title="Food & Exposure">
+      🌾 Food / Exposure
+    </button>
+    <button type="button" class="timeline-region-preset-btn" data-preset-region="Balanced Crossroads" data-preset-title="Trade & Outside Pressure">
+      🛤️ Trade Pressure
+    </button>
+  </div>
+</div>
+
+
 <div id="teacherRegionFocusSelector" class="teacher-region-focus-selector">
   <h3>Teacher Region Focus</h3>
   <p>
@@ -969,6 +1042,70 @@
 
   const current = readTimeline();
   renderFocus(current ? (current.focusRegion || "") : "");
+})();
+</script>
+
+
+<script>
+// STEM_NATION_TIMELINE_REGION_FOCUS_PRESETS_V1
+(function installTimelineRegionFocusPresets() {
+  const KEY = "STEM_NATION_CLASS_TIMELINE_V1";
+  const buttons = Array.from(document.querySelectorAll(".timeline-region-preset-btn"));
+
+  if (!buttons.length) return;
+
+  function readTimeline() {
+    const raw = localStorage.getItem(KEY);
+    if (!raw) return null;
+
+    try {
+      return JSON.parse(raw);
+    } catch (err) {
+      console.warn("Invalid timeline data ignored for region focus preset.", err);
+      return null;
+    }
+  }
+
+  function writePreset(region, presetTitle) {
+    const current = readTimeline() || {
+      activeStep: "manual-focus",
+      activeIndex: -1,
+      title: presetTitle || "Manual Focus",
+      teacherMove: "Teacher is focusing student observation on a region or comparison task.",
+      studentMove: "Observe the focused region and explain advantage, risk, and evidence."
+    };
+
+    current.focusRegion = region || "";
+    current.focusPresetTitle = presetTitle || "";
+    current.updatedAt = new Date().toISOString();
+
+    if (region) {
+      current.teacherMove = `Focus the class on ${region}: ${presetTitle}.`;
+      current.studentMove = "Observe the focused region and identify advantage, risk, and evidence.";
+    } else {
+      current.teacherMove = "Focus the class on comparing all regions before choosing a settlement.";
+      current.studentMove = "Compare all regions and prepare to explain the strongest settlement choice.";
+    }
+
+    localStorage.setItem(KEY, JSON.stringify(current));
+
+    const manualStatus = document.getElementById("teacherRegionFocusStatus");
+    if (manualStatus) {
+      manualStatus.textContent = region
+        ? `Current Teacher Focus: ${region}`
+        : "Current Teacher Focus: All Regions";
+    }
+
+    document.querySelectorAll(".teacher-region-focus-btn").forEach((btn) => {
+      btn.classList.toggle("active", btn.dataset.focusRegion === region);
+    });
+  }
+
+  buttons.forEach((btn) => {
+    btn.addEventListener("click", function () {
+      writePreset(btn.dataset.presetRegion || "", btn.dataset.presetTitle || "");
+    });
+  });
 })();
 </script>
 
