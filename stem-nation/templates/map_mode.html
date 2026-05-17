@@ -1860,6 +1860,52 @@
 }
 
 
+
+/* STEM_NATION_REGION_FOCUS_HIGHLIGHT_SYSTEM_V1 */
+.board-terrain-layer.region-focus-active .board-terrain-tile,
+.terrain-map-grid.region-focus-active .terrain-zone {
+  opacity: 0.42;
+  filter: saturate(0.75) brightness(0.82);
+  transition: opacity 0.28s ease, filter 0.28s ease, transform 0.28s ease, box-shadow 0.28s ease;
+}
+
+.board-terrain-layer.region-focus-active .board-terrain-tile.region-focused,
+.terrain-map-grid.region-focus-active .terrain-zone.region-focused {
+  opacity: 1;
+  filter: saturate(1.35) brightness(1.15);
+  transform: translateY(-4px) scale(1.045);
+  border-color: rgba(255,215,106,0.95);
+  box-shadow:
+    0 0 0 2px rgba(255,215,106,0.28),
+    0 0 26px rgba(255,215,106,0.42),
+    inset 0 0 18px rgba(255,215,106,0.12);
+}
+
+.region-card.region-focused {
+  border-color: rgba(255,215,106,0.85);
+  box-shadow: 0 0 22px rgba(255,215,106,0.25);
+}
+
+.cinematic-focus-banner {
+  position: relative;
+  z-index: 4;
+  width: 92%;
+  margin: 10px auto 0;
+  padding: 10px 14px;
+  border-radius: 14px;
+  border: 1px solid rgba(91,192,222,0.38);
+  background: rgba(5,12,20,0.72);
+  color: #dff6ff;
+  font-size: 13px;
+  line-height: 1.4;
+  animation: revealRise 0.35s ease-out;
+}
+
+.cinematic-focus-banner strong {
+  color: #ffd76a;
+}
+
+
 .status-label{
     margin-bottom:6px;
     font-weight:bold;
@@ -2375,6 +2421,14 @@
       <span id="regionIntelClue">Watch the land before making a decision.</span>
     </div>
   </div>
+</div>
+
+
+
+<!-- STEM_NATION_REGION_FOCUS_HIGHLIGHT_SYSTEM_V1 -->
+<div id="cinematicFocusBanner" class="cinematic-focus-banner hidden">
+  <strong>Region Focus:</strong>
+  <span id="cinematicFocusText">Select a region to focus the living board.</span>
 </div>
 
 
@@ -5188,6 +5242,75 @@ Displays active teacher-guided class session on the student map.
 
     console.log("STEM_NATION_STUDENT_MAP_RESET_VIEW_BUTTON_V1 reset complete");
   });
+})();
+</script>
+
+
+<script>
+// STEM_NATION_REGION_FOCUS_HIGHLIGHT_SYSTEM_V1
+(function installRegionFocusHighlightSystem() {
+  const worldLayer = document.getElementById("boardTerrainLayer");
+  const strategicLayer = document.querySelector(".terrain-map-grid");
+  const focusBanner = document.getElementById("cinematicFocusBanner");
+  const focusText = document.getElementById("cinematicFocusText");
+  const inquiryPrompt = document.getElementById("dynamicInquiryPrompt");
+
+  const focusMessages = {
+    "River Corridor": "The river offers life and movement, but flood danger must shape the settlement plan.",
+    "Forest Edge": "The forest gives shelter and resources, but hidden danger limits what people can see.",
+    "Highland Ridge": "The highland protects from above, but steep land challenges farming and supply movement.",
+    "Coastal Bay": "The coast connects fishing, travel, and trade, but storms and invasion routes create risk.",
+    "Open Plain": "The plain supports farming and expansion, but exposure makes defense harder.",
+    "Balanced Crossroads": "The crossroads brings trade and ideas, but connection also brings pressure and conflict."
+  };
+
+  function clearFocus() {
+    document.querySelectorAll(".board-terrain-tile, .terrain-zone, .region-card").forEach((el) => {
+      el.classList.remove("region-focused");
+    });
+
+    if (worldLayer) worldLayer.classList.remove("region-focus-active");
+    if (strategicLayer) strategicLayer.classList.remove("region-focus-active");
+
+    if (focusBanner) focusBanner.classList.add("hidden");
+  }
+
+  function applyFocus(region) {
+    if (!region) return;
+
+    clearFocus();
+
+    if (worldLayer) worldLayer.classList.add("region-focus-active");
+    if (strategicLayer) strategicLayer.classList.add("region-focus-active");
+
+    document.querySelectorAll(`[data-region="${region}"]`).forEach((el) => {
+      el.classList.add("region-focused");
+    });
+
+    const message = focusMessages[region] || "Observe this region carefully before deciding.";
+
+    if (focusText) focusText.textContent = message;
+    if (focusBanner) focusBanner.classList.remove("hidden");
+
+    if (inquiryPrompt) {
+      inquiryPrompt.textContent = `What does ${region} offer, and what danger must your civilization plan for?`;
+    }
+  }
+
+  document.querySelectorAll(".board-terrain-tile, .terrain-zone, .region-card").forEach((el) => {
+    el.addEventListener("click", function () {
+      applyFocus(el.dataset.region);
+    });
+
+    el.addEventListener("mouseenter", function () {
+      applyFocus(el.dataset.region);
+    });
+  });
+
+  const resetBtn = document.getElementById("resetStudentMapViewBtn");
+  if (resetBtn) {
+    resetBtn.addEventListener("click", clearFocus);
+  }
 })();
 </script>
 
