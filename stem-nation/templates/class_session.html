@@ -271,6 +271,53 @@
 }
 </style>
 
+
+<style>
+.teacher-region-focus-selector {
+  margin-top: 18px;
+  padding: 16px;
+  border-radius: 16px;
+  border: 1px solid rgba(244,211,94,0.38);
+  background:
+    radial-gradient(circle at top left, rgba(244,211,94,0.11), transparent 42%),
+    rgba(5,10,18,0.68);
+}
+
+.teacher-region-focus-selector h3 {
+  margin-top: 0;
+  color: #ffd76a;
+}
+
+.teacher-region-focus-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.teacher-region-focus-btn {
+  border: 1px solid rgba(255,255,255,0.14);
+  border-radius: 999px;
+  padding: 8px 12px;
+  background: rgba(255,255,255,0.08);
+  color: #f7e7b0;
+  cursor: pointer;
+  font-weight: 700;
+}
+
+.teacher-region-focus-btn.active {
+  border-color: rgba(255,215,106,0.95);
+  background: rgba(255,215,106,0.18);
+  color: #ffd76a;
+  box-shadow: 0 0 18px rgba(255,215,106,0.2);
+}
+
+#teacherRegionFocusStatus {
+  margin-top: 10px;
+  color: #dff6ff;
+  font-size: 13px;
+}
+</style>
+
 </head>
 
 <body>
@@ -430,7 +477,31 @@
         <button id="resetTimelineBtn" class="warning" type="button">Reset Timeline</button>
       </div>
 
-      <div id="timelineStatusBox" class="timeline-status-box">
+      
+<!-- STEM_NATION_TEACHER_REGION_FOCUS_SELECTOR_V1 -->
+<div id="teacherRegionFocusSelector" class="teacher-region-focus-selector">
+  <h3>Teacher Region Focus</h3>
+  <p>
+    Direct student attention to one region on the Living World Board without changing the current timeline step.
+  </p>
+
+  <div class="teacher-region-focus-grid">
+    <button type="button" class="teacher-region-focus-btn" data-focus-region="River Corridor">🌊 River</button>
+    <button type="button" class="teacher-region-focus-btn" data-focus-region="Forest Edge">🌲 Forest</button>
+    <button type="button" class="teacher-region-focus-btn" data-focus-region="Highland Ridge">⛰️ Highland</button>
+    <button type="button" class="teacher-region-focus-btn" data-focus-region="Coastal Bay">⚓ Coast</button>
+    <button type="button" class="teacher-region-focus-btn" data-focus-region="Open Plain">🌾 Plain</button>
+    <button type="button" class="teacher-region-focus-btn" data-focus-region="Balanced Crossroads">🛤️ Crossroads</button>
+    <button type="button" class="teacher-region-focus-btn" data-focus-region="">Clear Focus</button>
+  </div>
+
+  <div id="teacherRegionFocusStatus">
+    Current Teacher Focus: Timeline controlled
+  </div>
+</div>
+
+
+<div id="timelineStatusBox" class="timeline-status-box">
         No live instruction step selected yet.
       </div>
     </div>
@@ -839,6 +910,65 @@
   renderHealth();
   window.addEventListener("storage", renderHealth);
   setInterval(renderHealth, 1500);
+})();
+</script>
+
+
+<script>
+// STEM_NATION_TEACHER_REGION_FOCUS_SELECTOR_V1
+(function installTeacherRegionFocusSelector() {
+  const KEY = "STEM_NATION_CLASS_TIMELINE_V1";
+  const buttons = Array.from(document.querySelectorAll(".teacher-region-focus-btn"));
+  const status = document.getElementById("teacherRegionFocusStatus");
+
+  if (!buttons.length || !status) return;
+
+  function readTimeline() {
+    const raw = localStorage.getItem(KEY);
+    if (!raw) return null;
+
+    try {
+      return JSON.parse(raw);
+    } catch (err) {
+      console.warn("Invalid timeline data ignored for region focus selector.", err);
+      return null;
+    }
+  }
+
+  function writeFocus(region) {
+    const current = readTimeline() || {
+      activeStep: "manual",
+      activeIndex: -1,
+      title: "Manual Region Focus",
+      teacherMove: "Teacher is directing attention to a selected region.",
+      studentMove: "Observe the highlighted region and explain its advantage and risk."
+    };
+
+    current.focusRegion = region || "";
+    current.updatedAt = new Date().toISOString();
+
+    localStorage.setItem(KEY, JSON.stringify(current));
+    renderFocus(current.focusRegion);
+  }
+
+  function renderFocus(region) {
+    buttons.forEach((btn) => {
+      btn.classList.toggle("active", btn.dataset.focusRegion === region);
+    });
+
+    status.textContent = region
+      ? `Current Teacher Focus: ${region}`
+      : "Current Teacher Focus: None";
+  }
+
+  buttons.forEach((btn) => {
+    btn.addEventListener("click", function () {
+      writeFocus(btn.dataset.focusRegion || "");
+    });
+  });
+
+  const current = readTimeline();
+  renderFocus(current ? (current.focusRegion || "") : "");
 })();
 </script>
 
