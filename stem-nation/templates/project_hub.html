@@ -619,6 +619,78 @@ PHASE 8 STEP 7 — STEM NATION COMMAND SESSION DISPLAY V1
 }
 </style>
 
+
+<style>
+.civilization-score-panel {
+  margin-top: 24px;
+  border-radius: 18px;
+  border: 1px solid rgba(91,192,222,0.28);
+  padding: 24px;
+  background:
+    radial-gradient(circle at top right, rgba(91,192,222,0.10), transparent 38%),
+    rgba(255,255,255,0.04);
+}
+
+.civilization-score-panel h2 {
+  margin-top: 0;
+  color: #bdefff;
+  text-align: center;
+}
+
+.civilization-score-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 14px;
+  margin-top: 18px;
+}
+
+.civilization-score-card {
+  border-radius: 14px;
+  border: 1px solid rgba(255,255,255,0.10);
+  padding: 14px;
+  background: rgba(0,0,0,0.20);
+  text-align: center;
+}
+
+.civilization-score-label {
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  opacity: 0.72;
+}
+
+.civilization-score-value {
+  margin-top: 8px;
+  font-size: 22px;
+  font-weight: bold;
+  color: #ffd76a;
+}
+
+.civilization-badge-list {
+  margin-top: 22px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  justify-content: center;
+}
+
+.civilization-badge {
+  border-radius: 999px;
+  padding: 10px 16px;
+  background: rgba(255,215,106,0.10);
+  border: 1px solid rgba(255,215,106,0.28);
+  color: #ffe7a3;
+  font-size: 13px;
+}
+
+#civilizationReadinessSummary {
+  margin-top: 18px;
+  text-align: center;
+  font-size: 18px;
+  color: #b8f5c0;
+}
+</style>
+
 </head>
 
 <body>
@@ -680,7 +752,52 @@ PHASE 8 STEP 7 — STEM NATION COMMAND SESSION DISPLAY V1
 
     </div>
 
-    <div id="governanceActionPanel" class="panel governance-action-panel">
+    
+<!-- STEM_NATION_CIVILIZATION_SCORE_BADGE_SUMMARY_V1 -->
+<section id="civilizationScorePanel" class="civilization-score-panel">
+  <h2>Civilization Score / Badge Summary</h2>
+
+  <div class="civilization-score-grid">
+    <div class="civilization-score-card">
+      <div class="civilization-score-label">Observation Score</div>
+      <div id="scoreObservation" class="civilization-score-value">--</div>
+    </div>
+
+    <div class="civilization-score-card">
+      <div class="civilization-score-label">Evidence Score</div>
+      <div id="scoreEvidence" class="civilization-score-value">--</div>
+    </div>
+
+    <div class="civilization-score-card">
+      <div class="civilization-score-label">Risk Analysis</div>
+      <div id="scoreRisk" class="civilization-score-value">--</div>
+    </div>
+
+    <div class="civilization-score-card">
+      <div class="civilization-score-label">Settlement Planning</div>
+      <div id="scoreSettlement" class="civilization-score-value">--</div>
+    </div>
+
+    <div class="civilization-score-card">
+      <div class="civilization-score-label">Systems Thinking</div>
+      <div id="scoreSystems" class="civilization-score-value">--</div>
+    </div>
+
+    <div class="civilization-score-card">
+      <div class="civilization-score-label">Teacher Evaluation</div>
+      <div id="scoreTeacherEval" class="civilization-score-value">--</div>
+    </div>
+  </div>
+
+  <div id="civilizationReadinessSummary">
+    Civilization Readiness: --
+  </div>
+
+  <div id="civilizationBadgeList" class="civilization-badge-list"></div>
+</section>
+
+
+<div id="governanceActionPanel" class="panel governance-action-panel">
 
       <h2>Governance Actions</h2>
 
@@ -2830,6 +2947,128 @@ Selective demo reset controls for local student test data.
   });
 
   loadEvaluation();
+})();
+</script>
+
+
+<script>
+// STEM_NATION_CIVILIZATION_SCORE_BADGE_SUMMARY_V1
+(function installCivilizationScoreSummary() {
+
+  function readJSON(key) {
+    try {
+      return JSON.parse(localStorage.getItem(key) || "null");
+    } catch (err) {
+      return null;
+    }
+  }
+
+  const comparison = readJSON("STEM_NATION_STUDENT_COMPARISON_RESPONSE_V1");
+  const evaluation = readJSON("STEM_NATION_TEACHER_EVALUATION_FEEDBACK_V1");
+
+  const scoreMap = {
+    "4 · Strong": 95,
+    "3 · Proficient": 82,
+    "2 · Developing": 68,
+    "1 · Beginning": 52
+  };
+
+  function evalScore(value) {
+    return scoreMap[value] || 0;
+  }
+
+  const observation = document.getElementById("scoreObservation");
+  const evidence = document.getElementById("scoreEvidence");
+  const risk = document.getElementById("scoreRisk");
+  const settlement = document.getElementById("scoreSettlement");
+  const systems = document.getElementById("scoreSystems");
+  const teacherEval = document.getElementById("scoreTeacherEval");
+
+  const readiness = document.getElementById("civilizationReadinessSummary");
+  const badgeList = document.getElementById("civilizationBadgeList");
+
+  if (!observation || !evidence || !risk || !settlement || !systems || !teacherEval || !readiness || !badgeList) return;
+
+  const observationScore = evalScore(evaluation?.observationQuality);
+  const evidenceScore = evalScore(evaluation?.evidenceUse);
+  const riskScore = evalScore(evaluation?.riskAwareness);
+  const settlementScore = evalScore(evaluation?.settlementLogic);
+  const systemsScore = evalScore(evaluation?.systemsThinking);
+
+  // STEM_NATION_SCORE_AVERAGING_COMPLETED_ONLY_V1
+  const completedScores = [
+    observationScore,
+    evidenceScore,
+    riskScore,
+    settlementScore,
+    systemsScore
+  ].filter((score) => score > 0);
+
+  const completedCount = completedScores.length;
+
+  const teacherAverage = completedCount
+    ? Math.round(completedScores.reduce((sum, score) => sum + score, 0) / completedCount)
+    : 0;
+
+  observation.textContent = observationScore || "--";
+  evidence.textContent = evidenceScore || "--";
+  risk.textContent = riskScore || "--";
+  settlement.textContent = settlementScore || "--";
+  systems.textContent = systemsScore || "--";
+  teacherEval.textContent = teacherAverage
+    ? `${teacherAverage} (${completedCount} / 5 complete)`
+    : "--";
+
+  let readinessLabel = completedCount
+    ? "Emerging Civilization"
+    : "Rubric Pending";
+
+  if (teacherAverage >= 90) {
+    readinessLabel = "Advanced Civilization Readiness";
+  } else if (teacherAverage >= 75) {
+    readinessLabel = "Stable Civilization Readiness";
+  } else if (teacherAverage >= 60) {
+    readinessLabel = "Developing Civilization Readiness";
+  }
+
+  readiness.textContent =
+    completedCount
+      ? "Civilization Readiness: " + readinessLabel
+      : "Civilization Readiness: Rubric Pending";
+
+  const badges = [];
+
+  if (comparison?.regions?.includes("River Corridor")) {
+    badges.push("🌊 Water Systems Thinker");
+  }
+
+  if (riskScore >= 75) {
+    badges.push("⚖️ Risk Awareness Builder");
+  }
+
+  if (settlementScore >= 75) {
+    badges.push("🛖 Settlement Strategist");
+  }
+
+  if (systemsScore >= 75) {
+    badges.push("🧠 Systems Thinker");
+  }
+
+  if (evidenceScore >= 75) {
+    badges.push("📜 Evidence-Based Reasoner");
+  }
+
+  if (teacherAverage >= 90) {
+    badges.push("🏛️ Civilization Architect");
+  }
+
+  if (!badges.length) {
+    badges.push("🌱 Founding Civilization");
+  }
+
+  badgeList.innerHTML = badges.map((badge) => {
+    return `<div class="civilization-badge">${badge}</div>`;
+  }).join("");
 })();
 </script>
 

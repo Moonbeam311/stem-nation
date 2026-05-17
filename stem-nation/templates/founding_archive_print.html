@@ -198,6 +198,55 @@
 
 
 <!-- STEM_NATION_PRINT_TEACHER_EVALUATION_FEEDBACK_V1 -->
+
+<!-- STEM_NATION_PRINT_CIVILIZATION_SCORE_SUMMARY_V1 -->
+<section class="print-section" id="civilizationScorePrintSection">
+  <h2>Civilization Score / Badge Summary</h2>
+
+  <div class="print-grid">
+    <div class="print-item">
+      <div class="print-label">Observation Score:</div>
+      <div id="printScoreObservation" class="print-answer">—</div>
+    </div>
+
+    <div class="print-item">
+      <div class="print-label">Evidence Score:</div>
+      <div id="printScoreEvidence" class="print-answer">—</div>
+    </div>
+
+    <div class="print-item">
+      <div class="print-label">Risk Analysis:</div>
+      <div id="printScoreRisk" class="print-answer">—</div>
+    </div>
+
+    <div class="print-item">
+      <div class="print-label">Settlement Planning:</div>
+      <div id="printScoreSettlement" class="print-answer">—</div>
+    </div>
+
+    <div class="print-item">
+      <div class="print-label">Systems Thinking:</div>
+      <div id="printScoreSystems" class="print-answer">—</div>
+    </div>
+
+    <div class="print-item">
+      <div class="print-label">Teacher Evaluation Average:</div>
+      <div id="printScoreTeacherEval" class="print-answer">—</div>
+    </div>
+
+    <div class="print-item">
+      <div class="print-label">Civilization Readiness:</div>
+      <div id="printReadinessSummary" class="print-answer">—</div>
+    </div>
+
+    <div class="print-item">
+      <div class="print-label">Achievement Badges:</div>
+      <div id="printBadgeSummary" class="print-answer">—</div>
+    </div>
+  </div>
+</section>
+
+
 <section class="print-section" id="teacherEvaluationPrintSection">
   <h2>Teacher Evaluation / Feedback</h2>
 
@@ -441,6 +490,115 @@ loadPrintableArchive();
     "printEvalSavedAt",
     evaluation.savedAt ? new Date(evaluation.savedAt).toLocaleString() : ""
   );
+})();
+</script>
+
+
+<script>
+// STEM_NATION_PRINT_CIVILIZATION_SCORE_SUMMARY_V1
+(function renderCivilizationScoreSummaryForPrint() {
+
+  function readJSON(key) {
+    try {
+      return JSON.parse(localStorage.getItem(key) || "null");
+    } catch (err) {
+      return null;
+    }
+  }
+
+  function setText(id, value) {
+    const el = document.getElementById(id);
+    if (el) el.textContent = value || "—";
+  }
+
+  const comparison = readJSON("STEM_NATION_STUDENT_COMPARISON_RESPONSE_V1");
+  const evaluation = readJSON("STEM_NATION_TEACHER_EVALUATION_FEEDBACK_V1");
+
+  const scoreMap = {
+    "4 · Strong": 95,
+    "3 · Proficient": 82,
+    "2 · Developing": 68,
+    "1 · Beginning": 52
+  };
+
+  function evalScore(value) {
+    return scoreMap[value] || 0;
+  }
+
+  const observationScore = evalScore(evaluation?.observationQuality);
+  const evidenceScore = evalScore(evaluation?.evidenceUse);
+  const riskScore = evalScore(evaluation?.riskAwareness);
+  const settlementScore = evalScore(evaluation?.settlementLogic);
+  const systemsScore = evalScore(evaluation?.systemsThinking);
+
+  // STEM_NATION_SCORE_AVERAGING_COMPLETED_ONLY_V1
+  const completedScores = [
+    observationScore,
+    evidenceScore,
+    riskScore,
+    settlementScore,
+    systemsScore
+  ].filter((score) => score > 0);
+
+  const completedCount = completedScores.length;
+
+  const teacherAverage = completedCount
+    ? Math.round(completedScores.reduce((sum, score) => sum + score, 0) / completedCount)
+    : 0;
+
+  setText("printScoreObservation", observationScore);
+  setText("printScoreEvidence", evidenceScore);
+  setText("printScoreRisk", riskScore);
+  setText("printScoreSettlement", settlementScore);
+  setText("printScoreSystems", systemsScore);
+  setText(
+    "printScoreTeacherEval",
+    teacherAverage ? `${teacherAverage} (${completedCount} / 5 complete)` : ""
+  );
+
+  let readiness = completedCount ? "Emerging Civilization" : "Rubric Pending";
+
+  if (teacherAverage >= 90) {
+    readiness = "Advanced Civilization Readiness";
+  } else if (teacherAverage >= 75) {
+    readiness = "Stable Civilization Readiness";
+  } else if (teacherAverage >= 60) {
+    readiness = "Developing Civilization Readiness";
+  }
+
+  setText("printReadinessSummary", readiness);
+
+  const badges = [];
+
+  if (comparison?.regions?.includes("River Corridor")) {
+    badges.push("🌊 Water Systems Thinker");
+  }
+
+  if (riskScore >= 75) {
+    badges.push("⚖️ Risk Awareness Builder");
+  }
+
+  if (settlementScore >= 75) {
+    badges.push("🛖 Settlement Strategist");
+  }
+
+  if (systemsScore >= 75) {
+    badges.push("🧠 Systems Thinker");
+  }
+
+  if (evidenceScore >= 75) {
+    badges.push("📜 Evidence-Based Reasoner");
+  }
+
+  if (teacherAverage >= 90) {
+    badges.push("🏛️ Civilization Architect");
+  }
+
+  if (!badges.length) {
+    badges.push("🌱 Founding Civilization");
+  }
+
+  setText("printBadgeSummary", badges.join(" · "));
 })();
 </script>
 
