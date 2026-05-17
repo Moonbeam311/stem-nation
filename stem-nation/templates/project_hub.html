@@ -439,6 +439,73 @@ PHASE 8 STEP 7 — STEM NATION COMMAND SESSION DISPLAY V1
 }
 </style>
 
+
+<style>
+.comparison-response-review {
+  margin-top: 28px;
+  background: rgba(0,0,0,0.34);
+  border: 1px solid rgba(91,192,222,0.32);
+  border-radius: 18px;
+  padding: 24px;
+}
+
+.comparison-response-review h2 {
+  color: #bdefff;
+  margin-top: 0;
+  text-align: center;
+}
+
+.comparison-response-empty {
+  text-align: center;
+  opacity: 0.82;
+  line-height: 1.6;
+}
+
+.comparison-response-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 14px;
+  margin-top: 18px;
+}
+
+.comparison-response-item {
+  border: 1px solid rgba(91,192,222,0.22);
+  border-radius: 14px;
+  padding: 16px;
+  background: rgba(255,255,255,0.05);
+}
+
+.comparison-response-item .label {
+  color: #bdefff;
+  font-size: 12px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  margin-bottom: 8px;
+}
+
+.comparison-response-item .answer {
+  line-height: 1.55;
+  white-space: pre-wrap;
+  opacity: 0.95;
+}
+
+.comparison-response-time {
+  margin-top: 14px;
+  text-align: center;
+  font-size: 13px;
+  opacity: 0.68;
+}
+</style>
+
+
+<style>
+/* STEM_NATION_HUB_COMPARISON_EMPTY_VISIBILITY_FIX_V1 */
+#comparisonResponseEmpty.hidden,
+#comparisonResponseContent.hidden {
+  display: none !important;
+}
+</style>
+
 </head>
 
 <body>
@@ -2081,6 +2148,43 @@ Selective demo reset controls for local student test data.
 </script>
 
 
+
+<!-- STEM_NATION_HUB_COMPARISON_RESPONSE_REVIEW_V1 -->
+<section id="comparisonResponseReview" class="comparison-response-review">
+  <h2>Region Comparison Response</h2>
+
+  <div id="comparisonResponseEmpty" class="comparison-response-empty">
+    No comparison response saved yet. Activate Region Comparison Mode on the Teacher Session page, then have students save their response on the map.
+  </div>
+
+  <div id="comparisonResponseContent" class="comparison-response-grid hidden">
+    <div class="comparison-response-item">
+      <div class="label">Compared Regions</div>
+      <div id="hubComparedRegions" class="answer">—</div>
+    </div>
+
+    <div class="comparison-response-item">
+      <div class="label">Stronger Beginning</div>
+      <div id="hubStrongerRegion" class="answer">—</div>
+    </div>
+
+    <div class="comparison-response-item">
+      <div class="label">Advantage / Evidence</div>
+      <div id="hubComparisonAdvantage" class="answer">—</div>
+    </div>
+
+    <div class="comparison-response-item">
+      <div class="label">Risk / Tradeoff</div>
+      <div id="hubComparisonRisk" class="answer">—</div>
+    </div>
+
+    <div id="hubComparisonSavedTime" class="comparison-response-time">
+      Saved: —
+    </div>
+  </div>
+</section>
+
+
 <!-- STEM_NATION_COMMAND_CENTER_TIMELINE_V1 -->
 <div id="commandCenterTimeline" class="command-center-timeline collapsed">
   <button id="commandCenterTimelineToggle"
@@ -2178,6 +2282,62 @@ Selective demo reset controls for local student test data.
 
   setInterval(renderTimeline, 1000);
 
+})();
+</script>
+
+
+<script>
+// STEM_NATION_HUB_COMPARISON_RESPONSE_REVIEW_V1
+(function installHubComparisonResponseReview() {
+  const KEY = "STEM_NATION_STUDENT_COMPARISON_RESPONSE_V1";
+
+  const empty = document.getElementById("comparisonResponseEmpty");
+  const content = document.getElementById("comparisonResponseContent");
+  const regions = document.getElementById("hubComparedRegions");
+  const stronger = document.getElementById("hubStrongerRegion");
+  const advantage = document.getElementById("hubComparisonAdvantage");
+  const risk = document.getElementById("hubComparisonRisk");
+  const savedTime = document.getElementById("hubComparisonSavedTime");
+
+  if (!empty || !content || !regions || !stronger || !advantage || !risk || !savedTime) return;
+
+  function readResponse() {
+    const raw = localStorage.getItem(KEY);
+    if (!raw) return null;
+
+    try {
+      return JSON.parse(raw);
+    } catch (err) {
+      console.warn("Invalid comparison response ignored.", err);
+      return null;
+    }
+  }
+
+  function renderResponse() {
+    const data = readResponse();
+
+    if (!data) {
+      empty.classList.remove("hidden");
+      content.classList.add("hidden");
+      return;
+    }
+
+    empty.classList.add("hidden");
+    content.classList.remove("hidden");
+
+    regions.textContent = Array.isArray(data.regions) ? data.regions.join(" vs ") : "—";
+    stronger.textContent = data.strongerRegion || "—";
+    advantage.textContent = data.advantageEvidence || "—";
+    risk.textContent = data.riskTradeoff || "—";
+
+    savedTime.textContent = data.savedAt
+      ? "Saved: " + new Date(data.savedAt).toLocaleString()
+      : "Saved: —";
+  }
+
+  renderResponse();
+  window.addEventListener("storage", renderResponse);
+  window.addEventListener("focus", renderResponse);
 })();
 </script>
 
