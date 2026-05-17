@@ -1793,6 +1793,73 @@
 }
 
 
+
+/* STEM_NATION_CINEMATIC_REGION_INTEL_CARDS_V1 */
+.cinematic-region-intel-card {
+  position: relative;
+  z-index: 4;
+  width: 92%;
+  margin: 16px auto 0;
+  padding: 16px 18px;
+  border-radius: 18px;
+  border: 1px solid rgba(244,211,94,0.38);
+  background:
+    radial-gradient(circle at top left, rgba(244,211,94,0.12), transparent 45%),
+    rgba(5,10,18,0.74);
+  box-shadow: 0 0 20px rgba(0,0,0,0.32);
+  color: #f6edc8;
+  animation: revealRise 0.45s ease-out;
+}
+
+.region-intel-label {
+  color: #f4d35e;
+  font-size: 11px;
+  letter-spacing: 4px;
+  text-transform: uppercase;
+  margin-bottom: 6px;
+}
+
+.region-intel-name {
+  font-size: 20px;
+  font-weight: 800;
+  color: #ffffff;
+  margin-bottom: 8px;
+}
+
+.region-intel-description {
+  line-height: 1.45;
+  opacity: 0.95;
+  margin-bottom: 12px;
+}
+
+.region-intel-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+}
+
+.region-intel-chip {
+  padding: 10px;
+  border-radius: 12px;
+  background: rgba(255,255,255,0.07);
+  border: 1px solid rgba(255,255,255,0.12);
+  font-size: 12px;
+  line-height: 1.35;
+}
+
+.region-intel-chip strong {
+  display: block;
+  color: #ffd76a;
+  margin-bottom: 4px;
+}
+
+@media (max-width: 900px) {
+  .region-intel-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+
 .status-label{
     margin-bottom:6px;
     font-weight:bold;
@@ -2285,7 +2352,33 @@
 
     </div>
 
-    <div id="boardWorldFeedback" class="board-world-feedback hidden">
+    
+<!-- STEM_NATION_CINEMATIC_REGION_INTEL_CARDS_V1 -->
+<div id="cinematicRegionIntelCard" class="cinematic-region-intel-card">
+  <div class="region-intel-label">Region Intel</div>
+  <div id="regionIntelName" class="region-intel-name">Select a Region</div>
+  <div id="regionIntelDescription" class="region-intel-description">
+    Choose a region on the Living World Board to reveal its survival advantage, risk, and observation clue.
+  </div>
+
+  <div class="region-intel-grid">
+    <div class="region-intel-chip">
+      <strong>Advantage</strong>
+      <span id="regionIntelAdvantage">—</span>
+    </div>
+    <div class="region-intel-chip">
+      <strong>Risk</strong>
+      <span id="regionIntelRisk">—</span>
+    </div>
+    <div class="region-intel-chip">
+      <strong>Observation Clue</strong>
+      <span id="regionIntelClue">Watch the land before making a decision.</span>
+    </div>
+  </div>
+</div>
+
+
+<div id="boardWorldFeedback" class="board-world-feedback hidden">
       Select terrain to begin settlement review.
     </div>
 
@@ -4908,6 +5001,87 @@ Displays active teacher-guided class session on the student map.
   }
 
   button.addEventListener("click", enterWorld);
+
+})();
+</script>
+
+
+<script>
+// STEM_NATION_CINEMATIC_REGION_INTEL_CARDS_V1
+(function installCinematicRegionIntelCards() {
+  const intel = {
+    "River Corridor": {
+      name: "🌊 River Corridor",
+      description: "Fresh water, fertile soil, fish, and travel routes make the river powerful, but rising water can flood early settlements.",
+      advantage: "Water, food, farming, fishing, and travel.",
+      risk: "Flooding, exposed banks, and settlement loss.",
+      clue: "Watch how water shapes movement, farming, and danger."
+    },
+    "Forest Edge": {
+      name: "🌲 Forest Edge",
+      description: "Trees provide shelter, tools, fuel, and protection, but thick cover can hide danger and limit visibility.",
+      advantage: "Shelter, wood, fuel, tools, and cover.",
+      risk: "Reduced visibility, hidden threats, and slower movement.",
+      clue: "Look for what the forest gives and what it hides."
+    },
+    "Highland Ridge": {
+      name: "⛰️ Highland Ridge",
+      description: "High ground improves defense and long-distance observation, but steep terrain makes farming, travel, and supplies harder.",
+      advantage: "Defense, lookout points, and protection.",
+      risk: "Difficult movement, limited farming, and supply strain.",
+      clue: "Notice how elevation protects people but slows survival."
+    },
+    "Coastal Bay": {
+      name: "⚓ Coastal Bay",
+      description: "The coast supports fishing, navigation, and future trade, but storms, exposure, and invasion routes create constant risk.",
+      advantage: "Fishing, travel, navigation, and future trade.",
+      risk: "Storms, exposure, and outside threats.",
+      clue: "Watch how the sea connects people and brings danger."
+    },
+    "Open Plain": {
+      name: "🌾 Open Plain",
+      description: "Open land supports farming, movement, and animal herds, but exposure makes defense and shelter more difficult.",
+      advantage: "Farming, movement, grazing, and expansion.",
+      risk: "Exposure, weak defense, and limited shelter.",
+      clue: "Look for how open space helps growth but increases vulnerability."
+    },
+    "Balanced Crossroads": {
+      name: "🛤️ Balanced Crossroads",
+      description: "Roads connect people, goods, and ideas, but trade routes also bring conflict, competition, and outside pressure.",
+      advantage: "Trade, communication, alliances, and movement.",
+      risk: "Conflict, competition, and pressure from outsiders.",
+      clue: "Watch how connection creates wealth and tension."
+    }
+  };
+
+  const nameEl = document.getElementById("regionIntelName");
+  const descEl = document.getElementById("regionIntelDescription");
+  const advEl = document.getElementById("regionIntelAdvantage");
+  const riskEl = document.getElementById("regionIntelRisk");
+  const clueEl = document.getElementById("regionIntelClue");
+
+  if (!nameEl || !descEl || !advEl || !riskEl || !clueEl) return;
+
+  function updateIntel(region) {
+    const data = intel[region];
+    if (!data) return;
+
+    nameEl.textContent = data.name;
+    descEl.textContent = data.description;
+    advEl.textContent = data.advantage;
+    riskEl.textContent = data.risk;
+    clueEl.textContent = data.clue;
+  }
+
+  document.querySelectorAll(".board-terrain-tile, .terrain-zone, .region-card").forEach((el) => {
+    el.addEventListener("click", function () {
+      updateIntel(el.dataset.region);
+    });
+
+    el.addEventListener("mouseenter", function () {
+      updateIntel(el.dataset.region);
+    });
+  });
 
 })();
 </script>
