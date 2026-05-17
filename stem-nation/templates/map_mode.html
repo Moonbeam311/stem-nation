@@ -1937,6 +1937,28 @@
 }
 
 
+
+/* STEM_NATION_MAP_REGION_COMPARISON_DISPLAY_V1 */
+.region-comparison-banner {
+  position: relative;
+  z-index: 4;
+  width: 92%;
+  margin: 10px auto 0;
+  padding: 12px 14px;
+  border-radius: 14px;
+  border: 1px solid rgba(255,215,106,0.42);
+  background:
+    radial-gradient(circle at top left, rgba(255,215,106,0.12), transparent 44%),
+    rgba(5,10,18,0.76);
+  color: #f7e7b0;
+  animation: revealRise 0.35s ease-out;
+}
+
+.region-comparison-banner strong {
+  color: #ffd76a;
+}
+
+
 .status-label{
     margin-bottom:6px;
     font-weight:bold;
@@ -2475,6 +2497,14 @@
 
 
 <!-- STEM_NATION_REGION_FOCUS_HIGHLIGHT_SYSTEM_V1 -->
+
+<!-- STEM_NATION_MAP_REGION_COMPARISON_DISPLAY_V1 -->
+<div id="regionComparisonBanner" class="region-comparison-banner hidden">
+  <strong>Region Comparison:</strong>
+  <span id="regionComparisonText">Choose two regions to compare.</span>
+</div>
+
+
 <div id="cinematicFocusBanner" class="cinematic-focus-banner hidden">
   <strong>Region Focus:</strong>
   <span id="cinematicFocusText">Select a region to focus the living board.</span>
@@ -5480,6 +5510,59 @@ Displays active teacher-guided class session on the student map.
   window.addEventListener("storage", focusRegionFromTimeline);
   window.addEventListener("focus", focusRegionFromTimeline);
   setInterval(focusRegionFromTimeline, 1000);
+})();
+</script>
+
+
+<script>
+// STEM_NATION_MAP_REGION_COMPARISON_DISPLAY_V1
+(function syncRegionComparisonDisplay() {
+  const KEY = "STEM_NATION_CLASS_TIMELINE_V1";
+  let lastSignature = "";
+  const banner = document.getElementById("regionComparisonBanner");
+  const text = document.getElementById("regionComparisonText");
+
+  if (!banner || !text) return;
+
+  function renderComparison() {
+    const raw = localStorage.getItem(KEY);
+    if (!raw) return;
+
+    try {
+      const state = JSON.parse(raw);
+      const regions = Array.isArray(state.compareRegions) ? state.compareRegions : [];
+
+      if (!state.comparisonMode || regions.length !== 2) {
+        banner.classList.add("hidden");
+        return;
+      }
+
+      const signature = regions.join("|") + "|" + state.updatedAt;
+      if (signature === lastSignature) return;
+      lastSignature = signature;
+
+      banner.classList.remove("hidden");
+      text.textContent = `${regions[0]} vs ${regions[1]} — Which is stronger for survival, trade, defense, or growth?`;
+
+      document.querySelectorAll(".board-terrain-tile, .terrain-zone, .region-card").forEach((el) => {
+        const match = regions.includes(el.dataset.region);
+        el.classList.toggle("region-focused", match);
+      });
+
+      const inquiryPrompt = document.getElementById("dynamicInquiryPrompt");
+      if (inquiryPrompt) {
+        inquiryPrompt.textContent = `Compare ${regions[0]} and ${regions[1]}: which region gives the stronger beginning, and what is the cost?`;
+      }
+
+    } catch (err) {
+      console.warn("Region comparison display skipped.", err);
+    }
+  }
+
+  renderComparison();
+  window.addEventListener("storage", renderComparison);
+  window.addEventListener("focus", renderComparison);
+  setInterval(renderComparison, 1000);
 })();
 </script>
 

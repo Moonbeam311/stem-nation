@@ -357,6 +357,46 @@
 }
 </style>
 
+
+<style>
+.region-comparison-mode-panel {
+  margin-top: 16px;
+  padding: 14px;
+  border-radius: 16px;
+  border: 1px solid rgba(255,215,106,0.34);
+  background:
+    radial-gradient(circle at top left, rgba(255,215,106,0.10), transparent 42%),
+    rgba(12,8,18,0.62);
+}
+
+.region-comparison-mode-panel h3 {
+  margin-top: 0;
+  color: #ffd76a;
+}
+
+.region-comparison-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr auto;
+  gap: 10px;
+  align-items: end;
+}
+
+.region-comparison-row label {
+  font-size: 12px;
+  color: #f7e7b0;
+}
+
+.region-comparison-row select {
+  width: 100%;
+}
+
+#regionComparisonStatus {
+  margin-top: 10px;
+  color: #dff6ff;
+  font-size: 13px;
+}
+</style>
+
 </head>
 
 <body>
@@ -548,6 +588,50 @@
     <button type="button" class="timeline-region-preset-btn" data-preset-region="Balanced Crossroads" data-preset-title="Trade & Outside Pressure">
       🛤️ Trade Pressure
     </button>
+  </div>
+</div>
+
+
+
+<!-- STEM_NATION_REGION_COMPARISON_MODE_V1 -->
+<div id="regionComparisonModePanel" class="region-comparison-mode-panel">
+  <h3>Region Comparison Mode</h3>
+  <p>
+    Compare two regions so students can explain which land is stronger for a specific purpose and at what cost.
+  </p>
+
+  <div class="region-comparison-row">
+    <label>
+      Region A
+      <select id="compareRegionA">
+        <option value="River Corridor">🌊 River Corridor</option>
+        <option value="Forest Edge">🌲 Forest Edge</option>
+        <option value="Highland Ridge">⛰️ Highland Ridge</option>
+        <option value="Coastal Bay">⚓ Coastal Bay</option>
+        <option value="Open Plain">🌾 Open Plain</option>
+        <option value="Balanced Crossroads">🛤️ Balanced Crossroads</option>
+      </select>
+    </label>
+
+    <label>
+      Region B
+      <select id="compareRegionB">
+        <option value="Highland Ridge">⛰️ Highland Ridge</option>
+        <option value="River Corridor">🌊 River Corridor</option>
+        <option value="Forest Edge">🌲 Forest Edge</option>
+        <option value="Coastal Bay">⚓ Coastal Bay</option>
+        <option value="Open Plain">🌾 Open Plain</option>
+        <option value="Balanced Crossroads">🛤️ Balanced Crossroads</option>
+      </select>
+    </label>
+
+    <button id="activateRegionComparisonBtn" type="button">
+      Compare Regions
+    </button>
+  </div>
+
+  <div id="regionComparisonStatus">
+    Comparison Mode: Not active
   </div>
 </div>
 
@@ -1106,6 +1190,62 @@
       writePreset(btn.dataset.presetRegion || "", btn.dataset.presetTitle || "");
     });
   });
+})();
+</script>
+
+
+<script>
+// STEM_NATION_REGION_COMPARISON_MODE_V1
+(function installRegionComparisonMode() {
+  const KEY = "STEM_NATION_CLASS_TIMELINE_V1";
+  const regionA = document.getElementById("compareRegionA");
+  const regionB = document.getElementById("compareRegionB");
+  const activateBtn = document.getElementById("activateRegionComparisonBtn");
+  const status = document.getElementById("regionComparisonStatus");
+
+  if (!regionA || !regionB || !activateBtn || !status) return;
+
+  function readTimeline() {
+    const raw = localStorage.getItem(KEY);
+    if (!raw) return null;
+
+    try {
+      return JSON.parse(raw);
+    } catch (err) {
+      console.warn("Invalid timeline data ignored for comparison mode.", err);
+      return null;
+    }
+  }
+
+  function activateComparison() {
+    const a = regionA.value;
+    const b = regionB.value;
+
+    if (!a || !b || a === b) {
+      status.textContent = "Comparison Mode: Choose two different regions.";
+      return;
+    }
+
+    const current = readTimeline() || {
+      activeStep: "compare",
+      activeIndex: -1,
+      title: "Region Comparison Mode"
+    };
+
+    current.comparisonMode = true;
+    current.compareRegions = [a, b];
+    current.focusRegion = a;
+    current.title = "Region Comparison Mode";
+    current.teacherMove = `Compare ${a} and ${b}. Ask students: Which region is stronger for survival, trade, defense, or growth?`;
+    current.studentMove = "Compare both regions using advantage, risk, evidence, and long-term consequence.";
+    current.updatedAt = new Date().toISOString();
+
+    localStorage.setItem(KEY, JSON.stringify(current));
+
+    status.textContent = `Comparison Mode: ${a} vs ${b}`;
+  }
+
+  activateBtn.addEventListener("click", activateComparison);
 })();
 </script>
 
