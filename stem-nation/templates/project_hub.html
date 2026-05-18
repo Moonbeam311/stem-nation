@@ -3019,16 +3019,17 @@ Selective demo reset controls for local student test data.
     ? `${teacherAverage} (${completedCount} / 5 complete)`
     : "--";
 
-  let readinessLabel = completedCount
-    ? "Emerging Civilization"
-    : "Rubric Pending";
+  // STEM_NATION_READINESS_THRESHOLD_LOGIC_V1
+  let readinessLabel = "Rubric Pending";
 
-  if (teacherAverage >= 90) {
+  if (completedCount >= 4 && teacherAverage >= 90) {
     readinessLabel = "Advanced Civilization Readiness";
-  } else if (teacherAverage >= 75) {
+  } else if (completedCount >= 3 && teacherAverage >= 75) {
     readinessLabel = "Stable Civilization Readiness";
-  } else if (teacherAverage >= 60) {
+  } else if (completedCount >= 2 && teacherAverage >= 60) {
     readinessLabel = "Developing Civilization Readiness";
+  } else if (completedCount >= 1) {
+    readinessLabel = "Emerging Civilization";
   }
 
   readiness.textContent =
@@ -3036,29 +3037,30 @@ Selective demo reset controls for local student test data.
       ? "Civilization Readiness: " + readinessLabel
       : "Civilization Readiness: Rubric Pending";
 
+  // STEM_NATION_BADGE_ELIGIBILITY_THRESHOLDS_V1
   const badges = [];
 
   if (comparison?.regions?.includes("River Corridor")) {
     badges.push("🌊 Water Systems Thinker");
   }
 
-  if (riskScore >= 75) {
+  if (riskScore >= 75 && completedCount >= 2) {
     badges.push("⚖️ Risk Awareness Builder");
   }
 
-  if (settlementScore >= 75) {
+  if (settlementScore >= 75 && completedCount >= 2) {
     badges.push("🛖 Settlement Strategist");
   }
 
-  if (systemsScore >= 75) {
+  if (systemsScore >= 75 && completedCount >= 2) {
     badges.push("🧠 Systems Thinker");
   }
 
-  if (evidenceScore >= 75) {
+  if (evidenceScore >= 75 && completedCount >= 2) {
     badges.push("📜 Evidence-Based Reasoner");
   }
 
-  if (teacherAverage >= 90) {
+  if (teacherAverage >= 90 && completedCount >= 4) {
     badges.push("🏛️ Civilization Architect");
   }
 
