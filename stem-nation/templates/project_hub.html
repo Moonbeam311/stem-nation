@@ -735,6 +735,61 @@ PHASE 8 STEP 7 — STEM NATION COMMAND SESSION DISPLAY V1
 }
 </style>
 
+
+<style>
+.civilization-competency-profile {
+  margin-top: 24px;
+  border-radius: 18px;
+  border: 1px solid rgba(184,245,192,0.28);
+  padding: 24px;
+  background:
+    radial-gradient(circle at top left, rgba(184,245,192,0.10), transparent 38%),
+    rgba(255,255,255,0.04);
+}
+
+.civilization-competency-profile h2 {
+  margin-top: 0;
+  text-align: center;
+  color: #b8f5c0;
+}
+
+.competency-profile-intro {
+  text-align: center;
+  opacity: 0.86;
+  line-height: 1.55;
+}
+
+.competency-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+  gap: 14px;
+  margin-top: 20px;
+}
+
+.competency-card {
+  border-radius: 14px;
+  border: 1px solid rgba(255,255,255,0.10);
+  background: rgba(0,0,0,0.20);
+  padding: 16px;
+}
+
+.competency-card h3 {
+  margin: 0 0 8px;
+  color: #ffd76a;
+}
+
+.competency-level {
+  font-weight: bold;
+  color: #bdefff;
+  margin-bottom: 8px;
+}
+
+.competency-description {
+  line-height: 1.45;
+  opacity: 0.92;
+}
+</style>
+
 </head>
 
 <body>
@@ -838,6 +893,19 @@ PHASE 8 STEP 7 — STEM NATION COMMAND SESSION DISPLAY V1
   </div>
 
   <div id="civilizationBadgeList" class="civilization-badge-list"></div>
+</section>
+
+
+
+<!-- STEM_NATION_CIVILIZATION_COMPETENCY_PROFILE_V1 -->
+<section id="civilizationCompetencyProfile" class="civilization-competency-profile">
+  <h2>Civilization Competency Profile</h2>
+
+  <p class="competency-profile-intro">
+    This profile translates the founding archive into civilization leadership traits. It shows how the student is developing as a decision-maker, planner, analyst, and builder.
+  </p>
+
+  <div id="competencyProfileGrid" class="competency-grid"></div>
 </section>
 
 
@@ -3213,6 +3281,119 @@ Selective demo reset controls for local student test data.
   badgeList.innerHTML = badges.map((badge) => {
     return `<div class="civilization-badge">${badge}</div>`;
   }).join("");
+})();
+</script>
+
+
+<script>
+// STEM_NATION_CIVILIZATION_COMPETENCY_PROFILE_V1
+(function installCivilizationCompetencyProfile() {
+  const grid = document.getElementById("competencyProfileGrid");
+  if (!grid) return;
+
+  function readJSON(key) {
+    try {
+      return JSON.parse(localStorage.getItem(key) || "null");
+    } catch (err) {
+      return null;
+    }
+  }
+
+  const evaluation = readJSON("STEM_NATION_TEACHER_EVALUATION_FEEDBACK_V1");
+  const comparison = readJSON("STEM_NATION_STUDENT_COMPARISON_RESPONSE_V1");
+  const defense = readJSON("STEM_NATION_SETTLEMENT_DEFENSE_V1");
+
+  const scoreMap = {
+    "4 · Strong": 4,
+    "3 · Proficient": 3,
+    "2 · Developing": 2,
+    "1 · Beginning": 1
+  };
+
+  function levelFromScore(score) {
+    if (score >= 4) return "Strongly Developing";
+    if (score >= 3) return "Developing";
+    if (score >= 2) return "Emerging";
+    if (score >= 1) return "Beginning";
+    return "Not Yet Scored";
+  }
+
+  const observation = scoreMap[evaluation?.observationQuality] || 0;
+  const evidence = scoreMap[evaluation?.evidenceUse] || 0;
+  const risk = scoreMap[evaluation?.riskAwareness] || 0;
+  const settlement = scoreMap[evaluation?.settlementLogic] || 0;
+  const systems = scoreMap[evaluation?.systemsThinking] || 0;
+  const collaboration = scoreMap[evaluation?.collaboration] || 0;
+
+  const chosenRegion = defense?.chosenRegion || "";
+  const comparedRegions = Array.isArray(comparison?.regions) ? comparison.regions.join(" vs ") : "";
+
+  const competencies = [
+    {
+      title: "Risk Awareness",
+      level: levelFromScore(risk),
+      description: risk
+        ? "The student identifies danger, consequence, and tradeoff when evaluating civilization choices."
+        : "This competency will strengthen when the student explains risks, dangers, and long-term consequences."
+    },
+    {
+      title: "Systems Thinking",
+      level: levelFromScore(systems),
+      description: systems
+        ? "The student connects food, defense, trade, movement, environment, and growth as related systems."
+        : "This competency will strengthen when the student connects multiple civilization systems together."
+    },
+    {
+      title: "Settlement Strategy",
+      level: levelFromScore(settlement),
+      description: settlement
+        ? `The student explains why ${chosenRegion || "the selected region"} can support survival and growth.`
+        : "This competency will strengthen when the student gives a clear settlement plan tied to geography."
+    },
+    {
+      title: "Evidence Reasoning",
+      level: levelFromScore(evidence || observation),
+      description: evidence || observation
+        ? "The student uses observation and map evidence to support civilization decisions."
+        : "This competency will strengthen when the student cites visible map evidence."
+    },
+    {
+      title: "Trade & Movement Logic",
+      level: comparedRegions.includes("Coastal") || comparedRegions.includes("Crossroads") || chosenRegion.includes("Coastal") || chosenRegion.includes("Crossroads")
+        ? "Emerging"
+        : "Not Yet Scored",
+      description: "The student begins recognizing how waterways, roads, coastlines, and crossroads shape movement, contact, trade, and exposure."
+    },
+    {
+      title: "Defense Logic",
+      level: comparedRegions.includes("Highland") || chosenRegion.includes("Highland") || risk || settlement
+        ? "Emerging"
+        : "Not Yet Scored",
+      description: "The student begins recognizing how terrain, elevation, barriers, and exposure affect security and protection."
+    },
+    {
+      title: "Environmental Adaptation",
+      level: chosenRegion || comparedRegions
+        ? "Emerging"
+        : "Not Yet Scored",
+      description: "The student begins explaining how civilizations adapt to rivers, storms, floods, forests, plains, mountains, and coastlines."
+    },
+    {
+      title: "Collaboration & Discussion",
+      level: levelFromScore(collaboration),
+      description: collaboration
+        ? "The student contributes to shared reasoning, discussion, and collective decision-making."
+        : "This competency will strengthen when discussion and collaboration are evaluated."
+    }
+  ];
+
+  grid.innerHTML = competencies.map((item) => `
+    <article class="competency-card">
+      <h3>${item.title}</h3>
+      <div class="competency-level">${item.level}</div>
+      <div class="competency-description">${item.description}</div>
+    </article>
+  `).join("");
 })();
 </script>
 

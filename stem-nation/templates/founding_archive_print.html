@@ -200,6 +200,55 @@
 <!-- STEM_NATION_PRINT_TEACHER_EVALUATION_FEEDBACK_V1 -->
 
 <!-- STEM_NATION_PRINT_CIVILIZATION_SCORE_SUMMARY_V1 -->
+
+<!-- STEM_NATION_PRINT_CIVILIZATION_COMPETENCY_PROFILE_V1 -->
+<section class="print-section" id="civilizationCompetencyPrintSection">
+  <h2>Civilization Competency Profile</h2>
+
+  <div class="print-grid">
+    <div class="print-item">
+      <div class="print-label">Risk Awareness</div>
+      <div id="printCompetencyRisk" class="print-answer">—</div>
+    </div>
+
+    <div class="print-item">
+      <div class="print-label">Systems Thinking</div>
+      <div id="printCompetencySystems" class="print-answer">—</div>
+    </div>
+
+    <div class="print-item">
+      <div class="print-label">Settlement Strategy</div>
+      <div id="printCompetencySettlement" class="print-answer">—</div>
+    </div>
+
+    <div class="print-item">
+      <div class="print-label">Evidence Reasoning</div>
+      <div id="printCompetencyEvidence" class="print-answer">—</div>
+    </div>
+
+    <div class="print-item">
+      <div class="print-label">Trade & Movement Logic</div>
+      <div id="printCompetencyTrade" class="print-answer">—</div>
+    </div>
+
+    <div class="print-item">
+      <div class="print-label">Defense Logic</div>
+      <div id="printCompetencyDefense" class="print-answer">—</div>
+    </div>
+
+    <div class="print-item">
+      <div class="print-label">Environmental Adaptation</div>
+      <div id="printCompetencyEnvironment" class="print-answer">—</div>
+    </div>
+
+    <div class="print-item">
+      <div class="print-label">Collaboration & Discussion</div>
+      <div id="printCompetencyCollaboration" class="print-answer">—</div>
+    </div>
+  </div>
+</section>
+
+
 <section class="print-section" id="civilizationScorePrintSection">
   <h2>Civilization Score / Badge Summary</h2>
 
@@ -656,6 +705,69 @@ loadPrintableArchive();
   }
 
   setText("printBadgeSummary", badges.join(" · "));
+})();
+</script>
+
+
+<script>
+// STEM_NATION_PRINT_CIVILIZATION_COMPETENCY_PROFILE_V1
+(function renderCivilizationCompetencyProfileForPrint() {
+  function readJSON(key) {
+    try {
+      return JSON.parse(localStorage.getItem(key) || "null");
+    } catch (err) {
+      return null;
+    }
+  }
+
+  function setText(id, value) {
+    const el = document.getElementById(id);
+    if (el) el.textContent = value || "—";
+  }
+
+  const evaluation = readJSON("STEM_NATION_TEACHER_EVALUATION_FEEDBACK_V1");
+  const comparison = readJSON("STEM_NATION_STUDENT_COMPARISON_RESPONSE_V1");
+  const defense = readJSON("STEM_NATION_SETTLEMENT_DEFENSE_V1");
+
+  const scoreMap = {
+    "4 · Strong": 4,
+    "3 · Proficient": 3,
+    "2 · Developing": 2,
+    "1 · Beginning": 1
+  };
+
+  function level(score) {
+    if (score >= 4) return "Strongly Developing";
+    if (score >= 3) return "Developing";
+    if (score >= 2) return "Emerging";
+    if (score >= 1) return "Beginning";
+    return "Not Yet Scored";
+  }
+
+  const chosenRegion = defense?.chosenRegion || "";
+  const comparedRegions = Array.isArray(comparison?.regions) ? comparison.regions.join(" vs ") : "";
+
+  setText("printCompetencyRisk", level(scoreMap[evaluation?.riskAwareness] || 0));
+  setText("printCompetencySystems", level(scoreMap[evaluation?.systemsThinking] || 0));
+  setText("printCompetencySettlement", level(scoreMap[evaluation?.settlementLogic] || 0));
+  setText("printCompetencyEvidence", level((scoreMap[evaluation?.evidenceUse] || 0) || (scoreMap[evaluation?.observationQuality] || 0)));
+  setText(
+    "printCompetencyTrade",
+    comparedRegions.includes("Coastal") || comparedRegions.includes("Crossroads") || chosenRegion.includes("Coastal") || chosenRegion.includes("Crossroads")
+      ? "Emerging"
+      : "Not Yet Scored"
+  );
+  setText(
+    "printCompetencyDefense",
+    comparedRegions.includes("Highland") || chosenRegion.includes("Highland") || scoreMap[evaluation?.riskAwareness] || scoreMap[evaluation?.settlementLogic]
+      ? "Emerging"
+      : "Not Yet Scored"
+  );
+  setText(
+    "printCompetencyEnvironment",
+    chosenRegion || comparedRegions ? "Emerging" : "Not Yet Scored"
+  );
+  setText("printCompetencyCollaboration", level(scoreMap[evaluation?.collaboration] || 0));
 })();
 </script>
 
