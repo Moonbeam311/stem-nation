@@ -1,0 +1,1654 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>STEM Nation | World Board v1.3</title>
+  <style>
+    body {
+      margin: 0;
+      background: #05070b;
+      color: #f5e6b8;
+      font-family: Georgia, serif;
+    }
+
+    .top-status {
+      display: grid;
+      grid-template-columns: 1fr auto 1fr;
+      align-items: center;
+      padding: 12px 22px;
+      background: #0f1621;
+      border-bottom: 1px solid rgba(212,175,55,.25);
+      position: sticky;
+      top: 0;
+      z-index: 50;
+    }
+
+    .top-status strong { color: #f5d76e; }
+
+    .hud {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 10px;
+      font-size: 13px;
+    }
+
+    .hud span {
+      border: 1px solid rgba(212,175,55,.25);
+      border-radius: 999px;
+      padding: 6px 10px;
+      background: rgba(255,255,255,.04);
+    }
+
+    .back-link {
+      color: #f5d76e;
+      text-decoration: none;
+      justify-self: end;
+    }
+
+    .shell {
+      display: grid;
+      grid-template-columns: 1fr 390px;
+      min-height: calc(100vh - 58px);
+    }
+
+    .map-zone {
+      padding: 24px;
+      background: radial-gradient(circle at top, #172230, #05070b 75%);
+    }
+
+    .world-frame {
+      position: relative;
+      overflow: hidden;
+      border-radius: 22px;
+      border: 1px solid rgba(212,175,55,.3);
+      box-shadow: 0 25px 80px rgba(0,0,0,.6);
+      background: #111;
+    }
+
+    .world-frame img {
+      width: 100%;
+      display: block;
+      opacity: .94;
+    }
+
+    .event-card, .decision-log, .settlement, .objective {
+      margin-top: 18px;
+      background: rgba(255,255,255,.05);
+      border: 1px solid rgba(212,175,55,.3);
+      border-radius: 16px;
+      padding: 16px;
+    }
+
+    .event-card h3, .decision-log h3, .objective h3 {
+      margin: 0 0 8px;
+      color: #f5d76e;
+    }
+
+    .region-grid {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 12px;
+      margin-top: 20px;
+    }
+
+    .region-btn {
+      background: rgba(255,255,255,.05);
+      color: #f5e6b8;
+      border: 1px solid rgba(212,175,55,.25);
+      border-radius: 14px;
+      padding: 14px 8px;
+      cursor: pointer;
+      font-weight: bold;
+      transition: .25s;
+    }
+
+    .region-btn:hover {
+      background: rgba(212,175,55,.16);
+      transform: translateY(-2px);
+    }
+
+    .region-btn.active {
+      background: rgba(212,175,55,.25);
+      border-color: #f5d76e;
+      box-shadow: 0 0 18px rgba(245,215,110,.25);
+    }
+
+    .panel {
+      border-left: 1px solid rgba(212,175,55,.25);
+      background: linear-gradient(180deg,#101720,#07090d);
+      padding: 26px;
+    }
+
+    .panel h2 {
+      color: #f5d76e;
+      margin-top: 0;
+    }
+
+    .metric {
+      display: flex;
+      justify-content: space-between;
+      padding: 10px 0;
+      border-bottom: 1px solid rgba(255,255,255,.08);
+    }
+
+    button {
+      font-family: Georgia, serif;
+    }
+
+    .actions button, .turn-btn {
+      width: 100%;
+      margin-top: 10px;
+      padding: 12px;
+      border-radius: 12px;
+      border: 1px solid rgba(212,175,55,.25);
+      background: rgba(212,175,55,.12);
+      color: #f5e6b8;
+      cursor: pointer;
+      transition: .2s;
+    }
+
+    .actions button:hover, .turn-btn:hover {
+      background: rgba(212,175,55,.22);
+    }
+
+    .turn-btn {
+      background: rgba(245,215,110,.22);
+      border-color: rgba(245,215,110,.55);
+      font-weight: bold;
+      margin-top: 12px;
+    }
+
+    input {
+      width: 100%;
+      box-sizing: border-box;
+      padding: 10px;
+      border-radius: 10px;
+      border: 1px solid rgba(212,175,55,.3);
+      background: #080c12;
+      color: #f5e6b8;
+      margin-top: 8px;
+    }
+
+    .log-entry {
+      padding: 8px 0;
+      border-bottom: 1px solid rgba(255,255,255,.06);
+      color: #d8c89b;
+      font-size: 14px;
+    }
+
+    .advisor {
+      margin-top: 18px;
+      line-height: 1.5;
+      color: #d9cfa8;
+    }
+
+    .system-status {
+      color: #9ee6a8;
+      border: 1px solid rgba(158,230,168,.3);
+      background: rgba(158,230,168,.08);
+      padding: 8px 10px;
+      border-radius: 10px;
+      margin-bottom: 14px;
+      font-size: 13px;
+    }
+
+    .research-path-btn {
+      display: block;
+      width: 100%;
+      margin-top: 8px;
+      padding: 10px;
+      border-radius: 12px;
+      border: 1px solid rgba(245,215,110,.42);
+      background: rgba(245,215,110,.12);
+      color: #f5e6b8;
+      cursor: pointer;
+      text-align: left;
+      font-weight: bold;
+    }
+
+    .research-path-btn:hover {
+      background: rgba(245,215,110,.22);
+    }
+
+    .research-action-box {
+      margin-top: 12px;
+      padding: 12px;
+      border: 1px solid rgba(212,175,55,.25);
+      border-radius: 14px;
+      background: rgba(255,255,255,.035);
+      color: #d8c89b;
+      line-height: 1.45;
+    }
+  </style>
+</head>
+
+<body>
+<!-- STEM_NATION_WORLD_BOARD_CLEAN_V13 -->
+
+<div class="top-status">
+  <div><strong id="turnLabel">TURN 1</strong> · <span id="seasonLabel">Early Rainfall Season</span></div>
+
+  <div class="hud">
+    <span>Food: <strong id="hudFood">70</strong></span>
+    <span>Stability: <strong id="hudStability">75</strong></span>
+    <span>Knowledge: <strong id="hudKnowledge">40</strong></span>
+    <span>Wealth: <strong id="hudWealth">35</strong></span>
+    <span>Morale: <strong id="hudMorale">68</strong></span>
+    <span>Climate: <strong id="hudClimate">62</strong></span>
+  </div>
+
+  <a class="back-link" href="/gameboard">Back to Gameboard</a>
+</div>
+
+<div class="shell">
+  <main class="map-zone">
+    <div class="world-frame">
+      <img src="{{ url_for('static', filename='gameboard/02_world_board_locked.png') }}" alt="STEM Nation World Board">
+    </div>
+
+    <div class="event-card">
+      <h3>LIVE WORLD EVENT</h3>
+      <p id="eventText">Heavy rainfall detected near the River Corridor. Trade conditions improving along coastal regions.</p>
+    </div>
+
+    <div class="region-grid">
+      <button type="button" class="region-btn" data-region="River Corridor">River Corridor</button>
+      <button type="button" class="region-btn" data-region="Forest Belt">Forest Belt</button>
+      <button type="button" class="region-btn" data-region="Highland Ridge">Highland Ridge</button>
+      <button type="button" class="region-btn" data-region="Coastal Exchange">Coastal Exchange</button>
+      <button type="button" class="region-btn" data-region="Valley Basin">Valley Basin</button>
+    </div>
+  </main>
+
+  <aside class="panel">
+    <div class="system-status" id="systemStatus">World Board JS loading...</div>
+
+    <div class="objective">
+      <h3>OBJECTIVE</h3>
+      <p id="objectiveText">Choose a region, found your first settlement, then enter the land through a Scout Mission.</p>
+      <p><strong>Phase:</strong> <span id="phaseLabel">Settlement Formation</span></p>
+    </div>
+
+    <!-- STEM_NATION_WORLD_BOARD_PHASE_ADVANCEMENT_V17 -->
+    <div class="objective" id="missionChecklistCard">
+      <h3>Mission Checklist</h3>
+      <div class="log-entry" id="checkRegion">□ Select a region</div>
+      <div class="log-entry" id="checkSettlement">□ Found first settlement</div>
+      <div class="log-entry" id="checkScout">□ Complete scout mission</div>
+      <div class="log-entry" id="checkResearch">□ Activate one research path</div>
+      <div class="log-entry" id="checkArchive">□ Archive evidence trail</div>
+      <button type="button" class="turn-btn" id="advancePhaseBtn" style="display:none;">Advance to Survival Planning</button>
+    </div>
+
+    <div class="objective" id="survivalPlanningCard" style="display:none;">
+      <h3>Survival Planning Actions</h3>
+      <div class="log-entry" id="survival-food">□ Secure Food Supply</div>
+      <div class="log-entry" id="survival-water">□ Protect Water Sources</div>
+      <div class="log-entry" id="survival-health">□ Prepare Health Response</div>
+      <div class="log-entry" id="survival-shelter">□ Strengthen Shelter</div>
+      <div class="log-entry" id="survival-civic">□ Assign Civic Roles</div>
+    </div>
+
+    <!-- STEM_NATION_WORLD_BOARD_TURN2_READINESS_V19 -->
+    <div class="objective" id="turnReadinessCard" style="display:none;">
+      <h3>Turn 2 Readiness</h3>
+      <div class="log-entry">Readiness Score: <strong id="readinessScore">0/5</strong></div>
+      <div class="log-entry">Status: <strong id="readinessStatus">Not Prepared</strong></div>
+      <div class="log-entry" id="readinessForecast">
+        Complete Survival Planning actions before advancing the turn.
+      </div>
+    </div>
+
+    <!-- STEM_NATION_WORLD_BOARD_TURN2_CRISIS_V20 -->
+    <div class="objective" id="crisisCard" style="display:none;">
+      <h3 id="crisisTitle">Turn 2 Crisis</h3>
+      <div class="log-entry" id="crisisDescription">No active crisis.</div>
+      <div class="log-entry">Severity: <strong id="crisisSeverity">--</strong></div>
+      <div class="log-entry" id="crisisAdvisor">Advisor guidance will appear here.</div>
+
+      <button type="button" class="turn-btn" id="crisisMedicineBtn">Deploy Medicine Research</button>
+      <button type="button" class="turn-btn" id="crisisWaterBtn">Protect Water Sources</button>
+      <button type="button" class="turn-btn" id="crisisHealthBtn">Organize Health Response</button>
+      <button type="button" class="turn-btn" id="crisisCivicBtn">Call Civic Council</button>
+    </div>
+
+    <!-- STEM_NATION_WORLD_BOARD_RECOVERY_PHASE_V21 -->
+    <div class="objective" id="crisisResolutionCard" style="display:none;">
+      <h3>Crisis Resolution Archive</h3>
+      <div class="log-entry" id="crisisResolutionSummary">No crisis resolution recorded yet.</div>
+
+      <p style="color:#d6c89a; line-height:1.45; margin-top:12px;">
+        Lessons Learned: What did your civilization learn from this crisis?
+      </p>
+
+      <textarea id="crisisLessonNote" placeholder="Write a short lesson learned from this crisis..."
+        style="width:100%; min-height:90px; box-sizing:border-box; border-radius:12px; border:1px solid rgba(212,175,55,.35); background:#080c12; color:#f5e6b8; padding:10px; font-family:Georgia,serif;"></textarea>
+
+      <button type="button" class="turn-btn" id="archiveCrisisBtn">Archive Crisis Resolution</button>
+      <button type="button" class="turn-btn" id="advanceRecoveryBtn" style="display:none;">Advance to Recovery & Growth</button>
+    </div>
+
+    <div class="objective" id="recoveryActionsCard" style="display:none;">
+      <h3>Recovery & Growth Actions</h3>
+      <div class="log-entry" id="recovery-rebuild">□ Rebuild Community Trust</div>
+      <div class="log-entry" id="recovery-farms">□ Expand Food Resilience</div>
+      <div class="log-entry" id="recovery-clinic">□ Establish Healing Center</div>
+      <div class="log-entry" id="recovery-archive">□ Preserve Crisis Records</div>
+    </div>
+
+    <h2 id="regionName">Select a Region</h2>
+    <p id="regionSummary">Choose a region to begin civilization analysis.</p>
+
+    <div class="metric"><span>Food</span><strong id="food">--</strong></div>
+    <div class="metric"><span>Water</span><strong id="water">--</strong></div>
+    <div class="metric"><span>Trade</span><strong id="trade">--</strong></div>
+    <div class="metric"><span>Defense</span><strong id="defense">--</strong></div>
+    <div class="metric"><span>Risk</span><strong id="risk">--</strong></div>
+
+    <div class="settlement">
+      <strong>Found First Settlement</strong>
+      <input id="settlementName" placeholder="Name your first settlement">
+      <button type="button" class="turn-btn" id="placeSettlementBtn">Place Settlement</button>
+      <p id="settlementStatus">No settlement placed yet.</p>
+    </div>
+
+    <!-- STEM_NATION_WORLD_BOARD_SURVIVAL_ACTIONS_V18 -->
+    <div class="actions">
+      <button type="button" id="scoutBtn">Scout Region</button>
+      <button type="button" id="buildBtn">Build Infrastructure</button>
+      <button type="button" id="tradeBtn">Open Trade Route</button>
+      <button type="button" id="preserveBtn">Preserve Sacred Site</button>
+      <button type="button" id="survivalBtn1" style="display:none;">Secure Food Supply</button>
+      <button type="button" id="survivalBtn2" style="display:none;">Protect Water Sources</button>
+      <button type="button" id="survivalBtn3" style="display:none;">Prepare Health Response</button>
+      <button type="button" id="survivalBtn4" style="display:none;">Strengthen Shelter</button>
+      <button type="button" id="survivalBtn5" style="display:none;">Assign Civic Roles</button>
+
+      <button type="button" id="recoveryBtn1" style="display:none;">Rebuild Community Trust</button>
+      <button type="button" id="recoveryBtn2" style="display:none;">Expand Food Resilience</button>
+      <button type="button" id="recoveryBtn3" style="display:none;">Establish Healing Center</button>
+      <button type="button" id="recoveryBtn4" style="display:none;">Preserve Crisis Records</button>
+    </div>
+
+    <button type="button" class="turn-btn" id="advanceTurnBtn">Advance Turn</button>
+    <button type="button" class="turn-btn" id="resetBtn">Reset World State</button>
+
+    <div class="advisor" id="advisorNote">Advisor Note: The world is waiting for your first decision.</div>
+
+    <div class="decision-log" id="scoutIntelCard" style="display:none;">
+      <h3>Returned Scout Intelligence</h3>
+      <div id="scoutIntelText" class="log-entry">No scout intelligence returned yet.</div>
+    </div>
+
+    <div class="decision-log" id="unlockCard" style="display:none;">
+      <h3>Unlocked Paths</h3>
+      <div id="unlockList" class="log-entry">No paths unlocked yet.</div>
+    </div>
+
+    <!-- STEM_NATION_WORLD_BOARD_RESEARCH_PATHS_V15 -->
+    <div class="decision-log" id="researchCard" style="display:none;">
+      <h3>Research Path Activation</h3>
+      <div id="researchActionBox" class="research-action-box">
+        Select an unlocked path to begin research.
+      </div>
+    </div>
+
+    <!-- STEM_NATION_WORLD_BOARD_RESEARCH_ARCHIVE_V16 -->
+    <div class="decision-log" id="archiveCard">
+      <h3>Research Archive + Completed Discoveries</h3>
+      <div id="archiveBox" class="research-action-box">
+        No completed discoveries or research archived yet.
+      </div>
+    </div>
+
+    <div class="decision-log">
+      <h3>Decision Log</h3>
+      <div id="logEntries">
+        <div class="log-entry">Awaiting civilization action...</div>
+      </div>
+    </div>
+  </aside>
+</div>
+
+<script>
+(function () {
+  let currentRegion = null;
+  let turn = 1;
+  let eventIndex = 0;
+
+  let state = {
+    food: 70,
+    stability: 75,
+    knowledge: 40,
+    wealth: 35,
+    morale: 68,
+    climate: 62,
+    settlementPlaced: false,
+    settlementName: "",
+    settlementRegion: "",
+    unlockedPaths: [],
+    appliedScoutReturns: [],
+    completedResearch: [],
+    phase: "Settlement Formation",
+    phaseAdvanced: false,
+    completedSurvivalActions: [],
+    turn2OutcomeApplied: false,
+    activeCrisis: null,
+    crisisResponses: [],
+    crisisArchived: false,
+    recoveryAdvanced: false,
+    completedRecoveryActions: []
+  };
+
+  const seasons = ["Early Rainfall Season", "High Sun Season", "Harvest Season", "Cold Wind Season"];
+
+  const events = [
+    "Heavy rainfall detected near the River Corridor. Flood risk is rising.",
+    "A coastal trade caravan requests safe passage and fair exchange.",
+    "Forest scouts report medicinal plants and signs of disease risk.",
+    "Highland winds reveal mineral deposits near the ridge.",
+    "Valley population growth is increasing pressure on food and water."
+  ];
+
+  const regions = {
+    "River Corridor": {
+      summary: "Strong farming and water access, but vulnerable to flooding.",
+      food: "High", water: "High", trade: "Medium", defense: "Low", risk: "Flooding",
+      note: "Advisor Note: The river can sustain civilization for generations if respected."
+    },
+    "Forest Belt": {
+      summary: "Rich in biodiversity, medicine, timber, and sacred memory.",
+      food: "Medium", water: "Medium", trade: "Low", defense: "Medium", risk: "Disease / Isolation",
+      note: "Advisor Note: The forest rewards balance, not reckless expansion."
+    },
+    "Highland Ridge": {
+      summary: "Strong defensive advantage and mineral access.",
+      food: "Low", water: "Medium", trade: "Low", defense: "High", risk: "Harsh terrain",
+      note: "Advisor Note: Control the heights, and you control visibility and defense."
+    },
+    "Coastal Exchange": {
+      summary: "Trade, diplomacy, migration, and naval opportunity.",
+      food: "Medium", water: "High", trade: "High", defense: "Medium", risk: "Storms / invasion",
+      note: "Advisor Note: Prosperity flows through open trade routes."
+    },
+    "Valley Basin": {
+      summary: "Balanced growth potential and fertile expansion zones.",
+      food: "High", water: "Medium", trade: "Medium", defense: "Medium", risk: "Overpopulation / drought",
+      note: "Advisor Note: Growth without planning leads to instability."
+    }
+  };
+
+  function setText(id, value) {
+    const el = document.getElementById(id);
+    if (el) el.textContent = value;
+  }
+
+  function logAction(message) {
+    const container = document.getElementById("logEntries");
+    if (!container) return;
+
+    if (container.textContent.includes("Awaiting civilization action")) {
+      container.innerHTML = "";
+    }
+
+    const entry = document.createElement("div");
+    entry.className = "log-entry";
+    entry.textContent = "[" + new Date().toLocaleTimeString() + "] " + message;
+    container.prepend(entry);
+  }
+
+  function updateArchive() {
+    const box = document.getElementById("archiveBox");
+    if (!box) return;
+
+    const scoutReports = JSON.parse(localStorage.getItem("STEM_NATION_SCOUT_REPORTS_V1") || "[]");
+    const completedResearch = state.completedResearch || [];
+    const unlockedPaths = state.unlockedPaths || [];
+
+    let html = "";
+
+    if (completedResearch.length > 0) {
+      html += "<strong>Completed Research</strong>";
+      completedResearch.forEach(function (item) {
+        html += "<div class='log-entry'>✓ " + item + "</div>";
+      });
+    }
+
+    if (unlockedPaths.length > 0) {
+      html += "<br><strong>Unlocked Civilization Knowledge</strong>";
+      unlockedPaths.forEach(function (item) {
+        html += "<div class='log-entry'>• " + item + "</div>";
+      });
+    }
+
+    if (scoutReports.length > 0) {
+      html += "<br><strong>Completed Scout Reports</strong>";
+
+      scoutReports.slice(0, 5).forEach(function (report) {
+        html += "<div class='log-entry'>";
+        html += "<strong>" + report.region + "</strong>";
+
+        if (report.savedAt) {
+          html += " · " + report.savedAt;
+        }
+
+        if (report.observations && report.observations.length > 0) {
+          html += "<br>";
+          html += report.observations.map(function (obs) {
+            return obs.label + ": " + obs.effect;
+          }).join("<br>");
+        } else if (report.effect) {
+          html += "<br>" + report.effect;
+        }
+
+        if (report.evidenceNote) {
+          html += "<br><em>Evidence:</em> " + report.evidenceNote;
+        }
+
+        html += "</div>";
+      });
+    }
+
+    if (!html) {
+      html = "No completed discoveries or research archived yet.";
+    }
+
+    box.innerHTML = html;
+  }
+
+  function hasScoutReports() {
+    try {
+      const scoutReports = JSON.parse(localStorage.getItem("STEM_NATION_SCOUT_REPORTS_V1") || "[]");
+      return scoutReports.length > 0;
+    } catch (err) {
+      return false;
+    }
+  }
+
+  function setCheck(id, done, label) {
+    const el = document.getElementById(id);
+    if (!el) return;
+
+    el.textContent = (done ? "✓ " : "□ ") + label;
+    el.style.color = done ? "#9ee6a8" : "#d8c89b";
+  }
+
+  function missionComplete() {
+    return Boolean(
+      currentRegion &&
+      state.settlementPlaced &&
+      hasScoutReports() &&
+      state.completedResearch &&
+      state.completedResearch.length > 0 &&
+      state.unlockedPaths &&
+      state.unlockedPaths.length > 0
+    );
+  }
+
+  function updateMissionChecklist() {
+    const scoutDone = hasScoutReports();
+    const researchDone = state.completedResearch && state.completedResearch.length > 0;
+    const archiveDone = scoutDone || researchDone || (state.unlockedPaths && state.unlockedPaths.length > 0);
+
+    setCheck("checkRegion", Boolean(currentRegion), "Select a region");
+    setCheck("checkSettlement", Boolean(state.settlementPlaced), "Found first settlement");
+    setCheck("checkScout", scoutDone, "Complete scout mission");
+    setCheck("checkResearch", researchDone, "Activate one research path");
+    setCheck("checkArchive", archiveDone, "Archive evidence trail");
+
+    const btn = document.getElementById("advancePhaseBtn");
+
+    if (btn) {
+      if (missionComplete() && !state.phaseAdvanced) {
+        btn.style.display = "block";
+        btn.textContent = "Advance to Survival Planning";
+      } else if (state.phaseAdvanced) {
+        btn.style.display = "none";
+      } else {
+        btn.style.display = "none";
+      }
+    }
+
+    const phaseLabel = document.getElementById("phaseLabel");
+    const objectiveText = document.getElementById("objectiveText");
+
+    if (phaseLabel) phaseLabel.textContent = state.phase || "Settlement Formation";
+
+    if (objectiveText && state.phase === "Survival Planning") {
+      objectiveText.textContent = "Use your settlement, scout intelligence, and research to protect food, water, health, and stability through the next turns.";
+    }
+
+    if (objectiveText && state.phase === "Recovery & Growth") {
+      objectiveText.textContent = "Recover from crisis, rebuild trust, strengthen food systems, and preserve the lessons learned for future generations.";
+    }
+  }
+
+  function advancePhase() {
+    if (!missionComplete()) {
+      logAction("Phase advancement blocked: complete the mission checklist first.");
+      setText("systemStatus", "JS ACTIVE — phase advancement blocked.");
+      return;
+    }
+
+    state.phase = "Survival Planning";
+    state.phaseAdvanced = true;
+    state.stability += 2;
+    state.morale += 2;
+
+    updateHUD();
+    updateMissionChecklist();
+    saveState();
+
+    logAction("Phase advanced: Settlement Formation → Survival Planning. Stability +2, Morale +2.");
+    setText("systemStatus", "JS ACTIVE — phase advanced to Survival Planning.");
+  }
+
+  function updateHUD() {
+    setText("hudFood", state.food);
+    setText("hudStability", state.stability);
+    setText("hudKnowledge", state.knowledge);
+    setText("hudWealth", state.wealth);
+    setText("hudMorale", state.morale);
+    setText("hudClimate", state.climate);
+
+    if (state.settlementPlaced) {
+      setText("settlementStatus", "Active Settlement: " + state.settlementName + " — " + state.settlementRegion);
+    } else {
+      setText("settlementStatus", "No settlement placed yet.");
+    }
+
+    const unlockCard = document.getElementById("unlockCard");
+    const unlockList = document.getElementById("unlockList");
+
+    if (unlockCard && unlockList && state.unlockedPaths && state.unlockedPaths.length > 0) {
+      unlockCard.style.display = "block";
+      unlockList.innerHTML = "";
+
+      state.unlockedPaths.forEach(function (pathName) {
+        const btn = document.createElement("button");
+        btn.type = "button";
+        btn.className = "research-path-btn";
+        btn.textContent = pathName;
+        btn.addEventListener("click", function () {
+          openResearchPath(pathName);
+        });
+        unlockList.appendChild(btn);
+      });
+    }
+
+    const researchCard = document.getElementById("researchCard");
+    if (researchCard && state.unlockedPaths && state.unlockedPaths.length > 0) {
+      researchCard.style.display = "block";
+    }
+
+    updateArchive();
+    updateMissionChecklist();
+    updateSurvivalPlanningUI();
+    updateTurnReadinessUI();
+    updateCrisisUI();
+    updateCrisisResolutionUI();
+    updateRecoveryUI();
+  }
+
+  function saveState() {
+    localStorage.setItem("STEM_NATION_WORLD_BOARD_V13_STATE", JSON.stringify({
+      currentRegion: currentRegion,
+      turn: turn,
+      eventIndex: eventIndex,
+      state: state
+    }));
+  }
+
+  function loadState() {
+    const saved = localStorage.getItem("STEM_NATION_WORLD_BOARD_V13_STATE");
+    if (!saved) return;
+
+    try {
+      const data = JSON.parse(saved);
+      currentRegion = data.currentRegion || null;
+      turn = data.turn || 1;
+      eventIndex = data.eventIndex || 0;
+      state = data.state || state;
+
+      setText("turnLabel", "TURN " + turn);
+      setText("seasonLabel", seasons[(turn - 1) % seasons.length]);
+      setText("eventText", events[eventIndex]);
+
+      updateHUD();
+
+      if (currentRegion && regions[currentRegion]) {
+        selectRegion(currentRegion, false);
+      }
+    } catch (err) {
+      console.warn("Could not load saved world state", err);
+    }
+  }
+
+  function selectRegion(name, shouldLog) {
+    currentRegion = name;
+    const r = regions[name];
+    if (!r) return;
+
+    document.querySelectorAll(".region-btn").forEach(function (btn) {
+      btn.classList.toggle("active", btn.getAttribute("data-region") === name);
+    });
+
+    setText("regionName", name);
+    setText("regionSummary", r.summary);
+    setText("food", r.food);
+    setText("water", r.water);
+    setText("trade", r.trade);
+    setText("defense", r.defense);
+    setText("risk", r.risk);
+    setText("advisorNote", r.note);
+    setText("systemStatus", "JS ACTIVE — selected " + name);
+
+    if (shouldLog !== false) {
+      logAction("Selected region: " + name);
+    }
+
+    saveState();
+  }
+
+  function placeSettlement() {
+    if (!currentRegion) {
+      logAction("Settlement blocked: select a region first.");
+      setText("systemStatus", "JS ACTIVE — settlement blocked, select a region.");
+      return;
+    }
+
+    if (state.settlementPlaced) {
+      logAction("Settlement blocked: first settlement already placed at " + state.settlementName + ".");
+      setText("systemStatus", "JS ACTIVE — duplicate settlement blocked.");
+      return;
+    }
+
+    const input = document.getElementById("settlementName");
+    const name = input && input.value.trim() ? input.value.trim() : "First Settlement";
+
+    state.settlementPlaced = true;
+    state.settlementName = name;
+    state.settlementRegion = currentRegion;
+    state.stability += 5;
+    state.morale += 5;
+    state.wealth -= 3;
+
+    updateHUD();
+    logAction("Settlement founded: " + name + " in " + currentRegion + ".");
+    setText("advisorNote", "Advisor Note: A people become a civilization when they bind survival to memory, land, and responsibility.");
+    setText("systemStatus", "JS ACTIVE — settlement placed.");
+    saveState();
+  }
+
+  function enterScoutMission() {
+    if (!currentRegion) {
+      logAction("Scout mission blocked: select a region first.");
+      setText("systemStatus", "JS ACTIVE — scout blocked, select a region.");
+      return;
+    }
+
+    saveState();
+    const slug = currentRegion.toLowerCase().replaceAll(" ", "-");
+    window.location.href = "/scout/" + slug + "?fresh=" + Date.now();
+  }
+
+  function getSurvivalReadinessScore() {
+    if (!state.completedSurvivalActions) return 0;
+    return state.completedSurvivalActions.length;
+  }
+
+  function getSurvivalReadinessStatus(score) {
+    if (score >= 4) return "Prepared";
+    if (score >= 2) return "Partially Prepared";
+    return "Vulnerable";
+  }
+
+  function updateTurnReadinessUI() {
+    const card = document.getElementById("turnReadinessCard");
+    if (!card) return;
+
+    const isSurvival = state.phase === "Survival Planning";
+    card.style.display = isSurvival ? "block" : "none";
+
+    const score = getSurvivalReadinessScore();
+    const status = getSurvivalReadinessStatus(score);
+
+    setText("readinessScore", score + "/5");
+    setText("readinessStatus", status);
+
+    let forecast = "Complete Survival Planning actions before advancing the turn.";
+
+    if (status === "Prepared") {
+      forecast = "Forecast: Strong preparation. Turn 2 risks should be reduced.";
+    } else if (status === "Partially Prepared") {
+      forecast = "Forecast: Some systems are ready, but the settlement remains exposed.";
+    } else {
+      forecast = "Forecast: The settlement is vulnerable. Turn 2 may bring severe consequences.";
+    }
+
+    setText("readinessForecast", forecast);
+  }
+
+  function applyTurn2ReadinessConsequences() {
+    if (turn !== 2) return;
+    if (state.turn2OutcomeApplied) return;
+    if (state.phase !== "Survival Planning") return;
+
+    const score = getSurvivalReadinessScore();
+    const status = getSurvivalReadinessStatus(score);
+
+    if (status === "Prepared") {
+      state.food += 2;
+      state.stability += 2;
+      state.morale += 1;
+      logAction("Turn 2 Readiness Outcome: Prepared — Food +2, Stability +2, Morale +1.");
+      setText("systemStatus", "JS ACTIVE — Turn 2 outcome: Prepared.");
+    } else if (status === "Partially Prepared") {
+      state.food -= 1;
+      state.stability -= 1;
+      logAction("Turn 2 Readiness Outcome: Partially Prepared — Food -1, Stability -1.");
+      setText("systemStatus", "JS ACTIVE — Turn 2 outcome: Partially Prepared.");
+    } else {
+      state.food -= 4;
+      state.stability -= 3;
+      state.morale -= 2;
+      logAction("Turn 2 Readiness Outcome: Vulnerable — Food -4, Stability -3, Morale -2.");
+      setText("systemStatus", "JS ACTIVE — Turn 2 outcome: Vulnerable.");
+    }
+
+    state.turn2OutcomeApplied = true;
+    updateHUD();
+    saveState();
+  }
+
+  function survivalActionDone(key) {
+    return state.completedSurvivalActions && state.completedSurvivalActions.includes(key);
+  }
+
+  function updateSurvivalPlanningUI() {
+    const isSurvival = state.phase === "Survival Planning";
+
+    const starterIds = ["scoutBtn", "buildBtn", "tradeBtn", "preserveBtn"];
+    const survivalIds = ["survivalBtn1", "survivalBtn2", "survivalBtn3", "survivalBtn4", "survivalBtn5"];
+    const card = document.getElementById("survivalPlanningCard");
+
+    starterIds.forEach(function (id) {
+      const el = document.getElementById(id);
+      if (el) el.style.display = isSurvival ? "none" : "block";
+    });
+
+    survivalIds.forEach(function (id) {
+      const el = document.getElementById(id);
+      if (el) el.style.display = isSurvival ? "block" : "none";
+    });
+
+    if (card) card.style.display = isSurvival ? "block" : "none";
+
+    const checks = {
+      food: "Secure Food Supply",
+      water: "Protect Water Sources",
+      health: "Prepare Health Response",
+      shelter: "Strengthen Shelter",
+      civic: "Assign Civic Roles"
+    };
+
+    Object.keys(checks).forEach(function (key) {
+      const row = document.getElementById("survival-" + key);
+      if (!row) return;
+
+      const done = survivalActionDone(key);
+      row.textContent = (done ? "✓ " : "□ ") + checks[key];
+      row.style.color = done ? "#9ee6a8" : "#d8c89b";
+    });
+  }
+
+  function applySurvivalAction(key, label) {
+    if (state.phase !== "Survival Planning") {
+      logAction("Survival action blocked: advance to Survival Planning first.");
+      return;
+    }
+
+    if (!state.completedSurvivalActions) state.completedSurvivalActions = [];
+
+    if (state.completedSurvivalActions.includes(key)) {
+      logAction("Survival action blocked: " + label + " already completed.");
+      setText("systemStatus", "JS ACTIVE — duplicate survival action blocked.");
+      return;
+    }
+
+    if (key === "food") {
+      state.food += 5;
+      state.stability += 1;
+      logAction("Survival action completed: Secure Food Supply — Food +5, Stability +1.");
+    }
+
+    if (key === "water") {
+      state.climate += 2;
+      state.stability += 1;
+      logAction("Survival action completed: Protect Water Sources — Climate +2, Stability +1.");
+    }
+
+    if (key === "health") {
+      state.morale += 2;
+      state.stability += 2;
+      logAction("Survival action completed: Prepare Health Response — Morale +2, Stability +2.");
+    }
+
+    if (key === "shelter") {
+      state.stability += 3;
+      state.wealth -= 1;
+      logAction("Survival action completed: Strengthen Shelter — Stability +3, Wealth -1.");
+    }
+
+    if (key === "civic") {
+      state.morale += 3;
+      state.knowledge += 1;
+      logAction("Survival action completed: Assign Civic Roles — Morale +3, Knowledge +1.");
+    }
+
+    state.completedSurvivalActions.push(key);
+
+    updateHUD();
+    updateSurvivalPlanningUI();
+    saveState();
+
+    setText("systemStatus", "JS ACTIVE — survival action completed: " + label + ".");
+  }
+
+  function applyAction(label) {
+    if (!currentRegion) {
+      logAction("Action blocked: select a region first.");
+      return;
+    }
+
+    if (label === "Build Infrastructure") {
+      state.wealth -= 2;
+      state.stability += 2;
+    }
+
+    if (label === "Open Trade Route") {
+      state.wealth += 5;
+      state.stability += 1;
+    }
+
+    if (label === "Preserve Sacred Site") {
+      state.morale += 4;
+      state.climate += 2;
+    }
+
+    updateHUD();
+    logAction(label + " in " + currentRegion + ".");
+    setText("systemStatus", "JS ACTIVE — action complete.");
+    saveState();
+  }
+
+  function determineCrisisSeverity() {
+    const score = getSurvivalReadinessScore();
+
+    if (score >= 4) return "Moderate";
+    if (score >= 2) return "Serious";
+    return "Severe";
+  }
+
+  function launchTurn2Crisis() {
+    if (turn < 2) return;
+    if (state.activeCrisis) return;
+
+    const severity = determineCrisisSeverity();
+
+    let crisis = {
+      id: "forest_disease_risk",
+      title: "Disease Risk Rising in Forest Belt",
+      severity: severity,
+      description: "Scouts reported stagnant water, insects, and signs of illness risk near the Forest Belt settlement.",
+      advisor: "Regional Advisor: Medicine research, clean water protection, health coordination, and civic order can reduce the damage."
+    };
+
+    state.activeCrisis = crisis;
+    state.crisisResponses = [];
+
+    logAction("Turn 2 Crisis Launched: " + crisis.title + " — Severity: " + severity + ".");
+    setText("systemStatus", "JS ACTIVE — Turn 2 crisis launched.");
+    updateCrisisUI();
+    saveState();
+  }
+
+  function updateCrisisUI() {
+    const card = document.getElementById("crisisCard");
+    if (!card) return;
+
+    if (!state.activeCrisis) {
+      card.style.display = "none";
+      return;
+    }
+
+    card.style.display = "block";
+
+    setText("crisisTitle", state.activeCrisis.title);
+    setText("crisisDescription", state.activeCrisis.description);
+    setText("crisisSeverity", state.activeCrisis.severity);
+    setText("crisisAdvisor", state.activeCrisis.advisor);
+
+    const responses = state.crisisResponses || [];
+
+    const buttonMap = {
+      medicine: "crisisMedicineBtn",
+      water: "crisisWaterBtn",
+      health: "crisisHealthBtn",
+      civic: "crisisCivicBtn"
+    };
+
+    Object.keys(buttonMap).forEach(function (key) {
+      const btn = document.getElementById(buttonMap[key]);
+      if (!btn) return;
+
+      if (responses.includes(key)) {
+        btn.textContent = "✓ " + btn.textContent.replace("✓ ", "");
+        btn.disabled = true;
+        btn.style.opacity = "0.7";
+      }
+    });
+  }
+
+  function hasCompletedResearch(name) {
+    return state.completedResearch && state.completedResearch.includes(name);
+  }
+
+  function applyCrisisResponse(key, label) {
+    if (!state.activeCrisis) {
+      logAction("Crisis response blocked: no active crisis.");
+      return;
+    }
+
+    if (!state.crisisResponses) state.crisisResponses = [];
+
+    if (state.crisisResponses.includes(key)) {
+      logAction("Crisis response blocked: " + label + " already used.");
+      return;
+    }
+
+    if (key === "medicine") {
+      if (hasCompletedResearch("Medicine Research")) {
+        state.stability += 3;
+        state.morale += 2;
+        logAction("Crisis response used: Deploy Medicine Research — Stability +3, Morale +2.");
+      } else {
+        state.stability += 1;
+        logAction("Crisis response used: basic medicine response — Stability +1. Medicine Research not completed.");
+      }
+    }
+
+    if (key === "water") {
+      state.climate += 2;
+      state.stability += 1;
+      logAction("Crisis response used: Protect Water Sources — Climate +2, Stability +1.");
+    }
+
+    if (key === "health") {
+      state.morale += 2;
+      state.stability += 2;
+      logAction("Crisis response used: Organize Health Response — Morale +2, Stability +2.");
+    }
+
+    if (key === "civic") {
+      state.morale += 2;
+      state.knowledge += 1;
+      logAction("Crisis response used: Call Civic Council — Morale +2, Knowledge +1.");
+    }
+
+    state.crisisResponses.push(key);
+
+    if (state.crisisResponses.length >= 3) {
+      logAction("Crisis Stabilized: The Forest Belt disease risk has been contained through coordinated response.");
+      state.activeCrisis.severity = "Contained";
+      state.stability += 1;
+      state.morale += 1;
+    }
+
+    updateHUD();
+    updateCrisisUI();
+    saveState();
+
+    setText("systemStatus", "JS ACTIVE — crisis response completed: " + label + ".");
+  }
+
+  function crisisIsContained() {
+    return Boolean(state.activeCrisis && state.activeCrisis.severity === "Contained");
+  }
+
+  function updateCrisisResolutionUI() {
+    const card = document.getElementById("crisisResolutionCard");
+    if (!card) return;
+
+    if (!crisisIsContained()) {
+      card.style.display = "none";
+      return;
+    }
+
+    card.style.display = "block";
+
+    const responses = state.crisisResponses || [];
+    const summary =
+      "Resolved Crisis: " + state.activeCrisis.title +
+      " | Severity: " + state.activeCrisis.severity +
+      " | Responses: " + responses.join(", ");
+
+    setText("crisisResolutionSummary", summary);
+
+    const archiveBtn = document.getElementById("archiveCrisisBtn");
+    const advanceBtn = document.getElementById("advanceRecoveryBtn");
+
+    if (archiveBtn) {
+      archiveBtn.style.display = state.crisisArchived ? "none" : "block";
+    }
+
+    if (advanceBtn) {
+      advanceBtn.style.display = state.crisisArchived && state.phase !== "Recovery & Growth" ? "block" : "none";
+    }
+  }
+
+  function archiveCrisisResolution() {
+    if (!crisisIsContained()) {
+      logAction("Crisis archive blocked: crisis is not contained yet.");
+      return;
+    }
+
+    if (state.crisisArchived) {
+      logAction("Crisis archive blocked: crisis already archived.");
+      return;
+    }
+
+    const noteEl = document.getElementById("crisisLessonNote");
+    const lesson = noteEl && noteEl.value.trim() ? noteEl.value.trim() : "No lesson note entered.";
+
+    const archive = {
+      title: state.activeCrisis.title,
+      severity: state.activeCrisis.severity,
+      responses: state.crisisResponses || [],
+      lesson: lesson,
+      archivedAt: new Date().toLocaleString()
+    };
+
+    const existing = JSON.parse(localStorage.getItem("STEM_NATION_CRISIS_ARCHIVE_V1") || "[]");
+    existing.unshift(archive);
+    localStorage.setItem("STEM_NATION_CRISIS_ARCHIVE_V1", JSON.stringify(existing));
+
+    state.crisisArchived = true;
+
+    logAction("Crisis Resolution Archived: " + state.activeCrisis.title + " | Lesson: " + lesson);
+    setText("systemStatus", "JS ACTIVE — crisis resolution archived.");
+
+    updateHUD();
+    updateCrisisResolutionUI();
+    saveState();
+  }
+
+  function advanceToRecoveryGrowth() {
+    if (!state.crisisArchived) {
+      logAction("Recovery phase blocked: archive crisis resolution first.");
+      return;
+    }
+
+    state.phase = "Recovery & Growth";
+    state.recoveryAdvanced = true;
+    state.morale += 2;
+    state.stability += 2;
+
+    logAction("Phase advanced: Survival Planning → Recovery & Growth. Stability +2, Morale +2.");
+    setText("systemStatus", "JS ACTIVE — phase advanced to Recovery & Growth.");
+
+    updateHUD();
+    updateCrisisResolutionUI();
+    updateRecoveryUI();
+    saveState();
+  }
+
+  function recoveryActionDone(key) {
+    return state.completedRecoveryActions && state.completedRecoveryActions.includes(key);
+  }
+
+  function updateRecoveryUI() {
+    const isRecovery = state.phase === "Recovery & Growth";
+    const card = document.getElementById("recoveryActionsCard");
+
+    if (card) card.style.display = isRecovery ? "block" : "none";
+
+    ["recoveryBtn1", "recoveryBtn2", "recoveryBtn3", "recoveryBtn4"].forEach(function (id) {
+      const btn = document.getElementById(id);
+      if (btn) btn.style.display = isRecovery ? "block" : "none";
+    });
+
+    ["survivalBtn1", "survivalBtn2", "survivalBtn3", "survivalBtn4", "survivalBtn5"].forEach(function (id) {
+      const btn = document.getElementById(id);
+      if (btn && isRecovery) btn.style.display = "none";
+    });
+
+    const labels = {
+      rebuild: "Rebuild Community Trust",
+      farms: "Expand Food Resilience",
+      clinic: "Establish Healing Center",
+      archive: "Preserve Crisis Records"
+    };
+
+    Object.keys(labels).forEach(function (key) {
+      const row = document.getElementById("recovery-" + key);
+      if (!row) return;
+      const done = recoveryActionDone(key);
+      row.textContent = (done ? "✓ " : "□ ") + labels[key];
+      row.style.color = done ? "#9ee6a8" : "#d8c89b";
+    });
+  }
+
+  function applyRecoveryAction(key, label) {
+    if (state.phase !== "Recovery & Growth") {
+      logAction("Recovery action blocked: advance to Recovery & Growth first.");
+      return;
+    }
+
+    if (!state.completedRecoveryActions) state.completedRecoveryActions = [];
+
+    if (state.completedRecoveryActions.includes(key)) {
+      logAction("Recovery action blocked: " + label + " already completed.");
+      return;
+    }
+
+    if (key === "rebuild") {
+      state.morale += 4;
+      state.stability += 1;
+      logAction("Recovery action completed: Rebuild Community Trust — Morale +4, Stability +1.");
+    }
+
+    if (key === "farms") {
+      state.food += 5;
+      state.climate += 1;
+      logAction("Recovery action completed: Expand Food Resilience — Food +5, Climate +1.");
+    }
+
+    if (key === "clinic") {
+      state.stability += 3;
+      state.morale += 2;
+      logAction("Recovery action completed: Establish Healing Center — Stability +3, Morale +2.");
+    }
+
+    if (key === "archive") {
+      state.knowledge += 3;
+      state.morale += 1;
+      logAction("Recovery action completed: Preserve Crisis Records — Knowledge +3, Morale +1.");
+    }
+
+    state.completedRecoveryActions.push(key);
+
+    updateHUD();
+    updateRecoveryUI();
+    saveState();
+
+    setText("systemStatus", "JS ACTIVE — recovery action completed: " + label + ".");
+  }
+
+  function advanceTurn() {
+    turn += 1;
+    eventIndex = (eventIndex + 1) % events.length;
+
+    state.food -= 2;
+    state.wealth += 1;
+    state.knowledge += 1;
+
+    if (state.settlementPlaced) {
+      state.stability += 1;
+      state.morale += 1;
+    }
+
+    setText("turnLabel", "TURN " + turn);
+    setText("seasonLabel", seasons[(turn - 1) % seasons.length]);
+    setText("eventText", events[eventIndex]);
+
+    updateHUD();
+    logAction("Advanced to Turn " + turn + ": " + seasons[(turn - 1) % seasons.length] + ".");
+    applyTurn2ReadinessConsequences();
+    launchTurn2Crisis();
+    saveState();
+  }
+
+  // STEM_NATION_WORLD_BOARD_APPLY_SCOUT_EFFECTS_V14
+  function normalizeResearchPath(pathName) {
+    if (!pathName) return "";
+
+    if (pathName.includes("Medicine Research")) {
+      return "Medicine Research";
+    }
+
+    if (pathName.includes("Port Path")) {
+      return "Port Development";
+    }
+
+    if (pathName.includes("Road Path")) {
+      return "Road Network";
+    }
+
+    if (pathName.includes("Agriculture Path")) {
+      return "Agriculture Development";
+    }
+
+    if (pathName.includes("Sacred Preservation")) {
+      return "Sacred Preservation";
+    }
+
+    return pathName.replace("Unlocked", "").trim();
+  }
+
+  function openResearchPath(pathName) {
+    const researchName = normalizeResearchPath(pathName);
+    const box = document.getElementById("researchActionBox");
+
+    if (!box) return;
+
+    let cost = 5;
+    let effect = "Stability +1 | Morale +1";
+    let description = "Use discovered field intelligence to improve civilization systems.";
+
+    if (researchName === "Medicine Research") {
+      cost = 5;
+      effect = "Disease Risk reduced | Stability +2 | Morale +2";
+      description = "Use medicinal plant knowledge to reduce disease risk and protect the settlement.";
+    }
+
+    if (researchName === "Port Development") {
+      cost = 6;
+      effect = "Wealth +4 | Trade Capacity increased";
+      description = "Use coastal scouting to develop safer harbor and exchange systems.";
+    }
+
+    if (researchName === "Road Network") {
+      cost = 4;
+      effect = "Trade +2 | Stability +1";
+      description = "Use travel-path scouting to connect people, goods, and ideas.";
+    }
+
+    if (researchName === "Agriculture Development") {
+      cost = 4;
+      effect = "Food +4 | Stability +1";
+      description = "Use soil and food-source observations to improve farming systems.";
+    }
+
+    const completed = state.completedResearch && state.completedResearch.includes(researchName);
+
+    box.innerHTML =
+      "<strong>" + researchName + "</strong><br>" +
+      description + "<br><br>" +
+      "<strong>Cost:</strong> Knowledge " + cost + "<br>" +
+      "<strong>Effect:</strong> " + effect + "<br><br>" +
+      (completed
+        ? "<em>Research already completed.</em>"
+        : "<button type='button' class='turn-btn' id='activateResearchBtn'>Activate Research</button>");
+
+    const btn = document.getElementById("activateResearchBtn");
+    if (btn) {
+      btn.addEventListener("click", function () {
+        activateResearch(researchName, cost, effect);
+      });
+    }
+  }
+
+  function activateResearch(researchName, cost, effect) {
+    if (!state.completedResearch) state.completedResearch = [];
+
+    if (state.completedResearch.includes(researchName)) {
+      logAction("Research blocked: " + researchName + " already completed.");
+      setText("systemStatus", "JS ACTIVE — duplicate research blocked.");
+      return;
+    }
+
+    if (state.knowledge < cost) {
+      logAction("Research blocked: not enough Knowledge for " + researchName + ".");
+      setText("systemStatus", "JS ACTIVE — not enough Knowledge.");
+      return;
+    }
+
+    state.knowledge -= cost;
+
+    if (researchName === "Medicine Research") {
+      state.stability += 2;
+      state.morale += 2;
+    } else if (researchName === "Port Development") {
+      state.wealth += 4;
+    } else if (researchName === "Road Network") {
+      state.wealth += 2;
+      state.stability += 1;
+    } else if (researchName === "Agriculture Development") {
+      state.food += 4;
+      state.stability += 1;
+    } else {
+      state.stability += 1;
+      state.morale += 1;
+    }
+
+    state.completedResearch.push(researchName);
+
+    updateHUD();
+    saveState();
+
+    logAction("Research completed: " + researchName + " — " + effect + ".");
+    setText("systemStatus", "JS ACTIVE — research completed: " + researchName + ".");
+    updateArchive();
+
+    openResearchPath(researchName);
+  }
+
+  function addUnlock(pathName) {
+    if (!pathName) return;
+    if (!state.unlockedPaths) state.unlockedPaths = [];
+    if (!state.unlockedPaths.includes(pathName)) {
+      state.unlockedPaths.push(pathName);
+    }
+  }
+
+  function applyScoutEffect(message) {
+    if (!message) return;
+
+    if (!state.appliedScoutReturns) state.appliedScoutReturns = [];
+
+    const effectKey = message;
+
+    if (state.appliedScoutReturns.includes(effectKey)) {
+      logAction("Scout effect already applied. Duplicate prevented.");
+      return;
+    }
+
+    state.appliedScoutReturns.push(effectKey);
+
+    const effectText = message.split(":").slice(1).join(":").trim();
+
+    const statMatches = effectText.matchAll(/(Knowledge|Food|Water|Trade|Defense|Culture|Stability|Morale|Climate)\s*\+(\d+)/g);
+
+    for (const match of statMatches) {
+      const stat = match[1];
+      const amount = parseInt(match[2], 10);
+
+      if (stat === "Knowledge") state.knowledge += amount;
+      if (stat === "Food") state.food += amount;
+      if (stat === "Water") state.climate += Math.max(1, Math.floor(amount / 2));
+      if (stat === "Trade") state.wealth += amount;
+      if (stat === "Defense") state.stability += amount;
+      if (stat === "Culture") state.morale += amount;
+      if (stat === "Stability") state.stability += amount;
+      if (stat === "Morale") state.morale += amount;
+      if (stat === "Climate") state.climate += amount;
+
+      logAction("HUD updated from scout report: " + stat + " +" + amount + ".");
+    }
+
+    const parts = effectText.split("|").map(function (p) { return p.trim(); });
+
+    parts.forEach(function (part) {
+      if (
+        part.includes("Unlocked") ||
+        part.includes("Path") ||
+        part.includes("Option") ||
+        part.includes("Bonus") ||
+        part.includes("Recommended") ||
+        part.includes("Needed")
+      ) {
+        addUnlock(part);
+      }
+    });
+
+    updateHUD();
+    saveState();
+  }
+
+  // STEM_NATION_WORLD_BOARD_MULTI_SCOUT_RECEIVER_V13
+  function receiveScoutSummaryReport() {
+    const raw = localStorage.getItem("STEM_NATION_LAST_SCOUT_RETURN_V13");
+    if (!raw) return false;
+
+    let payload = null;
+
+    try {
+      payload = JSON.parse(raw);
+    } catch (err) {
+      console.warn("Could not parse multi-scout payload", err);
+      return false;
+    }
+
+    if (!payload || !payload.region || !payload.observations) return false;
+
+    const card = document.getElementById("scoutIntelCard");
+    const text = document.getElementById("scoutIntelText");
+
+    const summaryLines = payload.observations.map(function (item) {
+      return item.label + ": " + item.effect;
+    });
+
+    const displayText =
+      payload.region + " Scout Summary — " +
+      summaryLines.join(" | ") +
+      (payload.evidenceNote ? " | Evidence: " + payload.evidenceNote : "");
+
+    if (card && text) {
+      card.style.display = "block";
+      text.textContent = displayText;
+    }
+
+    logAction("Returned Scout Summary: " + payload.region + " — " + summaryLines.join(" | "));
+
+    payload.observations.forEach(function (item) {
+      applyScoutEffect("Scout report returned from " + payload.region + ": " + item.effect);
+    });
+
+    localStorage.removeItem("STEM_NATION_LAST_SCOUT_RETURN_V13");
+    localStorage.removeItem("STEM_NATION_LAST_SCOUT_RETURN_V1");
+
+    updateHUD();
+    updateArchive();
+    saveState();
+
+    return true;
+  }
+
+  function receiveScoutReport() {
+    const message = localStorage.getItem("STEM_NATION_LAST_SCOUT_RETURN_V1");
+    if (!message) return;
+
+    const card = document.getElementById("scoutIntelCard");
+    const text = document.getElementById("scoutIntelText");
+
+    if (card && text) {
+      card.style.display = "block";
+      text.textContent = message;
+    }
+
+    logAction("Returned Scout Intelligence: " + message.replace("Scout report returned from ", ""));
+    applyScoutEffect(message);
+    localStorage.removeItem("STEM_NATION_LAST_SCOUT_RETURN_V1");
+    saveState();
+  }
+
+  function resetWorld() {
+    localStorage.removeItem("STEM_NATION_WORLD_BOARD_V13_STATE");
+    localStorage.removeItem("STEM_NATION_LAST_SCOUT_RETURN_V1");
+    localStorage.removeItem("STEM_NATION_LAST_SCOUT_RETURN_V13");
+    localStorage.removeItem("STEM_NATION_SCOUT_REPORTS_V1");
+    window.location.reload();
+  }
+
+  document.addEventListener("DOMContentLoaded", function () {
+    setText("systemStatus", "JS ACTIVE — World Board ready.");
+
+    document.querySelectorAll(".region-btn").forEach(function (btn) {
+      btn.addEventListener("click", function () {
+        selectRegion(btn.getAttribute("data-region"), true);
+      });
+    });
+
+    document.getElementById("placeSettlementBtn").addEventListener("click", placeSettlement);
+    document.getElementById("scoutBtn").addEventListener("click", enterScoutMission);
+    document.getElementById("buildBtn").addEventListener("click", function () { applyAction("Build Infrastructure"); });
+    document.getElementById("tradeBtn").addEventListener("click", function () { applyAction("Open Trade Route"); });
+    document.getElementById("preserveBtn").addEventListener("click", function () { applyAction("Preserve Sacred Site"); });
+
+    document.getElementById("survivalBtn1").addEventListener("click", function () { applySurvivalAction("food", "Secure Food Supply"); });
+    document.getElementById("survivalBtn2").addEventListener("click", function () { applySurvivalAction("water", "Protect Water Sources"); });
+    document.getElementById("survivalBtn3").addEventListener("click", function () { applySurvivalAction("health", "Prepare Health Response"); });
+    document.getElementById("survivalBtn4").addEventListener("click", function () { applySurvivalAction("shelter", "Strengthen Shelter"); });
+    document.getElementById("survivalBtn5").addEventListener("click", function () { applySurvivalAction("civic", "Assign Civic Roles"); });
+    document.getElementById("advanceTurnBtn").addEventListener("click", advanceTurn);
+
+    document.getElementById("crisisMedicineBtn").addEventListener("click", function () {
+      applyCrisisResponse("medicine", "Deploy Medicine Research");
+    });
+
+    document.getElementById("crisisWaterBtn").addEventListener("click", function () {
+      applyCrisisResponse("water", "Protect Water Sources");
+    });
+
+    document.getElementById("crisisHealthBtn").addEventListener("click", function () {
+      applyCrisisResponse("health", "Organize Health Response");
+    });
+
+    document.getElementById("crisisCivicBtn").addEventListener("click", function () {
+      applyCrisisResponse("civic", "Call Civic Council");
+    });
+
+    document.getElementById("archiveCrisisBtn").addEventListener("click", archiveCrisisResolution);
+    document.getElementById("advanceRecoveryBtn").addEventListener("click", advanceToRecoveryGrowth);
+
+    document.getElementById("recoveryBtn1").addEventListener("click", function () {
+      applyRecoveryAction("rebuild", "Rebuild Community Trust");
+    });
+
+    document.getElementById("recoveryBtn2").addEventListener("click", function () {
+      applyRecoveryAction("farms", "Expand Food Resilience");
+    });
+
+    document.getElementById("recoveryBtn3").addEventListener("click", function () {
+      applyRecoveryAction("clinic", "Establish Healing Center");
+    });
+
+    document.getElementById("recoveryBtn4").addEventListener("click", function () {
+      applyRecoveryAction("archive", "Preserve Crisis Records");
+    });
+    document.getElementById("resetBtn").addEventListener("click", resetWorld);
+
+    const advancePhaseBtn = document.getElementById("advancePhaseBtn");
+    if (advancePhaseBtn) {
+      advancePhaseBtn.addEventListener("click", advancePhase);
+    }
+
+    loadState();
+    updateHUD();
+
+    // STEM_NATION_WORLD_BOARD_TURN2_CRISIS_LOAD_FIX_V20A
+    // STEM_NATION_WORLD_BOARD_MISSED_CRISIS_FIX_V20B
+    if (turn >= 2 && state.phase === "Survival Planning" && !state.activeCrisis) {
+      launchTurn2Crisis();
+    }
+
+    if (!receiveScoutSummaryReport()) {
+      receiveScoutReport();
+    }
+  });
+})();
+</script>
+</body>
+</html>

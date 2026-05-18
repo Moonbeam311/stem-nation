@@ -197,6 +197,24 @@ def founding_archive_print():
 def hub():
     return render_template("project_hub.html")
 
+
+# STEM_NATION_GAMEBOARD_GALLERY_ROUTE_V1
+@app.route("/gameboard")
+def gameboard():
+    return render_template("gameboard.html")
+
+
+# STEM_NATION_WORLD_BOARD_ROUTE_V1
+@app.route("/world-board")
+def world_board():
+    return render_template("world_board.html")
+
+
+# STEM_NATION_SCOUT_REGION_ROUTE_V1
+@app.route("/scout/<region>")
+def scout_region(region):
+    return render_template("scout_region.html", region=region)
+
 if __name__ == "__main__":
     import os
     port = int(os.environ.get("PORT", 5000))
