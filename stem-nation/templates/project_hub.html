@@ -790,6 +790,73 @@ PHASE 8 STEP 7 — STEM NATION COMMAND SESSION DISPLAY V1
 }
 </style>
 
+
+<style>
+.student-reflection-panel {
+  margin-top: 24px;
+  border-radius: 18px;
+  border: 1px solid rgba(255,255,255,0.12);
+  background:
+    radial-gradient(circle at top left, rgba(255,255,255,0.06), transparent 36%),
+    rgba(255,255,255,0.04);
+  padding: 24px;
+}
+
+.student-reflection-panel h2 {
+  margin-top: 0;
+  text-align: center;
+  color: #ffe082;
+}
+
+.student-reflection-panel p {
+  text-align: center;
+  opacity: 0.88;
+  line-height: 1.5;
+}
+
+.reflection-grid {
+  display: grid;
+  gap: 16px;
+  margin-top: 20px;
+}
+
+.reflection-grid label {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  font-weight: bold;
+}
+
+.reflection-grid textarea,
+.reflection-grid select {
+  width: 100%;
+  min-height: 90px;
+  border-radius: 12px;
+  border: 1px solid rgba(255,255,255,0.14);
+  background: rgba(0,0,0,0.24);
+  color: white;
+  padding: 12px;
+  font-size: 14px;
+  resize: vertical;
+}
+
+.reflection-grid select {
+  min-height: auto;
+}
+
+.reflection-actions {
+  margin-top: 20px;
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.reflection-save-status {
+  margin-top: 14px;
+  opacity: 0.84;
+}
+</style>
+
 </head>
 
 <body>
@@ -2830,6 +2897,70 @@ Selective demo reset controls for local student test data.
 </section>
 
 
+
+<!-- STEM_NATION_STUDENT_REFLECTION_GROWTH_V1 -->
+<section id="studentReflectionPanel" class="student-reflection-panel">
+  <h2>Student Reflection / Growth Statement</h2>
+
+  <p>
+    Reflect on how your civilization thinking changed during the mission and identify what leadership competencies you want to strengthen next.
+  </p>
+
+  <div class="reflection-grid">
+
+    <label>
+      What changed in your thinking during this mission?
+      <textarea id="reflectionThinkingChange"></textarea>
+    </label>
+
+    <label>
+      What was the strongest civilization decision you made?
+      <textarea id="reflectionStrongestDecision"></textarea>
+    </label>
+
+    <label>
+      What risk or weakness would you improve next time?
+      <textarea id="reflectionImprovement"></textarea>
+    </label>
+
+    <label>
+      Which civilization competency do you want to strengthen?
+      <select id="reflectionCompetencyGoal">
+        <option value="">Select competency</option>
+        <option>Risk Awareness</option>
+        <option>Systems Thinking</option>
+        <option>Settlement Strategy</option>
+        <option>Evidence Reasoning</option>
+        <option>Trade & Movement Logic</option>
+        <option>Defense Logic</option>
+        <option>Environmental Adaptation</option>
+        <option>Collaboration & Discussion</option>
+      </select>
+    </label>
+
+    <label>
+      What did this mission teach you about survival, leadership, or society?
+      <textarea id="reflectionLesson"></textarea>
+    </label>
+
+  </div>
+
+  <div class="reflection-actions">
+    <button id="saveReflectionBtn" class="btn" type="button">
+      Save Reflection
+    </button>
+
+    <button id="clearReflectionBtn" class="btn" type="button">
+      Clear Reflection
+    </button>
+  </div>
+
+  <div id="reflectionSaveStatus" class="reflection-save-status">
+    No reflection saved yet.
+  </div>
+</section>
+
+
 <section id="comparisonResponseReview" class="comparison-response-review">
   <h2>Region Comparison Response</h2>
 
@@ -3394,6 +3525,90 @@ Selective demo reset controls for local student test data.
       <div class="competency-description">${item.description}</div>
     </article>
   `).join("");
+})();
+</script>
+
+
+<script>
+// STEM_NATION_STUDENT_REFLECTION_GROWTH_V1
+(function installStudentReflectionGrowthLayer() {
+
+  const STORAGE_KEY = "STEM_NATION_STUDENT_REFLECTION_GROWTH_V1";
+
+  const fields = {
+    thinkingChange: document.getElementById("reflectionThinkingChange"),
+    strongestDecision: document.getElementById("reflectionStrongestDecision"),
+    improvement: document.getElementById("reflectionImprovement"),
+    competencyGoal: document.getElementById("reflectionCompetencyGoal"),
+    lesson: document.getElementById("reflectionLesson")
+  };
+
+  const saveBtn = document.getElementById("saveReflectionBtn");
+  const clearBtn = document.getElementById("clearReflectionBtn");
+  const status = document.getElementById("reflectionSaveStatus");
+
+  if (!saveBtn || !clearBtn || !status) return;
+
+  function loadReflection() {
+    try {
+      const raw = localStorage.getItem(STORAGE_KEY);
+      if (!raw) return;
+
+      const data = JSON.parse(raw);
+
+      Object.keys(fields).forEach((key) => {
+        if (fields[key]) {
+          fields[key].value = data[key] || "";
+        }
+      });
+
+      if (data.savedAt) {
+        status.textContent =
+          "Last reflection saved: " +
+          new Date(data.savedAt).toLocaleString();
+      }
+
+    } catch (err) {
+      console.log("Could not load reflection.", err);
+    }
+  }
+
+  function saveReflection() {
+    try {
+      const payload = {
+        thinkingChange: fields.thinkingChange?.value || "",
+        strongestDecision: fields.strongestDecision?.value || "",
+        improvement: fields.improvement?.value || "",
+        competencyGoal: fields.competencyGoal?.value || "",
+        lesson: fields.lesson?.value || "",
+        savedAt: new Date().toISOString()
+      };
+
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(payload));
+
+      status.textContent =
+        "Reflection saved: " +
+        new Date(payload.savedAt).toLocaleString();
+
+    } catch (err) {
+      console.log("Could not save reflection.", err);
+    }
+  }
+
+  function clearReflection() {
+    localStorage.removeItem(STORAGE_KEY);
+
+    Object.values(fields).forEach((field) => {
+      if (field) field.value = "";
+    });
+
+    status.textContent = "Reflection cleared.";
+  }
+
+  saveBtn.addEventListener("click", saveReflection);
+  clearBtn.addEventListener("click", clearReflection);
+
+  loadReflection();
 })();
 </script>
 

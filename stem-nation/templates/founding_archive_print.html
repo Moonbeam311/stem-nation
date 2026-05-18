@@ -397,6 +397,42 @@
 </section>
 
 
+
+<!-- STEM_NATION_PRINT_STUDENT_REFLECTION_GROWTH_V1 -->
+<section class="print-section" id="studentReflectionPrintSection">
+  <h2>Student Reflection / Growth Statement</h2>
+
+  <div class="print-grid">
+
+    <div class="print-item">
+      <div class="print-label">Thinking Change</div>
+      <div id="printReflectionThinkingChange" class="print-answer">—</div>
+    </div>
+
+    <div class="print-item">
+      <div class="print-label">Strongest Civilization Decision</div>
+      <div id="printReflectionStrongestDecision" class="print-answer">—</div>
+    </div>
+
+    <div class="print-item">
+      <div class="print-label">Improvement / Risk Reflection</div>
+      <div id="printReflectionImprovement" class="print-answer">—</div>
+    </div>
+
+    <div class="print-item">
+      <div class="print-label">Competency to Strengthen</div>
+      <div id="printReflectionCompetencyGoal" class="print-answer">—</div>
+    </div>
+
+    <div class="print-item">
+      <div class="print-label">Leadership / Society Lesson</div>
+      <div id="printReflectionLesson" class="print-answer">—</div>
+    </div>
+
+  </div>
+</section>
+
+
 <section class="print-section" id="comparisonResponsePrintSection">
   <h2>Region Comparison Response</h2>
   <div class="print-grid">
@@ -768,6 +804,37 @@ loadPrintableArchive();
     chosenRegion || comparedRegions ? "Emerging" : "Not Yet Scored"
   );
   setText("printCompetencyCollaboration", level(scoreMap[evaluation?.collaboration] || 0));
+})();
+</script>
+
+
+<script>
+// STEM_NATION_PRINT_STUDENT_REFLECTION_GROWTH_V1
+(function renderStudentReflectionForPrint() {
+
+  const STORAGE_KEY = "STEM_NATION_STUDENT_REFLECTION_GROWTH_V1";
+
+  function setText(id, value) {
+    const el = document.getElementById(id);
+    if (el) el.textContent = value || "—";
+  }
+
+  try {
+    const raw = localStorage.getItem(STORAGE_KEY);
+    if (!raw) return;
+
+    const data = JSON.parse(raw);
+
+    setText("printReflectionThinkingChange", data.thinkingChange);
+    setText("printReflectionStrongestDecision", data.strongestDecision);
+    setText("printReflectionImprovement", data.improvement);
+    setText("printReflectionCompetencyGoal", data.competencyGoal);
+    setText("printReflectionLesson", data.lesson);
+
+  } catch (err) {
+    console.log("Could not render reflection for print.", err);
+  }
+
 })();
 </script>
 
