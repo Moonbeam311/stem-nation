@@ -452,6 +452,24 @@
       <div class="log-entry" id="nation-memory">□ Protect Cultural Memory</div>
     </div>
 
+    <!-- STEM_NATION_WORLD_BOARD_LEGACY_VICTORY_V27 -->
+    <div class="objective" id="legacyReadinessCard" style="display:none;">
+      <h3>Legacy Victory Readiness</h3>
+      <div class="log-entry">Nation Score: <strong id="legacyScore">0/4</strong></div>
+      <div class="log-entry">Status: <strong id="legacyStatus">Not Ready</strong></div>
+      <div class="log-entry" id="legacyForecast">
+        Complete nation formation actions to prepare the civilization report.
+      </div>
+      <button type="button" class="turn-btn" id="generateLegacyReportBtn" style="display:none;">Generate Civilization Report</button>
+    </div>
+
+    <div class="objective" id="legacyVictoryCard" style="display:none;">
+      <h3>Legacy Victory / Civilization Report</h3>
+      <div class="log-entry" id="legacyReportBox">
+        No civilization report generated yet.
+      </div>
+    </div>
+
     <h2 id="regionName">Select a Region</h2>
     <p id="regionSummary">Choose a region to begin civilization analysis.</p>
 
@@ -584,7 +602,9 @@
     townAdvanced: false,
     cityAdvanced: false,
     regionalCapitalAdvanced: false,
-    nationAdvanced: false
+    nationAdvanced: false,
+    legacyVictoryAchieved: false,
+    legacyReportGenerated: false
   };
 
   const seasons = ["Early Rainfall Season", "High Sun Season", "Harvest Season", "Cold Wind Season"];
@@ -869,6 +889,7 @@
     updateRegionalCapitalUI();
     updateNationReadinessUI();
     updateNationFormationUI();
+    updateLegacyReadinessUI();
   }
 
   function saveState() {
@@ -1766,6 +1787,166 @@
     updateNationReadinessUI();
     updateNationFormationUI();
     saveState();
+  }
+
+  function getNationScore() {
+    if (!state.completedNationActions) return 0;
+    return state.completedNationActions.length;
+  }
+
+  function getLegacyStatus(score) {
+    if (score >= 3) return "Ready for Legacy Victory";
+    if (score >= 2) return "Nearly Ready";
+    return "Not Ready";
+  }
+
+  function updateLegacyReadinessUI() {
+    const card = document.getElementById("legacyReadinessCard");
+    if (!card) return;
+
+    const isNation = state.phase === "Nation Formation";
+    card.style.display = isNation ? "block" : "none";
+
+    const score = getNationScore();
+    const status = getLegacyStatus(score);
+
+    setText("legacyScore", score + "/4");
+    setText("legacyStatus", status);
+
+    let forecast = "Complete nation formation actions to prepare the civilization report.";
+
+    if (status === "Ready for Legacy Victory") {
+      forecast = "Forecast: The nation has enough civic law, trade unity, council authority, and cultural memory to record its legacy.";
+    } else if (status === "Nearly Ready") {
+      forecast = "Forecast: The nation is close, but one more foundation is needed before the legacy report.";
+    } else {
+      forecast = "Forecast: Legacy victory too soon would leave the nation unfinished.";
+    }
+
+    setText("legacyForecast", forecast);
+
+    const btn = document.getElementById("generateLegacyReportBtn");
+    if (btn) {
+      btn.style.display =
+        state.phase === "Nation Formation" && score >= 3 && !state.legacyReportGenerated
+          ? "block"
+          : "none";
+    }
+
+    updateLegacyReportUI();
+  }
+
+  function buildCivilizationReport() {
+    const scoutReports = JSON.parse(localStorage.getItem("STEM_NATION_SCOUT_REPORTS_V1") || "[]");
+    const crisisArchive = JSON.parse(localStorage.getItem("STEM_NATION_CRISIS_ARCHIVE_V1") || "[]");
+
+    const latestScout = scoutReports.length > 0 ? scoutReports[0] : null;
+    const latestCrisis = crisisArchive.length > 0 ? crisisArchive[0] : null;
+
+    const finalStats =
+      "Food " + state.food +
+      " | Stability " + state.stability +
+      " | Knowledge " + state.knowledge +
+      " | Wealth " + state.wealth +
+      " | Morale " + state.morale +
+      " | Climate " + state.climate;
+
+    const completedPhases = [
+      "Settlement Formation",
+      "Survival Planning",
+      "Recovery & Growth",
+      "Village Expansion",
+      "Town Formation",
+      "City Planning",
+      "Regional Capital",
+      "Nation Formation"
+    ].join(" → ");
+
+    let report = "";
+
+    report += "<strong>Legacy Outcome:</strong> Nation Formed Through Evidence, Crisis Response, and Civic Growth<br><br>";
+    report += "<strong>Settlement:</strong> " + (state.settlementName || "Unnamed Settlement") + "<br>";
+    report += "<strong>Region:</strong> " + (state.settlementRegion || currentRegion || "Unknown Region") + "<br>";
+    report += "<strong>Completed Growth Path:</strong> " + completedPhases + "<br>";
+    report += "<strong>Final Civilization Metrics:</strong> " + finalStats + "<br><br>";
+
+    report += "<strong>Research Completed:</strong> " + ((state.completedResearch || []).join(", ") || "None recorded") + "<br>";
+    report += "<strong>Unlocked Knowledge:</strong> " + ((state.unlockedPaths || []).join(", ") || "None recorded") + "<br><br>";
+
+    if (latestScout) {
+      report += "<strong>Scout Evidence:</strong> " + latestScout.region + " — ";
+      if (latestScout.observations && latestScout.observations.length > 0) {
+        report += latestScout.observations.map(function (obs) {
+          return obs.label + ": " + obs.effect;
+        }).join(" | ");
+      } else {
+        report += latestScout.effect || "No effect recorded.";
+      }
+
+      if (latestScout.evidenceNote) {
+        report += "<br><strong>Student Evidence Note:</strong> " + latestScout.evidenceNote;
+      }
+
+      report += "<br><br>";
+    }
+
+    if (latestCrisis) {
+      report += "<strong>Crisis Resolved:</strong> " + latestCrisis.title + "<br>";
+      report += "<strong>Crisis Responses:</strong> " + ((latestCrisis.responses || []).join(", ") || "None recorded") + "<br>";
+      report += "<strong>Lessons Learned:</strong> " + (latestCrisis.lesson || "No lesson recorded.") + "<br><br>";
+    }
+
+    report += "<strong>Nation Formation Actions:</strong> " + ((state.completedNationActions || []).join(", ") || "None recorded") + "<br><br>";
+    report += "<strong>Legacy Statement:</strong> This civilization survived by observing land, protecting health, organizing civic authority, preserving memory, and building systems from settlement to nation.";
+
+    return report;
+  }
+
+  function generateLegacyReport() {
+    const score = getNationScore();
+
+    if (state.phase !== "Nation Formation") {
+      logAction("Legacy report blocked: reach Nation Formation first.");
+      return;
+    }
+
+    if (score < 3) {
+      logAction("Legacy report blocked: complete at least 3 nation actions first.");
+      setText("systemStatus", "JS ACTIVE — legacy report blocked, nation incomplete.");
+      return;
+    }
+
+    state.legacyVictoryAchieved = true;
+    state.legacyReportGenerated = true;
+    state.morale += 5;
+    state.knowledge += 5;
+    state.stability += 3;
+
+    const report = buildCivilizationReport();
+    localStorage.setItem("STEM_NATION_LEGACY_REPORT_V1", report);
+
+    logAction("Legacy Victory Achieved: Civilization Report generated.");
+    setText("systemStatus", "JS ACTIVE — Legacy Victory achieved.");
+
+    updateHUD();
+    updateLegacyReportUI();
+    saveState();
+  }
+
+  function updateLegacyReportUI() {
+    const card = document.getElementById("legacyVictoryCard");
+    const box = document.getElementById("legacyReportBox");
+
+    if (!card || !box) return;
+
+    const report = localStorage.getItem("STEM_NATION_LEGACY_REPORT_V1");
+
+    if (state.legacyReportGenerated && report) {
+      card.style.display = "block";
+      box.innerHTML = report;
+    } else {
+      card.style.display = "none";
+    }
   }
 
   function nationActionDone(key) {
@@ -2780,6 +2961,8 @@
     document.getElementById("nationBtn4").addEventListener("click", function () {
       applyNationAction("memory", "Protect Cultural Memory");
     });
+
+    document.getElementById("generateLegacyReportBtn").addEventListener("click", generateLegacyReport);
     document.getElementById("resetBtn").addEventListener("click", resetWorld);
 
     const advancePhaseBtn = document.getElementById("advancePhaseBtn");
