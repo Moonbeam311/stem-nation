@@ -376,6 +376,63 @@
       <div class="log-entry" id="village-council">□ Establish Village Council</div>
     </div>
 
+    <!-- STEM_NATION_WORLD_BOARD_TOWN_READINESS_V23 -->
+    <div class="objective" id="townReadinessCard" style="display:none;">
+      <h3>Town Readiness</h3>
+      <div class="log-entry">Village Score: <strong id="townScore">0/4</strong></div>
+      <div class="log-entry">Status: <strong id="townStatus">Not Ready</strong></div>
+      <div class="log-entry" id="townForecast">
+        Complete village expansion actions to prepare for Town Formation.
+      </div>
+      <button type="button" class="turn-btn" id="advanceTownBtn" style="display:none;">Advance to Town Formation</button>
+    </div>
+
+    <div class="objective" id="townFormationCard" style="display:none;">
+      <h3>Town Formation Actions</h3>
+      <div class="log-entry" id="town-hall">□ Build Town Hall</div>
+      <div class="log-entry" id="town-market">□ Create Market District</div>
+      <div class="log-entry" id="town-works">□ Establish Public Works</div>
+      <div class="log-entry" id="town-school">□ Open Civic School</div>
+    </div>
+
+    <!-- STEM_NATION_WORLD_BOARD_CITY_READINESS_V24 -->
+    <div class="objective" id="cityReadinessCard" style="display:none;">
+      <h3>City Readiness</h3>
+      <div class="log-entry">Town Score: <strong id="cityScore">0/4</strong></div>
+      <div class="log-entry">Status: <strong id="cityStatus">Not Ready</strong></div>
+      <div class="log-entry" id="cityForecast">
+        Complete town formation actions to prepare for City Planning.
+      </div>
+      <button type="button" class="turn-btn" id="advanceCityBtn" style="display:none;">Advance to City Planning</button>
+    </div>
+
+    <div class="objective" id="cityPlanningCard" style="display:none;">
+      <h3>City Planning Actions</h3>
+      <div class="log-entry" id="city-districts">□ Plan City Districts</div>
+      <div class="log-entry" id="city-trade">□ Create Trade Authority</div>
+      <div class="log-entry" id="city-water">□ Build Water & Sanitation System</div>
+      <div class="log-entry" id="city-academy">□ Found Civic Academy</div>
+    </div>
+
+    <!-- STEM_NATION_WORLD_BOARD_REGIONAL_CAPITAL_READINESS_V25 -->
+    <div class="objective" id="regionalReadinessCard" style="display:none;">
+      <h3>Regional Capital Readiness</h3>
+      <div class="log-entry">City Score: <strong id="regionalScore">0/4</strong></div>
+      <div class="log-entry">Status: <strong id="regionalStatus">Not Ready</strong></div>
+      <div class="log-entry" id="regionalForecast">
+        Complete city planning actions to prepare for Regional Capital status.
+      </div>
+      <button type="button" class="turn-btn" id="advanceRegionalBtn" style="display:none;">Advance to Regional Capital</button>
+    </div>
+
+    <div class="objective" id="regionalCapitalCard" style="display:none;">
+      <h3>Regional Capital Actions</h3>
+      <div class="log-entry" id="regional-trade">□ Coordinate Regional Trade</div>
+      <div class="log-entry" id="regional-roads">□ Build Intercity Roads</div>
+      <div class="log-entry" id="regional-council">□ Establish Regional Council</div>
+      <div class="log-entry" id="regional-archive">□ Create Knowledge Archive</div>
+    </div>
+
     <h2 id="regionName">Select a Region</h2>
     <p id="regionSummary">Choose a region to begin civilization analysis.</p>
 
@@ -413,6 +470,21 @@
       <button type="button" id="villageBtn2" style="display:none;">Build Marketplace</button>
       <button type="button" id="villageBtn3" style="display:none;">Open Learning House</button>
       <button type="button" id="villageBtn4" style="display:none;">Establish Village Council</button>
+
+      <button type="button" id="townBtn1" style="display:none;">Build Town Hall</button>
+      <button type="button" id="townBtn2" style="display:none;">Create Market District</button>
+      <button type="button" id="townBtn3" style="display:none;">Establish Public Works</button>
+      <button type="button" id="townBtn4" style="display:none;">Open Civic School</button>
+
+      <button type="button" id="cityBtn1" style="display:none;">Plan City Districts</button>
+      <button type="button" id="cityBtn2" style="display:none;">Create Trade Authority</button>
+      <button type="button" id="cityBtn3" style="display:none;">Build Water & Sanitation System</button>
+      <button type="button" id="cityBtn4" style="display:none;">Found Civic Academy</button>
+
+      <button type="button" id="regionalBtn1" style="display:none;">Coordinate Regional Trade</button>
+      <button type="button" id="regionalBtn2" style="display:none;">Build Intercity Roads</button>
+      <button type="button" id="regionalBtn3" style="display:none;">Establish Regional Council</button>
+      <button type="button" id="regionalBtn4" style="display:none;">Create Knowledge Archive</button>
     </div>
 
     <button type="button" class="turn-btn" id="advanceTurnBtn">Advance Turn</button>
@@ -484,7 +556,10 @@
     crisisArchived: false,
     recoveryAdvanced: false,
     completedRecoveryActions: [],
-    growthAdvanced: false
+    growthAdvanced: false,
+    townAdvanced: false,
+    cityAdvanced: false,
+    regionalCapitalAdvanced: false
   };
 
   const seasons = ["Early Rainfall Season", "High Sun Season", "Harvest Season", "Cold Wind Season"];
@@ -672,6 +747,18 @@
     if (objectiveText && state.phase === "Village Expansion") {
       objectiveText.textContent = "Guide the settlement into village growth by expanding homes, trade, learning, and civic leadership.";
     }
+
+    if (objectiveText && state.phase === "Town Formation") {
+      objectiveText.textContent = "Strengthen the village into a town by building institutions, public works, markets, and civic learning systems.";
+    }
+
+    if (objectiveText && state.phase === "City Planning") {
+      objectiveText.textContent = "Coordinate districts, trade authority, water systems, and civic learning to guide the town toward city-level complexity.";
+    }
+
+    if (objectiveText && state.phase === "Regional Capital") {
+      objectiveText.textContent = "Coordinate the wider region through trade, roads, council authority, and preserved knowledge systems.";
+    }
   }
 
   function advancePhase() {
@@ -745,6 +832,12 @@
     updateRecoveryUI();
     updateGrowthReadinessUI();
     updateVillageExpansionUI();
+    updateTownReadinessUI();
+    updateTownFormationUI();
+    updateCityReadinessUI();
+    updateCityPlanningUI();
+    updateRegionalReadinessUI();
+    updateRegionalCapitalUI();
   }
 
   function saveState() {
@@ -1346,6 +1439,534 @@
     saveState();
   }
 
+  function getVillageScore() {
+    if (!state.completedVillageActions) return 0;
+    return state.completedVillageActions.length;
+  }
+
+  function getTownStatus(score) {
+    if (score >= 3) return "Ready for Town Formation";
+    if (score >= 2) return "Nearly Ready";
+    return "Not Ready";
+  }
+
+  function updateTownReadinessUI() {
+    const card = document.getElementById("townReadinessCard");
+    if (!card) return;
+
+    const isVillageOrBeyond = state.phase === "Village Expansion" || state.phase === "Town Formation";
+    card.style.display = isVillageOrBeyond ? "block" : "none";
+
+    const score = getVillageScore();
+    const status = getTownStatus(score);
+
+    setText("townScore", score + "/4");
+    setText("townStatus", status);
+
+    let forecast = "Complete village expansion actions to prepare for Town Formation.";
+
+    if (status === "Ready for Town Formation") {
+      forecast = "Forecast: The village has enough housing, trade, learning, and council structure to become a town.";
+    } else if (status === "Nearly Ready") {
+      forecast = "Forecast: The village is close, but needs one more major civic foundation.";
+    } else {
+      forecast = "Forecast: Town formation too soon may strain the village.";
+    }
+
+    setText("townForecast", forecast);
+
+    const btn = document.getElementById("advanceTownBtn");
+    if (btn) {
+      btn.style.display =
+        state.phase === "Village Expansion" && score >= 3 && !state.townAdvanced
+          ? "block"
+          : "none";
+    }
+  }
+
+  function advanceToTownFormation() {
+    const score = getVillageScore();
+
+    if (state.phase !== "Village Expansion") {
+      logAction("Town Formation blocked: reach Village Expansion first.");
+      return;
+    }
+
+    if (score < 3) {
+      logAction("Town Formation blocked: complete at least 3 village actions first.");
+      setText("systemStatus", "JS ACTIVE — Town Formation blocked, village incomplete.");
+      return;
+    }
+
+    state.phase = "Town Formation";
+    state.townAdvanced = true;
+    state.stability += 2;
+    state.wealth += 3;
+    state.knowledge += 1;
+
+    logAction("Phase advanced: Village Expansion → Town Formation. Stability +2, Wealth +3, Knowledge +1.");
+    setText("systemStatus", "JS ACTIVE — phase advanced to Town Formation.");
+
+    updateHUD();
+    updateTownReadinessUI();
+    updateTownFormationUI();
+    saveState();
+  }
+
+  function getTownScore() {
+    if (!state.completedTownActions) return 0;
+    return state.completedTownActions.length;
+  }
+
+  function getCityStatus(score) {
+    if (score >= 3) return "Ready for City Planning";
+    if (score >= 2) return "Nearly Ready";
+    return "Not Ready";
+  }
+
+  function updateCityReadinessUI() {
+    const card = document.getElementById("cityReadinessCard");
+    if (!card) return;
+
+    const isTownOrBeyond = state.phase === "Town Formation" || state.phase === "City Planning";
+    card.style.display = isTownOrBeyond ? "block" : "none";
+
+    const score = getTownScore();
+    const status = getCityStatus(score);
+
+    setText("cityScore", score + "/4");
+    setText("cityStatus", status);
+
+    let forecast = "Complete town formation actions to prepare for City Planning.";
+
+    if (status === "Ready for City Planning") {
+      forecast = "Forecast: The town has enough public institutions, infrastructure, markets, and civic learning to plan a city.";
+    } else if (status === "Nearly Ready") {
+      forecast = "Forecast: The town is close, but needs one more major public institution.";
+    } else {
+      forecast = "Forecast: City planning too soon may overload the town.";
+    }
+
+    setText("cityForecast", forecast);
+
+    const btn = document.getElementById("advanceCityBtn");
+    if (btn) {
+      btn.style.display =
+        state.phase === "Town Formation" && score >= 3 && !state.cityAdvanced
+          ? "block"
+          : "none";
+    }
+  }
+
+  function advanceToCityPlanning() {
+    const score = getTownScore();
+
+    if (state.phase !== "Town Formation") {
+      logAction("City Planning blocked: reach Town Formation first.");
+      return;
+    }
+
+    if (score < 3) {
+      logAction("City Planning blocked: complete at least 3 town actions first.");
+      setText("systemStatus", "JS ACTIVE — City Planning blocked, town incomplete.");
+      return;
+    }
+
+    state.phase = "City Planning";
+    state.cityAdvanced = true;
+    state.stability += 2;
+    state.wealth += 3;
+    state.knowledge += 2;
+
+    logAction("Phase advanced: Town Formation → City Planning. Stability +2, Wealth +3, Knowledge +2.");
+    setText("systemStatus", "JS ACTIVE — phase advanced to City Planning.");
+
+    updateHUD();
+    updateCityReadinessUI();
+    updateCityPlanningUI();
+    saveState();
+  }
+
+  function getCityScore() {
+    if (!state.completedCityActions) return 0;
+    return state.completedCityActions.length;
+  }
+
+  function getRegionalStatus(score) {
+    if (score >= 3) return "Ready for Regional Capital";
+    if (score >= 2) return "Nearly Ready";
+    return "Not Ready";
+  }
+
+  function updateRegionalReadinessUI() {
+    const card = document.getElementById("regionalReadinessCard");
+    if (!card) return;
+
+    const isCityOrBeyond = state.phase === "City Planning" || state.phase === "Regional Capital";
+    card.style.display = isCityOrBeyond ? "block" : "none";
+
+    const score = getCityScore();
+    const status = getRegionalStatus(score);
+
+    setText("regionalScore", score + "/4");
+    setText("regionalStatus", status);
+
+    let forecast = "Complete city planning actions to prepare for Regional Capital status.";
+
+    if (status === "Ready for Regional Capital") {
+      forecast = "Forecast: The city has enough districts, trade systems, water infrastructure, and civic learning to serve the wider region.";
+    } else if (status === "Nearly Ready") {
+      forecast = "Forecast: The city is close, but needs one more major system before it can coordinate the region.";
+    } else {
+      forecast = "Forecast: Regional leadership too soon may overextend the city.";
+    }
+
+    setText("regionalForecast", forecast);
+
+    const btn = document.getElementById("advanceRegionalBtn");
+    if (btn) {
+      btn.style.display =
+        state.phase === "City Planning" && score >= 3 && !state.regionalCapitalAdvanced
+          ? "block"
+          : "none";
+    }
+  }
+
+  function advanceToRegionalCapital() {
+    const score = getCityScore();
+
+    if (state.phase !== "City Planning") {
+      logAction("Regional Capital blocked: reach City Planning first.");
+      return;
+    }
+
+    if (score < 3) {
+      logAction("Regional Capital blocked: complete at least 3 city planning actions first.");
+      setText("systemStatus", "JS ACTIVE — Regional Capital blocked, city planning incomplete.");
+      return;
+    }
+
+    state.phase = "Regional Capital";
+    state.regionalCapitalAdvanced = true;
+    state.stability += 3;
+    state.wealth += 4;
+    state.knowledge += 2;
+    state.morale += 1;
+
+    logAction("Phase advanced: City Planning → Regional Capital. Stability +3, Wealth +4, Knowledge +2, Morale +1.");
+    setText("systemStatus", "JS ACTIVE — phase advanced to Regional Capital.");
+
+    updateHUD();
+    updateRegionalReadinessUI();
+    updateRegionalCapitalUI();
+    saveState();
+  }
+
+  function regionalActionDone(key) {
+    if (!state.completedRegionalActions) state.completedRegionalActions = [];
+    return state.completedRegionalActions.includes(key);
+  }
+
+  function updateRegionalCapitalUI() {
+    const isRegional = state.phase === "Regional Capital";
+
+    const card = document.getElementById("regionalCapitalCard");
+    if (card) card.style.display = isRegional ? "block" : "none";
+
+    [
+      "cityBtn1", "cityBtn2", "cityBtn3", "cityBtn4",
+      "townBtn1", "townBtn2", "townBtn3", "townBtn4",
+      "villageBtn1", "villageBtn2", "villageBtn3", "villageBtn4",
+      "recoveryBtn1", "recoveryBtn2", "recoveryBtn3", "recoveryBtn4",
+      "survivalBtn1", "survivalBtn2", "survivalBtn3", "survivalBtn4", "survivalBtn5",
+      "scoutBtn", "buildBtn", "tradeBtn", "preserveBtn"
+    ].forEach(function (id) {
+      const btn = document.getElementById(id);
+      if (btn && isRegional) btn.style.display = "none";
+    });
+
+    ["advanceRecoveryBtn", "advanceVillageBtn", "advanceTownBtn", "advanceCityBtn", "advanceRegionalBtn"].forEach(function (id) {
+      const btn = document.getElementById(id);
+      if (btn && isRegional) btn.style.display = "none";
+    });
+
+    ["regionalBtn1", "regionalBtn2", "regionalBtn3", "regionalBtn4"].forEach(function (id) {
+      const btn = document.getElementById(id);
+      if (btn) btn.style.display = isRegional ? "block" : "none";
+    });
+
+    const labels = {
+      trade: "Coordinate Regional Trade",
+      roads: "Build Intercity Roads",
+      council: "Establish Regional Council",
+      archive: "Create Knowledge Archive"
+    };
+
+    Object.keys(labels).forEach(function (key) {
+      const row = document.getElementById("regional-" + key);
+      if (!row) return;
+
+      const done = regionalActionDone(key);
+      row.textContent = (done ? "✓ " : "□ ") + labels[key];
+      row.style.color = done ? "#9ee6a8" : "#d8c89b";
+    });
+  }
+
+  function applyRegionalAction(key, label) {
+    if (state.phase !== "Regional Capital") {
+      logAction("Regional action blocked: advance to Regional Capital first.");
+      return;
+    }
+
+    if (!state.completedRegionalActions) state.completedRegionalActions = [];
+
+    if (state.completedRegionalActions.includes(key)) {
+      logAction("Regional action blocked: " + label + " already completed.");
+      return;
+    }
+
+    if (key === "trade") {
+      state.wealth += 8;
+      state.stability += 1;
+      logAction("Regional action completed: Coordinate Regional Trade — Wealth +8, Stability +1.");
+    }
+
+    if (key === "roads") {
+      state.wealth += 3;
+      state.stability += 3;
+      logAction("Regional action completed: Build Intercity Roads — Wealth +3, Stability +3.");
+    }
+
+    if (key === "council") {
+      state.stability += 5;
+      state.morale += 2;
+      logAction("Regional action completed: Establish Regional Council — Stability +5, Morale +2.");
+    }
+
+    if (key === "archive") {
+      state.knowledge += 8;
+      state.morale += 1;
+      logAction("Regional action completed: Create Knowledge Archive — Knowledge +8, Morale +1.");
+    }
+
+    state.completedRegionalActions.push(key);
+
+    updateHUD();
+    updateRegionalCapitalUI();
+    saveState();
+
+    setText("systemStatus", "JS ACTIVE — regional action completed: " + label + ".");
+  }
+
+  function cityActionDone(key) {
+    if (!state.completedCityActions) state.completedCityActions = [];
+    return state.completedCityActions.includes(key);
+  }
+
+  function updateCityPlanningUI() {
+    const isCity = state.phase === "City Planning";
+
+    const card = document.getElementById("cityPlanningCard");
+    if (card) card.style.display = isCity ? "block" : "none";
+
+    [
+      "townBtn1", "townBtn2", "townBtn3", "townBtn4",
+      "villageBtn1", "villageBtn2", "villageBtn3", "villageBtn4",
+      "recoveryBtn1", "recoveryBtn2", "recoveryBtn3", "recoveryBtn4",
+      "survivalBtn1", "survivalBtn2", "survivalBtn3", "survivalBtn4", "survivalBtn5",
+      "scoutBtn", "buildBtn", "tradeBtn", "preserveBtn"
+    ].forEach(function (id) {
+      const btn = document.getElementById(id);
+      if (btn && isCity) btn.style.display = "none";
+    });
+
+    const advanceRecoveryBtn = document.getElementById("advanceRecoveryBtn");
+    if (advanceRecoveryBtn && isCity) advanceRecoveryBtn.style.display = "none";
+
+    const advanceVillageBtn = document.getElementById("advanceVillageBtn");
+    if (advanceVillageBtn && isCity) advanceVillageBtn.style.display = "none";
+
+    const advanceTownBtn = document.getElementById("advanceTownBtn");
+    if (advanceTownBtn && isCity) advanceTownBtn.style.display = "none";
+
+    const advanceCityBtn = document.getElementById("advanceCityBtn");
+    if (advanceCityBtn && isCity) advanceCityBtn.style.display = "none";
+
+    ["cityBtn1", "cityBtn2", "cityBtn3", "cityBtn4"].forEach(function (id) {
+      const btn = document.getElementById(id);
+      if (btn) btn.style.display = isCity ? "block" : "none";
+    });
+
+    const labels = {
+      districts: "Plan City Districts",
+      trade: "Create Trade Authority",
+      water: "Build Water & Sanitation System",
+      academy: "Found Civic Academy"
+    };
+
+    Object.keys(labels).forEach(function (key) {
+      const row = document.getElementById("city-" + key);
+      if (!row) return;
+
+      const done = cityActionDone(key);
+      row.textContent = (done ? "✓ " : "□ ") + labels[key];
+      row.style.color = done ? "#9ee6a8" : "#d8c89b";
+    });
+  }
+
+  function applyCityAction(key, label) {
+    if (state.phase !== "City Planning") {
+      logAction("City action blocked: advance to City Planning first.");
+      return;
+    }
+
+    if (!state.completedCityActions) state.completedCityActions = [];
+
+    if (state.completedCityActions.includes(key)) {
+      logAction("City action blocked: " + label + " already completed.");
+      return;
+    }
+
+    if (key === "districts") {
+      state.stability += 3;
+      state.wealth += 2;
+      logAction("City action completed: Plan City Districts — Stability +3, Wealth +2.");
+    }
+
+    if (key === "trade") {
+      state.wealth += 7;
+      state.knowledge += 1;
+      logAction("City action completed: Create Trade Authority — Wealth +7, Knowledge +1.");
+    }
+
+    if (key === "water") {
+      state.climate += 4;
+      state.stability += 3;
+      logAction("City action completed: Build Water & Sanitation System — Climate +4, Stability +3.");
+    }
+
+    if (key === "academy") {
+      state.knowledge += 7;
+      state.morale += 2;
+      logAction("City action completed: Found Civic Academy — Knowledge +7, Morale +2.");
+    }
+
+    state.completedCityActions.push(key);
+
+    updateHUD();
+    updateCityPlanningUI();
+    saveState();
+
+    setText("systemStatus", "JS ACTIVE — city action completed: " + label + ".");
+  }
+
+  function townActionDone(key) {
+    if (!state.completedTownActions) state.completedTownActions = [];
+    return state.completedTownActions.includes(key);
+  }
+
+  // STEM_NATION_WORLD_BOARD_TOWN_PHASE_CLEANUP_V23A
+  function updateTownFormationUI() {
+    const isTown = state.phase === "Town Formation";
+
+    const card = document.getElementById("townFormationCard");
+    if (card) card.style.display = isTown ? "block" : "none";
+
+    const hideDuringTown = [
+      "scoutBtn", "buildBtn", "tradeBtn", "preserveBtn",
+      "survivalBtn1", "survivalBtn2", "survivalBtn3", "survivalBtn4", "survivalBtn5",
+      "recoveryBtn1", "recoveryBtn2", "recoveryBtn3", "recoveryBtn4",
+      "villageBtn1", "villageBtn2", "villageBtn3", "villageBtn4"
+    ];
+
+    hideDuringTown.forEach(function (id) {
+      const btn = document.getElementById(id);
+      if (btn && isTown) btn.style.display = "none";
+    });
+
+    const advanceRecoveryBtn = document.getElementById("advanceRecoveryBtn");
+    if (advanceRecoveryBtn && isTown) {
+      advanceRecoveryBtn.style.display = "none";
+    }
+
+    const advanceVillageBtn = document.getElementById("advanceVillageBtn");
+    if (advanceVillageBtn && isTown) {
+      advanceVillageBtn.style.display = "none";
+    }
+
+    const advanceTownBtn = document.getElementById("advanceTownBtn");
+    if (advanceTownBtn && isTown) {
+      advanceTownBtn.style.display = "none";
+    }
+
+    ["townBtn1", "townBtn2", "townBtn3", "townBtn4"].forEach(function (id) {
+      const btn = document.getElementById(id);
+      if (btn) btn.style.display = isTown ? "block" : "none";
+    });
+
+    const labels = {
+      hall: "Build Town Hall",
+      market: "Create Market District",
+      works: "Establish Public Works",
+      school: "Open Civic School"
+    };
+
+    Object.keys(labels).forEach(function (key) {
+      const row = document.getElementById("town-" + key);
+      if (!row) return;
+
+      const done = townActionDone(key);
+      row.textContent = (done ? "✓ " : "□ ") + labels[key];
+      row.style.color = done ? "#9ee6a8" : "#d8c89b";
+    });
+  }
+
+  function applyTownAction(key, label) {
+    if (state.phase !== "Town Formation") {
+      logAction("Town action blocked: advance to Town Formation first.");
+      return;
+    }
+
+    if (!state.completedTownActions) state.completedTownActions = [];
+
+    if (state.completedTownActions.includes(key)) {
+      logAction("Town action blocked: " + label + " already completed.");
+      return;
+    }
+
+    if (key === "hall") {
+      state.stability += 4;
+      state.morale += 1;
+      logAction("Town action completed: Build Town Hall — Stability +4, Morale +1.");
+    }
+
+    if (key === "market") {
+      state.wealth += 6;
+      state.stability += 1;
+      logAction("Town action completed: Create Market District — Wealth +6, Stability +1.");
+    }
+
+    if (key === "works") {
+      state.stability += 2;
+      state.climate += 2;
+      logAction("Town action completed: Establish Public Works — Stability +2, Climate +2.");
+    }
+
+    if (key === "school") {
+      state.knowledge += 6;
+      state.morale += 1;
+      logAction("Town action completed: Open Civic School — Knowledge +6, Morale +1.");
+    }
+
+    state.completedTownActions.push(key);
+
+    updateHUD();
+    updateTownFormationUI();
+    saveState();
+
+    setText("systemStatus", "JS ACTIVE — town action completed: " + label + ".");
+  }
+
   function villageActionDone(key) {
     if (!state.completedVillageActions) state.completedVillageActions = [];
     return state.completedVillageActions.includes(key);
@@ -1883,6 +2504,60 @@
 
     document.getElementById("villageBtn4").addEventListener("click", function () {
       applyVillageAction("council", "Establish Village Council");
+    });
+
+    document.getElementById("advanceTownBtn").addEventListener("click", advanceToTownFormation);
+
+    document.getElementById("townBtn1").addEventListener("click", function () {
+      applyTownAction("hall", "Build Town Hall");
+    });
+
+    document.getElementById("townBtn2").addEventListener("click", function () {
+      applyTownAction("market", "Create Market District");
+    });
+
+    document.getElementById("townBtn3").addEventListener("click", function () {
+      applyTownAction("works", "Establish Public Works");
+    });
+
+    document.getElementById("townBtn4").addEventListener("click", function () {
+      applyTownAction("school", "Open Civic School");
+    });
+
+    document.getElementById("advanceCityBtn").addEventListener("click", advanceToCityPlanning);
+
+    document.getElementById("cityBtn1").addEventListener("click", function () {
+      applyCityAction("districts", "Plan City Districts");
+    });
+
+    document.getElementById("cityBtn2").addEventListener("click", function () {
+      applyCityAction("trade", "Create Trade Authority");
+    });
+
+    document.getElementById("cityBtn3").addEventListener("click", function () {
+      applyCityAction("water", "Build Water & Sanitation System");
+    });
+
+    document.getElementById("cityBtn4").addEventListener("click", function () {
+      applyCityAction("academy", "Found Civic Academy");
+    });
+
+    document.getElementById("advanceRegionalBtn").addEventListener("click", advanceToRegionalCapital);
+
+    document.getElementById("regionalBtn1").addEventListener("click", function () {
+      applyRegionalAction("trade", "Coordinate Regional Trade");
+    });
+
+    document.getElementById("regionalBtn2").addEventListener("click", function () {
+      applyRegionalAction("roads", "Build Intercity Roads");
+    });
+
+    document.getElementById("regionalBtn3").addEventListener("click", function () {
+      applyRegionalAction("council", "Establish Regional Council");
+    });
+
+    document.getElementById("regionalBtn4").addEventListener("click", function () {
+      applyRegionalAction("archive", "Create Knowledge Archive");
     });
     document.getElementById("resetBtn").addEventListener("click", resetWorld);
 
