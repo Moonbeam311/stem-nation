@@ -337,6 +337,25 @@
       <div class="log-entry" id="recovery-archive">□ Preserve Crisis Records</div>
     </div>
 
+    <!-- STEM_NATION_WORLD_BOARD_GROWTH_READINESS_V22 -->
+    <div class="objective" id="growthReadinessCard" style="display:none;">
+      <h3>Growth Readiness</h3>
+      <div class="log-entry">Recovery Score: <strong id="growthScore">0/4</strong></div>
+      <div class="log-entry">Status: <strong id="growthStatus">Not Ready</strong></div>
+      <div class="log-entry" id="growthForecast">
+        Complete recovery actions to prepare for Village Expansion.
+      </div>
+      <button type="button" class="turn-btn" id="advanceVillageBtn" style="display:none;">Advance to Village Expansion</button>
+    </div>
+
+    <div class="objective" id="villageExpansionCard" style="display:none;">
+      <h3>Village Expansion Actions</h3>
+      <div class="log-entry" id="village-housing">□ Expand Housing</div>
+      <div class="log-entry" id="village-market">□ Build Marketplace</div>
+      <div class="log-entry" id="village-learning">□ Open Learning House</div>
+      <div class="log-entry" id="village-council">□ Establish Village Council</div>
+    </div>
+
     <h2 id="regionName">Select a Region</h2>
     <p id="regionSummary">Choose a region to begin civilization analysis.</p>
 
@@ -369,6 +388,11 @@
       <button type="button" id="recoveryBtn2" style="display:none;">Expand Food Resilience</button>
       <button type="button" id="recoveryBtn3" style="display:none;">Establish Healing Center</button>
       <button type="button" id="recoveryBtn4" style="display:none;">Preserve Crisis Records</button>
+
+      <button type="button" id="villageBtn1" style="display:none;">Expand Housing</button>
+      <button type="button" id="villageBtn2" style="display:none;">Build Marketplace</button>
+      <button type="button" id="villageBtn3" style="display:none;">Open Learning House</button>
+      <button type="button" id="villageBtn4" style="display:none;">Establish Village Council</button>
     </div>
 
     <button type="button" class="turn-btn" id="advanceTurnBtn">Advance Turn</button>
@@ -438,7 +462,8 @@
     crisisResponses: [],
     crisisArchived: false,
     recoveryAdvanced: false,
-    completedRecoveryActions: []
+    completedRecoveryActions: [],
+    growthAdvanced: false
   };
 
   const seasons = ["Early Rainfall Season", "High Sun Season", "Harvest Season", "Cold Wind Season"];
@@ -622,6 +647,10 @@
     if (objectiveText && state.phase === "Recovery & Growth") {
       objectiveText.textContent = "Recover from crisis, rebuild trust, strengthen food systems, and preserve the lessons learned for future generations.";
     }
+
+    if (objectiveText && state.phase === "Village Expansion") {
+      objectiveText.textContent = "Guide the settlement into village growth by expanding homes, trade, learning, and civic leadership.";
+    }
   }
 
   function advancePhase() {
@@ -689,6 +718,8 @@
     updateCrisisUI();
     updateCrisisResolutionUI();
     updateRecoveryUI();
+    updateGrowthReadinessUI();
+    updateVillageExpansionUI();
   }
 
   function saveState() {
@@ -1204,6 +1235,176 @@
     saveState();
   }
 
+  function getRecoveryScore() {
+    if (!state.completedRecoveryActions) return 0;
+    return state.completedRecoveryActions.length;
+  }
+
+  function getGrowthStatus(score) {
+    if (score >= 3) return "Ready for Village Expansion";
+    if (score >= 2) return "Nearly Ready";
+    return "Not Ready";
+  }
+
+  function updateGrowthReadinessUI() {
+    const card = document.getElementById("growthReadinessCard");
+    if (!card) return;
+
+    const isRecoveryOrBeyond = state.phase === "Recovery & Growth" || state.phase === "Village Expansion";
+    card.style.display = isRecoveryOrBeyond ? "block" : "none";
+
+    const score = getRecoveryScore();
+    const status = getGrowthStatus(score);
+
+    setText("growthScore", score + "/4");
+    setText("growthStatus", status);
+
+    let forecast = "Complete recovery actions to prepare for Village Expansion.";
+
+    if (status === "Ready for Village Expansion") {
+      forecast = "Forecast: The settlement has recovered enough to grow into a larger village system.";
+    } else if (status === "Nearly Ready") {
+      forecast = "Forecast: Recovery is underway, but the people need one more strong foundation before expansion.";
+    } else {
+      forecast = "Forecast: Expansion too soon may weaken the settlement.";
+    }
+
+    setText("growthForecast", forecast);
+
+    const btn = document.getElementById("advanceVillageBtn");
+    if (btn) {
+      btn.style.display =
+        state.phase === "Recovery & Growth" && score >= 3 && !state.growthAdvanced
+          ? "block"
+          : "none";
+    }
+  }
+
+  function advanceToVillageExpansion() {
+    const score = getRecoveryScore();
+
+    if (state.phase !== "Recovery & Growth") {
+      logAction("Village Expansion blocked: reach Recovery & Growth first.");
+      return;
+    }
+
+    if (score < 3) {
+      logAction("Village Expansion blocked: complete at least 3 recovery actions first.");
+      setText("systemStatus", "JS ACTIVE — Village Expansion blocked, recovery incomplete.");
+      return;
+    }
+
+    state.phase = "Village Expansion";
+    state.growthAdvanced = true;
+    state.stability += 2;
+    state.wealth += 2;
+    state.morale += 1;
+
+    logAction("Phase advanced: Recovery & Growth → Village Expansion. Stability +2, Wealth +2, Morale +1.");
+    setText("systemStatus", "JS ACTIVE — phase advanced to Village Expansion.");
+
+    updateHUD();
+    updateGrowthReadinessUI();
+    updateVillageExpansionUI();
+    saveState();
+  }
+
+  function villageActionDone(key) {
+    if (!state.completedVillageActions) state.completedVillageActions = [];
+    return state.completedVillageActions.includes(key);
+  }
+
+  // STEM_NATION_WORLD_BOARD_PHASE_BUTTON_CLEANUP_V22A
+  function updateVillageExpansionUI() {
+    const isVillage = state.phase === "Village Expansion";
+
+    const card = document.getElementById("villageExpansionCard");
+    if (card) card.style.display = isVillage ? "block" : "none";
+
+    const starterButtons = ["scoutBtn", "buildBtn", "tradeBtn", "preserveBtn"];
+    starterButtons.forEach(function (id) {
+      const btn = document.getElementById(id);
+      if (btn && isVillage) btn.style.display = "none";
+    });
+
+    ["recoveryBtn1", "recoveryBtn2", "recoveryBtn3", "recoveryBtn4"].forEach(function (id) {
+      const btn = document.getElementById(id);
+      if (btn && isVillage) btn.style.display = "none";
+    });
+
+    const advanceRecoveryBtn = document.getElementById("advanceRecoveryBtn");
+    if (advanceRecoveryBtn && isVillage) {
+      advanceRecoveryBtn.style.display = "none";
+    }
+
+    ["villageBtn1", "villageBtn2", "villageBtn3", "villageBtn4"].forEach(function (id) {
+      const btn = document.getElementById(id);
+      if (btn) btn.style.display = isVillage ? "block" : "none";
+    });
+
+    const labels = {
+      housing: "Expand Housing",
+      market: "Build Marketplace",
+      learning: "Open Learning House",
+      council: "Establish Village Council"
+    };
+
+    Object.keys(labels).forEach(function (key) {
+      const row = document.getElementById("village-" + key);
+      if (!row) return;
+
+      const done = villageActionDone(key);
+      row.textContent = (done ? "✓ " : "□ ") + labels[key];
+      row.style.color = done ? "#9ee6a8" : "#d8c89b";
+    });
+  }
+
+  function applyVillageAction(key, label) {
+    if (state.phase !== "Village Expansion") {
+      logAction("Village action blocked: advance to Village Expansion first.");
+      return;
+    }
+
+    if (!state.completedVillageActions) state.completedVillageActions = [];
+
+    if (state.completedVillageActions.includes(key)) {
+      logAction("Village action blocked: " + label + " already completed.");
+      return;
+    }
+
+    if (key === "housing") {
+      state.stability += 2;
+      state.morale += 1;
+      logAction("Village action completed: Expand Housing — Stability +2, Morale +1.");
+    }
+
+    if (key === "market") {
+      state.wealth += 5;
+      state.stability += 1;
+      logAction("Village action completed: Build Marketplace — Wealth +5, Stability +1.");
+    }
+
+    if (key === "learning") {
+      state.knowledge += 5;
+      state.morale += 1;
+      logAction("Village action completed: Open Learning House — Knowledge +5, Morale +1.");
+    }
+
+    if (key === "council") {
+      state.stability += 3;
+      state.morale += 2;
+      logAction("Village action completed: Establish Village Council — Stability +3, Morale +2.");
+    }
+
+    state.completedVillageActions.push(key);
+
+    updateHUD();
+    updateVillageExpansionUI();
+    saveState();
+
+    setText("systemStatus", "JS ACTIVE — village action completed: " + label + ".");
+  }
+
   function recoveryActionDone(key) {
     return state.completedRecoveryActions && state.completedRecoveryActions.includes(key);
   }
@@ -1627,6 +1828,24 @@
 
     document.getElementById("recoveryBtn4").addEventListener("click", function () {
       applyRecoveryAction("archive", "Preserve Crisis Records");
+    });
+
+    document.getElementById("advanceVillageBtn").addEventListener("click", advanceToVillageExpansion);
+
+    document.getElementById("villageBtn1").addEventListener("click", function () {
+      applyVillageAction("housing", "Expand Housing");
+    });
+
+    document.getElementById("villageBtn2").addEventListener("click", function () {
+      applyVillageAction("market", "Build Marketplace");
+    });
+
+    document.getElementById("villageBtn3").addEventListener("click", function () {
+      applyVillageAction("learning", "Open Learning House");
+    });
+
+    document.getElementById("villageBtn4").addEventListener("click", function () {
+      applyVillageAction("council", "Establish Village Council");
     });
     document.getElementById("resetBtn").addEventListener("click", resetWorld);
 
