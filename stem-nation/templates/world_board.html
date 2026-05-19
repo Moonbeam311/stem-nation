@@ -220,6 +220,24 @@
       color: #d8c89b;
       line-height: 1.45;
     }
+
+    /* STEM_NATION_WORLD_BOARD_CRISIS_SETTLEMENT_CLEANUP_V22B */
+    .crisis-response-grid {
+      display: grid;
+      gap: 10px;
+      margin-top: 12px;
+    }
+
+    .crisis-response-grid .turn-btn {
+      margin-top: 0;
+      text-align: left;
+      font-weight: bold;
+    }
+
+    .settlement.placed input,
+    .settlement.placed button {
+      display: none;
+    }
   </style>
 </head>
 
@@ -307,10 +325,12 @@
       <div class="log-entry">Severity: <strong id="crisisSeverity">--</strong></div>
       <div class="log-entry" id="crisisAdvisor">Advisor guidance will appear here.</div>
 
-      <button type="button" class="turn-btn" id="crisisMedicineBtn">Deploy Medicine Research</button>
-      <button type="button" class="turn-btn" id="crisisWaterBtn">Protect Water Sources</button>
-      <button type="button" class="turn-btn" id="crisisHealthBtn">Organize Health Response</button>
-      <button type="button" class="turn-btn" id="crisisCivicBtn">Call Civic Council</button>
+      <div class="crisis-response-grid">
+        <button type="button" class="turn-btn" id="crisisMedicineBtn">Deploy Medicine Research</button>
+        <button type="button" class="turn-btn" id="crisisWaterBtn">Protect Water Sources</button>
+        <button type="button" class="turn-btn" id="crisisHealthBtn">Organize Health Response</button>
+        <button type="button" class="turn-btn" id="crisisCivicBtn">Call Civic Council</button>
+      </div>
     </div>
 
     <!-- STEM_NATION_WORLD_BOARD_RECOVERY_PHASE_V21 -->
@@ -460,6 +480,7 @@
     turn2OutcomeApplied: false,
     activeCrisis: null,
     crisisResponses: [],
+    crisisContainedLogged: false,
     crisisArchived: false,
     recoveryAdvanced: false,
     completedRecoveryActions: [],
@@ -681,10 +702,14 @@
     setText("hudMorale", state.morale);
     setText("hudClimate", state.climate);
 
+    const settlementBox = document.querySelector(".settlement");
+
     if (state.settlementPlaced) {
       setText("settlementStatus", "Active Settlement: " + state.settlementName + " — " + state.settlementRegion);
+      if (settlementBox) settlementBox.classList.add("placed");
     } else {
       setText("settlementStatus", "No settlement placed yet.");
+      if (settlementBox) settlementBox.classList.remove("placed");
     }
 
     const unlockCard = document.getElementById("unlockCard");
@@ -1038,6 +1063,7 @@
 
     state.activeCrisis = crisis;
     state.crisisResponses = [];
+    state.crisisContainedLogged = false;
 
     logAction("Turn 2 Crisis Launched: " + crisis.title + " — Severity: " + severity + ".");
     setText("systemStatus", "JS ACTIVE — Turn 2 crisis launched.");
@@ -1074,8 +1100,18 @@
       const btn = document.getElementById(buttonMap[key]);
       if (!btn) return;
 
+      const cleanLabel = btn.textContent.replace("✓ ", "");
+
       if (responses.includes(key)) {
-        btn.textContent = "✓ " + btn.textContent.replace("✓ ", "");
+        btn.textContent = "✓ " + cleanLabel;
+        btn.disabled = true;
+        btn.style.opacity = "0.7";
+      }
+
+      if (state.activeCrisis && state.activeCrisis.severity === "Contained") {
+        if (!responses.includes(key)) {
+          btn.textContent = cleanLabel;
+        }
         btn.disabled = true;
         btn.style.opacity = "0.7";
       }
@@ -1130,9 +1166,10 @@
 
     state.crisisResponses.push(key);
 
-    if (state.crisisResponses.length >= 3) {
+    if (state.crisisResponses.length >= 3 && !state.crisisContainedLogged) {
       logAction("Crisis Stabilized: The Forest Belt disease risk has been contained through coordinated response.");
       state.activeCrisis.severity = "Contained";
+      state.crisisContainedLogged = true;
       state.stability += 1;
       state.morale += 1;
     }
