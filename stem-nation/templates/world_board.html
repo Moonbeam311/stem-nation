@@ -433,6 +433,25 @@
       <div class="log-entry" id="regional-archive">□ Create Knowledge Archive</div>
     </div>
 
+    <!-- STEM_NATION_WORLD_BOARD_NATION_READINESS_V26 -->
+    <div class="objective" id="nationReadinessCard" style="display:none;">
+      <h3>Nation Readiness</h3>
+      <div class="log-entry">Regional Score: <strong id="nationScore">0/4</strong></div>
+      <div class="log-entry">Status: <strong id="nationStatus">Not Ready</strong></div>
+      <div class="log-entry" id="nationForecast">
+        Complete regional capital actions to prepare for Nation Formation.
+      </div>
+      <button type="button" class="turn-btn" id="advanceNationBtn" style="display:none;">Advance to Nation Formation</button>
+    </div>
+
+    <div class="objective" id="nationFormationCard" style="display:none;">
+      <h3>Nation Formation Actions</h3>
+      <div class="log-entry" id="nation-constitution">□ Draft Civic Constitution</div>
+      <div class="log-entry" id="nation-trade">□ Unify Regional Trade Network</div>
+      <div class="log-entry" id="nation-council">□ Establish National Council</div>
+      <div class="log-entry" id="nation-memory">□ Protect Cultural Memory</div>
+    </div>
+
     <h2 id="regionName">Select a Region</h2>
     <p id="regionSummary">Choose a region to begin civilization analysis.</p>
 
@@ -485,6 +504,11 @@
       <button type="button" id="regionalBtn2" style="display:none;">Build Intercity Roads</button>
       <button type="button" id="regionalBtn3" style="display:none;">Establish Regional Council</button>
       <button type="button" id="regionalBtn4" style="display:none;">Create Knowledge Archive</button>
+
+      <button type="button" id="nationBtn1" style="display:none;">Draft Civic Constitution</button>
+      <button type="button" id="nationBtn2" style="display:none;">Unify Regional Trade Network</button>
+      <button type="button" id="nationBtn3" style="display:none;">Establish National Council</button>
+      <button type="button" id="nationBtn4" style="display:none;">Protect Cultural Memory</button>
     </div>
 
     <button type="button" class="turn-btn" id="advanceTurnBtn">Advance Turn</button>
@@ -559,7 +583,8 @@
     growthAdvanced: false,
     townAdvanced: false,
     cityAdvanced: false,
-    regionalCapitalAdvanced: false
+    regionalCapitalAdvanced: false,
+    nationAdvanced: false
   };
 
   const seasons = ["Early Rainfall Season", "High Sun Season", "Harvest Season", "Cold Wind Season"];
@@ -759,6 +784,10 @@
     if (objectiveText && state.phase === "Regional Capital") {
       objectiveText.textContent = "Coordinate the wider region through trade, roads, council authority, and preserved knowledge systems.";
     }
+
+    if (objectiveText && state.phase === "Nation Formation") {
+      objectiveText.textContent = "Unify the region into a nation through civic law, trade networks, national council authority, and protected cultural memory.";
+    }
   }
 
   function advancePhase() {
@@ -838,6 +867,8 @@
     updateCityPlanningUI();
     updateRegionalReadinessUI();
     updateRegionalCapitalUI();
+    updateNationReadinessUI();
+    updateNationFormationUI();
   }
 
   function saveState() {
@@ -1660,6 +1691,178 @@
     updateRegionalReadinessUI();
     updateRegionalCapitalUI();
     saveState();
+  }
+
+  function getRegionalScore() {
+    if (!state.completedRegionalActions) return 0;
+    return state.completedRegionalActions.length;
+  }
+
+  function getNationStatus(score) {
+    if (score >= 3) return "Ready for Nation Formation";
+    if (score >= 2) return "Nearly Ready";
+    return "Not Ready";
+  }
+
+  function updateNationReadinessUI() {
+    const card = document.getElementById("nationReadinessCard");
+    if (!card) return;
+
+    const isRegionalOrBeyond = state.phase === "Regional Capital" || state.phase === "Nation Formation";
+    card.style.display = isRegionalOrBeyond ? "block" : "none";
+
+    const score = getRegionalScore();
+    const status = getNationStatus(score);
+
+    setText("nationScore", score + "/4");
+    setText("nationStatus", status);
+
+    let forecast = "Complete regional capital actions to prepare for Nation Formation.";
+
+    if (status === "Ready for Nation Formation") {
+      forecast = "Forecast: The regional capital has enough trade, roads, council authority, and knowledge systems to unify into a nation.";
+    } else if (status === "Nearly Ready") {
+      forecast = "Forecast: Regional unity is close, but one more national foundation is needed.";
+    } else {
+      forecast = "Forecast: Nation formation too soon may create weak unity and unstable governance.";
+    }
+
+    setText("nationForecast", forecast);
+
+    const btn = document.getElementById("advanceNationBtn");
+    if (btn) {
+      btn.style.display =
+        state.phase === "Regional Capital" && score >= 3 && !state.nationAdvanced
+          ? "block"
+          : "none";
+    }
+  }
+
+  function advanceToNationFormation() {
+    const score = getRegionalScore();
+
+    if (state.phase !== "Regional Capital") {
+      logAction("Nation Formation blocked: reach Regional Capital first.");
+      return;
+    }
+
+    if (score < 3) {
+      logAction("Nation Formation blocked: complete at least 3 regional capital actions first.");
+      setText("systemStatus", "JS ACTIVE — Nation Formation blocked, regional capital incomplete.");
+      return;
+    }
+
+    state.phase = "Nation Formation";
+    state.nationAdvanced = true;
+    state.stability += 4;
+    state.wealth += 4;
+    state.knowledge += 3;
+    state.morale += 3;
+
+    logAction("Phase advanced: Regional Capital → Nation Formation. Stability +4, Wealth +4, Knowledge +3, Morale +3.");
+    setText("systemStatus", "JS ACTIVE — phase advanced to Nation Formation.");
+
+    updateHUD();
+    updateNationReadinessUI();
+    updateNationFormationUI();
+    saveState();
+  }
+
+  function nationActionDone(key) {
+    if (!state.completedNationActions) state.completedNationActions = [];
+    return state.completedNationActions.includes(key);
+  }
+
+  function updateNationFormationUI() {
+    const isNation = state.phase === "Nation Formation";
+
+    const card = document.getElementById("nationFormationCard");
+    if (card) card.style.display = isNation ? "block" : "none";
+
+    [
+      "regionalBtn1", "regionalBtn2", "regionalBtn3", "regionalBtn4",
+      "cityBtn1", "cityBtn2", "cityBtn3", "cityBtn4",
+      "townBtn1", "townBtn2", "townBtn3", "townBtn4",
+      "villageBtn1", "villageBtn2", "villageBtn3", "villageBtn4",
+      "recoveryBtn1", "recoveryBtn2", "recoveryBtn3", "recoveryBtn4",
+      "survivalBtn1", "survivalBtn2", "survivalBtn3", "survivalBtn4", "survivalBtn5",
+      "scoutBtn", "buildBtn", "tradeBtn", "preserveBtn"
+    ].forEach(function (id) {
+      const btn = document.getElementById(id);
+      if (btn && isNation) btn.style.display = "none";
+    });
+
+    ["advanceRecoveryBtn", "advanceVillageBtn", "advanceTownBtn", "advanceCityBtn", "advanceRegionalBtn", "advanceNationBtn"].forEach(function (id) {
+      const btn = document.getElementById(id);
+      if (btn && isNation) btn.style.display = "none";
+    });
+
+    ["nationBtn1", "nationBtn2", "nationBtn3", "nationBtn4"].forEach(function (id) {
+      const btn = document.getElementById(id);
+      if (btn) btn.style.display = isNation ? "block" : "none";
+    });
+
+    const labels = {
+      constitution: "Draft Civic Constitution",
+      trade: "Unify Regional Trade Network",
+      council: "Establish National Council",
+      memory: "Protect Cultural Memory"
+    };
+
+    Object.keys(labels).forEach(function (key) {
+      const row = document.getElementById("nation-" + key);
+      if (!row) return;
+
+      const done = nationActionDone(key);
+      row.textContent = (done ? "✓ " : "□ ") + labels[key];
+      row.style.color = done ? "#9ee6a8" : "#d8c89b";
+    });
+  }
+
+  function applyNationAction(key, label) {
+    if (state.phase !== "Nation Formation") {
+      logAction("Nation action blocked: advance to Nation Formation first.");
+      return;
+    }
+
+    if (!state.completedNationActions) state.completedNationActions = [];
+
+    if (state.completedNationActions.includes(key)) {
+      logAction("Nation action blocked: " + label + " already completed.");
+      return;
+    }
+
+    if (key === "constitution") {
+      state.stability += 6;
+      state.knowledge += 2;
+      logAction("Nation action completed: Draft Civic Constitution — Stability +6, Knowledge +2.");
+    }
+
+    if (key === "trade") {
+      state.wealth += 9;
+      state.stability += 2;
+      logAction("Nation action completed: Unify Regional Trade Network — Wealth +9, Stability +2.");
+    }
+
+    if (key === "council") {
+      state.stability += 6;
+      state.morale += 3;
+      logAction("Nation action completed: Establish National Council — Stability +6, Morale +3.");
+    }
+
+    if (key === "memory") {
+      state.knowledge += 9;
+      state.morale += 3;
+      logAction("Nation action completed: Protect Cultural Memory — Knowledge +9, Morale +3.");
+    }
+
+    state.completedNationActions.push(key);
+
+    updateHUD();
+    updateNationFormationUI();
+    saveState();
+
+    setText("systemStatus", "JS ACTIVE — nation action completed: " + label + ".");
   }
 
   function regionalActionDone(key) {
@@ -2558,6 +2761,24 @@
 
     document.getElementById("regionalBtn4").addEventListener("click", function () {
       applyRegionalAction("archive", "Create Knowledge Archive");
+    });
+
+    document.getElementById("advanceNationBtn").addEventListener("click", advanceToNationFormation);
+
+    document.getElementById("nationBtn1").addEventListener("click", function () {
+      applyNationAction("constitution", "Draft Civic Constitution");
+    });
+
+    document.getElementById("nationBtn2").addEventListener("click", function () {
+      applyNationAction("trade", "Unify Regional Trade Network");
+    });
+
+    document.getElementById("nationBtn3").addEventListener("click", function () {
+      applyNationAction("council", "Establish National Council");
+    });
+
+    document.getElementById("nationBtn4").addEventListener("click", function () {
+      applyNationAction("memory", "Protect Cultural Memory");
     });
     document.getElementById("resetBtn").addEventListener("click", resetWorld);
 
