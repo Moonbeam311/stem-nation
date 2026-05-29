@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>STEM Nation | Student Entry</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- STEM_NATION_STUDENT_LANDING_TEMPLATE_V1 -->
+
+  <style>
+    :root {
+      --gold: #d8b85f;
+      --gold-soft: rgba(216, 184, 95, 0.22);
+      --text: #f6edd1;
+      --muted: rgba(246, 237, 209, 0.72);
+      --dark: #070907;
+      --panel: rgba(0, 0, 0, 0.46);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      overflow: hidden;
+      color: var(--text);
+      font-family: Georgia, "Times New Roman", serif;
+      background:
+        radial-gradient(circle at 18% 18%, rgba(216,184,95,0.16), transparent 28%),
+        radial-gradient(circle at 78% 22%, rgba(46,123,88,0.18), transparent 28%),
+        linear-gradient(135deg, #050705, #101811 55%, #070907);
+    }
+
+    .entry {
+      min-height: 100vh;
+      position: relative;
+      display: grid;
+      place-items: center;
+      padding: 32px;
+      isolation: isolate;
+    }
+
+    .world {
+      position: absolute;
+      inset: 0;
+      z-index: -5;
+      background:
+        linear-gradient(105deg, transparent 0 24%, rgba(48,128,166,0.34) 25% 32%, transparent 33% 100%),
+        radial-gradient(circle at 22% 68%, rgba(72,153,190,0.20), transparent 20%),
+        radial-gradient(circle at 50% 58%, rgba(164,132,67,0.17), transparent 24%),
+        radial-gradient(circle at 82% 62%, rgba(35,108,57,0.25), transparent 30%);
+    }
+
+    .world::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background:
+        repeating-linear-gradient(100deg, rgba(255,255,255,0.035) 0 2px, transparent 2px 18px),
+        radial-gradient(circle at center, transparent 42%, rgba(0,0,0,0.62) 100%);
+      opacity: 0.78;
+    }
+
+    .world::after {
+      content: "";
+      position: absolute;
+      left: -10%;
+      top: -12%;
+      width: 46%;
+      height: 120%;
+      border-radius: 50%;
+      background:
+        linear-gradient(105deg,
+          transparent,
+          rgba(80,174,215,0.18) 24%,
+          rgba(106,194,224,0.42) 44%,
+          rgba(36,111,148,0.38) 60%,
+          transparent
+        );
+      transform: rotate(10deg);
+      animation: riverMotion 8s ease-in-out infinite alternate;
+    }
+
+    @keyframes riverMotion {
+      from {
+        transform: rotate(10deg) translateY(0);
+        filter: brightness(0.94);
+      }
+      to {
+        transform: rotate(10deg) translateY(18px);
+        filter: brightness(1.14);
+      }
+    }
+
+    .air {
+      position: absolute;
+      inset: 0;
+      z-index: -4;
+      background:
+        radial-gradient(circle at 78% 42%, rgba(83,156,88,0.13), transparent 20%),
+        radial-gradient(circle at 86% 72%, rgba(38,112,61,0.15), transparent 20%);
+      animation: airDrift 10s ease-in-out infinite alternate;
+    }
+
+    @keyframes airDrift {
+      from {
+        transform: translateX(-10px);
+        opacity: 0.4;
+      }
+      to {
+        transform: translateX(20px);
+        opacity: 0.85;
+      }
+    }
+
+    .card {
+      width: min(880px, 92vw);
+      min-height: 500px;
+      display: grid;
+      place-items: center;
+      text-align: center;
+      padding: 46px;
+      border: 1px solid var(--gold-soft);
+      border-radius: 30px;
+      background:
+        linear-gradient(180deg, rgba(0,0,0,0.58), rgba(0,0,0,0.36)),
+        var(--panel);
+      backdrop-filter: blur(8px);
+      box-shadow:
+        0 30px 90px rgba(0,0,0,0.55),
+        inset 0 0 90px rgba(216,184,95,0.06);
+    }
+
+    .kicker {
+      color: var(--gold);
+      text-transform: uppercase;
+      letter-spacing: 0.24em;
+      font-size: 0.78rem;
+      margin-bottom: 18px;
+    }
+
+    h1 {
+      margin: 0;
+      font-size: clamp(3rem, 7vw, 6rem);
+      font-weight: 500;
+      letter-spacing: 0.04em;
+      line-height: 0.96;
+    }
+
+    .tagline {
+      margin: 18px auto 0;
+      max-width: 680px;
+      color: var(--muted);
+      font-size: clamp(1.05rem, 1.7vw, 1.35rem);
+      line-height: 1.55;
+    }
+
+    .entry-button {
+      display: inline-block;
+      margin-top: 38px;
+      padding: 15px 30px;
+      border: 1px solid rgba(216,184,95,0.52);
+      border-radius: 999px;
+      background: rgba(216,184,95,0.16);
+      color: var(--text);
+      text-decoration: none;
+      font-size: 1.08rem;
+      transition: 0.25s ease;
+      box-shadow: 0 0 24px rgba(216,184,95,0.08);
+    }
+
+    .entry-button:hover {
+      background: rgba(216,184,95,0.28);
+      transform: translateY(-2px);
+      box-shadow: 0 0 34px rgba(216,184,95,0.18);
+    }
+
+    .small-note {
+      margin-top: 16px;
+      color: rgba(246,237,209,0.52);
+      font-size: 0.86rem;
+    }
+
+    @media (max-width: 760px) {
+      .card {
+        padding: 30px;
+        min-height: 520px;
+      }
+
+      .entry-button {
+        width: 100%;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <main class="entry">
+    <div class="world"></div>
+    <div class="air"></div>
+
+    <section class="card">
+      <div>
+        <div class="kicker">Student Experience</div>
+        <h1>STEM Nation</h1>
+        <p class="tagline">
+          Enter a world where nations rise, nations fall, and every decision changes what happens next.
+        </p>
+
+        <a class="entry-button" href="/academy_transition">Enter STEM Nation</a>
+
+        <div class="small-note">
+          Observe. Ask questions. Test ideas. Refine your thinking.
+        </div>
+      </div>
+    </section>
+  </main>
+</body>
+</html>

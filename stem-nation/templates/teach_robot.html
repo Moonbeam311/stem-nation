@@ -1,0 +1,616 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Teach the Robot | Inquiry Skills Lab</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <style>
+    :root {
+      --bg: #07111f;
+      --panel: rgba(13, 26, 46, 0.92);
+      --panel2: rgba(20, 38, 64, 0.94);
+      --gold: #f4c95d;
+      --text: #f7f2df;
+      --muted: #b9c4d6;
+      --green: #7ee081;
+      --red: #ff7b7b;
+      --blue: #76c7ff;
+      --line: rgba(244, 201, 93, 0.3);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      font-family: Georgia, "Times New Roman", serif;
+      background:
+        radial-gradient(circle at top left, rgba(244, 201, 93, 0.12), transparent 34%),
+        radial-gradient(circle at bottom right, rgba(118, 199, 255, 0.10), transparent 38%),
+        linear-gradient(135deg, #050911, var(--bg));
+      color: var(--text);
+    }
+
+    .page {
+      max-width: 1180px;
+      margin: 0 auto;
+      padding: 28px 18px 42px;
+    }
+
+    .topbar {
+      display: flex;
+      justify-content: space-between;
+      gap: 16px;
+      align-items: center;
+      margin-bottom: 18px;
+    }
+
+    .brand {
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--gold);
+      font-size: 0.76rem;
+      font-weight: bold;
+    }
+
+    .home-link {
+      color: var(--muted);
+      text-decoration: none;
+      border: 1px solid rgba(255,255,255,0.16);
+      border-radius: 999px;
+      padding: 8px 13px;
+      font-size: 0.84rem;
+      background: rgba(255,255,255,0.04);
+    }
+
+    .hero {
+      border: 1px solid var(--line);
+      background: rgba(10, 20, 36, 0.86);
+      border-radius: 24px;
+      padding: 24px;
+      box-shadow: 0 26px 70px rgba(0,0,0,0.38);
+      margin-bottom: 18px;
+    }
+
+    .hero h1 {
+      margin: 0 0 8px;
+      font-size: clamp(2.1rem, 4vw, 4rem);
+      color: var(--gold);
+      line-height: 1;
+    }
+
+    .hero p {
+      max-width: 850px;
+      color: var(--muted);
+      font-size: 1.08rem;
+      line-height: 1.55;
+      margin: 0;
+    }
+
+    .layout {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 18px;
+    }
+
+    .card {
+      border: 1px solid rgba(244, 201, 93, 0.24);
+      background: var(--panel);
+      border-radius: 22px;
+      padding: 20px;
+      box-shadow: 0 18px 55px rgba(0,0,0,0.28);
+    }
+
+    .card h2 {
+      margin: 0 0 10px;
+      color: var(--gold);
+      font-size: 1.25rem;
+    }
+
+    .mission {
+      background: rgba(244, 201, 93, 0.09);
+      border: 1px solid rgba(244, 201, 93, 0.28);
+      border-radius: 16px;
+      padding: 14px;
+      margin-bottom: 14px;
+      color: #fff7d4;
+      line-height: 1.45;
+    }
+
+    .grid-wrap {
+      display: flex;
+      justify-content: center;
+      margin: 16px 0 12px;
+    }
+
+    .robot-grid {
+      display: grid;
+      grid-template-columns: repeat(5, 72px);
+      grid-template-rows: repeat(5, 72px);
+      gap: 8px;
+      background: rgba(255,255,255,0.04);
+      padding: 10px;
+      border-radius: 18px;
+      border: 1px solid rgba(255,255,255,0.12);
+    }
+
+    .cell {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 14px;
+      background: rgba(255,255,255,0.08);
+      border: 1px solid rgba(255,255,255,0.12);
+      font-size: 2rem;
+      min-width: 0;
+      min-height: 0;
+    }
+
+    .cell.goal {
+      background: rgba(244, 201, 93, 0.18);
+      border-color: rgba(244, 201, 93, 0.55);
+    }
+
+    .cell.robot {
+      background: rgba(118, 199, 255, 0.18);
+      border-color: rgba(118, 199, 255, 0.55);
+    }
+
+    .command-buttons {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 9px;
+      margin: 12px 0;
+    }
+
+    button {
+      cursor: pointer;
+      border: none;
+      border-radius: 14px;
+      padding: 12px 14px;
+      font-family: inherit;
+      font-weight: bold;
+      color: #09111f;
+      background: var(--gold);
+      transition: transform 0.15s ease, filter 0.15s ease;
+    }
+
+    button:hover {
+      transform: translateY(-1px);
+      filter: brightness(1.08);
+    }
+
+    button.secondary {
+      background: rgba(255,255,255,0.1);
+      color: var(--text);
+      border: 1px solid rgba(255,255,255,0.16);
+    }
+
+    button.blue {
+      background: var(--blue);
+    }
+
+    button.green {
+      background: var(--green);
+    }
+
+    textarea {
+      width: 100%;
+      min-height: 110px;
+      resize: vertical;
+      border-radius: 16px;
+      border: 1px solid rgba(255,255,255,0.18);
+      background: rgba(0,0,0,0.28);
+      color: var(--text);
+      padding: 14px;
+      font-family: Consolas, Monaco, monospace;
+      line-height: 1.45;
+      font-size: 0.96rem;
+      outline: none;
+    }
+
+    .hint {
+      color: var(--muted);
+      font-size: 0.92rem;
+      line-height: 1.45;
+      margin: 10px 0;
+    }
+
+    .log {
+      min-height: 160px;
+      max-height: 260px;
+      overflow: auto;
+      padding: 14px;
+      border-radius: 16px;
+      background: rgba(0,0,0,0.28);
+      border: 1px solid rgba(255,255,255,0.14);
+      color: #e9f1ff;
+      font-family: Consolas, Monaco, monospace;
+      font-size: 0.9rem;
+      line-height: 1.45;
+      white-space: pre-wrap;
+    }
+
+    .checkpoint {
+      display: none;
+      margin-top: 14px;
+      padding: 14px;
+      border-radius: 16px;
+      background: var(--panel2);
+      border: 1px solid rgba(118, 199, 255, 0.25);
+    }
+
+    .checkpoint.active {
+      display: block;
+    }
+
+    .choices {
+      display: grid;
+      gap: 8px;
+      margin-top: 10px;
+    }
+
+    .choice {
+      text-align: left;
+      background: rgba(255,255,255,0.08);
+      color: var(--text);
+      border: 1px solid rgba(255,255,255,0.16);
+    }
+
+    .choice.selected {
+      background: rgba(244, 201, 93, 0.24);
+      color: var(--gold);
+      border-color: rgba(244, 201, 93, 0.55);
+    }
+
+    .reflection {
+      display: grid;
+      gap: 10px;
+      margin-top: 10px;
+    }
+
+    .reflection input {
+      width: 100%;
+      border-radius: 12px;
+      border: 1px solid rgba(255,255,255,0.18);
+      background: rgba(0,0,0,0.24);
+      color: var(--text);
+      padding: 10px;
+      font-family: inherit;
+      font-size: 0.95rem;
+    }
+
+    .reveal {
+      display: none;
+      margin-top: 14px;
+      padding: 14px;
+      border-radius: 16px;
+      border: 1px solid rgba(126, 224, 129, 0.35);
+      background: rgba(126, 224, 129, 0.1);
+      color: #ddffe1;
+      line-height: 1.5;
+    }
+
+    .reveal.active {
+      display: block;
+    }
+
+    .pill-row {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      margin-top: 12px;
+    }
+
+    .pill {
+      border: 1px solid rgba(244, 201, 93, 0.24);
+      background: rgba(244, 201, 93, 0.08);
+      color: #ffe9a8;
+      border-radius: 999px;
+      padding: 7px 10px;
+      font-size: 0.82rem;
+    }
+
+    @media (max-width: 900px) {
+      .layout {
+        grid-template-columns: 1fr;
+      }
+
+      .robot-grid {
+        grid-template-columns: repeat(5, 56px);
+        grid-template-rows: repeat(5, 56px);
+        gap: 6px;
+      }
+
+      .cell {
+        font-size: 1.55rem;
+      }
+    }
+
+    @media (max-width: 410px) {
+      .robot-grid {
+        grid-template-columns: repeat(5, 48px);
+        grid-template-rows: repeat(5, 48px);
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <main class="page">
+    <div class="topbar">
+      <div class="brand">Inquiry Skills Lab</div>
+      <a class="home-link" href="/">Return Home</a>
+    </div>
+
+    <section class="hero">
+      <h1>Teach the Robot</h1>
+      <p>
+        The robot does not guess. It only follows clear instructions. Give directions,
+        watch what happens, change one thing, and try again.
+      </p>
+
+      <div class="pill-row">
+        <span class="pill">Clear Instructions</span>
+        <span class="pill">Observe What Happens</span>
+        <span class="pill">Change One Thing</span>
+        <span class="pill">Test Again</span>
+        <span class="pill">Explain Evidence</span>
+      </div>
+    </section>
+
+    <section class="layout">
+      <div class="card">
+        <h2>Mission</h2>
+
+        <div class="mission">
+          Move the robot 🤖 to the star ⭐.<br>
+          The robot begins in the bottom-left corner. The star is in the top-right corner.
+        </div>
+
+        <div class="grid-wrap">
+          <div id="robotGrid" class="robot-grid" aria-label="Robot movement grid"></div>
+        </div>
+
+        <div class="hint">
+          Use the command buttons or type your own steps. The robot understands:
+          <strong>MOVE UP</strong>, <strong>MOVE DOWN</strong>, <strong>MOVE LEFT</strong>, and <strong>MOVE RIGHT</strong>.
+        </div>
+
+        <div class="command-buttons">
+          <button class="blue" onclick="addCommand('MOVE UP')">Move Up</button>
+          <button class="blue" onclick="addCommand('MOVE DOWN')">Move Down</button>
+          <button class="blue" onclick="addCommand('MOVE LEFT')">Move Left</button>
+          <button class="blue" onclick="addCommand('MOVE RIGHT')">Move Right</button>
+        </div>
+
+        <textarea id="commands" aria-label="Student robot instructions" placeholder="Example:
+MOVE RIGHT
+MOVE RIGHT
+MOVE UP"></textarea>
+
+        <div class="command-buttons">
+          <button class="green" onclick="runRobot()">Run Instructions</button>
+          <button class="secondary" onclick="resetActivity()">Reset</button>
+        </div>
+      </div>
+
+      <div class="card">
+        <h2>What Happened?</h2>
+
+        <div id="log" class="log">Waiting for instructions...</div>
+
+        <div id="checkpoint1" class="checkpoint">
+          <h2>Checkpoint 1</h2>
+          <div class="hint">Did the robot do what you expected?</div>
+          <div class="choices">
+            <button class="choice" onclick="selectChoice(this, 'expected', 'Yes')">Yes, it worked.</button>
+            <button class="choice" onclick="selectChoice(this, 'expected', 'Almost')">Almost, but not fully.</button>
+            <button class="choice" onclick="selectChoice(this, 'expected', 'No')">No, it did something different.</button>
+          </div>
+        </div>
+
+        <div id="checkpoint2" class="checkpoint">
+          <h2>Checkpoint 2</h2>
+          <div class="hint">What do you want to find out before your next try?</div>
+          <div class="choices">
+            <button class="choice" onclick="selectChoice(this, 'question', 'Will adding one step help?')">Will adding one step help?</button>
+            <button class="choice" onclick="selectChoice(this, 'question', 'Did I use the wrong direction?')">Did I use the wrong direction?</button>
+            <button class="choice" onclick="selectChoice(this, 'question', 'Did I stop too soon?')">Did I stop too soon?</button>
+            <button class="choice" onclick="selectChoice(this, 'question', 'Did I move too far?')">Did I move too far?</button>
+            <button class="choice" onclick="selectChoice(this, 'question', 'Did I put the steps in the wrong order?')">Did I put the steps in the wrong order?</button>
+          </div>
+        </div>
+
+        <div id="checkpoint3" class="checkpoint">
+          <h2>Checkpoint 3</h2>
+          <div class="hint">Choose one thing to change. Then edit your instructions and run them again.</div>
+          <div class="choices">
+            <button class="choice" onclick="selectChoice(this, 'change', 'Add one step')">Add one step.</button>
+            <button class="choice" onclick="selectChoice(this, 'change', 'Remove one step')">Remove one step.</button>
+            <button class="choice" onclick="selectChoice(this, 'change', 'Change a direction')">Change a direction.</button>
+            <button class="choice" onclick="selectChoice(this, 'change', 'Change the order')">Change the order.</button>
+          </div>
+        </div>
+
+        <div id="checkpoint4" class="checkpoint">
+          <h2>Explain Your Process</h2>
+          <div class="reflection">
+            <input id="reflect1" placeholder="My first instructions made the robot..." />
+            <input id="reflect2" placeholder="I changed..." />
+            <input id="reflect3" placeholder="After the change, the robot..." />
+            <input id="reflect4" placeholder="I know this because..." />
+            <button onclick="showReveal()">Finish Reflection</button>
+          </div>
+        </div>
+
+        <div id="reveal" class="reveal">
+          <strong>You just tested an idea.</strong><br>
+          You gave instructions, observed what happened, asked what to try next,
+          changed one thing, and tested again. Scientists, engineers, coders, and builders
+          use this same process when they investigate a problem.
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <script>
+    const size = 5;
+    const start = { row: 4, col: 0 };
+    const goal = { row: 0, col: 4 };
+
+    let robot = { ...start };
+    let runCount = 0;
+    let studentSelections = {};
+
+    const grid = document.getElementById("robotGrid");
+    const log = document.getElementById("log");
+    const commandsBox = document.getElementById("commands");
+
+    function drawGrid() {
+      grid.innerHTML = "";
+
+      for (let r = 0; r < size; r++) {
+        for (let c = 0; c < size; c++) {
+          const cell = document.createElement("div");
+          cell.className = "cell";
+
+          if (r === goal.row && c === goal.col) {
+            cell.classList.add("goal");
+            cell.textContent = "⭐";
+          }
+
+          if (r === robot.row && c === robot.col) {
+            cell.classList.add("robot");
+            cell.textContent = "🤖";
+          }
+
+          grid.appendChild(cell);
+        }
+      }
+    }
+
+    function addCommand(command) {
+      const current = commandsBox.value.trim();
+      commandsBox.value = current ? current + "\n" + command : command;
+      commandsBox.focus();
+    }
+
+    function normalizeCommand(line) {
+      return line.trim().toUpperCase().replace(/\s+/g, " ");
+    }
+
+    function runRobot() {
+      robot = { ...start };
+      drawGrid();
+
+      const raw = commandsBox.value.trim();
+
+      if (!raw) {
+        log.textContent = "The robot is waiting. Give it one clear instruction at a time.";
+        return;
+      }
+
+      const lines = raw.split("\n").map(normalizeCommand).filter(Boolean);
+      const output = [];
+
+      output.push("Robot reset to starting point.");
+      output.push("Reading instructions exactly as written...");
+      output.push("");
+
+      for (let i = 0; i < lines.length; i++) {
+        const cmd = lines[i];
+
+        let next = { ...robot };
+        let understood = true;
+
+        if (cmd === "MOVE UP") next.row -= 1;
+        else if (cmd === "MOVE DOWN") next.row += 1;
+        else if (cmd === "MOVE LEFT") next.col -= 1;
+        else if (cmd === "MOVE RIGHT") next.col += 1;
+        else understood = false;
+
+        if (!understood) {
+          output.push(`Step ${i + 1}: "${cmd}" is unclear.`);
+          output.push("The robot only understands MOVE UP, MOVE DOWN, MOVE LEFT, or MOVE RIGHT.");
+          break;
+        }
+
+        if (next.row < 0 || next.row >= size || next.col < 0 || next.col >= size) {
+          output.push(`Step ${i + 1}: ${cmd}`);
+          output.push("The robot hit the edge of the grid and could not move.");
+          break;
+        }
+
+        robot = next;
+        output.push(`Step ${i + 1}: ${cmd} accepted. Robot moved.`);
+      }
+
+      output.push("");
+      if (robot.row === goal.row && robot.col === goal.col) {
+        output.push("MISSION COMPLETE: The robot reached the star.");
+      } else {
+        output.push(`MISSION NOT COMPLETE: Robot stopped at row ${robot.row + 1}, column ${robot.col + 1}.`);
+      }
+
+      runCount += 1;
+      log.textContent = output.join("\n");
+      drawGrid();
+      activateCheckpoints();
+    }
+
+    function activateCheckpoints() {
+      document.getElementById("checkpoint1").classList.add("active");
+
+      if (runCount >= 1) {
+        document.getElementById("checkpoint2").classList.add("active");
+        document.getElementById("checkpoint3").classList.add("active");
+      }
+
+      if (runCount >= 2) {
+        document.getElementById("checkpoint4").classList.add("active");
+      }
+    }
+
+    function selectChoice(button, key, value) {
+      studentSelections[key] = value;
+
+      const group = button.parentElement.querySelectorAll(".choice");
+      group.forEach(btn => btn.classList.remove("selected"));
+      button.classList.add("selected");
+    }
+
+    function showReveal() {
+      const fields = ["reflect1", "reflect2", "reflect3", "reflect4"];
+      const missing = fields.filter(id => !document.getElementById(id).value.trim());
+
+      if (missing.length) {
+        alert("Complete all reflection lines before finishing.");
+        return;
+      }
+
+      document.getElementById("reveal").classList.add("active");
+    }
+
+    function resetActivity() {
+      robot = { ...start };
+      runCount = 0;
+      studentSelections = {};
+      commandsBox.value = "";
+      log.textContent = "Waiting for instructions...";
+      document.querySelectorAll(".checkpoint").forEach(el => el.classList.remove("active"));
+      document.querySelectorAll(".choice").forEach(el => el.classList.remove("selected"));
+      document.getElementById("reveal").classList.remove("active");
+      ["reflect1", "reflect2", "reflect3", "reflect4"].forEach(id => {
+        document.getElementById(id).value = "";
+      });
+      drawGrid();
+    }
+
+    drawGrid();
+  </script>
+</body>
+</html>

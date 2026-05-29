@@ -1,0 +1,550 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>STEM Nation | The Washed-Out Crossing</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<!-- STEM_NATION_STEP6J_MISSION_BRIEFING_V1 -->
+
+<style>
+
+:root{
+  --gold:#d7ba6d;
+  --gold-soft:rgba(215,186,109,0.28);
+  --bg:#07110d;
+  --panel:rgba(5,8,6,0.78);
+  --text:#f3edd7;
+  --muted:rgba(243,237,215,0.72);
+  --green:#86a96d;
+}
+
+*{
+  box-sizing:border-box;
+}
+
+html,body{
+  margin:0;
+  width:100%;
+  height:100%;
+  overflow:hidden;
+  font-family:Arial,sans-serif;
+  color:var(--text);
+  background:#000;
+}
+
+.scene{
+  position:relative;
+  width:100%;
+  height:100vh;
+  overflow:hidden;
+  background:
+    linear-gradient(rgba(0,0,0,0.35),rgba(0,0,0,0.45)),
+    radial-gradient(circle at top left, rgba(255,220,140,0.08), transparent 35%),
+    linear-gradient(180deg,#2f3f2e 0%,#1f261d 30%,#1b1d18 45%,#2e271f 100%);
+}
+
+/* subtle cinematic push */
+
+.scene::before{
+  content:"";
+  position:absolute;
+  inset:-4%;
+  background:
+    radial-gradient(circle at 30% 55%, rgba(92,160,210,0.18), transparent 22%),
+    linear-gradient(115deg,
+      transparent 0%,
+      rgba(88,158,196,0.20) 18%,
+      rgba(52,122,168,0.34) 28%,
+      rgba(38,86,120,0.46) 38%,
+      transparent 52%);
+  animation:slowPush 18s ease-in-out infinite alternate;
+  opacity:0.9;
+}
+
+.scene::after{
+  content:"";
+  position:absolute;
+  inset:0;
+  background:
+    radial-gradient(circle at center, transparent 45%, rgba(0,0,0,0.42) 100%);
+  pointer-events:none;
+}
+
+@keyframes slowPush{
+  from{
+    transform:scale(1) translateY(0px);
+  }
+  to{
+    transform:scale(1.06) translateY(-10px);
+  }
+}
+
+/* drifting mist */
+
+.mist{
+  position:absolute;
+  inset:0;
+  background:
+    radial-gradient(circle at 20% 30%, rgba(255,255,255,0.06), transparent 18%),
+    radial-gradient(circle at 75% 60%, rgba(255,255,255,0.05), transparent 24%);
+  mix-blend-mode:screen;
+  animation:mistMove 12s linear infinite alternate;
+}
+
+@keyframes mistMove{
+  from{
+    transform:translateX(-10px);
+  }
+  to{
+    transform:translateX(18px);
+  }
+}
+
+/* environment illustration */
+
+.environment{
+  position:absolute;
+  inset:0;
+}
+
+/* broken crossing */
+
+.crossing{
+  position:absolute;
+  left:18%;
+  top:54%;
+  width:44%;
+  height:70px;
+  background:
+    linear-gradient(180deg,#5f5344,#342d27);
+  transform:rotate(-8deg);
+  border-radius:18px;
+  box-shadow:0 12px 24px rgba(0,0,0,0.45);
+}
+
+.crossing::before{
+  content:"";
+  position:absolute;
+  left:48%;
+  top:-8%;
+  width:24%;
+  height:120%;
+  background:
+    linear-gradient(180deg,#1b1918,#43372b);
+  transform:rotate(8deg);
+  clip-path:polygon(0 0,100% 0,70% 100%,0 100%);
+  box-shadow:0 0 16px rgba(0,0,0,0.35);
+}
+
+/* water channel */
+
+.water{
+  position:absolute;
+  left:22%;
+  top:45%;
+  width:52%;
+  height:180px;
+  border-radius:50%;
+  background:
+    linear-gradient(120deg,
+      rgba(78,147,188,0.18),
+      rgba(72,143,182,0.45),
+      rgba(35,76,112,0.62));
+  filter:blur(1px);
+  transform:rotate(-6deg);
+  animation:waterShift 5s ease-in-out infinite alternate;
+}
+
+@keyframes waterShift{
+  from{
+    filter:brightness(0.92);
+  }
+  to{
+    filter:brightness(1.12);
+  }
+}
+
+/* high ground */
+
+.high-ground{
+  position:absolute;
+  right:10%;
+  top:18%;
+  width:28%;
+  height:38%;
+  background:
+    radial-gradient(circle at center,
+      rgba(170,150,102,0.56),
+      rgba(76,66,48,0.88));
+  clip-path:polygon(50% 0%,100% 100%,0% 100%);
+  filter:drop-shadow(0 20px 22px rgba(0,0,0,0.35));
+}
+
+/* forest edge */
+
+.forest{
+  position:absolute;
+  left:72%;
+  top:32%;
+  width:22%;
+  height:52%;
+}
+
+.tree{
+  position:absolute;
+  bottom:0;
+  width:34px;
+  height:120px;
+  background:
+    linear-gradient(180deg,#264927,#132114);
+  clip-path:polygon(50% 0%,100% 100%,0% 100%);
+  animation:treeSway 4s ease-in-out infinite alternate;
+}
+
+@keyframes treeSway{
+  from{
+    transform:rotate(-0.6deg);
+  }
+  to{
+    transform:rotate(0.8deg);
+  }
+}
+
+.tree:nth-child(1){left:0;height:130px;}
+.tree:nth-child(2){left:34px;height:110px;}
+.tree:nth-child(3){left:70px;height:142px;}
+.tree:nth-child(4){left:112px;height:120px;}
+.tree:nth-child(5){left:150px;height:134px;}
+
+/* tiny traveler group */
+
+.group{
+  position:absolute;
+  left:56%;
+  top:58%;
+  width:120px;
+  height:80px;
+}
+
+.person{
+  position:absolute;
+  width:10px;
+  height:24px;
+  background:#151515;
+  border-radius:6px;
+}
+
+.person::before{
+  content:"";
+  position:absolute;
+  top:-7px;
+  left:1px;
+  width:8px;
+  height:8px;
+  background:#252525;
+  border-radius:50%;
+}
+
+.person:nth-child(1){left:0;top:10px;}
+.person:nth-child(2){left:18px;top:22px;}
+.person:nth-child(3){left:40px;top:8px;}
+.person:nth-child(4){left:60px;top:18px;}
+.person:nth-child(5){left:84px;top:26px;}
+
+.overlay{
+  position:absolute;
+  inset:0;
+  display:grid;
+  grid-template-columns:420px 1fr 360px;
+  gap:18px;
+  padding:28px;
+  z-index:5;
+}
+
+/* left mission panel */
+
+.left-panel{
+  align-self:start;
+  border:1px solid var(--gold-soft);
+  border-radius:22px;
+  background:var(--panel);
+  backdrop-filter:blur(6px);
+  padding:24px;
+  box-shadow:0 16px 38px rgba(0,0,0,0.45);
+}
+
+.mission-tag{
+  color:var(--gold);
+  letter-spacing:0.16em;
+  font-size:0.76rem;
+  margin-bottom:12px;
+}
+
+.left-panel h1{
+  margin:0;
+  font-size:2.2rem;
+  line-height:1.1;
+  font-family:Georgia,serif;
+  color:var(--gold);
+}
+
+.sub{
+  margin-top:10px;
+  color:var(--muted);
+  font-size:0.92rem;
+  line-height:1.45;
+}
+
+.brief-feed{
+  margin-top:24px;
+  display:grid;
+  gap:10px;
+}
+
+.feed-item{
+  border:1px solid rgba(255,255,255,0.08);
+  border-radius:14px;
+  background:rgba(255,255,255,0.04);
+  padding:12px;
+  color:rgba(243,237,215,0.88);
+  font-size:0.86rem;
+  line-height:1.45;
+}
+
+/* right intel panel */
+
+.right-panel{
+  align-self:center;
+  justify-self:end;
+  width:100%;
+  border:1px solid var(--gold-soft);
+  border-radius:22px;
+  background:var(--panel);
+  backdrop-filter:blur(6px);
+  padding:22px;
+  box-shadow:0 16px 38px rgba(0,0,0,0.45);
+}
+
+.right-panel h2{
+  margin:0 0 14px;
+  font-family:Georgia,serif;
+  color:var(--gold);
+  font-size:1.2rem;
+}
+
+.status-list{
+  display:grid;
+  gap:10px;
+}
+
+.status{
+  border:1px solid rgba(255,255,255,0.08);
+  border-radius:14px;
+  background:rgba(255,255,255,0.04);
+  padding:12px;
+  color:rgba(243,237,215,0.88);
+  font-size:0.82rem;
+  line-height:1.4;
+}
+
+/* bottom controls */
+
+.bottom-controls{
+  position:absolute;
+  left:28px;
+  bottom:28px;
+  z-index:10;
+  display:flex;
+  gap:12px;
+  flex-wrap:wrap;
+}
+
+.control-btn{
+  border:1px solid var(--gold-soft);
+  background:rgba(215,186,109,0.14);
+  color:var(--text);
+  padding:12px 18px;
+  border-radius:999px;
+  text-decoration:none;
+  font-size:0.88rem;
+  transition:0.2s ease;
+}
+
+.control-btn:hover{
+  background:rgba(215,186,109,0.28);
+}
+
+.primary{
+  border-color:rgba(134,169,109,0.65);
+  background:rgba(134,169,109,0.22);
+  font-weight:700;
+}
+
+/* title fade */
+
+.fade-line{
+  opacity:0;
+  animation:fadeLine 1.2s ease forwards;
+}
+
+.fade-line:nth-child(1){animation-delay:0.2s;}
+.fade-line:nth-child(2){animation-delay:1.2s;}
+.fade-line:nth-child(3){animation-delay:2.2s;}
+
+@keyframes fadeLine{
+  from{
+    opacity:0;
+    transform:translateY(8px);
+  }
+  to{
+    opacity:1;
+    transform:translateY(0);
+  }
+}
+
+@media(max-width:1100px){
+
+  html,body{
+    overflow:auto;
+  }
+
+  .overlay{
+    grid-template-columns:1fr;
+    padding-bottom:140px;
+  }
+
+  .right-panel{
+    justify-self:stretch;
+  }
+
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="scene">
+
+  <div class="mist"></div>
+
+  <div class="environment">
+
+    <div class="water"></div>
+
+    <div class="crossing"></div>
+
+    <div class="high-ground"></div>
+
+    <div class="forest">
+      <div class="tree"></div>
+      <div class="tree"></div>
+      <div class="tree"></div>
+      <div class="tree"></div>
+      <div class="tree"></div>
+    </div>
+
+    <div class="group">
+      <div class="person"></div>
+      <div class="person"></div>
+      <div class="person"></div>
+      <div class="person"></div>
+      <div class="person"></div>
+    </div>
+
+  </div>
+
+  <div class="overlay">
+
+    <div class="left-panel">
+
+      <div class="mission-tag fade-line">
+        MISSION BRIEFING
+      </div>
+
+      <h1 class="fade-line">
+        The Washed-Out Crossing
+      </h1>
+
+      <div class="sub fade-line">
+        Acting Field Leader Briefing
+      </div>
+
+      <div class="brief-feed">
+
+        <div class="feed-item">
+          The old route behind your group is no longer safe.
+        </div>
+
+        <div class="feed-item">
+          Rising water and mud have damaged the crossing.
+        </div>
+
+        <div class="feed-item">
+          Nightfall in: 40 minutes
+        </div>
+
+        <div class="feed-item">
+          12 travelers depend on your decisions.
+        </div>
+
+      </div>
+
+    </div>
+
+    <div></div>
+
+    <div class="right-panel">
+
+      <h2>Incoming Leadership Intel</h2>
+
+      <div class="status-list">
+
+        <div class="status">
+          2 children exhausted after difficult travel conditions.
+        </div>
+
+        <div class="status">
+          Water jars nearly empty.
+        </div>
+
+        <div class="status">
+          One injured traveler slowing movement.
+        </div>
+
+        <div class="status">
+          Several supplies damp from river conditions.
+        </div>
+
+        <div class="status">
+          Visible terrain nearby:
+          river area, forest edge, elevated ground.
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+  <div class="bottom-controls">
+
+    <a href="/world_select.html" class="control-btn">
+      Observe the Land
+    </a>
+
+    <a href="/baseline_inquiry" class="control-btn">
+      Review Supplies
+    </a>
+
+    <a href="/baseline_inquiry" class="control-btn primary">
+      Begin Leadership Trial
+    </a>
+
+  </div>
+
+</div>
+
+</body>
+</html>
