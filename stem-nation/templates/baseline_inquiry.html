@@ -475,6 +475,30 @@ textarea{
   .actions{margin-top:10px}
   .checklist-grid{grid-template-columns:1fr}
 }
+
+/* STEM_NATION_PHASE_GUIDE_V1 */
+.phase-guide {
+  margin: 14px 0 10px;
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  max-width: 980px;
+}
+
+.phase-chip {
+  border: 1px solid rgba(215,186,109,0.28);
+  background: rgba(0,0,0,0.28);
+  color: rgba(243,237,215,0.9);
+  border-radius: 999px;
+  padding: 7px 10px;
+  font-size: 0.74rem;
+  letter-spacing: 0.02em;
+}
+
+.phase-chip strong {
+  color: var(--gold);
+}
+
 </style>
 </head>
 
@@ -484,6 +508,13 @@ textarea{
   <div>
     <h1>Academy Readiness Evaluation</h1>
     <div class="sub">Survival Scenario 1: The Washed-Out Crossing · Leader Command Trial</div>
+    <div class="phase-guide" aria-label="Mission path">
+      <div class="phase-chip"><strong>1 Understand</strong> · Briefing / Question / Priorities</div>
+      <div class="phase-chip"><strong>2 Assign</strong> · Scout / Builder / Gatherer / Caretaker</div>
+      <div class="phase-chip"><strong>3 Decide</strong> · Reports / Placement / Test</div>
+      <div class="phase-chip"><strong>4 Reflect</strong> · Reflect / Debrief</div>
+    </div>
+
     <div id="missionTabs" class="mission-tabs">
       <span data-tab-stage="0" class="tab active-tab">Briefing</span>
       <span data-tab-stage="1" class="tab">Question</span>
