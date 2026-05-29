@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>STEM Nation | Scout Mission</title>
+  <title>STEM Nation World Board | Scout Mission</title>
   <style>
     body {
       margin: 0;
@@ -217,7 +217,22 @@
       font-size: 14px;
       line-height: 1.4;
     }
-  </style>
+  
+/* STEM_NATION_SCOUT_VISUAL_CLEANUP_V1 */
+.world-board-kicker {
+  color: rgba(245,215,110,.82);
+  letter-spacing: .18em;
+  font-size: .72rem;
+  margin-bottom: 6px;
+  text-transform: uppercase;
+}
+
+.topline-title-stack {
+  display: grid;
+  gap: 2px;
+}
+
+</style>
 </head>
 
 <body>
@@ -226,16 +241,19 @@
 <div class="mission-shell">
   <main class="field-zone">
     <div class="topline">
-      <h1 id="missionTitle">Scout Mission</h1>
+      <div class="topline-title-stack">
+        <div class="world-board-kicker">World Board Field Intelligence</div>
+        <h1 id="missionTitle">Scout Mission — Field Intelligence</h1>
+      </div>
       <a href="/world-board">Return to World Board</a>
     </div>
 
     <section class="scene">
       <div class="scene-overlay"></div>
       <div class="mission-card">
-        <h2 id="regionTitle">Entering Region</h2>
+        <h2 id="regionTitle">Field Intelligence Report</h2>
         <p id="missionObjective">
-          Objective: Enter the region, observe the land, gather evidence, and return intelligence to the World Board.
+          Objective: Observe the region, collect evidence, and return field intelligence to the World Board.
         </p>
 
         <p id="missionAtmosphere" style="color:#d6c89a;"></p>
