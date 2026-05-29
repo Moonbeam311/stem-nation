@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>STEM Nation | The Washed-Out Crossing</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<!-- STEM_NATION_LEADER_COMMAND_6G2_INCIDENT_MATERIALS_V1 -->
+<style>
+body{margin:0;background:#07100c;color:#f6edd1;font-family:Arial,sans-serif;}
+main{min-height:100vh;padding:24px;display:grid;gap:18px;}
+.card{border:1px solid rgba(212,180,95,.34);border-radius:22px;background:rgba(0,0,0,.45);padding:24px;}
+h1,h2{font-family:Georgia,serif;color:#d4b45f;margin-top:0;}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;}
+.item{border:1px solid rgba(212,180,95,.2);border-radius:16px;padding:14px;background:rgba(255,255,255,.05);}
+button,a{display:inline-block;margin:6px 6px 0 0;padding:11px 16px;border-radius:999px;border:1px solid rgba(212,180,95,.34);background:rgba(212,180,95,.16);color:#f6edd1;text-decoration:none;cursor:pointer;}
+.primary{border-color:rgba(138,170,98,.74);background:rgba(138,170,98,.24);font-weight:bold;}
+textarea{width:100%;min-height:82px;border-radius:12px;background:rgba(0,0,0,.35);color:#f6edd1;border:1px solid rgba(255,255,255,.16);padding:10px;}
+.hidden{display:none;}
+.stage{display:none}.stage.active{display:block}
+</style>
+</head>
+<body>
+<main>
+<section class="card">
+<h1>The Washed-Out Crossing</h1>
+<p><strong>Academy Readiness Evaluation — Survival Scenario 1: Leader Command Trial</strong></p>
+<p>Your group was traveling along an old route when rising water and mud loosened the riverbank. The crossing behind you became unsafe. Part of the path washed out, and the group cannot safely return before dark.</p>
+<p>The group has 12 people: four adults, three older youth, two young children, two elders, and one injured traveler. You are the acting field leader.</p>
+</section>
+
+<section id="stage0" class="card stage active">
+<h2>1. Leader’s First Questions</h2>
+<p>Before giving orders, what must be known?</p>
+<textarea placeholder="Example: Where can food stay dry and safe from animals?"></textarea>
+<button onclick="go(1)" class="primary">Assign Materials</button>
+</section>
+
+<section id="stage1" class="card stage">
+<h2>2. Assign Materials to Specialists</h2>
+<div class="grid">
+<div class="item"><strong>Scout</strong><p>Rope, marker stones, torn map scrap.</p></div>
+<div class="item"><strong>Builder</strong><p>2 shelter cloths, 12 wooden stakes, hand axe, digging tool.</p></div>
+<div class="item"><strong>Gatherer</strong><p>3 food sacks, 4 water jars, small tools.</p></div>
+<div class="item"><strong>Caretaker</strong><p>2 blankets, fire starter / match tin, water jars.</p></div>
+</div>
+<button onclick="go(2)" class="primary">Send Specialists</button>
+</section>
+
+<section id="stage2" class="card stage">
+<h2>3. Specialist Reports</h2>
+<div class="grid">
+<div class="item"><strong>Scout Report</strong><p>The torn map scrap shows a broken river line, one old trail mark, a hill symbol, three faded tree marks, an X near the riverbend, and the partial warning “FLO…”</p></div>
+<div class="item"><strong>Builder Report</strong><p>The river area is flat but wet. Stakes may not hold well. High ground is drier but rocky.</p></div>
+<div class="item"><strong>Gatherer Report</strong><p>The river has water and fish. Food sacks near low ground may get wet. Food near the forest may attract animals.</p></div>
+<div class="item"><strong>Caretaker Report</strong><p>The children, elders, and injured traveler need dry rest. Blankets and matches must stay dry.</p></div>
+</div>
+<button onclick="go(3)" class="primary">Choose Main Question</button>
+</section>
+
+<section id="stage3" class="card stage">
+<h2>4. Main Survival Question</h2>
+<textarea placeholder="What question should guide the first-night survival plan?"></textarea>
+<button onclick="go(4)" class="primary">Place Survival Bundles</button>
+</section>
+
+<section id="stage4" class="card stage">
+<h2>5. Place Survival Bundles</h2>
+<div class="grid">
+<div class="item"><strong>Home Place</strong><p>2 shelter cloths, 2 blankets, 12 stakes, fire starter if kept dry.</p></div>
+<div class="item"><strong>Food Supplies</strong><p>3 food sacks, small tools, protected storage bundle.</p></div>
+<div class="item"><strong>Water Place</strong><p>4 water jars, clean-water point, carrying route.</p></div>
+<div class="item"><strong>Path Marker</strong><p>40 ft rope, 10 marker stones, torn map scrap.</p></div>
+</div>
+<button onclick="go(5)" class="primary">Test Survival Plan</button>
+</section>
+
+<section id="stage5" class="card stage">
+<h2>6. Reflect / Continue</h2>
+<p>Your first plan does not have to be perfect. Leadership improves through evidence and revision.</p>
+<textarea placeholder="What changed? Which report helped? What would you order differently next time?"></textarea>
+<br>
+<button onclick="go(4)">Try New Plan</button>
+<a href="/world_select.html" class="primary">Continue to World Selection</a>
+</section>
+</main>
+
+<script>
+function go(n){
+  document.querySelectorAll('.stage').forEach(s=>s.classList.remove('active'));
+  document.getElementById('stage'+n).classList.add('active');
+}
+</script>
+</body>
+</html>

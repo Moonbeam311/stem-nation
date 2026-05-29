@@ -1,0 +1,4 @@
+./hub_inventory.txt
+./STEM_NATION_DEPLOY_PACKAGE/STEM_NATION_DEPLOY_PACKAGE/templates/project_hub.html
+./STEM_NATION_DEPLOY_PACKAGE/templates/project_hub.html
+./templates/project_hub.html

@@ -1,0 +1,69 @@
+diff --git a/stem-nation/web_app.py b/stem-nation/web_app.py
+index ae1546d..580ac49 100644
+--- a/stem-nation/web_app.py
++++ b/stem-nation/web_app.py
+@@ -215,7 +215,64 @@ def world_board():
+ def scout_region(region):
+     return render_template("scout_region.html", region=region)
+ 
++
++# STEM_NATION_BASELINE_INQUIRY_ROUTE_V1
++@app.route("/baseline_inquiry")
++def baseline_inquiry():
++    return render_template("baseline_inquiry.html")
++
++
++# STEM_NATION_ACADEMY_TRANSITION_ROUTE_V1
++@app.route("/academy_transition")
++def academy_transition():
++    return render_template("academy_transition.html")
++
++# STEM_NATION_STEP6J_ROUTE_V1
++@app.route("/washed_out_crossing_intro")
++def washed_out_crossing_intro():
++    return render_template("washed_out_crossing_intro.html")
++
++
++
++
++# STEM_NATION_STUDENT_LANDING_ROUTE_V1
++@app.route("/student")
++def student_landing():
++    return render_template("student_landing.html")
++
++
++# STEM_NATION_BASELINE_INQUIRY_ORIGINAL_ARCHIVE_ROUTE_V1
++@app.route("/baseline_inquiry_original")
++def baseline_inquiry_original():
++    return render_template("baseline_inquiry_original_archive.html")
++
++
++
++@app.route("/teach-robot")
++def teach_robot():
++    return render_template("teach_robot.html")
++
++
++
++@app.route("/literal-listener")
++def literal_listener():
++    return render_template("literal_listener.html")
++
++
++
++@app.route("/backpack-lab")
++def backpack_lab():
++    return render_template("backpack_lab.html")
++
++
++
++@app.route("/river-crossing-lab")
++def river_crossing_lab():
++    return render_template("river_crossing_lab.html")
++
+ if __name__ == "__main__":
+     import os
+     port = int(os.environ.get("PORT", 5000))
+     app.run(host="0.0.0.0", port=port, debug=True)
++
++
