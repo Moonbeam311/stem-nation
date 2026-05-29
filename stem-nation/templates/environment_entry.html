@@ -363,7 +363,42 @@
       20% { opacity: 0.65; }
       100% { transform: translateY(-85vh) translateX(60px); opacity: 0; }
     }
-  </style>
+  
+/* STEM_NATION_ENVIRONMENT_VISUAL_CLEANUP_V1 */
+.content {
+  max-width: 980px;
+}
+
+.label {
+  color: rgba(244,211,94,0.86);
+  font-weight: 700;
+}
+
+.question {
+  max-width: 760px;
+  border-radius: 16px;
+  border-left: 4px solid #d4af37;
+  backdrop-filter: blur(4px);
+}
+
+.btn-row.corner-actions {
+  background: rgba(0,0,0,0.38);
+  border: 1px solid rgba(244,211,94,0.22);
+  border-radius: 18px;
+  padding: 12px;
+  backdrop-filter: blur(5px);
+}
+
+.tool-panel {
+  background: rgba(0,0,0,0.58);
+  border-color: rgba(244,211,94,0.38);
+}
+
+.tool-header h3 {
+  color: #f4d35e;
+}
+
+</style>
 <!-- STEM_NATION_ENVIRONMENT_BRIDGE_LANGUAGE_V1 -->
 </head>
 
@@ -380,11 +415,11 @@
 
 <div id="toolPanel" class="tool-panel">
       <div class="tool-header" onclick="toggleTools()">
-        <h3>Inquiry Tools</h3>
+        <h3>Region Marking Tools</h3>
         <span class="collapse-note">tap to hide/show</span>
       </div>
       <div class="tool-body">
-        <p>Choose a tool, then click the land.</p>
+        <p>Mark what you notice before continuing to Settlement Design.</p>
         <div class="tool-grid">
           <button class="tool active" data-tool="Settlement" data-symbol="🏠" title="Settlement">🏠</button>
           <button class="tool" data-tool="Farm" data-symbol="🌾" title="Farm / Food">🌾</button>
@@ -419,8 +454,8 @@
     </div>
 
     <div class="content">
-      <div class="label">Week 1 · Baseline Inquiry</div>
-      <h1 id="title">Environment</h1>
+      <div class="label">STEM Nation Academy · Region Investigation</div>
+      <h1 id="title">Region Investigation Entry</h1>
       <div id="description" class="description hidden-observation-text"></div>
 
       <div id="resources" class="resources hidden-observation-text"></div>
