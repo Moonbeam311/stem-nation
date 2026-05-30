@@ -50,197 +50,87 @@ To test whether students can observe, ask questions, rank priorities, assign rol
 ## Active Core Pages
 
 ### `/washed_out_crossing_intro`
-
-Role:
-Cinematic scenario bridge.
-
-Use:
-Sets urgency and sends students into the baseline inquiry.
-
-Status:
-Active.
+Role: Cinematic scenario bridge.  
+Use: Sets urgency and sends students into the baseline inquiry.  
+Status: Active.
 
 ### `/baseline_inquiry`
-
-Role:
-Main baseline inquiry engine.
-
-Use:
-Leader Command Trial with briefing, question, priorities, specialist roles, reports, decision, placement, test, reflection, and debrief.
-
-Status:
-Active.
+Role: Main baseline inquiry engine.  
+Use: Leader Command Trial with briefing, question, priorities, specialist roles, reports, decision, placement, test, reflection, and debrief.  
+Status: Active.
 
 ### `/world_select.html`
-
-Role:
-Region Investigation selection.
-
-Use:
-Students choose which region to investigate before making civilization decisions.
-
-Status:
-Active.
+Role: Region Investigation selection.  
+Use: Students choose which region to investigate before making civilization decisions.  
+Status: Active.
 
 ### `/environment_entry?world=<region>`
-
-Role:
-Region Investigation / land marking.
-
-Use:
-Students observe terrain, mark evidence, explain decisions, and prepare for settlement design.
-
-Status:
-Active.
+Role: Region Investigation / land marking.  
+Use: Students observe terrain, mark evidence, explain decisions, and prepare for settlement design.  
+Status: Active.
 
 ### `/academy_individual?world=<region>`
-
-Role:
-Settlement Design bridge.
-
-Use:
-Moves students from region investigation into the final decision threshold.
-
-Status:
-Active.
+Role: Settlement Design bridge.  
+Use: Moves students from region investigation into the final decision threshold.  
+Status: Active.
 
 ### `/academy_decision`
-
-Role:
-First Decision / command threshold.
-
-Use:
-Complete cinematic bridge into the Strategic Map.
-
-Status:
-Active.
+Role: First Decision / command threshold.  
+Use: Complete cinematic bridge into the Strategic Map.  
+Status: Active.
 
 ### `/map`
-
-Role:
-Strategic Map / Founding Archive.
-
-Use:
-Students choose and defend the first settlement decision.
-
-Status:
-Active.
+Role: Strategic Map / Founding Archive.  
+Use: Students choose and defend the first settlement decision.  
+Status: Active.
 
 ### `/hub`
-
-Role:
-Civilization Command Center.
-
-Use:
-Civilization record, archive, scoring, governance actions, and progress.
-
-Status:
-Active.
+Role: Civilization Command Center.  
+Use: Civilization record, archive, scoring, governance actions, and progress.  
+Status: Active.
 
 ---
 
 ## Compare / Contrast Pages
 
 ### `/academy_role`
-
-Category:
-Optional Council Chamber / responsibility variation.
-
-Why preserve:
-Contains responsibility language and council-style framing.
-
-Current decision:
-Removed from required student path. Keep for possible later Council Chamber module or teacher-led discussion.
-
+Category: Optional Council Chamber / responsibility variation.  
+Why preserve: Contains responsibility language and council-style framing.  
+Current decision: Removed from required student path. Keep for possible later Council Chamber module or teacher-led discussion.  
 Harvest candidates:
 - "An individual does not observe in isolation."
 - "Every decision reaches beyond the person who makes it."
 - "This is the beginning of responsibility."
 
 ### `/academy_transition`
-
-Category:
-Bridge variation.
-
-Why preserve:
-May contain useful transition language between intro and readiness.
-
-Current decision:
-Not part of active spine.
-
-Harvest candidates:
-- Any strong Academy entry language.
-- Any transition animation or identity framing.
+Category: Bridge variation.  
+Why preserve: May contain useful transition language between intro and readiness.  
+Current decision: Not part of active spine.
 
 ### `/decision_bridge`
-
-Category:
-Decision bridge variation.
-
-Why preserve:
-May contain language useful for First Decision or Strategic Map threshold.
-
-Current decision:
-Not part of active spine.
-
-Harvest candidates:
-- Any concise language about moving from observation to action.
+Category: Decision bridge variation.  
+Why preserve: May contain language useful for First Decision or Strategic Map threshold.  
+Current decision: Not part of active spine.
 
 ### `/river-crossing-lab`
-
-Category:
-Puzzle lab.
-
-Why preserve:
-Potential future puzzle warm-up.
-
-Current decision:
-Not official baseline yet.
-
-Possible future use:
-Puzzle Warm-Up before Washed-Out Crossing.
+Category: Puzzle lab.  
+Why preserve: Potential future puzzle warm-up.  
+Current decision: Not official baseline yet.
 
 ### `/backpack-lab`
-
-Category:
-Puzzle lab.
-
-Why preserve:
-Potential survival-priority puzzle.
-
-Current decision:
-Not official baseline yet.
-
-Possible future use:
-Short warm-up about resource limits and survival priorities.
+Category: Puzzle lab.  
+Why preserve: Potential survival-priority puzzle.  
+Current decision: Not official baseline yet.
 
 ### `/literal-listener`
-
-Category:
-Puzzle / communication lab.
-
-Why preserve:
-Potential inquiry and instruction clarity training.
-
-Current decision:
-Not official baseline yet.
-
-Possible future use:
-Students learn why precise language matters.
+Category: Puzzle / communication lab.  
+Why preserve: Potential inquiry and instruction clarity training.  
+Current decision: Not official baseline yet.
 
 ### `/teach-robot`
-
-Category:
-Puzzle / communication lab.
-
-Why preserve:
-Potential computational thinking and instruction clarity activity.
-
-Current decision:
-Not official baseline yet.
-
-Possible future use:
-Students practice procedural thinking before simulation.
+Category: Puzzle / communication lab.  
+Why preserve: Potential computational thinking and instruction clarity activity.  
+Current decision: Not official baseline yet.
 
 ---
 
