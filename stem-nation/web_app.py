@@ -3,6 +3,8 @@ from flask import Flask, render_template, request
 
 app = Flask(__name__)
 
+# STEM_NATION_DECISION_BRIDGE_ROUTE_ALIAS_V1
+@app.route("/decision_bridge")
 @app.route("/decision_bridge.html")
 def decision_bridge():
     return render_template("decision_bridge.html")
