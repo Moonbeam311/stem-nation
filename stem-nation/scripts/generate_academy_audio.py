@@ -4,7 +4,15 @@ import edge_tts
 
 VOICE = "en-US-JennyNeural"
 
+# STEM_NATION_INTRO_AUDIO_REGEN_V1
 scripts = {
+    "intro1_demo.mp3": (
+        "Every nation begins with a decision."
+    ),
+    "intro5_demo.mp3": (
+        "Before a nation can lead, it must learn to think clearly. "
+        "Give clear instructions. Test the process. Revise what fails."
+    ),
     "academy_individual_demo.mp3": (
         "Every civilization begins with observation. "
         "Before there is a government, before there is a city, before there is a nation, "
