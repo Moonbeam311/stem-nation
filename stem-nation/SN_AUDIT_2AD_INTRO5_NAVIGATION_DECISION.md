@@ -2,9 +2,16 @@
 
 ## Finding
 
-Intro 5 text and audio now match, and the visible words stay long enough for the narration.
+Intro 5 text and audio now match.
 
-The page does not need to auto-advance to `/backpack-lab`.
+The approved Intro 5 narrative focuses on individual readiness before the Backpack Puzzle:
+
+Before you lead,  
+you must think clearly.  
+
+Give clear instructions.  
+Test the process.  
+Revise what fails.
 
 ## Decision
 
@@ -28,3 +35,7 @@ Continue to Backpack Puzzle
 ## Reason
 
 Manual continuation is safer for classroom use because students may need a moment before entering the puzzle activity. It also prevents audio/text cutoff issues caused by fixed timers or browser playback timing.
+
+## Status
+
+Approved.
