@@ -111,6 +111,7 @@
 <!-- STEM_NATION_INTRO5_AUDIO_END_ADVANCE_V1 -->
 <!-- STEM_NATION_INTRO5_MANUAL_CONTINUE_AFTER_AUDIO_V1 -->
 <!-- STEM_NATION_INTRO5_TEXT_STAYS_UNTIL_AUDIO_END_V1 -->
+<!-- STEM_NATION_INTRO5_AUDIO_END_TO_BACKPACK_V1 -->
 </head>
 
 <body>
@@ -185,10 +186,12 @@ Revise what fails.</div>
     voiceEl.addEventListener("ended", () => {
       setTimeout(finishScene, 350);
     });
-  
+
+
     if (audio) {
       audio.addEventListener("ended", () => {
-      // Navigation now waits for the audio to finish.
+        textEl.style.opacity = 1;
+        setTimeout(goNext, 1200);
       });
     }
 
