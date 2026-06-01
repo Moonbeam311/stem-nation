@@ -110,6 +110,7 @@
 <!-- STEM_NATION_INTRO5_EXTENDED_TIMING_V1 -->
 <!-- STEM_NATION_INTRO5_AUDIO_END_ADVANCE_V1 -->
 <!-- STEM_NATION_INTRO5_MANUAL_CONTINUE_AFTER_AUDIO_V1 -->
+<!-- STEM_NATION_INTRO5_TEXT_STAYS_UNTIL_AUDIO_END_V1 -->
 </head>
 
 <body>
@@ -148,8 +149,8 @@ Revise what fails.</div>
     function finishScene() {
       if (finished) return;
       finished = true;
-      textEl.style.opacity = 0;
-      // Audio-end advance controls navigation.
+      // Text remains visible until the audio finishes.
+// Audio-end advance controls navigation.
     }
 
     function goNext() {
