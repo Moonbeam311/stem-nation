@@ -108,6 +108,7 @@
   <!-- STEM_NATION_INTRO5_TO_ACADEMY_TRANSITION_V1 -->
 <!-- STEM_NATION_INTRO_TO_BACKPACK_PUZZLE_V1 -->
 <!-- STEM_NATION_INTRO5_EXTENDED_TIMING_V1 -->
+<!-- STEM_NATION_INTRO5_AUDIO_END_ADVANCE_V1 -->
 </head>
 
 <body>
@@ -147,7 +148,7 @@ Revise what fails.</div>
       if (finished) return;
       finished = true;
       textEl.style.opacity = 0;
-      setTimeout(goNext, 13000);
+      // Audio-end advance controls navigation.
     }
 
     function goNext() {
@@ -182,6 +183,13 @@ Revise what fails.</div>
     voiceEl.addEventListener("ended", () => {
       setTimeout(finishScene, 350);
     });
-  </script>
+  
+    if (audio) {
+      audio.addEventListener("ended", () => {
+        setTimeout(goNext, 900);
+      });
+    }
+
+</script>
 </body>
 </html>
