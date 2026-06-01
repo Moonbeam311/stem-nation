@@ -109,6 +109,7 @@
 <!-- STEM_NATION_INTRO_TO_BACKPACK_PUZZLE_V1 -->
 <!-- STEM_NATION_INTRO5_EXTENDED_TIMING_V1 -->
 <!-- STEM_NATION_INTRO5_AUDIO_END_ADVANCE_V1 -->
+<!-- STEM_NATION_INTRO5_MANUAL_CONTINUE_AFTER_AUDIO_V1 -->
 </head>
 
 <body>
@@ -125,7 +126,7 @@ Test the process.
 Revise what fails.</div>
 
     <button id="start" class="start" onclick="manualStart()">Start Audio</button>
-    <button id="skip" class="skip" onclick="goNext()">Skip</button>
+    <button id="skip" class="skip" onclick="goNext()">Continue to Backpack Puzzle</button>
 
     <audio id="voice" preload="auto">
       <source src="/static/intro5_demo.mp3" type="audio/mpeg">
@@ -186,7 +187,7 @@ Revise what fails.</div>
   
     if (audio) {
       audio.addEventListener("ended", () => {
-        setTimeout(goNext, 900);
+      // Navigation now waits for the audio to finish.
       });
     }
 
