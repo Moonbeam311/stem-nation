@@ -10,8 +10,8 @@ scripts = {
         "Every nation begins with a decision."
     ),
     "intro5_demo.mp3": (
-        "Before a nation can lead, it must learn to think clearly. "
-        "Give clear instructions. Test the process. Revise what fails."
+        "Before a nation can lead, think clearly. "
+        "Give clear instructions. Test. Revise."
     ),
     "academy_individual_demo.mp3": (
         "Every civilization begins with observation. "
@@ -48,7 +48,7 @@ async def main():
         communicate = edge_tts.Communicate(
             text=text,
             voice=VOICE,
-            rate="+7%",
+            rate="-5%",
             volume="+0%"
         )
         await communicate.save(str(path))
