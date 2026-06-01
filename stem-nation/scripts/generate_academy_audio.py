@@ -10,7 +10,7 @@ scripts = {
         "Every nation begins with a decision."
     ),
     "intro5_demo.mp3": (
-        "Before a nation can lead, it must learn to think clearly. "
+        "Before you lead, you must think clearly. "
         "Give clear instructions. Test the process. Revise what fails."
     ),
     "academy_individual_demo.mp3": (
