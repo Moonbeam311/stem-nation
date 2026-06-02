@@ -34,6 +34,7 @@
     .status { grid-column:1 / -1; color:rgba(248,241,221,.78); min-height:22px; }
     @media(max-width:900px){ .grid{grid-template-columns:1fr;} .setup{grid-template-columns:1fr;} }
   </style>
+<!-- STEM_NATION_AVATAR_PNG_WITH_SVG_FALLBACK_V1 -->
 </head>
 <body>
   <main class="page">
@@ -58,12 +59,12 @@
   </main>
   <script>
     const avatars = [
-      { role:"Scout", symbol:"Eye / Trail Marker", portrait:"/static/avatars/student_scout.svg", line:"I notice what others miss." },
-      { role:"Builder", symbol:"Beam / Tool", portrait:"/static/avatars/student_builder.svg", line:"I turn ideas into structure." },
-      { role:"Caretaker", symbol:"Shield / Protection", portrait:"/static/avatars/student_caretaker.svg", line:"I protect the people." },
-      { role:"Mapkeeper", symbol:"Map / Memory", portrait:"/static/avatars/student_mapkeeper.svg", line:"I remember the land." },
-      { role:"Inventor", symbol:"Gear / Solution", portrait:"/static/avatars/student_inventor.svg", line:"I solve problems with tools." },
-      { role:"Diplomat", symbol:"Circle / Agreement", portrait:"/static/avatars/student_diplomat.svg", line:"I help the group decide together." }
+      { role:"Scout", symbol:"Eye / Trail Marker", portrait:"/static/avatars/student_scout.png", fallback:"/static/avatars/student_scout.svg", line:"I notice what others miss." },
+      { role:"Builder", symbol:"Beam / Tool", portrait:"/static/avatars/student_builder.png", fallback:"/static/avatars/student_builder.svg", line:"I turn ideas into structure." },
+      { role:"Caretaker", symbol:"Shield / Protection", portrait:"/static/avatars/student_caretaker.png", fallback:"/static/avatars/student_caretaker.svg", line:"I protect the people." },
+      { role:"Mapkeeper", symbol:"Map / Memory", portrait:"/static/avatars/student_mapkeeper.png", fallback:"/static/avatars/student_mapkeeper.svg", line:"I remember the land." },
+      { role:"Inventor", symbol:"Gear / Solution", portrait:"/static/avatars/student_inventor.png", fallback:"/static/avatars/student_inventor.svg", line:"I solve problems with tools." },
+      { role:"Diplomat", symbol:"Circle / Agreement", portrait:"/static/avatars/student_diplomat.png", fallback:"/static/avatars/student_diplomat.svg", line:"I help the group decide together." }
     ];
     let selected = null;
     function renderAvatars(){
@@ -72,7 +73,7 @@
       avatars.forEach(a => {
         const card = document.createElement("article");
         card.className = "card";
-        card.innerHTML = `<img class="portrait" src="${a.portrait}" alt="${a.role} student avatar"><h2>${a.role}</h2><div class="symbol">${a.symbol}</div><p>${a.line}</p>`;
+        card.innerHTML = `<img class="portrait" src="${a.portrait}" onerror="this.onerror=null; this.src=a.fallback;" alt="${a.role} student avatar"><h2>${a.role}</h2><div class="symbol">${a.symbol}</div><p>${a.line}</p>`;
         card.onclick = () => {
           selected = a;
           document.querySelectorAll(".card").forEach(c => c.classList.remove("selected"));
@@ -85,7 +86,7 @@
     function continueMission(){
       if(!selected){ document.getElementById("status").textContent = "Choose an avatar first."; return; }
       const name = document.getElementById("leaderName").value.trim() || selected.role;
-      localStorage.setItem("stemNationAvatar", JSON.stringify({...selected, name}));
+      localStorage.setItem("stemNationAvatar", JSON.stringify({...selected, name, portrait: selected.portrait, fallback: selected.fallback}));
       window.location.href = "/mission_intro";
     }
     renderAvatars();
