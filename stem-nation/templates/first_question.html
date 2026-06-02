@@ -1,0 +1,575 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>STEM Nation | The First Question</title>
+  <style>
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      background: #06111f;
+      color: #f8f1dd;
+      font-family: Georgia, "Times New Roman", serif;
+      overflow-x: hidden;
+    }
+
+    .world {
+      min-height: 100vh;
+      position: relative;
+      overflow: hidden;
+      background:
+        linear-gradient(180deg, rgba(48,92,145,.55), rgba(8,20,35,.96) 58%),
+        #07111f;
+    }
+
+    .sky-glow {
+      position: absolute;
+      inset: -20%;
+      background:
+        radial-gradient(circle at 70% 12%, rgba(244,211,94,.22), transparent 24%),
+        radial-gradient(circle at 22% 22%, rgba(90,170,230,.22), transparent 34%);
+      animation: breathe 5s ease-in-out infinite;
+    }
+
+    @keyframes breathe {
+      0%, 100% { opacity: .75; }
+      50% { opacity: 1; }
+    }
+
+    .cloud {
+      position: absolute;
+      width: 240px;
+      height: 80px;
+      border-radius: 999px;
+      background: rgba(255,255,255,.1);
+      filter: blur(1px);
+      animation: cloudDrift 32s linear infinite;
+    }
+
+    .cloud.one { top: 10%; left: -260px; }
+    .cloud.two { top: 22%; left: -360px; animation-duration: 45s; animation-delay: -14s; }
+
+    @keyframes cloudDrift {
+      to { transform: translateX(calc(100vw + 480px)); }
+    }
+
+    .river {
+      position: absolute;
+      left: -10%;
+      right: -10%;
+      bottom: 88px;
+      height: 180px;
+      background:
+        repeating-linear-gradient(115deg, rgba(255,255,255,.13) 0 8px, transparent 8px 30px),
+        linear-gradient(90deg, rgba(70,170,220,.7), rgba(40,120,190,.88));
+      transform: rotate(-2deg);
+      box-shadow: 0 0 40px rgba(70,170,220,.36);
+      animation: riverMove 4s linear infinite;
+    }
+
+    @keyframes riverMove {
+      to { background-position: 180px 0, 0 0; }
+    }
+
+    .ground {
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      height: 210px;
+      background: linear-gradient(180deg, #2f4f36, #172516);
+      clip-path: polygon(0 22%, 22% 10%, 43% 20%, 64% 8%, 100% 18%, 100% 100%, 0 100%);
+    }
+
+    .bridge {
+      position: absolute;
+      left: 42%;
+      bottom: 190px;
+      width: 240px;
+      height: 18px;
+      background: #6b4728;
+      transform: rotate(-9deg);
+      box-shadow: 0 12px 0 rgba(0,0,0,.22);
+    }
+
+    .bridge:after {
+      content: "";
+      position: absolute;
+      right: 25px;
+      top: -8px;
+      width: 70px;
+      height: 20px;
+      border-top: 4px dashed rgba(255,210,110,.8);
+      transform: rotate(12deg);
+    }
+
+    .hud {
+      position: relative;
+      z-index: 5;
+      width: min(1180px, 94vw);
+      margin: 0 auto;
+      padding: 26px 0 34px;
+    }
+
+    .topbar {
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      align-items: center;
+      margin-bottom: 16px;
+    }
+
+    .brand {
+      color: #f4d35e;
+      letter-spacing: .18em;
+      text-transform: uppercase;
+      font-weight: 900;
+      font-size: .78rem;
+    }
+
+    .home {
+      color: #f4d35e;
+      text-decoration: none;
+      border: 1px solid rgba(244,211,94,.36);
+      border-radius: 999px;
+      padding: 9px 12px;
+      background: rgba(0,0,0,.26);
+    }
+
+    .panel {
+      display: grid;
+      grid-template-columns: .94fr 1.06fr;
+      gap: 18px;
+      align-items: start;
+    }
+
+    .scene-card,
+    .choice-card {
+      border: 1px solid rgba(255,255,255,.14);
+      background: rgba(6,14,26,.78);
+      backdrop-filter: blur(6px);
+      border-radius: 26px;
+      padding: 18px;
+      box-shadow: 0 22px 70px rgba(0,0,0,.34);
+    }
+
+    .kicker {
+      color: rgba(244,211,94,.86);
+      letter-spacing: .16em;
+      text-transform: uppercase;
+      font-size: .75rem;
+      font-weight: 900;
+      margin-bottom: 8px;
+    }
+
+    h1 {
+      margin: 0 0 10px;
+      color: #f4d35e;
+      font-size: clamp(2.1rem, 5vw, 4.3rem);
+      line-height: .94;
+    }
+
+    h2 {
+      color: #f4d35e;
+      margin: 0 0 10px;
+    }
+
+    .dialogue {
+      display: grid;
+      gap: 10px;
+      margin-top: 14px;
+    }
+
+    .bubble {
+      display: flex;
+      gap: 10px;
+      align-items: start;
+      padding: 12px;
+      border-radius: 18px;
+      background: rgba(255,255,255,.085);
+      border: 1px solid rgba(255,255,255,.13);
+      animation: popIn .35s ease both;
+    }
+
+    .bubble:nth-child(2) { animation-delay: .15s; }
+    .bubble:nth-child(3) { animation-delay: .3s; }
+
+    @keyframes popIn {
+      from { opacity: 0; transform: translateY(12px) scale(.98); }
+      to { opacity: 1; transform: translateY(0) scale(1); }
+    }
+
+    .avatar {
+      width: 44px;
+      height: 44px;
+      border-radius: 16px;
+      display: grid;
+      place-items: center;
+      background: rgba(244,211,94,.14);
+      border: 1px solid rgba(244,211,94,.3);
+      font-size: 1.35rem;
+      flex: 0 0 auto;
+    }
+
+    .bubble strong {
+      color: #f4d35e;
+      display: block;
+      margin-bottom: 2px;
+    }
+
+    .question-prompt {
+      padding: 14px;
+      border-radius: 18px;
+      background: rgba(68,163,255,.13);
+      border: 1px solid rgba(134,190,255,.36);
+      margin-bottom: 12px;
+      line-height: 1.45;
+    }
+
+    .choices {
+      display: grid;
+      gap: 10px;
+    }
+
+    button,
+    .button {
+      border: 0;
+      border-radius: 16px;
+      padding: 13px 14px;
+      font-family: inherit;
+      font-size: .98rem;
+      font-weight: 900;
+      cursor: pointer;
+      text-align: left;
+      text-decoration: none;
+      display: block;
+    }
+
+    .choice {
+      color: #fff7df;
+      background: rgba(255,255,255,.09);
+      border: 1px solid rgba(255,255,255,.16);
+    }
+
+    .choice:hover {
+      background: rgba(244,211,94,.12);
+      border-color: rgba(244,211,94,.4);
+    }
+
+    .choice.correct {
+      background: rgba(70,180,105,.18);
+      border-color: rgba(112,230,130,.45);
+    }
+
+    .choice.wrong {
+      background: rgba(220,80,80,.14);
+      border-color: rgba(255,120,120,.34);
+      animation: shake .25s ease;
+    }
+
+    @keyframes shake {
+      0%,100% { transform: translateX(0); }
+      25% { transform: translateX(-5px); }
+      75% { transform: translateX(5px); }
+    }
+
+    .feedback {
+      margin-top: 14px;
+      min-height: 86px;
+      padding: 14px;
+      border-radius: 18px;
+      background: rgba(0,0,0,.28);
+      border: 1px solid rgba(255,255,255,.12);
+      white-space: pre-line;
+      line-height: 1.45;
+    }
+
+    .badges {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin: 14px 0;
+    }
+
+    .badge {
+      padding: 10px 12px;
+      border-radius: 999px;
+      background: rgba(255,255,255,.08);
+      border: 1px solid rgba(255,255,255,.12);
+      color: rgba(248,241,221,.72);
+      font-weight: 900;
+    }
+
+    .badge.active {
+      background: rgba(244,211,94,.18);
+      border-color: rgba(244,211,94,.48);
+      color: #f4d35e;
+      box-shadow: 0 0 20px rgba(244,211,94,.18);
+    }
+
+    .actions {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-top: 14px;
+    }
+
+    .primary {
+      background: linear-gradient(135deg, #f4d35e, #d7a51e);
+      color: #171006;
+      text-align: center;
+    }
+
+    .secondary {
+      background: rgba(255,255,255,.1);
+      border: 1px solid rgba(255,255,255,.16);
+      color: #f8f1dd;
+      text-align: center;
+    }
+
+    .fog {
+      position: absolute;
+      inset: 0;
+      background: rgba(220,230,240,.12);
+      opacity: 0;
+      z-index: 3;
+      pointer-events: none;
+      transition: .4s ease;
+    }
+
+    .world.foggy .fog {
+      opacity: 1;
+    }
+
+    .world.clear .bridge {
+      box-shadow: 0 0 28px rgba(244,211,94,.36), 0 12px 0 rgba(0,0,0,.22);
+    }
+
+    .complete {
+      display: none;
+      margin-top: 14px;
+      padding: 16px;
+      border-radius: 20px;
+      background: rgba(76,175,80,.15);
+      border: 1px solid rgba(112,230,130,.36);
+    }
+
+    .complete.show {
+      display: block;
+    }
+
+    @media (max-width: 920px) {
+      .panel { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+
+<body>
+  <main id="world" class="world">
+    <div class="sky-glow"></div>
+    <div class="cloud one"></div>
+    <div class="cloud two"></div>
+    <div class="river"></div>
+    <div class="bridge"></div>
+    <div class="ground"></div>
+    <div class="fog"></div>
+
+    <section class="hud">
+      <div class="topbar">
+        <div class="brand">STEM Nation Academy · Animated Inquiry Challenge</div>
+        <a class="home" href="/">Return Home</a>
+      </div>
+
+      <div class="panel">
+        <div class="scene-card">
+          <div class="kicker">Mission 1</div>
+          <h1>The First Question</h1>
+          <p id="leaderLine">A strong leader does not act first. A strong leader asks first.</p>
+
+          <div class="dialogue" id="dialogue"></div>
+
+          <div class="badges">
+            <div id="badgeObserve" class="badge">👁️ Observe</div>
+            <div id="badgeAsk" class="badge">❓ Ask</div>
+            <div id="badgeDecide" class="badge">⚖️ Decide</div>
+          </div>
+        </div>
+
+        <div class="choice-card">
+          <h2 id="roundTitle">Round 1</h2>
+          <div class="question-prompt" id="prompt"></div>
+          <div id="choices" class="choices"></div>
+          <div id="feedback" class="feedback">Choose the strongest question.</div>
+
+          <div class="actions">
+            <button id="nextBtn" class="primary" type="button" onclick="nextRound()" style="display:none;">Next Report</button>
+            <button class="secondary" type="button" onclick="restart()">Restart</button>
+          </div>
+
+          <div id="completeBox" class="complete">
+            <h2>Inquiry Badge Unlocked</h2>
+            <p>You asked before acting. You are ready for the Academy Questioning Session.</p>
+            <div class="actions">
+              <a class="button primary" href="/academy_transition">Enter Academy Questioning Session</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <script>
+    const saved = localStorage.getItem("stemNationAvatar");
+    let avatarName = "Leader";
+    let avatarIcon = "👁️";
+    if (saved) {
+      const avatar = JSON.parse(saved);
+      avatarName = avatar.name || avatar.role || "Leader";
+      avatarIcon = avatar.icon || "👁️";
+    }
+
+    const rounds = [
+      {
+        title: "Round 1 · Observe Before Action",
+        prompt: "The team wants to move quickly. What should you ask first?",
+        dialogue: [
+          ["Scout", "👁️", "The path looks clear from here."],
+          ["Builder", "🛠️", "The crossing is damaged near the center."],
+          ["Caretaker", "🛡️", "The younger ones are tired."]
+        ],
+        choices: [
+          ["Can we cross?", false, "Too small. That question does not reveal enough about risk, people, supplies, or time."],
+          ["What do we need to know about the river, people, supplies, and time before choosing a crossing plan?", true, "Strong question. The scene becomes clearer because you asked for the missing evidence.", ["Observe"]],
+          ["Who wants to go first?", false, "That asks for volunteers, but it does not protect the group."]
+        ]
+      },
+      {
+        title: "Round 2 · Ask For Evidence",
+        prompt: "A scout says, “The path looks safe.” What question tests the report?",
+        dialogue: [
+          ["Scout", "👁️", "I think the path looks safe."],
+          ["Builder", "🛠️", "Looks safe is not the same as tested."],
+          ["Caretaker", "🛡️", "We need to know before we move."]
+        ],
+        choices: [
+          ["Why does the path look safe? What evidence did you see?", true, "Good. You asked for evidence behind the report.", ["Ask"]],
+          ["Can we hurry?", false, "Hurrying does not answer whether the path is safe."],
+          ["Should we ignore the scout?", false, "Ignoring a report is not inquiry. A leader tests the report."]
+        ]
+      },
+      {
+        title: "Round 3 · Decide With Care",
+        prompt: "The group must choose: cross now, wait, or find higher ground. Which question best prepares the decision?",
+        dialogue: [
+          ["Scout", "👁️", "Night is coming."],
+          ["Builder", "🛠️", "The bridge might not hold everyone."],
+          ["Caretaker", "🛡️", "The people must come first."]
+        ],
+        choices: [
+          ["Which choice protects people, supplies, and time with the least risk?", true, "Excellent. You connected safety, resources, time, and consequence before deciding.", ["Decide"]],
+          ["Which choice is fastest?", false, "Fastest is not always safest."],
+          ["Which choice sounds easiest?", false, "Easy is not enough. A leader needs evidence."]
+        ]
+      }
+    ];
+
+    let roundIndex = 0;
+    const earned = new Set();
+
+    function byId(id) { return document.getElementById(id); }
+
+    function renderRound() {
+      const round = rounds[roundIndex];
+      byId("roundTitle").textContent = round.title;
+      byId("prompt").textContent = round.prompt;
+      byId("feedback").textContent = "Choose the strongest question.";
+      byId("nextBtn").style.display = "none";
+      byId("leaderLine").textContent = `${avatarIcon} ${avatarName}, ask before you act.`;
+
+      const dialogue = byId("dialogue");
+      dialogue.innerHTML = "";
+      round.dialogue.forEach(([name, icon, text]) => {
+        const bubble = document.createElement("div");
+        bubble.className = "bubble";
+        bubble.innerHTML = `<div class="avatar">${icon}</div><div><strong>${name}</strong>${text}</div>`;
+        dialogue.appendChild(bubble);
+      });
+
+      const choices = byId("choices");
+      choices.innerHTML = "";
+      round.choices.forEach((choice, index) => {
+        const btn = document.createElement("button");
+        btn.className = "choice";
+        btn.type = "button";
+        btn.textContent = choice[0];
+        btn.onclick = () => choose(index, btn);
+        choices.appendChild(btn);
+      });
+
+      updateBadges();
+      byId("world").classList.remove("foggy", "clear");
+    }
+
+    function choose(index, btn) {
+      const round = rounds[roundIndex];
+      const [text, correct, feedback, badges] = round.choices[index];
+
+      document.querySelectorAll(".choice").forEach(c => {
+        c.disabled = true;
+        c.classList.remove("correct", "wrong");
+      });
+
+      btn.classList.add(correct ? "correct" : "wrong");
+      byId("feedback").textContent = feedback;
+
+      if (correct) {
+        (badges || []).forEach(b => earned.add(b));
+        byId("world").classList.add("clear");
+        if (roundIndex === rounds.length - 1) {
+          finish();
+        } else {
+          byId("nextBtn").style.display = "inline-block";
+        }
+      } else {
+        byId("world").classList.add("foggy");
+        setTimeout(() => {
+          byId("world").classList.remove("foggy");
+          document.querySelectorAll(".choice").forEach(c => {
+            c.disabled = false;
+            c.classList.remove("wrong");
+          });
+        }, 950);
+      }
+
+      updateBadges();
+    }
+
+    function updateBadges() {
+      byId("badgeObserve").classList.toggle("active", earned.has("Observe"));
+      byId("badgeAsk").classList.toggle("active", earned.has("Ask"));
+      byId("badgeDecide").classList.toggle("active", earned.has("Decide"));
+    }
+
+    function nextRound() {
+      roundIndex += 1;
+      renderRound();
+    }
+
+    function finish() {
+      byId("completeBox").classList.add("show");
+      byId("nextBtn").style.display = "none";
+    }
+
+    function restart() {
+      roundIndex = 0;
+      earned.clear();
+      byId("completeBox").classList.remove("show");
+      renderRound();
+    }
+
+    renderRound();
+  </script>
+</body>
+</html>

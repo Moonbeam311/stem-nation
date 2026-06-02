@@ -229,6 +229,19 @@ def baseline_inquiry():
 def academy_transition():
     return render_template("academy_transition.html")
 
+# STEM_NATION_AVATAR_MISSION_FIRST_QUESTION_ROUTES_V1
+@app.route("/avatar_select")
+def avatar_select():
+    return render_template("avatar_select.html")
+
+@app.route("/mission_intro")
+def mission_intro():
+    return render_template("mission_intro.html")
+
+@app.route("/first-question")
+def first_question():
+    return render_template("first_question.html")
+
 # STEM_NATION_STEP6J_ROUTE_V1
 @app.route("/washed_out_crossing_intro")
 def washed_out_crossing_intro():
@@ -265,6 +278,11 @@ def literal_listener():
 @app.route("/backpack-lab")
 def backpack_lab():
     return render_template("backpack_lab.html")
+
+# STEM_NATION_BACKPACK_ADVANCED_ROUTE_V1
+@app.route("/backpack-lab-advanced")
+def backpack_lab_advanced():
+    return render_template("backpack_lab_advanced.html")
 
 
 
