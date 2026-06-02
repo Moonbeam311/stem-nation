@@ -112,6 +112,7 @@
 <!-- STEM_NATION_INTRO5_MANUAL_CONTINUE_AFTER_AUDIO_V1 -->
 <!-- STEM_NATION_INTRO5_TEXT_STAYS_UNTIL_AUDIO_END_V1 -->
 <!-- STEM_NATION_INTRO5_AUDIO_END_TO_BACKPACK_V1 -->
+<!-- STEM_NATION_INTRO5_TO_AVATAR_SELECT_V1 -->
 </head>
 
 <body>
@@ -128,7 +129,7 @@ Test the process.
 Revise what fails.</div>
 
     <button id="start" class="start" onclick="manualStart()">Start Audio</button>
-    <button id="skip" class="skip" onclick="goNext()">Continue to Backpack Puzzle</button>
+    <button id="skip" class="skip" onclick="goNext()">Continue to Avatar Selection</button>
 
     <audio id="voice" preload="auto">
       <source src="/static/intro5_demo.mp3" type="audio/mpeg">
@@ -155,7 +156,7 @@ Revise what fails.</div>
     }
 
     function goNext() {
-      window.location.href = "/backpack-lab";
+      window.location.href = "/avatar_select";
     }
 
     function beginScene() {
