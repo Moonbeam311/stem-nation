@@ -1,0 +1,531 @@
+[
+  {
+    "instruction": "open the backpack",
+    "messages": [
+      "I heard words, but the step was not clear enough for me to pack anything yet.",
+      "Try naming the item, action, condition, and location."
+    ],
+    "state": {
+      "backpackOpen": false,
+      "dumpedEverything": false,
+      "papersFlat": false,
+      "bottleClosed": false,
+      "bottlePacked": false,
+      "lunchUpright": false,
+      "lunchPacked": false,
+      "pencilPacked": false,
+      "tabletPacked": false,
+      "zipped": false,
+      "spill": false,
+      "crushedPapers": false,
+      "cannotClose": false,
+      "warning": ""
+    },
+    "expected": {
+      "backpackOpen": true,
+      "pencilPacked": false,
+      "tabletPacked": false
+    },
+    "pass": false,
+    "failures": [
+      "backpackOpen: expected True, got False"
+    ],
+    "note": "Open should not pack anything."
+  },
+  {
+    "instruction": "open the bag",
+    "messages": [
+      "I opened the backpack.",
+      "Good first step. Now ask: what item should go in first, and what condition matters?"
+    ],
+    "state": {
+      "backpackOpen": true,
+      "dumpedEverything": false,
+      "papersFlat": false,
+      "bottleClosed": false,
+      "bottlePacked": false,
+      "lunchUpright": false,
+      "lunchPacked": false,
+      "pencilPacked": false,
+      "tabletPacked": false,
+      "zipped": false,
+      "spill": false,
+      "crushedPapers": false,
+      "cannotClose": false,
+      "warning": ""
+    },
+    "expected": {
+      "backpackOpen": true,
+      "pencilPacked": false,
+      "tabletPacked": false
+    },
+    "pass": true,
+    "failures": [],
+    "note": "Bag should be recognized as backpack."
+  },
+  {
+    "instruction": "unzip the bag",
+    "messages": [
+      "I opened the backpack.",
+      "Good first step. Now ask: what item should go in first, and what condition matters?"
+    ],
+    "state": {
+      "backpackOpen": true,
+      "dumpedEverything": false,
+      "papersFlat": false,
+      "bottleClosed": false,
+      "bottlePacked": false,
+      "lunchUpright": false,
+      "lunchPacked": false,
+      "pencilPacked": false,
+      "tabletPacked": false,
+      "zipped": false,
+      "spill": false,
+      "crushedPapers": false,
+      "cannotClose": false,
+      "warning": ""
+    },
+    "expected": {
+      "backpackOpen": true,
+      "pencilPacked": false
+    },
+    "pass": true,
+    "failures": [],
+    "note": "Unzip should open only."
+  },
+  {
+    "instruction": "pack the backpack",
+    "messages": [
+      "I heard words, but the step was not clear enough for me to pack anything yet.",
+      "Try naming the item, action, condition, and location."
+    ],
+    "state": {
+      "backpackOpen": false,
+      "dumpedEverything": false,
+      "papersFlat": false,
+      "bottleClosed": false,
+      "bottlePacked": false,
+      "lunchUpright": false,
+      "lunchPacked": false,
+      "pencilPacked": false,
+      "tabletPacked": false,
+      "zipped": false,
+      "spill": false,
+      "crushedPapers": false,
+      "cannotClose": false,
+      "warning": ""
+    },
+    "expected": {
+      "pencilPacked": false,
+      "tabletPacked": false,
+      "dumpedEverything": false
+    },
+    "pass": true,
+    "failures": [],
+    "note": "Too general; should ask for item/action/location/condition."
+  },
+  {
+    "instruction": "put everything in the backpack",
+    "messages": [
+      "I dumped everything into the backpack because the instruction did not tell me order, placement, or conditions."
+    ],
+    "state": {
+      "backpackOpen": false,
+      "dumpedEverything": true,
+      "papersFlat": false,
+      "bottleClosed": false,
+      "bottlePacked": false,
+      "lunchUpright": false,
+      "lunchPacked": false,
+      "pencilPacked": false,
+      "tabletPacked": false,
+      "zipped": false,
+      "spill": true,
+      "crushedPapers": true,
+      "cannotClose": true,
+      "warning": "Everything was dumped together."
+    },
+    "expected": {
+      "dumpedEverything": true,
+      "spill": true,
+      "crushedPapers": true
+    },
+    "pass": true,
+    "failures": [],
+    "note": "Starter mistake."
+  },
+  {
+    "instruction": "put the pencil in the backpack",
+    "messages": [
+      "I packed the pencil."
+    ],
+    "state": {
+      "backpackOpen": false,
+      "dumpedEverything": false,
+      "papersFlat": false,
+      "bottleClosed": false,
+      "bottlePacked": false,
+      "lunchUpright": false,
+      "lunchPacked": false,
+      "pencilPacked": true,
+      "tabletPacked": false,
+      "zipped": false,
+      "spill": false,
+      "crushedPapers": false,
+      "cannotClose": false,
+      "warning": ""
+    },
+    "expected": {
+      "pencilPacked": true
+    },
+    "pass": true,
+    "failures": [],
+    "note": "Pencil should pack only when named."
+  },
+  {
+    "instruction": "put the pen in the bag",
+    "messages": [
+      "I heard words, but the step was not clear enough for me to pack anything yet.",
+      "Try naming the item, action, condition, and location."
+    ],
+    "state": {
+      "backpackOpen": false,
+      "dumpedEverything": false,
+      "papersFlat": false,
+      "bottleClosed": false,
+      "bottlePacked": false,
+      "lunchUpright": false,
+      "lunchPacked": false,
+      "pencilPacked": false,
+      "tabletPacked": false,
+      "zipped": false,
+      "spill": false,
+      "crushedPapers": false,
+      "cannotClose": false,
+      "warning": ""
+    },
+    "expected": {
+      "pencilPacked": true
+    },
+    "pass": false,
+    "failures": [
+      "pencilPacked: expected True, got False"
+    ],
+    "note": "Pen synonym should pack pencil."
+  },
+  {
+    "instruction": "put the tablet in the backpack",
+    "messages": [
+      "I packed the tablet."
+    ],
+    "state": {
+      "backpackOpen": false,
+      "dumpedEverything": false,
+      "papersFlat": false,
+      "bottleClosed": false,
+      "bottlePacked": false,
+      "lunchUpright": false,
+      "lunchPacked": false,
+      "pencilPacked": false,
+      "tabletPacked": true,
+      "zipped": false,
+      "spill": false,
+      "crushedPapers": false,
+      "cannotClose": false,
+      "warning": ""
+    },
+    "expected": {
+      "tabletPacked": true
+    },
+    "pass": true,
+    "failures": [],
+    "note": "Tablet packs, but may need future protected/closed distinction."
+  },
+  {
+    "instruction": "put the closed tablet in the backpack",
+    "messages": [
+      "I packed the tablet."
+    ],
+    "state": {
+      "backpackOpen": false,
+      "dumpedEverything": false,
+      "papersFlat": false,
+      "bottleClosed": false,
+      "bottlePacked": false,
+      "lunchUpright": false,
+      "lunchPacked": false,
+      "pencilPacked": false,
+      "tabletPacked": true,
+      "zipped": false,
+      "spill": false,
+      "crushedPapers": false,
+      "cannotClose": false,
+      "warning": ""
+    },
+    "expected": {
+      "tabletPacked": true
+    },
+    "pass": true,
+    "failures": [],
+    "note": "Closed tablet should pack; future visual should show protected/closed."
+  },
+  {
+    "instruction": "put the water bottle in the backpack",
+    "messages": [
+      "I packed the water bottle, but it spilled because the instruction did not say to close it first."
+    ],
+    "state": {
+      "backpackOpen": false,
+      "dumpedEverything": false,
+      "papersFlat": false,
+      "bottleClosed": false,
+      "bottlePacked": true,
+      "lunchUpright": false,
+      "lunchPacked": false,
+      "pencilPacked": false,
+      "tabletPacked": false,
+      "zipped": false,
+      "spill": true,
+      "crushedPapers": false,
+      "cannotClose": false,
+      "warning": "The bottle was packed without being closed first."
+    },
+    "expected": {
+      "bottlePacked": true,
+      "spill": true
+    },
+    "pass": true,
+    "failures": [],
+    "note": "Bottle spills if not closed first."
+  },
+  {
+    "instruction": "close the water bottle",
+    "messages": [
+      "I closed the water bottle tightly."
+    ],
+    "state": {
+      "backpackOpen": false,
+      "dumpedEverything": false,
+      "papersFlat": false,
+      "bottleClosed": true,
+      "bottlePacked": false,
+      "lunchUpright": false,
+      "lunchPacked": false,
+      "pencilPacked": false,
+      "tabletPacked": false,
+      "zipped": false,
+      "spill": false,
+      "crushedPapers": false,
+      "cannotClose": false,
+      "warning": ""
+    },
+    "expected": {
+      "bottleClosed": true
+    },
+    "pass": true,
+    "failures": [],
+    "note": "Close bottle only."
+  },
+  {
+    "instruction": "put the closed water bottle in the backpack",
+    "messages": [
+      "I closed the water bottle tightly.",
+      "I packed the closed water bottle."
+    ],
+    "state": {
+      "backpackOpen": false,
+      "dumpedEverything": false,
+      "papersFlat": false,
+      "bottleClosed": true,
+      "bottlePacked": true,
+      "lunchUpright": false,
+      "lunchPacked": false,
+      "pencilPacked": false,
+      "tabletPacked": false,
+      "zipped": false,
+      "spill": false,
+      "crushedPapers": false,
+      "cannotClose": false,
+      "warning": ""
+    },
+    "expected": {
+      "bottleClosed": true,
+      "bottlePacked": true,
+      "spill": false
+    },
+    "pass": true,
+    "failures": [],
+    "note": "Closed bottle should not spill."
+  },
+  {
+    "instruction": "put the lunchbox in the backpack",
+    "messages": [
+      "I packed the lunchbox, but the instruction did not say to keep it upright."
+    ],
+    "state": {
+      "backpackOpen": false,
+      "dumpedEverything": false,
+      "papersFlat": false,
+      "bottleClosed": false,
+      "bottlePacked": false,
+      "lunchUpright": false,
+      "lunchPacked": true,
+      "pencilPacked": false,
+      "tabletPacked": false,
+      "zipped": false,
+      "spill": false,
+      "crushedPapers": false,
+      "cannotClose": false,
+      "warning": ""
+    },
+    "expected": {
+      "lunchPacked": true
+    },
+    "pass": true,
+    "failures": [],
+    "note": "Lunch packs, but without upright condition."
+  },
+  {
+    "instruction": "keep the lunchbox upright",
+    "messages": [
+      "I kept the lunchbox upright."
+    ],
+    "state": {
+      "backpackOpen": false,
+      "dumpedEverything": false,
+      "papersFlat": false,
+      "bottleClosed": false,
+      "bottlePacked": false,
+      "lunchUpright": true,
+      "lunchPacked": false,
+      "pencilPacked": false,
+      "tabletPacked": false,
+      "zipped": false,
+      "spill": false,
+      "crushedPapers": false,
+      "cannotClose": false,
+      "warning": ""
+    },
+    "expected": {
+      "lunchUpright": true
+    },
+    "pass": true,
+    "failures": [],
+    "note": "Condition only."
+  },
+  {
+    "instruction": "put the lunchbox upright in the backpack",
+    "messages": [
+      "I kept the lunchbox upright.",
+      "I packed the lunchbox upright."
+    ],
+    "state": {
+      "backpackOpen": false,
+      "dumpedEverything": false,
+      "papersFlat": false,
+      "bottleClosed": false,
+      "bottlePacked": false,
+      "lunchUpright": true,
+      "lunchPacked": true,
+      "pencilPacked": false,
+      "tabletPacked": false,
+      "zipped": false,
+      "spill": false,
+      "crushedPapers": false,
+      "cannotClose": false,
+      "warning": ""
+    },
+    "expected": {
+      "lunchPacked": true,
+      "lunchUpright": true
+    },
+    "pass": true,
+    "failures": [],
+    "note": "Lunch should pack upright."
+  },
+  {
+    "instruction": "put the notebook and folder flat against the back of the backpack",
+    "messages": [
+      "I placed the notebook and folder flat against the back of the backpack."
+    ],
+    "state": {
+      "backpackOpen": false,
+      "dumpedEverything": false,
+      "papersFlat": true,
+      "bottleClosed": false,
+      "bottlePacked": false,
+      "lunchUpright": false,
+      "lunchPacked": false,
+      "pencilPacked": false,
+      "tabletPacked": false,
+      "zipped": false,
+      "spill": false,
+      "crushedPapers": false,
+      "cannotClose": false,
+      "warning": ""
+    },
+    "expected": {
+      "papersFlat": true,
+      "crushedPapers": false
+    },
+    "pass": true,
+    "failures": [],
+    "note": "Papers should be protected."
+  },
+  {
+    "instruction": "put the papers in the backpack",
+    "messages": [
+      "I put the papers in, but they bent because the instruction did not say to keep them flat."
+    ],
+    "state": {
+      "backpackOpen": false,
+      "dumpedEverything": false,
+      "papersFlat": false,
+      "bottleClosed": false,
+      "bottlePacked": false,
+      "lunchUpright": false,
+      "lunchPacked": false,
+      "pencilPacked": false,
+      "tabletPacked": false,
+      "zipped": false,
+      "spill": false,
+      "crushedPapers": true,
+      "cannotClose": false,
+      "warning": ""
+    },
+    "expected": {
+      "crushedPapers": true
+    },
+    "pass": true,
+    "failures": [],
+    "note": "Papers bend without flat condition."
+  },
+  {
+    "instruction": "zip the backpack",
+    "messages": [
+      "I zipped the backpack closed."
+    ],
+    "state": {
+      "backpackOpen": false,
+      "dumpedEverything": false,
+      "papersFlat": false,
+      "bottleClosed": false,
+      "bottlePacked": false,
+      "lunchUpright": false,
+      "lunchPacked": false,
+      "pencilPacked": false,
+      "tabletPacked": false,
+      "zipped": true,
+      "spill": false,
+      "crushedPapers": false,
+      "cannotClose": false,
+      "warning": ""
+    },
+    "expected": {
+      "zipped": true
+    },
+    "pass": true,
+    "failures": [],
+    "note": "Zip should close if no mess."
+  }
+]
