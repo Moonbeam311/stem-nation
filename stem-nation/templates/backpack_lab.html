@@ -808,6 +808,7 @@ Put everything in the backpack."></textarea>
       return {
         everything: includesAny(t, ["everything", "all the items", "all items", "all supplies", "stuff"]),
         backpack: includesAny(t, ["backpack", "bag", "bookbag"]),
+        open: includesAny(t, ["open", "unzip"]),
         put: includesAny(t, ["put", "place", "pack", "load", "insert"]),
         papers: includesAny(t, ["paper", "papers", "folder", "notebook", "flat"]),
         flat: includesAny(t, ["flat", "against the back", "against back", "first"]),
@@ -825,6 +826,13 @@ Put everything in the backpack."></textarea>
     function processInstruction(raw, workingState) {
       const result = analyze(raw);
       const messages = [];
+
+      // STEM_NATION_BACKPACK_OPEN_COMMAND_FIX_V1
+      if (result.open && result.backpack && !result.put) {
+        messages.push("I opened the backpack.");
+        messages.push("Good first step. What should I do next?");
+        return messages;
+      }
 
       if (result.everything && result.backpack && result.put) {
         workingState.dumpedEverything = true;
