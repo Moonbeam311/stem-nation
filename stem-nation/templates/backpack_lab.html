@@ -1,615 +1,342 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <title>The Literal Listener | Pack the Backpack Lab</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-
+  <meta charset="UTF-8">
+  <title>STEM Nation | Ask Before You Pack</title>
   <style>
-    :root {
-      --bg: #07111f;
-      --panel: rgba(12, 24, 43, 0.94);
-      --panel2: rgba(20, 38, 64, 0.96);
-      --gold: #f4c95d;
-      --text: #f7f2df;
-      --muted: #b9c4d6;
-      --blue: #78c7ff;
-      --green: #82e28c;
-      --red: #ff8585;
-      --line: rgba(244, 201, 93, 0.28);
-      --shadow: rgba(0,0,0,0.38);
-    }
-
     * { box-sizing: border-box; }
 
     body {
       margin: 0;
       min-height: 100vh;
-      font-family: Georgia, "Times New Roman", serif;
       background:
-        radial-gradient(circle at 15% 10%, rgba(244, 201, 93, 0.12), transparent 32%),
-        radial-gradient(circle at 85% 82%, rgba(120, 199, 255, 0.10), transparent 36%),
-        linear-gradient(135deg, #040812, var(--bg));
-      color: var(--text);
+        radial-gradient(circle at 20% 10%, rgba(70,130,180,.24), transparent 34%),
+        radial-gradient(circle at 80% 0%, rgba(212,175,55,.18), transparent 30%),
+        linear-gradient(135deg, #07111f, #101b2f 46%, #05080f);
+      color: #f7f1df;
+      font-family: Georgia, "Times New Roman", serif;
     }
 
     .page {
-      max-width: 1240px;
+      width: min(1180px, 94vw);
       margin: 0 auto;
-      padding: 24px 18px 44px;
+      padding: 28px 0 34px;
     }
 
     .topbar {
       display: flex;
       justify-content: space-between;
-      gap: 14px;
       align-items: center;
-      margin-bottom: 16px;
+      gap: 14px;
+      margin-bottom: 18px;
     }
 
     .brand {
-      color: var(--gold);
+      color: #f4d35e;
+      letter-spacing: .16em;
       text-transform: uppercase;
-      letter-spacing: 0.16em;
-      font-size: 0.76rem;
-      font-weight: bold;
+      font-size: .78rem;
+      font-weight: 700;
     }
 
-    .home-link {
-      color: var(--muted);
+    a {
+      color: inherit;
+    }
+
+    .home-link,
+    .advanced-link {
       text-decoration: none;
-      border: 1px solid rgba(255,255,255,0.15);
-      background: rgba(255,255,255,0.04);
-      padding: 8px 13px;
+      border: 1px solid rgba(244,211,94,.36);
+      color: #f4d35e;
+      padding: 9px 12px;
       border-radius: 999px;
-      font-size: 0.84rem;
+      background: rgba(0,0,0,.22);
+      font-size: .9rem;
     }
 
     .hero {
-      border: 1px solid var(--line);
-      background: rgba(10, 20, 36, 0.88);
-      border-radius: 22px;
+      border: 1px solid rgba(244,211,94,.28);
+      background: rgba(7, 15, 28, .78);
+      border-radius: 26px;
       padding: 22px;
-      box-shadow: 0 22px 58px var(--shadow);
-      margin-bottom: 16px;
+      box-shadow: 0 20px 70px rgba(0,0,0,.35);
+      margin-bottom: 18px;
     }
 
     .hero h1 {
-      margin: 0 0 8px;
-      color: var(--gold);
-      font-size: clamp(2rem, 4vw, 3.5rem);
-      line-height: 1;
+      margin: 0 0 10px;
+      color: #f4d35e;
+      font-size: clamp(2rem, 5vw, 4rem);
+      line-height: .95;
     }
 
     .hero p {
       margin: 0;
-      color: var(--muted);
-      font-size: 1.04rem;
-      line-height: 1.5;
-      max-width: 940px;
-    }
-
-    .pill-row {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 8px;
-      margin-top: 14px;
-    }
-
-    .pill {
-      border: 1px solid rgba(244, 201, 93, 0.26);
-      background: rgba(244, 201, 93, 0.08);
-      color: #ffe8a4;
-      border-radius: 999px;
-      padding: 7px 10px;
-      font-size: 0.82rem;
+      max-width: 860px;
+      color: rgba(247,241,223,.86);
+      line-height: 1.6;
+      font-size: 1.05rem;
     }
 
     .layout {
       display: grid;
-      grid-template-columns: 0.9fr 1.1fr;
-      gap: 16px;
+      grid-template-columns: 1.02fr .98fr;
+      gap: 18px;
       align-items: start;
     }
 
     .card {
-      border: 1px solid rgba(244, 201, 93, 0.22);
-      background: var(--panel);
+      border: 1px solid rgba(255,255,255,.13);
+      background: rgba(255,255,255,.065);
       border-radius: 22px;
       padding: 18px;
-      box-shadow: 0 18px 50px rgba(0,0,0,0.28);
+      box-shadow: 0 16px 40px rgba(0,0,0,.25);
     }
 
     .card h2 {
       margin: 0 0 10px;
-      color: var(--gold);
-      font-size: 1.2rem;
+      color: #f4d35e;
+      font-size: 1.35rem;
     }
 
-    .mission {
-      background: rgba(244, 201, 93, 0.09);
-      border: 1px solid rgba(244, 201, 93, 0.28);
-      border-radius: 15px;
-      padding: 13px;
-      margin-bottom: 13px;
-      color: #fff7d4;
-      line-height: 1.45;
-    }
-
-    .discovery-strip {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
+    .round-label {
+      display: inline-flex;
       gap: 8px;
+      align-items: center;
+      padding: 7px 10px;
+      border-radius: 999px;
+      background: rgba(68,163,255,.13);
+      border: 1px solid rgba(134,190,255,.34);
+      color: #dceeff;
+      font-size: .85rem;
+      font-weight: 700;
+      margin-bottom: 12px;
+    }
+
+    .question-box {
+      padding: 14px;
+      border-radius: 18px;
+      background: rgba(68, 163, 255, 0.12);
+      border: 1px solid rgba(134, 190, 255, 0.36);
       margin: 12px 0;
     }
 
-    .discovery-step {
-      border: 1px solid rgba(255,255,255,0.14);
-      background: rgba(255,255,255,0.06);
-      color: var(--muted);
-      border-radius: 12px;
-      padding: 9px;
-      text-align: center;
-      font-size: 0.78rem;
-      line-height: 1.25;
+    .question-box strong {
+      display: block;
+      color: #91c8ff;
+      margin-bottom: 5px;
     }
 
-    .discovery-step.active {
-      border-color: rgba(244,201,93,0.55);
-      background: rgba(244,201,93,0.13);
-      color: var(--gold);
-    }
-
-    textarea {
-      width: 100%;
-      min-height: 86px;
-      resize: vertical;
-      border-radius: 16px;
-      border: 1px solid rgba(255,255,255,0.18);
-      background: rgba(0,0,0,0.28);
-      color: var(--text);
-      padding: 14px;
-      font-family: Consolas, Monaco, monospace;
-      line-height: 1.45;
-      font-size: 0.95rem;
-      outline: none;
-    }
-
-    .hint {
-      color: var(--muted);
-      font-size: 0.9rem;
-      line-height: 1.45;
-      margin: 9px 0;
-    }
-
-    .button-row {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 9px;
-      margin-top: 11px;
-    }
-
-    button {
-      cursor: pointer;
-      border: none;
-      border-radius: 14px;
-      padding: 10px 12px;
-      font-family: inherit;
-      font-weight: bold;
-      color: #09111f;
-      background: var(--gold);
-      transition: transform 0.15s ease, filter 0.15s ease;
-    }
-
-    button:hover {
-      transform: translateY(-1px);
-      filter: brightness(1.06);
-    }
-
-    button.secondary {
-      background: rgba(255,255,255,0.1);
-      color: var(--text);
-      border: 1px solid rgba(255,255,255,0.16);
-    }
-
-    button.blue { background: var(--blue); }
-    button.green { background: var(--green); }
-
-    .process-builder {
+    .choices {
+      display: grid;
+      gap: 10px;
       margin-top: 14px;
-      padding: 12px;
-      min-height: 150px;
-      max-height: 250px;
-      overflow: auto;
-      border-radius: 15px;
-      background: rgba(0,0,0,0.25);
-      border: 1px solid rgba(255,255,255,0.13);
     }
 
-    .empty-builder {
-      color: var(--muted);
-      font-size: 0.9rem;
-      line-height: 1.45;
-    }
-
-    .step-card {
-      border: 1px solid rgba(255,255,255,0.14);
-      background: rgba(255,255,255,0.06);
+    button,
+    .button {
+      border: 0;
       border-radius: 14px;
-      padding: 10px;
-      margin-bottom: 9px;
+      padding: 12px 14px;
+      font-weight: 800;
+      cursor: pointer;
+      font-family: inherit;
+      font-size: .96rem;
+      text-decoration: none;
+      display: inline-block;
+      text-align: center;
     }
 
-    .step-card strong { color: var(--gold); }
-
-    .step-text {
-      margin: 5px 0 8px;
-      color: #edf4ff;
-      line-height: 1.35;
+    .choice {
+      background: rgba(255,255,255,.09);
+      color: #fff7df;
+      border: 1px solid rgba(255,255,255,.16);
+      text-align: left;
     }
 
-    .step-result {
-      color: var(--muted);
-      font-size: 0.86rem;
-      line-height: 1.35;
-      margin-bottom: 8px;
+    .choice:hover {
+      background: rgba(244,211,94,.12);
+      border-color: rgba(244,211,94,.36);
     }
 
-    .mini-buttons {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 6px;
+    .primary {
+      background: linear-gradient(135deg, #f4d35e, #d7a51e);
+      color: #161006;
     }
 
-    .mini-buttons button {
-      padding: 7px 9px;
-      font-size: 0.78rem;
-      border-radius: 10px;
+    .secondary {
+      background: rgba(255,255,255,.1);
+      color: #f7f1df;
+      border: 1px solid rgba(255,255,255,.16);
     }
 
     .feedback {
-      margin-top: 13px;
       min-height: 96px;
-      padding: 13px;
-      border-radius: 15px;
-      background: rgba(0,0,0,0.28);
-      border: 1px solid rgba(255,255,255,0.14);
-      color: #e9f1ff;
-      font-size: 0.94rem;
-      line-height: 1.46;
-      white-space: pre-wrap;
+      margin-top: 14px;
+      padding: 14px;
+      border-radius: 18px;
+      background: rgba(0,0,0,.24);
+      border: 1px solid rgba(255,255,255,.12);
+      color: rgba(247,241,223,.9);
+      line-height: 1.45;
+      white-space: pre-line;
     }
 
-    .reflection {
+    .scorebar {
       display: grid;
-      gap: 9px;
-      margin-top: 9px;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 8px;
+      margin: 14px 0 0;
     }
 
-    .reflection input {
-      width: 100%;
-      border-radius: 12px;
-      border: 1px solid rgba(255,255,255,0.18);
-      background: rgba(0,0,0,0.24);
-      color: var(--text);
+    .score-pill {
       padding: 10px;
-      font-family: inherit;
-      font-size: 0.95rem;
+      border-radius: 14px;
+      text-align: center;
+      background: rgba(255,255,255,.08);
+      border: 1px solid rgba(255,255,255,.12);
+      color: rgba(247,241,223,.78);
+      font-size: .82rem;
     }
 
-    .checkpoint {
-      margin-top: 13px;
-      padding: 13px;
-      border-radius: 15px;
-      background: var(--panel2);
-      border: 1px solid rgba(120, 199, 255, 0.25);
+    .score-pill.active {
+      background: rgba(244,211,94,.16);
+      border-color: rgba(244,211,94,.42);
+      color: #f4d35e;
     }
 
-    .post-note-actions {
-      display: none;
-    }
-
-    .post-note-actions.active {
-      display: flex;
-    }
-
-    .reveal {
-      display: none;
-      margin-top: 13px;
-      padding: 13px;
-      border-radius: 15px;
-      border: 1px solid rgba(130, 226, 140, 0.35);
-      background: rgba(130, 226, 140, 0.1);
-      color: #ddffe1;
-      line-height: 1.5;
-    }
-
-    .reveal.active { display: block; }
-
-    .focus-pulse {
-      outline: 3px solid rgba(244, 201, 93, 0.75);
-      box-shadow: 0 0 0 7px rgba(244, 201, 93, 0.16);
-    }
-
-    .backpack-scene {
+    .scene {
       position: relative;
-      min-height: 530px;
+      height: 470px;
       overflow: hidden;
       border-radius: 22px;
-      border: 1px solid rgba(255,255,255,0.14);
       background:
-        linear-gradient(to bottom, rgba(255,255,255,0.06), rgba(255,255,255,0.02)),
-        #142138;
+        linear-gradient(180deg, rgba(95,145,190,.22), transparent 38%),
+        linear-gradient(180deg, #2f241b 0 60%, #1d1712 60% 100%);
+      border: 1px solid rgba(255,255,255,.14);
     }
 
-    .wall {
+    .table {
       position: absolute;
-      inset: 0 0 42%;
-      background:
-        radial-gradient(circle at 15% 25%, rgba(244,201,93,0.08), transparent 20%),
-        linear-gradient(135deg, #1b2b47, #102038);
+      left: 5%;
+      right: 5%;
+      bottom: 18px;
+      height: 155px;
+      border-radius: 28px;
+      background: linear-gradient(180deg, #7b4f2f, #4b2d19);
+      box-shadow: inset 0 10px 24px rgba(255,255,255,.08);
     }
 
-    .floor {
+    .bag {
       position: absolute;
-      left: 0;
-      right: 0;
-      bottom: 0;
-      height: 46%;
-      background:
-        linear-gradient(90deg, rgba(255,255,255,0.05), transparent 20%, rgba(255,255,255,0.04)),
-        #5b4630;
-      border-top: 8px solid #7b6040;
-    }
-
-    .supply-tray {
-      position: absolute;
-      left: 22px;
-      right: 22px;
-      top: 22px;
-      min-height: 118px;
-      border-radius: 18px;
-      border: 1px solid rgba(244,201,93,0.22);
-      background: rgba(0,0,0,0.18);
-      display: flex;
-      align-items: center;
-      gap: 14px;
-      padding: 12px 18px;
-      z-index: 4;
-    }
-
-    .tray-item {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      width: 76px;
-    }
-
-    .item-icon {
-      width: 54px;
-      height: 54px;
-      border-radius: 12px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 2rem;
-      background: rgba(255,255,255,0.10);
-      border: 1px solid rgba(255,255,255,0.15);
-    }
-
-    .mini-label {
-      text-align: center;
-      color: rgba(255,255,255,0.76);
-      font-size: 0.72rem;
-      margin-top: 5px;
-      line-height: 1.1;
-    }
-
-    .listener {
-      position: absolute;
-      left: 24px;
-      top: 172px;
-      width: 76px;
-      height: 76px;
-      border-radius: 50%;
-      background: rgba(120,199,255,0.14);
-      border: 2px solid rgba(120,199,255,0.34);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 2.5rem;
-      box-shadow: 0 12px 26px rgba(0,0,0,0.24);
-      z-index: 5;
-    }
-
-    .speech {
-      position: absolute;
-      left: 116px;
-      top: 172px;
-      right: 24px;
-      min-height: 76px;
-      border-radius: 18px;
-      padding: 13px 15px;
-      color: #eaf5ff;
-      line-height: 1.4;
-      background: rgba(0,0,0,0.25);
-      border: 1px solid rgba(120,199,255,0.28);
-      z-index: 5;
-    }
-
-    .action-zone {
-      position: absolute;
-      left: 24px;
-      right: 24px;
-      bottom: 28px;
-      height: 270px;
-      border-radius: 22px;
-      border: 1px dashed rgba(255,255,255,0.18);
-      background: rgba(255,255,255,0.035);
-      z-index: 3;
-    }
-
-    .zone-label {
-      position: absolute;
-      left: 16px;
-      top: 12px;
-      color: rgba(255,255,255,0.58);
-      text-transform: uppercase;
-      letter-spacing: 0.08em;
-      font-size: 0.74rem;
-    }
-
-    .backpack {
-      position: absolute;
-      left: calc(50% - 85px);
-      bottom: 34px;
-      width: 170px;
-      height: 188px;
+      left: 50%;
+      bottom: 94px;
+      width: 180px;
+      height: 210px;
+      transform: translateX(-50%);
       border-radius: 40px 40px 28px 28px;
-      background:
-        linear-gradient(145deg, rgba(255,255,255,0.10), transparent 35%),
-        #2d6cdf;
-      border: 7px solid #173b7a;
-      box-shadow: inset 0 -18px 0 rgba(0,0,0,0.15), 0 18px 30px rgba(0,0,0,0.30);
-      z-index: 2;
+      background: linear-gradient(145deg, #304d7a, #172c4f);
+      border: 4px solid rgba(255,255,255,.18);
+      box-shadow: 0 20px 38px rgba(0,0,0,.38);
     }
 
-    .backpack::before {
+    .bag::before {
       content: "";
       position: absolute;
       left: 30px;
       right: 30px;
-      top: 50px;
-      height: 78px;
-      border-radius: 18px;
-      border: 4px solid rgba(255,255,255,0.25);
-      background: rgba(0,0,0,0.12);
+      top: -42px;
+      height: 70px;
+      border: 10px solid rgba(200,220,245,.35);
+      border-bottom: 0;
+      border-radius: 60px 60px 0 0;
     }
 
-    .backpack.zipped::after {
-      content: "ZIPPED";
+    .bag::after {
+      content: "ZIP";
       position: absolute;
-      left: 30px;
-      right: 30px;
-      bottom: 20px;
-      text-align: center;
-      color: #d9f1ff;
-      font-weight: bold;
-      letter-spacing: 0.08em;
-      font-size: 0.72rem;
+      top: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      font-size: .7rem;
+      letter-spacing: .18em;
+      color: rgba(255,255,255,.5);
     }
 
-    .mess-pile {
+    .bag.open {
+      box-shadow: 0 0 0 5px rgba(106,210,255,.24), 0 0 30px rgba(106,210,255,.36);
+    }
+
+    .bag.open::after {
+      content: "OPEN";
+      color: #9bdcff;
+    }
+
+    .packed {
       position: absolute;
+      opacity: 0;
+      transform: translate(-50%, 18px) scale(.86);
+      transition: .35s ease;
+      font-size: 2rem;
+      z-index: 3;
+    }
+
+    .packed.active {
+      opacity: 1;
+      transform: translate(-50%, 0) scale(1);
+    }
+
+    #papers { left: 45%; bottom: 184px; }
+    #pencil { left: 58%; bottom: 134px; }
+    #tablet { left: 50%; bottom: 166px; }
+    #water { left: 38%; bottom: 118px; }
+    #lunch { left: 62%; bottom: 112px; }
+
+    .tray {
+      position: absolute;
+      left: 18px;
+      top: 18px;
+      display: grid;
+      gap: 8px;
+      color: #fff;
+    }
+
+    .tray span {
+      display: inline-flex;
+      gap: 6px;
+      align-items: center;
+      padding: 7px 9px;
+      border-radius: 999px;
+      background: rgba(0,0,0,.28);
+      border: 1px solid rgba(255,255,255,.12);
+      font-size: .88rem;
+    }
+
+    .complete {
       display: none;
-      left: calc(50% - 115px);
-      bottom: 56px;
-      width: 230px;
-      height: 150px;
-      z-index: 8;
+      margin-top: 14px;
+      padding: 16px;
+      border-radius: 20px;
+      background: rgba(76, 175, 80, .15);
+      border: 1px solid rgba(112, 230, 130, .35);
     }
 
-    .mess-pile.active { display: block; }
-
-    .mess-item {
-      position: absolute;
-      font-size: 2.5rem;
-      filter: drop-shadow(0 8px 9px rgba(0,0,0,0.35));
+    .complete.show {
+      display: block;
     }
 
-    .mess-item:nth-child(1) { left: 20px; top: 32px; transform: rotate(-18deg); }
-    .mess-item:nth-child(2) { left: 78px; top: 20px; transform: rotate(12deg); }
-    .mess-item:nth-child(3) { left: 138px; top: 50px; transform: rotate(-8deg); }
-    .mess-item:nth-child(4) { left: 56px; top: 86px; transform: rotate(8deg); }
-    .mess-item:nth-child(5) { left: 122px; top: 94px; transform: rotate(16deg); }
-
-    .packed-item {
-      position: absolute;
-      display: none;
-      z-index: 7;
-      font-size: 1.7rem;
-      filter: drop-shadow(0 6px 6px rgba(0,0,0,0.25));
+    .actions {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-top: 14px;
     }
 
-    .packed-item.active { display: block; }
-
-    #flatPapers { left: calc(50% - 42px); bottom: 148px; }
-    #closedBottle { left: calc(50% + 34px); bottom: 114px; }
-    #lunchUpright { left: calc(50% - 72px); bottom: 104px; }
-    #pencilPacked { left: calc(50% - 8px); bottom: 82px; }
-    #tabletPacked { left: calc(50% + 2px); bottom: 140px; }
-
-    .spill {
-      position: absolute;
-      display: none;
-      left: calc(50% + 24px);
-      bottom: 64px;
-      width: 96px;
-      height: 34px;
-      border-radius: 50%;
-      background: rgba(120,199,255,0.52);
-      z-index: 9;
-    }
-
-    .spill.active { display: block; }
-
-    .warning {
-      position: absolute;
-      display: none;
-      right: 30px;
-      bottom: 230px;
-      max-width: 230px;
-      border-radius: 14px;
-      padding: 10px;
-      color: #ffe3e3;
-      border: 1px solid rgba(255,133,133,0.35);
-      background: rgba(255,133,133,0.12);
-      z-index: 10;
-      font-size: 0.88rem;
-      line-height: 1.35;
-    }
-
-    .warning.active { display: block; }
-
-    @media (max-width: 980px) {
+    @media (max-width: 880px) {
       .layout { grid-template-columns: 1fr; }
-      .backpack-scene { min-height: 530px; }
+      .scene { height: 410px; }
     }
-
-    @media (max-width: 560px) {
-      .discovery-strip { grid-template-columns: 1fr 1fr; }
-      .supply-tray {
-        gap: 8px;
-        padding: 10px;
-        overflow-x: auto;
-      }
-      .tray-item { width: 62px; }
-      .item-icon { width: 46px; height: 46px; font-size: 1.6rem; }
-      .speech { font-size: 0.88rem; }
-      .backpack { transform: scale(0.88); transform-origin: bottom center; }
-    }
-  
-/* STEM_NATION_BACKPACK_INQUIRY_WARMUP_V1 */
-.inquiry-focus {
-  margin: 10px 0 12px;
-  padding: 12px 14px;
-  border-radius: 14px;
-  background: rgba(68, 163, 255, 0.12);
-  border: 1px solid rgba(134, 190, 255, 0.36);
-  color: #dceeff;
-}
-.inquiry-focus strong {
-  display: block;
-  color: #91c8ff;
-  margin-bottom: 4px;
-}
-.backpack.opened {
-  box-shadow: 0 0 0 4px rgba(106, 210, 255, 0.22), 0 0 24px rgba(106, 210, 255, 0.42);
-  transform: rotate(-1deg) scale(1.02);
-}
-
-</style>
+  </style>
 </head>
 
 <body>
@@ -620,649 +347,209 @@
     </div>
 
     <section class="hero">
-      <h1>Pack the Backpack</h1>
+      <h1>Ask Before You Pack</h1>
       <p>
-        Build instructions one step at a time. The listener follows your words literally.
-        If the backpack becomes messy, spills, or will not close, revise the process.
+        Your job is not to pack fast. Your job is to ask what the listener needs to know
+        before giving an instruction. Strong questions create clear actions.
       </p>
-
-      <div class="pill-row">
-        <span class="pill">Backpack Inquiry Lab</span>
-        <span class="pill">Order Matters</span>
-        <span class="pill">Conditions Matter</span>
-        <span class="pill">Revise & Retest</span>
-      </div>
     </section>
 
     <section class="layout">
       <div class="card">
-        <h2>Mission</h2>
+        <div id="roundLabel" class="round-label">Round 1 of 3</div>
+        <h2 id="roundTitle">Prepare the Bag</h2>
+        <p id="roundMission">
+          Goal: get the bag ready before putting anything inside.
+        </p>
 
-        <div class="mission">
-          Teach the Literal Listener how to pack a backpack for school.
-          The supplies are ready. The listener needs clear instructions about order,
-          placement, and conditions.
+        <div class="question-box">
+          <strong>Ask Before You Act</strong>
+          <span id="roundQuestion">What must the listener know before this step can work?</span>
         </div>
 
-        <div class="discovery-strip">
-          <div class="discovery-step active">1<br>Try a Step</div>
-          <div class="discovery-step">2<br>Observe</div>
-          <div class="discovery-step">3<br>Revise</div>
-          <div class="discovery-step">4<br>Continue</div>
+        <div id="choices" class="choices"></div>
+
+        <div id="feedback" class="feedback">
+          Choose the clearest instruction. Watch what the Literal Listener does.
         </div>
 
-        <h2>Current Step</h2>
-        <div class="hint">
-          Type one instruction. Test it. If the result is not what you meant,
-          edit the step and retest.
+        <div class="scorebar">
+          <div id="scoreQuestion" class="score-pill">Question</div>
+          <div id="scoreAction" class="score-pill">Action</div>
+          <div id="scoreLocation" class="score-pill">Location</div>
+          <div id="scoreCondition" class="score-pill">Condition</div>
         </div>
 
-        <textarea id="currentStep" aria-label="Current instruction step" placeholder="Example:
-Put everything in the backpack."></textarea>
-
-        <div class="button-row">
-          <button class="green" onclick="testCurrentStep()">Test Current Step</button>
-          <button class="blue" onclick="useStarter()">Use Starter Mistake</button>
-          <button class="secondary" onclick="runAllSteps()">Run All Tested Steps</button>
-          <button class="secondary" onclick="resetLab()">Reset</button>
-        </div>
-
-        <h2 style="margin-top:16px;">Process Builder</h2>
-        <div id="processBuilder" class="process-builder">
-          <div class="empty-builder">No tested steps yet. Add your first instruction above.</div>
-        </div>
-
-        <h2 style="margin-top:16px;">Literal Listener Feedback</h2>
-        <div id="feedback" class="feedback">Waiting for your first step...</div>
-
-        <div id="guidedNotesPanel" class="checkpoint">
-          <h2>My Discovery Notes</h2>
-          <div class="hint">
-            Add notes from a tested step. The first two boxes fill from the result. You decide what to change next.
-          </div>
-
-          <div class="reflection">
-            <input id="note1" placeholder="Tested step" />
-            <input id="note2" placeholder="What happened?" />
-            <input id="note3" placeholder="What will I change next?" />
-          </div>
-
-          <div class="button-row">
-            <button class="secondary" onclick="saveDiscoveryNote()">Save Note</button>
-            <button class="secondary" onclick="clearDiscoveryNoteInputs()">Clear Note Boxes</button>
-          </div>
-
-          <div id="savedNotes" class="feedback" style="min-height:70px;">
-            No notes saved yet.
-          </div>
-
-          <div id="postNoteActions" class="button-row post-note-actions" style="margin-top:10px;">
-            <button class="green" type="button" onclick="jumpToCurrentStep()">Revise This Step</button>
-            <button class="blue" type="button" onclick="runAllSteps()">Run All Tested Steps</button>
-            <button class="secondary" type="button" onclick="hidePostNoteActions()">Hide Actions</button>
+        <div id="completeBox" class="complete">
+          <h2>Warm-Up Complete</h2>
+          <p>
+            You asked before acting. You named what mattered: item, action, location,
+            order, condition, and risk. Now you are ready for the Academy Questioning Session.
+          </p>
+          <div class="actions">
+            <a class="button primary" href="/academy_transition">Continue to Academy Questioning Session</a>
+            <a class="button secondary" href="/backpack-lab-advanced">Try Advanced Builder</a>
           </div>
         </div>
 
-        <div id="finalReflection" class="checkpoint" style="display:none;">
-          <h2>Final Reflection Unlocked</h2>
-          <div class="hint">
-            The backpack process worked. Use your notes to explain how your instructions improved.
-          </div>
-
-          <div class="reflection">
-            <input id="reflect1" placeholder="One instruction that did not work at first was..." />
-            <input id="reflect2" placeholder="I changed it by..." />
-            <input id="reflect3" placeholder="After I changed it, the listener..." />
-            <input id="reflect4" placeholder="This shows that clear instructions need..." />
-            <button onclick="finishReflection()">Finish Reflection</button>
-          </div>
-        </div>
-
-        <div id="reveal" class="reveal">
-          <strong>You tested your own process.</strong><br>
-          You tried instructions, observed the result, revised your steps, and tested again.
-          That is how strong thinkers improve procedures, experiments, designs, and explanations.
+        <div class="actions">
+          <button id="nextBtn" class="primary" type="button" onclick="nextRound()" style="display:none;">Next Round</button>
+          <button class="secondary" type="button" onclick="restart()">Restart Warm-Up</button>
+          <a class="button secondary" href="/backpack-lab-advanced">Advanced Builder</a>
         </div>
       </div>
 
       <div class="card">
-        <h2>Visual Result</h2>
-        <div class="hint" style="margin-bottom:10px;">
-          Supply Tray: items stay here. The action area shows what your instructions caused.
-        </div>
-
-        <div class="backpack-scene" aria-label="Literal Listener backpack scene">
-          <div class="wall"></div>
-          <div class="floor"></div>
-
-          <div class="supply-tray">
-            <div class="tray-item"><div class="item-icon">📓</div><div class="mini-label">Notebook</div></div>
-            <div class="tray-item"><div class="item-icon">📄</div><div class="mini-label">Folder</div></div>
-            <div class="tray-item"><div class="item-icon">✏️</div><div class="mini-label">Pencil</div></div>
-            <div class="tray-item"><div class="item-icon">🍱</div><div class="mini-label">Lunch</div></div>
-            <div class="tray-item"><div class="item-icon">💧</div><div class="mini-label">Water</div></div>
-            <div class="tray-item"><div class="item-icon">💻</div><div class="mini-label">Tablet</div></div>
+        <h2>Literal Listener Result</h2>
+        <div class="scene" aria-label="Ask Before You Pack backpack scene">
+          <div class="tray">
+            <span>📓 Folder + Notebook</span>
+            <span>✏️ Pencil</span>
+            <span>💻 Closed Tablet</span>
+            <span>💧 Water Bottle</span>
+            <span>🍱 Lunchbox</span>
           </div>
 
-          <div class="listener">👂</div>
-          <div id="speech" class="speech">
-            I am the Literal Listener. I will follow exactly what your words tell me to do.
-          </div>
+          <div id="bag" class="bag"></div>
+          <div class="table"></div>
 
-          <div class="action-zone">
-            <div class="zone-label">Action Area</div>
-            <div id="warning" class="warning"></div>
-
-            <div id="backpack" class="backpack"></div>
-
-            <div id="messPile" class="mess-pile">
-              <div class="mess-item">📓</div>
-              <div class="mess-item">📄</div>
-              <div class="mess-item">🍱</div>
-              <div class="mess-item">💧</div>
-              <div class="mess-item">💻</div>
-            </div>
-
-            <div id="spill" class="spill"></div>
-
-            <div id="flatPapers" class="packed-item">📓📄</div>
-            <div id="closedBottle" class="packed-item">💧</div>
-            <div id="lunchUpright" class="packed-item">🍱</div>
-            <div id="pencilPacked" class="packed-item">✏️</div>
-            <div id="tabletPacked" class="packed-item">💻</div>
-          </div>
+          <div id="papers" class="packed">📓📄</div>
+          <div id="pencil" class="packed">✏️</div>
+          <div id="tablet" class="packed">▣</div>
+          <div id="water" class="packed">💧</div>
+          <div id="lunch" class="packed">🍱</div>
         </div>
       </div>
     </section>
   </main>
 
   <script>
-    let steps = [];
-    let editingIndex = null;
-    let discoveryNotes = [];
-    let state = freshState();
+    const rounds = [
+      {
+        title: "Prepare the Bag",
+        mission: "Goal: get the bag ready before putting anything inside.",
+        question: "What must happen before any item can go inside?",
+        choices: [
+          { text: "Put the pencil in the bag.", ok: false, feedback: "The pencil can go in later, but the bag should be opened first." },
+          { text: "Open the bag.", ok: true, feedback: "Good. The bag opened. Nothing was packed yet.", state: { bagOpen: true }, score: ["Question", "Action", "Location"] },
+          { text: "Pack everything.", ok: false, feedback: "Too much at once. Ask what item goes first, where it goes, and what condition matters." }
+        ]
+      },
+      {
+        title: "Protect the Papers",
+        mission: "Goal: add the folder and notebook without bending them.",
+        question: "What condition protects the papers?",
+        choices: [
+          { text: "Put the folder in the bag.", ok: false, feedback: "The folder went in, but it bent because the instruction did not say how to place it.", state: { papers: true } },
+          { text: "Put the folder and notebook flat against the back of the bag.", ok: true, feedback: "Good. You named the items, action, location, and condition.", state: { papers: true }, score: ["Question", "Action", "Location", "Condition"] },
+          { text: "Put stuff in the bag.", ok: false, feedback: "The listener needs exact items and placement, not 'stuff'." }
+        ]
+      },
+      {
+        title: "Protect the Supplies",
+        mission: "Goal: pack the closed tablet, water bottle, pencil, and lunchbox safely.",
+        question: "What risks should you think about before packing the final supplies?",
+        choices: [
+          { text: "Put the closed tablet in the bag away from the water bottle.", ok: true, feedback: "Good. You thought about risk before acting. The closed tablet is protected.", state: { tablet: true }, score: ["Question", "Action", "Location", "Condition"] },
+          { text: "Put the water bottle in the bag without checking it.", ok: false, feedback: "The bottle may spill. Ask whether it is closed first.", state: { water: true } },
+          { text: "Put the pencil, closed water bottle, upright lunchbox, and closed tablet in the bag.", ok: true, feedback: "Strong instruction. You named items and conditions clearly.", state: { pencil: true, water: true, lunch: true, tablet: true }, score: ["Question", "Action", "Location", "Condition"] }
+        ]
+      }
+    ];
 
-    const currentStep = document.getElementById("currentStep");
-    const feedback = document.getElementById("feedback");
-    const speech = document.getElementById("speech");
-    const processBuilder = document.getElementById("processBuilder");
-    const postNoteActions = document.getElementById("postNoteActions");
+    let roundIndex = 0;
+    const state = {
+      bagOpen: false,
+      papers: false,
+      pencil: false,
+      tablet: false,
+      water: false,
+      lunch: false
+    };
 
-    const backpack = document.getElementById("backpack");
-    const messPile = document.getElementById("messPile");
-    const spill = document.getElementById("spill");
-    const warning = document.getElementById("warning");
-
-    const flatPapers = document.getElementById("flatPapers");
-    const closedBottle = document.getElementById("closedBottle");
-    const lunchUpright = document.getElementById("lunchUpright");
-    const pencilPacked = document.getElementById("pencilPacked");
-    const tabletPacked = document.getElementById("tabletPacked");
-
-    function freshState() {
-      return {
-        backpackOpen: false,
-        dumpedEverything: false,
-        papersFlat: false,
-        heavyBottom: false,
-        bottleClosed: false,
-        bottlePacked: false,
-        lunchUpright: false,
-        lunchPacked: false,
-        pencilPacked: false,
-        tabletPacked: false,
-        zipped: false,
-        spill: false,
-        crushedPapers: false,
-        cannotClose: false,
-        warning: ""
-      };
+    function byId(id) {
+      return document.getElementById(id);
     }
 
-    function includesAny(text, words) {
-      return words.some(word => text.includes(word));
+    function renderRound() {
+      const round = rounds[roundIndex];
+      byId("roundLabel").textContent = "Round " + (roundIndex + 1) + " of " + rounds.length;
+      byId("roundTitle").textContent = round.title;
+      byId("roundMission").textContent = round.mission;
+      byId("roundQuestion").textContent = round.question;
+      byId("feedback").textContent = "Choose the clearest instruction. Watch what the Literal Listener does.";
+      byId("nextBtn").style.display = "none";
+
+      const choices = byId("choices");
+      choices.innerHTML = "";
+      round.choices.forEach((choice, index) => {
+        const btn = document.createElement("button");
+        btn.className = "choice";
+        btn.type = "button";
+        btn.textContent = choice.text;
+        btn.onclick = () => choose(index);
+        choices.appendChild(btn);
+      });
+
+      updateScores([]);
+      renderState();
     }
 
-    function analyze(text) {
-      const t = text.toLowerCase();
+    function choose(index) {
+      const round = rounds[roundIndex];
+      const choice = round.choices[index];
 
-      return {
-        everything: includesAny(t, ["everything", "all the items", "all items", "all supplies", "stuff"]),
-        backpack: includesAny(t, ["backpack", "bag", "bookbag"]),
-        open: includesAny(t, ["open", "unzip", "open the backpack", "open backpack", "open the bag", "open bag"]),
-        put: includesAny(t, ["put", "place", "pack", "load", "insert"]),
-        papers: includesAny(t, ["paper", "papers", "folder", "notebook", "flat"]),
-        flat: includesAny(t, ["flat", "against the back", "against back", "first"]),
-        heavy: includesAny(t, ["heavy", "bottom", "first"]),
-        bottle: includesAny(t, ["water", "bottle"]),
-        closed: includesAny(t, ["closed", "close", "cap", "lid", "tight", "sealed"]),
-        lunch: includesAny(t, ["lunch", "lunchbox", "food"]),
-        upright: includesAny(t, ["upright", "right side up", "standing"]),
-        pencil: includesAny(t, ["pencil", "pen"]),
-        tablet: includesAny(t, ["tablet", "computer", "device", "laptop"]),
-        zip: includesAny(t, ["zip", "zipper", "close the backpack", "close bag", "close the bag"])
-      };
-    }
-
-    function processInstruction(raw, workingState) {
-      const result = analyze(raw);
-      const messages = [];
-
-      // STEM_NATION_BACKPACK_INQUIRY_WARMUP_V1_OPEN_COMMAND
-      if (result.open && result.backpack && !result.put) {
-        workingState.backpackOpen = true;
-        workingState.warning = "";
-        messages.push("I opened the backpack.");
-        messages.push("Good first step. Now ask: what item should go in first, and what condition matters?");
-        return messages;
-      }
-if (result.everything && result.backpack && result.put) {
-        workingState.dumpedEverything = true;
-        workingState.spill = true;
-        workingState.crushedPapers = true;
-        workingState.cannotClose = true;
-        workingState.warning = "Everything was dumped together. The bottle tipped sideways, papers bent, and the tablet was packed too close to food and water.";
-        messages.push("I dumped everything into the backpack because the instruction did not tell me order, placement, or conditions.");
-        messages.push("The water bottle tipped sideways, the papers bent, and the tablet was too close to food and water.");
+      if (choice.state) {
+        Object.assign(state, choice.state);
       }
 
-      if (result.papers && result.backpack && result.put && result.flat) {
-        workingState.papersFlat = true;
-        workingState.crushedPapers = false;
-        messages.push("I placed the notebook and folder flat against the back of the backpack.");
-      } else if (result.papers && result.backpack && result.put && !result.flat) {
-        workingState.crushedPapers = true;
-        messages.push("I put the papers in, but they bent because the instruction did not say to keep them flat.");
-      }
+      byId("feedback").textContent = choice.feedback;
+      updateScores(choice.score || []);
 
-      if (result.bottle && result.closed) {
-        workingState.bottleClosed = true;
-        messages.push("I closed the water bottle tightly.");
-      }
-
-      if (result.bottle && result.backpack && result.put) {
-        workingState.bottlePacked = true;
-        if (!workingState.bottleClosed) {
-          workingState.spill = true;
-          workingState.warning = "The bottle was packed without being closed first.";
-          messages.push("I packed the water bottle, but it spilled because the instruction did not say to close it first.");
+      if (choice.ok) {
+        if (roundIndex === rounds.length - 1) {
+          finish();
         } else {
-          messages.push("I packed the closed water bottle.");
+          byId("nextBtn").style.display = "inline-block";
         }
       }
 
-      if (result.lunch && result.upright) {
-        workingState.lunchUpright = true;
-        messages.push("I kept the lunchbox upright.");
-      }
-
-      if (result.lunch && result.backpack && result.put) {
-        workingState.lunchPacked = true;
-        if (!workingState.lunchUpright) {
-          messages.push("I packed the lunchbox, but the instruction did not say to keep it upright.");
-        } else {
-          messages.push("I packed the lunchbox upright.");
-        }
-      }
-
-      if (result.pencil && result.backpack && result.put) {
-        workingState.pencilPacked = true;
-        messages.push("I packed the pencil.");
-      }
-
-      if (result.tablet && result.backpack && result.put) {
-        workingState.tabletPacked = true;
-        messages.push("I packed the tablet.");
-      }
-
-      if (result.zip) {
-        if (workingState.spill || workingState.crushedPapers || workingState.dumpedEverything) {
-          workingState.cannotClose = true;
-          messages.push("I tried to zip the backpack, but the messy packing made it hard to close.");
-        } else {
-          workingState.zipped = true;
-          workingState.cannotClose = false;
-          messages.push("I zipped the backpack closed.");
-        }
-      }
-
-      if (messages.length === 0) {
-        messages.push("I heard words, but the step was not clear enough for me to pack anything yet.");
-        messages.push("Try naming the item, action, condition, and location.");
-      }
-
-      return messages;
+      renderState();
     }
 
-    function renderScene() {
-      const backpackVisual = document.querySelector(".backpack");
-      if (backpackVisual) {
-        backpackVisual.classList.toggle("opened", !!state.backpackOpen);
-      }
-      messPile.classList.toggle("active", state.dumpedEverything);
-      spill.classList.toggle("active", state.spill);
-
-      flatPapers.classList.toggle("active", state.papersFlat);
-      closedBottle.classList.toggle("active", state.bottlePacked && state.bottleClosed);
-      lunchUpright.classList.toggle("active", state.lunchPacked && state.lunchUpright);
-      pencilPacked.classList.toggle("active", state.pencilPacked);
-      tabletPacked.classList.toggle("active", state.tabletPacked);
-
-      backpack.classList.toggle("zipped", state.zipped);
-
-      if (state.warning || state.cannotClose || state.spill || state.crushedPapers) {
-        warning.classList.add("active");
-        warning.textContent = state.warning || "Something is not packed correctly yet.";
-      } else {
-        warning.classList.remove("active");
-        warning.textContent = "";
-      }
-    }
-
-    function setDiscoveryPhase(index) {
-      document.querySelectorAll(".discovery-step").forEach((card, i) => {
-        card.classList.toggle("active", i === index);
+    function updateScores(active) {
+      ["Question", "Action", "Location", "Condition"].forEach(label => {
+        byId("score" + label).classList.toggle("active", active.includes(label));
       });
     }
 
-    function isUnclearResult(messages) {
-      const joined = messages.join(" ").toLowerCase();
-      return (
-        joined.includes("not clear enough") ||
-        joined.includes("dumped everything") ||
-        joined.includes("spilled") ||
-        joined.includes("bent") ||
-        joined.includes("will not close") ||
-        joined.includes("did not tell me")
-      );
+    function renderState() {
+      byId("bag").classList.toggle("open", state.bagOpen);
+      byId("papers").classList.toggle("active", state.papers);
+      byId("pencil").classList.toggle("active", state.pencil);
+      byId("tablet").classList.toggle("active", state.tablet);
+      byId("water").classList.toggle("active", state.water);
+      byId("lunch").classList.toggle("active", state.lunch);
     }
 
-    function testCurrentStep() {
-      const raw = currentStep.value.trim();
-
-      if (!raw) {
-        feedback.textContent = "Write one instruction first.";
-        speech.textContent = "I need one step to test.";
-        return;
-      }
-
-      const testState = cloneStateFromSteps(editingIndex);
-      const messages = processInstruction(raw, testState);
-
-      if (editingIndex === null) {
-        steps.push({ text: raw, result: messages.join(" ") });
-      } else {
-        steps[editingIndex] = { text: raw, result: messages.join(" ") };
-        editingIndex = null;
-      }
-
-      replayAllSteps();
-      renderProcessBuilder();
-
-      if (isUnclearResult(messages)) {
-        setDiscoveryPhase(2);
-        currentStep.value = raw;
-        feedback.textContent = messages.join("\n") + "\n\nNext: add this step to notes, explain what needs fixing, then revise the instruction.";
-        speech.textContent = "Something was unclear. Use your notes, then revise the step.";
-      } else {
-        setDiscoveryPhase(3);
-        currentStep.value = "";
-        feedback.textContent = messages.join("\n") + "\n\nGood. Keep building the next step, or run all tested steps.";
-        speech.textContent = "That step was clear enough to continue.";
-      }
-
-      maybeUnlockReflection();
+    function nextRound() {
+      roundIndex += 1;
+      renderRound();
     }
 
-    function cloneStateFromSteps(stopBeforeIndex) {
-      const temp = freshState();
-
-      if (stopBeforeIndex === null) {
-        for (const s of steps) processInstruction(s.text, temp);
-      } else {
-        for (let i = 0; i < stopBeforeIndex; i++) processInstruction(steps[i].text, temp);
-      }
-
-      return temp;
+    function finish() {
+      byId("completeBox").classList.add("show");
+      byId("nextBtn").style.display = "none";
     }
 
-    function replayAllSteps() {
-      state = freshState();
-      for (const s of steps) processInstruction(s.text, state);
-      renderScene();
-
-      if (isComplete()) {
-        speech.textContent = "The full process now packs the backpack correctly.";
-      }
+    function restart() {
+      roundIndex = 0;
+      Object.keys(state).forEach(key => state[key] = false);
+      byId("completeBox").classList.remove("show");
+      renderRound();
     }
 
-    function runAllSteps() {
-      if (!steps.length) {
-        feedback.textContent = "No tested steps yet. Test your first step before running the full process.";
-        return;
-      }
-
-      state = freshState();
-      const messages = [];
-
-      steps.forEach((step, index) => {
-        const stepMessages = processInstruction(step.text, state);
-        messages.push(`Step ${index + 1}: ${step.text}`);
-        stepMessages.forEach(msg => messages.push("  - " + msg));
-        messages.push("");
-      });
-
-      renderScene();
-
-      if (isComplete()) {
-        messages.push("PROCESS COMPLETE: The backpack is organized, dry, protected, and zipped.");
-        speech.textContent = "Your full process worked.";
-      } else {
-        messages.push("PROCESS NOT COMPLETE: Something is still missing, messy, wet, bent, or unzipped.");
-        speech.textContent = "Your process still needs revision.";
-      }
-
-      feedback.textContent = messages.join("\n");
-      maybeUnlockReflection();
-    }
-
-    function isComplete() {
-      return (
-        state.papersFlat &&
-        state.bottleClosed &&
-        state.bottlePacked &&
-        state.lunchUpright &&
-        state.lunchPacked &&
-        state.pencilPacked &&
-        state.tabletPacked &&
-        state.zipped &&
-        !state.spill &&
-        !state.crushedPapers &&
-        !state.cannotClose &&
-        !state.dumpedEverything
-      );
-    }
-
-    function editStep(index) {
-      setDiscoveryPhase(2);
-      currentStep.value = steps[index].text;
-      editingIndex = index;
-      feedback.textContent = `Editing Step ${index + 1}. Change the wording, then click Test Current Step.`;
-      speech.textContent = "Revise the step and test it again.";
-      jumpToCurrentStep();
-    }
-
-    function retestStep(index) {
-      const temp = cloneStateFromSteps(index);
-      const messages = processInstruction(steps[index].text, temp);
-      feedback.textContent = `Retested Step ${index + 1}:\n` + messages.join("\n");
-      speech.textContent = "I retested that step using the process before it.";
-    }
-
-    function deleteStep(index) {
-      steps.splice(index, 1);
-      editingIndex = null;
-      replayAllSteps();
-      renderProcessBuilder();
-      feedback.textContent = "Step removed. The process was replayed without it.";
-      speech.textContent = "I updated the process after removing that step.";
-    }
-
-    function addStepToNotes(index) {
-      const step = steps[index];
-
-      if (!step) {
-        alert("That step could not be found.");
-        return;
-      }
-
-      document.getElementById("note1").value = step.text || "";
-      document.getElementById("note2").value = step.result || "";
-      currentStep.value = step.text || currentStep.value;
-
-      document.getElementById("guidedNotesPanel").scrollIntoView({ behavior: "smooth", block: "center" });
-      document.getElementById("note3").focus();
-
-      feedback.textContent = "Step " + (index + 1) + " was copied into your Discovery Notes. Write what you will change next.";
-      speech.textContent = "Use your notes to decide how to improve the next instruction.";
-    }
-
-    function renderProcessBuilder() {
-      if (!steps.length) {
-        processBuilder.innerHTML = '<div class="empty-builder">No tested steps yet. Add your first instruction above.</div>';
-        return;
-      }
-
-      processBuilder.innerHTML = steps.map((step, index) => `
-        <div class="step-card">
-          <strong>Step ${index + 1}</strong>
-          <div class="step-text">${escapeHtml(step.text)}</div>
-          <div class="step-result">${escapeHtml(step.result)}</div>
-          <div class="mini-buttons">
-            <button class="secondary" onclick="editStep(${index})">Edit</button>
-            <button class="secondary" onclick="retestStep(${index})">Retest</button>
-            <button class="secondary" onclick="addStepToNotes(${index})">Add to Notes</button>
-            <button class="secondary" onclick="deleteStep(${index})">Remove</button>
-          </div>
-        </div>
-      `).join("");
-    }
-
-    function saveDiscoveryNote() {
-      const note = {
-        tried: document.getElementById("note1").value.trim(),
-        happened: document.getElementById("note2").value.trim(),
-        next: document.getElementById("note3").value.trim()
-      };
-
-      if (!note.tried && !note.happened && !note.next) {
-        alert("Write at least one note before saving.");
-        return;
-      }
-
-      discoveryNotes.push(note);
-      renderDiscoveryNotes();
-      clearDiscoveryNoteInputs();
-
-      postNoteActions.classList.add("active");
-    }
-
-    function clearDiscoveryNoteInputs() {
-      ["note1", "note2", "note3"].forEach(id => {
-        document.getElementById(id).value = "";
-      });
-    }
-
-    function renderDiscoveryNotes() {
-      const savedNotes = document.getElementById("savedNotes");
-
-      if (!discoveryNotes.length) {
-        savedNotes.textContent = "No notes saved yet.";
-        return;
-      }
-
-      savedNotes.textContent = discoveryNotes.map((note, index) => {
-        return [
-          `Note ${index + 1}:`,
-          note.tried ? `Tested Step: ${note.tried}` : "",
-          note.happened ? `What Happened: ${note.happened}` : "",
-          note.next ? `What I Will Change Next: ${note.next}` : ""
-        ].filter(Boolean).join("\n");
-      }).join("\n\n");
-    }
-
-    function hidePostNoteActions() {
-      postNoteActions.classList.remove("active");
-    }
-
-    function jumpToCurrentStep() {
-      currentStep.scrollIntoView({ behavior: "smooth", block: "center" });
-      currentStep.focus();
-
-      currentStep.classList.add("focus-pulse");
-      setTimeout(() => currentStep.classList.remove("focus-pulse"), 1400);
-    }
-
-    function useStarter() {
-      setDiscoveryPhase(0);
-      currentStep.value = "Put everything in the backpack.";
-      currentStep.focus();
-    }
-
-    function maybeUnlockReflection() {
-      if (isComplete()) {
-        document.getElementById("finalReflection").style.display = "block";
-      }
-    }
-
-    function finishReflection() {
-      const fields = ["reflect1", "reflect2", "reflect3", "reflect4"];
-      const missing = fields.filter(id => !document.getElementById(id).value.trim());
-
-      if (missing.length) {
-        alert("Complete all reflection lines before finishing.");
-        return;
-      }
-
-      document.getElementById("reveal").classList.add("active");
-    }
-
-    function resetLab() {
-      steps = [];
-      editingIndex = null;
-      discoveryNotes = [];
-      state = freshState();
-
-      currentStep.value = "";
-      feedback.textContent = "Waiting for your first step...";
-      speech.textContent = "I am the Literal Listener. I will follow exactly what your words tell me to do.";
-
-      renderScene();
-      renderProcessBuilder();
-      renderDiscoveryNotes();
-      clearDiscoveryNoteInputs();
-      hidePostNoteActions();
-      setDiscoveryPhase(0);
-
-      document.getElementById("finalReflection").style.display = "none";
-      document.getElementById("reveal").classList.remove("active");
-    }
-
-    function escapeHtml(str) {
-      return str.replace(/[&<>"']/g, function(match) {
-        return ({
-          "&": "&amp;",
-          "<": "&lt;",
-          ">": "&gt;",
-          '"': "&quot;",
-          "'": "&#039;"
-        })[match];
-      });
-    }
-
-    renderScene();
-    renderProcessBuilder();
-    renderDiscoveryNotes();
+    renderRound();
   </script>
 </body>
 </html>
