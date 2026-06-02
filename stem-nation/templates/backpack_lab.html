@@ -589,13 +589,33 @@
       .speech { font-size: 0.88rem; }
       .backpack { transform: scale(0.88); transform-origin: bottom center; }
     }
-  </style>
+  
+/* STEM_NATION_BACKPACK_INQUIRY_WARMUP_V1 */
+.inquiry-focus {
+  margin: 10px 0 12px;
+  padding: 12px 14px;
+  border-radius: 14px;
+  background: rgba(68, 163, 255, 0.12);
+  border: 1px solid rgba(134, 190, 255, 0.36);
+  color: #dceeff;
+}
+.inquiry-focus strong {
+  display: block;
+  color: #91c8ff;
+  margin-bottom: 4px;
+}
+.backpack.opened {
+  box-shadow: 0 0 0 4px rgba(106, 210, 255, 0.22), 0 0 24px rgba(106, 210, 255, 0.42);
+  transform: rotate(-1deg) scale(1.02);
+}
+
+</style>
 </head>
 
 <body>
   <main class="page">
     <div class="topbar">
-      <div class="brand">Instruction & Process Lab</div>
+      <div class="brand">Inquiry Warm-Up Lab</div>
       <a class="home-link" href="/">Return Home</a>
     </div>
 
@@ -607,7 +627,7 @@
       </p>
 
       <div class="pill-row">
-        <span class="pill">Backpack Discovery Lab</span>
+        <span class="pill">Backpack Inquiry Lab</span>
         <span class="pill">Order Matters</span>
         <span class="pill">Conditions Matter</span>
         <span class="pill">Revise & Retest</span>
@@ -781,6 +801,7 @@ Put everything in the backpack."></textarea>
 
     function freshState() {
       return {
+        backpackOpen: false,
         dumpedEverything: false,
         papersFlat: false,
         heavyBottom: false,
@@ -827,23 +848,12 @@ Put everything in the backpack."></textarea>
       const result = analyze(raw);
       const messages = [];
 
-      // STEM_NATION_BACKPACK_OPEN_COMMAND_FINAL_V1
+      // STEM_NATION_BACKPACK_INQUIRY_WARMUP_V1_OPEN_COMMAND
       if (result.open && result.backpack && !result.put) {
-        workingState.dumpedEverything = false;
-        workingState.papersFlat = false;
-        workingState.bottleClosed = false;
-        workingState.bottlePacked = false;
-        workingState.lunchUpright = false;
-        workingState.lunchPacked = false;
-        workingState.pencilPacked = false;
-        workingState.tabletPacked = false;
-        workingState.zipped = false;
-        workingState.spill = false;
-        workingState.crushedPapers = false;
-        workingState.cannotClose = false;
+        workingState.backpackOpen = true;
         workingState.warning = "";
         messages.push("I opened the backpack.");
-        messages.push("Good first step. What should I do next?");
+        messages.push("Good first step. Now ask: what item should go in first, and what condition matters?");
         return messages;
       }
 if (result.everything && result.backpack && result.put) {
@@ -925,6 +935,10 @@ if (result.everything && result.backpack && result.put) {
     }
 
     function renderScene() {
+      const backpackVisual = document.querySelector(".backpack");
+      if (backpackVisual) {
+        backpackVisual.classList.toggle("opened", !!state.backpackOpen);
+      }
       messPile.classList.toggle("active", state.dumpedEverything);
       spill.classList.toggle("active", state.spill);
 
