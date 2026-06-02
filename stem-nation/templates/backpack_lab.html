@@ -808,7 +808,7 @@ Put everything in the backpack."></textarea>
       return {
         everything: includesAny(t, ["everything", "all the items", "all items", "all supplies", "stuff"]),
         backpack: includesAny(t, ["backpack", "bag", "bookbag"]),
-        open: includesAny(t, ["open", "unzip"]),
+        open: includesAny(t, ["open", "unzip", "open the backpack", "open backpack", "open the bag", "open bag"]),
         put: includesAny(t, ["put", "place", "pack", "load", "insert"]),
         papers: includesAny(t, ["paper", "papers", "folder", "notebook", "flat"]),
         flat: includesAny(t, ["flat", "against the back", "against back", "first"]),
@@ -827,14 +827,26 @@ Put everything in the backpack."></textarea>
       const result = analyze(raw);
       const messages = [];
 
-      // STEM_NATION_BACKPACK_OPEN_COMMAND_FIX_V1
+      // STEM_NATION_BACKPACK_OPEN_COMMAND_FINAL_V1
       if (result.open && result.backpack && !result.put) {
+        workingState.dumpedEverything = false;
+        workingState.papersFlat = false;
+        workingState.bottleClosed = false;
+        workingState.bottlePacked = false;
+        workingState.lunchUpright = false;
+        workingState.lunchPacked = false;
+        workingState.pencilPacked = false;
+        workingState.tabletPacked = false;
+        workingState.zipped = false;
+        workingState.spill = false;
+        workingState.crushedPapers = false;
+        workingState.cannotClose = false;
+        workingState.warning = "";
         messages.push("I opened the backpack.");
         messages.push("Good first step. What should I do next?");
         return messages;
       }
-
-      if (result.everything && result.backpack && result.put) {
+if (result.everything && result.backpack && result.put) {
         workingState.dumpedEverything = true;
         workingState.spill = true;
         workingState.crushedPapers = true;
