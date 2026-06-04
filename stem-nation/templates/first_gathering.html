@@ -346,16 +346,17 @@
 
     let guardianIndex = 0;
 
+    // CI-2B_GATHERING_TIMING_POLISH
     function revealVoices() {
       voices.forEach((voice, index) => {
         setTimeout(() => {
           voice.classList.add("show");
-        }, 800 + index * 1300);
+        }, 800 + index * 1700);
       });
 
       setTimeout(() => {
         guardianCard.classList.add("show");
-      }, 5000);
+      }, 6500);
     }
 
     function nextGuardianLine() {

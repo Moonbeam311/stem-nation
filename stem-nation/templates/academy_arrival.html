@@ -112,6 +112,7 @@
     .hidden { display: none; }
   
 /* CI-1E_ARRIVAL_TO_GATHERING_TRANSITION */
+/* CI-2B_ARRIVAL_TIMING_POLISH */
 .arrival-status {
   margin-top: 18px;
   color: #f4d35e;
@@ -124,7 +125,7 @@
 .bell-flash {
   position: fixed;
   inset: 0;
-  background: radial-gradient(circle at center, rgba(244,211,94,.24), transparent 45%);
+  background: radial-gradient(circle at center, rgba(244,211,94,.34), transparent 46%);
   opacity: 0;
   pointer-events: none;
   transition: opacity .55s ease;
@@ -145,13 +146,53 @@
   opacity: 0;
   transform: scaleX(.2);
   transform-origin: left center;
-  transition: opacity .8s ease, transform 2.4s ease;
+  transition: opacity .9s ease, transform 2.8s ease;
   z-index: 12;
 }
 
 .movement-trail.show {
   opacity: .9;
   transform: scaleX(1);
+}
+
+
+
+/* CI-2B_STUDENT_NAME_ARRIVAL */
+/* CI-2B-FIX2_ARRIVAL_NAME_LAYOUT */
+.arrival-identity-card {
+  width: min(520px, 92vw);
+  margin: 12px auto 22px;
+  padding: 14px 18px;
+  border: 1px solid rgba(244,211,94,.26);
+  border-radius: 20px;
+  background: rgba(0,0,0,.22);
+  box-shadow: 0 12px 36px rgba(0,0,0,.22);
+}
+
+.arrival-stage {
+  color: #d8cfb0;
+  font-size: .78rem;
+  font-weight: 900;
+  letter-spacing: .18em;
+  text-transform: uppercase;
+  margin-bottom: 6px;
+}
+
+.arrival-student-name {
+  color: #f4d35e;
+  font-size: clamp(1.35rem, 3.2vw, 2.25rem);
+  font-weight: 900;
+  letter-spacing: .03em;
+  line-height: 1.12;
+  word-break: break-word;
+  text-shadow: 0 8px 30px rgba(0,0,0,.55);
+}
+
+.line {
+  max-width: 760px;
+  margin: 18px auto 0;
+  line-height: 1.55;
+  min-height: 3.2em;
 }
 
 </style>
@@ -169,14 +210,45 @@
     <section class="card">
       <div class="kicker">Arrival at the Academy</div>
       <h1>You Have Arrived</h1>
+      <div class="arrival-identity-card" id="arrivalIdentityCard">
+        <div class="arrival-stage">New Arrival</div>
+        <div class="arrival-student-name" id="arrivalStudentName">Academy Learner</div>
+      </div>
       <div id="line" class="line">The Academy receives new arrivals quietly.</div>
       <a id="enterBtn" class="button hidden" href="/first_gathering">Follow the Gathering</a>
     </section>
   </main>
 
   <script>
+    const STEM_NATION_IDENTITY_KEY = "stemNationStudentIdentity";
+    let stemNationArrivalIdentity = {
+      name: "Academy Learner",
+      teacherApprovedName: "",
+      approvedName: ""
+    };
+
+    try {
+      const savedIdentity = JSON.parse(localStorage.getItem(STEM_NATION_IDENTITY_KEY) || "null");
+      if (savedIdentity) {
+        stemNationArrivalIdentity = { ...stemNationArrivalIdentity, ...savedIdentity };
+      }
+    } catch (error) {
+      console.warn("Could not load STEM Nation identity for arrival.", error);
+    }
+
+    const arrivalDisplayName =
+      stemNationArrivalIdentity.teacherApprovedName ||
+      stemNationArrivalIdentity.approvedName ||
+      stemNationArrivalIdentity.name ||
+      "Academy Learner";
+
+    const arrivalStudentName = document.getElementById("arrivalStudentName");
+    if (arrivalStudentName) {
+      arrivalStudentName.textContent = arrivalDisplayName;
+    }
+
     const lines = [
-      "The Academy receives new arrivals quietly.",
+      `The Academy receives ${arrivalDisplayName} quietly.`,
       "For a moment, everything feels still.",
       "Then a bell rings across the grounds.",
       "People begin moving toward the Council Hall.",
@@ -195,14 +267,14 @@
           line.textContent = lines[i];
           line.style.opacity = 1;
         }, 350);
-        setTimeout(nextLine, 2400);
+        setTimeout(nextLine, 2550);
       } else {
-        setTimeout(() => enterBtn.classList.remove("hidden"), 900);
+        setTimeout(() => enterBtn.classList.remove("hidden"), 1100);
       }
     }
 
     line.style.transition = "opacity .35s ease";
-    setTimeout(nextLine, 2200);
+    setTimeout(nextLine, 1800);
   </script>
 </body>
 </html>

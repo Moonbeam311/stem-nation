@@ -244,6 +244,22 @@
       font-family: inherit;
     }
 
+    
+    /* CI-2B_FINAL_FADE */
+    .final-fade {
+      position: fixed;
+      inset: 0;
+      background: #000;
+      opacity: 0;
+      pointer-events: none;
+      z-index: 40;
+      transition: opacity 900ms ease;
+    }
+
+    .final-fade.show {
+      opacity: 1;
+    }
+
     .progress {
       position: fixed;
       left: 0;
@@ -323,6 +339,7 @@
       </div>
     </section>
 
+    <div class="final-fade" id="finalFade" aria-hidden="true"></div>
     <button class="skip" type="button" onclick="goArrival()">Skip Cinematic</button>
     <div class="progress" id="progress"></div>
   </main>
@@ -366,16 +383,17 @@
     studentName.textContent = identity.name || "Academy Learner";
     studentLine.textContent = "Welcome, " + (identity.name || "Academy Learner") + ".";
 
+    // CI-2B_TIMING_POLISH: smoother cinematic pacing
     const durations = [
-      2600,
-      2600,
+      2400,
+      2500,
       3000,
+      3200,
+      3400,
+      3100,
       3300,
-      3600,
-      3000,
-      3000,
-      4200,
-      3200
+      3900,
+      3400
     ];
 
     let index = 0;
@@ -425,7 +443,15 @@
     }
 
     function goArrival() {
-      window.location.href = "/academy_arrival";
+      const finalFade = document.getElementById("finalFade");
+      if (finalFade) {
+        finalFade.classList.add("show");
+        setTimeout(() => {
+          window.location.href = "/academy_arrival";
+        }, 850);
+      } else {
+        window.location.href = "/academy_arrival";
+      }
     }
 
     document.addEventListener("keydown", (event) => {
