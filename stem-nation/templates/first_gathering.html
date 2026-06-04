@@ -2,287 +2,380 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>STEM Nation | First Gathering</title>
+  <title>STEM Nation | The First Gathering</title>
   <style>
-    * { box-sizing: border-box; }
+    :root {
+      --gold: #f4d35e;
+      --gold2: #d7a51e;
+      --text: #f8f1dd;
+      --muted: #d8cfb0;
+      --panel: rgba(5, 12, 24, .78);
+      --border: rgba(244, 211, 94, .28);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
     body {
       margin: 0;
       min-height: 100vh;
-      background: #06111f;
-      color: #f8f1dd;
+      background:
+        radial-gradient(circle at 20% 10%, rgba(244,211,94,.14), transparent 30%),
+        radial-gradient(circle at 80% 0%, rgba(80,160,220,.18), transparent 34%),
+        linear-gradient(180deg, #06111f, #0a192b 56%, #030914);
+      color: var(--text);
       font-family: Georgia, "Times New Roman", serif;
       overflow-x: hidden;
     }
+
     .hall {
+      position: relative;
       min-height: 100vh;
-      padding: 24px;
+      padding: 38px 22px 70px;
+      overflow: hidden;
+    }
+
+    .hall::before {
+      content: "";
+      position: fixed;
+      inset: 0;
       background:
-        radial-gradient(circle at 50% 12%, rgba(244,211,94,.17), transparent 28%),
-        linear-gradient(180deg, #0d1f35, #06111f 58%, #03070d);
+        linear-gradient(90deg, rgba(255,255,255,.04) 1px, transparent 1px),
+        radial-gradient(circle at 50% 18%, rgba(244,211,94,.12), transparent 36%);
+      background-size: 74px 74px, auto;
+      opacity: .22;
+      pointer-events: none;
     }
-    .top {
-      width: min(1200px, 96vw);
-      margin: 0 auto 16px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      gap: 12px;
+
+    .light-scan {
+      position: fixed;
+      top: 0;
+      bottom: 0;
+      width: 24%;
+      left: -30%;
+      background: linear-gradient(90deg, transparent, rgba(244,211,94,.12), transparent);
+      animation: scan 7s linear infinite;
+      pointer-events: none;
     }
-    .brand {
-      color: #f4d35e;
-      letter-spacing: .18em;
-      text-transform: uppercase;
-      font-weight: 900;
-      font-size: .78rem;
+
+    @keyframes scan {
+      to { left: 120%; }
     }
-    .badge {
-      border: 1px solid rgba(244,211,94,.36);
-      color: #f4d35e;
-      border-radius: 999px;
-      padding: 8px 12px;
-      background: rgba(0,0,0,.24);
-    }
-    .grid {
-      width: min(1200px, 96vw);
+
+    .wrap {
+      position: relative;
+      z-index: 2;
+      max-width: 1120px;
       margin: 0 auto;
       display: grid;
-      grid-template-columns: 1fr .75fr;
-      gap: 18px;
-      align-items: stretch;
+      grid-template-columns: 1.1fr .9fr;
+      gap: 22px;
+      align-items: start;
     }
+
     .panel {
-      border-radius: 28px;
-      border: 1px solid rgba(255,255,255,.14);
-      background: rgba(255,255,255,.065);
-      box-shadow: 0 20px 70px rgba(0,0,0,.36);
-      overflow: hidden;
-    }
-    .display {
-      min-height: 560px;
-      padding: 18px;
-      position: relative;
+      border: 1px solid var(--border);
       background:
-        linear-gradient(180deg, rgba(25,55,90,.55), rgba(0,0,0,.2)),
-        rgba(0,0,0,.25);
+        linear-gradient(135deg, rgba(244,211,94,.09), rgba(255,255,255,.035)),
+        var(--panel);
+      border-radius: 28px;
+      padding: clamp(20px, 3vw, 34px);
+      box-shadow: 0 28px 80px rgba(0,0,0,.36);
+      backdrop-filter: blur(8px);
     }
-    .display h1 {
-      color: #f4d35e;
+
+    .badge {
+      display: inline-block;
+      color: var(--gold);
+      letter-spacing: .16em;
+      text-transform: uppercase;
+      font-size: .78rem;
+      font-weight: 900;
+      margin-bottom: 12px;
+    }
+
+    h1 {
       margin: 0 0 14px;
-      font-size: clamp(2rem, 5vw, 4.2rem);
-      line-height: .95;
+      font-size: clamp(2.2rem, 5vw, 4.4rem);
+      line-height: .96;
     }
-    .evidence-wall {
+
+    .lead {
+      color: var(--muted);
+      line-height: 1.65;
+      font-size: 1.08rem;
+      margin: 0;
+    }
+
+    .conversation {
       display: grid;
-      grid-template-columns: repeat(3, 1fr);
+      gap: 14px;
+      margin-top: 24px;
+    }
+
+    .voice {
+      opacity: 0;
+      transform: translateY(12px);
+      transition: opacity .65s ease, transform .65s ease;
+      padding: 14px 16px;
+      border-radius: 18px;
+      border: 1px solid rgba(255,255,255,.12);
+      background: rgba(255,255,255,.065);
+      line-height: 1.5;
+    }
+
+    .voice.show {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .voice strong {
+      color: var(--gold);
+      display: block;
+      margin-bottom: 4px;
+      letter-spacing: .04em;
+    }
+
+    .guardian-card {
+      margin-top: 22px;
+      display: none;
+      border: 1px solid rgba(244,211,94,.34);
+      background: rgba(244,211,94,.09);
+      border-radius: 22px;
+      padding: 18px;
+    }
+
+    .guardian-card.show {
+      display: block;
+      animation: rise .65s ease both;
+    }
+
+    @keyframes rise {
+      from { opacity: 0; transform: translateY(14px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .guardian-line {
+      font-size: clamp(1.2rem, 2.6vw, 1.9rem);
+      line-height: 1.32;
+      margin: 0;
+    }
+
+    .actions {
+      display: flex;
+      flex-wrap: wrap;
       gap: 12px;
       margin-top: 18px;
     }
-    .evidence {
-      height: 230px;
-      border-radius: 20px;
-      border: 1px solid rgba(255,255,255,.16);
-      background:
-        radial-gradient(circle at 50% 30%, rgba(255,255,255,.72), transparent 18%),
-        linear-gradient(135deg, #dfeaf2 0 42%, #1d3347 42% 54%, #eef6fb 54%);
-      position: relative;
-      overflow: hidden;
-    }
-    .evidence.two {
-      background:
-        radial-gradient(circle at 55% 34%, rgba(35,55,65,.9), transparent 19%),
-        linear-gradient(135deg, #dfeaf2 0 34%, #1d3347 34% 64%, #eef6fb 64%);
-    }
-    .evidence.three {
-      background:
-        radial-gradient(circle at 48% 46%, rgba(35,55,65,.9), transparent 25%),
-        repeating-linear-gradient(45deg, rgba(244,211,94,.18) 0 8px, transparent 8px 24px),
-        #dfeaf2;
-    }
-    .evidence::after {
-      content: "";
-      position: absolute;
-      inset: 0;
-      background: repeating-linear-gradient(0deg, rgba(255,255,255,.07) 0 2px, transparent 2px 8px);
-      animation: scan 2.5s linear infinite;
-    }
-    @keyframes scan {
-      to { transform: translateY(20px); }
-    }
-    .activity {
-      padding: 18px;
-      min-height: 560px;
-      background: rgba(4,10,18,.55);
-    }
-    .activity h2 {
-      color: #f4d35e;
-      margin: 0 0 12px;
-    }
-    .feed {
-      display: grid;
-      gap: 10px;
-      margin-bottom: 18px;
-    }
-    .quote {
-      padding: 12px;
-      border-radius: 16px;
-      background: rgba(255,255,255,.08);
-      border: 1px solid rgba(255,255,255,.13);
-      color: rgba(248,241,221,.86);
-      animation: pulse 3s ease-in-out infinite;
-    }
-    .quote:nth-child(2) { animation-delay: .4s; }
-    .quote:nth-child(3) { animation-delay: .8s; }
-    @keyframes pulse {
-      50% { border-color: rgba(244,211,94,.32); }
-    }
-    .guardian {
-      margin-top: 18px;
-      padding: 14px;
-      border-radius: 20px;
-      background: rgba(244,211,94,.11);
-      border: 1px solid rgba(244,211,94,.28);
-      display: grid;
-      gap: 10px;
-    }
-    .guardian-title {
-      color: #f4d35e;
-      font-weight: 900;
-      letter-spacing: .08em;
-      text-transform: uppercase;
-      font-size: .8rem;
-    }
-    .dialogue {
-      min-height: 90px;
-      line-height: 1.5;
-      color: #fff7df;
-      white-space: pre-line;
-    }
-    button, .button {
+
+    button,
+    .button {
       border: 0;
-      border-radius: 16px;
-      padding: 13px 15px;
+      border-radius: 999px;
+      padding: 13px 21px;
       font-family: inherit;
       font-weight: 900;
       cursor: pointer;
       text-decoration: none;
-      display: inline-block;
-      text-align: center;
     }
+
     .primary {
-      background: linear-gradient(135deg, #f4d35e, #d7a51e);
+      background: linear-gradient(135deg, var(--gold), var(--gold2));
       color: #171006;
+      box-shadow: 0 12px 36px rgba(244,211,94,.22);
     }
-    .observe {
-      display: none;
-      margin-top: 18px;
-      padding: 16px;
-      border-radius: 22px;
-      background: rgba(68,163,255,.12);
-      border: 1px solid rgba(134,190,255,.34);
-    }
-    .observe.show { display: block; }
-    .choices {
-      display: grid;
-      gap: 10px;
-      margin-top: 12px;
-    }
-    .choice {
-      color: #f8f1dd;
+
+    .secondary {
       background: rgba(255,255,255,.1);
+      color: var(--text);
       border: 1px solid rgba(255,255,255,.16);
-      text-align: left;
     }
-    @media (max-width: 920px) {
-      .grid { grid-template-columns: 1fr; }
-      .evidence-wall { grid-template-columns: 1fr; }
-      .evidence { height: 160px; }
+
+    .evidence-panel {
+      opacity: 0;
+      transform: translateY(16px);
+      transition: opacity .85s ease, transform .85s ease;
+    }
+
+    .evidence-panel.show {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .evidence-table {
+      display: grid;
+      gap: 12px;
+      margin-top: 18px;
+    }
+
+    .evidence-card {
+      border: 1px solid rgba(255,255,255,.13);
+      background: rgba(0,0,0,.24);
+      border-radius: 18px;
+      padding: 14px;
+    }
+
+    .evidence-card .label {
+      color: var(--gold);
+      font-size: .78rem;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      font-weight: 900;
+      margin-bottom: 6px;
+    }
+
+    .evidence-card p {
+      color: var(--muted);
+      margin: 0;
+      line-height: 1.45;
+    }
+
+    .note {
+      margin-top: 16px;
+      color: #cfc4a3;
+      line-height: 1.5;
+      font-size: .96rem;
+    }
+
+    @media (max-width: 880px) {
+      .wrap {
+        grid-template-columns: 1fr;
+      }
     }
   </style>
 </head>
 <body>
   <main class="hall">
-    <div class="top">
-      <div class="brand">STEM Nation · Council Hall</div>
-      <div class="badge">First Gathering</div>
-    </div>
+    <div class="light-scan" aria-hidden="true"></div>
 
-    <section class="grid">
-      <div class="panel display">
-        <h1>Something Has Changed</h1>
-        <p>No labels. No conclusions. Only evidence.</p>
+    <section class="wrap">
+      <article class="panel">
+        <div class="badge">The First Gathering</div>
+        <h1>The Council Hall</h1>
+        <p class="lead">
+          You arrive near the edge of a gathering already in motion.
+          No one has introduced the problem yet, but the room feels tense.
+          You hear different voices trying to make sense of the same evidence.
+        </p>
 
-        <div class="evidence-wall">
-          <div class="evidence one"></div>
-          <div class="evidence two"></div>
-          <div class="evidence three"></div>
-        </div>
+        <div class="conversation">
+          <div class="voice" id="voice1">
+            <strong>Voice One</strong>
+            The crossing is unsafe. The water changed overnight.
+          </div>
 
-        <div id="observeBox" class="observe">
-          <h2>Before anyone explains it...</h2>
-          <p>What do you notice?</p>
-          <div class="choices">
-            <button class="choice" onclick="notice('The images are different.')">The images are different.</button>
-            <button class="choice" onclick="notice('Something appears or disappears.')">Something appears or disappears.</button>
-            <button class="choice" onclick="notice('The shape of the land or ice changed.')">The shape of the land or ice changed.</button>
-            <button class="choice" onclick="notice('I am not sure yet.')">I am not sure yet.</button>
+          <div class="voice" id="voice2">
+            <strong>Voice Two</strong>
+            If we wait too long, the group loses daylight.
+          </div>
+
+          <div class="voice" id="voice3">
+            <strong>Voice Three</strong>
+            We do not know enough yet. The signs are not all pointing in the same direction.
           </div>
         </div>
-      </div>
 
-      <div class="panel activity">
-        <h2>Overheard in the Hall</h2>
-        <div class="feed">
-          <div class="quote">“That does not match.”</div>
-          <div class="quote">“Look at the second image.”</div>
-          <div class="quote">“We need more evidence.”</div>
+        <div class="guardian-card" id="guardianCard">
+          <p class="guardian-line" id="guardianLine">Ah. You made it.</p>
+          <div class="actions">
+            <button class="primary" id="guardianNextBtn" type="button">Continue</button>
+          </div>
+        </div>
+      </article>
+
+      <aside class="panel evidence-panel" id="evidencePanel">
+        <div class="badge">Unlabeled Evidence</div>
+        <h1 style="font-size:clamp(1.8rem,3.4vw,3rem);">What do you notice?</h1>
+        <p class="lead">
+          No one tells you what the evidence means.
+          Your first task is to observe before deciding.
+        </p>
+
+        <div class="evidence-table">
+          <div class="evidence-card">
+            <div class="label">Evidence A</div>
+            <p>Fresh water marks appear higher than expected near the crossing.</p>
+          </div>
+
+          <div class="evidence-card">
+            <div class="label">Evidence B</div>
+            <p>Footprints stop near the bank, then turn away from the river.</p>
+          </div>
+
+          <div class="evidence-card">
+            <div class="label">Evidence C</div>
+            <p>A broken branch points toward a higher path through the trees.</p>
+          </div>
+
+          <div class="evidence-card">
+            <div class="label">Evidence D</div>
+            <p>The sky is clearing, but the ground is still soft.</p>
+          </div>
         </div>
 
-        <div class="guardian">
-          <div class="guardian-title">Someone approaches</div>
-          <div id="guardianDialogue" class="dialogue"></div>
-          <button id="guardianBtn" class="primary" onclick="nextGuardianLine()">Continue</button>
-        </div>
+        <p class="note">
+          The evidence is unlabeled on purpose. The Academy wants to see what you notice first.
+        </p>
 
-        <div id="response" class="guardian" style="display:none;">
-          <div class="guardian-title">Guardian</div>
-          <div id="responseText" class="dialogue"></div>
+        <div class="actions">
+          <a class="button primary" href="/baseline_inquiry">Begin Observation</a>
+          <button class="secondary" type="button" onclick="replayScene()">Replay Gathering</button>
         </div>
-      </div>
+      </aside>
     </section>
   </main>
 
   <script>
-    const lines = [
+    const voices = [
+      document.getElementById("voice1"),
+      document.getElementById("voice2"),
+      document.getElementById("voice3")
+    ];
+
+    const guardianCard = document.getElementById("guardianCard");
+    const guardianLine = document.getElementById("guardianLine");
+    const guardianNextBtn = document.getElementById("guardianNextBtn");
+    const evidencePanel = document.getElementById("evidencePanel");
+
+    const guardianLines = [
       "Ah. You made it.",
       "We need another set of eyes.",
       "Come take a look."
     ];
 
-    let index = -1;
-    const dialogue = document.getElementById("guardianDialogue");
-    const btn = document.getElementById("guardianBtn");
+    let guardianIndex = 0;
+
+    function revealVoices() {
+      voices.forEach((voice, index) => {
+        setTimeout(() => {
+          voice.classList.add("show");
+        }, 800 + index * 1300);
+      });
+
+      setTimeout(() => {
+        guardianCard.classList.add("show");
+      }, 5000);
+    }
 
     function nextGuardianLine() {
-      index++;
-      if (index < lines.length) {
-        dialogue.textContent = lines.slice(0, index + 1).join("\n\n");
+      guardianIndex += 1;
+
+      if (guardianIndex < guardianLines.length) {
+        guardianLine.textContent = guardianLines[guardianIndex];
       } else {
-        btn.style.display = "none";
-        document.getElementById("observeBox").classList.add("show");
-        dialogue.textContent += "\n\nBefore I tell you anything...\n\nWhat do you notice?";
+        guardianNextBtn.style.display = "none";
+        evidencePanel.classList.add("show");
       }
     }
 
-    function notice(text) {
-      document.getElementById("response").style.display = "grid";
-      document.getElementById("responseText").textContent =
-        "Interesting.\n\n" +
-        "You noticed: " + text + "\n\n" +
-        "The room has been debating these images all morning.\n\n" +
-        "Everyone wants answers. The problem is, we do not know which questions matter most.";
+    function replayScene() {
+      location.reload();
     }
 
-    nextGuardianLine();
+    guardianNextBtn.addEventListener("click", nextGuardianLine);
+
+    revealVoices();
   </script>
 </body>
 </html>
