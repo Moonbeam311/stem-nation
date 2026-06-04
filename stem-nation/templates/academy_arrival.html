@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>STEM Nation | Academy Arrival</title>
+  <title>STEM Nation | Arrival at the Academy</title>
   <style>
     * { box-sizing: border-box; }
     body {
@@ -110,9 +110,55 @@
       font-weight: 900;
     }
     .hidden { display: none; }
-  </style>
+  
+/* CI-1E_ARRIVAL_TO_GATHERING_TRANSITION */
+.arrival-status {
+  margin-top: 18px;
+  color: #f4d35e;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  font-size: .78rem;
+  font-weight: 900;
+}
+
+.bell-flash {
+  position: fixed;
+  inset: 0;
+  background: radial-gradient(circle at center, rgba(244,211,94,.24), transparent 45%);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity .55s ease;
+  z-index: 20;
+}
+
+.bell-flash.show {
+  opacity: 1;
+}
+
+.movement-trail {
+  position: fixed;
+  left: 8%;
+  right: 8%;
+  bottom: 10%;
+  height: 3px;
+  background: linear-gradient(90deg, transparent, rgba(244,211,94,.85), transparent);
+  opacity: 0;
+  transform: scaleX(.2);
+  transform-origin: left center;
+  transition: opacity .8s ease, transform 2.4s ease;
+  z-index: 12;
+}
+
+.movement-trail.show {
+  opacity: .9;
+  transform: scaleX(1);
+}
+
+</style>
 </head>
 <body>
+<div class="bell-flash" id="bellFlash" aria-hidden="true"></div>
+<div class="movement-trail" id="movementTrail" aria-hidden="true"></div>
   <main class="scene">
     <div class="moon"></div>
     <div class="cloud one"></div>
@@ -121,19 +167,20 @@
     <div class="water"></div>
 
     <section class="card">
-      <div class="kicker">Academy Arrival</div>
-      <h1>The Academy</h1>
-      <div id="line" class="line">The Academy gathers learners from many places.</div>
-      <a id="enterBtn" class="button hidden" href="/first_gathering">Enter Council Hall</a>
+      <div class="kicker">Arrival at the Academy</div>
+      <h1>You Have Arrived</h1>
+      <div id="line" class="line">The Academy receives new arrivals quietly.</div>
+      <a id="enterBtn" class="button hidden" href="/first_gathering">Follow the Gathering</a>
     </section>
   </main>
 
   <script>
     const lines = [
-      "The Academy gathers learners from many places.",
-      "Some come to ask questions.",
-      "Some come to answer them.",
-      "Today, something unexpected has happened."
+      "The Academy receives new arrivals quietly.",
+      "For a moment, everything feels still.",
+      "Then a bell rings across the grounds.",
+      "People begin moving toward the Council Hall.",
+      "You follow the movement, not yet knowing what has happened."
     ];
 
     let i = 0;
