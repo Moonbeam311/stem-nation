@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>STEM Nation | First Gathering</title>
+  <style>
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      min-height: 100vh;
+      background: #06111f;
+      color: #f8f1dd;
+      font-family: Georgia, "Times New Roman", serif;
+      overflow-x: hidden;
+    }
+    .hall {
+      min-height: 100vh;
+      padding: 24px;
+      background:
+        radial-gradient(circle at 50% 12%, rgba(244,211,94,.17), transparent 28%),
+        linear-gradient(180deg, #0d1f35, #06111f 58%, #03070d);
+    }
+    .top {
+      width: min(1200px, 96vw);
+      margin: 0 auto 16px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+    }
+    .brand {
+      color: #f4d35e;
+      letter-spacing: .18em;
+      text-transform: uppercase;
+      font-weight: 900;
+      font-size: .78rem;
+    }
+    .badge {
+      border: 1px solid rgba(244,211,94,.36);
+      color: #f4d35e;
+      border-radius: 999px;
+      padding: 8px 12px;
+      background: rgba(0,0,0,.24);
+    }
+    .grid {
+      width: min(1200px, 96vw);
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1fr .75fr;
+      gap: 18px;
+      align-items: stretch;
+    }
+    .panel {
+      border-radius: 28px;
+      border: 1px solid rgba(255,255,255,.14);
+      background: rgba(255,255,255,.065);
+      box-shadow: 0 20px 70px rgba(0,0,0,.36);
+      overflow: hidden;
+    }
+    .display {
+      min-height: 560px;
+      padding: 18px;
+      position: relative;
+      background:
+        linear-gradient(180deg, rgba(25,55,90,.55), rgba(0,0,0,.2)),
+        rgba(0,0,0,.25);
+    }
+    .display h1 {
+      color: #f4d35e;
+      margin: 0 0 14px;
+      font-size: clamp(2rem, 5vw, 4.2rem);
+      line-height: .95;
+    }
+    .evidence-wall {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+      margin-top: 18px;
+    }
+    .evidence {
+      height: 230px;
+      border-radius: 20px;
+      border: 1px solid rgba(255,255,255,.16);
+      background:
+        radial-gradient(circle at 50% 30%, rgba(255,255,255,.72), transparent 18%),
+        linear-gradient(135deg, #dfeaf2 0 42%, #1d3347 42% 54%, #eef6fb 54%);
+      position: relative;
+      overflow: hidden;
+    }
+    .evidence.two {
+      background:
+        radial-gradient(circle at 55% 34%, rgba(35,55,65,.9), transparent 19%),
+        linear-gradient(135deg, #dfeaf2 0 34%, #1d3347 34% 64%, #eef6fb 64%);
+    }
+    .evidence.three {
+      background:
+        radial-gradient(circle at 48% 46%, rgba(35,55,65,.9), transparent 25%),
+        repeating-linear-gradient(45deg, rgba(244,211,94,.18) 0 8px, transparent 8px 24px),
+        #dfeaf2;
+    }
+    .evidence::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: repeating-linear-gradient(0deg, rgba(255,255,255,.07) 0 2px, transparent 2px 8px);
+      animation: scan 2.5s linear infinite;
+    }
+    @keyframes scan {
+      to { transform: translateY(20px); }
+    }
+    .activity {
+      padding: 18px;
+      min-height: 560px;
+      background: rgba(4,10,18,.55);
+    }
+    .activity h2 {
+      color: #f4d35e;
+      margin: 0 0 12px;
+    }
+    .feed {
+      display: grid;
+      gap: 10px;
+      margin-bottom: 18px;
+    }
+    .quote {
+      padding: 12px;
+      border-radius: 16px;
+      background: rgba(255,255,255,.08);
+      border: 1px solid rgba(255,255,255,.13);
+      color: rgba(248,241,221,.86);
+      animation: pulse 3s ease-in-out infinite;
+    }
+    .quote:nth-child(2) { animation-delay: .4s; }
+    .quote:nth-child(3) { animation-delay: .8s; }
+    @keyframes pulse {
+      50% { border-color: rgba(244,211,94,.32); }
+    }
+    .guardian {
+      margin-top: 18px;
+      padding: 14px;
+      border-radius: 20px;
+      background: rgba(244,211,94,.11);
+      border: 1px solid rgba(244,211,94,.28);
+      display: grid;
+      gap: 10px;
+    }
+    .guardian-title {
+      color: #f4d35e;
+      font-weight: 900;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      font-size: .8rem;
+    }
+    .dialogue {
+      min-height: 90px;
+      line-height: 1.5;
+      color: #fff7df;
+      white-space: pre-line;
+    }
+    button, .button {
+      border: 0;
+      border-radius: 16px;
+      padding: 13px 15px;
+      font-family: inherit;
+      font-weight: 900;
+      cursor: pointer;
+      text-decoration: none;
+      display: inline-block;
+      text-align: center;
+    }
+    .primary {
+      background: linear-gradient(135deg, #f4d35e, #d7a51e);
+      color: #171006;
+    }
+    .observe {
+      display: none;
+      margin-top: 18px;
+      padding: 16px;
+      border-radius: 22px;
+      background: rgba(68,163,255,.12);
+      border: 1px solid rgba(134,190,255,.34);
+    }
+    .observe.show { display: block; }
+    .choices {
+      display: grid;
+      gap: 10px;
+      margin-top: 12px;
+    }
+    .choice {
+      color: #f8f1dd;
+      background: rgba(255,255,255,.1);
+      border: 1px solid rgba(255,255,255,.16);
+      text-align: left;
+    }
+    @media (max-width: 920px) {
+      .grid { grid-template-columns: 1fr; }
+      .evidence-wall { grid-template-columns: 1fr; }
+      .evidence { height: 160px; }
+    }
+  </style>
+</head>
+<body>
+  <main class="hall">
+    <div class="top">
+      <div class="brand">STEM Nation · Council Hall</div>
+      <div class="badge">First Gathering</div>
+    </div>
+
+    <section class="grid">
+      <div class="panel display">
+        <h1>Something Has Changed</h1>
+        <p>No labels. No conclusions. Only evidence.</p>
+
+        <div class="evidence-wall">
+          <div class="evidence one"></div>
+          <div class="evidence two"></div>
+          <div class="evidence three"></div>
+        </div>
+
+        <div id="observeBox" class="observe">
+          <h2>Before anyone explains it...</h2>
+          <p>What do you notice?</p>
+          <div class="choices">
+            <button class="choice" onclick="notice('The images are different.')">The images are different.</button>
+            <button class="choice" onclick="notice('Something appears or disappears.')">Something appears or disappears.</button>
+            <button class="choice" onclick="notice('The shape of the land or ice changed.')">The shape of the land or ice changed.</button>
+            <button class="choice" onclick="notice('I am not sure yet.')">I am not sure yet.</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="panel activity">
+        <h2>Overheard in the Hall</h2>
+        <div class="feed">
+          <div class="quote">“That does not match.”</div>
+          <div class="quote">“Look at the second image.”</div>
+          <div class="quote">“We need more evidence.”</div>
+        </div>
+
+        <div class="guardian">
+          <div class="guardian-title">Someone approaches</div>
+          <div id="guardianDialogue" class="dialogue"></div>
+          <button id="guardianBtn" class="primary" onclick="nextGuardianLine()">Continue</button>
+        </div>
+
+        <div id="response" class="guardian" style="display:none;">
+          <div class="guardian-title">Guardian</div>
+          <div id="responseText" class="dialogue"></div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <script>
+    const lines = [
+      "Ah. You made it.",
+      "We need another set of eyes.",
+      "Come take a look."
+    ];
+
+    let index = -1;
+    const dialogue = document.getElementById("guardianDialogue");
+    const btn = document.getElementById("guardianBtn");
+
+    function nextGuardianLine() {
+      index++;
+      if (index < lines.length) {
+        dialogue.textContent = lines.slice(0, index + 1).join("\n\n");
+      } else {
+        btn.style.display = "none";
+        document.getElementById("observeBox").classList.add("show");
+        dialogue.textContent += "\n\nBefore I tell you anything...\n\nWhat do you notice?";
+      }
+    }
+
+    function notice(text) {
+      document.getElementById("response").style.display = "grid";
+      document.getElementById("responseText").textContent =
+        "Interesting.\n\n" +
+        "You noticed: " + text + "\n\n" +
+        "The room has been debating these images all morning.\n\n" +
+        "Everyone wants answers. The problem is, we do not know which questions matter most.";
+    }
+
+    nextGuardianLine();
+  </script>
+</body>
+</html>

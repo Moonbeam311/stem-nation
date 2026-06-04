@@ -307,3 +307,12 @@ if __name__ == "__main__":
 @app.route("/academy_arrival")
 def academy_arrival():
     return render_template("academy_arrival.html")
+
+# STEM_NATION_OPENING_FLOW_ROUTES_V1
+@app.route("/academy_arrival")
+def academy_arrival():
+    return render_template("academy_arrival.html")
+
+@app.route("/first_gathering")
+def first_gathering():
+    return render_template("first_gathering.html")

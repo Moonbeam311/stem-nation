@@ -3,13 +3,159 @@
 <head>
   <meta charset="UTF-8">
   <title>STEM Nation | Academy Arrival</title>
+  <style>
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      min-height: 100vh;
+      overflow: hidden;
+      background: linear-gradient(180deg, #07172b, #0d1f35 52%, #06101c);
+      color: #f8f1dd;
+      font-family: Georgia, "Times New Roman", serif;
+    }
+    .scene {
+      position: relative;
+      min-height: 100vh;
+      display: grid;
+      place-items: center;
+      text-align: center;
+      padding: 32px;
+    }
+    .moon {
+      position: absolute;
+      top: 9%;
+      right: 13%;
+      width: 130px;
+      height: 130px;
+      border-radius: 50%;
+      background: radial-gradient(circle, #f4d35e, #9e7b24);
+      box-shadow: 0 0 80px rgba(244,211,94,.3);
+      opacity: .9;
+    }
+    .cloud {
+      position: absolute;
+      width: 260px;
+      height: 80px;
+      border-radius: 999px;
+      background: rgba(255,255,255,.08);
+      animation: drift 34s linear infinite;
+    }
+    .cloud.one { top: 18%; left: -270px; }
+    .cloud.two { top: 30%; left: -360px; animation-duration: 48s; animation-delay: -10s; }
+    @keyframes drift {
+      to { transform: translateX(calc(100vw + 520px)); }
+    }
+    .academy {
+      position: absolute;
+      left: 5%;
+      right: 5%;
+      bottom: 0;
+      height: 42vh;
+      background:
+        linear-gradient(180deg, transparent 0 15%, rgba(244,211,94,.12) 15% 18%, transparent 18%),
+        linear-gradient(180deg, #182d48, #07101d);
+      clip-path: polygon(0 45%, 8% 30%, 16% 42%, 24% 18%, 32% 42%, 42% 28%, 50% 10%, 60% 35%, 70% 22%, 82% 40%, 92% 26%, 100% 44%, 100% 100%, 0 100%);
+      opacity: .95;
+    }
+    .water {
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      height: 90px;
+      background: repeating-linear-gradient(90deg, rgba(120,190,230,.22) 0 16px, transparent 16px 44px), #071827;
+      animation: waterMove 4s linear infinite;
+    }
+    @keyframes waterMove {
+      to { background-position: 120px 0; }
+    }
+    .card {
+      position: relative;
+      z-index: 3;
+      width: min(860px, 92vw);
+      padding: 34px;
+      border-radius: 32px;
+      background: rgba(5,12,24,.72);
+      border: 1px solid rgba(244,211,94,.32);
+      box-shadow: 0 25px 90px rgba(0,0,0,.5);
+    }
+    .kicker {
+      color: #f4d35e;
+      letter-spacing: .18em;
+      text-transform: uppercase;
+      font-weight: 900;
+      font-size: .78rem;
+      margin-bottom: 12px;
+    }
+    h1 {
+      color: #f4d35e;
+      font-size: clamp(2.5rem, 7vw, 5.5rem);
+      line-height: .9;
+      margin: 0 0 18px;
+    }
+    .line {
+      color: rgba(248,241,221,.86);
+      font-size: clamp(1.1rem, 2.3vw, 1.55rem);
+      line-height: 1.5;
+      min-height: 78px;
+      margin-bottom: 24px;
+    }
+    .button {
+      display: inline-block;
+      text-decoration: none;
+      background: linear-gradient(135deg, #f4d35e, #d7a51e);
+      color: #171006;
+      padding: 15px 20px;
+      border-radius: 18px;
+      font-weight: 900;
+    }
+    .hidden { display: none; }
+  </style>
 </head>
-<body style="margin:0;min-height:100vh;display:grid;place-items:center;background:#06111f;color:#f4d35e;font-family:Georgia,serif;">
-  <main style="text-align:center;max-width:760px;padding:32px;">
-    <h1>Academy Arrival</h1>
-    <p style="color:#f8f1dd;">The Academy gathers learners from many places.</p>
-    <p style="color:#f8f1dd;">Today, something unexpected has happened.</p>
-    <a href="/first_gathering" style="display:inline-block;margin-top:18px;padding:14px 18px;border-radius:16px;background:#f4d35e;color:#171006;text-decoration:none;font-weight:bold;">Enter Council Hall</a>
+<body>
+  <main class="scene">
+    <div class="moon"></div>
+    <div class="cloud one"></div>
+    <div class="cloud two"></div>
+    <div class="academy"></div>
+    <div class="water"></div>
+
+    <section class="card">
+      <div class="kicker">Academy Arrival</div>
+      <h1>The Academy</h1>
+      <div id="line" class="line">The Academy gathers learners from many places.</div>
+      <a id="enterBtn" class="button hidden" href="/first_gathering">Enter Council Hall</a>
+    </section>
   </main>
+
+  <script>
+    const lines = [
+      "The Academy gathers learners from many places.",
+      "Some come to ask questions.",
+      "Some come to answer them.",
+      "Today, something unexpected has happened."
+    ];
+
+    let i = 0;
+    const line = document.getElementById("line");
+    const enterBtn = document.getElementById("enterBtn");
+
+    function nextLine() {
+      i++;
+      if (i < lines.length) {
+        line.style.opacity = 0;
+        setTimeout(() => {
+          line.textContent = lines[i];
+          line.style.opacity = 1;
+        }, 350);
+        setTimeout(nextLine, 2400);
+      } else {
+        setTimeout(() => enterBtn.classList.remove("hidden"), 900);
+      }
+    }
+
+    line.style.transition = "opacity .35s ease";
+    setTimeout(nextLine, 2200);
+  </script>
 </body>
 </html>
