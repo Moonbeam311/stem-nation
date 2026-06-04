@@ -295,16 +295,19 @@ def backpack_lab_advanced():
 def river_crossing_lab():
     return render_template("river_crossing_lab.html")
 
+@app.route("/academy_identity")
+@app.route("/student_identity")
+def academy_identity():
+    return render_template("academy_identity.html")
+
 if __name__ == "__main__":
     import os
     port = int(os.environ.get("PORT", 5000))
     app.run(host="0.0.0.0", port=port, debug=True)
-
-
-
-
 # STEM_NATION_ACADEMY_ARRIVAL_ROUTE_V1
 # STEM_NATION_OPENING_FLOW_ROUTES_V1
+
+
 @app.route("/academy_arrival")
 def academy_arrival():
     return render_template("academy_arrival.html")

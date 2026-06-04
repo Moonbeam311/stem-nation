@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Create Academy Identity | STEM Nation</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: Georgia, serif;
+      background: radial-gradient(circle at top, #243b55, #0b1020 70%);
+      color: #f5f1df;
+    }
+
+    .page {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 40px 22px 70px;
+    }
+
+    .eyebrow {
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: #d8b45c;
+      font-size: 0.8rem;
+    }
+
+    h1 {
+      font-size: 2.5rem;
+      margin: 10px 0 8px;
+    }
+
+    .lead {
+      max-width: 780px;
+      line-height: 1.6;
+      color: #ddd6bd;
+      font-size: 1.08rem;
+    }
+
+    .identity-grid {
+      display: grid;
+      grid-template-columns: 1.1fr 0.9fr;
+      gap: 24px;
+      margin-top: 28px;
+    }
+
+    .panel {
+      background: rgba(255,255,255,0.07);
+      border: 1px solid rgba(216,180,92,0.32);
+      border-radius: 20px;
+      padding: 22px;
+      box-shadow: 0 18px 45px rgba(0,0,0,0.28);
+    }
+
+    .portrait-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 14px;
+      margin-top: 16px;
+    }
+
+    .portrait-card {
+      border: 2px solid rgba(255,255,255,0.14);
+      border-radius: 18px;
+      padding: 14px;
+      text-align: center;
+      cursor: pointer;
+      background: rgba(0,0,0,0.2);
+      transition: 0.18s ease;
+    }
+
+    .portrait-card:hover,
+    .portrait-card.selected {
+      border-color: #d8b45c;
+      transform: translateY(-2px);
+      background: rgba(216,180,92,0.12);
+    }
+
+    .portrait-face {
+      height: 92px;
+      border-radius: 16px;
+      display: grid;
+      place-items: center;
+      font-size: 3.5rem;
+      background: linear-gradient(145deg, rgba(255,255,255,0.16), rgba(255,255,255,0.04));
+      margin-bottom: 10px;
+    }
+
+    label {
+      display: block;
+      margin-top: 16px;
+      color: #f3df9b;
+      font-weight: bold;
+    }
+
+    input, select, textarea {
+      width: 100%;
+      box-sizing: border-box;
+      margin-top: 7px;
+      border-radius: 12px;
+      border: 1px solid rgba(255,255,255,0.22);
+      background: rgba(0,0,0,0.28);
+      color: #fff8dc;
+      padding: 12px;
+      font-family: inherit;
+      font-size: 1rem;
+    }
+
+    textarea {
+      min-height: 88px;
+      resize: vertical;
+    }
+
+    .preview-card {
+      text-align: center;
+      position: sticky;
+      top: 20px;
+    }
+
+    .preview-face {
+      width: 170px;
+      height: 170px;
+      border-radius: 28px;
+      margin: 8px auto 18px;
+      display: grid;
+      place-items: center;
+      font-size: 5rem;
+      background: linear-gradient(145deg, rgba(216,180,92,0.26), rgba(255,255,255,0.06));
+      border: 2px solid rgba(216,180,92,0.45);
+      overflow: hidden;
+    }
+
+    .preview-face img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .rank {
+      display: inline-block;
+      margin-top: 8px;
+      padding: 8px 14px;
+      border-radius: 999px;
+      background: rgba(216,180,92,0.16);
+      border: 1px solid rgba(216,180,92,0.36);
+      color: #f6d978;
+      font-weight: bold;
+    }
+
+    .actions {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+      margin-top: 22px;
+    }
+
+    .preview-actions {
+      justify-content: center;
+      margin-top: 18px;
+    }
+
+    button, a.button {
+      border: 0;
+      border-radius: 999px;
+      padding: 13px 20px;
+      font-weight: bold;
+      cursor: pointer;
+      text-decoration: none;
+      font-family: inherit;
+    }
+
+    .primary {
+      background: #d8b45c;
+      color: #17140b;
+    }
+
+    .secondary {
+      background: rgba(255,255,255,0.1);
+      color: #f5f1df;
+      border: 1px solid rgba(255,255,255,0.18);
+    }
+
+    .note {
+      margin-top: 14px;
+      color: #cfc7a8;
+      font-size: 0.95rem;
+      line-height: 1.45;
+    }
+
+    .status {
+      margin-top: 14px;
+      color: #f6d978;
+      min-height: 22px;
+    }
+
+    @media (max-width: 850px) {
+      .identity-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .preview-card {
+        position: static;
+      }
+
+      .portrait-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+    }
+  </style>
+</head>
+<body>
+  <main class="page">
+    <div class="eyebrow">STEM Nation Academy</div>
+    <h1>Create Your Academy Identity</h1>
+    <p class="lead">
+      You are not choosing a council role. Scout, Mapkeeper, Builder, Healer, and Guardian are fixed Academy advisors.
+      You are arriving as a New Arrival — an Academy Learner. Leadership will be earned through observation,
+      questions, evidence, and decisions.
+    </p>
+
+    <section class="identity-grid">
+      <div class="panel">
+        <h2>Choose how you appear in the Academy</h2>
+
+        <label>Academy Name</label>
+        <input id="studentName" placeholder="Example: Luna, Kai, Amara, River">
+
+        <label>Choose a pre-made student portrait</label>
+        <div class="portrait-grid" id="portraitGrid">
+          <div class="portrait-card selected" data-face="🧑🏽‍🎓"><div class="portrait-face">🧑🏽‍🎓</div><strong>Scholar</strong></div>
+          <div class="portrait-card" data-face="🧒🏾"><div class="portrait-face">🧒🏾</div><strong>Observer</strong></div>
+          <div class="portrait-card" data-face="👧🏽"><div class="portrait-face">👧🏽</div><strong>Questioner</strong></div>
+          <div class="portrait-card" data-face="🧑🏾"><div class="portrait-face">🧑🏾</div><strong>Explorer</strong></div>
+          <div class="portrait-card" data-face="👦🏽"><div class="portrait-face">👦🏽</div><strong>Apprentice</strong></div>
+          <div class="portrait-card" data-face="🧕🏽"><div class="portrait-face">🧕🏽</div><strong>Archivist</strong></div>
+        </div>
+
+        <label>Or upload a photo</label>
+        <input id="photoUpload" type="file" accept="image/*">
+
+
+<label>What brings you to the Academy?</label>
+<select id="academyMotivation">
+  <option>I like solving mysteries.</option>
+  <option>I like building things.</option>
+  <option>I like helping people.</option>
+  <option>I like discovering new ideas.</option>
+  <option selected>I am not sure yet.</option>
+</select>
+
+
+        
+
+        
+
+        
+<p class="note">
+
+</p>
+
+
+
+        <div class="status" id="status"></div>
+      </div>
+
+      <aside class="panel preview-card">
+        <h2>Academy Identity</h2>
+        <div class="preview-face" id="previewFace">🧑🏽‍🎓</div>
+        <h3 id="previewName">New Arrival</h3>
+        <div class="rank">Academy Learner</div>
+        <p class="note" id="previewStyle">Reason for Arrival: I am not sure yet.</p>
+        <p class="note">
+          Council advisors will appear later as guides. They are not student avatars.
+        </p>
+
+<div class="actions preview-actions">
+  <button class="primary" id="saveIdentityBtn">Begin Your Journey</button>
+</div>
+
+      </aside>
+    </section>
+  </main>
+
+  <script>
+    const STORAGE_KEY = "stemNationStudentIdentity";
+
+    const studentName = document.getElementById("studentName");
+    const learningStyle = document.getElementById("learningStyle");
+    const identityNote = document.getElementById("identityNote");
+    const previewFace = document.getElementById("previewFace");
+    const previewName = document.getElementById("previewName");
+    const previewStyle = document.getElementById("previewStyle");
+    const status = document.getElementById("status");
+    const photoUpload = document.getElementById("photoUpload");
+
+    let selectedFace = "🧑🏽‍🎓";
+    let uploadedPhoto = "";
+
+    function updatePreview() {
+      previewName.textContent = studentName.value.trim() || "New Arrival";
+      previewStyle.textContent = learningStyle.value;
+      if (!uploadedPhoto) {
+        previewFace.textContent = selectedFace;
+      }
+    }
+
+    document.querySelectorAll(".portrait-card").forEach(card => {
+      card.addEventListener("click", () => {
+        document.querySelectorAll(".portrait-card").forEach(c => c.classList.remove("selected"));
+        card.classList.add("selected");
+        selectedFace = card.dataset.face;
+        uploadedPhoto = "";
+        previewFace.innerHTML = selectedFace;
+        photoUpload.value = "";
+        updatePreview();
+      });
+    });
+
+    photoUpload.addEventListener("change", event => {
+      const file = event.target.files[0];
+      if (!file) return;
+
+      const reader = new FileReader();
+      reader.onload = e => {
+        uploadedPhoto = e.target.result;
+        previewFace.innerHTML = "";
+        const img = document.createElement("img");
+        img.src = uploadedPhoto;
+        img.alt = "Uploaded student identity";
+        previewFace.appendChild(img);
+      };
+      reader.readAsDataURL(file);
+    });
+
+    [studentName, learningStyle, identityNote].forEach(el => {
+      el.addEventListener("input", updatePreview);
+      el.addEventListener("change", updatePreview);
+    });
+
+    document.getElementById("saveIdentityBtn").addEventListener("click", () => {
+      const identity = {
+        name: studentName.value.trim() || "New Arrival",
+        status: "Academy Learner",
+        leadershipStage: "New Arrival",
+        portraitType: uploadedPhoto ? "uploaded" : "premade",
+        portrait: uploadedPhoto || selectedFace,
+        learningStyle: learningStyle.value,
+        note: identityNote.value.trim(),
+        savedAt: new Date().toISOString()
+      };
+
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(identity));
+      status.textContent = "Identity saved. Entering Academy...";
+      setTimeout(() => {
+        window.location.href = "/academy_arrival";
+      }, 500);
+    });
+
+    try {
+      const saved = JSON.parse(localStorage.getItem(STORAGE_KEY) || "null");
+      if (saved) {
+        studentName.value = saved.name || "";
+        learningStyle.value = saved.learningStyle || learningStyle.value;
+        identityNote.value = saved.note || "";
+        if (saved.portraitType === "uploaded" && saved.portrait) {
+          uploadedPhoto = saved.portrait;
+          previewFace.innerHTML = "";
+          const img = document.createElement("img");
+          img.src = uploadedPhoto;
+          img.alt = "Saved student identity";
+          previewFace.appendChild(img);
+        } else if (saved.portrait) {
+          selectedFace = saved.portrait;
+          previewFace.textContent = selectedFace;
+        }
+        updatePreview();
+      }
+    } catch (err) {}
+
+    updatePreview();
+  </script>
+</body>
+</html>
