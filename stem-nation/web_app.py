@@ -303,13 +303,9 @@ def academy_opening():
 def academy_identity():
     return render_template("academy_identity.html")
 
-if __name__ == "__main__":
-    import os
-    port = int(os.environ.get("PORT", 5000))
-    app.run(host="0.0.0.0", port=port, debug=True)
-# STEM_NATION_ACADEMY_ARRIVAL_ROUTE_V1
-# STEM_NATION_OPENING_FLOW_ROUTES_V1
-
+@app.route("/academy_cinematic")
+def academy_cinematic():
+    return render_template("academy_cinematic.html")
 
 @app.route("/academy_arrival")
 def academy_arrival():
@@ -318,3 +314,10 @@ def academy_arrival():
 @app.route("/first_gathering")
 def first_gathering():
     return render_template("first_gathering.html")
+
+if __name__ == "__main__":
+    import os
+    port = int(os.environ.get("PORT", 5000))
+    app.run(host="0.0.0.0", port=port, debug=True)
+# STEM_NATION_ACADEMY_ARRIVAL_ROUTE_V1
+# STEM_NATION_OPENING_FLOW_ROUTES_V1
