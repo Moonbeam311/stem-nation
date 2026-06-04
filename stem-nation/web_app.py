@@ -234,6 +234,11 @@ def academy_transition():
 def avatar_select():
     return render_template("avatar_select.html")
 
+# STEM_NATION_AVATAR_CONFIRM_ROUTE_V1
+@app.route("/avatar_confirm")
+def avatar_confirm():
+    return render_template("avatar_confirm.html")
+
 @app.route("/mission_intro")
 def mission_intro():
     return render_template("mission_intro.html")
@@ -296,3 +301,9 @@ if __name__ == "__main__":
     app.run(host="0.0.0.0", port=port, debug=True)
 
 
+
+
+# STEM_NATION_ACADEMY_ARRIVAL_ROUTE_V1
+@app.route("/academy_arrival")
+def academy_arrival():
+    return render_template("academy_arrival.html")

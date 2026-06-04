@@ -87,7 +87,7 @@
       if(!selected){ document.getElementById("status").textContent = "Choose an avatar first."; return; }
       const name = document.getElementById("leaderName").value.trim() || selected.role;
       localStorage.setItem("stemNationAvatar", JSON.stringify({...selected, name, portrait: selected.portrait, fallback: selected.fallback}));
-      window.location.href = "/mission_intro";
+      window.location.href = "/avatar_confirm";
     }
     renderAvatars();
   </script>
