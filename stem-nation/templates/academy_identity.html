@@ -284,8 +284,7 @@
     const STORAGE_KEY = "stemNationStudentIdentity";
 
     const studentName = document.getElementById("studentName");
-    const learningStyle = document.getElementById("learningStyle");
-    const identityNote = document.getElementById("identityNote");
+    const academyMotivation = document.getElementById("academyMotivation");
     const previewFace = document.getElementById("previewFace");
     const previewName = document.getElementById("previewName");
     const previewStyle = document.getElementById("previewStyle");
@@ -297,7 +296,7 @@
 
     function updatePreview() {
       previewName.textContent = studentName.value.trim() || "New Arrival";
-      previewStyle.textContent = learningStyle.value;
+      previewStyle.textContent = "Reason for Arrival: " + (academyMotivation?.value || "I am not sure yet.");
       if (!uploadedPhoto) {
         previewFace.textContent = selectedFace;
       }
@@ -331,7 +330,8 @@
       reader.readAsDataURL(file);
     });
 
-    [studentName, learningStyle, identityNote].forEach(el => {
+    [studentName, academyMotivation].forEach(el => {
+      if (!el) return;
       el.addEventListener("input", updatePreview);
       el.addEventListener("change", updatePreview);
     });
@@ -343,15 +343,15 @@
         leadershipStage: "New Arrival",
         portraitType: uploadedPhoto ? "uploaded" : "premade",
         portrait: uploadedPhoto || selectedFace,
-        learningStyle: learningStyle.value,
-        note: identityNote.value.trim(),
+        academyMotivation: academyMotivation?.value || "I am not sure yet.",
         savedAt: new Date().toISOString()
       };
 
       localStorage.setItem(STORAGE_KEY, JSON.stringify(identity));
-      status.textContent = "Identity saved. Entering Academy...";
+      status.textContent = "Identity saved. Beginning your journey...";
+      console.log("STEM Nation identity saved. Routing to /academy_cinematic", identity);
       setTimeout(() => {
-        window.location.href = "/academy_cinematic";
+        window.location.assign("/academy_cinematic");
       }, 500);
     });
 
@@ -359,8 +359,9 @@
       const saved = JSON.parse(localStorage.getItem(STORAGE_KEY) || "null");
       if (saved) {
         studentName.value = saved.name || "";
-        learningStyle.value = saved.learningStyle || learningStyle.value;
-        identityNote.value = saved.note || "";
+        if (academyMotivation && saved.academyMotivation) {
+          academyMotivation.value = saved.academyMotivation;
+        }
         if (saved.portraitType === "uploaded" && saved.portrait) {
           uploadedPhoto = saved.portrait;
           previewFace.innerHTML = "";
