@@ -294,6 +294,9 @@ def backpack_lab_advanced():
 @app.route("/river-crossing-lab")
 def river_crossing_lab():
     return render_template("river_crossing_lab.html")
+@app.route("/academy_opening")
+def academy_opening():
+    return render_template("academy_opening.html")
 
 @app.route("/academy_identity")
 @app.route("/student_identity")
