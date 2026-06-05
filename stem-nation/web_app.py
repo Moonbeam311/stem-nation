@@ -339,6 +339,13 @@ def academy_arrival():
 def first_gathering():
     return render_template("first_gathering.html")
 
+
+
+@app.route("/student_command_entry")
+def student_command_entry():
+    return render_template("student_command_entry.html")
+
+
 if __name__ == "__main__":
     import os
     port = int(os.environ.get("PORT", 5000))
