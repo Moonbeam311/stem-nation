@@ -3,147 +3,292 @@
 <head>
   <meta charset="UTF-8">
   <title>Create Academy Identity | STEM Nation</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
   <style>
+    /* CI-4B_SAFE_APPROVED_IDENTITY_ROSTER */
+    * { box-sizing: border-box; }
+
     body {
       margin: 0;
-      font-family: Georgia, serif;
-      background: radial-gradient(circle at top, #243b55, #0b1020 70%);
-      color: #f5f1df;
+      min-height: 100vh;
+      font-family: Georgia, "Times New Roman", serif;
+      color: #f8f0d5;
+      background:
+        radial-gradient(circle at 18% 12%, rgba(244, 211, 94, 0.18), transparent 30%),
+        radial-gradient(circle at 82% 16%, rgba(125, 211, 252, 0.14), transparent 28%),
+        linear-gradient(135deg, #061826 0%, #07131d 58%, #03070d 100%);
+      overflow-x: hidden;
+    }
+
+    .atmosphere {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      background:
+        linear-gradient(115deg, rgba(255,255,255,0.05), transparent 20%),
+        radial-gradient(circle at 28% 72%, rgba(244,211,94,0.08), transparent 28%),
+        radial-gradient(circle at 75% 72%, rgba(76,201,240,0.09), transparent 24%);
+      opacity: 0.82;
     }
 
     .page {
-      max-width: 1100px;
+      position: relative;
+      z-index: 1;
+      max-width: 1220px;
       margin: 0 auto;
-      padding: 40px 22px 70px;
+      padding: 42px 22px 52px;
     }
 
-    .eyebrow {
-      letter-spacing: 0.12em;
+    .academy-shell {
+      border: 1px solid rgba(244,211,94,0.24);
+      border-radius: 34px;
+      background: rgba(5,18,29,0.82);
+      box-shadow: 0 28px 90px rgba(0,0,0,0.44);
+      padding: 30px;
+      backdrop-filter: blur(12px);
+    }
+
+    .topbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 14px;
+      flex-wrap: wrap;
+      margin-bottom: 24px;
+    }
+
+    .brand {
+      color: #f4d35e;
       text-transform: uppercase;
-      color: #d8b45c;
-      font-size: 0.8rem;
+      letter-spacing: .16em;
+      font-size: .78rem;
+      font-weight: 900;
     }
 
-    h1 {
-      font-size: 2.5rem;
-      margin: 10px 0 8px;
+    .rank-pill {
+      border: 1px solid rgba(125,211,252,.28);
+      background: rgba(125,211,252,.08);
+      color: #dff7ff;
+      border-radius: 999px;
+      padding: 9px 13px;
+      font-size: .86rem;
+      font-weight: 800;
     }
 
-    .lead {
-      max-width: 780px;
-      line-height: 1.6;
-      color: #ddd6bd;
-      font-size: 1.08rem;
-    }
-
-    .identity-grid {
+    .hero {
       display: grid;
-      grid-template-columns: 1.1fr 0.9fr;
+      grid-template-columns: minmax(0, 1fr) 350px;
       gap: 24px;
-      margin-top: 28px;
+      align-items: stretch;
     }
 
     .panel {
-      background: rgba(255,255,255,0.07);
-      border: 1px solid rgba(216,180,92,0.32);
-      border-radius: 20px;
-      padding: 22px;
-      box-shadow: 0 18px 45px rgba(0,0,0,0.28);
+      border: 1px solid rgba(255,255,255,.1);
+      border-radius: 28px;
+      background:
+        radial-gradient(circle at top left, rgba(244,211,94,.11), transparent 34%),
+        rgba(255,255,255,.045);
+      padding: 24px;
     }
 
-    .portrait-grid {
-      display: grid;
-      grid-template-columns: repeat(3, minmax(0, 1fr));
-      gap: 14px;
-      margin-top: 16px;
+    .kicker {
+      color: #7dd3fc;
+      text-transform: uppercase;
+      letter-spacing: .14em;
+      font-size: .75rem;
+      font-weight: 900;
+      margin-bottom: 8px;
     }
 
-    .portrait-card {
-      border: 2px solid rgba(255,255,255,0.14);
-      border-radius: 18px;
-      padding: 14px;
-      text-align: center;
-      cursor: pointer;
-      background: rgba(0,0,0,0.2);
-      transition: 0.18s ease;
+    h1 {
+      margin: 0;
+      color: #f4d35e;
+      font-size: clamp(2.3rem, 6vw, 5rem);
+      line-height: .93;
+      letter-spacing: -.055em;
     }
 
-    .portrait-card:hover,
-    .portrait-card.selected {
-      border-color: #d8b45c;
-      transform: translateY(-2px);
-      background: rgba(216,180,92,0.12);
-    }
-
-    .portrait-face {
-      height: 92px;
-      border-radius: 16px;
-      display: grid;
-      place-items: center;
-      font-size: 3.5rem;
-      background: linear-gradient(145deg, rgba(255,255,255,0.16), rgba(255,255,255,0.04));
-      margin-bottom: 10px;
+    .lead {
+      max-width: 760px;
+      color: rgba(248,240,213,.78);
+      font-size: 1.06rem;
+      line-height: 1.65;
+      margin: 16px 0 0;
     }
 
     label {
       display: block;
-      margin-top: 16px;
-      color: #f3df9b;
-      font-weight: bold;
+      color: rgba(248,240,213,.9);
+      font-size: .92rem;
+      font-weight: 900;
+      letter-spacing: .03em;
+      margin: 22px 0 8px;
     }
 
-    input, select, textarea {
+    input {
       width: 100%;
-      box-sizing: border-box;
-      margin-top: 7px;
-      border-radius: 12px;
-      border: 1px solid rgba(255,255,255,0.22);
-      background: rgba(0,0,0,0.28);
-      color: #fff8dc;
-      padding: 12px;
+      border: 1px solid rgba(244,211,94,.24);
+      border-radius: 18px;
+      background: rgba(0,0,0,.25);
+      color: #f8f0d5;
+      padding: 14px 15px;
       font-family: inherit;
       font-size: 1rem;
+      outline: none;
     }
 
-    textarea {
-      min-height: 88px;
-      resize: vertical;
+    input:focus {
+      border-color: rgba(244,211,94,.62);
+      box-shadow: 0 0 0 3px rgba(244,211,94,.12);
     }
 
-    .preview-card {
-      text-align: center;
-      position: sticky;
-      top: 20px;
-    }
-
-    .preview-face {
-      width: 170px;
-      height: 170px;
-      border-radius: 28px;
-      margin: 8px auto 18px;
+    .avatar-grid {
       display: grid;
-      place-items: center;
-      font-size: 5rem;
-      background: linear-gradient(145deg, rgba(216,180,92,0.26), rgba(255,255,255,0.06));
-      border: 2px solid rgba(216,180,92,0.45);
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 13px;
+      margin-top: 8px;
+    }
+
+    .avatar-card {
+      border: 1px solid rgba(255,255,255,.12);
+      border-radius: 22px;
+      background: rgba(255,255,255,.055);
+      color: #f8f0d5;
+      padding: 14px;
+      cursor: pointer;
+      min-height: 188px;
+      transition: transform .18s ease, border-color .18s ease, background .18s ease, box-shadow .18s ease;
+      text-align: left;
+      position: relative;
       overflow: hidden;
     }
 
-    .preview-face img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
+    .avatar-card::after {
+      content: "";
+      position: absolute;
+      right: -34px;
+      bottom: -76px;
+      width: 140px;
+      height: 140px;
+      border-radius: 999px;
+      background: rgba(244,211,94,.08);
     }
 
-    .rank {
-      display: inline-block;
-      margin-top: 8px;
-      padding: 8px 14px;
-      border-radius: 999px;
-      background: rgba(216,180,92,0.16);
-      border: 1px solid rgba(216,180,92,0.36);
-      color: #f6d978;
-      font-weight: bold;
+    .avatar-card:hover,
+    .avatar-card.selected {
+      transform: translateY(-4px);
+      border-color: rgba(244,211,94,.62);
+      background: rgba(244,211,94,.08);
+      box-shadow: 0 18px 45px rgba(0,0,0,.26);
+    }
+
+    .avatar-symbol {
+      width: 74px;
+      height: 88px;
+      border-radius: 20px;
+      border: 1px solid rgba(244,211,94,.3);
+      background: rgba(0,0,0,.22);
+      display: grid;
+      place-items: center;
+      margin-bottom: 10px;
+      position: relative;
+      z-index: 1;
+      font-size: 2.25rem;
+    }
+
+    .avatar-role {
+      color: #f4d35e;
+      font-size: 1.08rem;
+      font-weight: 900;
+      position: relative;
+      z-index: 1;
+    }
+
+    .avatar-title {
+      color: rgba(248,240,213,.72);
+      font-size: .86rem;
+      margin-top: 3px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .avatar-motto {
+      color: rgba(248,240,213,.78);
+      font-size: .82rem;
+      line-height: 1.38;
+      margin-top: 9px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .preview-card {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .preview-symbol {
+      width: 150px;
+      height: 180px;
+      border-radius: 34px;
+      border: 1px solid rgba(244,211,94,.42);
+      background: rgba(244,211,94,.08);
+      display: grid;
+      place-items: center;
+      margin: 8px auto 18px;
+      font-size: 4.4rem;
+      box-shadow: 0 18px 52px rgba(0,0,0,.28);
+    }
+
+    .preview-name {
+      text-align: center;
+      color: #f4d35e;
+      font-size: 1.55rem;
+      font-weight: 900;
+      margin-bottom: 6px;
+    }
+
+    .preview-rank {
+      text-align: center;
+      color: #7dd3fc;
+      text-transform: uppercase;
+      letter-spacing: .12em;
+      font-size: .76rem;
+      font-weight: 900;
+      margin-bottom: 14px;
+    }
+
+    .preview-role {
+      border: 1px solid rgba(255,255,255,.11);
+      border-radius: 18px;
+      background: rgba(0,0,0,.18);
+      padding: 14px;
+      color: rgba(248,240,213,.82);
+      line-height: 1.45;
+      min-height: 112px;
+    }
+
+    .preview-role strong {
+      color: #f4d35e;
+      display: block;
+      margin-bottom: 5px;
+    }
+
+    .identity-storage-notice {
+      display: none;
+      margin-top: 14px;
+      border: 1px solid rgba(125,211,252,.26);
+      background: rgba(125,211,252,.08);
+      color: rgba(248,240,213,.8);
+      border-radius: 16px;
+      padding: 12px 14px;
+      font-size: .9rem;
+      line-height: 1.45;
+    }
+
+    .identity-storage-notice.show {
+      display: block;
     }
 
     .actions {
@@ -153,327 +298,287 @@
       margin-top: 22px;
     }
 
-    .preview-actions {
-      justify-content: center;
-      margin-top: 18px;
-    }
-
-    button, a.button {
-      border: 0;
+    button,
+    .button {
+      border: 1px solid rgba(244,211,94,.35);
       border-radius: 999px;
-      padding: 13px 20px;
-      font-weight: bold;
+      padding: 13px 18px;
+      font-family: inherit;
+      font-weight: 900;
       cursor: pointer;
       text-decoration: none;
-      font-family: inherit;
     }
 
     .primary {
-      background: #d8b45c;
-      color: #17140b;
+      background: linear-gradient(135deg, #f4d35e, #f7b955);
+      color: #07131d;
+      box-shadow: 0 14px 35px rgba(244,211,94,.16);
     }
 
     .secondary {
-      background: rgba(255,255,255,0.1);
-      color: #f5f1df;
-      border: 1px solid rgba(255,255,255,0.18);
-    }
-
-    .note {
-      margin-top: 14px;
-      color: #cfc7a8;
-      font-size: 0.95rem;
-      line-height: 1.45;
+      background: rgba(255,255,255,.06);
+      color: #f8f0d5;
     }
 
     .status {
       margin-top: 14px;
-      color: #f6d978;
-      min-height: 22px;
+      color: rgba(248,240,213,.78);
+      min-height: 24px;
     }
 
-    @media (max-width: 850px) {
-      .identity-grid {
-        grid-template-columns: 1fr;
-      }
-
-      .preview-card {
-        position: static;
-      }
-
-      .portrait-grid {
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-      }
+    .note {
+      color: rgba(248,240,213,.66);
+      font-size: .9rem;
+      line-height: 1.45;
+      margin-top: 16px;
     }
-  
-/* CI-3A-1_IDENTITY_CARRYOVER_CLEANUP */
-.identity-storage-notice {
-  margin-top: 12px;
-  padding: 12px 14px;
-  border: 1px solid rgba(244,211,94,.30);
-  border-radius: 16px;
-  background: rgba(244,211,94,.08);
-  color: #d8cfb0;
-  line-height: 1.45;
-  font-size: .94rem;
-  display: none;
-}
 
-.identity-storage-notice.show {
-  display: block;
-}
+    @media (max-width: 1050px) {
+      .hero { grid-template-columns: 1fr; }
+      .avatar-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    }
 
-.identity-storage-notice strong {
-  color: #f4d35e;
-}
-
-.upload-note {
-  margin-top: 8px;
-  color: #d8cfb0;
-  font-size: .92rem;
-  line-height: 1.4;
-}
-
-.generated-avatar-note {
-  margin-top: 12px;
-  padding: 12px 14px;
-  border: 1px dashed rgba(244,211,94,.34);
-  border-radius: 16px;
-  color: #d8cfb0;
-  background: rgba(0,0,0,.18);
-  line-height: 1.45;
-  font-size: .94rem;
-}
-
-.generated-avatar-note strong {
-  color: #f4d35e;
-}
-
-</style>
+    @media (max-width: 620px) {
+      .academy-shell { padding: 20px; }
+      .avatar-grid { grid-template-columns: 1fr; }
+      .preview-symbol { width: 126px; height: 150px; }
+    }
+  </style>
 </head>
+
 <body>
+  <div class="atmosphere"></div>
+
   <main class="page">
-    <div class="eyebrow">STEM Nation Academy</div>
-    <h1>Create Your Academy Identity</h1>
-    <p class="lead">
-      You are not choosing a council role. Scout, Mapkeeper, Builder, Healer, and Guardian are fixed Academy advisors.
-      You are arriving as a New Arrival — an Academy Learner. Leadership will be earned through observation,
-      questions, evidence, and decisions.
-    </p>
-
-    <section class="identity-grid">
-      <div class="panel">
-        <h2>Choose how you appear in the Academy</h2>
-
-        <label>Academy Name</label>
-        <input id="studentName" placeholder="Example: Luna, Kai, Amara, River">
-
-        <label>Choose a pre-made student portrait</label>
-        <div class="portrait-grid" id="portraitGrid">
-          <div class="portrait-card selected" data-face="🧑🏽‍🎓"><div class="portrait-face">🧑🏽‍🎓</div><strong>Scholar</strong></div>
-          <div class="portrait-card" data-face="🧒🏾"><div class="portrait-face">🧒🏾</div><strong>Observer</strong></div>
-          <div class="portrait-card" data-face="👧🏽"><div class="portrait-face">👧🏽</div><strong>Questioner</strong></div>
-          <div class="portrait-card" data-face="🧑🏾"><div class="portrait-face">🧑🏾</div><strong>Explorer</strong></div>
-          <div class="portrait-card" data-face="👦🏽"><div class="portrait-face">👦🏽</div><strong>Apprentice</strong></div>
-          <div class="portrait-card" data-face="🧕🏽"><div class="portrait-face">🧕🏽</div><strong>Archivist</strong></div>
-        </div>
-
-        <label>Or upload a photo</label>
-        <input id="photoUpload" type="file" accept="image/*">
-        <div class="generated-avatar-note">
-          <strong>Generated avatar is not active yet.</strong><br>
-          For now, you may choose a portrait or upload a photo. A computer-generated avatar workflow will be added in a later build.
-        </div>
-
-        <div class="upload-note">
-          Uploaded photos are temporary browser test data. They can be cleared from this page or from /dev_reset.
-        </div>
-
-
-<label>What brings you to the Academy?</label>
-<select id="academyMotivation">
-  <option>I like solving mysteries.</option>
-  <option>I like building things.</option>
-  <option>I like helping people.</option>
-  <option>I like discovering new ideas.</option>
-  <option selected>I am not sure yet.</option>
-</select>
-
-
-        
-
-        
-
-        
-<p class="note">
-
-</p>
-
-
-
-        <div class="status" id="status"></div>
+    <section class="academy-shell">
+      <div class="topbar">
+        <div class="brand">STEM Nation Academy</div>
+        <div class="rank-pill">New Arrival · Academy Learner</div>
       </div>
 
-      <aside class="panel preview-card">
-        <h2>Academy Identity</h2>
-        <div class="preview-face" id="previewFace">🧑🏽‍🎓</div>
-        <h3 id="previewName">New Arrival</h3>
-        <div class="rank">Academy Learner</div>
-        <p class="note" id="previewStyle">Reason for Arrival: I am not sure yet.</p>
+      <section class="hero">
+        <article class="panel">
+          <div class="kicker">Identity Chamber</div>
+          <h1>Create Your Academy Identity</h1>
+          <p class="lead">
+            Before the Council opens the first inquiry, choose the identity that will travel with you.
+            This does not lock your destiny. It gives your first mission a face, a voice, and a starting signal.
+          </p>
 
-        <div class="identity-storage-notice" id="identityStorageNotice">
-          <strong>Saved browser identity loaded.</strong><br>
-          This name or uploaded image is only saved in this browser for testing and student flow continuity.
-          Use “Clear Current Identity” to start fresh.
-        </div>
+          <label for="studentName">Academy Name</label>
+          <input id="studentName" autocomplete="off" placeholder="Enter your first name or Academy name">
 
-        <p class="note">
-          Council advisors will appear later as guides. They are not student avatars.
-        </p>
+          <label>Choose your first Academy avatar</label>
+          <div class="avatar-grid" id="avatarGrid"></div>
 
-<div class="actions preview-actions">
-  <button class="primary" id="saveIdentityBtn">Begin Your Journey</button>
+          <div class="actions">
+            <button class="primary" id="saveIdentityBtn" type="button">Lock Identity & Begin Journey</button>
             <button class="secondary" id="clearIdentityBtn" type="button">Clear Current Identity</button>
-</div>
+          </div>
 
-      </aside>
+          <div class="status" id="status"></div>
+
+          <p class="note">
+            Avatar portraits will continue improving as the Academy grows. For now, choose the role signal that best fits how you want to enter the first mission.
+          </p>
+        </article>
+
+        <aside class="panel preview-card">
+          <div>
+            <div class="kicker">Academy Profile Preview</div>
+            <div class="preview-symbol" id="previewSymbol">🧭</div>
+            <div class="preview-name" id="previewName">New Arrival</div>
+            <div class="preview-rank">Academy Learner</div>
+            <div class="preview-role" id="previewRole">
+              <strong>Explorer · First Path Finder</strong>
+              I enter the unknown and look for what others miss.
+            </div>
+
+            <div class="identity-storage-notice" id="identityStorageNotice">
+              <strong>Saved identity detected.</strong><br>
+              Your Academy profile was loaded from this browser. You can keep it or clear it.
+            </div>
+          </div>
+        </aside>
+      </section>
     </section>
   </main>
 
   <script>
+    // CI-4B_SAFE_APPROVED_IDENTITY_ROSTER
     const STORAGE_KEY = "stemNationStudentIdentity";
+    const AVATAR_KEY = "stemNationAvatar";
 
+    const avatars = [
+      {
+        role: "Explorer",
+        title: "First Path Finder",
+        symbol: "🧭",
+        motto: "I enter the unknown and look for what others miss."
+      },
+      {
+        role: "Apprentice",
+        title: "Learner in Motion",
+        symbol: "🧑🏽‍🎓",
+        motto: "I learn by trying, listening, and improving."
+      },
+      {
+        role: "Archivist",
+        title: "Keeper of Records",
+        symbol: "📜",
+        motto: "I preserve evidence so the mission is not forgotten."
+      },
+      {
+        role: "Scout",
+        title: "Discoverer",
+        symbol: "🔭",
+        motto: "I search the land for clues, patterns, and danger."
+      },
+      {
+        role: "Mapkeeper",
+        title: "Reader of Paths",
+        symbol: "🗺️",
+        motto: "I connect places, movement, routes, and risk."
+      },
+      {
+        role: "Builder",
+        title: "Creator of Plans",
+        symbol: "🛠️",
+        motto: "I turn ideas into structures, systems, and action."
+      },
+      {
+        role: "Healer",
+        title: "Restorer",
+        symbol: "🌿",
+        motto: "I protect people, repair harm, and restore balance."
+      },
+      {
+        role: "Guardian",
+        title: "Protector",
+        symbol: "🛡️",
+        motto: "I watch for threats and defend what must survive."
+      }
+    ];
+
+    let selectedAvatar = avatars[0];
+
+    const avatarGrid = document.getElementById("avatarGrid");
     const studentName = document.getElementById("studentName");
-    const academyMotivation = document.getElementById("academyMotivation");
-    const previewFace = document.getElementById("previewFace");
     const previewName = document.getElementById("previewName");
-    const previewStyle = document.getElementById("previewStyle");
-    const status = document.getElementById("status");
-    const photoUpload = document.getElementById("photoUpload");
-    const clearIdentityBtn = document.getElementById("clearIdentityBtn");
+    const previewSymbol = document.getElementById("previewSymbol");
+    const previewRole = document.getElementById("previewRole");
+    const statusBox = document.getElementById("status");
     const identityStorageNotice = document.getElementById("identityStorageNotice");
 
-    let selectedFace = "🧑🏽‍🎓";
-    let uploadedPhoto = "";
+    function safeName() {
+      return studentName.value.trim() || "New Arrival";
+    }
+
+    function renderAvatarGrid() {
+      avatarGrid.innerHTML = avatars.map((avatar, index) => `
+        <button
+          type="button"
+          class="avatar-card ${avatar.role === selectedAvatar.role ? "selected" : ""}"
+          data-avatar-index="${index}"
+          aria-label="Choose ${avatar.role} avatar"
+        >
+          <div class="avatar-symbol">${avatar.symbol}</div>
+          <div class="avatar-role">${avatar.role}</div>
+          <div class="avatar-title">${avatar.title}</div>
+          <div class="avatar-motto">“${avatar.motto}”</div>
+        </button>
+      `).join("");
+
+      document.querySelectorAll(".avatar-card").forEach(card => {
+        card.addEventListener("click", () => {
+          const index = Number(card.dataset.avatarIndex);
+          selectedAvatar = avatars[index] || avatars[0];
+          renderAvatarGrid();
+          updatePreview();
+        });
+      });
+    }
 
     function updatePreview() {
-      previewName.textContent = studentName.value.trim() || "New Arrival";
-      previewStyle.textContent = "Reason for Arrival: " + (academyMotivation?.value || "I am not sure yet.");
-      if (!uploadedPhoto) {
-        previewFace.textContent = selectedFace;
-      }
+      previewName.textContent = safeName();
+      previewSymbol.textContent = selectedAvatar.symbol;
+      previewRole.innerHTML = `
+        <strong>${selectedAvatar.role} · ${selectedAvatar.title}</strong>
+        ${selectedAvatar.motto}
+      `;
     }
 
-    document.querySelectorAll(".portrait-card").forEach(card => {
-      card.addEventListener("click", () => {
-        document.querySelectorAll(".portrait-card").forEach(c => c.classList.remove("selected"));
-        card.classList.add("selected");
-        selectedFace = card.dataset.face;
-        uploadedPhoto = "";
-        previewFace.innerHTML = selectedFace;
-        photoUpload.value = "";
-        updatePreview();
-      });
-    });
+    function saveIdentity() {
+      const savedAt = new Date().toISOString();
 
-    photoUpload.addEventListener("change", event => {
-      const file = event.target.files[0];
-      if (!file) return;
-
-      const reader = new FileReader();
-      reader.onload = e => {
-        uploadedPhoto = e.target.result;
-        previewFace.innerHTML = "";
-        const img = document.createElement("img");
-        img.src = uploadedPhoto;
-        img.alt = "Uploaded student identity";
-        previewFace.appendChild(img);
-      };
-      reader.readAsDataURL(file);
-    });
-
-    [studentName, academyMotivation].forEach(el => {
-      if (!el) return;
-      el.addEventListener("input", updatePreview);
-      el.addEventListener("change", updatePreview);
-    });
-
-
-    function clearCurrentIdentity() {
-      localStorage.removeItem(STORAGE_KEY);
-
-      uploadedPhoto = "";
-      selectedFace = "🧑🏽‍🎓";
-
-      if (studentName) studentName.value = "";
-      if (academyMotivation) academyMotivation.value = "I am not sure yet.";
-      if (photoUpload) photoUpload.value = "";
-
-      document.querySelectorAll(".portrait-card").forEach(c => c.classList.remove("selected"));
-      const firstCard = document.querySelector(".portrait-card");
-      if (firstCard) firstCard.classList.add("selected");
-
-      if (previewFace) {
-        previewFace.innerHTML = "";
-        previewFace.textContent = selectedFace;
-      }
-
-      if (identityStorageNotice) {
-        identityStorageNotice.classList.remove("show");
-      }
-
-      updatePreview();
-    }
-
-    if (clearIdentityBtn) {
-      clearIdentityBtn.addEventListener("click", clearCurrentIdentity);
-    }
-
-    document.getElementById("saveIdentityBtn").addEventListener("click", () => {
       const identity = {
-        name: studentName.value.trim() || "New Arrival",
+        name: safeName(),
         status: "Academy Learner",
         leadershipStage: "New Arrival",
-        portraitType: uploadedPhoto ? "uploaded" : "premade",
-        portrait: uploadedPhoto || selectedFace,
-        academyMotivation: academyMotivation?.value || "I am not sure yet.",
-        savedAt: new Date().toISOString()
+        portraitType: "approved-symbolic-avatar",
+        portrait: selectedAvatar.symbol,
+        fallback: selectedAvatar.symbol,
+        role: selectedAvatar.role,
+        avatarTitle: selectedAvatar.title,
+        avatarMotto: selectedAvatar.motto,
+        savedAt
+      };
+
+      const avatarRecord = {
+        role: selectedAvatar.role,
+        title: selectedAvatar.title,
+        portrait: selectedAvatar.symbol,
+        fallback: selectedAvatar.symbol,
+        motto: selectedAvatar.motto,
+        savedAt
       };
 
       localStorage.setItem(STORAGE_KEY, JSON.stringify(identity));
-      status.textContent = "Identity saved. Beginning your journey...";
-      console.log("STEM Nation identity saved. Routing to /academy_cinematic", identity);
+      localStorage.setItem(AVATAR_KEY, JSON.stringify(avatarRecord));
+
+      statusBox.textContent = "Identity locked. The Academy doors are opening...";
       setTimeout(() => {
-        window.location.assign("/academy_cinematic");
-      }, 500);
-    });
+        window.location.href = "/academy_cinematic";
+      }, 650);
+    }
 
-    try {
-      const saved = JSON.parse(localStorage.getItem(STORAGE_KEY) || "null");
-      if (saved) {
-        studentName.value = saved.name || "";
-        if (academyMotivation && saved.academyMotivation) {
-          academyMotivation.value = saved.academyMotivation;
+    function clearIdentity() {
+      localStorage.removeItem(STORAGE_KEY);
+      localStorage.removeItem(AVATAR_KEY);
+      studentName.value = "";
+      selectedAvatar = avatars[0];
+      identityStorageNotice.classList.remove("show");
+      statusBox.textContent = "Identity cleared. Choose your Academy profile.";
+      renderAvatarGrid();
+      updatePreview();
+    }
+
+    function loadSavedIdentity() {
+      try {
+        const saved = JSON.parse(localStorage.getItem(STORAGE_KEY) || "null");
+        const savedAvatar = JSON.parse(localStorage.getItem(AVATAR_KEY) || "null");
+
+        if (!saved && !savedAvatar) return;
+
+        if (saved?.name) studentName.value = saved.name;
+
+        const role = saved?.role || savedAvatar?.role;
+        if (role) {
+          selectedAvatar = avatars.find(item => item.role === role) || avatars[0];
         }
-        if (identityStorageNotice) {
+
         identityStorageNotice.classList.add("show");
+      } catch (err) {
+        console.warn("Saved Academy identity ignored.", err);
       }
+    }
 
-      if (saved.portraitType === "uploaded" && saved.portrait) {
-          uploadedPhoto = saved.portrait;
-          previewFace.innerHTML = "";
-          const img = document.createElement("img");
-          img.src = uploadedPhoto;
-          img.alt = "Saved student identity";
-          previewFace.appendChild(img);
-        } else if (saved.portrait) {
-          selectedFace = saved.portrait;
-          previewFace.textContent = selectedFace;
-        }
-        updatePreview();
-      }
-    } catch (err) {}
+    studentName.addEventListener("input", updatePreview);
+    document.getElementById("saveIdentityBtn").addEventListener("click", saveIdentity);
+    document.getElementById("clearIdentityBtn").addEventListener("click", clearIdentity);
 
+    loadSavedIdentity();
+    renderAvatarGrid();
     updatePreview();
   </script>
 </body>
