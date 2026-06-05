@@ -231,6 +231,10 @@ def mystery_deepens():
 def question_justification():
     return render_template("question_justification.html")
 
+@app.route("/advisor_reactions")
+def advisor_reactions():
+    return render_template("advisor_reactions.html")
+
 @app.route("/baseline_inquiry")
 def baseline_inquiry():
     return render_template("baseline_inquiry.html")
