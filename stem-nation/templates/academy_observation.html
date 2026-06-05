@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>STEM Nation Academy | Student Observation</title>
+  <style>
+    :root {
+      --gold: #f4d35e;
+      --gold2: #d7a51e;
+      --text: #f8f1dd;
+      --muted: #d8cfb0;
+      --panel: rgba(5, 12, 24, .82);
+      --border: rgba(244, 211, 94, .30);
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      background:
+        radial-gradient(circle at 20% 12%, rgba(244,211,94,.12), transparent 32%),
+        radial-gradient(circle at 80% 0%, rgba(80,160,220,.16), transparent 36%),
+        linear-gradient(180deg, #06111f, #0a192b 58%, #030914);
+      color: var(--text);
+      font-family: Georgia, "Times New Roman", serif;
+    }
+
+    .page {
+      max-width: 1180px;
+      margin: 0 auto;
+      padding: 34px 22px 70px;
+    }
+
+    .hero,
+    .panel {
+      border: 1px solid var(--border);
+      background:
+        linear-gradient(135deg, rgba(244,211,94,.10), rgba(255,255,255,.035)),
+        var(--panel);
+      border-radius: 28px;
+      box-shadow: 0 24px 78px rgba(0,0,0,.32);
+      backdrop-filter: blur(8px);
+    }
+
+    .hero {
+      padding: clamp(22px, 4vw, 42px);
+      margin-bottom: 22px;
+    }
+
+    .kicker {
+      color: var(--gold);
+      letter-spacing: .16em;
+      text-transform: uppercase;
+      font-size: .78rem;
+      font-weight: 900;
+      margin-bottom: 10px;
+    }
+
+    h1 {
+      margin: 0 0 12px;
+      font-size: clamp(2.1rem, 5vw, 4.5rem);
+      line-height: .96;
+    }
+
+    h2 {
+      margin: 0 0 10px;
+      color: #fff4d0;
+      font-size: clamp(1.45rem, 3vw, 2.2rem);
+    }
+
+    .sub,
+    .prompt,
+    .note {
+      color: var(--muted);
+      line-height: 1.6;
+      font-size: 1.05rem;
+    }
+
+    .sub {
+      max-width: 900px;
+      margin: 0;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: 1fr 380px;
+      gap: 20px;
+      align-items: start;
+    }
+
+    .panel {
+      padding: 22px;
+    }
+
+    .evidence-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 12px;
+      margin-top: 16px;
+    }
+
+    .evidence-card {
+      border: 1px solid rgba(255,255,255,.13);
+      background: rgba(0,0,0,.24);
+      border-radius: 18px;
+      padding: 14px;
+      min-height: 128px;
+    }
+
+    .evidence-card strong {
+      color: var(--gold);
+      display: block;
+      margin-bottom: 8px;
+      letter-spacing: .04em;
+    }
+
+    .evidence-card p {
+      margin: 0;
+      color: var(--muted);
+      line-height: 1.45;
+    }
+
+    label {
+      display: block;
+      margin: 16px 0 7px;
+      color: var(--gold);
+      font-weight: 900;
+      letter-spacing: .03em;
+    }
+
+    textarea {
+      width: 100%;
+      min-height: 132px;
+      border: 1px solid rgba(255,255,255,.18);
+      background: rgba(0,0,0,.30);
+      color: var(--text);
+      border-radius: 16px;
+      padding: 13px 14px;
+      font: inherit;
+      line-height: 1.45;
+      resize: vertical;
+      outline: none;
+    }
+
+    .actions {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+      margin-top: 18px;
+    }
+
+    button,
+    .button {
+      border: 0;
+      border-radius: 999px;
+      padding: 13px 20px;
+      font-family: inherit;
+      font-weight: 900;
+      cursor: pointer;
+      text-decoration: none;
+    }
+
+    .primary {
+      background: linear-gradient(135deg, var(--gold), var(--gold2));
+      color: #171006;
+      box-shadow: 0 12px 36px rgba(244,211,94,.20);
+    }
+
+    .secondary {
+      background: rgba(255,255,255,.10);
+      color: var(--text);
+      border: 1px solid rgba(255,255,255,.16);
+    }
+
+    .hud {
+      border-left: 4px solid var(--gold);
+      padding: 12px 14px;
+      background: rgba(244,211,94,.08);
+      border-radius: 14px;
+      color: #f8f1dd;
+      margin-top: 14px;
+      min-height: 48px;
+    }
+
+    .status-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 18px;
+    }
+
+    .pill {
+      border: 1px solid rgba(244,211,94,.26);
+      background: rgba(0,0,0,.22);
+      color: #f8f1dd;
+      padding: 8px 12px;
+      border-radius: 999px;
+      font-size: .88rem;
+      font-weight: 800;
+    }
+
+    @media (max-width: 900px) {
+      .grid { grid-template-columns: 1fr; }
+      .evidence-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+  <main class="page">
+    <section class="hero">
+      <div class="kicker">Academy Observation</div>
+      <h1>Look Before You Decide</h1>
+      <p class="sub" id="heroSub">
+        The Guardian has brought you to the evidence table. Satellite images show a dramatic change,
+        but the Council does not agree on what the change means. Your first task is observation, not judgment.
+      </p>
+      <div class="status-row">
+        <div class="pill" id="studentPill">New Arrival · Academy Learner</div>
+        <div class="pill">Observe first</div>
+        <div class="pill">No explanation yet</div>
+      </div>
+    </section>
+
+    <section class="grid">
+      <article class="panel">
+        <div class="kicker">Unlabeled Evidence Review</div>
+        <h2>What do you notice?</h2>
+        <p class="prompt">
+          Study the four pieces of evidence. Do not decide what happened yet.
+          Record what you notice, what changes, and what seems uncertain.
+        </p>
+
+        <div class="evidence-grid">
+          <div class="evidence-card">
+            <strong>Evidence A — Earlier Image</strong>
+            <p>An older view of the land before the dramatic change appeared.</p>
+          </div>
+          <div class="evidence-card">
+            <strong>Evidence B — New Image</strong>
+            <p>A recent image of the same area shows a visible shift that no one has explained yet.</p>
+          </div>
+          <div class="evidence-card">
+            <strong>Evidence C — Marked Change Zone</strong>
+            <p>A highlighted area shows where the land no longer matches the earlier record.</p>
+          </div>
+          <div class="evidence-card">
+            <strong>Evidence D — Conflicting Notes</strong>
+            <p>Observers disagree about whether the change means danger, opportunity, damage, or movement.</p>
+          </div>
+        </div>
+
+        <label for="observations">Record at least three observations</label>
+        <textarea id="observations" placeholder="Example: The new image shows a darker area near the boundary..."></textarea>
+
+        <label for="uncertainties">What is still uncertain?</label>
+        <textarea id="uncertainties" placeholder="Example: I do not know whether the change is water, shadow, or movement..."></textarea>
+
+        <div class="actions">
+          <button class="primary" type="button" onclick="saveObservation()">Save Observation</button>
+          <button class="secondary" type="button" onclick="resetObservation()">Clear</button>
+        </div>
+
+        <div class="hud" id="hud">Begin by recording what you notice. Do not explain the mystery yet.</div>
+      </article>
+
+      <aside class="panel">
+        <div class="kicker">Guardian Reminder</div>
+        <h2>“Another set of eyes.”</h2>
+        <p class="note">
+          The Guardian did not ask you to solve the problem. The Council needs someone who can notice details before choosing a side.
+        </p>
+
+        <div class="kicker" style="margin-top:22px;">Next Locked Step</div>
+        <p class="note">
+          After observation, the mystery deepens. You will decide which questions matter most before anyone accepts an explanation.
+        </p>
+
+        <div class="actions">
+          <a class="button primary" id="nextBtn" href="#" style="display:none;">Continue</a>
+        </div>
+      </aside>
+    </section>
+  </main>
+
+  <script>
+    const IDENTITY_KEY = "stemNationStudentIdentity";
+    const OBSERVATION_KEY = "stemNationAcademyObservationV1";
+
+    const studentPill = document.getElementById("studentPill");
+    const heroSub = document.getElementById("heroSub");
+    const hud = document.getElementById("hud");
+    const nextBtn = document.getElementById("nextBtn");
+
+    let displayName = "Academy Learner";
+
+    try {
+      const saved = JSON.parse(localStorage.getItem(IDENTITY_KEY) || "null");
+      if (saved) {
+        displayName = saved.teacherApprovedName || saved.approvedName || saved.name || "Academy Learner";
+        displayName = String(displayName)
+          .replace(/^New Arrival\s*/i, "")
+          .replace(/^Academy Learner\s*/i, "")
+          .trim() || "Academy Learner";
+
+        studentPill.textContent = `New Arrival · ${displayName}`;
+        heroSub.textContent = `${displayName}, the Guardian has brought you to the evidence table. Satellite images show a dramatic change, but the Council does not agree on what the change means. Your first task is observation, not judgment.`;
+      }
+    } catch (error) {
+      console.warn("Could not load student identity.", error);
+    }
+
+    function countObservations(value) {
+      return value
+        .split(/\n|\.|;/)
+        .map(item => item.trim())
+        .filter(Boolean)
+        .length;
+    }
+
+    function saveObservation() {
+      const observations = document.getElementById("observations").value.trim();
+      const uncertainties = document.getElementById("uncertainties").value.trim();
+
+      if (countObservations(observations) < 3) {
+        hud.textContent = "Record at least three observations before moving on.";
+        return;
+      }
+
+      if (uncertainties.length < 20) {
+        hud.textContent = "Record at least one uncertainty. The mystery should not be solved too early.";
+        return;
+      }
+
+      localStorage.setItem(OBSERVATION_KEY, JSON.stringify({
+        displayName,
+        observations,
+        uncertainties,
+        completedAt: new Date().toISOString()
+      }));
+
+      hud.textContent = "Observation saved. The mystery is not solved yet — it is ready to deepen.";
+      nextBtn.style.display = "inline-block";
+      nextBtn.textContent = "Continue to Mystery Deepens";
+      nextBtn.href = "/baseline_inquiry";
+    }
+
+    function resetObservation() {
+      document.getElementById("observations").value = "";
+      document.getElementById("uncertainties").value = "";
+      nextBtn.style.display = "none";
+      hud.textContent = "Observation cleared. Begin again by noticing details.";
+    }
+  </script>
+</body>
+</html>

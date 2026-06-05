@@ -219,6 +219,10 @@ def scout_region(region):
 
 
 # STEM_NATION_BASELINE_INQUIRY_ROUTE_V1
+@app.route("/academy_observation")
+def academy_observation():
+    return render_template("academy_observation.html")
+
 @app.route("/baseline_inquiry")
 def baseline_inquiry():
     return render_template("baseline_inquiry.html")
