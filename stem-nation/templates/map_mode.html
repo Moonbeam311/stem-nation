@@ -3376,7 +3376,7 @@ Settlement Recommendation Portfolio</div>
       </div>
 
       <div id="completionStatus" class="completion-status">
-        Complete all 5 fields to unlock the Project Hub.
+        Complete the Founding Defense to unlock the Command Center.
       </div>
 
       <div id="archiveSavedStatus" class="archive-saved-status">
@@ -3483,7 +3483,7 @@ Settlement Recommendation Portfolio</div>
 
 </div>
 
-<button id="openHubBtn" class="btn locked" disabled>Open Project Hub</button>
+<button id="openHubBtn" class="btn locked" type="button">Complete Founding Defense</button>
       <button class="btn secondary" onclick="window.location.href='/'">Back to Landing</button>
     </div>
   </div>
@@ -4732,8 +4732,32 @@ updateCompletionStatus();
 
 if (openHubBtn) {
   openHubBtn.addEventListener("click", () => {
-    if (!openHubBtn.disabled) {
+    const requiredComplete = requiredFields.every((id) => {
+      const field = document.getElementById(id);
+      return field && field.value && field.value.trim().length > 0;
+    });
+
+    if (requiredComplete) {
       window.location.href = "/hub";
+      return;
+    }
+
+    const form = document.getElementById("settlementForm");
+    const legacyWrapper = document.getElementById("legacyContentWrapper");
+    const toggleLegacyBtn = document.getElementById("toggleLegacyContentBtn");
+
+    if (legacyWrapper && legacyWrapper.classList.contains("hidden")) {
+      legacyWrapper.classList.remove("hidden");
+      if (toggleLegacyBtn) toggleLegacyBtn.textContent = "Hide Legacy Mission Details";
+    }
+
+    if (form) {
+      form.scrollIntoView({ behavior: "smooth", block: "center" });
+    }
+
+    if (completionStatus) {
+      completionStatus.textContent =
+        "Command Center locked: complete all Founding Defense fields first.";
     }
   });
 }
