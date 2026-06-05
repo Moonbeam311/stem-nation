@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>STEM Nation | Student Command Hub</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      font-family: Georgia, "Times New Roman", serif;
+      color: #f8f0d5;
+      background:
+        radial-gradient(circle at 20% 10%, rgba(244,211,94,.14), transparent 28%),
+        radial-gradient(circle at 80% 20%, rgba(125,211,252,.12), transparent 30%),
+        linear-gradient(135deg, #061826, #07131d 55%, #03070d);
+    }
+
+    .shell {
+      max-width: 1180px;
+      margin: 0 auto;
+      padding: 34px 20px 46px;
+    }
+
+    .hero {
+      border: 1px solid rgba(244,211,94,.28);
+      border-radius: 30px;
+      padding: 28px;
+      background:
+        radial-gradient(circle at top left, rgba(244,211,94,.16), transparent 35%),
+        rgba(5,18,29,.88);
+      box-shadow: 0 24px 70px rgba(0,0,0,.36);
+      margin-bottom: 22px;
+    }
+
+    .topline {
+      display: flex;
+      gap: 18px;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+
+    .portrait {
+      width: 88px;
+      height: 88px;
+      border-radius: 26px;
+      border: 1px solid rgba(244,211,94,.45);
+      background: rgba(244,211,94,.08);
+      display: grid;
+      place-items: center;
+      overflow: hidden;
+      font-size: 2.4rem;
+      flex: 0 0 auto;
+    }
+
+    .portrait img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .kicker {
+      color: #7dd3fc;
+      text-transform: uppercase;
+      letter-spacing: .14em;
+      font-size: .76rem;
+      font-weight: 800;
+      margin-bottom: 7px;
+    }
+
+    h1 {
+      margin: 0;
+      color: #f4d35e;
+      font-size: clamp(2.1rem, 5vw, 4.4rem);
+      line-height: .95;
+      letter-spacing: -.04em;
+    }
+
+    p {
+      color: rgba(248,240,213,.78);
+      line-height: 1.55;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 16px;
+      margin-top: 20px;
+    }
+
+    .card {
+      border: 1px solid rgba(255,255,255,.11);
+      border-radius: 22px;
+      background: rgba(255,255,255,.055);
+      padding: 18px;
+      min-height: 130px;
+    }
+
+    .card strong {
+      display: block;
+      color: #7dd3fc;
+      text-transform: uppercase;
+      letter-spacing: .1em;
+      font-size: .75rem;
+      margin-bottom: 8px;
+    }
+
+    .card h2 {
+      color: #f4d35e;
+      margin: 0 0 8px;
+      font-size: 1.25rem;
+    }
+
+    .card span, .card div {
+      color: rgba(248,240,213,.86);
+      line-height: 1.48;
+    }
+
+    .wide {
+      grid-column: span 2;
+    }
+
+    .actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-top: 22px;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 999px;
+      padding: 13px 18px;
+      border: 1px solid rgba(244,211,94,.34);
+      text-decoration: none;
+      font-weight: 800;
+      cursor: pointer;
+    }
+
+    .btn.primary {
+      color: #07131d;
+      background: linear-gradient(135deg,#f4d35e,#f7b955);
+    }
+
+    .btn.secondary {
+      color: #f8f0d5;
+      background: rgba(255,255,255,.065);
+    }
+
+    .section-title {
+      margin: 28px 0 12px;
+      color: #f4d35e;
+      font-size: 1.4rem;
+    }
+
+    .event-list {
+      display: grid;
+      gap: 10px;
+    }
+
+    .event {
+      border: 1px solid rgba(255,255,255,.1);
+      border-radius: 18px;
+      padding: 14px 16px;
+      background: rgba(0,0,0,.2);
+    }
+
+    .event b {
+      color: #f4d35e;
+    }
+
+    .note {
+      margin-top: 18px;
+      padding: 14px 16px;
+      border-left: 3px solid rgba(125,211,252,.6);
+      background: rgba(125,211,252,.08);
+      border-radius: 14px;
+      color: rgba(248,240,213,.78);
+    }
+
+    @media (max-width: 860px) {
+      .grid { grid-template-columns: 1fr; }
+      .wide { grid-column: span 1; }
+      .hero { padding: 22px; }
+    }
+  </style>
+</head>
+<body>
+  <main class="shell">
+    <section class="hero">
+      <div class="topline">
+        <div class="portrait" id="studentPortrait">🧭</div>
+        <div>
+          <div class="kicker">Student Command Hub</div>
+          <h1>Your Civilization Record</h1>
+          <p id="studentWelcome">
+            Your Academy inquiry has entered the student command hub.
+          </p>
+        </div>
+      </div>
+
+      <div class="grid">
+        <article class="card">
+          <strong>Identity</strong>
+          <h2 id="studentName">New Arrival</h2>
+          <span id="studentRole">Academy Learner</span>
+        </article>
+
+        <article class="card">
+          <strong>Academy Trial</strong>
+          <h2 id="trialStatus">Checking...</h2>
+          <span>Observation, question ranking, justification, Council reaction, and debrief.</span>
+        </article>
+
+        <article class="card">
+          <strong>Next Action</strong>
+          <h2>First World Decision</h2>
+          <span>Use your Academy thinking to begin the civilization decision path.</span>
+        </article>
+
+        <article class="card wide">
+          <strong>First Inquiry Record</strong>
+          <div id="inquiryRecord">Loading saved inquiry record...</div>
+        </article>
+
+        <article class="card">
+          <strong>Readiness Signal</strong>
+          <h2 id="readinessSignal">Emerging Leader</h2>
+          <span id="readinessText">Your reasoning record will grow as you make decisions.</span>
+        </article>
+      </div>
+
+      <div class="actions">
+        <a class="btn primary" href="/map">Begin First World Decision</a>
+        <a class="btn secondary" href="/mission_debrief">Review Mission Debrief</a>
+        <a class="btn secondary" href="/student_command_entry">Return to Command Entry</a>
+      </div>
+
+      <div class="note">
+        This is the student hub. Teacher reflection, rubric scoring, class session controls, archive exports, and development tools are not part of this student-facing view.
+      </div>
+    </section>
+
+    <h2 class="section-title">Mission Memory</h2>
+    <section class="event-list">
+      <div class="event"><b>Academy Opening:</b> You entered STEM Nation and created an Academy identity.</div>
+      <div class="event"><b>Guardian Bridge:</b> You entered the Council Hall and observed evidence before judging it.</div>
+      <div class="event"><b>Question Ranking:</b> You selected the questions that should guide the investigation.</div>
+      <div class="event"><b>Council Reaction:</b> The advisors reacted to the kind of thinking your questions revealed.</div>
+      <div class="event"><b>Mission Debrief:</b> You reflected before entering civilization command.</div>
+    </section>
+
+    <h2 class="section-title">Civilization Signals</h2>
+    <section class="grid">
+      <article class="card">
+        <strong>Observation</strong>
+        <h2 id="observationSignal">Pending</h2>
+        <span>What did you notice before deciding?</span>
+      </article>
+      <article class="card">
+        <strong>Question Quality</strong>
+        <h2 id="questionSignal">Pending</h2>
+        <span>Which questions did you choose to guide the investigation?</span>
+      </article>
+      <article class="card">
+        <strong>Reflection</strong>
+        <h2 id="reflectionSignal">Pending</h2>
+        <span>What changed in your thinking?</span>
+      </article>
+    </section>
+  </main>
+
+  <script>
+    const IDENTITY_KEY = "stemNationStudentIdentity";
+    const AVATAR_KEY = "stemNationAvatar";
+    const OBSERVATION_KEY = "stemNationObservationV1";
+    const RANKING_KEY = "stemNationQuestionPriorityRankingV1";
+    const JUSTIFICATION_KEY = "stemNationQuestionJustificationV1";
+    const REACTION_KEY = "stemNationAdvisorReactionV1";
+    const DEBRIEF_KEY = "stemNationMissionDebriefV1";
+
+    function readJson(key) {
+      try {
+        return JSON.parse(localStorage.getItem(key) || "null");
+      } catch (err) {
+        console.warn("Invalid localStorage record ignored:", key, err);
+        return null;
+      }
+    }
+
+    function isImageSource(value) {
+      return typeof value === "string" && (
+        value.startsWith("/") ||
+        value.startsWith("data:image") ||
+        value.startsWith("http://") ||
+        value.startsWith("https://")
+      );
+    }
+
+    const identity = readJson(IDENTITY_KEY);
+    const avatar = readJson(AVATAR_KEY);
+    const observation = readJson(OBSERVATION_KEY);
+    const ranking = readJson(RANKING_KEY);
+    const justification = readJson(JUSTIFICATION_KEY);
+    const reaction = readJson(REACTION_KEY);
+    const debrief = readJson(DEBRIEF_KEY);
+
+    const displayName =
+      identity?.teacherApprovedName ||
+      identity?.approvedName ||
+      identity?.name ||
+      avatar?.name ||
+      "New Arrival";
+
+    const roleName =
+      avatar?.role ||
+      identity?.role ||
+      "Academy Learner";
+
+    document.getElementById("studentName").textContent = displayName;
+    document.getElementById("studentRole").textContent = roleName;
+    document.getElementById("studentWelcome").textContent =
+      `${displayName}, your Academy inquiry has entered the student command hub.`;
+
+    const portrait =
+      identity?.portrait ||
+      avatar?.portrait ||
+      avatar?.fallback ||
+      "/static/avatars/student_scout.svg";
+
+    const portraitBox = document.getElementById("studentPortrait");
+    if (isImageSource(portrait)) {
+      portraitBox.innerHTML = `<img src="${portrait}" alt="Student avatar">`;
+    } else {
+      portraitBox.textContent = portrait || "🧭";
+    }
+
+    const savedPieces = [
+      observation ? "observations" : "",
+      ranking ? "ranked questions" : "",
+      justification ? "justification" : "",
+      reaction ? "Council reaction" : "",
+      debrief ? "mission debrief" : ""
+    ].filter(Boolean);
+
+    document.getElementById("trialStatus").textContent =
+      debrief ? "Debrief Complete" : "Debrief Pending";
+
+    document.getElementById("inquiryRecord").textContent =
+      savedPieces.length
+        ? `Saved record includes: ${savedPieces.join(", ")}.`
+        : "No saved inquiry record detected in this browser yet.";
+
+    document.getElementById("observationSignal").textContent =
+      observation ? "Recorded" : "Pending";
+
+    document.getElementById("questionSignal").textContent =
+      ranking ? "Ranked" : "Pending";
+
+    document.getElementById("reflectionSignal").textContent =
+      debrief ? "Saved" : "Pending";
+
+    const readinessSignal = document.getElementById("readinessSignal");
+    const readinessText = document.getElementById("readinessText");
+
+    if (debrief && ranking && justification && reaction) {
+      readinessSignal.textContent = "Academy Trial Complete";
+      readinessText.textContent = "You completed the first inquiry cycle and are ready for the first world decision.";
+    } else if (ranking || observation) {
+      readinessSignal.textContent = "Inquiry In Progress";
+      readinessText.textContent = "Continue the Academy trial to complete your first reasoning record.";
+    }
+  </script>
+</body>
+</html>

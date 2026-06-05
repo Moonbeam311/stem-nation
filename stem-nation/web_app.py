@@ -346,6 +346,13 @@ def student_command_entry():
     return render_template("student_command_entry.html")
 
 
+
+
+@app.route("/student_hub")
+def student_hub():
+    return render_template("student_hub.html")
+
+
 if __name__ == "__main__":
     import os
     port = int(os.environ.get("PORT", 5000))
