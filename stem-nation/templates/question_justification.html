@@ -201,11 +201,27 @@
     @media (max-width: 900px) {
       .grid { grid-template-columns: 1fr; }
     }
-  </style>
+  
+/* CI-2F-FIX1_JUSTIFICATION_REQUIREMENT_HELP */
+.justification-help {
+  margin: 7px 0 9px;
+  color: #d8cfb0;
+  font-size: .92rem;
+  line-height: 1.4;
+}
+
+.justification-example {
+  color: #f4d35e;
+  font-size: .9rem;
+  margin-top: 6px;
+}
+
+</style>
 </head>
 <body>
   <main class="page">
     <section class="hero">
+      <!-- CI-2F-FIX1_JUSTIFICATION_REQUIREMENT_LOCK -->
       <div class="kicker">Justification Engine</div>
       <h1>Explain Why Your Questions Matter</h1>
       <p class="sub" id="heroSub">
@@ -312,7 +328,11 @@
         <div class="ranked-question">
           <strong>Priority ${index + 1}: ${escapeHtml(question)}</strong>
           <label for="reason${index}">Why does this question matter?</label>
-          <textarea id="reason${index}" placeholder="Explain why this question should guide the Council's investigation..."></textarea>
+          <div class="justification-help">
+            Write one clear sentence. Explain why the Council should pay attention to this question now.
+          </div>
+          <textarea id="reason${index}" placeholder="Example: This matters because the Council needs to understand what changed before deciding what caused it."></textarea>
+          <div class="justification-example">Minimum: one clear thought, not just one or two words.</div>
         </div>
       `).join("");
     }
@@ -323,9 +343,11 @@
         return { question, reason: value };
       });
 
-      const incomplete = reasons.find(item => item.reason.length < 25);
-      if (incomplete) {
-        hud.textContent = "Explain each priority in at least one clear sentence.";
+      const incompleteIndex = reasons.findIndex(item => item.reason.length < 15);
+      if (incompleteIndex !== -1) {
+        hud.textContent = `Priority ${incompleteIndex + 1} needs a clearer explanation. Write one complete thought, not just one or two words.`;
+        const box = document.getElementById(`reason${incompleteIndex}`);
+        if (box) box.focus();
         return;
       }
 

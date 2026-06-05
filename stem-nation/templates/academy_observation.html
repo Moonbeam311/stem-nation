@@ -204,7 +204,139 @@
       .grid { grid-template-columns: 1fr; }
       .evidence-grid { grid-template-columns: 1fr; }
     }
-  </style>
+  
+/* CI-2H-FIX1_OBSERVATION_ADVANCE_PANEL */
+.advance-panel {
+  display: none;
+  margin-top: 16px;
+  padding: 15px 16px;
+  border: 1px solid rgba(244,211,94,.34);
+  border-radius: 18px;
+  background: rgba(244,211,94,.10);
+  box-shadow: 0 12px 34px rgba(0,0,0,.22);
+  clear: both;
+}
+
+.advance-panel.show {
+  display: block;
+}
+
+.advance-panel strong {
+  display: block;
+  color: #f4d35e;
+  margin-bottom: 6px;
+}
+
+.advance-panel p {
+  margin: 0 0 12px;
+  color: #d8cfb0;
+  line-height: 1.45;
+}
+
+.hud {
+  position: relative;
+  z-index: 1;
+  margin-bottom: 0;
+}
+
+.observation-next-side {
+  display: none !important;
+}
+
+
+/* CI-2H-FIX2_OBSERVATION_BOTTOM_ACTION_BAR */
+.observation-bottom-bar {
+  position: sticky;
+  bottom: 18px;
+  z-index: 50;
+  display: none;
+  max-width: 1180px;
+  margin: 22px auto 0;
+  padding: 14px 16px;
+  border: 1px solid rgba(244,211,94,.42);
+  border-radius: 22px;
+  background:
+    linear-gradient(135deg, rgba(244,211,94,.16), rgba(255,255,255,.04)),
+    rgba(5,12,24,.96);
+  box-shadow: 0 20px 60px rgba(0,0,0,.42);
+  backdrop-filter: blur(10px);
+}
+
+.observation-bottom-bar.show {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+  flex-wrap: wrap;
+}
+
+.observation-bottom-copy {
+  color: #f8f1dd;
+  line-height: 1.4;
+}
+
+.observation-bottom-copy strong {
+  color: #f4d35e;
+  display: block;
+  margin-bottom: 3px;
+}
+
+.advance-panel {
+  display: none !important;
+}
+
+
+/* CI-2H-FIX3_OBSERVATION_LOCKED_NEXT_STEP */
+.observation-bottom-bar {
+  position: sticky;
+  bottom: 18px;
+  z-index: 50;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+  flex-wrap: wrap;
+  max-width: 1180px;
+  margin: 22px auto 0;
+  padding: 14px 16px;
+  border: 1px solid rgba(244,211,94,.34);
+  border-radius: 22px;
+  background:
+    linear-gradient(135deg, rgba(244,211,94,.12), rgba(255,255,255,.04)),
+    rgba(5,12,24,.96);
+  box-shadow: 0 20px 60px rgba(0,0,0,.42);
+  backdrop-filter: blur(10px);
+}
+
+.observation-bottom-bar.ready {
+  border-color: rgba(244,211,94,.58);
+  background:
+    linear-gradient(135deg, rgba(244,211,94,.18), rgba(255,255,255,.05)),
+    rgba(5,12,24,.98);
+}
+
+.observation-bottom-copy {
+  color: #f8f1dd;
+  line-height: 1.4;
+}
+
+.observation-bottom-copy strong {
+  color: #f4d35e;
+  display: block;
+  margin-bottom: 3px;
+}
+
+.observation-bottom-bar .button.locked {
+  opacity: .45;
+  pointer-events: none;
+  filter: grayscale(.4);
+}
+
+.advance-panel {
+  display: none !important;
+}
+
+</style>
 </head>
 <body>
   <main class="page">
@@ -262,6 +394,12 @@
         </div>
 
         <div class="hud" id="hud">Begin by recording what you notice. Do not explain the mystery yet.</div>
+
+        <div class="advance-panel" id="advancePanel">
+          <strong>Observation saved.</strong>
+          <p>The mystery is not solved yet. Your notes are ready to carry into the next stage.</p>
+          <a class="button primary" id="nextBtn" href="/mystery_deepens">Continue to Mystery Deepens</a>
+        </div>
       </article>
 
       <aside class="panel">
@@ -276,11 +414,18 @@
           After observation, the mystery deepens. You will decide which questions matter most before anyone accepts an explanation.
         </p>
 
-        <div class="actions">
-          <a class="button primary" id="nextBtn" href="#" style="display:none;">Continue</a>
-        </div>
+        <div class="actions observation-next-side" aria-hidden="true"></div>
       </aside>
     </section>
+
+    <div class="observation-bottom-bar" id="observationBottomBar">
+      <div class="observation-bottom-copy" id="observationBottomCopy">
+        <strong>Next step locked.</strong>
+        Save your observation to continue.
+      </div>
+      <a class="button primary locked" id="observationNextLink" href="/mystery_deepens" aria-disabled="true">Continue to Mystery Deepens</a>
+    </div>
+
   </main>
 
   <script>
@@ -290,7 +435,6 @@
     const studentPill = document.getElementById("studentPill");
     const heroSub = document.getElementById("heroSub");
     const hud = document.getElementById("hud");
-    const nextBtn = document.getElementById("nextBtn");
 
     let displayName = "Academy Learner";
 
@@ -340,15 +484,33 @@
       }));
 
       hud.textContent = "Observation saved. The mystery is not solved yet — it is ready to deepen.";
-      nextBtn.style.display = "inline-block";
-      nextBtn.textContent = "Continue to Mystery Deepens";
-      nextBtn.href = "/mystery_deepens";
+      const bottomBar = document.getElementById("observationBottomBar");
+      const bottomCopy = document.getElementById("observationBottomCopy");
+      const nextLink = document.getElementById("observationNextLink");
+      if (bottomBar) bottomBar.classList.add("ready");
+      if (bottomCopy) {
+        bottomCopy.innerHTML = "<strong>Observation saved.</strong>Your notes are ready. Continue when you are ready to deepen the mystery.";
+      }
+      if (nextLink) {
+        nextLink.classList.remove("locked");
+        nextLink.setAttribute("aria-disabled", "false");
+      }
     }
 
     function resetObservation() {
       document.getElementById("observations").value = "";
       document.getElementById("uncertainties").value = "";
-      nextBtn.style.display = "none";
+      const bottomBar = document.getElementById("observationBottomBar");
+      const bottomCopy = document.getElementById("observationBottomCopy");
+      const nextLink = document.getElementById("observationNextLink");
+      if (bottomBar) bottomBar.classList.remove("ready");
+      if (bottomCopy) {
+        bottomCopy.innerHTML = "<strong>Next step locked.</strong>Save your observation to continue.";
+      }
+      if (nextLink) {
+        nextLink.classList.add("locked");
+        nextLink.setAttribute("aria-disabled", "true");
+      }
       hud.textContent = "Observation cleared. Begin again by noticing details.";
     }
   </script>
