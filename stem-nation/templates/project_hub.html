@@ -406,6 +406,138 @@ PHASE 8 STEP 7 — STEM NATION COMMAND SESSION DISPLAY V1
   background: rgba(120, 30, 30, 0.28);
 }
 
+
+/* CI-3F_STUDENT_HUB_FRONT_LAYER */
+.student-command-front-layer {
+  margin: 22px auto 28px;
+  max-width: 1180px;
+  border: 1px solid rgba(244, 211, 94, 0.28);
+  border-radius: 28px;
+  background:
+    radial-gradient(circle at top left, rgba(244, 211, 94, 0.16), transparent 34%),
+    linear-gradient(135deg, rgba(6, 24, 38, 0.94), rgba(7, 15, 25, 0.96));
+  box-shadow: 0 24px 70px rgba(0,0,0,0.34);
+  padding: 26px;
+  color: #f8f0d5;
+}
+
+.student-command-topline {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  flex-wrap: wrap;
+  margin-bottom: 18px;
+}
+
+.student-command-portrait {
+  width: 84px;
+  height: 84px;
+  border-radius: 26px;
+  border: 1px solid rgba(244, 211, 94, 0.45);
+  background: rgba(244, 211, 94, 0.08);
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+  flex: 0 0 auto;
+  font-size: 2.3rem;
+}
+
+.student-command-portrait img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.student-command-kicker {
+  color: #7dd3fc;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  font-size: 0.76rem;
+  font-weight: 800;
+  margin-bottom: 6px;
+}
+
+.student-command-front-layer h1 {
+  margin: 0;
+  color: #f4d35e;
+  font-size: clamp(2rem, 4vw, 3.5rem);
+  letter-spacing: -0.035em;
+  line-height: 1;
+}
+
+.student-command-front-layer p {
+  color: rgba(248, 240, 213, 0.8);
+  line-height: 1.55;
+  margin: 8px 0 0;
+}
+
+.student-command-status-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(150px, 1fr));
+  gap: 12px;
+  margin-top: 20px;
+}
+
+.student-command-status-card {
+  border: 1px solid rgba(255,255,255,0.11);
+  background: rgba(255,255,255,0.055);
+  border-radius: 18px;
+  padding: 14px;
+}
+
+.student-command-status-card strong {
+  display: block;
+  color: #7dd3fc;
+  font-size: 0.74rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  margin-bottom: 6px;
+}
+
+.student-command-status-card span {
+  color: rgba(248, 240, 213, 0.88);
+  line-height: 1.42;
+}
+
+.student-command-actions {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin-top: 20px;
+}
+
+.student-command-actions a,
+.student-command-actions button {
+  border-radius: 999px;
+  padding: 12px 17px;
+  border: 1px solid rgba(244, 211, 94, 0.34);
+  text-decoration: none;
+  font-weight: 800;
+  cursor: pointer;
+}
+
+.student-command-actions .primary {
+  background: linear-gradient(135deg, #f4d35e, #f7b955);
+  color: #07131d;
+}
+
+.student-command-actions .secondary {
+  background: rgba(255,255,255,0.065);
+  color: #f8f0d5;
+}
+
+.student-command-note {
+  margin-top: 14px;
+  color: rgba(248, 240, 213, 0.64);
+  font-size: 0.9rem;
+}
+
+@media (max-width: 880px) {
+  .student-command-status-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
 </style>
 
 <style>
@@ -861,6 +993,52 @@ PHASE 8 STEP 7 — STEM NATION COMMAND SESSION DISPLAY V1
 </head>
 
 <body>
+
+<!-- CI-3F_STUDENT_HUB_FRONT_LAYER -->
+<section class="student-command-front-layer" id="studentCommandFrontLayer">
+  <div class="student-command-topline">
+    <div class="student-command-portrait" id="hubStudentPortrait">🧭</div>
+    <div>
+      <div class="student-command-kicker">Student Command Layer</div>
+      <h1>Current Mission Status</h1>
+      <p id="hubStudentWelcome">
+        Your Academy inquiry has entered the Civilization Command Center.
+      </p>
+    </div>
+  </div>
+
+  <div class="student-command-status-grid">
+    <div class="student-command-status-card">
+      <strong>Identity</strong>
+      <span id="hubStudentIdentity">Academy Learner</span>
+    </div>
+    <div class="student-command-status-card">
+      <strong>Academy Trial</strong>
+      <span id="hubTrialStatus">Mission Debrief pending.</span>
+    </div>
+    <div class="student-command-status-card">
+      <strong>First Inquiry Record</strong>
+      <span id="hubInquiryStatus">Observation and question record pending.</span>
+    </div>
+    <div class="student-command-status-card">
+      <strong>Next Available Action</strong>
+      <span id="hubNextAction">Review command center records.</span>
+    </div>
+  </div>
+
+  <div class="student-command-actions">
+    <a class="primary" href="/map">Begin First World Decision</a>
+    <a class="secondary" href="/mission_debrief">Review Mission Debrief</a>
+    <button class="secondary" type="button" onclick="document.getElementById('foundingArchiveSection')?.scrollIntoView({behavior:'smooth', block:'start'});">
+      Open Civilization Records
+    </button>
+  </div>
+
+  <div class="student-command-note">
+    Teacher tools, archive exports, and deeper command systems remain below. This top layer keeps the student journey oriented.
+  </div>
+</section>
+
   <div class="container">
     <div class="label">STEM Nation · Civilization Command Center</div>
 
@@ -3610,6 +3788,107 @@ Selective demo reset controls for local student test data.
   clearBtn.addEventListener("click", clearReflection);
 
   loadReflection();
+})();
+</script>
+
+
+<script>
+/* CI-3F_STUDENT_HUB_FRONT_LAYER */
+(function installStudentHubFrontLayer() {
+  const IDENTITY_KEY = "stemNationStudentIdentity";
+  const AVATAR_KEY = "stemNationAvatar";
+  const OBSERVATION_KEY = "stemNationObservationV1";
+  const RANKING_KEY = "stemNationQuestionPriorityRankingV1";
+  const JUSTIFICATION_KEY = "stemNationQuestionJustificationV1";
+  const REACTION_KEY = "stemNationAdvisorReactionV1";
+  const DEBRIEF_KEY = "stemNationMissionDebriefV1";
+
+  function readJson(key) {
+    try {
+      return JSON.parse(localStorage.getItem(key) || "null");
+    } catch (err) {
+      console.warn("Student hub front layer ignored invalid storage:", key, err);
+      return null;
+    }
+  }
+
+  function isImageSource(value) {
+    return typeof value === "string" && (
+      value.startsWith("/") ||
+      value.startsWith("data:image") ||
+      value.startsWith("http://") ||
+      value.startsWith("https://")
+    );
+  }
+
+  const identity = readJson(IDENTITY_KEY);
+  const avatar = readJson(AVATAR_KEY);
+  const observation = readJson(OBSERVATION_KEY);
+  const ranking = readJson(RANKING_KEY);
+  const justification = readJson(JUSTIFICATION_KEY);
+  const reaction = readJson(REACTION_KEY);
+  const debrief = readJson(DEBRIEF_KEY);
+
+  const displayName =
+    identity?.teacherApprovedName ||
+    identity?.approvedName ||
+    identity?.name ||
+    avatar?.name ||
+    "Academy Learner";
+
+  const portrait =
+    identity?.portrait ||
+    avatar?.portrait ||
+    avatar?.fallback ||
+    "/static/avatars/student_scout.svg";
+
+  const portraitBox = document.getElementById("hubStudentPortrait");
+  if (portraitBox) {
+    if (isImageSource(portrait)) {
+      portraitBox.innerHTML = `<img src="${portrait}" alt="Student avatar">`;
+    } else {
+      portraitBox.textContent = portrait || "🧭";
+    }
+  }
+
+  const welcome = document.getElementById("hubStudentWelcome");
+  if (welcome) {
+    welcome.textContent =
+      `${displayName}, your Academy inquiry has entered the Civilization Command Center.`;
+  }
+
+  const identityBox = document.getElementById("hubStudentIdentity");
+  if (identityBox) {
+    identityBox.textContent = displayName;
+  }
+
+  const trialStatus = document.getElementById("hubTrialStatus");
+  if (trialStatus) {
+    trialStatus.textContent = debrief
+      ? "Academy Readiness Debrief complete."
+      : "Mission Debrief pending.";
+  }
+
+  const inquiryStatus = document.getElementById("hubInquiryStatus");
+  if (inquiryStatus) {
+    const pieces = [
+      observation ? "observations" : "",
+      ranking ? "ranked questions" : "",
+      justification ? "justification" : "",
+      reaction ? "Council reaction" : ""
+    ].filter(Boolean);
+
+    inquiryStatus.textContent = pieces.length
+      ? `Saved: ${pieces.join(", ")}.`
+      : "Observation and question record pending.";
+  }
+
+  const nextAction = document.getElementById("hubNextAction");
+  if (nextAction) {
+    nextAction.textContent = debrief
+      ? "Begin the first world decision or review civilization records."
+      : "Complete Mission Debrief before advancing.";
+  }
 })();
 </script>
 
