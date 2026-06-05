@@ -336,6 +336,70 @@
   display: none !important;
 }
 
+
+/* CI-2UX-FIX2_OBSERVATION_ADVANCE_STABLE */
+.observation-field-grid {
+  display: grid;
+  gap: 10px;
+}
+
+.observation-help {
+  margin: 8px 0 10px;
+  color: #d8cfb0;
+  font-size: .95rem;
+  line-height: 1.45;
+}
+
+textarea.compact-observation {
+  min-height: 74px;
+}
+
+.observation-bottom-bar {
+  position: sticky;
+  bottom: 18px;
+  z-index: 50;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+  flex-wrap: wrap;
+  max-width: 1180px;
+  margin: 22px auto 0;
+  padding: 14px 16px;
+  border: 1px solid rgba(244,211,94,.34);
+  border-radius: 22px;
+  background:
+    linear-gradient(135deg, rgba(244,211,94,.12), rgba(255,255,255,.04)),
+    rgba(5,12,24,.96);
+  box-shadow: 0 20px 60px rgba(0,0,0,.42);
+  backdrop-filter: blur(10px);
+}
+
+.observation-bottom-bar.ready {
+  border-color: rgba(244,211,94,.58);
+}
+
+.observation-bottom-copy {
+  color: #f8f1dd;
+  line-height: 1.4;
+}
+
+.observation-bottom-copy strong {
+  color: #f4d35e;
+  display: block;
+  margin-bottom: 3px;
+}
+
+.observation-bottom-bar .button.locked {
+  opacity: .45;
+  pointer-events: none;
+  filter: grayscale(.4);
+}
+
+.advance-panel {
+  display: none !important;
+}
+
 </style>
 </head>
 <body>
@@ -382,8 +446,15 @@
           </div>
         </div>
 
-        <label for="observations">Record at least three observations</label>
-        <textarea id="observations" placeholder="Example: The new image shows a darker area near the boundary..."></textarea>
+        <label>Record three observations</label>
+        <div class="observation-help">
+          Write one observation in each box. Do not solve the mystery yet — just notice what you see.
+        </div>
+        <div class="observation-field-grid">
+          <textarea id="observation1" class="compact-observation" placeholder="Observation 1: What changed or stands out?"></textarea>
+          <textarea id="observation2" class="compact-observation" placeholder="Observation 2: What else do you notice?"></textarea>
+          <textarea id="observation3" class="compact-observation" placeholder="Observation 3: What seems important or unclear?"></textarea>
+        </div>
 
         <label for="uncertainties">What is still uncertain?</label>
         <textarea id="uncertainties" placeholder="Example: I do not know whether the change is water, shadow, or movement..."></textarea>
@@ -463,30 +534,37 @@
     }
 
     function saveObservation() {
-      const observations = document.getElementById("observations").value.trim();
+      const observations = [
+        document.getElementById("observation1")?.value.trim() || "",
+        document.getElementById("observation2")?.value.trim() || "",
+        document.getElementById("observation3")?.value.trim() || ""
+      ].filter(Boolean);
+
       const uncertainties = document.getElementById("uncertainties").value.trim();
 
-      if (countObservations(observations) < 3) {
-        hud.textContent = "Record at least three observations before moving on.";
+      if (observations.length < 3) {
+        hud.textContent = "Record one clear observation in each of the three observation boxes.";
         return;
       }
 
-      if (uncertainties.length < 20) {
-        hud.textContent = "Record at least one uncertainty. The mystery should not be solved too early.";
+      if (uncertainties.length < 10) {
+        hud.textContent = "Record one uncertainty. What do you still not know?";
         return;
       }
 
       localStorage.setItem(OBSERVATION_KEY, JSON.stringify({
         displayName,
-        observations,
+        observations: observations.join("\n"),
         uncertainties,
         completedAt: new Date().toISOString()
       }));
 
       hud.textContent = "Observation saved. The mystery is not solved yet — it is ready to deepen.";
+
       const bottomBar = document.getElementById("observationBottomBar");
       const bottomCopy = document.getElementById("observationBottomCopy");
       const nextLink = document.getElementById("observationNextLink");
+
       if (bottomBar) bottomBar.classList.add("ready");
       if (bottomCopy) {
         bottomCopy.innerHTML = "<strong>Observation saved.</strong>Your notes are ready. Continue when you are ready to deepen the mystery.";
@@ -498,19 +576,24 @@
     }
 
     function resetObservation() {
-      document.getElementById("observations").value = "";
-      document.getElementById("uncertainties").value = "";
+      ["observation1", "observation2", "observation3", "uncertainties"].forEach(id => {
+        const el = document.getElementById(id);
+        if (el) el.value = "";
+      });
+
       const bottomBar = document.getElementById("observationBottomBar");
       const bottomCopy = document.getElementById("observationBottomCopy");
       const nextLink = document.getElementById("observationNextLink");
+
       if (bottomBar) bottomBar.classList.remove("ready");
       if (bottomCopy) {
-        bottomCopy.innerHTML = "<strong>Next step locked.</strong>Save your observation to continue.";
+        bottomCopy.innerHTML = "<strong>Next step locked.</strong>Save your three observations and one uncertainty to continue.";
       }
       if (nextLink) {
         nextLink.classList.add("locked");
         nextLink.setAttribute("aria-disabled", "true");
       }
+
       hud.textContent = "Observation cleared. Begin again by noticing details.";
     }
   </script>
