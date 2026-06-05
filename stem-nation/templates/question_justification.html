@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>STEM Nation Academy | Question Justification</title>
+  <style>
+    :root {
+      --gold: #f4d35e;
+      --gold2: #d7a51e;
+      --text: #f8f1dd;
+      --muted: #d8cfb0;
+      --panel: rgba(5, 12, 24, .84);
+      --border: rgba(244, 211, 94, .30);
+      --soft: rgba(255,255,255,.07);
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      background:
+        radial-gradient(circle at 20% 10%, rgba(244,211,94,.12), transparent 32%),
+        radial-gradient(circle at 80% 0%, rgba(80,160,220,.16), transparent 36%),
+        linear-gradient(180deg, #06111f, #0a192b 58%, #030914);
+      color: var(--text);
+      font-family: Georgia, "Times New Roman", serif;
+    }
+
+    .page {
+      max-width: 1180px;
+      margin: 0 auto;
+      padding: 34px 22px 70px;
+    }
+
+    .hero,
+    .panel {
+      border: 1px solid var(--border);
+      background:
+        linear-gradient(135deg, rgba(244,211,94,.10), rgba(255,255,255,.035)),
+        var(--panel);
+      border-radius: 28px;
+      box-shadow: 0 24px 78px rgba(0,0,0,.32);
+      backdrop-filter: blur(8px);
+    }
+
+    .hero {
+      padding: clamp(22px, 4vw, 42px);
+      margin-bottom: 22px;
+    }
+
+    .kicker {
+      color: var(--gold);
+      letter-spacing: .16em;
+      text-transform: uppercase;
+      font-size: .78rem;
+      font-weight: 900;
+      margin-bottom: 10px;
+    }
+
+    h1 {
+      margin: 0 0 12px;
+      font-size: clamp(2.1rem, 5vw, 4.5rem);
+      line-height: .96;
+    }
+
+    h2 {
+      margin: 0 0 10px;
+      color: #fff4d0;
+      font-size: clamp(1.45rem, 3vw, 2.2rem);
+    }
+
+    .sub,
+    .prompt,
+    .note {
+      color: var(--muted);
+      line-height: 1.6;
+      font-size: 1.05rem;
+    }
+
+    .sub {
+      max-width: 900px;
+      margin: 0;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: 1fr 380px;
+      gap: 20px;
+      align-items: start;
+    }
+
+    .panel {
+      padding: 22px;
+    }
+
+    .ranked-question {
+      border: 1px solid rgba(255,255,255,.13);
+      background: rgba(0,0,0,.24);
+      border-radius: 20px;
+      padding: 16px;
+      margin-top: 14px;
+    }
+
+    .ranked-question strong {
+      color: var(--gold);
+      display: block;
+      margin-bottom: 8px;
+      font-size: 1.05rem;
+    }
+
+    label {
+      display: block;
+      margin: 12px 0 7px;
+      color: #f4d35e;
+      font-weight: 900;
+      letter-spacing: .03em;
+    }
+
+    textarea {
+      width: 100%;
+      min-height: 96px;
+      border: 1px solid rgba(255,255,255,.18);
+      background: rgba(0,0,0,.30);
+      color: var(--text);
+      border-radius: 16px;
+      padding: 13px 14px;
+      font: inherit;
+      line-height: 1.45;
+      resize: vertical;
+      outline: none;
+    }
+
+    .actions {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+      margin-top: 18px;
+    }
+
+    button,
+    .button {
+      border: 0;
+      border-radius: 999px;
+      padding: 13px 20px;
+      font-family: inherit;
+      font-weight: 900;
+      cursor: pointer;
+      text-decoration: none;
+    }
+
+    .primary {
+      background: linear-gradient(135deg, var(--gold), var(--gold2));
+      color: #171006;
+      box-shadow: 0 12px 36px rgba(244,211,94,.20);
+    }
+
+    .secondary {
+      background: rgba(255,255,255,.10);
+      color: var(--text);
+      border: 1px solid rgba(255,255,255,.16);
+    }
+
+    .hud {
+      border-left: 4px solid var(--gold);
+      padding: 12px 14px;
+      background: rgba(244,211,94,.08);
+      border-radius: 14px;
+      color: #f8f1dd;
+      margin-top: 14px;
+      min-height: 48px;
+    }
+
+    .summary {
+      display: none;
+      margin-top: 18px;
+      border: 1px solid rgba(244,211,94,.28);
+      background: rgba(244,211,94,.08);
+      border-radius: 18px;
+      padding: 14px;
+      color: #f8f1dd;
+      line-height: 1.5;
+    }
+
+    .summary.show { display: block; }
+
+    .side-box {
+      border: 1px solid rgba(255,255,255,.12);
+      background: rgba(0,0,0,.22);
+      border-radius: 18px;
+      padding: 14px;
+      margin-top: 14px;
+    }
+
+    .side-box strong {
+      color: var(--gold);
+      display: block;
+      margin-bottom: 6px;
+    }
+
+    @media (max-width: 900px) {
+      .grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+  <main class="page">
+    <section class="hero">
+      <div class="kicker">Justification Engine</div>
+      <h1>Explain Why Your Questions Matter</h1>
+      <p class="sub" id="heroSub">
+        You ranked the questions. Now make your thinking visible.
+        The Council does not need a final answer yet. It needs to understand why these questions should guide the investigation.
+      </p>
+    </section>
+
+    <section class="grid">
+      <article class="panel">
+        <div class="kicker">Question Priority Justification</div>
+        <h2>Your ranked questions</h2>
+        <p class="prompt">
+          For each priority, explain why that question matters right now.
+          Your explanation should connect to what you observed.
+        </p>
+
+        <div id="rankingArea"></div>
+
+        <div class="actions">
+          <button class="primary" type="button" onclick="saveJustification()">Save Justification</button>
+          <button class="secondary" type="button" onclick="clearJustification()">Clear Explanations</button>
+        </div>
+
+        <div class="summary" id="summaryBox"></div>
+        <div class="hud" id="hud">Explain why each ranked question matters before moving on.</div>
+      </article>
+
+      <aside class="panel">
+        <div class="kicker">Guardian Response</div>
+        <h2>Not right or wrong yet.</h2>
+        <p class="note">
+          The Guardian is listening for reasoning, not a perfect answer.
+          The goal is to show why your investigation should begin with these questions.
+        </p>
+
+        <div class="side-box">
+          <strong>Evidence-before-explanation</strong>
+          You observed first. Now you are defending which questions matter most.
+        </div>
+
+        <div class="side-box">
+          <strong>Next locked step</strong>
+          Advisor reactions come later. The Council will begin responding to the kinds of questions you prioritized.
+        </div>
+
+        <div class="actions">
+          <a class="button primary" id="nextBtn" href="#" style="display:none;">Continue</a>
+        </div>
+      </aside>
+    </section>
+  </main>
+
+  <script>
+    const IDENTITY_KEY = "stemNationStudentIdentity";
+    const OBSERVATION_KEY = "stemNationAcademyObservationV1";
+    const RANKING_KEY = "stemNationQuestionPriorityRankingV1";
+    const JUSTIFICATION_KEY = "stemNationQuestionJustificationV1";
+
+    const rankingArea = document.getElementById("rankingArea");
+    const hud = document.getElementById("hud");
+    const summaryBox = document.getElementById("summaryBox");
+    const heroSub = document.getElementById("heroSub");
+    const nextBtn = document.getElementById("nextBtn");
+
+    let displayName = "Academy Learner";
+    let ranking = [];
+
+    try {
+      const saved = JSON.parse(localStorage.getItem(IDENTITY_KEY) || "null");
+      if (saved) {
+        displayName = saved.teacherApprovedName || saved.approvedName || saved.name || "Academy Learner";
+        displayName = String(displayName)
+          .replace(/^New Arrival\s*/i, "")
+          .replace(/^Academy Learner\s*/i, "")
+          .trim() || "Academy Learner";
+
+        heroSub.textContent = `${displayName}, you ranked the questions. Now make your thinking visible. The Council does not need a final answer yet. It needs to understand why these questions should guide the investigation.`;
+      }
+    } catch (error) {
+      console.warn("Could not load identity.", error);
+    }
+
+    try {
+      const savedRanking = JSON.parse(localStorage.getItem(RANKING_KEY) || "null");
+      if (savedRanking && Array.isArray(savedRanking.ranking)) {
+        ranking = savedRanking.ranking.slice(0, 3);
+      }
+    } catch (error) {
+      console.warn("Could not load ranking.", error);
+    }
+
+    if (ranking.length !== 3) {
+      ranking = [
+        "What changed?",
+        "What caused it?",
+        "Has this happened before?"
+      ];
+      hud.textContent = "No saved ranking was found. A default ranking is shown for testing.";
+    }
+
+    function renderRanking() {
+      rankingArea.innerHTML = ranking.map((question, index) => `
+        <div class="ranked-question">
+          <strong>Priority ${index + 1}: ${escapeHtml(question)}</strong>
+          <label for="reason${index}">Why does this question matter?</label>
+          <textarea id="reason${index}" placeholder="Explain why this question should guide the Council's investigation..."></textarea>
+        </div>
+      `).join("");
+    }
+
+    function saveJustification() {
+      const reasons = ranking.map((question, index) => {
+        const value = document.getElementById(`reason${index}`).value.trim();
+        return { question, reason: value };
+      });
+
+      const incomplete = reasons.find(item => item.reason.length < 25);
+      if (incomplete) {
+        hud.textContent = "Explain each priority in at least one clear sentence.";
+        return;
+      }
+
+      let observation = null;
+      try {
+        observation = JSON.parse(localStorage.getItem(OBSERVATION_KEY) || "null");
+      } catch (error) {}
+
+      localStorage.setItem(JUSTIFICATION_KEY, JSON.stringify({
+        displayName,
+        ranking,
+        justifications: reasons,
+        observation,
+        completedAt: new Date().toISOString()
+      }));
+
+      summaryBox.innerHTML = `
+        <strong>Justification Saved</strong><br><br>
+        ${reasons.map((item, index) => `
+          <strong>Priority ${index + 1}: ${escapeHtml(item.question)}</strong><br>
+          ${escapeHtml(item.reason)}<br><br>
+        `).join("")}
+        The next build will allow the Council advisors to react to the kinds of questions you prioritized.
+      `;
+
+      summaryBox.classList.add("show");
+      hud.textContent = "Justification saved. Advisor reactions come next.";
+      nextBtn.style.display = "inline-block";
+      nextBtn.textContent = "Continue to Advisor Reactions";
+      nextBtn.href = "/mystery_deepens";
+    }
+
+    function clearJustification() {
+      ranking.forEach((_, index) => {
+        const area = document.getElementById(`reason${index}`);
+        if (area) area.value = "";
+      });
+      summaryBox.classList.remove("show");
+      summaryBox.innerHTML = "";
+      nextBtn.style.display = "none";
+      hud.textContent = "Explanations cleared. Explain why each question matters.";
+    }
+
+    function escapeHtml(str) {
+      return String(str)
+        .replaceAll("&", "&amp;")
+        .replaceAll("<", "&lt;")
+        .replaceAll(">", "&gt;")
+        .replaceAll('"', "&quot;")
+        .replaceAll("'", "&#039;");
+    }
+
+    renderRanking();
+  </script>
+</body>
+</html>

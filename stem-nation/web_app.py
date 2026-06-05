@@ -227,6 +227,10 @@ def academy_observation():
 def mystery_deepens():
     return render_template("mystery_deepens.html")
 
+@app.route("/question_justification")
+def question_justification():
+    return render_template("question_justification.html")
+
 @app.route("/baseline_inquiry")
 def baseline_inquiry():
     return render_template("baseline_inquiry.html")

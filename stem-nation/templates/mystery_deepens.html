@@ -346,6 +346,7 @@
         </div>
 
         <div class="summary" id="summaryBox"></div>
+        <div class="actions"><a class="button primary" id="nextBtn" href="/question_justification" style="display:none;">Continue to Justification</a></div>
         <div class="hud" id="hud">Wait for the Guardian’s reveal. Then rank exactly three questions.</div>
       </article>
 
@@ -471,7 +472,9 @@
         The next step is the Justification Engine, where you explain why these questions matter.
       `;
       summaryBox.classList.add("show");
-      hud.textContent = "Ranking saved. The next build will ask you to justify your choices.";
+      hud.textContent = "Ranking saved. Now explain why those questions matter.";
+      const nextBtn = document.getElementById("nextBtn");
+      if (nextBtn) nextBtn.style.display = "inline-block";
     }
 
     function clearRanking() {
