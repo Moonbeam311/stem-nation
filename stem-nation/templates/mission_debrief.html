@@ -265,7 +265,7 @@
         </div>
 
         <div class="actions">
-          <a class="button primary" id="nextBtn" href="#" style="display:none;">Continue</a>
+          <a class="button primary" id="nextBtn" href="/student_command_entry" style="display:none;">Enter Command Center</a>
         </div>
       </aside>
     </section>
@@ -389,7 +389,10 @@
 
       hud.textContent = "Mission debrief complete.";
       nextBtn.style.display = "inline-block";
-      nextBtn.textContent = "Continue";
+      
+      nextBtn.textContent = "Enter Command Center";
+      nextBtn.href = "/student_command_entry";
+
       nextBtn.href = "/advisor_reactions";
     }
 
