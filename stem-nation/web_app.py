@@ -235,6 +235,10 @@ def question_justification():
 def advisor_reactions():
     return render_template("advisor_reactions.html")
 
+@app.route("/mission_debrief")
+def mission_debrief():
+    return render_template("mission_debrief.html")
+
 @app.route("/baseline_inquiry")
 def baseline_inquiry():
     return render_template("baseline_inquiry.html")
