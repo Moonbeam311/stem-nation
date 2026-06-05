@@ -223,6 +223,10 @@ def scout_region(region):
 def academy_observation():
     return render_template("academy_observation.html")
 
+@app.route("/mystery_deepens")
+def mystery_deepens():
+    return render_template("mystery_deepens.html")
+
 @app.route("/baseline_inquiry")
 def baseline_inquiry():
     return render_template("baseline_inquiry.html")

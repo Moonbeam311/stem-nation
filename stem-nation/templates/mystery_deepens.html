@@ -1,0 +1,497 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>STEM Nation Academy | Mystery Deepens</title>
+  <style>
+    :root {
+      --gold: #f4d35e;
+      --gold2: #d7a51e;
+      --text: #f8f1dd;
+      --muted: #d8cfb0;
+      --panel: rgba(5, 12, 24, .84);
+      --border: rgba(244, 211, 94, .30);
+      --soft: rgba(255,255,255,.07);
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      background:
+        radial-gradient(circle at 20% 10%, rgba(244,211,94,.12), transparent 32%),
+        radial-gradient(circle at 80% 0%, rgba(80,160,220,.16), transparent 36%),
+        linear-gradient(180deg, #06111f, #0a192b 58%, #030914);
+      color: var(--text);
+      font-family: Georgia, "Times New Roman", serif;
+    }
+
+    .page {
+      max-width: 1180px;
+      margin: 0 auto;
+      padding: 34px 22px 70px;
+    }
+
+    .hero,
+    .panel {
+      border: 1px solid var(--border);
+      background:
+        linear-gradient(135deg, rgba(244,211,94,.10), rgba(255,255,255,.035)),
+        var(--panel);
+      border-radius: 28px;
+      box-shadow: 0 24px 78px rgba(0,0,0,.32);
+      backdrop-filter: blur(8px);
+    }
+
+    .hero {
+      padding: clamp(22px, 4vw, 42px);
+      margin-bottom: 22px;
+    }
+
+    .kicker {
+      color: var(--gold);
+      letter-spacing: .16em;
+      text-transform: uppercase;
+      font-size: .78rem;
+      font-weight: 900;
+      margin-bottom: 10px;
+    }
+
+    h1 {
+      margin: 0 0 12px;
+      font-size: clamp(2.1rem, 5vw, 4.5rem);
+      line-height: .96;
+    }
+
+    h2 {
+      margin: 0 0 10px;
+      color: #fff4d0;
+      font-size: clamp(1.45rem, 3vw, 2.2rem);
+    }
+
+    .sub,
+    .prompt,
+    .note {
+      color: var(--muted);
+      line-height: 1.6;
+      font-size: 1.05rem;
+    }
+
+    .sub {
+      max-width: 900px;
+      margin: 0;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: 1fr 380px;
+      gap: 20px;
+      align-items: start;
+    }
+
+    .panel {
+      padding: 22px;
+    }
+
+    .reveal-stack {
+      display: grid;
+      gap: 12px;
+      margin: 16px 0 22px;
+    }
+
+    .reveal-card {
+      border: 1px solid rgba(255,255,255,.13);
+      background: rgba(0,0,0,.24);
+      border-radius: 18px;
+      padding: 14px;
+      opacity: 0;
+      transform: translateY(10px);
+      transition: opacity .55s ease, transform .55s ease;
+    }
+
+    .reveal-card.show {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .reveal-card strong {
+      color: var(--gold);
+      display: block;
+      margin-bottom: 6px;
+    }
+
+    .priority-list {
+      display: grid;
+      gap: 10px;
+      margin-top: 16px;
+    }
+
+    .priority-option {
+      border: 1px solid rgba(255,255,255,.14);
+      background: var(--soft);
+      border-radius: 18px;
+      padding: 14px;
+      cursor: pointer;
+      display: grid;
+      grid-template-columns: 38px 1fr;
+      gap: 12px;
+      align-items: center;
+      transition: .2s ease;
+    }
+
+    .priority-option:hover {
+      border-color: rgba(244,211,94,.42);
+      background: rgba(244,211,94,.08);
+    }
+
+    .priority-option.selected {
+      border-color: rgba(244,211,94,.68);
+      background: rgba(244,211,94,.13);
+    }
+
+    .rank {
+      width: 34px;
+      height: 34px;
+      display: grid;
+      place-items: center;
+      border-radius: 999px;
+      background: rgba(0,0,0,.34);
+      color: var(--gold);
+      font-weight: 900;
+    }
+
+    .question-title {
+      color: #fff4d0;
+      font-weight: 900;
+      margin-bottom: 4px;
+    }
+
+    .question-desc {
+      color: var(--muted);
+      line-height: 1.45;
+      font-size: .95rem;
+    }
+
+    .actions {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+      margin-top: 18px;
+    }
+
+    button,
+    .button {
+      border: 0;
+      border-radius: 999px;
+      padding: 13px 20px;
+      font-family: inherit;
+      font-weight: 900;
+      cursor: pointer;
+      text-decoration: none;
+    }
+
+    .primary {
+      background: linear-gradient(135deg, var(--gold), var(--gold2));
+      color: #171006;
+      box-shadow: 0 12px 36px rgba(244,211,94,.20);
+    }
+
+    .secondary {
+      background: rgba(255,255,255,.10);
+      color: var(--text);
+      border: 1px solid rgba(255,255,255,.16);
+    }
+
+    .disabled {
+      opacity: .55;
+      pointer-events: none;
+    }
+
+    .hud {
+      border-left: 4px solid var(--gold);
+      padding: 12px 14px;
+      background: rgba(244,211,94,.08);
+      border-radius: 14px;
+      color: #f8f1dd;
+      margin-top: 14px;
+      min-height: 48px;
+    }
+
+    .summary {
+      display: none;
+      margin-top: 18px;
+      border: 1px solid rgba(244,211,94,.28);
+      background: rgba(244,211,94,.08);
+      border-radius: 18px;
+      padding: 14px;
+      color: #f8f1dd;
+      line-height: 1.5;
+    }
+
+    .summary.show { display: block; }
+
+    .side-box {
+      border: 1px solid rgba(255,255,255,.12);
+      background: rgba(0,0,0,.22);
+      border-radius: 18px;
+      padding: 14px;
+      margin-top: 14px;
+    }
+
+    .side-box strong {
+      color: var(--gold);
+      display: block;
+      margin-bottom: 6px;
+    }
+
+    @media (max-width: 900px) {
+      .grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+  <main class="page">
+    <section class="hero">
+      <div class="kicker">Mystery Deepens</div>
+      <h1>Which Questions Matter Most?</h1>
+      <p class="sub" id="heroSub">
+        You made observations. Now the Guardian reveals more, but not enough to solve the mystery.
+        The next challenge is deciding which questions should guide the Council first.
+      </p>
+    </section>
+
+    <section class="grid">
+      <article class="panel">
+        <div class="kicker">Guardian reveals only enough to deepen the mystery</div>
+        <h2>The room has been debating this all morning.</h2>
+
+        <div class="reveal-stack">
+          <div class="reveal-card" id="reveal1">
+            <strong>Reveal 1</strong>
+            Those images were taken six days apart.
+          </div>
+          <div class="reveal-card" id="reveal2">
+            <strong>Reveal 2</strong>
+            The room has been debating them all morning.
+          </div>
+          <div class="reveal-card" id="reveal3">
+            <strong>Reveal 3</strong>
+            Everyone wants answers.
+          </div>
+          <div class="reveal-card" id="reveal4">
+            <strong>Reveal 4</strong>
+            The problem is, no one knows which questions matter most.
+          </div>
+        </div>
+
+        <p class="prompt">
+          Rank exactly three questions. Put the most important question first.
+          You are not choosing an answer. You are choosing where the investigation should begin.
+        </p>
+
+        <div class="priority-list" id="priorityList">
+          <div class="priority-option" data-value="What changed?">
+            <div class="rank">+</div>
+            <div>
+              <div class="question-title">What changed?</div>
+              <div class="question-desc">Identify the visible difference before guessing the cause.</div>
+            </div>
+          </div>
+
+          <div class="priority-option" data-value="What caused it?">
+            <div class="rank">+</div>
+            <div>
+              <div class="question-title">What caused it?</div>
+              <div class="question-desc">Investigate whether the change came from water, weather, damage, movement, or something else.</div>
+            </div>
+          </div>
+
+          <div class="priority-option" data-value="Has this happened before?">
+            <div class="rank">+</div>
+            <div>
+              <div class="question-title">Has this happened before?</div>
+              <div class="question-desc">Compare the change against older records and patterns.</div>
+            </div>
+          </div>
+
+          <div class="priority-option" data-value="Could people survive there?">
+            <div class="rank">+</div>
+            <div>
+              <div class="question-title">Could people survive there?</div>
+              <div class="question-desc">Consider whether the changed place could support people safely.</div>
+            </div>
+          </div>
+
+          <div class="priority-option" data-value="What should be protected?">
+            <div class="rank">+</div>
+            <div>
+              <div class="question-title">What should be protected?</div>
+              <div class="question-desc">Identify what may be at risk before decisions are made.</div>
+            </div>
+          </div>
+
+          <div class="priority-option" data-value="Can something be built there?">
+            <div class="rank">+</div>
+            <div>
+              <div class="question-title">Can something be built there?</div>
+              <div class="question-desc">Think about whether the changed area could support future structures or systems.</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="actions">
+          <button class="primary" type="button" onclick="saveRanking()">Save Question Ranking</button>
+          <button class="secondary" type="button" onclick="clearRanking()">Clear Ranking</button>
+        </div>
+
+        <div class="summary" id="summaryBox"></div>
+        <div class="hud" id="hud">Wait for the Guardian’s reveal. Then rank exactly three questions.</div>
+      </article>
+
+      <aside class="panel">
+        <div class="kicker">Observation Carryover</div>
+        <h2>Your earlier notes still matter.</h2>
+        <p class="note" id="observationNote">
+          If you completed the observation step, your notes have been saved. The mystery now asks you to choose the best questions.
+        </p>
+
+        <div class="side-box">
+          <strong>Not a worksheet</strong>
+          The goal is not to be right first. The goal is to decide which question deserves attention first.
+        </div>
+
+        <div class="side-box">
+          <strong>Next locked step</strong>
+          After question ranking, the student will justify the choices. Advisor reactions come later.
+        </div>
+      </aside>
+    </section>
+  </main>
+
+  <script>
+    const IDENTITY_KEY = "stemNationStudentIdentity";
+    const OBSERVATION_KEY = "stemNationAcademyObservationV1";
+    const RANKING_KEY = "stemNationQuestionPriorityRankingV1";
+
+    const selected = [];
+    const hud = document.getElementById("hud");
+    const summaryBox = document.getElementById("summaryBox");
+    const heroSub = document.getElementById("heroSub");
+    const observationNote = document.getElementById("observationNote");
+
+    let displayName = "Academy Learner";
+
+    try {
+      const saved = JSON.parse(localStorage.getItem(IDENTITY_KEY) || "null");
+      if (saved) {
+        displayName = saved.teacherApprovedName || saved.approvedName || saved.name || "Academy Learner";
+        displayName = String(displayName)
+          .replace(/^New Arrival\s*/i, "")
+          .replace(/^Academy Learner\s*/i, "")
+          .trim() || "Academy Learner";
+
+        heroSub.textContent = `${displayName}, you made observations. Now the Guardian reveals more, but not enough to solve the mystery. The next challenge is deciding which questions should guide the Council first.`;
+      }
+    } catch (error) {
+      console.warn("Could not load identity.", error);
+    }
+
+    try {
+      const observation = JSON.parse(localStorage.getItem(OBSERVATION_KEY) || "null");
+      if (observation && observation.observations) {
+        observationNote.textContent = "Your observation notes were saved. Use them now to decide which questions matter most.";
+      }
+    } catch (error) {
+      console.warn("Could not load observation.", error);
+    }
+
+    function revealCards() {
+      [1,2,3,4].forEach((number, index) => {
+        setTimeout(() => {
+          document.getElementById(`reveal${number}`).classList.add("show");
+          if (number === 4) {
+            hud.textContent = "Now rank exactly three questions in order of importance.";
+          }
+        }, 650 + index * 1100);
+      });
+    }
+
+    document.querySelectorAll(".priority-option").forEach(option => {
+      option.addEventListener("click", () => {
+        const value = option.dataset.value;
+
+        if (option.classList.contains("selected")) {
+          option.classList.remove("selected");
+          const idx = selected.indexOf(value);
+          if (idx >= 0) selected.splice(idx, 1);
+        } else {
+          if (selected.length >= 3) {
+            hud.textContent = "You already selected three questions. Deselect one if you want to change the order.";
+            return;
+          }
+          option.classList.add("selected");
+          selected.push(value);
+        }
+
+        updateRanks();
+      });
+    });
+
+    function updateRanks() {
+      document.querySelectorAll(".priority-option").forEach(option => {
+        const value = option.dataset.value;
+        const rank = option.querySelector(".rank");
+        const index = selected.indexOf(value);
+        rank.textContent = index >= 0 ? index + 1 : "+";
+      });
+
+      hud.textContent = selected.length === 3
+        ? "Three questions selected. Save the ranking when ready."
+        : `Select ${3 - selected.length} more question${3 - selected.length === 1 ? "" : "s"}.`;
+    }
+
+    function saveRanking() {
+      if (selected.length !== 3) {
+        hud.textContent = "Rank exactly three questions before moving on.";
+        return;
+      }
+
+      localStorage.setItem(RANKING_KEY, JSON.stringify({
+        displayName,
+        ranking: selected,
+        completedAt: new Date().toISOString()
+      }));
+
+      summaryBox.innerHTML = `
+        <strong>Question Priority Ranking Saved</strong><br>
+        1. ${escapeHtml(selected[0])}<br>
+        2. ${escapeHtml(selected[1])}<br>
+        3. ${escapeHtml(selected[2])}<br><br>
+        The next step is the Justification Engine, where you explain why these questions matter.
+      `;
+      summaryBox.classList.add("show");
+      hud.textContent = "Ranking saved. The next build will ask you to justify your choices.";
+    }
+
+    function clearRanking() {
+      selected.splice(0, selected.length);
+      document.querySelectorAll(".priority-option").forEach(option => option.classList.remove("selected"));
+      updateRanks();
+      summaryBox.classList.remove("show");
+      summaryBox.innerHTML = "";
+    }
+
+    function escapeHtml(str) {
+      return String(str)
+        .replaceAll("&", "&amp;")
+        .replaceAll("<", "&lt;")
+        .replaceAll(">", "&gt;")
+        .replaceAll('"', "&quot;")
+        .replaceAll("'", "&#039;");
+    }
+
+    revealCards();
+  </script>
+</body>
+</html>
