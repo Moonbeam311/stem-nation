@@ -276,6 +276,10 @@ def washed_out_crossing_intro():
 
 
 # STEM_NATION_STUDENT_LANDING_ROUTE_V1
+@app.route("/dev_reset")
+def dev_reset():
+    return render_template("dev_reset.html")
+
 @app.route("/student")
 def student_landing():
     return render_template("student_landing.html")
