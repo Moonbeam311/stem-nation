@@ -2366,6 +2366,194 @@
   line-height: normal;
 }
 
+
+/* CI-4L_B_WORLD_DECISION_ENTRY_POLISH */
+.academy-world-entry-shell {
+  max-width: 1220px;
+  margin: 0 auto 28px;
+  padding: 0;
+}
+
+.academy-world-entry {
+  border: 1px solid rgba(244, 211, 94, .32);
+  border-radius: 30px;
+  background:
+    radial-gradient(circle at 18% 16%, rgba(244,211,94,.16), transparent 28%),
+    radial-gradient(circle at 84% 18%, rgba(125,211,252,.13), transparent 32%),
+    linear-gradient(135deg, rgba(5, 12, 24, .94), rgba(8, 24, 38, .88));
+  box-shadow: 0 28px 84px rgba(0,0,0,.38);
+  padding: 22px;
+  display: grid;
+  grid-template-columns: 104px 1fr;
+  gap: 20px;
+  align-items: center;
+  overflow: hidden;
+  position: relative;
+}
+
+.academy-world-entry::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background:
+    linear-gradient(90deg, rgba(255,255,255,.022) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(255,255,255,.014) 1px, transparent 1px);
+  background-size: 76px 76px;
+  opacity: .24;
+}
+
+.academy-world-entry-avatar {
+  position: relative;
+  z-index: 1;
+  width: 104px;
+  height: 122px;
+  border-radius: 26px;
+  border: 1px solid rgba(244,211,94,.38);
+  background:
+    radial-gradient(circle at 50% 26%, rgba(248,240,213,.20), transparent 24%),
+    linear-gradient(145deg, rgba(125,211,252,.12), rgba(244,211,94,.08));
+  overflow: hidden;
+  display: grid;
+  place-items: center;
+  color: #f4d35e;
+  font-weight: 900;
+  text-transform: uppercase;
+  letter-spacing: .08em;
+  font-size: .68rem;
+  text-align: center;
+  box-shadow: 0 16px 38px rgba(0,0,0,.30);
+}
+
+.academy-world-entry-avatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.academy-world-entry-content {
+  position: relative;
+  z-index: 1;
+}
+
+.academy-world-entry-kicker {
+  color: #f4d35e;
+  text-transform: uppercase;
+  letter-spacing: .14em;
+  font-size: .80rem;
+  font-weight: 900;
+  margin-bottom: 10px;
+}
+
+.academy-world-entry h1 {
+  margin: 0;
+  color: #fff6d2;
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: clamp(2.25rem, 5vw, 4.8rem);
+  line-height: .95;
+  text-align: left;
+  text-shadow: 0 14px 38px rgba(0,0,0,.36);
+}
+
+.academy-world-entry-sub {
+  margin: 14px 0 0;
+  max-width: 960px;
+  color: rgba(248,241,221,.76);
+  line-height: 1.62;
+  font-size: 1.02rem;
+}
+
+.academy-world-entry-track {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin-top: 18px;
+}
+
+.academy-world-pill {
+  border: 1px solid rgba(244,211,94,.22);
+  background: rgba(244,211,94,.075);
+  color: rgba(248,241,221,.84);
+  border-radius: 999px;
+  padding: 8px 12px;
+  font-size: .84rem;
+  font-weight: 900;
+}
+
+.academy-world-pill.ready {
+  border-color: rgba(76, 175, 80, .55);
+  background: rgba(76, 175, 80, .15);
+  color: #b8f5c0;
+}
+
+.academy-world-entry-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 18px;
+}
+
+.academy-world-entry-actions a {
+  border-radius: 999px;
+  padding: 12px 18px;
+  font-weight: 900;
+  text-decoration: none;
+}
+
+.academy-world-primary {
+  background: linear-gradient(135deg, #f4d35e, #d7a51e);
+  color: #171006;
+  box-shadow: 0 12px 36px rgba(244,211,94,.18);
+}
+
+.academy-world-secondary {
+  color: #f8f1dd;
+  border: 1px solid rgba(255,255,255,.18);
+  background: rgba(255,255,255,.08);
+}
+
+.academy-world-entry-brief {
+  margin-top: 18px;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 10px;
+}
+
+.academy-world-brief-card {
+  border: 1px solid rgba(255,255,255,.10);
+  background: rgba(255,255,255,.055);
+  border-radius: 18px;
+  padding: 13px;
+}
+
+.academy-world-brief-card strong {
+  display: block;
+  color: #f4d35e;
+  margin-bottom: 5px;
+  font-size: .88rem;
+}
+
+.academy-world-brief-card span {
+  color: rgba(248,241,221,.72);
+  line-height: 1.42;
+  font-size: .88rem;
+}
+
+@media (max-width: 860px) {
+  .academy-world-entry {
+    grid-template-columns: 1fr;
+  }
+
+  .academy-world-entry h1 {
+    font-size: 2.35rem;
+  }
+
+  .academy-world-entry-brief {
+    grid-template-columns: 1fr;
+  }
+}
+
 </style>
 
 <style>
@@ -2395,6 +2583,50 @@
 
 
 <body>
+
+<section class="academy-world-entry-shell" id="academyWorldEntryShell">
+  <div class="academy-world-entry">
+    <div class="academy-world-entry-avatar" id="academyWorldAvatar">
+      Avatar
+    </div>
+
+    <div class="academy-world-entry-content">
+      <div class="academy-world-entry-kicker">World Decision Entry</div>
+      <h1>First World Decision</h1>
+      <p class="academy-world-entry-sub" id="academyWorldIntro">
+        Academy Learner, your Academy inquiry path is complete. You are now entering the World Board, where your first civilization decision begins with the land.
+      </p>
+
+      <div class="academy-world-entry-track">
+        <div class="academy-world-pill" id="academyWorldStudentPill">Academy Learner</div>
+        <div class="academy-world-pill ready" id="academyWorldReadinessPill">Checking Academy readiness</div>
+        <div class="academy-world-pill">Mission 1 · Claim the Land</div>
+        <div class="academy-world-pill">Observe · Choose · Defend</div>
+      </div>
+
+      <div class="academy-world-entry-brief">
+        <div class="academy-world-brief-card">
+          <strong>1 · Observe the regions</strong>
+          <span>Look for water, food, movement paths, defense, danger, and trade possibilities.</span>
+        </div>
+        <div class="academy-world-brief-card">
+          <strong>2 · Choose a settlement site</strong>
+          <span>Your people need a beginning. Every region offers a strength and a risk.</span>
+        </div>
+        <div class="academy-world-brief-card">
+          <strong>3 · Defend the decision</strong>
+          <span>Use evidence from the World Board before your civilization records its first founding choice.</span>
+        </div>
+      </div>
+
+      <div class="academy-world-entry-actions">
+        <a class="academy-world-primary" href="#compactMissionPanel">View Active Mission</a>
+        <a class="academy-world-secondary" href="/student_hub">Return to Student Hub</a>
+      </div>
+    </div>
+  </div>
+</section>
+
 
 
 <!-- STEM_NATION_THEATER_MODE_ENTRY_OVERLAY_V1 -->
@@ -5756,6 +5988,106 @@ Displays active teacher-guided class session on the student map.
   window.addEventListener("storage", renderPrompt);
   window.addEventListener("focus", renderPrompt);
   setInterval(renderPrompt, 1000);
+})();
+</script>
+
+
+<script>
+/* CI-4L_B_WORLD_DECISION_ENTRY_POLISH */
+(function installAcademyWorldDecisionEntry() {
+  const IDENTITY_KEY = "stemNationStudentIdentity";
+  const OBSERVATION_KEY = "stemNationAcademyObservationV1";
+  const RANKING_KEY = "stemNationQuestionPriorityRankingV1";
+  const JUSTIFICATION_KEY = "stemNationQuestionJustificationV1";
+  const REACTION_KEY = "stemNationAdvisorReactionV1";
+  const DEBRIEF_KEY = "stemNationMissionDebriefV1";
+  const WORLD_ENTRY_KEY = "stemNationWorldDecisionEntryV1";
+
+  function readJson(key) {
+    try {
+      return JSON.parse(localStorage.getItem(key) || "null");
+    } catch (error) {
+      console.warn("Could not read localStorage key:", key, error);
+      return null;
+    }
+  }
+
+  function looksLikeImageSource(value) {
+    return typeof value === "string" && (
+      value.startsWith("data:image/") ||
+      value.startsWith("/static/") ||
+      value.startsWith("http://") ||
+      value.startsWith("https://")
+    );
+  }
+
+  const identity = readJson(IDENTITY_KEY) || {};
+  const observation = readJson(OBSERVATION_KEY);
+  const ranking = readJson(RANKING_KEY);
+  const justification = readJson(JUSTIFICATION_KEY);
+  const reaction = readJson(REACTION_KEY);
+  const debrief = readJson(DEBRIEF_KEY);
+
+  let displayName = identity.teacherApprovedName || identity.approvedName || identity.name || "Academy Learner";
+  displayName = String(displayName)
+    .replace(/^New Arrival\s*/i, "")
+    .replace(/^Academy Learner\s*/i, "")
+    .trim() || "Academy Learner";
+
+  const avatarChoice = identity.avatarChoice || identity.avatarTitle || "Academy Avatar";
+  const avatarSource = identity.portrait || identity.fallback || "";
+
+  const intro = document.getElementById("academyWorldIntro");
+  const studentPill = document.getElementById("academyWorldStudentPill");
+  const readinessPill = document.getElementById("academyWorldReadinessPill");
+  const avatarBox = document.getElementById("academyWorldAvatar");
+
+  if (intro) {
+    intro.textContent = `${displayName}, your Academy inquiry path is complete. You are now entering the World Board, where your first civilization decision begins with the land.`;
+  }
+
+  if (studentPill) {
+    studentPill.textContent = `${avatarChoice} · ${displayName}`;
+  }
+
+  if (avatarBox) {
+    avatarBox.innerHTML = "";
+
+    if (looksLikeImageSource(avatarSource)) {
+      const img = document.createElement("img");
+      img.src = avatarSource;
+      img.alt = "Student Academy avatar";
+      avatarBox.appendChild(img);
+    } else {
+      avatarBox.textContent = "Avatar";
+    }
+  }
+
+  const ready =
+    observation &&
+    ranking && Array.isArray(ranking.ranking) && ranking.ranking.length === 3 &&
+    justification && Array.isArray(justification.justifications) &&
+    reaction && Array.isArray(reaction.reactions) &&
+    debrief && debrief.reflection;
+
+  if (readinessPill) {
+    if (ready) {
+      readinessPill.textContent = "Academy Trial Complete";
+      readinessPill.classList.add("ready");
+    } else {
+      readinessPill.textContent = "Academy Record In Progress";
+      readinessPill.classList.remove("ready");
+    }
+  }
+
+  localStorage.setItem(WORLD_ENTRY_KEY, JSON.stringify({
+    displayName,
+    avatarChoice,
+    academyTrialComplete: !!ready,
+    enteredAt: new Date().toISOString(),
+    nextMission: "Mission 1 · Claim the Land",
+    route: "/map"
+  }));
 })();
 </script>
 
