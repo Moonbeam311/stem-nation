@@ -343,6 +343,63 @@
       .avatar-grid { grid-template-columns: 1fr; }
       .preview-symbol { width: 126px; height: 150px; }
     }
+  
+    /* CI-4B_F3_REALISTIC_AVATAR_SLOTS */
+    .avatar-image-frame {
+      width: 92px;
+      height: 112px;
+      border-radius: 24px;
+      border: 1px solid rgba(244,211,94,.36);
+      background:
+        radial-gradient(circle at 50% 28%, rgba(248,240,213,.24), transparent 22%),
+        linear-gradient(145deg, rgba(125,211,252,.12), rgba(244,211,94,.08));
+      display: grid;
+      place-items: center;
+      margin-bottom: 10px;
+      overflow: hidden;
+      position: relative;
+      z-index: 1;
+    }
+
+    .avatar-image-frame img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .avatar-placeholder {
+      width: 54px;
+      height: 72px;
+      border-radius: 999px 999px 26px 26px;
+      background:
+        radial-gradient(circle at 50% 22%, rgba(248,240,213,.88), rgba(248,240,213,.5) 28%, transparent 30%),
+        linear-gradient(to bottom, transparent 36%, rgba(248,240,213,.54) 37%, rgba(248,240,213,.3));
+      opacity: .82;
+    }
+
+    .preview-image-frame {
+      width: 160px;
+      height: 190px;
+      border-radius: 34px;
+      border: 1px solid rgba(244,211,94,.42);
+      background:
+        radial-gradient(circle at 50% 26%, rgba(248,240,213,.24), transparent 22%),
+        linear-gradient(145deg, rgba(125,211,252,.12), rgba(244,211,94,.08));
+      display: grid;
+      place-items: center;
+      margin: 8px auto 18px;
+      overflow: hidden;
+      box-shadow: 0 18px 52px rgba(0,0,0,.28);
+    }
+
+    .preview-image-frame img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
   </style>
 </head>
 
@@ -385,7 +442,7 @@
         <aside class="panel preview-card">
           <div>
             <div class="kicker">Academy Profile Preview</div>
-            <div class="preview-symbol" id="previewSymbol">🧭</div>
+            <div class="preview-image-frame" id="previewAvatarFrame"><div class="avatar-placeholder"></div></div>
             <div class="preview-name" id="previewName">New Arrival</div>
             <div class="preview-rank">Academy Learner</div>
             <div class="preview-role" id="previewRole">
@@ -410,35 +467,31 @@
 
     // CI-4B_F_STUDENT_ONLY_IDENTITY_ROSTER
     // CI-4B_F2_AVATAR_ONLY_IDENTITY
+    // CI-4B_F3_REALISTIC_AVATAR_SLOTS
     const avatars = [
       {
-        role: "Avatar 1",
-        title: "Academy Avatar",
-        symbol: "🧑🏽‍🎓",
+        label: "Avatar 1",
+        image: "/static/avatars/student_choices/avatar_01.png",
         motto: "Choose the avatar that feels most like you."
       },
       {
-        role: "Avatar 2",
-        title: "Academy Avatar",
-        symbol: "🧭",
+        label: "Avatar 2",
+        image: "/static/avatars/student_choices/avatar_02.png",
         motto: "Choose the avatar that feels most like you."
       },
       {
-        role: "Avatar 3",
-        title: "Academy Avatar",
-        symbol: "📜",
+        label: "Avatar 3",
+        image: "/static/avatars/student_choices/avatar_03.png",
         motto: "Choose the avatar that feels most like you."
       },
       {
-        role: "Avatar 4",
-        title: "Academy Avatar",
-        symbol: "🔎",
+        label: "Avatar 4",
+        image: "/static/avatars/student_choices/avatar_04.png",
         motto: "Choose the avatar that feels most like you."
       },
       {
-        role: "Avatar 5",
-        title: "Academy Avatar",
-        symbol: "🧩",
+        label: "Avatar 5",
+        image: "/static/avatars/student_choices/avatar_05.png",
         motto: "Choose the avatar that feels most like you."
       }
     ];
@@ -461,12 +514,14 @@
       avatarGrid.innerHTML = avatars.map((avatar, index) => `
         <button
           type="button"
-          class="avatar-card ${avatar.role === selectedAvatar.role ? "selected" : ""}"
+          class="avatar-card ${avatar.label === selectedAvatar.label ? "selected" : ""}"
           data-avatar-index="${index}"
-          aria-label="Choose ${avatar.role} avatar"
+          aria-label="Choose ${avatar.label}"
         >
-          <div class="avatar-symbol">${avatar.symbol}</div>
-          <div class="avatar-role">${avatar.role}</div>
+          <div class="avatar-image-frame">
+            <img src="${avatar.image}" alt="${avatar.label}" onerror="this.remove(); this.parentElement.innerHTML='<div class=&quot;avatar-placeholder&quot;></div>';">
+          </div>
+          <div class="avatar-role">${avatar.label}</div>
           <div class="avatar-title">Choose this Academy avatar</div>
           <div class="avatar-motto">“${avatar.motto}”</div>
         </button>
@@ -484,9 +539,14 @@
 
     function updatePreview() {
       previewName.textContent = safeName();
-      previewSymbol.textContent = selectedAvatar.symbol;
+
+      const frame = document.getElementById("previewAvatarFrame");
+      if (frame) {
+        frame.innerHTML = `<img src="${selectedAvatar.image}" alt="${selectedAvatar.label}" onerror="this.remove(); this.parentElement.innerHTML='<div class=&quot;avatar-placeholder&quot;></div>';">`;
+      }
+
       previewRole.innerHTML = `
-        <strong>${selectedAvatar.role}</strong>
+        <strong>${selectedAvatar.label}</strong>
         Choose the avatar that feels most like you.
       `;
     }
@@ -498,20 +558,20 @@
         name: safeName(),
         status: "Academy Learner",
         leadershipStage: "New Arrival",
-        portraitType: "academy-avatar-choice",
-        portrait: selectedAvatar.symbol,
-        fallback: selectedAvatar.symbol,
-        role: selectedAvatar.role,
-        avatarTitle: selectedAvatar.title,
+        portraitType: "realistic-avatar-slot",
+        portrait: selectedAvatar.image,
+        fallback: selectedAvatar.image,
+        avatarChoice: selectedAvatar.label,
+        avatarTitle: "Academy Avatar",
         avatarMotto: selectedAvatar.motto,
         savedAt
       };
 
       const avatarRecord = {
-        role: selectedAvatar.role,
-        title: selectedAvatar.title,
-        portrait: selectedAvatar.symbol,
-        fallback: selectedAvatar.symbol,
+        avatarChoice: selectedAvatar.label,
+        title: "Academy Avatar",
+        portrait: selectedAvatar.image,
+        fallback: selectedAvatar.image,
         motto: selectedAvatar.motto,
         savedAt
       };
