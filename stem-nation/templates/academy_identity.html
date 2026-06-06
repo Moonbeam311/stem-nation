@@ -400,6 +400,38 @@
       display: block;
     }
 
+  
+    /* CI-4B_F3B_CLEAN_PLACEHOLDER_EXPERIENCE */
+    .avatar-image-frame.empty,
+    .preview-image-frame.empty {
+      background:
+        radial-gradient(circle at 50% 22%, rgba(248,240,213,.18), transparent 24%),
+        linear-gradient(145deg, rgba(125,211,252,.13), rgba(244,211,94,.09));
+    }
+
+    .avatar-placeholder {
+      position: relative;
+      width: 62px;
+      height: 82px;
+      border-radius: 999px 999px 26px 26px;
+      background:
+        radial-gradient(circle at 50% 22%, rgba(248,240,213,.88), rgba(248,240,213,.62) 23%, transparent 24%),
+        linear-gradient(to bottom, transparent 34%, rgba(248,240,213,.54) 35%, rgba(248,240,213,.22) 100%);
+      opacity: .86;
+    }
+
+    .avatar-placeholder::after {
+      content: "";
+      position: absolute;
+      left: 50%;
+      top: 56px;
+      width: 70px;
+      height: 1px;
+      transform: translateX(-50%);
+      background: rgba(244,211,94,.35);
+      box-shadow: 0 0 22px rgba(244,211,94,.2);
+    }
+
   </style>
 </head>
 
@@ -435,7 +467,7 @@
           <div class="status" id="status"></div>
 
           <p class="note">
-            Choose the student identity that best fits how you want to enter the first mission. Academy figures such as Scout, Mapkeeper, Builder, Healer, and Guardian will be introduced later.
+            Choose the avatar that feels most like you. Realistic avatar portraits will be added as the Academy grows.
           </p>
         </article>
 
@@ -468,30 +500,36 @@
     // CI-4B_F_STUDENT_ONLY_IDENTITY_ROSTER
     // CI-4B_F2_AVATAR_ONLY_IDENTITY
     // CI-4B_F3_REALISTIC_AVATAR_SLOTS
+    // CI-4B_F3B_CLEAN_PLACEHOLDER_EXPERIENCE
     const avatars = [
       {
         label: "Avatar 1",
-        image: "/static/avatars/student_choices/avatar_01.png",
+        image: "",
+        futureImage: "/static/avatars/student_choices/avatar_01.png",
         motto: "Choose the avatar that feels most like you."
       },
       {
         label: "Avatar 2",
-        image: "/static/avatars/student_choices/avatar_02.png",
+        image: "",
+        futureImage: "/static/avatars/student_choices/avatar_02.png",
         motto: "Choose the avatar that feels most like you."
       },
       {
         label: "Avatar 3",
-        image: "/static/avatars/student_choices/avatar_03.png",
+        image: "",
+        futureImage: "/static/avatars/student_choices/avatar_03.png",
         motto: "Choose the avatar that feels most like you."
       },
       {
         label: "Avatar 4",
-        image: "/static/avatars/student_choices/avatar_04.png",
+        image: "",
+        futureImage: "/static/avatars/student_choices/avatar_04.png",
         motto: "Choose the avatar that feels most like you."
       },
       {
         label: "Avatar 5",
-        image: "/static/avatars/student_choices/avatar_05.png",
+        image: "",
+        futureImage: "/static/avatars/student_choices/avatar_05.png",
         motto: "Choose the avatar that feels most like you."
       }
     ];
@@ -511,21 +549,27 @@
     }
 
     function renderAvatarGrid() {
-      avatarGrid.innerHTML = avatars.map((avatar, index) => `
-        <button
-          type="button"
-          class="avatar-card ${avatar.label === selectedAvatar.label ? "selected" : ""}"
-          data-avatar-index="${index}"
-          aria-label="Choose ${avatar.label}"
-        >
-          <div class="avatar-image-frame">
-            <img src="${avatar.image}" alt="${avatar.label}" onerror="this.remove(); this.parentElement.innerHTML='<div class=&quot;avatar-placeholder&quot;></div>';">
-          </div>
-          <div class="avatar-role">${avatar.label}</div>
-          <div class="avatar-title">Choose this Academy avatar</div>
-          <div class="avatar-motto">“${avatar.motto}”</div>
-        </button>
-      `).join("");
+      avatarGrid.innerHTML = avatars.map((avatar, index) => {
+        const visual = avatar.image
+          ? `<img src="${avatar.image}" alt="${avatar.label}">`
+          : `<div class="avatar-placeholder"></div>`;
+
+        return `
+          <button
+            type="button"
+            class="avatar-card ${avatar.label === selectedAvatar.label ? "selected" : ""}"
+            data-avatar-index="${index}"
+            aria-label="Choose ${avatar.label}"
+          >
+            <div class="avatar-image-frame ${avatar.image ? "" : "empty"}">
+              ${visual}
+            </div>
+            <div class="avatar-role">${avatar.label}</div>
+            <div class="avatar-title">Choose this Academy avatar</div>
+            <div class="avatar-motto">“${avatar.motto}”</div>
+          </button>
+        `;
+      }).join("");
 
       document.querySelectorAll(".avatar-card").forEach(card => {
         card.addEventListener("click", () => {
@@ -542,7 +586,10 @@
 
       const frame = document.getElementById("previewAvatarFrame");
       if (frame) {
-        frame.innerHTML = `<img src="${selectedAvatar.image}" alt="${selectedAvatar.label}" onerror="this.remove(); this.parentElement.innerHTML='<div class=&quot;avatar-placeholder&quot;></div>';">`;
+        frame.classList.toggle("empty", !selectedAvatar.image);
+        frame.innerHTML = selectedAvatar.image
+          ? `<img src="${selectedAvatar.image}" alt="${selectedAvatar.label}">`
+          : `<div class="avatar-placeholder"></div>`;
       }
 
       previewRole.innerHTML = `
@@ -559,8 +606,9 @@
         status: "Academy Learner",
         leadershipStage: "New Arrival",
         portraitType: "realistic-avatar-slot",
-        portrait: selectedAvatar.image,
-        fallback: selectedAvatar.image,
+        portrait: selectedAvatar.image || "",
+        fallback: selectedAvatar.image || "",
+        futureImage: selectedAvatar.futureImage || "",
         avatarChoice: selectedAvatar.label,
         avatarTitle: "Academy Avatar",
         avatarMotto: selectedAvatar.motto,
@@ -570,8 +618,9 @@
       const avatarRecord = {
         avatarChoice: selectedAvatar.label,
         title: "Academy Avatar",
-        portrait: selectedAvatar.image,
-        fallback: selectedAvatar.image,
+        portrait: selectedAvatar.image || "",
+        fallback: selectedAvatar.image || "",
+        futureImage: selectedAvatar.futureImage || "",
         motto: selectedAvatar.motto,
         savedAt
       };
