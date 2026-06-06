@@ -13,6 +13,10 @@ def decision_bridge():
 def council_stage():
     return render_template("council_stage.html")
 
+@app.route("/student_hub")
+def student_hub():
+    return render_template("student_hub.html")
+
 
 # =========================
 # ZIP ENTRY (UNCHANGED)
