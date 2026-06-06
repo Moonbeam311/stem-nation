@@ -2,16 +2,20 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>STEM Nation Academy | Advisor Reactions</title>
+  <title>Advisor Reactions | STEM Nation Academy</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
   <style>
+    /* CI-4I_B_ADVISOR_REACTIONS_COUNCIL_POLISH */
     :root {
       --gold: #f4d35e;
       --gold2: #d7a51e;
+      --blue: #7dd3fc;
       --text: #f8f1dd;
-      --muted: #d8cfb0;
-      --panel: rgba(5, 12, 24, .84);
-      --border: rgba(244, 211, 94, .30);
-      --soft: rgba(255,255,255,.07);
+      --muted: rgba(248,241,221,.72);
+      --panel: rgba(5, 12, 24, .82);
+      --soft: rgba(255,255,255,.055);
+      --border: rgba(244,211,94,.26);
     }
 
     * { box-sizing: border-box; }
@@ -19,80 +23,193 @@
     body {
       margin: 0;
       min-height: 100vh;
-      background:
-        radial-gradient(circle at 20% 10%, rgba(244,211,94,.12), transparent 32%),
-        radial-gradient(circle at 80% 0%, rgba(80,160,220,.16), transparent 36%),
-        linear-gradient(180deg, #06111f, #0a192b 58%, #030914);
       color: var(--text);
       font-family: Georgia, "Times New Roman", serif;
+      background:
+        radial-gradient(circle at 18% 10%, rgba(244,211,94,.16), transparent 30%),
+        radial-gradient(circle at 84% 14%, rgba(125,211,252,.14), transparent 34%),
+        linear-gradient(135deg, #061826 0%, #07131d 58%, #03070d 100%);
+      overflow-x: hidden;
+    }
+
+    .atmosphere {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      background:
+        linear-gradient(90deg, rgba(255,255,255,.024) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(255,255,255,.016) 1px, transparent 1px);
+      background-size: 78px 78px;
+      opacity: .22;
     }
 
     .page {
-      max-width: 1180px;
+      position: relative;
+      z-index: 1;
+      max-width: 1380px;
       margin: 0 auto;
-      padding: 34px 22px 70px;
-    }
-
-    .hero,
-    .panel {
-      border: 1px solid var(--border);
-      background:
-        linear-gradient(135deg, rgba(244,211,94,.10), rgba(255,255,255,.035)),
-        var(--panel);
-      border-radius: 28px;
-      box-shadow: 0 24px 78px rgba(0,0,0,.32);
-      backdrop-filter: blur(8px);
+      padding: 28px 20px 38px;
     }
 
     .hero {
-      padding: clamp(22px, 4vw, 42px);
+      border: 1px solid var(--border);
+      border-radius: 32px;
+      background:
+        radial-gradient(circle at 18% 18%, rgba(244,211,94,.13), transparent 28%),
+        radial-gradient(circle at 86% 20%, rgba(125,211,252,.10), transparent 30%),
+        var(--panel);
+      box-shadow: 0 28px 84px rgba(0,0,0,.36);
+      padding: 22px;
       margin-bottom: 22px;
+      display: grid;
+      grid-template-columns: 92px 1fr;
+      gap: 18px;
+      align-items: center;
+    }
+
+    .student-avatar {
+      width: 92px;
+      height: 108px;
+      border-radius: 24px;
+      border: 1px solid rgba(244,211,94,.36);
+      background:
+        radial-gradient(circle at 50% 26%, rgba(248,240,213,.22), transparent 24%),
+        linear-gradient(145deg, rgba(125,211,252,.12), rgba(244,211,94,.08));
+      overflow: hidden;
+      display: grid;
+      place-items: center;
+      box-shadow: 0 16px 38px rgba(0,0,0,.30);
+    }
+
+    .student-avatar img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .avatar-fallback {
+      color: var(--gold);
+      text-transform: uppercase;
+      letter-spacing: .08em;
+      font-size: .68rem;
+      font-weight: 900;
+      text-align: center;
+      padding: 8px;
     }
 
     .kicker {
       color: var(--gold);
-      letter-spacing: .16em;
       text-transform: uppercase;
-      font-size: .78rem;
+      letter-spacing: .14em;
+      font-size: .80rem;
       font-weight: 900;
       margin-bottom: 10px;
     }
 
     h1 {
-      margin: 0 0 12px;
-      font-size: clamp(2.1rem, 5vw, 4.5rem);
-      line-height: .96;
+      margin: 0;
+      color: #fff6d2;
+      font-size: clamp(2.3rem, 5vw, 4.9rem);
+      line-height: .95;
+      text-shadow: 0 14px 38px rgba(0,0,0,.36);
     }
 
     h2 {
       margin: 0 0 10px;
-      color: #fff4d0;
-      font-size: clamp(1.45rem, 3vw, 2.2rem);
+      color: #fff4cf;
+      font-size: clamp(1.45rem, 3vw, 2.15rem);
     }
 
     .sub,
     .prompt,
     .note {
       color: var(--muted);
-      line-height: 1.6;
-      font-size: 1.05rem;
+      line-height: 1.62;
+      font-size: 1.02rem;
     }
 
     .sub {
-      max-width: 900px;
-      margin: 0;
+      margin: 14px 0 0;
+      max-width: 940px;
     }
 
-    .grid {
+    .mission-track {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-top: 18px;
+    }
+
+    .mission-pill {
+      border: 1px solid rgba(244,211,94,.20);
+      background: rgba(244,211,94,.07);
+      color: rgba(248,241,221,.82);
+      border-radius: 999px;
+      padding: 8px 12px;
+      font-size: .84rem;
+      font-weight: 900;
+    }
+
+    .layout {
       display: grid;
-      grid-template-columns: 1fr 380px;
-      gap: 20px;
+      grid-template-columns: 1.08fr .92fr;
+      gap: 22px;
       align-items: start;
     }
 
     .panel {
+      border: 1px solid var(--border);
+      border-radius: 30px;
+      background: var(--panel);
+      box-shadow: 0 24px 72px rgba(0,0,0,.30);
       padding: 22px;
+      overflow: hidden;
     }
+
+    .council-dais {
+      min-height: 180px;
+      border-radius: 26px;
+      border: 1px solid rgba(125,211,252,.16);
+      background:
+        radial-gradient(circle at 50% 54%, rgba(244,211,94,.15), transparent 26%),
+        radial-gradient(circle at 22% 26%, rgba(125,211,252,.10), transparent 22%),
+        radial-gradient(circle at 78% 26%, rgba(125,211,252,.10), transparent 22%),
+        linear-gradient(180deg, rgba(255,255,255,.035), rgba(255,255,255,.01));
+      position: relative;
+      overflow: hidden;
+      margin: 16px 0 18px;
+    }
+
+    .council-dais::before {
+      content: "";
+      position: absolute;
+      inset: 22px 34px;
+      border-radius: 999px;
+      border: 2px solid rgba(244,211,94,.22);
+      box-shadow: inset 0 0 34px rgba(0,0,0,.35);
+    }
+
+    .seat {
+      position: absolute;
+      width: 54px;
+      height: 54px;
+      border-radius: 18px;
+      display: grid;
+      place-items: center;
+      border: 1px solid rgba(244,211,94,.24);
+      background: rgba(0,0,0,.28);
+      color: var(--gold);
+      font-weight: 900;
+      letter-spacing: .08em;
+      box-shadow: 0 14px 36px rgba(0,0,0,.24);
+    }
+
+    .seat.scout { left: 12%; top: 28%; }
+    .seat.mapkeeper { left: 31%; top: 16%; }
+    .seat.builder { left: 50%; top: 11%; transform: translateX(-50%); }
+    .seat.healer { right: 31%; top: 16%; }
+    .seat.guardian { right: 12%; top: 28%; }
 
     .reaction-feed {
       display: grid;
@@ -101,9 +218,9 @@
     }
 
     .reaction-card {
-      border: 1px solid rgba(255,255,255,.13);
-      background: rgba(0,0,0,.24);
-      border-radius: 20px;
+      border: 1px solid rgba(255,255,255,.10);
+      background: var(--soft);
+      border-radius: 22px;
       padding: 16px;
       opacity: 0;
       transform: translateY(12px);
@@ -116,29 +233,33 @@
     }
 
     .reaction-card.primary-reaction {
-      border-color: rgba(244,211,94,.58);
+      border-color: rgba(244,211,94,.62);
       background:
-        linear-gradient(135deg, rgba(244,211,94,.12), rgba(255,255,255,.035)),
-        rgba(0,0,0,.26);
+        linear-gradient(135deg, rgba(244,211,94,.13), rgba(255,255,255,.04)),
+        rgba(0,0,0,.18);
     }
 
     .advisor-line {
       display: grid;
-      grid-template-columns: 52px 1fr;
+      grid-template-columns: 62px 1fr;
       gap: 14px;
       align-items: start;
     }
 
     .advisor-mark {
-      width: 52px;
-      height: 52px;
-      border-radius: 18px;
+      width: 62px;
+      height: 62px;
+      border-radius: 20px;
       border: 1px solid rgba(244,211,94,.34);
       display: grid;
       place-items: center;
-      font-size: 1.65rem;
-      background: rgba(244,211,94,.09);
-      box-shadow: 0 10px 30px rgba(0,0,0,.22);
+      color: var(--gold);
+      background:
+        radial-gradient(circle at 50% 32%, rgba(244,211,94,.16), transparent 28%),
+        rgba(244,211,94,.08);
+      box-shadow: 0 12px 34px rgba(0,0,0,.26);
+      font-weight: 900;
+      letter-spacing: .08em;
     }
 
     .advisor-title {
@@ -146,11 +267,12 @@
       font-weight: 900;
       letter-spacing: .04em;
       margin-bottom: 5px;
+      font-size: .92rem;
     }
 
-    .advisor-hidden {
+    .advisor-name {
       color: #fff4d0;
-      font-size: 1.05rem;
+      font-size: 1.15rem;
       font-weight: 900;
       margin-bottom: 5px;
     }
@@ -211,8 +333,8 @@
     }
 
     .side-box {
-      border: 1px solid rgba(255,255,255,.12);
-      background: rgba(0,0,0,.22);
+      border: 1px solid rgba(255,255,255,.10);
+      background: rgba(255,255,255,.045);
       border-radius: 18px;
       padding: 14px;
       margin-top: 14px;
@@ -224,6 +346,20 @@
       margin-bottom: 6px;
     }
 
+    .side-box span,
+    .side-box div,
+    .side-box li {
+      color: rgba(248,241,221,.72);
+      line-height: 1.48;
+      font-size: .92rem;
+    }
+
+    .saved-preview {
+      white-space: pre-wrap;
+      max-height: 220px;
+      overflow: auto;
+    }
+
     .ranking-list {
       margin: 10px 0 0;
       padding-left: 20px;
@@ -231,34 +367,66 @@
       line-height: 1.55;
     }
 
-    @media (max-width: 900px) {
-      .grid { grid-template-columns: 1fr; }
+    @media (max-width: 1080px) {
+      .layout { grid-template-columns: 1fr; }
+    }
+
+    @media (max-width: 760px) {
+      .hero { grid-template-columns: 1fr; }
+      .advisor-line { grid-template-columns: 1fr; }
+      h1 { font-size: 2.35rem; }
     }
   </style>
 </head>
+
 <body>
+  <div class="atmosphere"></div>
+
   <main class="page">
     <section class="hero">
-      <div class="kicker">Advisor Reaction Engine</div>
-      <h1>The Council Begins to React</h1>
-      <p class="sub" id="heroSub">
-        You explained why your questions matter. Now the room responds — not with answers,
-        but with attention. Different people notice different kinds of questions.
-      </p>
+      <div class="student-avatar" id="studentAvatar">
+        <div class="avatar-fallback">Avatar</div>
+      </div>
+
+      <div>
+        <div class="kicker">Advisor Reactions Chamber</div>
+        <h1>The Council Responds</h1>
+        <p class="sub" id="heroSub">
+          Academy Learner, the Council has reviewed your question priorities.
+          The advisors are not giving answers yet. They are reacting to the kind of thinking you brought into the room.
+        </p>
+
+        <div class="mission-track">
+          <div class="mission-pill" id="studentPill">Academy Learner</div>
+          <div class="mission-pill">Step 1 · Review Council response</div>
+          <div class="mission-pill">Step 2 · Notice advisor priorities</div>
+          <div class="mission-pill">Step 3 · Save reaction layer</div>
+          <div class="mission-pill">Step 4 · Mission debrief</div>
+        </div>
+      </div>
     </section>
 
-    <section class="grid">
+    <section class="layout">
       <article class="panel">
-        <div class="kicker">Discovery through reaction</div>
-        <h2>Who responds to your questions?</h2>
+        <div class="kicker">Council Response Chamber</div>
+        <h2>Your questions shaped the room.</h2>
+
         <p class="prompt">
-          No one introduces the advisors by name yet. Watch what they react to.
-          Their priorities reveal who they may be.
+          Different advisors notice different kinds of questions. Their reactions reveal how your thinking
+          is beginning to shape the investigation.
         </p>
+
+        <div class="council-dais" aria-hidden="true">
+          <div class="seat scout">S</div>
+          <div class="seat mapkeeper">M</div>
+          <div class="seat builder">B</div>
+          <div class="seat healer">H</div>
+          <div class="seat guardian">G</div>
+        </div>
 
         <div class="reaction-feed" id="reactionFeed"></div>
 
-        <div class="hud" id="hud">The Council is reading your questions.</div>
+        <div class="hud" id="hud">The Council is reading your question priorities.</div>
 
         <div class="actions">
           <button class="secondary" type="button" onclick="replayReactions()">Replay Reactions</button>
@@ -267,21 +435,30 @@
       </article>
 
       <aside class="panel">
-        <div class="kicker">Your Question Ranking</div>
-        <h2>What guided the room?</h2>
+        <div class="kicker">Your Briefing Record</div>
+        <h2>What guided the advisors?</h2>
         <p class="note" id="rankingNote">
           Your saved ranking will appear here. Advisor reactions are based on the kinds of questions you prioritized.
         </p>
-        <ol class="ranking-list" id="rankingList"></ol>
 
         <div class="side-box">
-          <strong>Important</strong>
-          This is not the full advisor reveal. This is the first sign that different Council members think differently.
+          <strong>Question ranking</strong>
+          <ol class="ranking-list" id="rankingList"></ol>
         </div>
 
         <div class="side-box">
-          <strong>Next locked step</strong>
-          Mission Debrief / Reflection comes after this reaction layer.
+          <strong>Saved justifications</strong>
+          <div class="saved-preview" id="justificationPreview">No saved justifications found yet.</div>
+        </div>
+
+        <div class="side-box">
+          <strong>Observation carryover</strong>
+          <div class="saved-preview" id="observationPreview">No saved observation notes found yet.</div>
+        </div>
+
+        <div class="side-box">
+          <strong>Mission outcome</strong>
+          <span>Your questions shaped the investigation. The debrief will summarize what your choices revealed.</span>
         </div>
       </aside>
     </section>
@@ -289,6 +466,7 @@
 
   <script>
     const IDENTITY_KEY = "stemNationStudentIdentity";
+    const OBSERVATION_KEY = "stemNationAcademyObservationV1";
     const RANKING_KEY = "stemNationQuestionPriorityRankingV1";
     const JUSTIFICATION_KEY = "stemNationQuestionJustificationV1";
     const REACTION_KEY = "stemNationAdvisorReactionV1";
@@ -299,68 +477,109 @@
     const rankingList = document.getElementById("rankingList");
     const rankingNote = document.getElementById("rankingNote");
     const nextBtn = document.getElementById("nextBtn");
+    const studentAvatar = document.getElementById("studentAvatar");
+    const studentPill = document.getElementById("studentPill");
+    const justificationPreview = document.getElementById("justificationPreview");
+    const observationPreview = document.getElementById("observationPreview");
+
+    let identity = {
+      name: "Academy Learner",
+      portrait: "",
+      fallback: "",
+      avatarChoice: "Academy Avatar"
+    };
 
     let displayName = "Academy Learner";
     let ranking = [];
+    let justifications = [];
 
     const advisorMap = {
       "What changed?": {
-        code: "Scout",
-        mark: "🔎",
-        hiddenName: "A figure studying the images leans forward.",
-        line: "That question starts with what can be seen. The first move is to notice carefully.",
-        discovery: "Possible discovery signal: someone in the Council is drawn to observation and discovery."
+        code: "S",
+        advisor: "Scout",
+        chamberRole: "Discover",
+        line: "That question begins with what can be seen. The first move is to notice carefully before naming a cause.",
+        discovery: "Scout reacts to observation, evidence, and careful noticing."
       },
       "What caused it?": {
-        code: "Builder",
-        mark: "🛠️",
-        hiddenName: "A figure near the models turns toward the display.",
-        line: "Causes matter. If we misunderstand the cause, anything we build from this evidence may fail.",
-        discovery: "Possible discovery signal: someone in the Council is thinking about systems, structures, and consequences."
+        code: "B",
+        advisor: "Builder",
+        chamberRole: "Create",
+        line: "Causes matter. If the Council misunderstands the cause, any plan built from this evidence may fail.",
+        discovery: "Builder reacts to systems, structures, causes, and consequences."
       },
       "Has this happened before?": {
-        code: "Mapkeeper",
-        mark: "🗺️",
-        hiddenName: "A figure comparing old records begins taking notes.",
-        line: "A single image is not enough. We need memory, maps, and older records.",
-        discovery: "Possible discovery signal: someone in the Council protects memory and pattern."
+        code: "M",
+        advisor: "Mapkeeper",
+        chamberRole: "Remember / Map",
+        line: "A single image is not enough. The Council needs memory, maps, and older records before deciding.",
+        discovery: "Mapkeeper reacts to history, patterns, records, and earlier maps."
       },
       "Could people survive there?": {
-        code: "Healer",
-        mark: "🌿",
-        hiddenName: "A figure checking survival records looks up.",
+        code: "H",
+        advisor: "Healer",
+        chamberRole: "Restore",
         line: "Before the Council debates possibility, someone must ask what people would need to live safely.",
-        discovery: "Possible discovery signal: someone in the Council is focused on human needs and restoration."
+        discovery: "Healer reacts to survival, restoration, human needs, and risk."
       },
       "What should be protected?": {
-        code: "Guardian",
-        mark: "🛡️",
-        hiddenName: "The Guardian watches the room carefully.",
+        code: "G",
+        advisor: "Guardian",
+        chamberRole: "Protect",
         line: "That question matters because every decision risks losing something. Protection must be named before action.",
-        discovery: "Possible discovery signal: the Guardian responds when risk and protection rise to the surface."
+        discovery: "Guardian reacts to responsibility, protection, risk, and consequence."
       },
       "Can something be built there?": {
-        code: "Builder",
-        mark: "🛠️",
-        hiddenName: "A figure near the structure model studies the marked zone.",
+        code: "B",
+        advisor: "Builder",
+        chamberRole: "Create",
         line: "Building is not just placing something on land. It means asking what the land can hold.",
-        discovery: "Possible discovery signal: someone in the Council is thinking like a builder."
+        discovery: "Builder reacts to design, possibility, infrastructure, and limits."
       }
     };
 
     try {
       const saved = JSON.parse(localStorage.getItem(IDENTITY_KEY) || "null");
-      if (saved) {
-        displayName = saved.teacherApprovedName || saved.approvedName || saved.name || "Academy Learner";
-        displayName = String(displayName)
-          .replace(/^New Arrival\s*/i, "")
-          .replace(/^Academy Learner\s*/i, "")
-          .trim() || "Academy Learner";
-
-        heroSub.textContent = `${displayName}, you explained why your questions matter. Now the room responds — not with answers, but with attention. Different people notice different kinds of questions.`;
-      }
+      if (saved) identity = { ...identity, ...saved };
     } catch (error) {
       console.warn("Could not load identity.", error);
+    }
+
+    function looksLikeImageSource(value) {
+      return typeof value === "string" && (
+        value.startsWith("data:image/") ||
+        value.startsWith("/static/") ||
+        value.startsWith("http://") ||
+        value.startsWith("https://")
+      );
+    }
+
+    function renderStudentIdentity() {
+      displayName = identity.teacherApprovedName || identity.approvedName || identity.name || "Academy Learner";
+      displayName = String(displayName)
+        .replace(/^New Arrival\s*/i, "")
+        .replace(/^Academy Learner\s*/i, "")
+        .trim() || "Academy Learner";
+
+      const avatarSource = identity.portrait || identity.fallback || "";
+      const avatarChoice = identity.avatarChoice || identity.avatarTitle || "Academy Avatar";
+
+      studentPill.textContent = `${avatarChoice} · ${displayName}`;
+      heroSub.textContent = `${displayName}, the Council has reviewed your question priorities. The advisors are not giving answers yet. They are reacting to the kind of thinking you brought into the room.`;
+
+      studentAvatar.innerHTML = "";
+
+      if (looksLikeImageSource(avatarSource)) {
+        const img = document.createElement("img");
+        img.src = avatarSource;
+        img.alt = "Student Academy avatar";
+        studentAvatar.appendChild(img);
+      } else {
+        const fallback = document.createElement("div");
+        fallback.className = "avatar-fallback";
+        fallback.textContent = "Avatar";
+        studentAvatar.appendChild(fallback);
+      }
     }
 
     try {
@@ -372,27 +591,53 @@
       console.warn("Could not load ranking.", error);
     }
 
+    try {
+      const savedJustification = JSON.parse(localStorage.getItem(JUSTIFICATION_KEY) || "null");
+      if (savedJustification && Array.isArray(savedJustification.justifications)) {
+        justifications = savedJustification.justifications;
+      }
+    } catch (error) {
+      console.warn("Could not load justification.", error);
+    }
+
     if (ranking.length !== 3) {
       ranking = ["What changed?", "Has this happened before?", "What should be protected?"];
       rankingNote.textContent = "No saved ranking was found. A default ranking is shown for testing.";
     } else {
-      rankingNote.textContent = "These are the questions you ranked. The room reacts to what you placed first, second, and third.";
+      rankingNote.textContent = "These are the questions you ranked. The Council reacts to what you placed first, second, and third.";
     }
 
     rankingList.innerHTML = ranking.map(item => `<li>${escapeHtml(item)}</li>`).join("");
 
+    if (justifications.length) {
+      justificationPreview.textContent = justifications
+        .map((item, index) => `${index + 1}. ${item.question}\n${item.reason}`)
+        .join("\\n\\n");
+    }
+
+    try {
+      const observation = JSON.parse(localStorage.getItem(OBSERVATION_KEY) || "null");
+      if (observation && observation.observations) {
+        observationPreview.textContent =
+          observation.observations +
+          (observation.uncertainties ? "\\n\\nStill uncertain: " + observation.uncertainties : "");
+      }
+    } catch (error) {
+      console.warn("Could not load observation.", error);
+    }
+
     function buildReaction(question, index) {
       const reaction = advisorMap[question] || advisorMap["What changed?"];
-      const priorityLabel = index === 0 ? "Primary Reaction" : `Reaction ${index + 1}`;
+      const priorityLabel = index === 0 ? "Primary Council Response" : `Council Response ${index + 1}`;
       const primaryClass = index === 0 ? " primary-reaction" : "";
 
       return `
         <div class="reaction-card${primaryClass}" id="reaction${index}">
           <div class="advisor-line">
-            <div class="advisor-mark">${reaction.mark}</div>
+            <div class="advisor-mark">${reaction.code}</div>
             <div>
               <div class="advisor-title">${priorityLabel} · ${escapeHtml(question)}</div>
-              <div class="advisor-hidden">${reaction.hiddenName}</div>
+              <div class="advisor-name">${reaction.advisor} — ${reaction.chamberRole}</div>
               <p class="advisor-text">${reaction.line}</p>
               <div class="discovery-note">${reaction.discovery}</div>
             </div>
@@ -411,13 +656,13 @@
         setTimeout(() => {
           card.classList.add("show");
           hud.textContent = index === 0
-            ? "The room reacts first to your highest-priority question."
-            : "Another part of the Council reacts to your ranking.";
-        }, 700 + index * 1500);
+            ? "The Council reacts first to your highest-priority question."
+            : "Another advisor responds to the thinking in your ranking.";
+        }, 700 + index * 1450);
       });
 
       setTimeout(() => {
-        hud.textContent = "Advisor reaction saved. The next step is Mission Debrief / Reflection.";
+        hud.textContent = "Advisor reactions saved. The next step is Mission Debrief.";
         nextBtn.style.display = "inline-block";
         nextBtn.textContent = "Continue to Mission Debrief";
         nextBtn.href = "/mission_debrief";
@@ -425,10 +670,11 @@
         localStorage.setItem(REACTION_KEY, JSON.stringify({
           displayName,
           ranking,
+          justifications,
           reactions: ranking.map(q => advisorMap[q] || advisorMap["What changed?"]),
           completedAt: new Date().toISOString()
         }));
-      }, 700 + cards.length * 1500 + 500);
+      }, 700 + cards.length * 1450 + 500);
     }
 
     function replayReactions() {
@@ -447,6 +693,7 @@
         .replaceAll("'", "&#039;");
     }
 
+    renderStudentIdentity();
     renderReactions();
     revealReactions();
   </script>
