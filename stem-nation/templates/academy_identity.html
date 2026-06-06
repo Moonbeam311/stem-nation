@@ -361,14 +361,13 @@
           <div class="kicker">Identity Chamber</div>
           <h1>Create Your Academy Identity</h1>
           <p class="lead">
-            Before the Council opens the first inquiry, choose the identity that will travel with you.
-            This does not lock your destiny. It gives your first mission a face, a voice, and a starting signal.
+            Before the Academy opens the first inquiry, choose the avatar that feels most like you. You will meet the Academy figures later.
           </p>
 
           <label for="studentName">Academy Name</label>
           <input id="studentName" autocomplete="off" placeholder="Enter your first name or Academy name">
 
-          <label>Choose your first Academy avatar</label>
+          <label>Choose your Academy avatar</label>
           <div class="avatar-grid" id="avatarGrid"></div>
 
           <div class="actions">
@@ -390,8 +389,8 @@
             <div class="preview-name" id="previewName">New Arrival</div>
             <div class="preview-rank">Academy Learner</div>
             <div class="preview-role" id="previewRole">
-              <strong>Apprentice · Learner in Motion</strong>
-              I learn by trying, listening, and improving.
+              <strong>Academy Avatar</strong>
+              Choose the avatar that feels most like you.
             </div>
 
             <div class="identity-storage-notice" id="identityStorageNotice">
@@ -410,36 +409,37 @@
     const AVATAR_KEY = "stemNationAvatar";
 
     // CI-4B_F_STUDENT_ONLY_IDENTITY_ROSTER
+    // CI-4B_F2_AVATAR_ONLY_IDENTITY
     const avatars = [
       {
-        role: "Apprentice",
-        title: "Learner in Motion",
+        role: "Avatar 1",
+        title: "Academy Avatar",
         symbol: "🧑🏽‍🎓",
-        motto: "I learn by trying, listening, and improving."
+        motto: "Choose the avatar that feels most like you."
       },
       {
-        role: "Archivist",
-        title: "Keeper of Records",
-        symbol: "📜",
-        motto: "I preserve evidence so the mission is not forgotten."
-      },
-      {
-        role: "Pathfinder",
-        title: "First Route Finder",
+        role: "Avatar 2",
+        title: "Academy Avatar",
         symbol: "🧭",
-        motto: "I find possible routes when the way forward is not clear."
+        motto: "Choose the avatar that feels most like you."
       },
       {
-        role: "Observer",
-        title: "Evidence Watcher",
+        role: "Avatar 3",
+        title: "Academy Avatar",
+        symbol: "📜",
+        motto: "Choose the avatar that feels most like you."
+      },
+      {
+        role: "Avatar 4",
+        title: "Academy Avatar",
         symbol: "🔎",
-        motto: "I slow down, notice details, and gather evidence before deciding."
+        motto: "Choose the avatar that feels most like you."
       },
       {
-        role: "Maker",
-        title: "Hands-on Problem Solver",
+        role: "Avatar 5",
+        title: "Academy Avatar",
         symbol: "🧩",
-        motto: "I test ideas, build solutions, and learn from what happens."
+        motto: "Choose the avatar that feels most like you."
       }
     ];
 
@@ -467,7 +467,7 @@
         >
           <div class="avatar-symbol">${avatar.symbol}</div>
           <div class="avatar-role">${avatar.role}</div>
-          <div class="avatar-title">${avatar.title}</div>
+          <div class="avatar-title">Choose this Academy avatar</div>
           <div class="avatar-motto">“${avatar.motto}”</div>
         </button>
       `).join("");
@@ -486,8 +486,8 @@
       previewName.textContent = safeName();
       previewSymbol.textContent = selectedAvatar.symbol;
       previewRole.innerHTML = `
-        <strong>${selectedAvatar.role} · ${selectedAvatar.title}</strong>
-        ${selectedAvatar.motto}
+        <strong>${selectedAvatar.role}</strong>
+        Choose the avatar that feels most like you.
       `;
     }
 
@@ -498,7 +498,7 @@
         name: safeName(),
         status: "Academy Learner",
         leadershipStage: "New Arrival",
-        portraitType: "approved-symbolic-avatar",
+        portraitType: "academy-avatar-choice",
         portrait: selectedAvatar.symbol,
         fallback: selectedAvatar.symbol,
         role: selectedAvatar.role,
