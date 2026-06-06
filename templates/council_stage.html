@@ -125,13 +125,20 @@
       border-radius: 16px;
       background: rgba(255,255,255,0.06);
       border: 1px solid rgba(255,255,255,0.10);
-      transition: transform 0.25s, border-color 0.25s, background 0.25s;
+      transition: transform 0.25s, border-color 0.25s, background 0.25s, box-shadow 0.25s;
     }
 
     .avatar-card.active {
       border-color: rgba(245,215,122,0.88);
       background: rgba(245,215,122,0.12);
       transform: translateX(3px);
+      box-shadow: 0 0 18px rgba(245,215,122,0.16);
+    }
+
+    .avatar-card.guardian-active {
+      border-color: rgba(143,216,255,0.95);
+      background: rgba(143,216,255,0.12);
+      box-shadow: 0 0 18px rgba(143,216,255,0.16);
     }
 
     .avatar-face {
@@ -158,7 +165,7 @@
     }
 
     .main-stage {
-      min-height: 620px;
+      min-height: 650px;
       padding: 18px;
       position: relative;
       overflow: hidden;
@@ -173,6 +180,29 @@
         radial-gradient(circle at 80% 0%, rgba(143,216,255,0.16), transparent 25%);
       opacity: 0.9;
     }
+
+    .stage-status {
+      position: relative;
+      z-index: 5;
+      display: flex;
+      justify-content: space-between;
+      gap: 10px;
+      align-items: center;
+      margin-bottom: 12px;
+    }
+
+    .scene-pill, .line-count {
+      border: 1px solid rgba(255,255,255,0.14);
+      background: rgba(0,0,0,0.24);
+      border-radius: 999px;
+      padding: 8px 11px;
+      font-size: 12px;
+      color: var(--soft);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .scene-pill strong { color: var(--gold); }
 
     .evidence-screen {
       position: relative;
@@ -280,6 +310,16 @@
       border-radius: 20px;
       background: var(--panel-strong);
       border: 1px solid rgba(245,215,122,0.28);
+      min-height: 135px;
+    }
+
+    .dialogue-box.pulse {
+      animation: dialoguePulse 0.28s ease;
+    }
+
+    @keyframes dialoguePulse {
+      from { transform: translateY(4px); opacity: 0.74; }
+      to { transform: translateY(0); opacity: 1; }
     }
 
     .speaker {
@@ -301,7 +341,7 @@
       position: relative;
       z-index: 4;
       display: grid;
-      grid-template-columns: repeat(5, 1fr);
+      grid-template-columns: repeat(4, 1fr);
       gap: 8px;
       margin-top: 16px;
     }
@@ -315,7 +355,7 @@
       padding: 12px 10px;
       cursor: pointer;
       font-weight: 700;
-      transition: background 0.25s, transform 0.25s, border-color 0.25s;
+      transition: background 0.25s, transform 0.25s, border-color 0.25s, opacity 0.25s;
     }
 
     .console button:hover,
@@ -323,6 +363,13 @@
       background: rgba(245,215,122,0.16);
       border-color: rgba(245,215,122,0.72);
       transform: translateY(-1px);
+    }
+
+    .console button:disabled,
+    .guardian-panel button:disabled {
+      opacity: 0.45;
+      cursor: not-allowed;
+      transform: none;
     }
 
     .guardian-panel {
@@ -404,6 +451,12 @@
       border-color: var(--gold);
     }
 
+    .step.complete { color: rgba(255,255,255,0.84); }
+    .step.complete .dot {
+      background: rgba(143,216,255,0.72);
+      border-color: rgba(143,216,255,0.9);
+    }
+
     .footer-note {
       margin-top: 14px;
       color: rgba(255,255,255,0.58);
@@ -428,7 +481,7 @@
   </style>
 </head>
 <body>
-  <!-- CI-STAGE-1 — Council Hall Stage Show Shell -->
+  <!-- CI-STAGE-2 — Avatar Dialogue Engine -->
   <main class="stage-shell">
     <section class="topbar">
       <div>
@@ -440,6 +493,13 @@
 
     <section class="stage-grid">
       <aside class="panel avatar-rail" aria-label="Council avatars">
+        <div class="avatar-card" data-avatar="Guardian">
+          <div class="avatar-face">🛡️</div>
+          <div>
+            <div class="avatar-name">Guardian</div>
+            <div class="avatar-role">Guide · threshold · trial keeper</div>
+          </div>
+        </div>
         <div class="avatar-card active" data-avatar="Scout">
           <div class="avatar-face">🧭</div>
           <div>
@@ -479,25 +539,30 @@
 
       <section class="panel main-stage" aria-label="Council Hall stage">
         <div class="stage-lights"></div>
+
+        <div class="stage-status">
+          <div class="scene-pill">Current Stage: <strong id="stageName">Overheard Disagreement</strong></div>
+          <div class="line-count" id="lineCount">Line 1 / 14</div>
+        </div>
+
         <div class="evidence-screen">
           <div class="satellite-card" aria-label="Unlabeled satellite evidence screen">
             <div class="scan-line"></div>
-            <div class="evidence-label">Unlabeled Evidence · Satellite Feed</div>
-            <div class="evidence-title">A section of ice has broken away. Something underneath is now visible.</div>
+            <div class="evidence-label" id="evidenceLabel">Unlabeled Evidence · Satellite Feed Locked</div>
+            <div class="evidence-title" id="evidenceTitle">The Council table glows. A satellite feed waits behind a locked evidence layer.</div>
           </div>
         </div>
 
-        <div class="dialogue-box" aria-live="polite">
+        <div class="dialogue-box" id="dialogueBox" aria-live="polite">
           <div class="speaker" id="speaker">Scout</div>
           <div class="line" id="dialogueLine">The coastline changed overnight. That was not visible in the last scan.</div>
         </div>
 
-        <div class="console" aria-label="Student action console">
-          <button type="button" onclick="setScene(0)">Arrival</button>
-          <button type="button" onclick="setScene(1)">Observe</button>
-          <button type="button" onclick="setScene(2)">Ask</button>
-          <button type="button" onclick="setScene(3)">Council</button>
-          <button type="button" onclick="setScene(4)">Debrief</button>
+        <div class="console" aria-label="Dialogue controls">
+          <button type="button" id="backBtn" onclick="previousLine()">Back</button>
+          <button type="button" id="nextBtn" onclick="nextLine()">Continue Scene</button>
+          <button type="button" onclick="restartScene()">Restart</button>
+          <button type="button" onclick="skipToStudentReady()">Student Ready</button>
         </div>
       </section>
 
@@ -506,80 +571,229 @@
           <div>
             <div class="guardian-icon">🛡️</div>
             <div class="guardian-title">Guardian</div>
-            <p class="guardian-copy" id="guardianCopy">Ah. You made it. Good. We need another set of eyes. Come take a look.</p>
+            <p class="guardian-copy" id="guardianCopy">Listen first. The Council is already in disagreement.</p>
           </div>
         </div>
 
-        <button type="button" onclick="nextScene()">Continue Scene</button>
+        <button type="button" onclick="nextLine()">Advance Dialogue</button>
 
         <div class="progress-panel">
           <div class="progress-title">Trial Progress</div>
           <div class="steps">
-            <div class="step active"><span class="dot"></span> Arrival</div>
-            <div class="step"><span class="dot"></span> Evidence</div>
-            <div class="step"><span class="dot"></span> Questions</div>
-            <div class="step"><span class="dot"></span> Council Challenge</div>
-            <div class="step"><span class="dot"></span> Debrief</div>
+            <div class="step active" data-stage="overheard"><span class="dot"></span> Overheard Disagreement</div>
+            <div class="step" data-stage="guardian"><span class="dot"></span> Guardian Approaches</div>
+            <div class="step" data-stage="evidence"><span class="dot"></span> Unlabeled Evidence</div>
+            <div class="step" data-stage="prompt"><span class="dot"></span> Student First Task</div>
+            <div class="step" data-stage="debrief"><span class="dot"></span> Debrief Preview</div>
           </div>
         </div>
 
-        <p class="guardian-copy">Stage shell only: scoring, writing fields, evidence unlocks, and avatar reports will be added in the next steps.</p>
+        <p class="guardian-copy" id="missionDirective">Directive: do not solve yet. Watch the stage and listen for what each advisor believes.</p>
       </aside>
     </section>
 
-    <div class="footer-note">December Public Prototype Build · CI-STAGE-1</div>
+    <div class="footer-note">December Public Prototype Build · CI-STAGE-2</div>
   </main>
 
   <script>
-    const scenes = [
+    const dialogueScript = [
       {
+        stage: "overheard",
+        stageName: "Overheard Disagreement",
         avatar: "Scout",
         line: "The coastline changed overnight. That was not visible in the last scan.",
-        guardian: "Ah. You made it. Good. We need another set of eyes. Come take a look."
+        guardian: "Listen first. The Council is already in disagreement.",
+        directive: "Directive: do not solve yet. Watch the stage and listen for what each advisor believes.",
+        evidenceLabel: "Council Table · Evidence Layer Locked",
+        evidenceTitle: "The Council table glows. A satellite feed waits behind a locked evidence layer."
       },
       {
+        stage: "overheard",
+        stageName: "Overheard Disagreement",
         avatar: "Engineer",
-        line: "Or the image is distorted. Ice shadows can fool the eye. We need observations before claims.",
-        guardian: "Do not rush to answer. First, observe what is actually on the evidence screen."
+        line: "Or the image is distorted. Ice shadows can fool the eye. We need a second angle before anyone makes a claim.",
+        guardian: "Notice the conflict: one advisor sees change; another demands proof.",
+        directive: "Listen for evidence, uncertainty, and assumptions.",
+        evidenceLabel: "Council Table · Signal Stabilizing",
+        evidenceTitle: "A blurred polar scan flickers across the table. The image is not yet labeled."
       },
       {
-        avatar: "Archivist",
-        line: "Older records mark this region unclearly. The ice may have hidden more than terrain.",
-        guardian: "A strong investigator asks better questions before choosing a direction."
-      },
-      {
+        stage: "overheard",
+        stageName: "Overheard Disagreement",
         avatar: "Healer",
-        line: "If people or teams go near that region, exposure and communication failure become immediate dangers.",
-        guardian: "The Council will ask you to weigh risk, evidence, and priority."
+        line: "If anyone is sent near that region, cold exposure and communication failure become immediate dangers.",
+        guardian: "The Healer is not asking what is interesting. The Healer is asking what could harm people.",
+        directive: "Track the human risk, not only the mystery.",
+        evidenceLabel: "Risk Note · Human Impact Flagged",
+        evidenceTitle: "The scan remains unclear, but the Council recognizes that evidence can create danger."
       },
       {
+        stage: "overheard",
+        stageName: "Overheard Disagreement",
+        avatar: "Archivist",
+        line: "Older records mark this region unclearly. Some maps leave the area blank beneath the ice shelf.",
+        guardian: "The Archivist is connecting new evidence to old records.",
+        directive: "Remember: new evidence becomes stronger when compared to previous records.",
+        evidenceLabel: "Archive Reference · Older Maps Mentioned",
+        evidenceTitle: "The table overlays a faint historical grid over the satellite feed."
+      },
+      {
+        stage: "guardian",
+        stageName: "Guardian Approaches",
+        avatar: "Guardian",
+        line: "Quiet. Someone has arrived.",
+        guardian: "The room turns. The trial has noticed you.",
+        directive: "Prepare to enter the investigation.",
+        evidenceLabel: "Council Hall · Attention Shift",
+        evidenceTitle: "The satellite table dims. The Council looks toward the entrance."
+      },
+      {
+        stage: "guardian",
+        stageName: "Guardian Approaches",
+        avatar: "Guardian",
+        line: "Ah. You made it.",
+        guardian: "You are now inside the Council Hall sequence.",
+        directive: "The Academy is not asking for a guess. It is testing how you notice, question, and reason.",
+        evidenceLabel: "Academy Trial · Student Detected",
+        evidenceTitle: "A new marker appears on the Council table: STUDENT OBSERVER ARRIVED."
+      },
+      {
+        stage: "guardian",
+        stageName: "Guardian Approaches",
+        avatar: "Guardian",
+        line: "Good. We need another set of eyes.",
+        guardian: "This is the hook: the student is needed, not lectured at.",
+        directive: "Your role is observer first, decision-maker later.",
+        evidenceLabel: "Guardian Directive · Observer Needed",
+        evidenceTitle: "The evidence layer begins to unlock. The satellite image sharpens slightly."
+      },
+      {
+        stage: "guardian",
+        stageName: "Guardian Approaches",
+        avatar: "Guardian",
+        line: "Come take a look.",
+        guardian: "The Guardian has opened the first evidence layer.",
+        directive: "Next: study what changed before anyone tells you what it means.",
+        evidenceLabel: "Unlabeled Evidence · Satellite Feed Opening",
+        evidenceTitle: "The first image resolves: ice has broken away, and something underneath is now visible."
+      },
+      {
+        stage: "evidence",
+        stageName: "Unlabeled Evidence",
+        avatar: "Scout",
+        line: "Do not name it yet. First, tell us what changed between the old scan and this one.",
+        guardian: "The Scout is forcing observation before interpretation.",
+        directive: "Student Task soon: record three observations from the evidence.",
+        evidenceLabel: "Unlabeled Evidence · Before / After Scan",
+        evidenceTitle: "A section of ice has broken away. The exposed shape does not match the previous scan."
+      },
+      {
+        stage: "evidence",
+        stageName: "Unlabeled Evidence",
+        avatar: "Engineer",
+        line: "A strong claim needs a test. Is it land, shadow, rock, water, or an image error?",
+        guardian: "The Engineer is turning the mystery into testable possibilities.",
+        directive: "Student Task soon: ask questions that can be investigated.",
+        evidenceLabel: "Evidence Challenge · Possible Explanations",
+        evidenceTitle: "The scan highlights several possible interpretations, but none are confirmed."
+      },
+      {
+        stage: "evidence",
+        stageName: "Unlabeled Evidence",
         avatar: "Strategist",
-        line: "You will not be judged for guessing. You will be judged by how clearly you think.",
-        guardian: "Observe. Question. Defend your reasoning. That is how a Nation Builder begins."
+        line: "The Council cannot chase every possibility. We need priorities, and order matters.",
+        guardian: "The Strategist will later require only three priorities, ranked in order.",
+        directive: "Do not add everything. Choose what matters first.",
+        evidenceLabel: "Council Constraint · Priority Limit Pending",
+        evidenceTitle: "The Council table displays limited time, limited data, and limited access."
+      },
+      {
+        stage: "prompt",
+        stageName: "Student First Task",
+        avatar: "Guardian",
+        line: "Your first task is simple: observe before you answer. Three observations. No claims yet.",
+        guardian: "This is where CI-STAGE-3 will add the student input area.",
+        directive: "Next build step: add the Observe, Ask, Rank, and Explain task panels.",
+        evidenceLabel: "Student Console · Observation Task Pending",
+        evidenceTitle: "The evidence remains unlabeled. The Council waits for your first observations."
+      },
+      {
+        stage: "prompt",
+        stageName: "Student First Task",
+        avatar: "Guardian",
+        line: "A leader who guesses too quickly can endanger everyone. Slow down. Look closer.",
+        guardian: "The Guardian reinforces the inquiry habit: slow thinking before action.",
+        directive: "This line sets up the Academy Readiness Evaluation, not a normal worksheet.",
+        evidenceLabel: "Academy Readiness · Inquiry Standard",
+        evidenceTitle: "The trial measures observation, question quality, evidence use, priority, and reflection."
+      },
+      {
+        stage: "debrief",
+        stageName: "Debrief Preview",
+        avatar: "Guardian",
+        line: "Observe. Question. Defend your reasoning. That is how a Nation Builder begins.",
+        guardian: "End of CI-STAGE-2 sequence. The stage is ready for student task mechanics.",
+        directive: "Recommended next: CI-STAGE-3 — Evidence Unlock + Student Observation Console.",
+        evidenceLabel: "Debrief Preview · Trial Ready",
+        evidenceTitle: "The Council Hall stage is active. The next layer will let students respond."
       }
     ];
 
-    let currentScene = 0;
+    let currentLine = 0;
 
-    function setScene(index) {
-      currentScene = index;
-      const scene = scenes[index];
-      document.getElementById("speaker").textContent = scene.avatar;
-      document.getElementById("dialogueLine").textContent = scene.line;
-      document.getElementById("guardianCopy").textContent = scene.guardian;
+    function renderLine(index) {
+      currentLine = Math.max(0, Math.min(index, dialogueScript.length - 1));
+      const beat = dialogueScript[currentLine];
+
+      document.getElementById("stageName").textContent = beat.stageName;
+      document.getElementById("lineCount").textContent = `Line ${currentLine + 1} / ${dialogueScript.length}`;
+      document.getElementById("speaker").textContent = beat.avatar;
+      document.getElementById("dialogueLine").textContent = beat.line;
+      document.getElementById("guardianCopy").textContent = beat.guardian;
+      document.getElementById("missionDirective").textContent = beat.directive;
+      document.getElementById("evidenceLabel").textContent = beat.evidenceLabel;
+      document.getElementById("evidenceTitle").textContent = beat.evidenceTitle;
 
       document.querySelectorAll(".avatar-card").forEach(card => {
-        card.classList.toggle("active", card.dataset.avatar === scene.avatar);
+        const isActive = card.dataset.avatar === beat.avatar;
+        card.classList.toggle("active", isActive);
+        card.classList.toggle("guardian-active", isActive && beat.avatar === "Guardian");
       });
 
+      const stageOrder = ["overheard", "guardian", "evidence", "prompt", "debrief"];
+      const activeStageIndex = stageOrder.indexOf(beat.stage);
       document.querySelectorAll(".step").forEach((step, i) => {
-        step.classList.toggle("active", i === index);
+        step.classList.toggle("active", step.dataset.stage === beat.stage);
+        step.classList.toggle("complete", i < activeStageIndex);
       });
+
+      document.getElementById("backBtn").disabled = currentLine === 0;
+      document.getElementById("nextBtn").disabled = currentLine === dialogueScript.length - 1;
+
+      const dialogueBox = document.getElementById("dialogueBox");
+      dialogueBox.classList.remove("pulse");
+      void dialogueBox.offsetWidth;
+      dialogueBox.classList.add("pulse");
     }
 
-    function nextScene() {
-      setScene((currentScene + 1) % scenes.length);
+    function nextLine() {
+      renderLine(currentLine + 1);
     }
+
+    function previousLine() {
+      renderLine(currentLine - 1);
+    }
+
+    function restartScene() {
+      renderLine(0);
+    }
+
+    function skipToStudentReady() {
+      const target = dialogueScript.findIndex(beat => beat.stage === "prompt");
+      renderLine(target >= 0 ? target : dialogueScript.length - 1);
+    }
+
+    renderLine(0);
   </script>
 </body>
 </html>
