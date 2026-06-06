@@ -2,440 +2,722 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>STEM Nation | The First Gathering</title>
+  <title>First Gathering | STEM Nation</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
   <style>
     :root {
+      --bg-1: #061826;
+      --bg-2: #07131d;
+      --bg-3: #03070d;
       --gold: #f4d35e;
-      --gold2: #d7a51e;
-      --text: #f8f1dd;
-      --muted: #d8cfb0;
-      --panel: rgba(5, 12, 24, .78);
-      --border: rgba(244, 211, 94, .28);
+      --gold-soft: rgba(244, 211, 94, 0.18);
+      --blue: #7dd3fc;
+      --blue-soft: rgba(125, 211, 252, 0.16);
+      --ink: #f8f1dd;
+      --muted: rgba(248, 241, 221, 0.72);
+      --panel: rgba(5, 10, 18, 0.76);
+      --panel-2: rgba(255,255,255,0.05);
+      --line: rgba(255,255,255,0.08);
     }
 
-    * {
-      box-sizing: border-box;
-    }
+    * { box-sizing: border-box; }
 
     body {
       margin: 0;
       min-height: 100vh;
-      background:
-        radial-gradient(circle at 20% 10%, rgba(244,211,94,.14), transparent 30%),
-        radial-gradient(circle at 80% 0%, rgba(80,160,220,.18), transparent 34%),
-        linear-gradient(180deg, #06111f, #0a192b 56%, #030914);
-      color: var(--text);
+      color: var(--ink);
       font-family: Georgia, "Times New Roman", serif;
+      background:
+        radial-gradient(circle at 18% 12%, rgba(244,211,94,0.18), transparent 28%),
+        radial-gradient(circle at 82% 15%, rgba(125,211,252,0.14), transparent 32%),
+        linear-gradient(135deg, var(--bg-1) 0%, var(--bg-2) 56%, var(--bg-3) 100%);
       overflow-x: hidden;
     }
 
-    .hall {
-      position: relative;
-      min-height: 100vh;
-      padding: 38px 22px 70px;
-      overflow: hidden;
-    }
-
-    .hall::before {
-      content: "";
+    .atmosphere {
       position: fixed;
       inset: 0;
+      pointer-events: none;
       background:
-        linear-gradient(90deg, rgba(255,255,255,.04) 1px, transparent 1px),
-        radial-gradient(circle at 50% 18%, rgba(244,211,94,.12), transparent 36%);
-      background-size: 74px 74px, auto;
-      opacity: .22;
-      pointer-events: none;
+        linear-gradient(115deg, rgba(255,255,255,0.03), transparent 20%),
+        radial-gradient(circle at 50% 82%, rgba(244,211,94,0.08), transparent 30%);
+      opacity: .9;
     }
 
-    .light-scan {
-      position: fixed;
-      top: 0;
-      bottom: 0;
-      width: 24%;
-      left: -30%;
-      background: linear-gradient(90deg, transparent, rgba(244,211,94,.12), transparent);
-      animation: scan 7s linear infinite;
-      pointer-events: none;
-    }
-
-    @keyframes scan {
-      to { left: 120%; }
-    }
-
-    .wrap {
+    .page {
       position: relative;
-      z-index: 2;
-      max-width: 1120px;
+      z-index: 1;
+      max-width: 1380px;
       margin: 0 auto;
+      padding: 28px 20px 36px;
+    }
+
+    .scene-shell {
       display: grid;
-      grid-template-columns: 1.1fr .9fr;
+      grid-template-columns: 1.08fr .92fr;
       gap: 22px;
       align-items: start;
     }
 
-    .panel {
-      border: 1px solid var(--border);
+    .main-chamber,
+    .intel-chamber {
+      border: 1px solid rgba(244,211,94,.18);
+      border-radius: 30px;
+      background: var(--panel);
+      box-shadow: 0 28px 84px rgba(0,0,0,.34);
+      overflow: hidden;
+      backdrop-filter: blur(6px);
+    }
+
+    .main-chamber {
+      position: relative;
+      padding: 28px 28px 26px;
       background:
-        linear-gradient(135deg, rgba(244,211,94,.09), rgba(255,255,255,.035)),
+        radial-gradient(circle at 24% 16%, rgba(244,211,94,.08), transparent 26%),
+        radial-gradient(circle at 82% 12%, rgba(125,211,252,.08), transparent 24%),
+        linear-gradient(180deg, rgba(255,255,255,.025), rgba(255,255,255,.01)),
         var(--panel);
-      border-radius: 28px;
-      padding: clamp(20px, 3vw, 34px);
-      box-shadow: 0 28px 80px rgba(0,0,0,.36);
-      backdrop-filter: blur(8px);
     }
 
-    .badge {
-      display: inline-block;
-      color: var(--gold);
-      letter-spacing: .16em;
-      text-transform: uppercase;
-      font-size: .78rem;
-      font-weight: 900;
-      margin-bottom: 12px;
+    .main-chamber::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      background:
+        linear-gradient(to bottom, rgba(255,255,255,.03), transparent 20%),
+        repeating-linear-gradient(
+          to right,
+          transparent 0,
+          transparent 96px,
+          rgba(255,255,255,.015) 97px,
+          transparent 98px
+        );
+      opacity: .35;
     }
 
-    h1 {
-      margin: 0 0 14px;
-      font-size: clamp(2.2rem, 5vw, 4.4rem);
-      line-height: .96;
-    }
-
-    .lead {
-      color: var(--muted);
-      line-height: 1.65;
-      font-size: 1.08rem;
-      margin: 0;
-    }
-
-    .conversation {
+    .identity-ribbon {
+      position: relative;
+      z-index: 1;
       display: grid;
-      gap: 14px;
-      margin-top: 24px;
-    }
-
-    .voice {
-      opacity: 0;
-      transform: translateY(12px);
-      transition: opacity .65s ease, transform .65s ease;
-      padding: 14px 16px;
-      border-radius: 18px;
-      border: 1px solid rgba(255,255,255,.12);
-      background: rgba(255,255,255,.065);
-      line-height: 1.5;
-    }
-
-    .voice.show {
-      opacity: 1;
-      transform: translateY(0);
-    }
-
-    .voice strong {
-      color: var(--gold);
-      display: block;
-      margin-bottom: 4px;
-      letter-spacing: .04em;
-    }
-
-    .guardian-card {
-      margin-top: 22px;
-      display: none;
-      border: 1px solid rgba(244,211,94,.34);
-      background: rgba(244,211,94,.09);
-      border-radius: 22px;
-      padding: 18px;
-    }
-
-    .guardian-card.show {
-      display: block;
-      animation: rise .65s ease both;
-    }
-
-    @keyframes rise {
-      from { opacity: 0; transform: translateY(14px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-
-    .guardian-line {
-      font-size: clamp(1.2rem, 2.6vw, 1.9rem);
-      line-height: 1.32;
-      margin: 0;
-    }
-
-    .actions {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 12px;
-      margin-top: 18px;
-    }
-
-    button,
-    .button {
-      border: 0;
-      border-radius: 999px;
-      padding: 13px 21px;
-      font-family: inherit;
-      font-weight: 900;
-      cursor: pointer;
-      text-decoration: none;
-    }
-
-    .primary {
-      background: linear-gradient(135deg, var(--gold), var(--gold2));
-      color: #171006;
-      box-shadow: 0 12px 36px rgba(244,211,94,.22);
-    }
-
-    .secondary {
-      background: rgba(255,255,255,.1);
-      color: var(--text);
-      border: 1px solid rgba(255,255,255,.16);
-    }
-
-    .evidence-panel {
-      opacity: 0;
-      transform: translateY(16px);
-      transition: opacity .85s ease, transform .85s ease;
-    }
-
-    .evidence-panel.show {
-      opacity: 1;
-      transform: translateY(0);
-    }
-
-    .evidence-table {
-      display: grid;
-      gap: 12px;
-      margin-top: 18px;
-    }
-
-    .evidence-card {
-      border: 1px solid rgba(255,255,255,.13);
-      background: rgba(0,0,0,.24);
-      border-radius: 18px;
-      padding: 14px;
-    }
-
-    .evidence-card .label {
-      color: var(--gold);
-      font-size: .78rem;
-      letter-spacing: .12em;
-      text-transform: uppercase;
-      font-weight: 900;
-      margin-bottom: 6px;
-    }
-
-    .evidence-card p {
-      color: var(--muted);
-      margin: 0;
-      line-height: 1.45;
-    }
-
-    .note {
-      margin-top: 16px;
-      color: #cfc4a3;
-      line-height: 1.5;
-      font-size: .96rem;
-    }
-
-    @media (max-width: 880px) {
-      .wrap {
-        grid-template-columns: 1fr;
-      }
-    }
-  
-    /* CI-4E_B_FIRST_GATHERING_POLISH */
-    /* CI-4E_C_GUARDIAN_LINE_CLEANUP */
-    .student-arrival-strip {
-      display: flex;
+      grid-template-columns: 88px 1fr auto;
+      gap: 16px;
       align-items: center;
-      gap: 14px;
-      border: 1px solid rgba(125,211,252,.24);
+      padding: 14px;
+      border: 1px solid rgba(125,211,252,.20);
+      border-radius: 24px;
       background: rgba(125,211,252,.07);
-      border-radius: 22px;
-      padding: 12px;
-      margin-bottom: 20px;
+      margin-bottom: 22px;
     }
 
-    .student-avatar-mini {
-      width: 64px;
-      height: 74px;
-      border-radius: 18px;
+    .identity-avatar {
+      width: 88px;
+      height: 102px;
+      border-radius: 22px;
       border: 1px solid rgba(244,211,94,.34);
       background:
-        radial-gradient(circle at 50% 26%, rgba(248,240,213,.22), transparent 24%),
+        radial-gradient(circle at 50% 24%, rgba(248,240,213,.20), transparent 22%),
         linear-gradient(145deg, rgba(125,211,252,.12), rgba(244,211,94,.08));
       display: grid;
       place-items: center;
       overflow: hidden;
-      flex: 0 0 auto;
+      box-shadow: 0 16px 36px rgba(0,0,0,.28);
     }
 
-    .student-avatar-mini img {
+    .identity-avatar img {
       width: 100%;
       height: 100%;
       object-fit: cover;
       display: block;
     }
 
-    .student-avatar-fallback {
+    .identity-avatar-fallback {
       color: var(--gold);
-      font-size: .64rem;
       font-weight: 900;
+      font-size: .68rem;
       letter-spacing: .08em;
       text-transform: uppercase;
       text-align: center;
-      padding: 6px;
+      padding: 8px;
     }
 
-    .student-arrival-copy {
-      min-width: 0;
-    }
-
-    .student-arrival-copy strong {
+    .identity-copy strong {
       display: block;
-      color: #fff5cf;
-      font-size: 1rem;
-      margin-bottom: 3px;
+      color: #fff7d5;
+      font-size: 1.06rem;
+      margin-bottom: 4px;
     }
 
-    .student-arrival-copy span {
+    .identity-copy span {
       display: block;
-      color: rgba(248,241,221,.68);
-      font-size: .88rem;
-      line-height: 1.35;
+      color: var(--muted);
+      font-size: .92rem;
+      line-height: 1.42;
     }
 
-    .chamber-status {
+    .identity-badge {
+      justify-self: end;
       display: inline-flex;
       align-items: center;
       gap: 8px;
-      color: rgba(248,241,221,.72);
-      font-size: .9rem;
-      margin-top: 8px;
+      padding: 9px 12px;
+      border-radius: 999px;
+      border: 1px solid rgba(244,211,94,.28);
+      background: rgba(244,211,94,.08);
+      color: var(--gold);
+      font-size: .78rem;
+      font-weight: 900;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      white-space: nowrap;
     }
 
-    .chamber-status::before {
+    .identity-badge::before {
       content: "";
       width: 8px;
       height: 8px;
       border-radius: 999px;
       background: var(--gold);
-      box-shadow: 0 0 18px rgba(244,211,94,.58);
+      box-shadow: 0 0 18px rgba(244,211,94,.52);
     }
 
+    .badge {
+      position: relative;
+      z-index: 1;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      border-radius: 999px;
+      border: 1px solid rgba(244,211,94,.26);
+      background: rgba(244,211,94,.08);
+      color: var(--gold);
+      padding: 8px 12px;
+      font-size: .80rem;
+      font-weight: 900;
+      letter-spacing: .10em;
+      text-transform: uppercase;
+      margin-bottom: 14px;
+    }
+
+    .badge::before {
+      content: "";
+      width: 7px;
+      height: 7px;
+      border-radius: 999px;
+      background: var(--gold);
+      box-shadow: 0 0 18px rgba(244,211,94,.5);
+    }
+
+    h1 {
+      position: relative;
+      z-index: 1;
+      margin: 0;
+      color: #fff6d2;
+      font-size: clamp(2.3rem, 5vw, 4.8rem);
+      line-height: .96;
+      text-shadow: 0 12px 30px rgba(0,0,0,.34);
+    }
+
+    .lead {
+      position: relative;
+      z-index: 1;
+      max-width: 720px;
+      margin: 18px 0 0;
+      color: rgba(248,241,221,.82);
+      font-size: 1.08rem;
+      line-height: 1.72;
+    }
+
+    .status-line {
+      position: relative;
+      z-index: 1;
+      display: inline-flex;
+      align-items: center;
+      gap: 9px;
+      margin-top: 14px;
+      color: rgba(248,241,221,.70);
+      font-size: .92rem;
+    }
+
+    .status-line::before {
+      content: "";
+      width: 8px;
+      height: 8px;
+      border-radius: 999px;
+      background: var(--gold);
+      box-shadow: 0 0 18px rgba(244,211,94,.50);
+    }
+
+    .voice-grid {
+      position: relative;
+      z-index: 1;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+      margin-top: 24px;
+    }
+
+    .voice-card {
+      border: 1px solid rgba(255,255,255,.07);
+      border-radius: 20px;
+      background: rgba(255,255,255,.04);
+      padding: 16px;
+      min-height: 132px;
+    }
+
+    .voice-card strong {
+      display: block;
+      color: var(--blue);
+      font-size: .92rem;
+      margin-bottom: 8px;
+    }
+
+    .voice-card span {
+      color: rgba(248,241,221,.76);
+      font-size: .92rem;
+      line-height: 1.48;
+    }
+
+    .guardian-panel {
+      position: relative;
+      z-index: 1;
+      margin-top: 18px;
+      border: 1px solid rgba(244,211,94,.18);
+      border-radius: 24px;
+      background:
+        linear-gradient(135deg, rgba(244,211,94,.09), rgba(125,211,252,.06));
+      padding: 18px;
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 16px;
+      align-items: center;
+    }
+
+    .guardian-copy strong {
+      display: block;
+      color: #fff4c6;
+      margin-bottom: 7px;
+      font-size: 1rem;
+    }
+
+    .guardian-line {
+      margin: 0;
+      color: rgba(248,241,221,.84);
+      font-size: 1rem;
+      line-height: 1.5;
+    }
+
+    .guardian-actions {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+    }
+
+    .button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 46px;
+      padding: 12px 18px;
+      border-radius: 999px;
+      font-weight: 900;
+      text-decoration: none;
+      border: 1px solid rgba(244,211,94,.30);
+      cursor: pointer;
+      font-family: inherit;
+      font-size: .95rem;
+    }
+
+    .button.primary {
+      color: #07131d;
+      background: linear-gradient(135deg, #f4d35e, #f7b955);
+      box-shadow: 0 14px 30px rgba(244,211,94,.18);
+    }
+
+    .button.secondary {
+      color: var(--ink);
+      background: rgba(255,255,255,.06);
+    }
+
+    .button.ghost {
+      color: var(--blue);
+      background: rgba(125,211,252,.08);
+      border-color: rgba(125,211,252,.24);
+    }
+
+    .intel-chamber {
+      padding: 0;
+      background:
+        radial-gradient(circle at 65% 12%, rgba(125,211,252,.09), transparent 24%),
+        linear-gradient(180deg, rgba(255,255,255,.025), rgba(255,255,255,.01)),
+        var(--panel);
+    }
+
+    .intel-header {
+      padding: 20px 22px 14px;
+      border-bottom: 1px solid rgba(255,255,255,.06);
+      background: rgba(255,255,255,.025);
+    }
+
+    .intel-header strong {
+      display: block;
+      color: #fff4cb;
+      font-size: 1.06rem;
+      margin-bottom: 4px;
+    }
+
+    .intel-header span {
+      color: rgba(248,241,221,.68);
+      font-size: .90rem;
+      line-height: 1.42;
+    }
+
+    .map-wall {
+      position: relative;
+      padding: 18px 18px 8px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+    }
+
+    .map-board {
+      position: relative;
+      min-height: 220px;
+      border-radius: 22px;
+      border: 1px solid rgba(244,211,94,.14);
+      overflow: hidden;
+      background:
+        linear-gradient(180deg, rgba(10, 19, 30, .92), rgba(7, 14, 22, .98));
+      box-shadow: inset 0 0 0 1px rgba(255,255,255,.02);
+    }
+
+    .map-board::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background:
+        linear-gradient(to right, rgba(255,255,255,.035) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(255,255,255,.035) 1px, transparent 1px);
+      background-size: 26px 26px;
+      opacity: .36;
+    }
+
+    .map-board::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(circle at 20% 28%, rgba(244,211,94,.20), transparent 16%),
+        radial-gradient(circle at 76% 24%, rgba(125,211,252,.18), transparent 20%),
+        radial-gradient(circle at 66% 74%, rgba(244,211,94,.12), transparent 18%);
+      mix-blend-mode: screen;
+      opacity: .82;
+    }
+
+    .map-label {
+      position: absolute;
+      left: 14px;
+      top: 12px;
+      z-index: 2;
+      color: #fff5d1;
+      font-size: .82rem;
+      font-weight: 900;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+    }
+
+    .river-line {
+      position: absolute;
+      left: 26px;
+      top: 46px;
+      width: 180px;
+      height: 122px;
+      border: 3px solid rgba(125,211,252,.86);
+      border-color: rgba(125,211,252,.86) transparent transparent transparent;
+      border-radius: 65% 35% 45% 30%;
+      transform: rotate(14deg);
+      filter: drop-shadow(0 0 12px rgba(125,211,252,.28));
+      opacity: .9;
+      z-index: 2;
+    }
+
+    .zone-mark {
+      position: absolute;
+      right: 26px;
+      bottom: 24px;
+      width: 88px;
+      height: 88px;
+      border-radius: 18px;
+      border: 2px solid rgba(244,211,94,.78);
+      background: rgba(244,211,94,.10);
+      box-shadow: 0 0 0 8px rgba(244,211,94,.05);
+      z-index: 2;
+    }
+
+    .marker {
+      position: absolute;
+      width: 14px;
+      height: 14px;
+      border-radius: 999px;
+      background: var(--gold);
+      box-shadow: 0 0 18px rgba(244,211,94,.46);
+      z-index: 2;
+    }
+
+    .marker.blue {
+      background: var(--blue);
+      box-shadow: 0 0 18px rgba(125,211,252,.46);
+    }
+
+    .marker.one { left: 48px; top: 140px; }
+    .marker.two { left: 130px; top: 84px; }
+    .marker.three { right: 78px; top: 120px; }
+    .marker.four { right: 42px; bottom: 52px; }
+
+    .evidence-panel {
+      padding: 8px 18px 20px;
+    }
+
+    .evidence-panel h3 {
+      margin: 4px 0 14px;
+      color: #fff5cf;
+      font-size: 1.08rem;
+    }
+
+    .evidence-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+    }
+
+    .evidence-card {
+      border: 1px solid rgba(255,255,255,.07);
+      border-radius: 18px;
+      background: rgba(255,255,255,.04);
+      padding: 14px;
+      min-height: 126px;
+    }
+
+    .evidence-card strong {
+      display: block;
+      color: var(--gold);
+      font-size: .88rem;
+      margin-bottom: 7px;
+    }
+
+    .evidence-card span {
+      color: rgba(248,241,221,.74);
+      font-size: .88rem;
+      line-height: 1.45;
+    }
+
+    .evidence-note {
+      margin-top: 12px;
+      color: rgba(248,241,221,.62);
+      font-size: .86rem;
+      line-height: 1.48;
+    }
+
+    .bottom-actions {
+      position: relative;
+      z-index: 1;
+      margin-top: 20px;
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    @media (max-width: 1120px) {
+      .scene-shell {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 820px) {
+      .voice-grid,
+      .evidence-grid,
+      .map-wall {
+        grid-template-columns: 1fr;
+      }
+
+      .identity-ribbon {
+        grid-template-columns: 88px 1fr;
+      }
+
+      .identity-badge {
+        grid-column: 1 / -1;
+        justify-self: start;
+      }
+
+      .guardian-panel {
+        grid-template-columns: 1fr;
+      }
+
+      .guardian-actions {
+        justify-content: flex-start;
+      }
+    }
+
+    @media (max-width: 620px) {
+      .page {
+        padding: 18px 12px 26px;
+      }
+
+      .main-chamber,
+      .intel-chamber {
+        border-radius: 22px;
+      }
+
+      .main-chamber {
+        padding: 18px;
+      }
+
+      .identity-ribbon {
+        padding: 12px;
+        gap: 12px;
+      }
+
+      .identity-avatar {
+        width: 74px;
+        height: 88px;
+      }
+
+      h1 {
+        font-size: 2.3rem;
+      }
+    }
   </style>
 </head>
-<body>
-  <main class="hall">
-    <div class="light-scan" aria-hidden="true"></div>
 
-    <section class="wrap">
-      <article class="panel">
-        <div class="student-arrival-strip">
-          <div class="student-avatar-mini" id="studentAvatarMini">
-            <div class="student-avatar-fallback">Avatar</div>
+<body>
+  <div class="atmosphere"></div>
+
+  <main class="page">
+    <div class="scene-shell">
+      <section class="main-chamber">
+        <div class="identity-ribbon">
+          <div class="identity-avatar" id="studentAvatarMini">
+            <div class="identity-avatar-fallback">Avatar</div>
           </div>
-          <div class="student-arrival-copy">
+
+          <div class="identity-copy">
             <strong id="studentWelcome">Welcome, Academy Learner.</strong>
             <span id="studentArrivalLine">Your Academy identity has entered the first chamber.</span>
           </div>
+
+          <div class="identity-badge">Chamber Active</div>
         </div>
 
         <div class="badge">The First Gathering</div>
         <h1>The Council Hall</h1>
-        <p class="lead" id="gatheringLead">
+
+        <p class="lead">
           You step into a quiet chamber where a gathering is already in motion.
           No one has explained the problem yet. The room is tense, the evidence is waiting,
           and your first task is to listen before deciding.
         </p>
-        <div class="chamber-status">First chamber active</div>
 
-        <div class="conversation">
-          <div class="voice" id="voice1">
+        <div class="status-line">First chamber active</div>
+
+        <div class="voice-grid">
+          <div class="voice-card">
             <strong>Voice One</strong>
-            The image changed overnight. That boundary was not there before.
+            <span>The image changed overnight. That boundary was not there before.</span>
           </div>
-
-          <div class="voice" id="voice2">
+          <div class="voice-card">
             <strong>Voice Two</strong>
-            It could be water, shadow, damage, or movement. We should not assume.
+            <span>It could be water, shadow, damage, or movement. We should not assume.</span>
           </div>
-
-          <div class="voice" id="voice3">
+          <div class="voice-card">
             <strong>Voice Three</strong>
-            If we act too quickly, we may lead people the wrong way.
+            <span>If we act too quickly, we may lead people the wrong way.</span>
           </div>
         </div>
 
-        <div class="guardian-card" id="guardianCard">
-          <p class="guardian-line" id="guardianLine">You made it into the Hall.</p>
-          <div class="actions">
-            <button class="primary" id="guardianNextBtn" type="button">Continue</button>
-          </div>
-        </div>
-      </article>
-
-      <!-- CI-2C-G2_GUARDIAN_COUNCIL_EVIDENCE_BRIDGE -->
-      <aside class="panel evidence-panel" id="evidencePanel">
-        <div class="badge">Unlabeled Evidence</div>
-        <h1 style="font-size:clamp(1.8rem,3.4vw,3rem);">What do you notice?</h1>
-        <p class="lead">
-          No one tells you what the images mean.
-          Your first task is to notice what changed before anyone explains it.
-        </p>
-
-        <div class="evidence-table">
-          <div class="evidence-card">
-            <div class="label">Evidence A — Earlier Image</div>
-            <p>An older view of the land before the dramatic change appeared.</p>
+        <div class="guardian-panel">
+          <div class="guardian-copy">
+            <strong>First Voice</strong>
+            <p class="guardian-line" id="guardianLine">You made it into the Hall.</p>
           </div>
 
-          <div class="evidence-card">
-            <div class="label">Evidence B — New Image</div>
-            <p>A recent image of the same area shows a visible shift that no one has explained yet.</p>
-          </div>
-
-          <div class="evidence-card">
-            <div class="label">Evidence C — Marked Change Zone</div>
-            <p>A highlighted area shows where the land no longer matches the earlier record.</p>
-          </div>
-
-          <div class="evidence-card">
-            <div class="label">Evidence D — Conflicting Notes</div>
-            <p>Observers disagree about whether the change means danger, opportunity, damage, or movement.</p>
+          <div class="guardian-actions">
+            <button class="button ghost" type="button" id="guardianNextBtn">Continue</button>
+            <button class="button secondary" type="button" id="replayBtn">Replay Gathering</button>
           </div>
         </div>
 
-        <p class="note">
-          The evidence is unlabeled on purpose. The Academy wants to see what you notice before anyone gives you an interpretation.
-        </p>
-
-        <div class="actions">
+        <div class="bottom-actions">
           <a class="button primary" href="/academy_observation">Enter Observation Chamber</a>
-          <button class="secondary" type="button" onclick="replayScene()">Replay Gathering</button>
+        </div>
+      </section>
+
+      <aside class="intel-chamber">
+        <div class="intel-header">
+          <strong>Unlabeled Evidence</strong>
+          <span>
+            No one tells you what the images mean. Your first task is to notice what changed
+            before anyone explains it.
+          </span>
+        </div>
+
+        <div class="map-wall">
+          <div class="map-board">
+            <div class="map-label">Earlier Image</div>
+            <div class="river-line"></div>
+            <div class="marker one"></div>
+            <div class="marker two blue"></div>
+          </div>
+
+          <div class="map-board">
+            <div class="map-label">Marked Change Zone</div>
+            <div class="river-line" style="left:34px; top:56px; width:160px; height:112px; transform:rotate(24deg);"></div>
+            <div class="zone-mark"></div>
+            <div class="marker three blue"></div>
+            <div class="marker four"></div>
+          </div>
+        </div>
+
+        <div class="evidence-panel" id="evidencePanel">
+          <h3>What do you notice?</h3>
+
+          <div class="evidence-grid">
+            <div class="evidence-card">
+              <strong>Evidence A — Earlier Image</strong>
+              <span>An older view of the land before the dramatic change appeared.</span>
+            </div>
+            <div class="evidence-card">
+              <strong>Evidence B — New Image</strong>
+              <span>A recent image of the same area shows a visible shift that no one has explained yet.</span>
+            </div>
+            <div class="evidence-card">
+              <strong>Evidence C — Marked Change Zone</strong>
+              <span>A highlighted area shows where the land no longer matches the earlier record.</span>
+            </div>
+            <div class="evidence-card">
+              <strong>Evidence D — Conflicting Notes</strong>
+              <span>Observers disagree about whether the change means danger, opportunity, damage, or movement.</span>
+            </div>
+          </div>
+
+          <div class="evidence-note">
+            The evidence is unlabeled on purpose. The Academy wants to see what you notice before anyone gives you an interpretation.
+          </div>
         </div>
       </aside>
-    </section>
+    </div>
   </main>
 
   <script>
-    const voices = [
-      document.getElementById("voice1"),
-      document.getElementById("voice2"),
-      document.getElementById("voice3")
-    ];
-
-    const guardianCard = document.getElementById("guardianCard");
-    const guardianLine = document.getElementById("guardianLine");
-    const guardianNextBtn = document.getElementById("guardianNextBtn");
-    const evidencePanel = document.getElementById("evidencePanel");
-
-    // CI-4E_B_FIRST_GATHERING_POLISH
     const IDENTITY_KEY = "stemNationStudentIdentity";
+
     const studentAvatarMini = document.getElementById("studentAvatarMini");
     const studentWelcome = document.getElementById("studentWelcome");
     const studentArrivalLine = document.getElementById("studentArrivalLine");
+    const guardianLine = document.getElementById("guardianLine");
+    const guardianNextBtn = document.getElementById("guardianNextBtn");
+    const replayBtn = document.getElementById("replayBtn");
 
     let identity = {
       name: "Academy Learner",
@@ -475,7 +757,7 @@
         studentAvatarMini.appendChild(img);
       } else {
         const fallback = document.createElement("div");
-        fallback.className = "student-avatar-fallback";
+        fallback.className = "identity-avatar-fallback";
         fallback.textContent = "Avatar";
         studentAvatarMini.appendChild(fallback);
       }
@@ -489,38 +771,20 @@
 
     let guardianIndex = 0;
 
-    // CI-2B_GATHERING_TIMING_POLISH
-    function revealVoices() {
-      voices.forEach((voice, index) => {
-        setTimeout(() => {
-          voice.classList.add("show");
-        }, 800 + index * 1700);
-      });
-
-      setTimeout(() => {
-        guardianCard.classList.add("show");
-      }, 6500);
-    }
-
     function nextGuardianLine() {
-      guardianIndex += 1;
-
-      if (guardianIndex < guardianLines.length) {
-        guardianLine.textContent = guardianLines[guardianIndex];
-      } else {
-        guardianNextBtn.style.display = "none";
-        evidencePanel.classList.add("show");
-      }
+      guardianIndex = (guardianIndex + 1) % guardianLines.length;
+      guardianLine.textContent = guardianLines[guardianIndex];
     }
 
-    function replayScene() {
-      location.reload();
+    function replayGathering() {
+      guardianIndex = 0;
+      guardianLine.textContent = guardianLines[0];
     }
 
     guardianNextBtn.addEventListener("click", nextGuardianLine);
+    replayBtn.addEventListener("click", replayGathering);
 
     renderStudentIdentity();
-    revealVoices();
   </script>
 </body>
 </html>
