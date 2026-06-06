@@ -2,16 +2,20 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>STEM Nation Academy | Question Justification</title>
+  <title>Question Justification | STEM Nation Academy</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
   <style>
+    /* CI-4H_B_QUESTION_JUSTIFICATION_BRIEFING_POLISH */
     :root {
       --gold: #f4d35e;
       --gold2: #d7a51e;
+      --blue: #7dd3fc;
       --text: #f8f1dd;
-      --muted: #d8cfb0;
-      --panel: rgba(5, 12, 24, .84);
-      --border: rgba(244, 211, 94, .30);
-      --soft: rgba(255,255,255,.07);
+      --muted: rgba(248,241,221,.72);
+      --panel: rgba(5, 12, 24, .82);
+      --soft: rgba(255,255,255,.055);
+      --border: rgba(244,211,94,.26);
     }
 
     * { box-sizing: border-box; }
@@ -19,107 +23,228 @@
     body {
       margin: 0;
       min-height: 100vh;
-      background:
-        radial-gradient(circle at 20% 10%, rgba(244,211,94,.12), transparent 32%),
-        radial-gradient(circle at 80% 0%, rgba(80,160,220,.16), transparent 36%),
-        linear-gradient(180deg, #06111f, #0a192b 58%, #030914);
       color: var(--text);
       font-family: Georgia, "Times New Roman", serif;
+      background:
+        radial-gradient(circle at 18% 10%, rgba(244,211,94,.16), transparent 30%),
+        radial-gradient(circle at 84% 14%, rgba(125,211,252,.14), transparent 34%),
+        linear-gradient(135deg, #061826 0%, #07131d 58%, #03070d 100%);
+      overflow-x: hidden;
+    }
+
+    .atmosphere {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      background:
+        linear-gradient(90deg, rgba(255,255,255,.024) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(255,255,255,.016) 1px, transparent 1px);
+      background-size: 78px 78px;
+      opacity: .22;
     }
 
     .page {
-      max-width: 1180px;
+      position: relative;
+      z-index: 1;
+      max-width: 1380px;
       margin: 0 auto;
-      padding: 34px 22px 70px;
-    }
-
-    .hero,
-    .panel {
-      border: 1px solid var(--border);
-      background:
-        linear-gradient(135deg, rgba(244,211,94,.10), rgba(255,255,255,.035)),
-        var(--panel);
-      border-radius: 28px;
-      box-shadow: 0 24px 78px rgba(0,0,0,.32);
-      backdrop-filter: blur(8px);
+      padding: 28px 20px 38px;
     }
 
     .hero {
-      padding: clamp(22px, 4vw, 42px);
+      border: 1px solid var(--border);
+      border-radius: 32px;
+      background:
+        radial-gradient(circle at 18% 18%, rgba(244,211,94,.13), transparent 28%),
+        radial-gradient(circle at 86% 20%, rgba(125,211,252,.10), transparent 30%),
+        var(--panel);
+      box-shadow: 0 28px 84px rgba(0,0,0,.36);
+      padding: 22px;
       margin-bottom: 22px;
+      display: grid;
+      grid-template-columns: 92px 1fr;
+      gap: 18px;
+      align-items: center;
+    }
+
+    .student-avatar {
+      width: 92px;
+      height: 108px;
+      border-radius: 24px;
+      border: 1px solid rgba(244,211,94,.36);
+      background:
+        radial-gradient(circle at 50% 26%, rgba(248,240,213,.22), transparent 24%),
+        linear-gradient(145deg, rgba(125,211,252,.12), rgba(244,211,94,.08));
+      overflow: hidden;
+      display: grid;
+      place-items: center;
+      box-shadow: 0 16px 38px rgba(0,0,0,.30);
+    }
+
+    .student-avatar img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .avatar-fallback {
+      color: var(--gold);
+      text-transform: uppercase;
+      letter-spacing: .08em;
+      font-size: .68rem;
+      font-weight: 900;
+      text-align: center;
+      padding: 8px;
     }
 
     .kicker {
       color: var(--gold);
-      letter-spacing: .16em;
       text-transform: uppercase;
-      font-size: .78rem;
+      letter-spacing: .14em;
+      font-size: .80rem;
       font-weight: 900;
       margin-bottom: 10px;
     }
 
     h1 {
-      margin: 0 0 12px;
-      font-size: clamp(2.1rem, 5vw, 4.5rem);
-      line-height: .96;
+      margin: 0;
+      color: #fff6d2;
+      font-size: clamp(2.3rem, 5vw, 4.9rem);
+      line-height: .95;
+      text-shadow: 0 14px 38px rgba(0,0,0,.36);
     }
 
     h2 {
       margin: 0 0 10px;
-      color: #fff4d0;
-      font-size: clamp(1.45rem, 3vw, 2.2rem);
+      color: #fff4cf;
+      font-size: clamp(1.45rem, 3vw, 2.15rem);
     }
 
     .sub,
     .prompt,
     .note {
       color: var(--muted);
-      line-height: 1.6;
-      font-size: 1.05rem;
+      line-height: 1.62;
+      font-size: 1.02rem;
     }
 
     .sub {
-      max-width: 900px;
-      margin: 0;
+      margin: 14px 0 0;
+      max-width: 940px;
     }
 
-    .grid {
+    .mission-track {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-top: 18px;
+    }
+
+    .mission-pill {
+      border: 1px solid rgba(244,211,94,.20);
+      background: rgba(244,211,94,.07);
+      color: rgba(248,241,221,.82);
+      border-radius: 999px;
+      padding: 8px 12px;
+      font-size: .84rem;
+      font-weight: 900;
+    }
+
+    .layout {
       display: grid;
-      grid-template-columns: 1fr 380px;
-      gap: 20px;
+      grid-template-columns: 1.08fr .92fr;
+      gap: 22px;
       align-items: start;
     }
 
     .panel {
+      border: 1px solid var(--border);
+      border-radius: 30px;
+      background: var(--panel);
+      box-shadow: 0 24px 72px rgba(0,0,0,.30);
       padding: 22px;
+      overflow: hidden;
+    }
+
+    .briefing-banner {
+      border: 1px solid rgba(244,211,94,.18);
+      border-radius: 24px;
+      background:
+        linear-gradient(135deg, rgba(244,211,94,.08), rgba(125,211,252,.055));
+      padding: 16px;
+      margin: 16px 0 18px;
+    }
+
+    .briefing-banner strong {
+      display: block;
+      color: var(--gold);
+      margin-bottom: 6px;
+    }
+
+    .briefing-banner span {
+      display: block;
+      color: var(--muted);
+      line-height: 1.48;
+      font-size: .94rem;
     }
 
     .ranked-question {
-      border: 1px solid rgba(255,255,255,.13);
-      background: rgba(0,0,0,.24);
-      border-radius: 20px;
+      border: 1px solid rgba(255,255,255,.10);
+      background: var(--soft);
+      border-radius: 22px;
       padding: 16px;
       margin-top: 14px;
+      display: grid;
+      grid-template-columns: 44px 1fr;
+      gap: 12px;
+    }
+
+    .rank-badge {
+      width: 38px;
+      height: 38px;
+      border-radius: 999px;
+      display: grid;
+      place-items: center;
+      background: rgba(0,0,0,.34);
+      color: var(--gold);
+      font-weight: 900;
+      border: 1px solid rgba(244,211,94,.24);
+      box-shadow: 0 0 18px rgba(244,211,94,.08);
     }
 
     .ranked-question strong {
-      color: var(--gold);
+      color: #fff4d0;
       display: block;
       margin-bottom: 8px;
-      font-size: 1.05rem;
+      font-size: 1.04rem;
     }
 
     label {
       display: block;
       margin: 12px 0 7px;
-      color: #f4d35e;
+      color: var(--gold);
       font-weight: 900;
       letter-spacing: .03em;
     }
 
+    .justification-help {
+      margin: 7px 0 9px;
+      color: rgba(248,241,221,.70);
+      font-size: .92rem;
+      line-height: 1.42;
+    }
+
+    .justification-example {
+      color: var(--blue);
+      font-size: .88rem;
+      margin-top: 7px;
+      line-height: 1.4;
+    }
+
     textarea {
       width: 100%;
-      min-height: 96px;
+      min-height: 104px;
       border: 1px solid rgba(255,255,255,.18);
       background: rgba(0,0,0,.30);
       color: var(--text);
@@ -129,6 +254,11 @@
       line-height: 1.45;
       resize: vertical;
       outline: none;
+    }
+
+    textarea:focus {
+      border-color: rgba(244,211,94,.54);
+      box-shadow: 0 0 0 3px rgba(244,211,94,.08);
     }
 
     .actions {
@@ -174,8 +304,8 @@
     .summary {
       display: none;
       margin-top: 18px;
-      border: 1px solid rgba(244,211,94,.28);
-      background: rgba(244,211,94,.08);
+      border: 1px solid rgba(244,211,94,.30);
+      background: rgba(244,211,94,.09);
       border-radius: 18px;
       padding: 14px;
       color: #f8f1dd;
@@ -185,8 +315,8 @@
     .summary.show { display: block; }
 
     .side-box {
-      border: 1px solid rgba(255,255,255,.12);
-      background: rgba(0,0,0,.22);
+      border: 1px solid rgba(255,255,255,.10);
+      background: rgba(255,255,255,.045);
       border-radius: 18px;
       padding: 14px;
       margin-top: 14px;
@@ -198,51 +328,109 @@
       margin-bottom: 6px;
     }
 
-    @media (max-width: 900px) {
-      .grid { grid-template-columns: 1fr; }
+    .side-box span,
+    .side-box div {
+      color: rgba(248,241,221,.72);
+      line-height: 1.48;
+      font-size: .92rem;
     }
-  
-/* CI-2F-FIX1_JUSTIFICATION_REQUIREMENT_HELP */
-.justification-help {
-  margin: 7px 0 9px;
-  color: #d8cfb0;
-  font-size: .92rem;
-  line-height: 1.4;
-}
 
-.justification-example {
-  color: #f4d35e;
-  font-size: .9rem;
-  margin-top: 6px;
-}
+    .saved-preview {
+      white-space: pre-wrap;
+      max-height: 220px;
+      overflow: auto;
+    }
 
-</style>
+    .council-table {
+      margin-top: 16px;
+      border-radius: 24px;
+      border: 1px solid rgba(125,211,252,.16);
+      background:
+        radial-gradient(circle at 50% 38%, rgba(244,211,94,.12), transparent 26%),
+        linear-gradient(180deg, rgba(255,255,255,.035), rgba(255,255,255,.01));
+      min-height: 190px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .council-table::before {
+      content: "";
+      position: absolute;
+      inset: 18px;
+      border-radius: 999px;
+      border: 2px solid rgba(244,211,94,.22);
+      box-shadow: inset 0 0 34px rgba(0,0,0,.35);
+    }
+
+    .council-table::after {
+      content: "Council Briefing";
+      position: absolute;
+      inset: 0;
+      display: grid;
+      place-items: center;
+      color: rgba(248,241,221,.54);
+      font-weight: 900;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      font-size: .82rem;
+    }
+
+    @media (max-width: 1080px) {
+      .layout { grid-template-columns: 1fr; }
+    }
+
+    @media (max-width: 760px) {
+      .hero { grid-template-columns: 1fr; }
+      .ranked-question { grid-template-columns: 1fr; }
+      h1 { font-size: 2.35rem; }
+    }
+  </style>
 </head>
+
 <body>
+  <div class="atmosphere"></div>
+
   <main class="page">
     <section class="hero">
-      <!-- CI-2F-FIX1_JUSTIFICATION_REQUIREMENT_LOCK -->
-      <div class="kicker">Justification Engine</div>
-      <h1>Explain Why Your Questions Matter</h1>
-      <p class="sub" id="heroSub">
-        You ranked the questions. Now make your thinking visible.
-        The Council does not need a final answer yet. It needs to understand why these questions should guide the investigation.
-      </p>
+      <div class="student-avatar" id="studentAvatar">
+        <div class="avatar-fallback">Avatar</div>
+      </div>
+
+      <div>
+        <div class="kicker">Question Justification Chamber</div>
+        <h1>Defend Your Question Priorities</h1>
+        <p class="sub" id="heroSub">
+          Academy Learner, your three questions are now before the Council.
+          The Council does not need a final answer yet. It needs to understand why these questions should guide the investigation.
+        </p>
+
+        <div class="mission-track">
+          <div class="mission-pill" id="studentPill">Academy Learner</div>
+          <div class="mission-pill">Step 1 · Review ranking</div>
+          <div class="mission-pill">Step 2 · Explain each priority</div>
+          <div class="mission-pill">Step 3 · Save briefing</div>
+          <div class="mission-pill">Step 4 · Advisor reactions</div>
+        </div>
+      </div>
     </section>
 
-    <section class="grid">
+    <section class="layout">
       <article class="panel">
-        <div class="kicker">Question Priority Justification</div>
+        <div class="kicker">Council Briefing</div>
         <h2>Your ranked questions</h2>
-        <p class="prompt">
-          For each priority, explain why that question matters right now.
-          Your explanation should connect to what you observed.
-        </p>
+
+        <div class="briefing-banner">
+          <strong>Mission: Defend Your Question Priorities</strong>
+          <span>
+            For each ranked question, explain why it matters now. Your explanation should connect to what you observed
+            and help the Council understand where the investigation should begin.
+          </span>
+        </div>
 
         <div id="rankingArea"></div>
 
         <div class="actions">
-          <button class="primary" type="button" onclick="saveJustification()">Save Justification</button>
+          <button class="primary" type="button" onclick="saveJustification()">Save Council Briefing</button>
           <button class="secondary" type="button" onclick="clearJustification()">Clear Explanations</button>
         </div>
 
@@ -252,20 +440,27 @@
 
       <aside class="panel">
         <div class="kicker">Guardian Response</div>
-        <h2>Not right or wrong yet.</h2>
+        <h2>Reasoning before answers.</h2>
         <p class="note">
           The Guardian is listening for reasoning, not a perfect answer.
           The goal is to show why your investigation should begin with these questions.
         </p>
 
+        <div class="council-table"></div>
+
         <div class="side-box">
-          <strong>Evidence-before-explanation</strong>
-          You observed first. Now you are defending which questions matter most.
+          <strong>Your observation carryover</strong>
+          <div class="saved-preview" id="observationPreview">No saved observation notes found yet.</div>
+        </div>
+
+        <div class="side-box">
+          <strong>Ranking carryover</strong>
+          <div class="saved-preview" id="rankingPreview">No saved question ranking found yet.</div>
         </div>
 
         <div class="side-box">
           <strong>Next locked step</strong>
-          Advisor reactions come later. The Council will begin responding to the kinds of questions you prioritized.
+          <span>After saving your briefing, the advisors will react to the kinds of questions you prioritized.</span>
         </div>
 
         <div class="actions">
@@ -286,23 +481,63 @@
     const summaryBox = document.getElementById("summaryBox");
     const heroSub = document.getElementById("heroSub");
     const nextBtn = document.getElementById("nextBtn");
+    const studentAvatar = document.getElementById("studentAvatar");
+    const studentPill = document.getElementById("studentPill");
+    const observationPreview = document.getElementById("observationPreview");
+    const rankingPreview = document.getElementById("rankingPreview");
+
+    let identity = {
+      name: "Academy Learner",
+      portrait: "",
+      fallback: "",
+      avatarChoice: "Academy Avatar"
+    };
 
     let displayName = "Academy Learner";
     let ranking = [];
 
     try {
       const saved = JSON.parse(localStorage.getItem(IDENTITY_KEY) || "null");
-      if (saved) {
-        displayName = saved.teacherApprovedName || saved.approvedName || saved.name || "Academy Learner";
-        displayName = String(displayName)
-          .replace(/^New Arrival\s*/i, "")
-          .replace(/^Academy Learner\s*/i, "")
-          .trim() || "Academy Learner";
-
-        heroSub.textContent = `${displayName}, you ranked the questions. Now make your thinking visible. The Council does not need a final answer yet. It needs to understand why these questions should guide the investigation.`;
-      }
+      if (saved) identity = { ...identity, ...saved };
     } catch (error) {
       console.warn("Could not load identity.", error);
+    }
+
+    function looksLikeImageSource(value) {
+      return typeof value === "string" && (
+        value.startsWith("data:image/") ||
+        value.startsWith("/static/") ||
+        value.startsWith("http://") ||
+        value.startsWith("https://")
+      );
+    }
+
+    function renderStudentIdentity() {
+      displayName = identity.teacherApprovedName || identity.approvedName || identity.name || "Academy Learner";
+      displayName = String(displayName)
+        .replace(/^New Arrival\s*/i, "")
+        .replace(/^Academy Learner\s*/i, "")
+        .trim() || "Academy Learner";
+
+      const avatarSource = identity.portrait || identity.fallback || "";
+      const avatarChoice = identity.avatarChoice || identity.avatarTitle || "Academy Avatar";
+
+      studentPill.textContent = `${avatarChoice} · ${displayName}`;
+      heroSub.textContent = `${displayName}, your three questions are now before the Council. The Council does not need a final answer yet. It needs to understand why these questions should guide the investigation.`;
+
+      studentAvatar.innerHTML = "";
+
+      if (looksLikeImageSource(avatarSource)) {
+        const img = document.createElement("img");
+        img.src = avatarSource;
+        img.alt = "Student Academy avatar";
+        studentAvatar.appendChild(img);
+      } else {
+        const fallback = document.createElement("div");
+        fallback.className = "avatar-fallback";
+        fallback.textContent = "Avatar";
+        studentAvatar.appendChild(fallback);
+      }
     }
 
     try {
@@ -323,18 +558,49 @@
       hud.textContent = "No saved ranking was found. A default ranking is shown for testing.";
     }
 
+    try {
+      const observation = JSON.parse(localStorage.getItem(OBSERVATION_KEY) || "null");
+      if (observation && observation.observations) {
+        observationPreview.textContent = observation.observations + (observation.uncertainties ? "\\n\\nStill uncertain: " + observation.uncertainties : "");
+      }
+    } catch (error) {
+      console.warn("Could not load observation.", error);
+    }
+
+    rankingPreview.textContent = ranking.map((item, index) => `${index + 1}. ${item}`).join("\\n");
+
     function renderRanking() {
       rankingArea.innerHTML = ranking.map((question, index) => `
         <div class="ranked-question">
-          <strong>Priority ${index + 1}: ${escapeHtml(question)}</strong>
-          <label for="reason${index}">Why does this question matter?</label>
-          <div class="justification-help">
-            Write one clear sentence. Explain why the Council should pay attention to this question now.
+          <div class="rank-badge">${index + 1}</div>
+          <div>
+            <strong>${escapeHtml(question)}</strong>
+
+            <label for="reason${index}">${getPromptForIndex(index)}</label>
+            <div class="justification-help">
+              Write one clear thought. Explain why the Council should pay attention to this question now.
+            </div>
+
+            <textarea id="reason${index}" placeholder="${getPlaceholderForIndex(index)}"></textarea>
+
+            <div class="justification-example">
+              Minimum: one complete thought, not just one or two words.
+            </div>
           </div>
-          <textarea id="reason${index}" placeholder="Example: This matters because the Council needs to understand what changed before deciding what caused it."></textarea>
-          <div class="justification-example">Minimum: one clear thought, not just one or two words.</div>
         </div>
       `).join("");
+    }
+
+    function getPromptForIndex(index) {
+      if (index === 0) return "Why should this question come first?";
+      if (index === 1) return "Why does this question matter?";
+      return "What could happen if the Council ignores this question?";
+    }
+
+    function getPlaceholderForIndex(index) {
+      if (index === 0) return "Example: This should come first because the Council needs to understand what changed before deciding what caused it.";
+      if (index === 1) return "Example: This matters because it could help the Council avoid making a decision based on assumptions.";
+      return "Example: If the Council ignores this question, they might miss an important risk or choose the wrong response.";
     }
 
     function saveJustification() {
@@ -365,16 +631,16 @@
       }));
 
       summaryBox.innerHTML = `
-        <strong>Justification Saved</strong><br><br>
+        <strong>Council Briefing Saved</strong><br><br>
         ${reasons.map((item, index) => `
           <strong>Priority ${index + 1}: ${escapeHtml(item.question)}</strong><br>
           ${escapeHtml(item.reason)}<br><br>
         `).join("")}
-        The next build will allow the Council advisors to react to the kinds of questions you prioritized.
+        The advisors can now react to the kinds of questions you prioritized.
       `;
 
       summaryBox.classList.add("show");
-      hud.textContent = "Justification saved. Advisor reactions come next.";
+      hud.textContent = "Council briefing saved. Advisor reactions come next.";
       nextBtn.style.display = "inline-block";
       nextBtn.textContent = "Continue to Advisor Reactions";
       nextBtn.href = "/advisor_reactions";
@@ -400,6 +666,7 @@
         .replaceAll("'", "&#039;");
     }
 
+    renderStudentIdentity();
     renderRanking();
   </script>
 </body>
