@@ -2,15 +2,20 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>STEM Nation Academy | Student Observation</title>
+  <title>Observation Chamber | STEM Nation Academy</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
   <style>
+    /* CI-4F_B_OBSERVATION_CHAMBER_POLISH */
     :root {
       --gold: #f4d35e;
       --gold2: #d7a51e;
+      --blue: #7dd3fc;
       --text: #f8f1dd;
-      --muted: #d8cfb0;
-      --panel: rgba(5, 12, 24, .82);
-      --border: rgba(244, 211, 94, .30);
+      --muted: rgba(248,241,221,.72);
+      --soft: rgba(255,255,255,.055);
+      --panel: rgba(5, 12, 24, .80);
+      --border: rgba(244,211,94,.26);
     }
 
     * { box-sizing: border-box; }
@@ -18,112 +23,295 @@
     body {
       margin: 0;
       min-height: 100vh;
-      background:
-        radial-gradient(circle at 20% 12%, rgba(244,211,94,.12), transparent 32%),
-        radial-gradient(circle at 80% 0%, rgba(80,160,220,.16), transparent 36%),
-        linear-gradient(180deg, #06111f, #0a192b 58%, #030914);
       color: var(--text);
       font-family: Georgia, "Times New Roman", serif;
+      background:
+        radial-gradient(circle at 18% 10%, rgba(244,211,94,.16), transparent 30%),
+        radial-gradient(circle at 82% 12%, rgba(125,211,252,.14), transparent 34%),
+        linear-gradient(135deg, #061826 0%, #07131d 58%, #03070d 100%);
+      overflow-x: hidden;
+    }
+
+    .atmosphere {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      background:
+        linear-gradient(90deg, rgba(255,255,255,.025) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(255,255,255,.018) 1px, transparent 1px);
+      background-size: 74px 74px;
+      opacity: .22;
     }
 
     .page {
-      max-width: 1180px;
+      position: relative;
+      z-index: 1;
+      max-width: 1380px;
       margin: 0 auto;
-      padding: 34px 22px 70px;
-    }
-
-    .hero,
-    .panel {
-      border: 1px solid var(--border);
-      background:
-        linear-gradient(135deg, rgba(244,211,94,.10), rgba(255,255,255,.035)),
-        var(--panel);
-      border-radius: 28px;
-      box-shadow: 0 24px 78px rgba(0,0,0,.32);
-      backdrop-filter: blur(8px);
+      padding: 28px 20px 38px;
     }
 
     .hero {
-      padding: clamp(22px, 4vw, 42px);
+      border: 1px solid var(--border);
+      border-radius: 32px;
+      background:
+        radial-gradient(circle at 18% 18%, rgba(244,211,94,.12), transparent 28%),
+        radial-gradient(circle at 86% 20%, rgba(125,211,252,.10), transparent 30%),
+        var(--panel);
+      box-shadow: 0 28px 84px rgba(0,0,0,.36);
+      padding: 22px;
       margin-bottom: 22px;
+      display: grid;
+      grid-template-columns: 92px 1fr;
+      gap: 18px;
+      align-items: center;
+    }
+
+    .student-avatar {
+      width: 92px;
+      height: 108px;
+      border-radius: 24px;
+      border: 1px solid rgba(244,211,94,.36);
+      background:
+        radial-gradient(circle at 50% 26%, rgba(248,240,213,.22), transparent 24%),
+        linear-gradient(145deg, rgba(125,211,252,.12), rgba(244,211,94,.08));
+      overflow: hidden;
+      display: grid;
+      place-items: center;
+      box-shadow: 0 16px 38px rgba(0,0,0,.30);
+    }
+
+    .student-avatar img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .avatar-fallback {
+      color: var(--gold);
+      text-transform: uppercase;
+      letter-spacing: .08em;
+      font-size: .68rem;
+      font-weight: 900;
+      text-align: center;
+      padding: 8px;
     }
 
     .kicker {
       color: var(--gold);
-      letter-spacing: .16em;
       text-transform: uppercase;
-      font-size: .78rem;
+      letter-spacing: .14em;
+      font-size: .80rem;
       font-weight: 900;
       margin-bottom: 10px;
     }
 
     h1 {
-      margin: 0 0 12px;
-      font-size: clamp(2.1rem, 5vw, 4.5rem);
-      line-height: .96;
+      margin: 0;
+      color: #fff6d2;
+      font-size: clamp(2.3rem, 5vw, 4.9rem);
+      line-height: .95;
+      text-shadow: 0 14px 38px rgba(0,0,0,.36);
     }
 
     h2 {
       margin: 0 0 10px;
-      color: #fff4d0;
-      font-size: clamp(1.45rem, 3vw, 2.2rem);
+      color: #fff4cf;
+      font-size: clamp(1.5rem, 3vw, 2.25rem);
     }
 
     .sub,
     .prompt,
     .note {
       color: var(--muted);
-      line-height: 1.6;
-      font-size: 1.05rem;
+      line-height: 1.62;
+      font-size: 1.02rem;
     }
 
     .sub {
+      margin: 14px 0 0;
       max-width: 900px;
-      margin: 0;
     }
 
-    .grid {
+    .mission-track {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-top: 18px;
+    }
+
+    .mission-pill {
+      border: 1px solid rgba(244,211,94,.20);
+      background: rgba(244,211,94,.07);
+      color: rgba(248,241,221,.82);
+      border-radius: 999px;
+      padding: 8px 12px;
+      font-size: .84rem;
+      font-weight: 900;
+    }
+
+    .layout {
       display: grid;
-      grid-template-columns: 1fr 380px;
-      gap: 20px;
+      grid-template-columns: 1.05fr .95fr;
+      gap: 22px;
       align-items: start;
     }
 
     .panel {
+      border: 1px solid var(--border);
+      border-radius: 30px;
+      background: var(--panel);
+      box-shadow: 0 24px 72px rgba(0,0,0,.30);
       padding: 22px;
+      overflow: hidden;
     }
 
-    .evidence-grid {
+    .evidence-wall {
       display: grid;
-      grid-template-columns: repeat(2, minmax(0, 1fr));
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+      margin: 16px 0 18px;
+    }
+
+    .scan-board {
+      position: relative;
+      min-height: 220px;
+      border-radius: 22px;
+      border: 1px solid rgba(125,211,252,.18);
+      background:
+        linear-gradient(to right, rgba(255,255,255,.035) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(255,255,255,.035) 1px, transparent 1px),
+        linear-gradient(180deg, rgba(7,18,30,.96), rgba(4,10,18,.98));
+      background-size: 28px 28px, 28px 28px, auto;
+      overflow: hidden;
+      box-shadow: inset 0 0 34px rgba(0,0,0,.32);
+    }
+
+    .scan-board::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(circle at 24% 32%, rgba(244,211,94,.20), transparent 17%),
+        radial-gradient(circle at 74% 34%, rgba(125,211,252,.20), transparent 20%),
+        radial-gradient(circle at 62% 78%, rgba(244,211,94,.13), transparent 18%);
+      opacity: .86;
+      mix-blend-mode: screen;
+    }
+
+    .scan-label {
+      position: absolute;
+      z-index: 2;
+      left: 14px;
+      top: 12px;
+      color: #fff6d2;
+      font-size: .76rem;
+      font-weight: 900;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+    }
+
+    .river-line {
+      position: absolute;
+      z-index: 2;
+      left: 32px;
+      top: 54px;
+      width: 180px;
+      height: 118px;
+      border: 3px solid rgba(125,211,252,.86);
+      border-color: rgba(125,211,252,.86) transparent transparent transparent;
+      border-radius: 65% 35% 45% 30%;
+      transform: rotate(16deg);
+      filter: drop-shadow(0 0 12px rgba(125,211,252,.28));
+    }
+
+    .change-zone {
+      position: absolute;
+      z-index: 2;
+      right: 28px;
+      bottom: 28px;
+      width: 92px;
+      height: 92px;
+      border-radius: 20px;
+      border: 2px solid rgba(244,211,94,.80);
+      background: rgba(244,211,94,.10);
+      box-shadow: 0 0 0 9px rgba(244,211,94,.05);
+    }
+
+    .map-dot {
+      position: absolute;
+      z-index: 3;
+      width: 14px;
+      height: 14px;
+      border-radius: 999px;
+      background: var(--gold);
+      box-shadow: 0 0 18px rgba(244,211,94,.48);
+    }
+
+    .map-dot.blue {
+      background: var(--blue);
+      box-shadow: 0 0 18px rgba(125,211,252,.48);
+    }
+
+    .d1 { left: 52px; bottom: 52px; }
+    .d2 { right: 70px; top: 78px; }
+    .d3 { left: 132px; top: 84px; }
+    .d4 { right: 42px; bottom: 52px; }
+
+    .evidence-card-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0,1fr));
       gap: 12px;
-      margin-top: 16px;
+      margin-top: 14px;
     }
 
     .evidence-card {
-      border: 1px solid rgba(255,255,255,.13);
-      background: rgba(0,0,0,.24);
+      border: 1px solid rgba(255,255,255,.08);
+      background: var(--soft);
       border-radius: 18px;
       padding: 14px;
-      min-height: 128px;
+      min-height: 122px;
     }
 
     .evidence-card strong {
-      color: var(--gold);
       display: block;
-      margin-bottom: 8px;
-      letter-spacing: .04em;
+      color: var(--gold);
+      font-size: .88rem;
+      margin-bottom: 7px;
     }
 
     .evidence-card p {
+      color: rgba(248,241,221,.72);
       margin: 0;
+      line-height: 1.45;
+      font-size: .92rem;
+    }
+
+    .task-card {
+      border: 1px solid rgba(244,211,94,.18);
+      border-radius: 24px;
+      background: rgba(244,211,94,.065);
+      padding: 16px;
+      margin-bottom: 16px;
+    }
+
+    .task-card strong {
+      display: block;
+      color: var(--gold);
+      margin-bottom: 5px;
+      font-size: .95rem;
+    }
+
+    .task-card span {
       color: var(--muted);
       line-height: 1.45;
+      font-size: .92rem;
     }
 
     label {
       display: block;
-      margin: 16px 0 7px;
+      margin: 15px 0 7px;
       color: var(--gold);
       font-weight: 900;
       letter-spacing: .03em;
@@ -131,8 +319,8 @@
 
     textarea {
       width: 100%;
-      min-height: 132px;
-      border: 1px solid rgba(255,255,255,.18);
+      min-height: 86px;
+      border: 1px solid rgba(255,255,255,.16);
       background: rgba(0,0,0,.30);
       color: var(--text);
       border-radius: 16px;
@@ -141,6 +329,23 @@
       line-height: 1.45;
       resize: vertical;
       outline: none;
+    }
+
+    textarea:focus {
+      border-color: rgba(244,211,94,.54);
+      box-shadow: 0 0 0 3px rgba(244,211,94,.08);
+    }
+
+    .observation-field-grid {
+      display: grid;
+      gap: 10px;
+    }
+
+    .observation-help {
+      margin: 8px 0 10px;
+      color: rgba(248,241,221,.68);
+      font-size: .94rem;
+      line-height: 1.45;
     }
 
     .actions {
@@ -183,251 +388,126 @@
       min-height: 48px;
     }
 
-    .status-row {
+    .observation-bottom-bar {
+      position: sticky;
+      bottom: 18px;
+      z-index: 50;
       display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 14px;
       flex-wrap: wrap;
-      gap: 10px;
-      margin-top: 18px;
+      max-width: 1380px;
+      margin: 22px auto 0;
+      padding: 14px 16px;
+      border: 1px solid rgba(244,211,94,.34);
+      border-radius: 22px;
+      background:
+        linear-gradient(135deg, rgba(244,211,94,.12), rgba(255,255,255,.04)),
+        rgba(5,12,24,.96);
+      box-shadow: 0 20px 60px rgba(0,0,0,.42);
+      backdrop-filter: blur(10px);
     }
 
-    .pill {
-      border: 1px solid rgba(244,211,94,.26);
-      background: rgba(0,0,0,.22);
+    .observation-bottom-bar.ready {
+      border-color: rgba(244,211,94,.58);
+      background:
+        linear-gradient(135deg, rgba(244,211,94,.18), rgba(255,255,255,.05)),
+        rgba(5,12,24,.98);
+    }
+
+    .observation-bottom-copy {
       color: #f8f1dd;
-      padding: 8px 12px;
-      border-radius: 999px;
-      font-size: .88rem;
-      font-weight: 800;
+      line-height: 1.4;
     }
 
-    @media (max-width: 900px) {
-      .grid { grid-template-columns: 1fr; }
-      .evidence-grid { grid-template-columns: 1fr; }
+    .observation-bottom-copy strong {
+      color: #f4d35e;
+      display: block;
+      margin-bottom: 3px;
     }
-  
-/* CI-2H-FIX1_OBSERVATION_ADVANCE_PANEL */
-.advance-panel {
-  display: none;
-  margin-top: 16px;
-  padding: 15px 16px;
-  border: 1px solid rgba(244,211,94,.34);
-  border-radius: 18px;
-  background: rgba(244,211,94,.10);
-  box-shadow: 0 12px 34px rgba(0,0,0,.22);
-  clear: both;
-}
 
-.advance-panel.show {
-  display: block;
-}
+    .observation-bottom-bar .button.locked {
+      opacity: .45;
+      pointer-events: none;
+      filter: grayscale(.4);
+    }
 
-.advance-panel strong {
-  display: block;
-  color: #f4d35e;
-  margin-bottom: 6px;
-}
+    @media (max-width: 1080px) {
+      .layout { grid-template-columns: 1fr; }
+    }
 
-.advance-panel p {
-  margin: 0 0 12px;
-  color: #d8cfb0;
-  line-height: 1.45;
-}
+    @media (max-width: 760px) {
+      .hero {
+        grid-template-columns: 1fr;
+      }
 
-.hud {
-  position: relative;
-  z-index: 1;
-  margin-bottom: 0;
-}
+      .evidence-wall,
+      .evidence-card-grid {
+        grid-template-columns: 1fr;
+      }
 
-.observation-next-side {
-  display: none !important;
-}
-
-
-/* CI-2H-FIX2_OBSERVATION_BOTTOM_ACTION_BAR */
-.observation-bottom-bar {
-  position: sticky;
-  bottom: 18px;
-  z-index: 50;
-  display: none;
-  max-width: 1180px;
-  margin: 22px auto 0;
-  padding: 14px 16px;
-  border: 1px solid rgba(244,211,94,.42);
-  border-radius: 22px;
-  background:
-    linear-gradient(135deg, rgba(244,211,94,.16), rgba(255,255,255,.04)),
-    rgba(5,12,24,.96);
-  box-shadow: 0 20px 60px rgba(0,0,0,.42);
-  backdrop-filter: blur(10px);
-}
-
-.observation-bottom-bar.show {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 14px;
-  flex-wrap: wrap;
-}
-
-.observation-bottom-copy {
-  color: #f8f1dd;
-  line-height: 1.4;
-}
-
-.observation-bottom-copy strong {
-  color: #f4d35e;
-  display: block;
-  margin-bottom: 3px;
-}
-
-.advance-panel {
-  display: none !important;
-}
-
-
-/* CI-2H-FIX3_OBSERVATION_LOCKED_NEXT_STEP */
-.observation-bottom-bar {
-  position: sticky;
-  bottom: 18px;
-  z-index: 50;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 14px;
-  flex-wrap: wrap;
-  max-width: 1180px;
-  margin: 22px auto 0;
-  padding: 14px 16px;
-  border: 1px solid rgba(244,211,94,.34);
-  border-radius: 22px;
-  background:
-    linear-gradient(135deg, rgba(244,211,94,.12), rgba(255,255,255,.04)),
-    rgba(5,12,24,.96);
-  box-shadow: 0 20px 60px rgba(0,0,0,.42);
-  backdrop-filter: blur(10px);
-}
-
-.observation-bottom-bar.ready {
-  border-color: rgba(244,211,94,.58);
-  background:
-    linear-gradient(135deg, rgba(244,211,94,.18), rgba(255,255,255,.05)),
-    rgba(5,12,24,.98);
-}
-
-.observation-bottom-copy {
-  color: #f8f1dd;
-  line-height: 1.4;
-}
-
-.observation-bottom-copy strong {
-  color: #f4d35e;
-  display: block;
-  margin-bottom: 3px;
-}
-
-.observation-bottom-bar .button.locked {
-  opacity: .45;
-  pointer-events: none;
-  filter: grayscale(.4);
-}
-
-.advance-panel {
-  display: none !important;
-}
-
-
-/* CI-2UX-FIX2_OBSERVATION_ADVANCE_STABLE */
-.observation-field-grid {
-  display: grid;
-  gap: 10px;
-}
-
-.observation-help {
-  margin: 8px 0 10px;
-  color: #d8cfb0;
-  font-size: .95rem;
-  line-height: 1.45;
-}
-
-textarea.compact-observation {
-  min-height: 74px;
-}
-
-.observation-bottom-bar {
-  position: sticky;
-  bottom: 18px;
-  z-index: 50;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 14px;
-  flex-wrap: wrap;
-  max-width: 1180px;
-  margin: 22px auto 0;
-  padding: 14px 16px;
-  border: 1px solid rgba(244,211,94,.34);
-  border-radius: 22px;
-  background:
-    linear-gradient(135deg, rgba(244,211,94,.12), rgba(255,255,255,.04)),
-    rgba(5,12,24,.96);
-  box-shadow: 0 20px 60px rgba(0,0,0,.42);
-  backdrop-filter: blur(10px);
-}
-
-.observation-bottom-bar.ready {
-  border-color: rgba(244,211,94,.58);
-}
-
-.observation-bottom-copy {
-  color: #f8f1dd;
-  line-height: 1.4;
-}
-
-.observation-bottom-copy strong {
-  color: #f4d35e;
-  display: block;
-  margin-bottom: 3px;
-}
-
-.observation-bottom-bar .button.locked {
-  opacity: .45;
-  pointer-events: none;
-  filter: grayscale(.4);
-}
-
-.advance-panel {
-  display: none !important;
-}
-
-</style>
+      h1 {
+        font-size: 2.35rem;
+      }
+    }
+  </style>
 </head>
+
 <body>
+  <div class="atmosphere"></div>
+
   <main class="page">
     <section class="hero">
-      <div class="kicker">Academy Observation</div>
-      <h1>Look Before You Decide</h1>
-      <p class="sub" id="heroSub">
-        The Guardian has brought you to the evidence table. Satellite images show a dramatic change,
-        but the Council does not agree on what the change means. Your first task is observation, not judgment.
-      </p>
-      <div class="status-row">
-        <div class="pill" id="studentPill">New Arrival · Academy Learner</div>
-        <div class="pill">Observe first</div>
-        <div class="pill">No explanation yet</div>
+      <div class="student-avatar" id="studentAvatar">
+        <div class="avatar-fallback">Avatar</div>
+      </div>
+
+      <div>
+        <div class="kicker">Academy Observation Chamber</div>
+        <h1>Observe Before You Decide</h1>
+        <p class="sub" id="heroSub">
+          Academy Learner, your avatar is now at the evidence table. The Council does not agree on what changed.
+          Your first task is to notice details before anyone accepts an explanation.
+        </p>
+
+        <div class="mission-track">
+          <div class="mission-pill" id="studentPill">Academy Learner</div>
+          <div class="mission-pill">Step 1 · Look closely</div>
+          <div class="mission-pill">Step 2 · Record evidence</div>
+          <div class="mission-pill">Step 3 · Name uncertainty</div>
+          <div class="mission-pill">Step 4 · Deepen the mystery</div>
+        </div>
       </div>
     </section>
 
-    <section class="grid">
+    <section class="layout">
       <article class="panel">
-        <div class="kicker">Unlabeled Evidence Review</div>
-        <h2>What do you notice?</h2>
+        <div class="kicker">Visual Evidence Table</div>
+        <h2>What changed?</h2>
         <p class="prompt">
-          Study the four pieces of evidence. Do not decide what happened yet.
-          Record what you notice, what changes, and what seems uncertain.
+          Study the evidence wall. Do not solve the mystery yet.
+          Record what you notice, what changed, and what you still do not know.
         </p>
 
-        <div class="evidence-grid">
+        <div class="evidence-wall">
+          <div class="scan-board">
+            <div class="scan-label">Earlier Image</div>
+            <div class="river-line"></div>
+            <div class="map-dot d1"></div>
+            <div class="map-dot blue d2"></div>
+          </div>
+
+          <div class="scan-board">
+            <div class="scan-label">New Image / Change Zone</div>
+            <div class="river-line" style="left:38px; top:66px; width:165px; height:112px; transform:rotate(24deg);"></div>
+            <div class="change-zone"></div>
+            <div class="map-dot blue d3"></div>
+            <div class="map-dot d4"></div>
+          </div>
+        </div>
+
+        <div class="evidence-card-grid">
           <div class="evidence-card">
             <strong>Evidence A — Earlier Image</strong>
             <p>An older view of the land before the dramatic change appeared.</p>
@@ -445,19 +525,30 @@ textarea.compact-observation {
             <p>Observers disagree about whether the change means danger, opportunity, damage, or movement.</p>
           </div>
         </div>
+      </article>
+
+      <aside class="panel">
+        <div class="kicker">Mission: Observe Before Judging</div>
+        <h2>Record your first evidence notes</h2>
+
+        <div class="task-card">
+          <strong>Important rule</strong>
+          <span>The Academy is not asking for an answer yet. A strong observer notices first, explains later.</span>
+        </div>
 
         <label>Record three observations</label>
         <div class="observation-help">
-          Write one observation in each box. Do not solve the mystery yet — just notice what you see.
+          Write one observation in each box. Look for changes, patterns, clues, or details that stand out.
         </div>
+
         <div class="observation-field-grid">
-          <textarea id="observation1" class="compact-observation" placeholder="Observation 1: What changed or stands out?"></textarea>
-          <textarea id="observation2" class="compact-observation" placeholder="Observation 2: What else do you notice?"></textarea>
-          <textarea id="observation3" class="compact-observation" placeholder="Observation 3: What seems important or unclear?"></textarea>
+          <textarea id="observation1" placeholder="Observation 1: What changed or stands out?"></textarea>
+          <textarea id="observation2" placeholder="Observation 2: What else do you notice?"></textarea>
+          <textarea id="observation3" placeholder="Observation 3: What seems important or unclear?"></textarea>
         </div>
 
         <label for="uncertainties">What is still uncertain?</label>
-        <textarea id="uncertainties" placeholder="Example: I do not know whether the change is water, shadow, or movement..."></textarea>
+        <textarea id="uncertainties" placeholder="Example: I do not know whether the change is water, shadow, damage, or movement..."></textarea>
 
         <div class="actions">
           <button class="primary" type="button" onclick="saveObservation()">Save Observation</button>
@@ -466,37 +557,20 @@ textarea.compact-observation {
 
         <div class="hud" id="hud">Begin by recording what you notice. Do not explain the mystery yet.</div>
 
-        <div class="advance-panel" id="advancePanel">
-          <strong>Observation saved.</strong>
-          <p>The mystery is not solved yet. Your notes are ready to carry into the next stage.</p>
-          <a class="button primary" id="nextBtn" href="/mystery_deepens">Continue to Mystery Deepens</a>
-        </div>
-      </article>
-
-      <aside class="panel">
-        <div class="kicker">Guardian Reminder</div>
-        <h2>“Another set of eyes.”</h2>
-        <p class="note">
-          The Guardian did not ask you to solve the problem. The Council needs someone who can notice details before choosing a side.
-        </p>
-
         <div class="kicker" style="margin-top:22px;">Next Locked Step</div>
         <p class="note">
           After observation, the mystery deepens. You will decide which questions matter most before anyone accepts an explanation.
         </p>
-
-        <div class="actions observation-next-side" aria-hidden="true"></div>
       </aside>
     </section>
 
     <div class="observation-bottom-bar" id="observationBottomBar">
       <div class="observation-bottom-copy" id="observationBottomCopy">
         <strong>Next step locked.</strong>
-        Save your observation to continue.
+        Save your three observations and one uncertainty to continue.
       </div>
       <a class="button primary locked" id="observationNextLink" href="/mystery_deepens" aria-disabled="true">Continue to Mystery Deepens</a>
     </div>
-
   </main>
 
   <script>
@@ -506,31 +580,59 @@ textarea.compact-observation {
     const studentPill = document.getElementById("studentPill");
     const heroSub = document.getElementById("heroSub");
     const hud = document.getElementById("hud");
+    const studentAvatar = document.getElementById("studentAvatar");
+
+    let identity = {
+      name: "Academy Learner",
+      portrait: "",
+      fallback: "",
+      avatarChoice: "Academy Avatar"
+    };
 
     let displayName = "Academy Learner";
 
     try {
       const saved = JSON.parse(localStorage.getItem(IDENTITY_KEY) || "null");
-      if (saved) {
-        displayName = saved.teacherApprovedName || saved.approvedName || saved.name || "Academy Learner";
-        displayName = String(displayName)
-          .replace(/^New Arrival\s*/i, "")
-          .replace(/^Academy Learner\s*/i, "")
-          .trim() || "Academy Learner";
-
-        studentPill.textContent = `New Arrival · ${displayName}`;
-        heroSub.textContent = `${displayName}, the Guardian has brought you to the evidence table. Satellite images show a dramatic change, but the Council does not agree on what the change means. Your first task is observation, not judgment.`;
-      }
+      if (saved) identity = { ...identity, ...saved };
     } catch (error) {
       console.warn("Could not load student identity.", error);
     }
 
-    function countObservations(value) {
-      return value
-        .split(/\n|\.|;/)
-        .map(item => item.trim())
-        .filter(Boolean)
-        .length;
+    function looksLikeImageSource(value) {
+      return typeof value === "string" && (
+        value.startsWith("data:image/") ||
+        value.startsWith("/static/") ||
+        value.startsWith("http://") ||
+        value.startsWith("https://")
+      );
+    }
+
+    function renderStudentIdentity() {
+      displayName = identity.teacherApprovedName || identity.approvedName || identity.name || "Academy Learner";
+      displayName = String(displayName)
+        .replace(/^New Arrival\s*/i, "")
+        .replace(/^Academy Learner\s*/i, "")
+        .trim() || "Academy Learner";
+
+      const avatarSource = identity.portrait || identity.fallback || "";
+      const avatarChoice = identity.avatarChoice || identity.avatarTitle || "Academy Avatar";
+
+      studentPill.textContent = `${avatarChoice} · ${displayName}`;
+      heroSub.textContent = `${displayName}, your avatar is now at the evidence table. The Council does not agree on what changed. Your first task is to notice details before anyone accepts an explanation.`;
+
+      studentAvatar.innerHTML = "";
+
+      if (looksLikeImageSource(avatarSource)) {
+        const img = document.createElement("img");
+        img.src = avatarSource;
+        img.alt = "Student Academy avatar";
+        studentAvatar.appendChild(img);
+      } else {
+        const fallback = document.createElement("div");
+        fallback.className = "avatar-fallback";
+        fallback.textContent = "Avatar";
+        studentAvatar.appendChild(fallback);
+      }
     }
 
     function saveObservation() {
@@ -596,6 +698,8 @@ textarea.compact-observation {
 
       hud.textContent = "Observation cleared. Begin again by noticing details.";
     }
+
+    renderStudentIdentity();
   </script>
 </body>
 </html>
