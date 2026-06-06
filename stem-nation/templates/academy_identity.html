@@ -432,6 +432,75 @@
       box-shadow: 0 0 22px rgba(244,211,94,.2);
     }
 
+  
+    /* CI-4B_Q_CUSTOM_AVATAR_UPLOAD */
+    .upload-panel {
+      margin-top: 18px;
+      border: 1px solid rgba(125,211,252,.24);
+      border-radius: 22px;
+      background: rgba(125,211,252,.065);
+      padding: 16px;
+    }
+
+    .upload-panel h3 {
+      margin: 0 0 6px;
+      color: #7dd3fc;
+      font-size: 1rem;
+      letter-spacing: .02em;
+    }
+
+    .upload-panel p {
+      margin: 0 0 12px;
+      color: rgba(248,240,213,.72);
+      font-size: .9rem;
+      line-height: 1.45;
+    }
+
+    .upload-row {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .upload-row input[type="file"] {
+      display: none;
+    }
+
+    .upload-file-label {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      border: 1px solid rgba(244,211,94,.36);
+      border-radius: 999px;
+      padding: 12px 16px;
+      color: #07131d;
+      background: linear-gradient(135deg, #f4d35e, #f7b955);
+      font-weight: 900;
+      cursor: pointer;
+    }
+
+    .upload-hint {
+      color: rgba(248,240,213,.64);
+      font-size: .84rem;
+    }
+
+    .custom-avatar-badge {
+      display: none;
+      margin-top: 10px;
+      border-radius: 999px;
+      padding: 8px 11px;
+      background: rgba(244,211,94,.12);
+      color: #f4d35e;
+      font-size: .82rem;
+      font-weight: 900;
+      width: fit-content;
+    }
+
+    .custom-avatar-badge.show {
+      display: inline-flex;
+    }
+
   </style>
 </head>
 
@@ -458,6 +527,20 @@
 
           <label>Choose your Academy avatar</label>
           <div class="avatar-grid" id="avatarGrid"></div>
+
+          <div class="upload-panel">
+            <h3>Or upload your own avatar</h3>
+            <p>
+              Students may choose one of the Academy avatars or upload a personal avatar image from this device.
+              The image stays in this browser for the student experience.
+            </p>
+            <div class="upload-row">
+              <label class="upload-file-label" for="customAvatarInput">Upload Avatar Image</label>
+              <input id="customAvatarInput" type="file" accept="image/*">
+              <span class="upload-hint">PNG, JPG, or WEBP recommended.</span>
+            </div>
+            <div class="custom-avatar-badge" id="customAvatarBadge">Custom avatar selected</div>
+          </div>
 
           <div class="actions">
             <button class="primary" id="saveIdentityBtn" type="button">Lock Identity & Begin Journey</button>
@@ -499,58 +582,60 @@
 
     // CI-4B_F3_REALISTIC_AVATAR_SLOTS
     // CI-4B_F3C_REPAIR_FORCE_EIGHT_AVATAR_SLOTS
+    // CI-4B_P3_ACTIVATE_INSTALLED_AVATARS
     const avatars = [
       {
         label: "Avatar 1",
-        image: "",
+        image: "/static/avatars/student_choices/avatar_01.png",
         futureImage: "/static/avatars/student_choices/avatar_01.png",
         motto: "Choose the avatar that feels most like you."
       },
       {
         label: "Avatar 2",
-        image: "",
+        image: "/static/avatars/student_choices/avatar_02.png",
         futureImage: "/static/avatars/student_choices/avatar_02.png",
         motto: "Choose the avatar that feels most like you."
       },
       {
         label: "Avatar 3",
-        image: "",
+        image: "/static/avatars/student_choices/avatar_03.png",
         futureImage: "/static/avatars/student_choices/avatar_03.png",
         motto: "Choose the avatar that feels most like you."
       },
       {
         label: "Avatar 4",
-        image: "",
+        image: "/static/avatars/student_choices/avatar_04.png",
         futureImage: "/static/avatars/student_choices/avatar_04.png",
         motto: "Choose the avatar that feels most like you."
       },
       {
         label: "Avatar 5",
-        image: "",
+        image: "/static/avatars/student_choices/avatar_05.png",
         futureImage: "/static/avatars/student_choices/avatar_05.png",
         motto: "Choose the avatar that feels most like you."
       },
       {
         label: "Avatar 6",
-        image: "",
+        image: "/static/avatars/student_choices/avatar_06.png",
         futureImage: "/static/avatars/student_choices/avatar_06.png",
         motto: "Choose the avatar that feels most like you."
       },
       {
         label: "Avatar 7",
-        image: "",
+        image: "/static/avatars/student_choices/avatar_07.png",
         futureImage: "/static/avatars/student_choices/avatar_07.png",
         motto: "Choose the avatar that feels most like you."
       },
       {
         label: "Avatar 8",
-        image: "",
+        image: "/static/avatars/student_choices/avatar_08.png",
         futureImage: "/static/avatars/student_choices/avatar_08.png",
         motto: "Choose the avatar that feels most like you."
       }
     ];
 
     let selectedAvatar = avatars[0];
+    let customAvatarDataUrl = "";
 
     const avatarGrid = document.getElementById("avatarGrid");
     const studentName = document.getElementById("studentName");
@@ -559,6 +644,8 @@
     const previewRole = document.getElementById("previewRole");
     const statusBox = document.getElementById("status");
     const identityStorageNotice = document.getElementById("identityStorageNotice");
+    const customAvatarInput = document.getElementById("customAvatarInput");
+    const customAvatarBadge = document.getElementById("customAvatarBadge");
 
     function safeName() {
       return studentName.value.trim() || "New Arrival";
@@ -591,6 +678,8 @@
         card.addEventListener("click", () => {
           const index = Number(card.dataset.avatarIndex);
           selectedAvatar = avatars[index] || avatars[0];
+          customAvatarDataUrl = "";
+          if (customAvatarInput) customAvatarInput.value = "";
           renderAvatarGrid();
           updatePreview();
         });
@@ -601,15 +690,21 @@
       previewName.textContent = safeName();
 
       const frame = document.getElementById("previewAvatarFrame");
+      const activeImage = customAvatarDataUrl || selectedAvatar.image;
+
       if (frame) {
-        frame.classList.toggle("empty", !selectedAvatar.image);
-        frame.innerHTML = selectedAvatar.image
-          ? `<img src="${selectedAvatar.image}" alt="${selectedAvatar.label}">`
+        frame.classList.toggle("empty", !activeImage);
+        frame.innerHTML = activeImage
+          ? `<img src="${activeImage}" alt="${customAvatarDataUrl ? "Custom Avatar" : selectedAvatar.label}">`
           : `<div class="avatar-placeholder"></div>`;
       }
 
+      if (customAvatarBadge) {
+        customAvatarBadge.classList.toggle("show", !!customAvatarDataUrl);
+      }
+
       previewRole.innerHTML = `
-        <strong>${selectedAvatar.label}</strong>
+        <strong>${customAvatarDataUrl ? "Custom Avatar" : selectedAvatar.label}</strong>
         Choose the avatar that feels most like you.
       `;
     }
@@ -622,10 +717,11 @@
         status: "Academy Learner",
         leadershipStage: "New Arrival",
         portraitType: "realistic-avatar-slot",
-        portrait: selectedAvatar.image || "",
-        fallback: selectedAvatar.image || "",
+        portrait: customAvatarDataUrl || selectedAvatar.image || "",
+        fallback: customAvatarDataUrl || selectedAvatar.image || "",
         futureImage: selectedAvatar.futureImage || "",
-        avatarChoice: selectedAvatar.label,
+        avatarChoice: customAvatarDataUrl ? "Custom Avatar" : selectedAvatar.label,
+        customAvatar: !!customAvatarDataUrl,
         avatarTitle: "Academy Avatar",
         avatarMotto: selectedAvatar.motto,
         savedAt
@@ -634,9 +730,10 @@
       const avatarRecord = {
         avatarChoice: selectedAvatar.label,
         title: "Academy Avatar",
-        portrait: selectedAvatar.image || "",
-        fallback: selectedAvatar.image || "",
+        portrait: customAvatarDataUrl || selectedAvatar.image || "",
+        fallback: customAvatarDataUrl || selectedAvatar.image || "",
         futureImage: selectedAvatar.futureImage || "",
+        customAvatar: !!customAvatarDataUrl,
         motto: selectedAvatar.motto,
         savedAt
       };
@@ -655,6 +752,9 @@
       localStorage.removeItem(AVATAR_KEY);
       studentName.value = "";
       selectedAvatar = avatars[0];
+      customAvatarDataUrl = "";
+      if (customAvatarInput) customAvatarInput.value = "";
+      if (customAvatarBadge) customAvatarBadge.classList.remove("show");
       identityStorageNotice.classList.remove("show");
       statusBox.textContent = "Identity cleared. Choose your Academy profile.";
       renderAvatarGrid();
@@ -679,6 +779,32 @@
       } catch (err) {
         console.warn("Saved Academy identity ignored.", err);
       }
+    }
+
+
+    // CI-4B_Q_CUSTOM_AVATAR_UPLOAD
+    if (customAvatarInput) {
+      customAvatarInput.addEventListener("change", event => {
+        const file = event.target.files && event.target.files[0];
+        if (!file) return;
+
+        if (!file.type.startsWith("image/")) {
+          statusBox.textContent = "Please upload an image file.";
+          customAvatarInput.value = "";
+          return;
+        }
+
+        const reader = new FileReader();
+        reader.onload = () => {
+          customAvatarDataUrl = reader.result || "";
+          statusBox.textContent = "Custom avatar loaded. Lock identity when ready.";
+          updatePreview();
+        };
+        reader.onerror = () => {
+          statusBox.textContent = "Could not load that image. Try another file.";
+        };
+        reader.readAsDataURL(file);
+      });
     }
 
     studentName.addEventListener("input", updatePreview);
