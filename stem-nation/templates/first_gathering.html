@@ -243,6 +243,86 @@
         grid-template-columns: 1fr;
       }
     }
+  
+    /* CI-4E_B_FIRST_GATHERING_POLISH */
+    .student-arrival-strip {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      border: 1px solid rgba(125,211,252,.24);
+      background: rgba(125,211,252,.07);
+      border-radius: 22px;
+      padding: 12px;
+      margin-bottom: 20px;
+    }
+
+    .student-avatar-mini {
+      width: 64px;
+      height: 74px;
+      border-radius: 18px;
+      border: 1px solid rgba(244,211,94,.34);
+      background:
+        radial-gradient(circle at 50% 26%, rgba(248,240,213,.22), transparent 24%),
+        linear-gradient(145deg, rgba(125,211,252,.12), rgba(244,211,94,.08));
+      display: grid;
+      place-items: center;
+      overflow: hidden;
+      flex: 0 0 auto;
+    }
+
+    .student-avatar-mini img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .student-avatar-fallback {
+      color: var(--gold);
+      font-size: .64rem;
+      font-weight: 900;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      text-align: center;
+      padding: 6px;
+    }
+
+    .student-arrival-copy {
+      min-width: 0;
+    }
+
+    .student-arrival-copy strong {
+      display: block;
+      color: #fff5cf;
+      font-size: 1rem;
+      margin-bottom: 3px;
+    }
+
+    .student-arrival-copy span {
+      display: block;
+      color: rgba(248,241,221,.68);
+      font-size: .88rem;
+      line-height: 1.35;
+    }
+
+    .chamber-status {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      color: rgba(248,241,221,.72);
+      font-size: .9rem;
+      margin-top: 8px;
+    }
+
+    .chamber-status::before {
+      content: "";
+      width: 8px;
+      height: 8px;
+      border-radius: 999px;
+      background: var(--gold);
+      box-shadow: 0 0 18px rgba(244,211,94,.58);
+    }
+
   </style>
 </head>
 <body>
@@ -251,13 +331,24 @@
 
     <section class="wrap">
       <article class="panel">
+        <div class="student-arrival-strip">
+          <div class="student-avatar-mini" id="studentAvatarMini">
+            <div class="student-avatar-fallback">Avatar</div>
+          </div>
+          <div class="student-arrival-copy">
+            <strong id="studentWelcome">Welcome, Academy Learner.</strong>
+            <span id="studentArrivalLine">Your Academy identity has entered the first chamber.</span>
+          </div>
+        </div>
+
         <div class="badge">The First Gathering</div>
         <h1>The Council Hall</h1>
-        <p class="lead">
-          You arrive near the edge of a gathering already in motion.
-          No one has introduced the problem yet, but the room feels tense.
-          Several people are staring at images of the same land — and no one agrees what changed.
+        <p class="lead" id="gatheringLead">
+          You step into a quiet chamber where a gathering is already in motion.
+          No one has explained the problem yet. The room is tense, the evidence is waiting,
+          and your first task is to listen before deciding.
         </p>
+        <div class="chamber-status">First chamber active</div>
 
         <div class="conversation">
           <div class="voice" id="voice1">
@@ -320,7 +411,7 @@
         </p>
 
         <div class="actions">
-          <a class="button primary" href="/academy_observation">Begin Observation</a>
+          <a class="button primary" href="/academy_observation">Enter Observation Chamber</a>
           <button class="secondary" type="button" onclick="replayScene()">Replay Gathering</button>
         </div>
       </aside>
@@ -339,10 +430,60 @@
     const guardianNextBtn = document.getElementById("guardianNextBtn");
     const evidencePanel = document.getElementById("evidencePanel");
 
+    // CI-4E_B_FIRST_GATHERING_POLISH
+    const IDENTITY_KEY = "stemNationStudentIdentity";
+    const studentAvatarMini = document.getElementById("studentAvatarMini");
+    const studentWelcome = document.getElementById("studentWelcome");
+    const studentArrivalLine = document.getElementById("studentArrivalLine");
+
+    let identity = {
+      name: "Academy Learner",
+      portrait: "",
+      fallback: "",
+      avatarChoice: "Academy Avatar"
+    };
+
+    try {
+      const saved = JSON.parse(localStorage.getItem(IDENTITY_KEY) || "null");
+      if (saved) identity = { ...identity, ...saved };
+    } catch (err) {}
+
+    function looksLikeImageSource(value) {
+      return typeof value === "string" && (
+        value.startsWith("data:image/") ||
+        value.startsWith("/static/") ||
+        value.startsWith("http://") ||
+        value.startsWith("https://")
+      );
+    }
+
+    function renderStudentIdentity() {
+      const displayName = identity.name || "Academy Learner";
+      const avatarSource = identity.portrait || identity.fallback || "";
+      const avatarChoice = identity.avatarChoice || identity.avatarTitle || "Academy Avatar";
+
+      studentWelcome.textContent = `Welcome, ${displayName}.`;
+      studentArrivalLine.textContent = `${avatarChoice} has entered the Council Hall. Listen carefully before choosing what to believe.`;
+
+      studentAvatarMini.innerHTML = "";
+
+      if (looksLikeImageSource(avatarSource)) {
+        const img = document.createElement("img");
+        img.src = avatarSource;
+        img.alt = "Student Academy avatar";
+        studentAvatarMini.appendChild(img);
+      } else {
+        const fallback = document.createElement("div");
+        fallback.className = "student-avatar-fallback";
+        fallback.textContent = "Avatar";
+        studentAvatarMini.appendChild(fallback);
+      }
+    }
+
     const guardianLines = [
-      "Ah. You made it.",
-      "We need another set of eyes.",
-      "Come take a look."
+      "You made it into the Hall.",
+      "The room needs another set of eyes.",
+      "Step closer. Begin with what you notice."
     ];
 
     let guardianIndex = 0;
@@ -377,6 +518,7 @@
 
     guardianNextBtn.addEventListener("click", nextGuardianLine);
 
+    renderStudentIdentity();
     revealVoices();
   </script>
 </body>
