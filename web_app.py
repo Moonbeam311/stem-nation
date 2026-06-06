@@ -9,6 +9,10 @@ app = Flask(__name__)
 def decision_bridge():
     return render_template("decision_bridge.html")
 
+@app.route("/council_stage")
+def council_stage():
+    return render_template("council_stage.html")
+
 
 # =========================
 # ZIP ENTRY (UNCHANGED)
