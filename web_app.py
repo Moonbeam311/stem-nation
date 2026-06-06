@@ -129,7 +129,7 @@ def project_hub():
 
 @app.route("/hub")
 def hub():
-    return render_template("student_hub.html")
+    return render_template("project_hub.html")
 
 
 if __name__ == "__main__":
