@@ -325,17 +325,17 @@
 
       <div class="caption" data-route="false">
         <article class="identity-card">
-          <div class="identity-face" id="studentFace">🧑🏽‍🎓</div>
+          <div class="identity-face" id="studentFace"></div>
           <div class="identity-text">
-            <div class="kicker">New Arrival</div>
+            <div class="kicker">Academy Entry Confirmed</div>
             <h2 id="studentName">Academy Learner</h2>
-            <p id="studentLine">The Academy has recorded your arrival.</p>
+            <p id="studentLine">Your avatar is locked. The Academy has recorded your arrival.</p>
           </div>
         </article>
       </div>
 
       <div class="caption" data-route="false">
-        <h1>The Academy awaits.</h1>
+        <h1>Your first inquiry begins now.</h1>
       </div>
     </section>
 
@@ -356,13 +356,16 @@
     const studentName = document.getElementById("studentName");
     const studentLine = document.getElementById("studentLine");
 
+    // CI-4C_B_CLEAN_FINAL_NEW_ARRIVAL_PANEL
     let identity = {
       name: "Academy Learner",
       status: "Academy Learner",
       leadershipStage: "New Arrival",
-      portraitType: "premade",
-      portrait: "🧑🏽‍🎓",
-      academyMotivation: "I am not sure yet."
+      portraitType: "realistic-avatar-slot",
+      portrait: "",
+      fallback: "",
+      avatarChoice: "Academy Avatar",
+      academyMotivation: "I am ready to begin."
     };
 
     try {
@@ -370,18 +373,40 @@
       if (saved) identity = {...identity, ...saved};
     } catch (err) {}
 
-    if (identity.portraitType === "uploaded" && identity.portrait) {
-      studentFace.innerHTML = "";
-      const img = document.createElement("img");
-      img.src = identity.portrait;
-      img.alt = "Student identity";
-      studentFace.appendChild(img);
-    } else {
-      studentFace.textContent = identity.portrait || "🧑🏽‍🎓";
+    function looksLikeImageSource(value) {
+      return typeof value === "string" && (
+        value.startsWith("data:image/") ||
+        value.startsWith("/static/") ||
+        value.startsWith("http://") ||
+        value.startsWith("https://")
+      );
     }
 
-    studentName.textContent = identity.name || "Academy Learner";
-    studentLine.textContent = "Welcome, " + (identity.name || "Academy Learner") + ".";
+    const portraitSource = identity.portrait || identity.fallback || "";
+
+    studentFace.innerHTML = "";
+
+    if (looksLikeImageSource(portraitSource)) {
+      const img = document.createElement("img");
+      img.src = portraitSource;
+      img.alt = "Student Academy avatar";
+      studentFace.appendChild(img);
+    } else {
+      const fallback = document.createElement("div");
+      fallback.textContent = "Academy Avatar";
+      fallback.style.fontWeight = "900";
+      fallback.style.fontSize = ".85rem";
+      fallback.style.letterSpacing = ".08em";
+      fallback.style.textTransform = "uppercase";
+      fallback.style.color = "#f4d35e";
+      studentFace.appendChild(fallback);
+    }
+
+    const displayName = identity.name || "Academy Learner";
+    const avatarLabel = identity.avatarChoice || identity.avatarTitle || "Academy avatar";
+
+    studentName.textContent = displayName;
+    studentLine.textContent = `${avatarLabel} confirmed. The Academy has recorded your arrival.`;
 
     // CI-2B_TIMING_POLISH: smoother cinematic pacing
     const durations = [
