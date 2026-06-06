@@ -1,552 +1,74 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>STEM Nation | Council Hall</title>
-  <style>
-    :root {
-      --gold: #f5d77a;
-      --blue: #8fd8ff;
-      --ice: #dff6ff;
-      --panel: rgba(8, 15, 32, 0.78);
-      --panel-strong: rgba(9, 18, 39, 0.92);
-      --line: rgba(245, 215, 122, 0.34);
-      --soft: rgba(255, 255, 255, 0.72);
-      --good: #91f5b3;
-      --warn: #ffd36a;
-      --danger: #ff9d9d;
-    }
-
-    * { box-sizing: border-box; }
-
-    body {
-      margin: 0;
-      min-height: 100vh;
-      font-family: Arial, Helvetica, sans-serif;
-      color: white;
-      background:
-        radial-gradient(circle at 50% 12%, rgba(92, 179, 255, 0.22), transparent 28%),
-        radial-gradient(circle at 25% 76%, rgba(245, 215, 122, 0.11), transparent 24%),
-        linear-gradient(135deg, #02030a 0%, #071326 48%, #02040b 100%);
-      overflow-x: hidden;
-    }
-
-    .stage-shell { min-height: 100vh; padding: 22px; position: relative; isolation: isolate; }
-    .stage-shell::before {
-      content: "";
-      position: fixed;
-      inset: 0;
-      pointer-events: none;
-      background:
-        linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px),
-        linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px);
-      background-size: 54px 54px;
-      mask-image: radial-gradient(circle at center, black, transparent 78%);
-      z-index: -2;
-    }
-    .stage-shell::after {
-      content: "";
-      position: fixed;
-      inset: -15% -10%;
-      pointer-events: none;
-      background:
-        radial-gradient(ellipse at top, rgba(255,255,255,0.09), transparent 38%),
-        radial-gradient(ellipse at bottom, rgba(245,215,122,0.07), transparent 38%);
-      z-index: -1;
-    }
-
-    .topbar { display: flex; align-items: center; justify-content: space-between; gap: 16px; margin-bottom: 18px; }
-    .brand-kicker { letter-spacing: 0.22em; text-transform: uppercase; font-size: 12px; color: var(--gold); opacity: 0.9; }
-    h1 { margin: 5px 0 0; font-size: clamp(32px, 5vw, 58px); line-height: 0.95; text-shadow: 0 0 28px rgba(143,216,255,0.22); }
-    .mission-tag { border: 1px solid var(--line); border-radius: 999px; padding: 10px 14px; color: var(--ice); background: rgba(255,255,255,0.06); font-size: 13px; white-space: nowrap; }
-
-    .stage-grid { display: grid; grid-template-columns: minmax(180px, 260px) 1fr minmax(230px, 320px); gap: 18px; align-items: stretch; }
-    .panel { border: 1px solid var(--line); background: var(--panel); border-radius: 22px; box-shadow: 0 20px 60px rgba(0,0,0,0.34); backdrop-filter: blur(10px); }
-
-    .avatar-rail { padding: 14px; display: grid; gap: 12px; align-content: start; }
-    .avatar-card { display: grid; grid-template-columns: 48px 1fr; gap: 10px; align-items: center; padding: 11px; border-radius: 16px; background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.10); transition: transform 0.25s, border-color 0.25s, background 0.25s, box-shadow 0.25s; }
-    .avatar-card.active { border-color: rgba(245,215,122,0.88); background: rgba(245,215,122,0.12); transform: translateX(3px); box-shadow: 0 0 18px rgba(245,215,122,0.16); }
-    .avatar-card.guardian-active { border-color: rgba(143,216,255,0.95); background: rgba(143,216,255,0.12); box-shadow: 0 0 18px rgba(143,216,255,0.16); }
-    .avatar-face { width: 48px; height: 48px; display: grid; place-items: center; border-radius: 50%; background: radial-gradient(circle, rgba(255,255,255,0.22), rgba(143,216,255,0.10)); border: 1px solid rgba(255,255,255,0.28); font-size: 25px; }
-    .avatar-name { font-weight: 700; color: white; margin-bottom: 3px; }
-    .avatar-role { color: var(--soft); font-size: 12px; line-height: 1.35; }
-
-    .main-stage { min-height: 720px; padding: 18px; position: relative; overflow: hidden; }
-    .stage-lights { position: absolute; inset: 0; pointer-events: none; background: radial-gradient(circle at 20% 0%, rgba(245,215,122,0.16), transparent 25%), radial-gradient(circle at 80% 0%, rgba(143,216,255,0.16), transparent 25%); opacity: 0.9; }
-    .stage-status { position: relative; z-index: 5; display: flex; justify-content: space-between; gap: 10px; align-items: center; margin-bottom: 12px; }
-    .scene-pill, .line-count { border: 1px solid rgba(255,255,255,0.14); background: rgba(0,0,0,0.24); border-radius: 999px; padding: 8px 11px; font-size: 12px; color: var(--soft); letter-spacing: 0.08em; text-transform: uppercase; }
-    .scene-pill strong { color: var(--gold); }
-
-    .evidence-screen { position: relative; z-index: 2; min-height: 345px; display: grid; place-items: center; padding: 22px; border-radius: 24px; border: 1px solid rgba(143,216,255,0.34); background: linear-gradient(135deg, rgba(10,27,56,0.88), rgba(7,12,25,0.82)), radial-gradient(circle at center, rgba(143,216,255,0.16), transparent 44%); box-shadow: inset 0 0 60px rgba(143,216,255,0.09), 0 18px 50px rgba(0,0,0,0.35); }
-    .evidence-screen.unlocked { border-color: rgba(145,245,179,0.55); box-shadow: inset 0 0 70px rgba(145,245,179,0.09), 0 18px 50px rgba(0,0,0,0.35), 0 0 24px rgba(145,245,179,0.12); }
-    .evidence-screen.question-unlocked { border-color: rgba(245,215,122,0.75); box-shadow: inset 0 0 75px rgba(245,215,122,0.08), 0 0 26px rgba(245,215,122,0.14); }
-    .evidence-screen.priority-unlocked { border-color: rgba(143,216,255,0.85); box-shadow: inset 0 0 80px rgba(143,216,255,0.10), 0 0 30px rgba(143,216,255,0.18); }
-
-    .satellite-card { width: min(650px, 100%); min-height: 270px; border: 1px solid rgba(255,255,255,0.20); border-radius: 22px; background: linear-gradient(145deg, rgba(215,246,255,0.20), rgba(9,20,42,0.76)), repeating-linear-gradient(45deg, rgba(255,255,255,0.08) 0 4px, transparent 4px 18px); position: relative; overflow: hidden; padding: 18px; }
-    .satellite-card.unlocked { background: radial-gradient(circle at 64% 46%, rgba(44,77,84,0.72) 0 12%, transparent 13%), radial-gradient(circle at 36% 52%, rgba(226,252,255,0.82) 0 18%, transparent 19%), linear-gradient(145deg, rgba(215,246,255,0.28), rgba(9,20,42,0.82)), repeating-linear-gradient(45deg, rgba(255,255,255,0.08) 0 4px, transparent 4px 18px); }
-    .satellite-card.question-unlocked { background: radial-gradient(circle at 64% 46%, rgba(44,77,84,0.84) 0 12%, transparent 13%), radial-gradient(circle at 36% 52%, rgba(226,252,255,0.88) 0 18%, transparent 19%), radial-gradient(circle at 55% 58%, rgba(245,215,122,0.28) 0 8%, transparent 9%), linear-gradient(145deg, rgba(215,246,255,0.28), rgba(9,20,42,0.82)), repeating-linear-gradient(45deg, rgba(255,255,255,0.08) 0 4px, transparent 4px 18px); }
-    .satellite-card.priority-unlocked { background: radial-gradient(circle at 64% 46%, rgba(44,77,84,0.9) 0 12%, transparent 13%), radial-gradient(circle at 36% 52%, rgba(226,252,255,0.92) 0 18%, transparent 19%), radial-gradient(circle at 55% 58%, rgba(245,215,122,0.35) 0 8%, transparent 9%), radial-gradient(circle at 42% 42%, rgba(145,245,179,0.22) 0 7%, transparent 8%), linear-gradient(145deg, rgba(215,246,255,0.30), rgba(9,20,42,0.86)), repeating-linear-gradient(45deg, rgba(255,255,255,0.08) 0 4px, transparent 4px 18px); }
-    .satellite-card::before, .satellite-card::after { content: ""; position: absolute; border-radius: 45% 55% 60% 40%; background: rgba(230, 252, 255, 0.72); filter: blur(1px); opacity: 0.78; }
-    .satellite-card::before { width: 48%; height: 52%; left: 8%; top: 26%; transform: rotate(-14deg); }
-    .satellite-card::after { width: 30%; height: 36%; right: 14%; top: 17%; transform: rotate(22deg); opacity: 0.48; }
-    .scan-line { position: absolute; left: 0; right: 0; height: 3px; top: 0; background: rgba(143,216,255,0.8); box-shadow: 0 0 18px rgba(143,216,255,0.9); animation: scan 4s linear infinite; }
-    @keyframes scan { 0% { transform: translateY(0); opacity: 0; } 8% { opacity: 1; } 100% { transform: translateY(310px); opacity: 0; } }
-
-    .evidence-label { position: relative; z-index: 3; display: inline-flex; gap: 8px; align-items: center; padding: 9px 12px; border-radius: 999px; background: rgba(0,0,0,0.45); border: 1px solid rgba(245,215,122,0.45); color: var(--gold); font-size: 12px; text-transform: uppercase; letter-spacing: 0.16em; }
-    .evidence-title { position: relative; z-index: 3; max-width: 480px; margin-top: 62px; font-size: clamp(23px, 4vw, 40px); line-height: 1.02; text-shadow: 0 0 18px rgba(0,0,0,0.85); }
-
-    .dialogue-box { position: relative; z-index: 3; margin-top: 16px; padding: 18px; border-radius: 20px; background: var(--panel-strong); border: 1px solid rgba(245,215,122,0.28); min-height: 126px; }
-    .dialogue-box.pulse { animation: dialoguePulse 0.28s ease; }
-    @keyframes dialoguePulse { from { transform: translateY(4px); opacity: 0.74; } to { transform: translateY(0); opacity: 1; } }
-    .speaker { color: var(--gold); font-weight: 800; text-transform: uppercase; letter-spacing: 0.15em; font-size: 12px; margin-bottom: 8px; }
-    .line { font-size: clamp(18px, 2.3vw, 25px); line-height: 1.35; color: rgba(255,255,255,0.94); }
-
-    .student-console { display: none; position: relative; z-index: 4; margin-top: 16px; padding: 16px; border-radius: 20px; background: rgba(2, 8, 18, 0.76); border: 1px solid rgba(143,216,255,0.28); }
-    .student-console.active { display: block; animation: riseIn 0.35s ease; }
-    @keyframes riseIn { from { transform: translateY(8px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
-    .task-kicker { color: var(--gold); text-transform: uppercase; letter-spacing: 0.16em; font-size: 12px; margin-bottom: 6px; }
-    .task-title { font-size: 22px; font-weight: 800; margin-bottom: 6px; }
-    .task-help { color: var(--soft); line-height: 1.45; font-size: 14px; margin-bottom: 12px; }
-    .input-grid { display: grid; gap: 10px; }
-    .input-grid textarea { width: 100%; min-height: 62px; resize: vertical; border-radius: 14px; border: 1px solid rgba(255,255,255,0.17); background: rgba(255,255,255,0.08); color: white; padding: 12px; font-size: 14px; outline: none; }
-    .input-grid textarea:focus { border-color: rgba(245,215,122,0.72); box-shadow: 0 0 0 3px rgba(245,215,122,0.10); }
-
-    .priority-grid { display: grid; gap: 10px; margin-top: 10px; }
-    .priority-option { display: grid; grid-template-columns: auto 1fr 78px; gap: 10px; align-items: center; padding: 11px; border-radius: 14px; border: 1px solid rgba(255,255,255,0.14); background: rgba(255,255,255,0.06); }
-    .priority-option input { width: 18px; height: 18px; }
-    .priority-option label { line-height: 1.35; }
-    .priority-option select { width: 100%; padding: 9px; border-radius: 10px; border: 1px solid rgba(255,255,255,0.18); background: rgba(0,0,0,0.34); color: white; }
-    .priority-option.selected { border-color: rgba(245,215,122,0.72); background: rgba(245,215,122,0.10); }
-
-    .task-actions { display: flex; gap: 10px; flex-wrap: wrap; align-items: center; margin-top: 12px; }
-    .task-actions button, .console button, .guardian-panel button { border: 1px solid rgba(255,255,255,0.22); background: rgba(255,255,255,0.08); color: white; border-radius: 14px; padding: 12px 14px; cursor: pointer; font-weight: 700; transition: background 0.25s, transform 0.25s, border-color 0.25s, opacity 0.25s; }
-    .task-actions .primary-action { background: rgba(245,215,122,0.16); border-color: rgba(245,215,122,0.64); }
-    .task-actions button:hover, .console button:hover, .guardian-panel button:hover { background: rgba(245,215,122,0.16); border-color: rgba(245,215,122,0.72); transform: translateY(-1px); }
-    .console button:disabled, .guardian-panel button:disabled { opacity: 0.45; cursor: not-allowed; transform: none; }
-    .task-feedback { margin-top: 10px; padding: 11px 12px; border-radius: 14px; display: none; line-height: 1.45; font-size: 14px; }
-    .task-feedback.warn { display: block; background: rgba(255,211,106,0.13); border: 1px solid rgba(255,211,106,0.35); color: #ffe2a0; }
-    .task-feedback.good { display: block; background: rgba(145,245,179,0.12); border: 1px solid rgba(145,245,179,0.35); color: #d9ffe5; }
-    .task-feedback.bad { display: block; background: rgba(255,157,157,0.12); border: 1px solid rgba(255,157,157,0.35); color: #ffd0d0; }
-    .unlock-chip { display: none; margin-top: 10px; color: var(--good); font-size: 13px; letter-spacing: 0.08em; text-transform: uppercase; }
-    .unlock-chip.active { display: block; }
-
-    .strength-wrap { margin-top: 12px; padding: 12px; border-radius: 14px; background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.10); }
-    .strength-label { display: flex; justify-content: space-between; gap: 10px; color: var(--soft); font-size: 13px; margin-bottom: 8px; }
-    .strength-bar { height: 12px; border-radius: 999px; overflow: hidden; background: rgba(255,255,255,0.12); border: 1px solid rgba(255,255,255,0.10); }
-    .strength-fill { height: 100%; width: 0%; background: linear-gradient(90deg, var(--danger), var(--warn), var(--good)); transition: width 0.3s ease; }
-
-    .console { position: relative; z-index: 4; display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; margin-top: 16px; }
-    .guardian-panel { padding: 16px; display: flex; flex-direction: column; gap: 14px; }
-    .guardian-portrait { min-height: 210px; border-radius: 20px; display: grid; place-items: center; text-align: center; background: radial-gradient(circle at 50% 35%, rgba(245,215,122,0.22), transparent 30%), linear-gradient(145deg, rgba(255,255,255,0.08), rgba(143,216,255,0.08)); border: 1px solid rgba(255,255,255,0.16); padding: 18px; }
-    .guardian-icon { font-size: 64px; margin-bottom: 8px; }
-    .guardian-title { font-size: 21px; font-weight: 800; }
-    .guardian-copy { color: var(--soft); line-height: 1.5; font-size: 14px; }
-    .progress-panel { padding: 13px; border-radius: 18px; background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.10); }
-    .progress-title { color: var(--gold); font-size: 12px; text-transform: uppercase; letter-spacing: 0.16em; margin-bottom: 10px; }
-    .steps { display: grid; gap: 8px; }
-    .step { display: flex; align-items: center; gap: 8px; color: var(--soft); font-size: 13px; }
-    .dot { width: 11px; height: 11px; border-radius: 50%; border: 1px solid rgba(255,255,255,0.35); background: rgba(255,255,255,0.08); }
-    .step.active { color: white; }
-    .step.active .dot { background: var(--gold); box-shadow: 0 0 12px rgba(245,215,122,0.75); border-color: var(--gold); }
-    .step.complete { color: rgba(255,255,255,0.84); }
-    .step.complete .dot { background: rgba(143,216,255,0.72); border-color: rgba(143,216,255,0.9); }
-    .step.unlocked .dot { background: var(--good); border-color: var(--good); box-shadow: 0 0 12px rgba(145,245,179,0.72); }
-    .footer-note { margin-top: 14px; color: rgba(255,255,255,0.58); font-size: 12px; text-align: center; }
-
-    @media (max-width: 980px) { .stage-grid { grid-template-columns: 1fr; } .avatar-rail { grid-template-columns: repeat(2, 1fr); } .main-stage { min-height: auto; } .console { grid-template-columns: 1fr 1fr; } .mission-tag { white-space: normal; } }
-    @media (max-width: 560px) { .topbar { align-items: flex-start; flex-direction: column; } .avatar-rail { grid-template-columns: 1fr; } .console { grid-template-columns: 1fr; } .priority-option { grid-template-columns: auto 1fr; } .priority-option select { grid-column: 1 / -1; } .stage-shell { padding: 14px; } }
-  </style>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>STEM Nation | Council Hall</title>
+<style>
+:root{--gold:#f5d77a;--ice:#dff6ff;--panel:rgba(8,15,32,.78);--strong:rgba(9,18,39,.92);--line:rgba(245,215,122,.34);--soft:rgba(255,255,255,.72);--good:#91f5b3;--warn:#ffd36a;--bad:#ff9d9d;--blue:#8fd8ff}*{box-sizing:border-box}body{margin:0;min-height:100vh;font-family:Arial,Helvetica,sans-serif;color:#fff;background:radial-gradient(circle at 50% 12%,rgba(92,179,255,.22),transparent 28%),radial-gradient(circle at 25% 76%,rgba(245,215,122,.11),transparent 24%),linear-gradient(135deg,#02030a,#071326 48%,#02040b);overflow-x:hidden}.shell{min-height:100vh;padding:22px;position:relative}.shell:before{content:"";position:fixed;inset:0;pointer-events:none;background:linear-gradient(90deg,rgba(255,255,255,.03) 1px,transparent 1px),linear-gradient(rgba(255,255,255,.03) 1px,transparent 1px);background-size:54px 54px;mask-image:radial-gradient(circle at center,#000,transparent 78%);z-index:-2}.top{display:flex;justify-content:space-between;align-items:center;gap:16px;margin-bottom:18px}.kicker{letter-spacing:.22em;text-transform:uppercase;font-size:12px;color:var(--gold)}h1{margin:5px 0 0;font-size:clamp(32px,5vw,58px);line-height:.95;text-shadow:0 0 28px rgba(143,216,255,.22)}.tag{border:1px solid var(--line);border-radius:999px;padding:10px 14px;color:var(--ice);background:rgba(255,255,255,.06);font-size:13px}.grid{display:grid;grid-template-columns:minmax(180px,260px) 1fr minmax(230px,320px);gap:18px}.panel{border:1px solid var(--line);background:var(--panel);border-radius:22px;box-shadow:0 20px 60px rgba(0,0,0,.34);backdrop-filter:blur(10px)}.avatars{padding:14px;display:grid;gap:12px;align-content:start}.avatar{display:grid;grid-template-columns:48px 1fr;gap:10px;align-items:center;padding:11px;border-radius:16px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);transition:.25s}.avatar.active{border-color:rgba(245,215,122,.88);background:rgba(245,215,122,.12);transform:translateX(3px);box-shadow:0 0 18px rgba(245,215,122,.16)}.face{width:48px;height:48px;display:grid;place-items:center;border-radius:50%;background:radial-gradient(circle,rgba(255,255,255,.22),rgba(143,216,255,.1));border:1px solid rgba(255,255,255,.28);font-size:25px}.name{font-weight:700}.role{color:var(--soft);font-size:12px;line-height:1.35}.stage{min-height:720px;padding:18px;position:relative;overflow:hidden}.stage:before{content:"";position:absolute;inset:0;pointer-events:none;background:radial-gradient(circle at 20% 0,rgba(245,215,122,.16),transparent 25%),radial-gradient(circle at 80% 0,rgba(143,216,255,.16),transparent 25%)}.status{position:relative;z-index:5;display:flex;justify-content:space-between;gap:10px;margin-bottom:12px}.pill{border:1px solid rgba(255,255,255,.14);background:rgba(0,0,0,.24);border-radius:999px;padding:8px 11px;font-size:12px;color:var(--soft);letter-spacing:.08em;text-transform:uppercase}.pill strong{color:var(--gold)}.screen{position:relative;z-index:2;min-height:330px;display:grid;place-items:center;padding:22px;border-radius:24px;border:1px solid rgba(143,216,255,.34);background:linear-gradient(135deg,rgba(10,27,56,.88),rgba(7,12,25,.82)),radial-gradient(circle at center,rgba(143,216,255,.16),transparent 44%);box-shadow:inset 0 0 60px rgba(143,216,255,.09),0 18px 50px rgba(0,0,0,.35)}.screen.obs{border-color:rgba(145,245,179,.55)}.screen.q{border-color:rgba(245,215,122,.75)}.screen.p{border-color:rgba(143,216,255,.85)}.screen.r{border-color:rgba(255,255,255,.8);box-shadow:inset 0 0 80px rgba(245,215,122,.12),0 0 35px rgba(245,215,122,.2)}.sat{width:min(650px,100%);min-height:260px;border:1px solid rgba(255,255,255,.2);border-radius:22px;background:linear-gradient(145deg,rgba(215,246,255,.2),rgba(9,20,42,.76)),repeating-linear-gradient(45deg,rgba(255,255,255,.08) 0 4px,transparent 4px 18px);position:relative;overflow:hidden;padding:18px}.sat:before,.sat:after{content:"";position:absolute;border-radius:45% 55% 60% 40%;background:rgba(230,252,255,.72);filter:blur(1px);opacity:.78}.sat:before{width:48%;height:52%;left:8%;top:26%;transform:rotate(-14deg)}.sat:after{width:30%;height:36%;right:14%;top:17%;transform:rotate(22deg);opacity:.48}.sat.q{background:radial-gradient(circle at 64% 46%,rgba(44,77,84,.84) 0 12%,transparent 13%),radial-gradient(circle at 36% 52%,rgba(226,252,255,.88) 0 18%,transparent 19%),radial-gradient(circle at 55% 58%,rgba(245,215,122,.28) 0 8%,transparent 9%),linear-gradient(145deg,rgba(215,246,255,.28),rgba(9,20,42,.82))}.sat.p,.sat.r{background:radial-gradient(circle at 64% 46%,rgba(44,77,84,.9) 0 12%,transparent 13%),radial-gradient(circle at 36% 52%,rgba(226,252,255,.92) 0 18%,transparent 19%),radial-gradient(circle at 55% 58%,rgba(245,215,122,.35) 0 8%,transparent 9%),radial-gradient(circle at 42% 42%,rgba(145,245,179,.22) 0 7%,transparent 8%),linear-gradient(145deg,rgba(215,246,255,.3),rgba(9,20,42,.86))}.scan{position:absolute;left:0;right:0;height:3px;top:0;background:rgba(143,216,255,.8);box-shadow:0 0 18px rgba(143,216,255,.9);animation:scan 4s linear infinite}@keyframes scan{0%{transform:translateY(0);opacity:0}8%{opacity:1}100%{transform:translateY(310px);opacity:0}}.elabel{position:relative;z-index:3;display:inline-flex;padding:9px 12px;border-radius:999px;background:rgba(0,0,0,.45);border:1px solid rgba(245,215,122,.45);color:var(--gold);font-size:12px;text-transform:uppercase;letter-spacing:.16em}.etitle{position:relative;z-index:3;max-width:500px;margin-top:62px;font-size:clamp(23px,4vw,40px);line-height:1.02;text-shadow:0 0 18px rgba(0,0,0,.85)}.dialog{position:relative;z-index:3;margin-top:16px;padding:18px;border-radius:20px;background:var(--strong);border:1px solid rgba(245,215,122,.28);min-height:122px}.speaker{color:var(--gold);font-weight:800;text-transform:uppercase;letter-spacing:.15em;font-size:12px;margin-bottom:8px}.line{font-size:clamp(18px,2.3vw,25px);line-height:1.35}.student{display:none;position:relative;z-index:4;margin-top:16px;padding:16px;border-radius:20px;background:rgba(2,8,18,.76);border:1px solid rgba(143,216,255,.28)}.student.active{display:block;animation:rise .35s ease}@keyframes rise{from{transform:translateY(8px);opacity:0}to{transform:translateY(0);opacity:1}}.tk{color:var(--gold);text-transform:uppercase;letter-spacing:.16em;font-size:12px;margin-bottom:6px}.tt{font-size:22px;font-weight:800;margin-bottom:6px}.help{color:var(--soft);line-height:1.45;font-size:14px;margin-bottom:12px}.inputs{display:grid;gap:10px}.inputs textarea{width:100%;min-height:62px;resize:vertical;border-radius:14px;border:1px solid rgba(255,255,255,.17);background:rgba(255,255,255,.08);color:#fff;padding:12px;font-size:14px;outline:0}.inputs textarea:focus{border-color:rgba(245,215,122,.72);box-shadow:0 0 0 3px rgba(245,215,122,.1)}.actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:12px}.actions button,.controls button,.side button{border:1px solid rgba(255,255,255,.22);background:rgba(255,255,255,.08);color:#fff;border-radius:14px;padding:12px 14px;cursor:pointer;font-weight:700;transition:.25s}.actions .primary{background:rgba(245,215,122,.16);border-color:rgba(245,215,122,.64)}button:hover{background:rgba(245,215,122,.16);border-color:rgba(245,215,122,.72);transform:translateY(-1px)}button:disabled{opacity:.45;cursor:not-allowed;transform:none}.fb{margin-top:10px;padding:11px 12px;border-radius:14px;display:none;line-height:1.45;font-size:14px}.fb.warn{display:block;background:rgba(255,211,106,.13);border:1px solid rgba(255,211,106,.35);color:#ffe2a0}.fb.good{display:block;background:rgba(145,245,179,.12);border:1px solid rgba(145,245,179,.35);color:#d9ffe5}.fb.bad{display:block;background:rgba(255,157,157,.12);border:1px solid rgba(255,157,157,.35);color:#ffd0d0}.chip{display:none;margin-top:10px;color:var(--good);font-size:13px;letter-spacing:.08em;text-transform:uppercase}.chip.active{display:block}.strength{margin-top:12px;padding:12px;border-radius:14px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1)}.slabel{display:flex;justify-content:space-between;color:var(--soft);font-size:13px;margin-bottom:8px}.bar{height:12px;border-radius:999px;overflow:hidden;background:rgba(255,255,255,.12)}.fill{height:100%;width:0;background:linear-gradient(90deg,var(--bad),var(--warn),var(--good));transition:.3s}.priority{display:grid;gap:10px}.po{display:grid;grid-template-columns:auto 1fr 78px;gap:10px;align-items:center;padding:11px;border-radius:14px;border:1px solid rgba(255,255,255,.14);background:rgba(255,255,255,.06)}.po.selected{border-color:rgba(245,215,122,.72);background:rgba(245,215,122,.1)}.po input{width:18px;height:18px}.po select{width:100%;padding:9px;border-radius:10px;border:1px solid rgba(255,255,255,.18);background:rgba(0,0,0,.34);color:#fff}.reports{display:grid;gap:10px;margin-top:12px}.report{padding:12px;border-radius:14px;background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.12);line-height:1.45}.report strong{color:var(--gold)}.summary{display:grid;gap:8px;margin-top:12px}.summary div{padding:10px;border-radius:12px;background:rgba(145,245,179,.09);border:1px solid rgba(145,245,179,.2);font-size:14px}.controls{position:relative;z-index:4;display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-top:16px}.side{padding:16px;display:flex;flex-direction:column;gap:14px}.guardian{min-height:210px;border-radius:20px;display:grid;place-items:center;text-align:center;background:radial-gradient(circle at 50% 35%,rgba(245,215,122,.22),transparent 30%),linear-gradient(145deg,rgba(255,255,255,.08),rgba(143,216,255,.08));border:1px solid rgba(255,255,255,.16);padding:18px}.gicon{font-size:64px;margin-bottom:8px}.gtitle{font-size:21px;font-weight:800}.gcopy{color:var(--soft);line-height:1.5;font-size:14px}.progress{padding:13px;border-radius:18px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1)}.pt{color:var(--gold);font-size:12px;text-transform:uppercase;letter-spacing:.16em;margin-bottom:10px}.steps{display:grid;gap:8px}.step{display:flex;align-items:center;gap:8px;color:var(--soft);font-size:13px}.dot{width:11px;height:11px;border-radius:50%;border:1px solid rgba(255,255,255,.35);background:rgba(255,255,255,.08)}.step.active{color:#fff}.step.active .dot{background:var(--gold);box-shadow:0 0 12px rgba(245,215,122,.75);border-color:var(--gold)}.step.complete .dot{background:rgba(143,216,255,.72);border-color:rgba(143,216,255,.9)}.step.unlocked .dot{background:var(--good);border-color:var(--good);box-shadow:0 0 12px rgba(145,245,179,.72)}.foot{margin-top:14px;color:rgba(255,255,255,.58);font-size:12px;text-align:center}@media(max-width:980px){.grid{grid-template-columns:1fr}.avatars{grid-template-columns:repeat(2,1fr)}.controls{grid-template-columns:1fr 1fr}.tag{white-space:normal}}@media(max-width:560px){.top{align-items:flex-start;flex-direction:column}.avatars{grid-template-columns:1fr}.controls{grid-template-columns:1fr}.po{grid-template-columns:auto 1fr}.po select{grid-column:1/-1}.shell{padding:14px}}
+</style>
 </head>
 <body>
-  <!-- CI-STAGE-5 — Priority Ranking Challenge -->
-  <main class="stage-shell">
-    <section class="topbar">
-      <div>
-        <div class="brand-kicker">STEM Nation Academy Readiness Evaluation</div>
-        <h1>Council Hall</h1>
-      </div>
-      <div class="mission-tag">Prototype Mission: The Ice Break Mystery</div>
-    </section>
-
-    <section class="stage-grid">
-      <aside class="panel avatar-rail" aria-label="Council avatars">
-        <div class="avatar-card" data-avatar="Guardian"><div class="avatar-face">🛡️</div><div><div class="avatar-name">Guardian</div><div class="avatar-role">Guide · threshold · trial keeper</div></div></div>
-        <div class="avatar-card active" data-avatar="Scout"><div class="avatar-face">🧭</div><div><div class="avatar-name">Scout</div><div class="avatar-role">Observation · terrain · details</div></div></div>
-        <div class="avatar-card" data-avatar="Healer"><div class="avatar-face">🩺</div><div><div class="avatar-name">Healer</div><div class="avatar-role">Safety · people · risk</div></div></div>
-        <div class="avatar-card" data-avatar="Engineer"><div class="avatar-face">🛠️</div><div><div class="avatar-name">Engineer</div><div class="avatar-role">Systems · testing · tools</div></div></div>
-        <div class="avatar-card" data-avatar="Archivist"><div class="avatar-face">📜</div><div><div class="avatar-name">Archivist</div><div class="avatar-role">Records · memory · maps</div></div></div>
-        <div class="avatar-card" data-avatar="Strategist"><div class="avatar-face">♟️</div><div><div class="avatar-name">Strategist</div><div class="avatar-role">Priorities · decisions · order</div></div></div>
-      </aside>
-
-      <section class="panel main-stage" aria-label="Council Hall stage">
-        <div class="stage-lights"></div>
-        <div class="stage-status">
-          <div class="scene-pill">Current Stage: <strong id="stageName">Overheard Disagreement</strong></div>
-          <div class="line-count" id="lineCount">Line 1 / 15</div>
-        </div>
-
-        <div class="evidence-screen" id="evidenceScreen">
-          <div class="satellite-card" id="satelliteCard" aria-label="Unlabeled satellite evidence screen">
-            <div class="scan-line"></div>
-            <div class="evidence-label" id="evidenceLabel">Unlabeled Evidence · Satellite Feed Locked</div>
-            <div class="evidence-title" id="evidenceTitle">The Council table glows. A satellite feed waits behind a locked evidence layer.</div>
-          </div>
-        </div>
-
-        <div class="dialogue-box" id="dialogueBox" aria-live="polite">
-          <div class="speaker" id="speaker">Scout</div>
-          <div class="line" id="dialogueLine">The coastline changed overnight. That was not visible in the last scan.</div>
-        </div>
-
-        <div class="student-console" id="observationConsole">
-          <div class="task-kicker">Student Console · First Trial Task</div>
-          <div class="task-title">Record 3 observations before making a claim.</div>
-          <div class="task-help">Look at the unlabeled satellite evidence. Do not explain it yet. Do not solve it yet. Write only what you notice.</div>
-          <div class="input-grid">
-            <textarea id="obs1" placeholder="Observation 1: I notice..."></textarea>
-            <textarea id="obs2" placeholder="Observation 2: I notice..."></textarea>
-            <textarea id="obs3" placeholder="Observation 3: I notice..."></textarea>
-          </div>
-          <div class="task-actions"><button type="button" class="primary-action" onclick="checkObservations()">Submit Observations</button><button type="button" onclick="clearObservations()">Clear</button></div>
-          <div class="task-feedback" id="observationFeedback"></div>
-          <div class="unlock-chip" id="observationUnlockChip">Evidence Layer 2 Unlocked · Question Console Open</div>
-        </div>
-
-        <div class="student-console" id="questionConsole">
-          <div class="task-kicker">Student Console · Second Trial Task</div>
-          <div class="task-title">Ask 2 investigation questions.</div>
-          <div class="task-help">A strong question can be investigated. It should help the Council decide what evidence is missing, what needs testing, or what risk must be checked.</div>
-          <div class="input-grid">
-            <textarea id="q1" placeholder="Question 1: What should the Council investigate?"></textarea>
-            <textarea id="q2" placeholder="Question 2: What evidence is still missing?"></textarea>
-          </div>
-          <div class="strength-wrap"><div class="strength-label"><span>Strong Question Meter</span><strong id="strengthText">0%</strong></div><div class="strength-bar"><div class="strength-fill" id="strengthFill"></div></div></div>
-          <div class="task-actions"><button type="button" class="primary-action" onclick="checkQuestions()">Submit Questions</button><button type="button" onclick="clearQuestions()">Clear</button></div>
-          <div class="task-feedback" id="questionFeedback"></div>
-          <div class="unlock-chip" id="questionUnlockChip">Question Layer Unlocked · Priority Challenge Open</div>
-        </div>
-
-        <div class="student-console" id="priorityConsole">
-          <div class="task-kicker">Student Console · Third Trial Task</div>
-          <div class="task-title">Choose only 3 priorities and rank them in order.</div>
-          <div class="task-help">The Council has limited time. Select exactly three priorities. Assign each selected priority a different rank: 1, 2, and 3. Then explain why that order matters.</div>
-
-          <div class="priority-grid" id="priorityGrid">
-            <div class="priority-option" data-priority="confirm_scan"><input type="checkbox" id="p_confirm_scan"><label for="p_confirm_scan"><strong>Confirm the satellite scan</strong><br><span class="avatar-role">Check whether the image is accurate or distorted.</span></label><select id="rank_confirm_scan"><option value="">Rank</option><option value="1">1st</option><option value="2">2nd</option><option value="3">3rd</option></select></div>
-            <div class="priority-option" data-priority="identify_exposed"><input type="checkbox" id="p_identify_exposed"><label for="p_identify_exposed"><strong>Identify what is exposed</strong><br><span class="avatar-role">Determine if it is land, rock, water, shadow, or another formation.</span></label><select id="rank_identify_exposed"><option value="">Rank</option><option value="1">1st</option><option value="2">2nd</option><option value="3">3rd</option></select></div>
-            <div class="priority-option" data-priority="check_risk"><input type="checkbox" id="p_check_risk"><label for="p_check_risk"><strong>Check human and field-team risk</strong><br><span class="avatar-role">Consider cold exposure, communication, and emergency safety.</span></label><select id="rank_check_risk"><option value="">Rank</option><option value="1">1st</option><option value="2">2nd</option><option value="3">3rd</option></select></div>
-            <div class="priority-option" data-priority="compare_records"><input type="checkbox" id="p_compare_records"><label for="p_compare_records"><strong>Compare older maps and records</strong><br><span class="avatar-role">Look for evidence hidden by older ice or missing records.</span></label><select id="rank_compare_records"><option value="">Rank</option><option value="1">1st</option><option value="2">2nd</option><option value="3">3rd</option></select></div>
-            <div class="priority-option" data-priority="weather_window"><input type="checkbox" id="p_weather_window"><label for="p_weather_window"><strong>Check weather and access window</strong><br><span class="avatar-role">Decide whether conditions allow safe investigation.</span></label><select id="rank_weather_window"><option value="">Rank</option><option value="1">1st</option><option value="2">2nd</option><option value="3">3rd</option></select></div>
-            <div class="priority-option" data-priority="send_drone"><input type="checkbox" id="p_send_drone"><label for="p_send_drone"><strong>Send a scout drone</strong><br><span class="avatar-role">Collect a closer view before sending people.</span></label><select id="rank_send_drone"><option value="">Rank</option><option value="1">1st</option><option value="2">2nd</option><option value="3">3rd</option></select></div>
-          </div>
-
-          <div class="input-grid" style="margin-top:12px;">
-            <textarea id="priorityWhy" placeholder="Explain why you chose this order..."></textarea>
-          </div>
-          <div class="task-actions"><button type="button" class="primary-action" onclick="checkPriorities()">Submit Priority Ranking</button><button type="button" onclick="clearPriorities()">Clear</button></div>
-          <div class="task-feedback" id="priorityFeedback"></div>
-          <div class="unlock-chip" id="priorityUnlockChip">Priority Ranking Accepted · Avatar Reports Next</div>
-        </div>
-
-        <div class="console" aria-label="Dialogue controls">
-          <button type="button" id="backBtn" onclick="previousLine()">Back</button>
-          <button type="button" id="nextBtn" onclick="nextLine()">Continue Scene</button>
-          <button type="button" onclick="restartScene()">Restart</button>
-          <button type="button" onclick="skipToStudentReady()">Student Ready</button>
-        </div>
-      </section>
-
-      <aside class="panel guardian-panel" aria-label="Guardian mission guide">
-        <div class="guardian-portrait"><div><div class="guardian-icon">🛡️</div><div class="guardian-title">Guardian</div><p class="guardian-copy" id="guardianCopy">Listen first. The Council is already in disagreement.</p></div></div>
-        <button type="button" onclick="nextLine()">Advance Dialogue</button>
-        <div class="progress-panel">
-          <div class="progress-title">Trial Progress</div>
-          <div class="steps">
-            <div class="step active" data-stage="overheard"><span class="dot"></span> Overheard Disagreement</div>
-            <div class="step" data-stage="guardian"><span class="dot"></span> Guardian Approaches</div>
-            <div class="step" data-stage="evidence"><span class="dot"></span> Unlabeled Evidence</div>
-            <div class="step" data-stage="prompt"><span class="dot"></span> Observe Task</div>
-            <div class="step" data-stage="unlock"><span class="dot"></span> Evidence Unlock</div>
-            <div class="step" data-stage="questions"><span class="dot"></span> Question Task</div>
-            <div class="step" data-stage="questionUnlock"><span class="dot"></span> Priority Challenge Open</div>
-            <div class="step" data-stage="priorities"><span class="dot"></span> Priority Ranking</div>
-            <div class="step" data-stage="priorityUnlock"><span class="dot"></span> Avatar Reports Ready</div>
-            <div class="step" data-stage="debrief"><span class="dot"></span> Debrief Preview</div>
-          </div>
-        </div>
-        <p class="guardian-copy" id="missionDirective">Directive: do not solve yet. Watch the stage and listen for what each advisor believes.</p>
-      </aside>
-    </section>
-
-    <div class="footer-note">December Public Prototype Build · CI-STAGE-5</div>
-  </main>
-
-  <script>
-    const dialogueScript = [
-      { stage: "overheard", stageName: "Overheard Disagreement", avatar: "Scout", line: "The coastline changed overnight. That was not visible in the last scan.", guardian: "Listen first. The Council is already in disagreement.", directive: "Directive: do not solve yet. Watch the stage and listen for what each advisor believes.", evidenceLabel: "Council Table · Evidence Layer Locked", evidenceTitle: "The Council table glows. A satellite feed waits behind a locked evidence layer." },
-      { stage: "overheard", stageName: "Overheard Disagreement", avatar: "Engineer", line: "Or the image is distorted. Ice shadows can fool the eye. We need a second angle before anyone makes a claim.", guardian: "Notice the conflict: one advisor sees change; another demands proof.", directive: "Listen for evidence, uncertainty, and assumptions.", evidenceLabel: "Council Table · Signal Stabilizing", evidenceTitle: "A blurred polar scan flickers across the table. The image is not yet labeled." },
-      { stage: "overheard", stageName: "Overheard Disagreement", avatar: "Healer", line: "If anyone is sent near that region, cold exposure and communication failure become immediate dangers.", guardian: "The Healer is not asking what is interesting. The Healer is asking what could harm people.", directive: "Track the human risk, not only the mystery.", evidenceLabel: "Risk Note · Human Impact Flagged", evidenceTitle: "The scan remains unclear, but the Council recognizes that evidence can create danger." },
-      { stage: "overheard", stageName: "Overheard Disagreement", avatar: "Archivist", line: "Older records mark this region unclearly. Some maps leave the area blank beneath the ice shelf.", guardian: "The Archivist is connecting new evidence to old records.", directive: "Remember: new evidence becomes stronger when compared to previous records.", evidenceLabel: "Archive Reference · Older Maps Mentioned", evidenceTitle: "The table overlays a faint historical grid over the satellite feed." },
-      { stage: "guardian", stageName: "Guardian Approaches", avatar: "Guardian", line: "Quiet. Someone has arrived.", guardian: "The room turns. The trial has noticed you.", directive: "Prepare to enter the investigation.", evidenceLabel: "Council Hall · Attention Shift", evidenceTitle: "The satellite table dims. The Council looks toward the entrance." },
-      { stage: "guardian", stageName: "Guardian Approaches", avatar: "Guardian", line: "Ah. You made it.", guardian: "You are now inside the Council Hall sequence.", directive: "The Academy is not asking for a guess. It is testing how you notice, question, and reason.", evidenceLabel: "Academy Trial · Student Detected", evidenceTitle: "A new marker appears on the Council table: STUDENT OBSERVER ARRIVED." },
-      { stage: "guardian", stageName: "Guardian Approaches", avatar: "Guardian", line: "Good. We need another set of eyes.", guardian: "This is the hook: the student is needed, not lectured at.", directive: "Your role is observer first, decision-maker later.", evidenceLabel: "Guardian Directive · Observer Needed", evidenceTitle: "The evidence layer begins to unlock. The satellite image sharpens slightly." },
-      { stage: "guardian", stageName: "Guardian Approaches", avatar: "Guardian", line: "Come take a look.", guardian: "The Guardian has opened the first evidence layer.", directive: "Next: study what changed before anyone tells you what it means.", evidenceLabel: "Unlabeled Evidence · Satellite Feed Opening", evidenceTitle: "The first image resolves: ice has broken away, and something underneath is now visible." },
-      { stage: "evidence", stageName: "Unlabeled Evidence", avatar: "Scout", line: "Do not name it yet. First, tell us what changed between the old scan and this one.", guardian: "The Scout is forcing observation before interpretation.", directive: "Student Task soon: record three observations from the evidence.", evidenceLabel: "Unlabeled Evidence · Before / After Scan", evidenceTitle: "A section of ice has broken away. The exposed shape does not match the previous scan." },
-      { stage: "evidence", stageName: "Unlabeled Evidence", avatar: "Engineer", line: "A strong claim needs a test. Is it land, shadow, rock, water, or an image error?", guardian: "The Engineer is turning the mystery into testable possibilities.", directive: "Student Task soon: ask questions that can be investigated.", evidenceLabel: "Evidence Challenge · Possible Explanations", evidenceTitle: "The scan highlights several possible interpretations, but none are confirmed." },
-      { stage: "evidence", stageName: "Unlabeled Evidence", avatar: "Strategist", line: "The Council cannot chase every possibility. We need priorities, and order matters.", guardian: "The Strategist will later require only three priorities, ranked in order.", directive: "Do not add everything. Choose what matters first.", evidenceLabel: "Council Constraint · Priority Limit Pending", evidenceTitle: "The Council table displays limited time, limited data, and limited access." },
-      { stage: "prompt", stageName: "Observe Task", avatar: "Guardian", line: "Your first task is simple: observe before you answer. Three observations. No claims yet.", guardian: "Your console is active. Record three observations before the Council unlocks the next evidence layer.", directive: "Task: write three observations. Avoid guesses. Avoid conclusions. Start with what you can see.", evidenceLabel: "Student Console · Observation Task Active", evidenceTitle: "The evidence remains unlabeled. The Council waits for your first observations.", showObservationConsole: true },
-      { stage: "questions", stageName: "Question Task", avatar: "Engineer", line: "Now turn your observations into questions the Council can investigate.", guardian: "Question Console is waiting. Strong questions unlock the priority challenge.", directive: "Task: ask two investigation questions. Strong questions usually begin with what, how, why, where, when, or which.", evidenceLabel: "Question Console · Waiting For Student Questions", evidenceTitle: "The sharper scan raises new unknowns. The Council needs questions before it chooses priorities.", showObservationConsole: true, showQuestionConsole: true },
-      { stage: "priorities", stageName: "Priority Ranking", avatar: "Strategist", line: "Now choose only three priorities. If everything is first, nothing is first.", guardian: "Priority Console is open. Choose exactly three and rank them 1, 2, and 3.", directive: "Task: select exactly three priorities, rank them in order, and explain why that order matters.", evidenceLabel: "Priority Challenge · Council Waiting", evidenceTitle: "The Council has limited time, limited data, and limited access. Your order will shape the investigation.", showObservationConsole: true, showQuestionConsole: true, showPriorityConsole: true },
-      { stage: "debrief", stageName: "Debrief Preview", avatar: "Guardian", line: "Observe. Question. Prioritize. Defend your reasoning. That is how a Nation Builder begins.", guardian: "End of CI-STAGE-5 sequence. The next layer will reveal avatar reports based on the student ranking.", directive: "Recommended next: CI-STAGE-6 — Avatar Reports + Mission Checkpoint Summary.", evidenceLabel: "Debrief Preview · Avatar Reports Pending", evidenceTitle: "The Council Hall stage is active. Next, each advisor will respond to the student priority order.", showObservationConsole: true, showQuestionConsole: true, showPriorityConsole: true }
-    ];
-
-    let currentLine = 0;
-    let observationsUnlocked = false;
-    let questionsUnlocked = false;
-    let prioritiesUnlocked = false;
-
-    const priorityIds = ["confirm_scan", "identify_exposed", "check_risk", "compare_records", "weather_window", "send_drone"];
-
-    function renderLine(index) {
-      currentLine = Math.max(0, Math.min(index, dialogueScript.length - 1));
-      const beat = dialogueScript[currentLine];
-
-      document.getElementById("stageName").textContent = beat.stageName;
-      document.getElementById("lineCount").textContent = `Line ${currentLine + 1} / ${dialogueScript.length}`;
-      document.getElementById("speaker").textContent = beat.avatar;
-      document.getElementById("dialogueLine").textContent = beat.line;
-      document.getElementById("guardianCopy").textContent = beat.guardian;
-      document.getElementById("missionDirective").textContent = beat.directive;
-
-      if (!observationsUnlocked && !questionsUnlocked && !prioritiesUnlocked) {
-        document.getElementById("evidenceLabel").textContent = beat.evidenceLabel;
-        document.getElementById("evidenceTitle").textContent = beat.evidenceTitle;
-      }
-
-      document.getElementById("observationConsole").classList.toggle("active", !!beat.showObservationConsole || observationsUnlocked || questionsUnlocked || prioritiesUnlocked);
-      document.getElementById("questionConsole").classList.toggle("active", !!beat.showQuestionConsole || observationsUnlocked || questionsUnlocked || prioritiesUnlocked);
-      document.getElementById("priorityConsole").classList.toggle("active", !!beat.showPriorityConsole || questionsUnlocked || prioritiesUnlocked);
-
-      highlightAvatar(beat.avatar);
-      updateProgress(beat.stage);
-      document.getElementById("backBtn").disabled = currentLine === 0;
-      document.getElementById("nextBtn").disabled = currentLine === dialogueScript.length - 1;
-
-      const dialogueBox = document.getElementById("dialogueBox");
-      dialogueBox.classList.remove("pulse");
-      void dialogueBox.offsetWidth;
-      dialogueBox.classList.add("pulse");
-    }
-
-    function updateProgress(activeStage) {
-      const stageOrder = ["overheard", "guardian", "evidence", "prompt", "unlock", "questions", "questionUnlock", "priorities", "priorityUnlock", "debrief"];
-      let displayedStage = activeStage;
-      if (prioritiesUnlocked) displayedStage = "priorityUnlock";
-      else if (questionsUnlocked && activeStage !== "priorities") displayedStage = "questionUnlock";
-      else if (observationsUnlocked && activeStage === "prompt") displayedStage = "unlock";
-      const activeStageIndex = stageOrder.indexOf(displayedStage);
-
-      document.querySelectorAll(".step").forEach((step, i) => {
-        const isObsUnlock = step.dataset.stage === "unlock";
-        const isQuestionUnlock = step.dataset.stage === "questionUnlock";
-        const isPriorityUnlock = step.dataset.stage === "priorityUnlock";
-        step.classList.toggle("active", step.dataset.stage === displayedStage);
-        step.classList.toggle("complete", i < activeStageIndex);
-        step.classList.toggle("unlocked", (observationsUnlocked && isObsUnlock) || (questionsUnlocked && isQuestionUnlock) || (prioritiesUnlocked && isPriorityUnlock));
-      });
-    }
-
-    function nextLine() { renderLine(currentLine + 1); }
-    function previousLine() { renderLine(currentLine - 1); }
-    function skipToStudentReady() { const target = dialogueScript.findIndex(beat => beat.stage === "prompt"); renderLine(target >= 0 ? target : dialogueScript.length - 1); }
-
-    function restartScene() {
-      observationsUnlocked = false;
-      questionsUnlocked = false;
-      prioritiesUnlocked = false;
-      document.getElementById("evidenceScreen").classList.remove("unlocked", "question-unlocked", "priority-unlocked");
-      document.getElementById("satelliteCard").classList.remove("unlocked", "question-unlocked", "priority-unlocked");
-      document.getElementById("observationUnlockChip").classList.remove("active");
-      document.getElementById("questionUnlockChip").classList.remove("active");
-      document.getElementById("priorityUnlockChip").classList.remove("active");
-      clearObservations();
-      clearQuestions();
-      clearPriorities();
-      renderLine(0);
-    }
-
-    function checkObservations() {
-      const values = ["obs1", "obs2", "obs3"].map(id => document.getElementById(id).value.trim());
-      const feedback = document.getElementById("observationFeedback");
-      feedback.className = "task-feedback";
-      if (values.filter(Boolean).length < 3) { feedback.textContent = "The Guardian pauses. The Council needs three observations before it can unlock the next evidence layer."; feedback.classList.add("warn"); return; }
-      if (values.some(value => value.length < 10)) { feedback.textContent = "The Scout leans closer. Each observation should be specific enough for the Council to use. Add more detail before moving on."; feedback.classList.add("warn"); return; }
-      observationsUnlocked = true;
-      feedback.textContent = "The Guardian nods. You observed before claiming. Evidence Layer 2 is now unlocked.";
-      feedback.classList.add("good");
-      document.getElementById("observationUnlockChip").classList.add("active");
-      document.getElementById("evidenceScreen").classList.add("unlocked");
-      document.getElementById("satelliteCard").classList.add("unlocked");
-      document.getElementById("questionConsole").classList.add("active");
-      document.getElementById("evidenceLabel").textContent = "Evidence Layer 2 · Observation Accepted";
-      document.getElementById("evidenceTitle").textContent = "Your observations unlocked a sharper scan. Next, ask what the Council must investigate.";
-      document.getElementById("speaker").textContent = "Engineer";
-      document.getElementById("dialogueLine").textContent = "Good. You did not rush to name the mystery. Now turn your observations into questions.";
-      document.getElementById("guardianCopy").textContent = "Observation task complete. The Question Console is now open.";
-      document.getElementById("missionDirective").textContent = "Unlocked: write two investigation questions that can guide the Council.";
-      highlightAvatar("Engineer");
-      updateProgress("questions");
-    }
-
-    function clearObservations() {
-      ["obs1", "obs2", "obs3"].forEach(id => document.getElementById(id).value = "");
-      const feedback = document.getElementById("observationFeedback");
-      feedback.className = "task-feedback";
-      feedback.textContent = "";
-    }
-
-    function scoreQuestion(value) {
-      const q = value.trim().toLowerCase();
-      let score = 0;
-      if (q.length >= 12) score += 15;
-      if (q.length >= 35) score += 15;
-      if (q.includes("?")) score += 15;
-      if (/^(what|how|why|where|when|which|could|is|are|does|do|can)\b/.test(q)) score += 20;
-      if (/(evidence|scan|image|ice|land|shadow|risk|test|compare|change|missing|confirm|weather|map|record)/.test(q)) score += 25;
-      if (/(investigate|prove|verify|confirm|compare|measure|test)/.test(q)) score += 10;
-      return Math.min(score, 100);
-    }
-
-    function updateQuestionStrength() {
-      const q1 = document.getElementById("q1").value;
-      const q2 = document.getElementById("q2").value;
-      const avg = Math.round((scoreQuestion(q1) + scoreQuestion(q2)) / 2);
-      document.getElementById("strengthFill").style.width = avg + "%";
-      document.getElementById("strengthText").textContent = avg + "%";
-      return avg;
-    }
-
-    function checkQuestions() {
-      const values = ["q1", "q2"].map(id => document.getElementById(id).value.trim());
-      const feedback = document.getElementById("questionFeedback");
-      feedback.className = "task-feedback";
-      const strength = updateQuestionStrength();
-      if (values.filter(Boolean).length < 2) { feedback.textContent = "The Engineer shakes his head. The Council needs two investigation questions before choosing priorities."; feedback.classList.add("warn"); return; }
-      if (values.some(value => !value.includes("?"))) { feedback.textContent = "The Archivist points to the record: at least one entry is not written as a question. Add a question mark and make it ask something investigable."; feedback.classList.add("warn"); return; }
-      if (strength < 55) { feedback.textContent = "The Scout listens, but the questions are still weak. Try asking what evidence is missing, what should be compared, or what risk must be tested."; feedback.classList.add("bad"); return; }
-      questionsUnlocked = true;
-      feedback.textContent = "The Council leans in. Your questions can guide an investigation. Priority Challenge is now unlocked.";
-      feedback.classList.add("good");
-      document.getElementById("questionUnlockChip").classList.add("active");
-      document.getElementById("priorityConsole").classList.add("active");
-      document.getElementById("evidenceScreen").classList.add("question-unlocked");
-      document.getElementById("satelliteCard").classList.add("question-unlocked");
-      document.getElementById("evidenceLabel").textContent = "Question Layer Accepted · Priority Challenge Open";
-      document.getElementById("evidenceTitle").textContent = "Your questions revealed the next problem: the Council has limited time and must choose only three priorities.";
-      document.getElementById("speaker").textContent = "Strategist";
-      document.getElementById("dialogueLine").textContent = "Good questions narrow the field. Now the Council needs priorities, and order matters.";
-      document.getElementById("guardianCopy").textContent = "Question task complete. Rank exactly three priorities.";
-      document.getElementById("missionDirective").textContent = "Unlocked: Priority Challenge. Choose only three actions in order of importance.";
-      highlightAvatar("Strategist");
-      updateProgress("priorities");
-    }
-
-    function clearQuestions() {
-      ["q1", "q2"].forEach(id => document.getElementById(id).value = "");
-      const feedback = document.getElementById("questionFeedback");
-      feedback.className = "task-feedback";
-      feedback.textContent = "";
-      updateQuestionStrength();
-    }
-
-    function getSelectedPriorities() {
-      return priorityIds.filter(id => document.getElementById("p_" + id).checked).map(id => ({ id, rank: document.getElementById("rank_" + id).value }));
-    }
-
-    function updatePrioritySelections() {
-      priorityIds.forEach(id => {
-        const checked = document.getElementById("p_" + id).checked;
-        document.querySelector(`[data-priority="${id}"]`).classList.toggle("selected", checked);
-      });
-    }
-
-    function checkPriorities() {
-      const selected = getSelectedPriorities();
-      const feedback = document.getElementById("priorityFeedback");
-      feedback.className = "task-feedback";
-      const why = document.getElementById("priorityWhy").value.trim();
-
-      if (selected.length !== 3) {
-        feedback.textContent = `The Strategist stops the table. You selected ${selected.length}. The Council requires exactly three priorities.`;
-        feedback.classList.add("warn");
-        return;
-      }
-
-      const ranks = selected.map(item => item.rank);
-      if (ranks.some(rank => !rank)) {
-        feedback.textContent = "The Strategist points to the empty ranks. Each selected priority must be ranked 1st, 2nd, or 3rd.";
-        feedback.classList.add("warn");
-        return;
-      }
-
-      const uniqueRanks = new Set(ranks);
-      if (uniqueRanks.size !== 3 || !["1", "2", "3"].every(rank => uniqueRanks.has(rank))) {
-        feedback.textContent = "The Council cannot accept tied priorities. Use each rank exactly once: 1st, 2nd, and 3rd.";
-        feedback.classList.add("warn");
-        return;
-      }
-
-      if (why.length < 35) {
-        feedback.textContent = "The Guardian waits. Explain why your order matters. A ranking without reasoning is not leadership yet.";
-        feedback.classList.add("bad");
-        return;
-      }
-
-      prioritiesUnlocked = true;
-      feedback.textContent = "The Strategist nods. You limited the field, ordered the priorities, and defended your reasoning. Avatar Reports are now ready.";
-      feedback.classList.add("good");
-      document.getElementById("priorityUnlockChip").classList.add("active");
-      document.getElementById("evidenceScreen").classList.add("priority-unlocked");
-      document.getElementById("satelliteCard").classList.add("priority-unlocked");
-      document.getElementById("evidenceLabel").textContent = "Priority Ranking Accepted · Avatar Reports Ready";
-      document.getElementById("evidenceTitle").textContent = "Your ranked priorities are locked. Next, each Council avatar will respond with a specialist report.";
-      document.getElementById("speaker").textContent = "Strategist";
-      document.getElementById("dialogueLine").textContent = "Now the Council can move. Your order gives the investigation a path.";
-      document.getElementById("guardianCopy").textContent = "Priority task complete. The next prototype layer will generate avatar reports.";
-      document.getElementById("missionDirective").textContent = "Unlocked: Avatar Reports next. Scout, Engineer, Healer, and Archivist will respond to the plan.";
-      highlightAvatar("Strategist");
-      updateProgress("priorityUnlock");
-    }
-
-    function clearPriorities() {
-      priorityIds.forEach(id => {
-        document.getElementById("p_" + id).checked = false;
-        document.getElementById("rank_" + id).value = "";
-      });
-      document.getElementById("priorityWhy").value = "";
-      const feedback = document.getElementById("priorityFeedback");
-      feedback.className = "task-feedback";
-      feedback.textContent = "";
-      updatePrioritySelections();
-    }
-
-    function highlightAvatar(name) {
-      document.querySelectorAll(".avatar-card").forEach(card => {
-        const isActive = card.dataset.avatar === name;
-        card.classList.toggle("active", isActive);
-        card.classList.toggle("guardian-active", isActive && name === "Guardian");
-      });
-    }
-
-    ["q1", "q2"].forEach(id => document.addEventListener("input", event => { if (event.target && event.target.id === id) updateQuestionStrength(); }));
-    priorityIds.forEach(id => {
-      document.addEventListener("change", event => {
-        if (event.target && (event.target.id === "p_" + id || event.target.id === "rank_" + id)) updatePrioritySelections();
-      });
-    });
-
-    renderLine(0);
-  </script>
+<main class="shell">
+<section class="top"><div><div class="kicker">STEM Nation Academy Readiness Evaluation</div><h1>Council Hall</h1></div><div class="tag">Prototype Mission: The Ice Break Mystery</div></section>
+<section class="grid">
+<aside class="panel avatars" id="avatars"></aside>
+<section class="panel stage">
+<div class="status"><div class="pill">Current Stage: <strong id="stageName">Overheard Disagreement</strong></div><div class="pill" id="lineCount">Line 1 / 15</div></div>
+<div class="screen" id="screen"><div class="sat" id="sat"><div class="scan"></div><div class="elabel" id="evidenceLabel">Unlabeled Evidence · Satellite Feed Locked</div><div class="etitle" id="evidenceTitle">The Council table glows. A satellite feed waits behind a locked evidence layer.</div></div></div>
+<div class="dialog"><div class="speaker" id="speaker">Scout</div><div class="line" id="dialogueLine">The coastline changed overnight. That was not visible in the last scan.</div></div>
+<div class="student" id="observationConsole"><div class="tk">Student Console · First Trial Task</div><div class="tt">Record 3 observations before making a claim.</div><div class="help">Write only what you notice. Do not explain it yet. Do not solve it yet.</div><div class="inputs"><textarea id="obs1" placeholder="Observation 1: I notice..."></textarea><textarea id="obs2" placeholder="Observation 2: I notice..."></textarea><textarea id="obs3" placeholder="Observation 3: I notice..."></textarea></div><div class="actions"><button class="primary" onclick="checkObservations()">Submit Observations</button><button onclick="clearObservations()">Clear</button></div><div class="fb" id="observationFeedback"></div><div class="chip" id="observationUnlockChip">Evidence Layer 2 Unlocked · Question Console Open</div></div>
+<div class="student" id="questionConsole"><div class="tk">Student Console · Second Trial Task</div><div class="tt">Ask 2 investigation questions.</div><div class="help">Strong questions help the Council decide what evidence is missing, what needs testing, or what risk must be checked.</div><div class="inputs"><textarea id="q1" placeholder="Question 1: What should the Council investigate?"></textarea><textarea id="q2" placeholder="Question 2: What evidence is still missing?"></textarea></div><div class="strength"><div class="slabel"><span>Strong Question Meter</span><strong id="strengthText">0%</strong></div><div class="bar"><div class="fill" id="strengthFill"></div></div></div><div class="actions"><button class="primary" onclick="checkQuestions()">Submit Questions</button><button onclick="clearQuestions()">Clear</button></div><div class="fb" id="questionFeedback"></div><div class="chip" id="questionUnlockChip">Question Layer Unlocked · Priority Challenge Open</div></div>
+<div class="student" id="priorityConsole"><div class="tk">Student Console · Third Trial Task</div><div class="tt">Choose only 3 priorities and rank them in order.</div><div class="help">Select exactly three priorities. Assign each selected priority a different rank: 1, 2, and 3. Then explain why that order matters.</div><div class="priority" id="priorityGrid"></div><div class="inputs" style="margin-top:12px"><textarea id="priorityWhy" placeholder="Explain why you chose this order..."></textarea></div><div class="actions"><button class="primary" onclick="checkPriorities()">Submit Priority Ranking</button><button onclick="clearPriorities()">Clear</button></div><div class="fb" id="priorityFeedback"></div><div class="chip" id="priorityUnlockChip">Priority Ranking Accepted · Avatar Reports Open</div></div>
+<div class="student" id="reportConsole"><div class="tk">Council Reports · Mission Checkpoint</div><div class="tt">Avatar reports are ready.</div><div class="help">The Council responds to your completed observation, question, and priority sequence.</div><div class="reports" id="reports"></div><div class="summary" id="summary"></div><div class="actions"><button class="primary" onclick="showCheckpoint()">Refresh Checkpoint Summary</button><button onclick="prepareReflection()">Prepare Reflection</button></div><div class="fb good" style="display:block" id="reportFeedback">The Guardian records this as your first Academy Readiness checkpoint.</div></div>
+<div class="controls"><button id="backBtn" onclick="previousLine()">Back</button><button id="nextBtn" onclick="nextLine()">Continue Scene</button><button onclick="restartScene()">Restart</button><button onclick="skipToStudentReady()">Student Ready</button></div>
+</section>
+<aside class="panel side"><div class="guardian"><div><div class="gicon">🛡️</div><div class="gtitle">Guardian</div><p class="gcopy" id="guardianCopy">Listen first. The Council is already in disagreement.</p></div></div><button onclick="nextLine()">Advance Dialogue</button><div class="progress"><div class="pt">Trial Progress</div><div class="steps" id="steps"></div></div><p class="gcopy" id="missionDirective">Directive: do not solve yet. Watch the stage and listen for what each advisor believes.</p></aside>
+</section><div class="foot">December Public Prototype Build · CI-STAGE-6</div>
+</main>
+<script>
+const avatarData=[['Guardian','🛡️','Guide · threshold · trial keeper'],['Scout','🧭','Observation · terrain · details'],['Healer','🩺','Safety · people · risk'],['Engineer','🛠️','Systems · testing · tools'],['Archivist','📜','Records · memory · maps'],['Strategist','♟️','Priorities · decisions · order']];
+const stepData=[['overheard','Overheard Disagreement'],['guardian','Guardian Approaches'],['evidence','Unlabeled Evidence'],['prompt','Observe Task'],['unlock','Evidence Unlock'],['questions','Question Task'],['questionUnlock','Priority Challenge Open'],['priorities','Priority Ranking'],['priorityUnlock','Avatar Reports Open'],['reports','Mission Checkpoint'],['debrief','Debrief Preview']];
+const priorityData=[['confirm_scan','Confirm the satellite scan','Check whether the image is accurate or distorted.'],['identify_exposed','Identify what is exposed','Determine if it is land, rock, water, shadow, or another formation.'],['check_risk','Check human and field-team risk','Consider cold exposure, communication, and emergency safety.'],['compare_records','Compare older maps and records','Look for evidence hidden by older ice or missing records.'],['weather_window','Check weather and access window','Decide whether conditions allow safe investigation.'],['send_drone','Send a scout drone','Collect a closer view before sending people.']];
+const script=[
+{stage:'overheard',stageName:'Overheard Disagreement',avatar:'Scout',line:'The coastline changed overnight. That was not visible in the last scan.',guardian:'Listen first. The Council is already in disagreement.',directive:'Directive: do not solve yet. Watch the stage and listen for what each advisor believes.',label:'Council Table · Evidence Layer Locked',title:'The Council table glows. A satellite feed waits behind a locked evidence layer.'},
+{stage:'overheard',stageName:'Overheard Disagreement',avatar:'Engineer',line:'Or the image is distorted. Ice shadows can fool the eye. We need a second angle before anyone makes a claim.',guardian:'Notice the conflict: one advisor sees change; another demands proof.',directive:'Listen for evidence, uncertainty, and assumptions.',label:'Council Table · Signal Stabilizing',title:'A blurred polar scan flickers across the table. The image is not yet labeled.'},
+{stage:'overheard',stageName:'Overheard Disagreement',avatar:'Healer',line:'If anyone is sent near that region, cold exposure and communication failure become immediate dangers.',guardian:'The Healer is not asking what is interesting. The Healer is asking what could harm people.',directive:'Track the human risk, not only the mystery.',label:'Risk Note · Human Impact Flagged',title:'The scan remains unclear, but the Council recognizes that evidence can create danger.'},
+{stage:'overheard',stageName:'Overheard Disagreement',avatar:'Archivist',line:'Older records mark this region unclearly. Some maps leave the area blank beneath the ice shelf.',guardian:'The Archivist is connecting new evidence to old records.',directive:'Remember: new evidence becomes stronger when compared to previous records.',label:'Archive Reference · Older Maps Mentioned',title:'The table overlays a faint historical grid over the satellite feed.'},
+{stage:'guardian',stageName:'Guardian Approaches',avatar:'Guardian',line:'Quiet. Someone has arrived.',guardian:'The room turns. The trial has noticed you.',directive:'Prepare to enter the investigation.',label:'Council Hall · Attention Shift',title:'The satellite table dims. The Council looks toward the entrance.'},
+{stage:'guardian',stageName:'Guardian Approaches',avatar:'Guardian',line:'Ah. You made it.',guardian:'You are now inside the Council Hall sequence.',directive:'The Academy is not asking for a guess. It is testing how you notice, question, and reason.',label:'Academy Trial · Student Detected',title:'A new marker appears on the Council table: STUDENT OBSERVER ARRIVED.'},
+{stage:'guardian',stageName:'Guardian Approaches',avatar:'Guardian',line:'Good. We need another set of eyes.',guardian:'This is the hook: the student is needed, not lectured at.',directive:'Your role is observer first, decision-maker later.',label:'Guardian Directive · Observer Needed',title:'The evidence layer begins to unlock. The satellite image sharpens slightly.'},
+{stage:'guardian',stageName:'Guardian Approaches',avatar:'Guardian',line:'Come take a look.',guardian:'The Guardian has opened the first evidence layer.',directive:'Next: study what changed before anyone tells you what it means.',label:'Unlabeled Evidence · Satellite Feed Opening',title:'The first image resolves: ice has broken away, and something underneath is now visible.'},
+{stage:'evidence',stageName:'Unlabeled Evidence',avatar:'Scout',line:'Do not name it yet. First, tell us what changed between the old scan and this one.',guardian:'The Scout is forcing observation before interpretation.',directive:'Student Task soon: record three observations from the evidence.',label:'Unlabeled Evidence · Before / After Scan',title:'A section of ice has broken away. The exposed shape does not match the previous scan.'},
+{stage:'evidence',stageName:'Unlabeled Evidence',avatar:'Engineer',line:'A strong claim needs a test. Is it land, shadow, rock, water, or an image error?',guardian:'The Engineer is turning the mystery into testable possibilities.',directive:'Student Task soon: ask questions that can be investigated.',label:'Evidence Challenge · Possible Explanations',title:'The scan highlights several possible interpretations, but none are confirmed.'},
+{stage:'evidence',stageName:'Unlabeled Evidence',avatar:'Strategist',line:'The Council cannot chase every possibility. We need priorities, and order matters.',guardian:'The Strategist will later require only three priorities, ranked in order.',directive:'Do not add everything. Choose what matters first.',label:'Council Constraint · Priority Limit Pending',title:'The Council table displays limited time, limited data, and limited access.'},
+{stage:'prompt',stageName:'Observe Task',avatar:'Guardian',line:'Your first task is simple: observe before you answer. Three observations. No claims yet.',guardian:'Your console is active. Record three observations before the Council unlocks the next evidence layer.',directive:'Task: write three observations. Avoid guesses. Avoid conclusions. Start with what you can see.',label:'Student Console · Observation Task Active',title:'The evidence remains unlabeled. The Council waits for your first observations.',obs:true},
+{stage:'questions',stageName:'Question Task',avatar:'Engineer',line:'Now turn your observations into questions the Council can investigate.',guardian:'Question Console is waiting. Strong questions unlock the priority challenge.',directive:'Task: ask two investigation questions.',label:'Question Console · Waiting For Student Questions',title:'The sharper scan raises new unknowns. The Council needs questions before it chooses priorities.',obs:true,q:true},
+{stage:'priorities',stageName:'Priority Ranking',avatar:'Strategist',line:'Now choose only three priorities. If everything is first, nothing is first.',guardian:'Priority Console is open. Choose exactly three and rank them 1, 2, and 3.',directive:'Task: select exactly three priorities, rank them in order, and explain why that order matters.',label:'Priority Challenge · Council Waiting',title:'The Council has limited time, limited data, and limited access. Your order will shape the investigation.',obs:true,q:true,p:true},
+{stage:'reports',stageName:'Mission Checkpoint',avatar:'Guardian',line:'The Council has enough to respond. Listen to the reports, then prepare your final reflection.',guardian:'Avatar Reports are open. This checkpoint shows what the student has completed.',directive:'Next recommended build: CI-STAGE-7 — Final Claim + Reflection.',label:'Mission Checkpoint · Avatar Reports Active',title:'The Council responds to your investigation path. The first Academy checkpoint is recorded.',obs:true,q:true,p:true,r:true}
+];
+let current=0,obsUnlocked=false,qUnlocked=false,pUnlocked=false,rUnlocked=false;
+function init(){document.getElementById('avatars').innerHTML=avatarData.map(a=>`<div class="avatar" data-avatar="${a[0]}"><div class="face">${a[1]}</div><div><div class="name">${a[0]}</div><div class="role">${a[2]}</div></div></div>`).join('');document.getElementById('steps').innerHTML=stepData.map(s=>`<div class="step" data-stage="${s[0]}"><span class="dot"></span>${s[1]}</div>`).join('');document.getElementById('priorityGrid').innerHTML=priorityData.map(p=>`<div class="po" data-priority="${p[0]}"><input type="checkbox" id="p_${p[0]}"><label for="p_${p[0]}"><strong>${p[1]}</strong><br><span class="role">${p[2]}</span></label><select id="rank_${p[0]}"><option value="">Rank</option><option value="1">1st</option><option value="2">2nd</option><option value="3">3rd</option></select></div>`).join('');priorityData.forEach(p=>{document.addEventListener('change',e=>{if(e.target&&["p_"+p[0],"rank_"+p[0]].includes(e.target.id))updatePrioritySelections()})});['q1','q2'].forEach(id=>document.addEventListener('input',e=>{if(e.target&&e.target.id===id)updateQuestionStrength()}));render(0)}
+function render(i){current=Math.max(0,Math.min(i,script.length-1));const b=script[current];stageName.textContent=b.stageName;lineCount.textContent=`Line ${current+1} / ${script.length}`;speaker.textContent=b.avatar;dialogueLine.textContent=b.line;guardianCopy.textContent=b.guardian;missionDirective.textContent=b.directive;if(!obsUnlocked&&!qUnlocked&&!pUnlocked&&!rUnlocked){evidenceLabel.textContent=b.label;evidenceTitle.textContent=b.title}observationConsole.classList.toggle('active',!!b.obs||obsUnlocked||qUnlocked||pUnlocked||rUnlocked);questionConsole.classList.toggle('active',!!b.q||obsUnlocked||qUnlocked||pUnlocked||rUnlocked);priorityConsole.classList.toggle('active',!!b.p||qUnlocked||pUnlocked||rUnlocked);reportConsole.classList.toggle('active',!!b.r||rUnlocked);highlight(b.avatar);progress(b.stage);backBtn.disabled=current===0;nextBtn.disabled=current===script.length-1}
+function progress(active){const order=stepData.map(s=>s[0]);let shown=active;if(rUnlocked)shown='reports';else if(pUnlocked)shown='priorityUnlock';else if(qUnlocked&&active!=='priorities')shown='questionUnlock';else if(obsUnlocked&&active==='prompt')shown='unlock';const idx=order.indexOf(shown);document.querySelectorAll('.step').forEach((s,i)=>{s.classList.toggle('active',s.dataset.stage===shown);s.classList.toggle('complete',i<idx);s.classList.toggle('unlocked',(obsUnlocked&&s.dataset.stage==='unlock')||(qUnlocked&&s.dataset.stage==='questionUnlock')||(pUnlocked&&s.dataset.stage==='priorityUnlock')||(rUnlocked&&s.dataset.stage==='reports'))})}
+function nextLine(){render(current+1)}function previousLine(){render(current-1)}function skipToStudentReady(){render(script.findIndex(b=>b.stage==='prompt'))}
+function clearClass(){screen.className='screen';sat.className='sat'}function setEvidence(cls,label,title){clearClass();if(cls){screen.classList.add(cls);sat.classList.add(cls)}evidenceLabel.textContent=label;evidenceTitle.textContent=title}
+function checkObservations(){const v=['obs1','obs2','obs3'].map(id=>document.getElementById(id).value.trim()),f=observationFeedback;f.className='fb';if(v.filter(Boolean).length<3){f.textContent='The Guardian pauses. The Council needs three observations.';f.classList.add('warn');return}if(v.some(x=>x.length<10)){f.textContent='The Scout leans closer. Add more specific detail to each observation.';f.classList.add('warn');return}obsUnlocked=true;f.textContent='The Guardian nods. You observed before claiming. Evidence Layer 2 is unlocked.';f.classList.add('good');observationUnlockChip.classList.add('active');questionConsole.classList.add('active');setEvidence('obs','Evidence Layer 2 · Observation Accepted','Your observations unlocked a sharper scan. Next, ask what the Council must investigate.');speaker.textContent='Engineer';dialogueLine.textContent='Now turn your observations into questions.';guardianCopy.textContent='Observation task complete. The Question Console is open.';missionDirective.textContent='Unlocked: write two investigation questions that can guide the Council.';highlight('Engineer');progress('questions')}
+function clearObservations(){['obs1','obs2','obs3'].forEach(id=>document.getElementById(id).value='');observationFeedback.className='fb';observationFeedback.textContent=''}
+function scoreQuestion(x){const q=x.trim().toLowerCase();let s=0;if(q.length>=12)s+=15;if(q.length>=35)s+=15;if(q.includes('?'))s+=15;if(/^(what|how|why|where|when|which|could|is|are|does|do|can)\b/.test(q))s+=20;if(/(evidence|scan|image|ice|land|shadow|risk|test|compare|change|missing|confirm|weather|map|record)/.test(q))s+=25;if(/(investigate|prove|verify|confirm|compare|measure|test)/.test(q))s+=10;return Math.min(s,100)}
+function updateQuestionStrength(){const avg=Math.round((scoreQuestion(q1.value)+scoreQuestion(q2.value))/2);strengthFill.style.width=avg+'%';strengthText.textContent=avg+'%';return avg}
+function checkQuestions(){const v=[q1.value.trim(),q2.value.trim()],f=questionFeedback;f.className='fb';const strength=updateQuestionStrength();if(v.filter(Boolean).length<2){f.textContent='The Engineer shakes his head. The Council needs two investigation questions.';f.classList.add('warn');return}if(v.some(x=>!x.includes('?'))){f.textContent='The Archivist points to the record: each entry must be written as a question.';f.classList.add('warn');return}if(strength<55){f.textContent='The questions are still weak. Ask what evidence is missing, what should be compared, or what risk must be tested.';f.classList.add('bad');return}qUnlocked=true;f.textContent='The Council leans in. Your questions can guide an investigation. Priority Challenge is open.';f.classList.add('good');questionUnlockChip.classList.add('active');priorityConsole.classList.add('active');setEvidence('q','Question Layer Accepted · Priority Challenge Open','Your questions revealed the next problem: the Council has limited time and must choose only three priorities.');speaker.textContent='Strategist';dialogueLine.textContent='Good questions narrow the field. Now the Council needs priorities, and order matters.';guardianCopy.textContent='Question task complete. Rank exactly three priorities.';missionDirective.textContent='Unlocked: Priority Challenge. Choose only three actions in order of importance.';highlight('Strategist');progress('priorities')}
+function clearQuestions(){q1.value='';q2.value='';questionFeedback.className='fb';questionFeedback.textContent='';updateQuestionStrength()}
+function selectedPriorities(){return priorityData.filter(p=>document.getElementById('p_'+p[0]).checked).map(p=>({id:p[0],name:p[1],rank:document.getElementById('rank_'+p[0]).value}))}
+function updatePrioritySelections(){priorityData.forEach(p=>document.querySelector(`[data-priority="${p[0]}"]`).classList.toggle('selected',document.getElementById('p_'+p[0]).checked))}
+function checkPriorities(){const sel=selectedPriorities(),f=priorityFeedback;f.className='fb';const why=priorityWhy.value.trim();if(sel.length!==3){f.textContent=`The Strategist stops the table. You selected ${sel.length}. The Council requires exactly three priorities.`;f.classList.add('warn');return}const ranks=sel.map(x=>x.rank),u=new Set(ranks);if(ranks.some(x=>!x)){f.textContent='Each selected priority must be ranked 1st, 2nd, or 3rd.';f.classList.add('warn');return}if(u.size!==3||!['1','2','3'].every(x=>u.has(x))){f.textContent='The Council cannot accept tied priorities. Use each rank exactly once: 1st, 2nd, and 3rd.';f.classList.add('warn');return}if(why.length<35){f.textContent='The Guardian waits. Explain why your order matters. A ranking without reasoning is not leadership yet.';f.classList.add('bad');return}pUnlocked=true;f.textContent='The Strategist nods. You limited the field, ordered priorities, and defended your reasoning. Avatar Reports are open.';f.classList.add('good');priorityUnlockChip.classList.add('active');reportConsole.classList.add('active');setEvidence('p','Priority Ranking Accepted · Avatar Reports Open','Your ranked priorities are locked. Each Council avatar will respond with a specialist report.');speaker.textContent='Strategist';dialogueLine.textContent='Now the Council can move. Your order gives the investigation a path.';guardianCopy.textContent='Priority task complete. Read the avatar reports and checkpoint summary.';missionDirective.textContent='Unlocked: Avatar Reports. Scout, Engineer, Healer, Archivist, and Strategist respond to the plan.';highlight('Strategist');buildReports();showCheckpoint();progress('reports')}
+function clearPriorities(){priorityData.forEach(p=>{document.getElementById('p_'+p[0]).checked=false;document.getElementById('rank_'+p[0]).value=''});priorityWhy.value='';priorityFeedback.className='fb';priorityFeedback.textContent='';updatePrioritySelections()}
+function buildReports(){rUnlocked=true;const sel=selectedPriorities().sort((a,b)=>Number(a.rank)-Number(b.rank));const top=sel[0]?.name||'your first priority';reports.innerHTML=`<div class="report"><strong>Scout Report:</strong> Your first move is ${top}. The Scout will compare visible changes in the scan before naming the mystery.</div><div class="report"><strong>Engineer Report:</strong> The image still needs testing. A second angle, scan confirmation, or drone check can reduce guesswork.</div><div class="report"><strong>Healer Report:</strong> Any field action must account for cold exposure, communication gaps, and emergency return planning.</div><div class="report"><strong>Archivist Report:</strong> Older maps and records may explain whether the exposed shape is new, hidden, or previously misread.</div><div class="report"><strong>Strategist Report:</strong> Your ranking gives the Council an investigation sequence instead of a pile of ideas.</div>`;setEvidence('r','Avatar Reports Active · Mission Checkpoint Recorded','The Council has responded. Your first Academy Readiness checkpoint is ready for reflection.');speaker.textContent='Guardian';dialogueLine.textContent='You observed, questioned, prioritized, and defended your order. Now reflect on your reasoning.';guardianCopy.textContent='Mission checkpoint recorded. The next layer will ask for a final claim and reflection.';missionDirective.textContent='Recommended next: CI-STAGE-7 — Final Claim + Reflection.';highlight('Guardian');progress('reports')}
+function showCheckpoint(){const obs=['obs1','obs2','obs3'].filter(id=>document.getElementById(id).value.trim()).length;const qs=[q1.value.trim(),q2.value.trim()].filter(Boolean).length;const sel=selectedPriorities().sort((a,b)=>Number(a.rank)-Number(b.rank));summary.innerHTML=`<div>Observation Check: ${obs}/3 observations recorded.</div><div>Question Check: ${qs}/2 investigation questions submitted. Strong Question Meter: ${strengthText.textContent}.</div><div>Priority Check: ${sel.length}/3 priorities ranked. Order: ${sel.map(x=>x.rank+'. '+x.name).join(' → ')||'not locked'}.</div><div>Reasoning Check: ${priorityWhy.value.trim().length>=35?'Explanation accepted.':'Explanation needs more detail.'}</div>`}
+function prepareReflection(){buildReports();speaker.textContent='Guardian';dialogueLine.textContent='Your checkpoint is complete. The final step will be your claim: what do you think happened, what evidence supports it, and what are you still unsure about?';guardianCopy.textContent='Reflection is not open yet. CI-STAGE-7 will add the final claim and reflection chamber.';missionDirective.textContent='Next build: final claim, evidence support, uncertainty, and debrief rank.'}
+function highlight(name){document.querySelectorAll('.avatar').forEach(a=>a.classList.toggle('active',a.dataset.avatar===name))}
+function restartScene(){obsUnlocked=qUnlocked=pUnlocked=rUnlocked=false;clearClass();['observationUnlockChip','questionUnlockChip','priorityUnlockChip'].forEach(id=>document.getElementById(id).classList.remove('active'));clearObservations();clearQuestions();clearPriorities();reports.innerHTML='';summary.innerHTML='';render(0)}
+init();
+</script>
 </body>
 </html>
