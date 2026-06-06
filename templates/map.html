@@ -1,140 +1,370 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <title>Simulation Mode</title>
-
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>STEM Nation | World Board Preview</title>
   <style>
-    body {
-      margin: 0;
-      font-family: Arial, sans-serif;
-      background: #0f172a;
-      color: white;
-      padding: 40px 20px;
-      box-sizing: border-box;
+    :root {
+      --gold: #f5d77a;
+      --ice: #dff6ff;
+      --good: #91f5b3;
+      --panel: rgba(8, 15, 32, 0.80);
+      --line: rgba(245, 215, 122, 0.34);
+      --soft: rgba(255, 255, 255, 0.72);
     }
 
-    .container {
-      max-width: 980px;
-      margin: 0 auto;
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      font-family: Arial, Helvetica, sans-serif;
+      color: white;
+      background:
+        radial-gradient(circle at 50% 10%, rgba(143, 216, 255, 0.24), transparent 28%),
+        radial-gradient(circle at 20% 75%, rgba(245, 215, 122, 0.11), transparent 24%),
+        linear-gradient(135deg, #02030a 0%, #071326 48%, #02040b 100%);
+      overflow-x: hidden;
+    }
+
+    .world-shell {
+      min-height: 100vh;
+      padding: 28px;
+      position: relative;
+      isolation: isolate;
+    }
+
+    .world-shell::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      background:
+        linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px),
+        linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px);
+      background-size: 58px 58px;
+      mask-image: radial-gradient(circle at center, black, transparent 78%);
+      z-index: -2;
+    }
+
+    .topbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 16px;
+      margin-bottom: 24px;
+    }
+
+    .kicker {
+      color: var(--gold);
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      font-size: 12px;
+      margin-bottom: 8px;
     }
 
     h1 {
-      font-size: 42px;
-      margin-bottom: 10px;
-      color: #f4d35e;
-      text-align: center;
+      margin: 0;
+      font-size: clamp(36px, 6vw, 68px);
+      line-height: 0.95;
+      text-shadow: 0 0 30px rgba(143,216,255,0.22);
     }
 
-    .subtitle {
-      text-align: center;
-      font-size: 18px;
-      line-height: 1.6;
-      margin-bottom: 36px;
-      opacity: 0.92;
+    .status-pill {
+      border: 1px solid rgba(145,245,179,0.42);
+      background: rgba(145,245,179,0.10);
+      color: var(--good);
+      border-radius: 999px;
+      padding: 10px 14px;
+      font-size: 13px;
+      white-space: nowrap;
     }
 
-    .grid {
+    .layout {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      grid-template-columns: 1.1fr 0.9fr;
       gap: 18px;
     }
 
-    .card {
-      background: rgba(255,255,255,0.06);
-      border-radius: 14px;
+    .panel {
+      border: 1px solid var(--line);
+      background: var(--panel);
+      border-radius: 24px;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.36);
+      backdrop-filter: blur(10px);
       padding: 20px;
-      box-sizing: border-box;
-      border: 1px solid rgba(255,255,255,0.08);
     }
 
-    .card h2 {
-      font-size: 22px;
-      color: #f4d35e;
-      margin: 0 0 10px 0;
+    .world-map {
+      min-height: 520px;
+      position: relative;
+      overflow: hidden;
+      background:
+        radial-gradient(circle at 25% 32%, rgba(85, 160, 255, 0.28), transparent 16%),
+        radial-gradient(circle at 70% 42%, rgba(145,245,179,0.18), transparent 20%),
+        radial-gradient(circle at 48% 70%, rgba(245,215,122,0.16), transparent 18%),
+        linear-gradient(145deg, rgba(7, 22, 45, 0.95), rgba(4, 9, 20, 0.94));
     }
 
-    .card p {
-      font-size: 15px;
+    .world-map::before {
+      content: "";
+      position: absolute;
+      inset: 18px;
+      border-radius: 22px;
+      border: 1px solid rgba(143,216,255,0.18);
+      background:
+        linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px),
+        linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px);
+      background-size: 44px 44px;
+      opacity: 0.8;
+    }
+
+    .region {
+      position: absolute;
+      border: 1px solid rgba(255,255,255,0.22);
+      background: rgba(255,255,255,0.07);
+      border-radius: 18px;
+      padding: 12px;
+      min-width: 138px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.22);
+    }
+
+    .region strong {
+      display: block;
+      color: var(--gold);
+      margin-bottom: 5px;
+    }
+
+    .region span {
+      color: var(--soft);
+      font-size: 12px;
+      line-height: 1.3;
+    }
+
+    .river { left: 10%; top: 20%; }
+    .forest { right: 11%; top: 23%; }
+    .highland { left: 38%; top: 13%; }
+    .coast { right: 16%; bottom: 18%; }
+    .plain { left: 12%; bottom: 20%; }
+    .crossroads { left: 40%; bottom: 30%; }
+
+    .pulse-dot {
+      width: 16px;
+      height: 16px;
+      border-radius: 50%;
+      background: var(--good);
+      box-shadow: 0 0 0 rgba(145,245,179,0.7);
+      animation: pulse 2s infinite;
+      margin-bottom: 8px;
+    }
+
+    @keyframes pulse {
+      0% { box-shadow: 0 0 0 0 rgba(145,245,179,0.7); }
+      70% { box-shadow: 0 0 0 16px rgba(145,245,179,0); }
+      100% { box-shadow: 0 0 0 0 rgba(145,245,179,0); }
+    }
+
+    .section-title {
+      color: var(--gold);
+      text-transform: uppercase;
+      letter-spacing: 0.16em;
+      font-size: 12px;
+      margin-bottom: 12px;
+    }
+
+    .advisor-note {
+      color: var(--soft);
       line-height: 1.55;
-      margin: 0;
+      margin: 0 0 18px;
     }
 
-    .footer-box {
-      margin-top: 30px;
-      text-align: center;
-      background: rgba(255,255,255,0.05);
-      padding: 18px;
-      border-radius: 12px;
-      font-size: 16px;
-      line-height: 1.6;
+    .status-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 10px;
+      margin: 14px 0 18px;
+    }
+
+    .stat {
+      padding: 12px;
+      border-radius: 16px;
+      border: 1px solid rgba(255,255,255,0.12);
+      background: rgba(255,255,255,0.06);
+    }
+
+    .stat strong {
+      display: block;
+      color: white;
+      margin-bottom: 4px;
+      font-size: 15px;
+    }
+
+    .stat span {
+      color: var(--soft);
+      font-size: 13px;
+    }
+
+    .mission-card {
+      margin-top: 16px;
+      padding: 14px;
+      border-radius: 18px;
+      border: 1px solid rgba(145,245,179,0.24);
+      background: rgba(145,245,179,0.08);
+    }
+
+    .mission-card h2 {
+      margin: 0 0 8px;
+      font-size: 22px;
+    }
+
+    .mission-card p {
+      color: var(--soft);
+      line-height: 1.5;
+      margin: 0;
+      font-size: 14px;
     }
 
     .btn-row {
-      margin-top: 28px;
-      text-align: center;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 18px;
     }
 
-    .btn {
-      border: none;
-      border-radius: 10px;
-      background: #d4af37;
-      color: black;
-      padding: 12px 22px;
-      font-size: 16px;
-      font-weight: bold;
-      cursor: pointer;
-      margin: 0 8px;
+    a.button {
+      color: white;
+      text-decoration: none;
+      border: 1px solid rgba(255,255,255,0.22);
+      background: rgba(255,255,255,0.08);
+      border-radius: 14px;
+      padding: 12px 14px;
+      font-weight: 800;
+      transition: 0.25s;
+    }
+
+    a.button.primary {
+      background: rgba(245,215,122,0.16);
+      border-color: rgba(245,215,122,0.64);
+    }
+
+    a.button:hover {
+      transform: translateY(-1px);
+      border-color: rgba(245,215,122,0.82);
+      background: rgba(245,215,122,0.17);
+    }
+
+    .locked-banner {
+      margin-top: 18px;
+      color: rgba(255,255,255,0.62);
+      font-size: 13px;
+      line-height: 1.45;
+      border-top: 1px solid rgba(255,255,255,0.12);
+      padding-top: 14px;
+    }
+
+    .footer-note {
+      margin-top: 18px;
+      color: rgba(255,255,255,0.55);
+      text-align: center;
+      font-size: 12px;
+    }
+
+    @media (max-width: 980px) {
+      .layout { grid-template-columns: 1fr; }
+      .topbar { flex-direction: column; }
+      .status-pill { white-space: normal; }
+      .world-map { min-height: 640px; }
+    }
+
+    @media (max-width: 620px) {
+      .world-shell { padding: 16px; }
+      .status-grid { grid-template-columns: 1fr; }
+      .region { position: relative; left: auto; right: auto; top: auto; bottom: auto; margin: 10px 0; }
+      .world-map { min-height: auto; display: grid; padding: 18px; }
+      .world-map::before { display: none; }
     }
   </style>
 </head>
-
 <body>
-  <div class="container">
-    <h1>Simulation Mode</h1>
-
-    <div class="subtitle">
-      Simulation Mode is the strategic systems layer of STEM Nation.<br>
-      Explore how decisions, structures, and outcomes interact across the nation engine.
-    </div>
-
-    <div class="grid">
-      <div class="card">
-        <h2>Strategic View</h2>
-        <p>
-          Enter the systems-facing layer where decisions affect growth, stability, movement, and long-term national development.
-        </p>
+  <!-- CI-STAGE-10 — World Board Preview Cleanup -->
+  <main class="world-shell">
+    <section class="topbar">
+      <div>
+        <div class="kicker">STEM Nation World Board Preview</div>
+        <h1>The World Opens</h1>
       </div>
+      <div class="status-pill">Academy Investigator Cleared</div>
+    </section>
 
-      <div class="card">
-        <h2>Decision Flow</h2>
-        <p>
-          Simulation Mode connects leadership choices to consequences, reinforcing how actions shape national outcomes over time.
+    <section class="layout">
+      <article class="panel world-map" aria-label="World Board preview regions">
+        <div class="region river">
+          <div class="pulse-dot"></div>
+          <strong>River Corridor</strong>
+          <span>Water, food, travel, flooding risk</span>
+        </div>
+        <div class="region forest">
+          <strong>Forest Belt</strong>
+          <span>Wood, medicine, shelter, hidden paths</span>
+        </div>
+        <div class="region highland">
+          <strong>Highland Ridge</strong>
+          <span>Stone, defense, cold, visibility</span>
+        </div>
+        <div class="region coast">
+          <strong>Coastal Exchange</strong>
+          <span>Trade, fish, weather, outside contact</span>
+        </div>
+        <div class="region plain">
+          <strong>Valley Basin</strong>
+          <span>Farms, settlements, exposure, movement</span>
+        </div>
+        <div class="region crossroads">
+          <strong>Crossroads</strong>
+          <span>Routes, markets, diplomacy, conflict</span>
+        </div>
+      </article>
+
+      <aside class="panel">
+        <div class="section-title">Guardian Transition</div>
+        <p class="advisor-note">
+          You have completed the Council Hall trial. The World Board is not fully unlocked yet.
+          This preview shows the larger civilization space you will govern after the prototype stabilizes.
         </p>
-      </div>
 
-      <div class="card">
-        <h2>Systems Thinking</h2>
-        <p>
-          Students and facilitators can examine relationships among food, economy, defense, movement, and national organization.
-        </p>
-      </div>
+        <div class="section-title">Civilization Systems Preview</div>
+        <div class="status-grid">
+          <div class="stat"><strong>Food</strong><span>Farms, hunting, trade, storage</span></div>
+          <div class="stat"><strong>Water</strong><span>Rivers, wells, drought, flooding</span></div>
+          <div class="stat"><strong>Defense</strong><span>Terrain, roads, borders, risk</span></div>
+          <div class="stat"><strong>Knowledge</strong><span>Records, advisors, evidence, learning</span></div>
+          <div class="stat"><strong>Trade</strong><span>Routes, markets, diplomacy, exchange</span></div>
+          <div class="stat"><strong>Stability</strong><span>Trust, safety, leadership, consequence</span></div>
+        </div>
 
-      <div class="card">
-        <h2>Expansion Layer</h2>
-        <p>
-          This mode prepares the pathway for deeper simulation, map-state logic, scoring, and future nation engine extensions.
-        </p>
-      </div>
-    </div>
+        <div class="mission-card">
+          <h2>Next Locked Mission</h2>
+          <p>
+            Mission 2 will not open until the Council Hall trial and World Board preview are stable.
+            This prevents the prototype from expanding too fast before the student experience is clean.
+          </p>
+        </div>
 
-    <div class="footer-box">
-      Simulation Mode is the bridge between individual decisions and larger national systems. It supports strategic thinking, consequence, and structured expansion.
-    </div>
+        <div class="btn-row">
+          <a class="button" href="/council_stage">Replay Council Trial</a>
+          <a class="button primary" href="/project_hub">Open Project Hub</a>
+          <a class="button" href="/student_hub">Student Checkpoint</a>
+        </div>
 
-    <div class="btn-row">
-      <button class="btn" onclick="window.location.href='/'">Back to Landing</button>
-      <button class="btn" onclick="window.location.href='/hub'">Open Project Hub</button>
-    </div>
-  </div>
+        <div class="locked-banner">
+          Prototype note: this page is a preview layer only. Full region selection, settlement placement,
+          resource changes, and turn-based consequences should remain locked until the December prototype is stable.
+        </div>
+      </aside>
+    </section>
+
+    <div class="footer-note">December Public Prototype Build · CI-STAGE-10</div>
+  </main>
 </body>
 </html>
