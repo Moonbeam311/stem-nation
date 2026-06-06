@@ -123,9 +123,13 @@ def region_river():
 def decision_post():
     return {"ok": True}
 
+@app.route("/project_hub")
+def project_hub():
+    return render_template("project_hub.html")
+
 @app.route("/hub")
 def hub():
-    return render_template("project_hub.html")
+    return render_template("student_hub.html")
 
 
 if __name__ == "__main__":
