@@ -2,279 +2,326 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>STEM Nation | Arrival at the Academy</title>
+  <title>Academy Arrival | STEM Nation</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
   <style>
+    /* CI-4D_B_ACADEMY_ARRIVAL_POLISH */
     * { box-sizing: border-box; }
+
     body {
       margin: 0;
       min-height: 100vh;
-      overflow: hidden;
-      background: linear-gradient(180deg, #07172b, #0d1f35 52%, #06101c);
-      color: #f8f1dd;
       font-family: Georgia, "Times New Roman", serif;
+      color: #f8f0d5;
+      background:
+        radial-gradient(circle at 18% 14%, rgba(244, 211, 94, 0.20), transparent 28%),
+        radial-gradient(circle at 82% 18%, rgba(125, 211, 252, 0.14), transparent 30%),
+        linear-gradient(135deg, #061826 0%, #07131d 58%, #03070d 100%);
+      overflow-x: hidden;
     }
-    .scene {
+
+    .atmosphere {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      background:
+        linear-gradient(115deg, rgba(255,255,255,0.04), transparent 24%),
+        radial-gradient(circle at 50% 78%, rgba(244,211,94,0.11), transparent 30%);
+      opacity: .9;
+    }
+
+    .page {
       position: relative;
+      z-index: 1;
       min-height: 100vh;
       display: grid;
       place-items: center;
-      text-align: center;
-      padding: 32px;
+      padding: 42px 22px;
     }
-    .moon {
-      position: absolute;
-      top: 9%;
-      right: 13%;
-      width: 130px;
-      height: 130px;
-      border-radius: 50%;
-      background: radial-gradient(circle, #f4d35e, #9e7b24);
-      box-shadow: 0 0 80px rgba(244,211,94,.3);
-      opacity: .9;
+
+    .arrival-card {
+      width: min(1080px, 100%);
+      border: 1px solid rgba(244,211,94,.28);
+      border-radius: 34px;
+      background: rgba(3, 7, 13, .76);
+      box-shadow: 0 30px 90px rgba(0,0,0,.46);
+      overflow: hidden;
+      display: grid;
+      grid-template-columns: .9fr 1.35fr;
     }
-    .cloud {
-      position: absolute;
-      width: 260px;
-      height: 80px;
-      border-radius: 999px;
-      background: rgba(255,255,255,.08);
-      animation: drift 34s linear infinite;
-    }
-    .cloud.one { top: 18%; left: -270px; }
-    .cloud.two { top: 30%; left: -360px; animation-duration: 48s; animation-delay: -10s; }
-    @keyframes drift {
-      to { transform: translateX(calc(100vw + 520px)); }
-    }
-    .academy {
-      position: absolute;
-      left: 5%;
-      right: 5%;
-      bottom: 0;
-      height: 42vh;
-      background:
-        linear-gradient(180deg, transparent 0 15%, rgba(244,211,94,.12) 15% 18%, transparent 18%),
-        linear-gradient(180deg, #182d48, #07101d);
-      clip-path: polygon(0 45%, 8% 30%, 16% 42%, 24% 18%, 32% 42%, 42% 28%, 50% 10%, 60% 35%, 70% 22%, 82% 40%, 92% 26%, 100% 44%, 100% 100%, 0 100%);
-      opacity: .95;
-    }
-    .water {
-      position: absolute;
-      left: 0;
-      right: 0;
-      bottom: 0;
-      height: 90px;
-      background: repeating-linear-gradient(90deg, rgba(120,190,230,.22) 0 16px, transparent 16px 44px), #071827;
-      animation: waterMove 4s linear infinite;
-    }
-    @keyframes waterMove {
-      to { background-position: 120px 0; }
-    }
-    .card {
-      position: relative;
-      z-index: 3;
-      width: min(860px, 92vw);
+
+    .identity-panel {
       padding: 34px;
-      border-radius: 32px;
-      background: rgba(5,12,24,.72);
-      border: 1px solid rgba(244,211,94,.32);
-      box-shadow: 0 25px 90px rgba(0,0,0,.5);
+      border-right: 1px solid rgba(244,211,94,.16);
+      background:
+        radial-gradient(circle at 50% 18%, rgba(244,211,94,.16), transparent 30%),
+        linear-gradient(180deg, rgba(125,211,252,.08), rgba(244,211,94,.05));
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
     }
-    .kicker {
+
+    .avatar-frame {
+      width: 220px;
+      height: 260px;
+      border-radius: 36px;
+      border: 1px solid rgba(244,211,94,.38);
+      background:
+        radial-gradient(circle at 50% 26%, rgba(248,240,213,.22), transparent 22%),
+        linear-gradient(145deg, rgba(125,211,252,.12), rgba(244,211,94,.08));
+      display: grid;
+      place-items: center;
+      overflow: hidden;
+      box-shadow: 0 22px 64px rgba(0,0,0,.34);
+      margin-bottom: 18px;
+    }
+
+    .avatar-frame img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .avatar-fallback {
       color: #f4d35e;
-      letter-spacing: .18em;
+      text-transform: uppercase;
+      letter-spacing: .09em;
+      font-weight: 900;
+      font-size: .85rem;
+      padding: 18px;
+    }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 999px;
+      border: 1px solid rgba(125,211,252,.34);
+      background: rgba(125,211,252,.09);
+      color: #7dd3fc;
+      padding: 8px 12px;
+      font-size: .78rem;
+      letter-spacing: .08em;
       text-transform: uppercase;
       font-weight: 900;
-      font-size: .78rem;
-      margin-bottom: 12px;
     }
-    h1 {
+
+    .content-panel {
+      padding: 46px;
+    }
+
+    .kicker {
       color: #f4d35e;
-      font-size: clamp(2.5rem, 7vw, 5.5rem);
-      line-height: .9;
-      margin: 0 0 18px;
-    }
-    .line {
-      color: rgba(248,241,221,.86);
-      font-size: clamp(1.1rem, 2.3vw, 1.55rem);
-      line-height: 1.5;
-      min-height: 78px;
-      margin-bottom: 24px;
-    }
-    .button {
-      display: inline-block;
-      text-decoration: none;
-      background: linear-gradient(135deg, #f4d35e, #d7a51e);
-      color: #171006;
-      padding: 15px 20px;
-      border-radius: 18px;
+      text-transform: uppercase;
+      letter-spacing: .12em;
+      font-size: .82rem;
       font-weight: 900;
+      margin-bottom: 14px;
     }
-    .hidden { display: none; }
-  
-/* CI-1E_ARRIVAL_TO_GATHERING_TRANSITION */
-/* CI-2B_ARRIVAL_TIMING_POLISH */
-.arrival-status {
-  margin-top: 18px;
-  color: #f4d35e;
-  letter-spacing: .12em;
-  text-transform: uppercase;
-  font-size: .78rem;
-  font-weight: 900;
-}
 
-.bell-flash {
-  position: fixed;
-  inset: 0;
-  background: radial-gradient(circle at center, rgba(244,211,94,.34), transparent 46%);
-  opacity: 0;
-  pointer-events: none;
-  transition: opacity .55s ease;
-  z-index: 20;
-}
+    h1 {
+      margin: 0;
+      font-size: clamp(2.4rem, 5vw, 4.8rem);
+      line-height: .96;
+      color: #fff5cf;
+      text-shadow: 0 14px 40px rgba(0,0,0,.42);
+    }
 
-.bell-flash.show {
-  opacity: 1;
-}
+    .lead {
+      margin: 22px 0 0;
+      max-width: 680px;
+      color: rgba(248,240,213,.82);
+      font-size: 1.1rem;
+      line-height: 1.7;
+    }
 
-.movement-trail {
-  position: fixed;
-  left: 8%;
-  right: 8%;
-  bottom: 10%;
-  height: 3px;
-  background: linear-gradient(90deg, transparent, rgba(244,211,94,.85), transparent);
-  opacity: 0;
-  transform: scaleX(.2);
-  transform-origin: left center;
-  transition: opacity .9s ease, transform 2.8s ease;
-  z-index: 12;
-}
+    .mission-strip {
+      margin-top: 28px;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+    }
 
-.movement-trail.show {
-  opacity: .9;
-  transform: scaleX(1);
-}
+    .mission-card {
+      border: 1px solid rgba(244,211,94,.16);
+      border-radius: 18px;
+      background: rgba(255,255,255,.045);
+      padding: 15px;
+      min-height: 98px;
+    }
 
+    .mission-card strong {
+      display: block;
+      color: #f4d35e;
+      margin-bottom: 7px;
+      font-size: .9rem;
+    }
 
+    .mission-card span {
+      color: rgba(248,240,213,.72);
+      font-size: .88rem;
+      line-height: 1.45;
+    }
 
-/* CI-2B_STUDENT_NAME_ARRIVAL */
-/* CI-2B-FIX2_ARRIVAL_NAME_LAYOUT */
-.arrival-identity-card {
-  width: min(520px, 92vw);
-  margin: 12px auto 22px;
-  padding: 14px 18px;
-  border: 1px solid rgba(244,211,94,.26);
-  border-radius: 20px;
-  background: rgba(0,0,0,.22);
-  box-shadow: 0 12px 36px rgba(0,0,0,.22);
-}
+    .actions {
+      margin-top: 34px;
+      display: flex;
+      gap: 14px;
+      flex-wrap: wrap;
+    }
 
-.arrival-stage {
-  color: #d8cfb0;
-  font-size: .78rem;
-  font-weight: 900;
-  letter-spacing: .18em;
-  text-transform: uppercase;
-  margin-bottom: 6px;
-}
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 48px;
+      padding: 13px 20px;
+      border-radius: 999px;
+      text-decoration: none;
+      font-weight: 900;
+      border: 1px solid rgba(244,211,94,.34);
+    }
 
-.arrival-student-name {
-  color: #f4d35e;
-  font-size: clamp(1.35rem, 3.2vw, 2.25rem);
-  font-weight: 900;
-  letter-spacing: .03em;
-  line-height: 1.12;
-  word-break: break-word;
-  text-shadow: 0 8px 30px rgba(0,0,0,.55);
-}
+    .btn.primary {
+      color: #07131d;
+      background: linear-gradient(135deg, #f4d35e, #f7b955);
+      box-shadow: 0 14px 32px rgba(244,211,94,.18);
+    }
 
-.line {
-  max-width: 760px;
-  margin: 18px auto 0;
-  line-height: 1.55;
-  min-height: 3.2em;
-}
+    .btn.secondary {
+      color: #f8f0d5;
+      background: rgba(255,255,255,.06);
+    }
 
-</style>
+    .note {
+      margin-top: 20px;
+      color: rgba(248,240,213,.56);
+      font-size: .88rem;
+      line-height: 1.5;
+    }
+
+    @media (max-width: 860px) {
+      .arrival-card {
+        grid-template-columns: 1fr;
+      }
+
+      .identity-panel {
+        border-right: none;
+        border-bottom: 1px solid rgba(244,211,94,.16);
+      }
+
+      .mission-strip {
+        grid-template-columns: 1fr;
+      }
+
+      .content-panel {
+        padding: 32px 24px;
+      }
+    }
+  </style>
 </head>
-<body>
-<div class="bell-flash" id="bellFlash" aria-hidden="true"></div>
-<div class="movement-trail" id="movementTrail" aria-hidden="true"></div>
-  <main class="scene">
-    <div class="moon"></div>
-    <div class="cloud one"></div>
-    <div class="cloud two"></div>
-    <div class="academy"></div>
-    <div class="water"></div>
 
-    <section class="card">
-      <div class="kicker">Arrival at the Academy</div>
-      <h1>You Have Arrived</h1>
-      <div class="arrival-identity-card" id="arrivalIdentityCard">
-        <div class="arrival-stage">New Arrival</div>
-        <div class="arrival-student-name" id="arrivalStudentName">Academy Learner</div>
-      </div>
-      <div id="line" class="line">The Academy receives new arrivals quietly.</div>
-      <a id="enterBtn" class="button hidden" href="/first_gathering">Follow the Gathering</a>
+<body>
+  <div class="atmosphere"></div>
+
+  <main class="page">
+    <section class="arrival-card">
+      <aside class="identity-panel">
+        <div class="avatar-frame" id="avatarFrame">
+          <div class="avatar-fallback">Academy Avatar</div>
+        </div>
+        <div class="badge" id="avatarBadge">Arrival Recorded</div>
+      </aside>
+
+      <section class="content-panel">
+        <div class="kicker">Academy Arrival</div>
+        <h1 id="arrivalTitle">Welcome to the Academy.</h1>
+
+        <p class="lead" id="arrivalLead">
+          Your avatar has crossed the threshold. The Academy has recorded your arrival, and the first gathering is about to begin.
+        </p>
+
+        <div class="mission-strip">
+          <div class="mission-card">
+            <strong>1 · Enter</strong>
+            <span>Your identity is locked for the student journey.</span>
+          </div>
+          <div class="mission-card">
+            <strong>2 · Listen</strong>
+            <span>The first gathering introduces the chamber and the challenge ahead.</span>
+          </div>
+          <div class="mission-card">
+            <strong>3 · Observe</strong>
+            <span>Your first inquiry begins with noticing before judging.</span>
+          </div>
+        </div>
+
+        <div class="actions">
+          <a class="btn primary" href="/first_gathering">Enter the First Gathering</a>
+          <a class="btn secondary" href="/academy_identity">Review Identity</a>
+        </div>
+
+        <p class="note">
+          Student progress is saved on this device. Teacher tools remain separate from the student arrival experience.
+        </p>
+      </section>
     </section>
   </main>
 
   <script>
-    const STEM_NATION_IDENTITY_KEY = "stemNationStudentIdentity";
-    let stemNationArrivalIdentity = {
+    const IDENTITY_KEY = "stemNationStudentIdentity";
+
+    const avatarFrame = document.getElementById("avatarFrame");
+    const avatarBadge = document.getElementById("avatarBadge");
+    const arrivalTitle = document.getElementById("arrivalTitle");
+    const arrivalLead = document.getElementById("arrivalLead");
+
+    let identity = {
       name: "Academy Learner",
-      teacherApprovedName: "",
-      approvedName: ""
+      portrait: "",
+      fallback: "",
+      avatarChoice: "Academy Avatar"
     };
 
     try {
-      const savedIdentity = JSON.parse(localStorage.getItem(STEM_NATION_IDENTITY_KEY) || "null");
-      if (savedIdentity) {
-        stemNationArrivalIdentity = { ...stemNationArrivalIdentity, ...savedIdentity };
-      }
-    } catch (error) {
-      console.warn("Could not load STEM Nation identity for arrival.", error);
+      const saved = JSON.parse(localStorage.getItem(IDENTITY_KEY) || "null");
+      if (saved) identity = { ...identity, ...saved };
+    } catch (err) {}
+
+    function looksLikeImageSource(value) {
+      return typeof value === "string" && (
+        value.startsWith("data:image/") ||
+        value.startsWith("/static/") ||
+        value.startsWith("http://") ||
+        value.startsWith("https://")
+      );
     }
 
-    const arrivalDisplayName =
-      stemNationArrivalIdentity.teacherApprovedName ||
-      stemNationArrivalIdentity.approvedName ||
-      stemNationArrivalIdentity.name ||
-      "Academy Learner";
+    const displayName = identity.name || "Academy Learner";
+    const avatarSource = identity.portrait || identity.fallback || "";
+    const avatarChoice = identity.avatarChoice || identity.avatarTitle || "Academy Avatar";
 
-    const arrivalStudentName = document.getElementById("arrivalStudentName");
-    if (arrivalStudentName) {
-      arrivalStudentName.textContent = arrivalDisplayName;
+    avatarFrame.innerHTML = "";
+
+    if (looksLikeImageSource(avatarSource)) {
+      const img = document.createElement("img");
+      img.src = avatarSource;
+      img.alt = "Student Academy avatar";
+      avatarFrame.appendChild(img);
+    } else {
+      const fallback = document.createElement("div");
+      fallback.className = "avatar-fallback";
+      fallback.textContent = "Academy Avatar";
+      avatarFrame.appendChild(fallback);
     }
 
-    const lines = [
-      `The Academy receives ${arrivalDisplayName} quietly.`,
-      "For a moment, everything feels still.",
-      "Then a bell rings across the grounds.",
-      "People begin moving toward the Council Hall.",
-      "You follow the movement, not yet knowing what has happened."
-    ];
-
-    let i = 0;
-    const line = document.getElementById("line");
-    const enterBtn = document.getElementById("enterBtn");
-
-    function nextLine() {
-      i++;
-      if (i < lines.length) {
-        line.style.opacity = 0;
-        setTimeout(() => {
-          line.textContent = lines[i];
-          line.style.opacity = 1;
-        }, 350);
-        setTimeout(nextLine, 2550);
-      } else {
-        setTimeout(() => enterBtn.classList.remove("hidden"), 1100);
-      }
-    }
-
-    line.style.transition = "opacity .35s ease";
-    setTimeout(nextLine, 1800);
+    avatarBadge.textContent = `${avatarChoice} locked`;
+    arrivalTitle.textContent = `Welcome, ${displayName}.`;
+    arrivalLead.textContent = "Your avatar has crossed the threshold. The Academy has recorded your arrival, and the first gathering is about to begin.";
   </script>
 </body>
 </html>
