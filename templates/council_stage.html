@@ -1,0 +1,585 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>STEM Nation | Council Hall</title>
+  <style>
+    :root {
+      --gold: #f5d77a;
+      --blue: #8fd8ff;
+      --ice: #dff6ff;
+      --deep: #050814;
+      --panel: rgba(8, 15, 32, 0.78);
+      --panel-strong: rgba(9, 18, 39, 0.92);
+      --line: rgba(245, 215, 122, 0.34);
+      --soft: rgba(255, 255, 255, 0.72);
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      font-family: Arial, Helvetica, sans-serif;
+      color: white;
+      background:
+        radial-gradient(circle at 50% 12%, rgba(92, 179, 255, 0.22), transparent 28%),
+        radial-gradient(circle at 25% 76%, rgba(245, 215, 122, 0.11), transparent 24%),
+        linear-gradient(135deg, #02030a 0%, #071326 48%, #02040b 100%);
+      overflow-x: hidden;
+    }
+
+    .stage-shell {
+      min-height: 100vh;
+      padding: 22px;
+      position: relative;
+      isolation: isolate;
+    }
+
+    .stage-shell::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      background:
+        linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px),
+        linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px);
+      background-size: 54px 54px;
+      mask-image: radial-gradient(circle at center, black, transparent 78%);
+      z-index: -2;
+    }
+
+    .stage-shell::after {
+      content: "";
+      position: fixed;
+      inset: -15% -10%;
+      pointer-events: none;
+      background:
+        radial-gradient(ellipse at top, rgba(255,255,255,0.09), transparent 38%),
+        radial-gradient(ellipse at bottom, rgba(245,215,122,0.07), transparent 38%);
+      z-index: -1;
+    }
+
+    .topbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      margin-bottom: 18px;
+    }
+
+    .brand-kicker {
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      font-size: 12px;
+      color: var(--gold);
+      opacity: 0.9;
+    }
+
+    h1 {
+      margin: 5px 0 0;
+      font-size: clamp(32px, 5vw, 58px);
+      line-height: 0.95;
+      text-shadow: 0 0 28px rgba(143,216,255,0.22);
+    }
+
+    .mission-tag {
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      padding: 10px 14px;
+      color: var(--ice);
+      background: rgba(255,255,255,0.06);
+      font-size: 13px;
+      white-space: nowrap;
+    }
+
+    .stage-grid {
+      display: grid;
+      grid-template-columns: minmax(180px, 260px) 1fr minmax(230px, 320px);
+      gap: 18px;
+      align-items: stretch;
+    }
+
+    .panel {
+      border: 1px solid var(--line);
+      background: var(--panel);
+      border-radius: 22px;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.34);
+      backdrop-filter: blur(10px);
+    }
+
+    .avatar-rail {
+      padding: 14px;
+      display: grid;
+      gap: 12px;
+      align-content: start;
+    }
+
+    .avatar-card {
+      display: grid;
+      grid-template-columns: 48px 1fr;
+      gap: 10px;
+      align-items: center;
+      padding: 11px;
+      border-radius: 16px;
+      background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(255,255,255,0.10);
+      transition: transform 0.25s, border-color 0.25s, background 0.25s;
+    }
+
+    .avatar-card.active {
+      border-color: rgba(245,215,122,0.88);
+      background: rgba(245,215,122,0.12);
+      transform: translateX(3px);
+    }
+
+    .avatar-face {
+      width: 48px;
+      height: 48px;
+      display: grid;
+      place-items: center;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(255,255,255,0.22), rgba(143,216,255,0.10));
+      border: 1px solid rgba(255,255,255,0.28);
+      font-size: 25px;
+    }
+
+    .avatar-name {
+      font-weight: 700;
+      color: white;
+      margin-bottom: 3px;
+    }
+
+    .avatar-role {
+      color: var(--soft);
+      font-size: 12px;
+      line-height: 1.35;
+    }
+
+    .main-stage {
+      min-height: 620px;
+      padding: 18px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .stage-lights {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      background:
+        radial-gradient(circle at 20% 0%, rgba(245,215,122,0.16), transparent 25%),
+        radial-gradient(circle at 80% 0%, rgba(143,216,255,0.16), transparent 25%);
+      opacity: 0.9;
+    }
+
+    .evidence-screen {
+      position: relative;
+      z-index: 2;
+      min-height: 390px;
+      display: grid;
+      place-items: center;
+      padding: 22px;
+      border-radius: 24px;
+      border: 1px solid rgba(143,216,255,0.34);
+      background:
+        linear-gradient(135deg, rgba(10,27,56,0.88), rgba(7,12,25,0.82)),
+        radial-gradient(circle at center, rgba(143,216,255,0.16), transparent 44%);
+      box-shadow: inset 0 0 60px rgba(143,216,255,0.09), 0 18px 50px rgba(0,0,0,0.35);
+    }
+
+    .satellite-card {
+      width: min(650px, 100%);
+      min-height: 300px;
+      border: 1px solid rgba(255,255,255,0.20);
+      border-radius: 22px;
+      background:
+        linear-gradient(145deg, rgba(215,246,255,0.20), rgba(9,20,42,0.76)),
+        repeating-linear-gradient(45deg, rgba(255,255,255,0.08) 0 4px, transparent 4px 18px);
+      position: relative;
+      overflow: hidden;
+      padding: 18px;
+    }
+
+    .satellite-card::before,
+    .satellite-card::after {
+      content: "";
+      position: absolute;
+      border-radius: 45% 55% 60% 40%;
+      background: rgba(230, 252, 255, 0.72);
+      filter: blur(1px);
+      opacity: 0.78;
+    }
+
+    .satellite-card::before {
+      width: 48%;
+      height: 52%;
+      left: 8%;
+      top: 26%;
+      transform: rotate(-14deg);
+    }
+
+    .satellite-card::after {
+      width: 30%;
+      height: 36%;
+      right: 14%;
+      top: 17%;
+      transform: rotate(22deg);
+      opacity: 0.48;
+    }
+
+    .scan-line {
+      position: absolute;
+      left: 0;
+      right: 0;
+      height: 3px;
+      top: 0;
+      background: rgba(143,216,255,0.8);
+      box-shadow: 0 0 18px rgba(143,216,255,0.9);
+      animation: scan 4s linear infinite;
+    }
+
+    @keyframes scan {
+      0% { transform: translateY(0); opacity: 0; }
+      8% { opacity: 1; }
+      100% { transform: translateY(310px); opacity: 0; }
+    }
+
+    .evidence-label {
+      position: relative;
+      z-index: 3;
+      display: inline-flex;
+      gap: 8px;
+      align-items: center;
+      padding: 9px 12px;
+      border-radius: 999px;
+      background: rgba(0,0,0,0.45);
+      border: 1px solid rgba(245,215,122,0.45);
+      color: var(--gold);
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 0.16em;
+    }
+
+    .evidence-title {
+      position: relative;
+      z-index: 3;
+      max-width: 420px;
+      margin-top: 70px;
+      font-size: clamp(24px, 4vw, 44px);
+      line-height: 1.02;
+      text-shadow: 0 0 18px rgba(0,0,0,0.85);
+    }
+
+    .dialogue-box {
+      position: relative;
+      z-index: 3;
+      margin-top: 16px;
+      padding: 18px;
+      border-radius: 20px;
+      background: var(--panel-strong);
+      border: 1px solid rgba(245,215,122,0.28);
+    }
+
+    .speaker {
+      color: var(--gold);
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.15em;
+      font-size: 12px;
+      margin-bottom: 8px;
+    }
+
+    .line {
+      font-size: clamp(18px, 2.3vw, 26px);
+      line-height: 1.35;
+      color: rgba(255,255,255,0.94);
+    }
+
+    .console {
+      position: relative;
+      z-index: 4;
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 8px;
+      margin-top: 16px;
+    }
+
+    .console button,
+    .guardian-panel button {
+      border: 1px solid rgba(255,255,255,0.22);
+      background: rgba(255,255,255,0.08);
+      color: white;
+      border-radius: 14px;
+      padding: 12px 10px;
+      cursor: pointer;
+      font-weight: 700;
+      transition: background 0.25s, transform 0.25s, border-color 0.25s;
+    }
+
+    .console button:hover,
+    .guardian-panel button:hover {
+      background: rgba(245,215,122,0.16);
+      border-color: rgba(245,215,122,0.72);
+      transform: translateY(-1px);
+    }
+
+    .guardian-panel {
+      padding: 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+
+    .guardian-portrait {
+      min-height: 210px;
+      border-radius: 20px;
+      display: grid;
+      place-items: center;
+      text-align: center;
+      background:
+        radial-gradient(circle at 50% 35%, rgba(245,215,122,0.22), transparent 30%),
+        linear-gradient(145deg, rgba(255,255,255,0.08), rgba(143,216,255,0.08));
+      border: 1px solid rgba(255,255,255,0.16);
+      padding: 18px;
+    }
+
+    .guardian-icon {
+      font-size: 64px;
+      margin-bottom: 8px;
+    }
+
+    .guardian-title {
+      font-size: 21px;
+      font-weight: 800;
+    }
+
+    .guardian-copy {
+      color: var(--soft);
+      line-height: 1.5;
+      font-size: 14px;
+    }
+
+    .progress-panel {
+      padding: 13px;
+      border-radius: 18px;
+      background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(255,255,255,0.10);
+    }
+
+    .progress-title {
+      color: var(--gold);
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 0.16em;
+      margin-bottom: 10px;
+    }
+
+    .steps {
+      display: grid;
+      gap: 8px;
+    }
+
+    .step {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      color: var(--soft);
+      font-size: 13px;
+    }
+
+    .dot {
+      width: 11px;
+      height: 11px;
+      border-radius: 50%;
+      border: 1px solid rgba(255,255,255,0.35);
+      background: rgba(255,255,255,0.08);
+    }
+
+    .step.active { color: white; }
+    .step.active .dot {
+      background: var(--gold);
+      box-shadow: 0 0 12px rgba(245,215,122,0.75);
+      border-color: var(--gold);
+    }
+
+    .footer-note {
+      margin-top: 14px;
+      color: rgba(255,255,255,0.58);
+      font-size: 12px;
+      text-align: center;
+    }
+
+    @media (max-width: 980px) {
+      .stage-grid { grid-template-columns: 1fr; }
+      .avatar-rail { grid-template-columns: repeat(2, 1fr); }
+      .main-stage { min-height: auto; }
+      .console { grid-template-columns: 1fr 1fr; }
+      .mission-tag { white-space: normal; }
+    }
+
+    @media (max-width: 560px) {
+      .topbar { align-items: flex-start; flex-direction: column; }
+      .avatar-rail { grid-template-columns: 1fr; }
+      .console { grid-template-columns: 1fr; }
+      .stage-shell { padding: 14px; }
+    }
+  </style>
+</head>
+<body>
+  <!-- CI-STAGE-1 — Council Hall Stage Show Shell -->
+  <main class="stage-shell">
+    <section class="topbar">
+      <div>
+        <div class="brand-kicker">STEM Nation Academy Readiness Evaluation</div>
+        <h1>Council Hall</h1>
+      </div>
+      <div class="mission-tag">Prototype Mission: The Ice Break Mystery</div>
+    </section>
+
+    <section class="stage-grid">
+      <aside class="panel avatar-rail" aria-label="Council avatars">
+        <div class="avatar-card active" data-avatar="Scout">
+          <div class="avatar-face">🧭</div>
+          <div>
+            <div class="avatar-name">Scout</div>
+            <div class="avatar-role">Observation · terrain · details</div>
+          </div>
+        </div>
+        <div class="avatar-card" data-avatar="Healer">
+          <div class="avatar-face">🩺</div>
+          <div>
+            <div class="avatar-name">Healer</div>
+            <div class="avatar-role">Safety · people · risk</div>
+          </div>
+        </div>
+        <div class="avatar-card" data-avatar="Engineer">
+          <div class="avatar-face">🛠️</div>
+          <div>
+            <div class="avatar-name">Engineer</div>
+            <div class="avatar-role">Systems · testing · tools</div>
+          </div>
+        </div>
+        <div class="avatar-card" data-avatar="Archivist">
+          <div class="avatar-face">📜</div>
+          <div>
+            <div class="avatar-name">Archivist</div>
+            <div class="avatar-role">Records · memory · maps</div>
+          </div>
+        </div>
+        <div class="avatar-card" data-avatar="Strategist">
+          <div class="avatar-face">♟️</div>
+          <div>
+            <div class="avatar-name">Strategist</div>
+            <div class="avatar-role">Priorities · decisions · order</div>
+          </div>
+        </div>
+      </aside>
+
+      <section class="panel main-stage" aria-label="Council Hall stage">
+        <div class="stage-lights"></div>
+        <div class="evidence-screen">
+          <div class="satellite-card" aria-label="Unlabeled satellite evidence screen">
+            <div class="scan-line"></div>
+            <div class="evidence-label">Unlabeled Evidence · Satellite Feed</div>
+            <div class="evidence-title">A section of ice has broken away. Something underneath is now visible.</div>
+          </div>
+        </div>
+
+        <div class="dialogue-box" aria-live="polite">
+          <div class="speaker" id="speaker">Scout</div>
+          <div class="line" id="dialogueLine">The coastline changed overnight. That was not visible in the last scan.</div>
+        </div>
+
+        <div class="console" aria-label="Student action console">
+          <button type="button" onclick="setScene(0)">Arrival</button>
+          <button type="button" onclick="setScene(1)">Observe</button>
+          <button type="button" onclick="setScene(2)">Ask</button>
+          <button type="button" onclick="setScene(3)">Council</button>
+          <button type="button" onclick="setScene(4)">Debrief</button>
+        </div>
+      </section>
+
+      <aside class="panel guardian-panel" aria-label="Guardian mission guide">
+        <div class="guardian-portrait">
+          <div>
+            <div class="guardian-icon">🛡️</div>
+            <div class="guardian-title">Guardian</div>
+            <p class="guardian-copy" id="guardianCopy">Ah. You made it. Good. We need another set of eyes. Come take a look.</p>
+          </div>
+        </div>
+
+        <button type="button" onclick="nextScene()">Continue Scene</button>
+
+        <div class="progress-panel">
+          <div class="progress-title">Trial Progress</div>
+          <div class="steps">
+            <div class="step active"><span class="dot"></span> Arrival</div>
+            <div class="step"><span class="dot"></span> Evidence</div>
+            <div class="step"><span class="dot"></span> Questions</div>
+            <div class="step"><span class="dot"></span> Council Challenge</div>
+            <div class="step"><span class="dot"></span> Debrief</div>
+          </div>
+        </div>
+
+        <p class="guardian-copy">Stage shell only: scoring, writing fields, evidence unlocks, and avatar reports will be added in the next steps.</p>
+      </aside>
+    </section>
+
+    <div class="footer-note">December Public Prototype Build · CI-STAGE-1</div>
+  </main>
+
+  <script>
+    const scenes = [
+      {
+        avatar: "Scout",
+        line: "The coastline changed overnight. That was not visible in the last scan.",
+        guardian: "Ah. You made it. Good. We need another set of eyes. Come take a look."
+      },
+      {
+        avatar: "Engineer",
+        line: "Or the image is distorted. Ice shadows can fool the eye. We need observations before claims.",
+        guardian: "Do not rush to answer. First, observe what is actually on the evidence screen."
+      },
+      {
+        avatar: "Archivist",
+        line: "Older records mark this region unclearly. The ice may have hidden more than terrain.",
+        guardian: "A strong investigator asks better questions before choosing a direction."
+      },
+      {
+        avatar: "Healer",
+        line: "If people or teams go near that region, exposure and communication failure become immediate dangers.",
+        guardian: "The Council will ask you to weigh risk, evidence, and priority."
+      },
+      {
+        avatar: "Strategist",
+        line: "You will not be judged for guessing. You will be judged by how clearly you think.",
+        guardian: "Observe. Question. Defend your reasoning. That is how a Nation Builder begins."
+      }
+    ];
+
+    let currentScene = 0;
+
+    function setScene(index) {
+      currentScene = index;
+      const scene = scenes[index];
+      document.getElementById("speaker").textContent = scene.avatar;
+      document.getElementById("dialogueLine").textContent = scene.line;
+      document.getElementById("guardianCopy").textContent = scene.guardian;
+
+      document.querySelectorAll(".avatar-card").forEach(card => {
+        card.classList.toggle("active", card.dataset.avatar === scene.avatar);
+      });
+
+      document.querySelectorAll(".step").forEach((step, i) => {
+        step.classList.toggle("active", i === index);
+      });
+    }
+
+    function nextScene() {
+      setScene((currentScene + 1) % scenes.length);
+    }
+  </script>
+</body>
+</html>
