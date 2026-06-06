@@ -379,7 +379,7 @@
           <div class="status" id="status"></div>
 
           <p class="note">
-            Avatar portraits will continue improving as the Academy grows. For now, choose the role signal that best fits how you want to enter the first mission.
+            Choose the student identity that best fits how you want to enter the first mission. Academy figures such as Scout, Mapkeeper, Builder, Healer, and Guardian will be introduced later.
           </p>
         </article>
 
@@ -390,8 +390,8 @@
             <div class="preview-name" id="previewName">New Arrival</div>
             <div class="preview-rank">Academy Learner</div>
             <div class="preview-role" id="previewRole">
-              <strong>Explorer · First Path Finder</strong>
-              I enter the unknown and look for what others miss.
+              <strong>Apprentice · Learner in Motion</strong>
+              I learn by trying, listening, and improving.
             </div>
 
             <div class="identity-storage-notice" id="identityStorageNotice">
@@ -409,13 +409,8 @@
     const STORAGE_KEY = "stemNationStudentIdentity";
     const AVATAR_KEY = "stemNationAvatar";
 
+    // CI-4B_F_STUDENT_ONLY_IDENTITY_ROSTER
     const avatars = [
-      {
-        role: "Explorer",
-        title: "First Path Finder",
-        symbol: "🧭",
-        motto: "I enter the unknown and look for what others miss."
-      },
       {
         role: "Apprentice",
         title: "Learner in Motion",
@@ -429,34 +424,22 @@
         motto: "I preserve evidence so the mission is not forgotten."
       },
       {
-        role: "Scout",
-        title: "Discoverer",
-        symbol: "🔭",
-        motto: "I search the land for clues, patterns, and danger."
+        role: "Pathfinder",
+        title: "First Route Finder",
+        symbol: "🧭",
+        motto: "I find possible routes when the way forward is not clear."
       },
       {
-        role: "Mapkeeper",
-        title: "Reader of Paths",
-        symbol: "🗺️",
-        motto: "I connect places, movement, routes, and risk."
+        role: "Observer",
+        title: "Evidence Watcher",
+        symbol: "🔎",
+        motto: "I slow down, notice details, and gather evidence before deciding."
       },
       {
-        role: "Builder",
-        title: "Creator of Plans",
-        symbol: "🛠️",
-        motto: "I turn ideas into structures, systems, and action."
-      },
-      {
-        role: "Healer",
-        title: "Restorer",
-        symbol: "🌿",
-        motto: "I protect people, repair harm, and restore balance."
-      },
-      {
-        role: "Guardian",
-        title: "Protector",
-        symbol: "🛡️",
-        motto: "I watch for threats and defend what must survive."
+        role: "Maker",
+        title: "Hands-on Problem Solver",
+        symbol: "🧩",
+        motto: "I test ideas, build solutions, and learn from what happens."
       }
     ];
 
