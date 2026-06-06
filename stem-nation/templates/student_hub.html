@@ -2,377 +2,674 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>STEM Nation | Student Command Hub</title>
+  <title>Student Hub | STEM Nation Academy</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
   <style>
+    /* CI-4K_B_STUDENT_HUB_MISSION_DASHBOARD_POLISH */
+    :root {
+      --gold: #f4d35e;
+      --gold2: #d7a51e;
+      --blue: #7dd3fc;
+      --text: #f8f1dd;
+      --muted: rgba(248,241,221,.72);
+      --panel: rgba(5, 12, 24, .82);
+      --soft: rgba(255,255,255,.055);
+      --border: rgba(244,211,94,.26);
+    }
+
     * { box-sizing: border-box; }
 
     body {
       margin: 0;
       min-height: 100vh;
+      color: var(--text);
       font-family: Georgia, "Times New Roman", serif;
-      color: #f8f0d5;
       background:
-        radial-gradient(circle at 20% 10%, rgba(244,211,94,.14), transparent 28%),
-        radial-gradient(circle at 80% 20%, rgba(125,211,252,.12), transparent 30%),
-        linear-gradient(135deg, #061826, #07131d 55%, #03070d);
+        radial-gradient(circle at 18% 10%, rgba(244,211,94,.16), transparent 30%),
+        radial-gradient(circle at 84% 14%, rgba(125,211,252,.14), transparent 34%),
+        linear-gradient(135deg, #061826 0%, #07131d 58%, #03070d 100%);
+      overflow-x: hidden;
     }
 
-    .shell {
-      max-width: 1180px;
+    .atmosphere {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      background:
+        linear-gradient(90deg, rgba(255,255,255,.024) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(255,255,255,.016) 1px, transparent 1px);
+      background-size: 78px 78px;
+      opacity: .22;
+    }
+
+    .page {
+      position: relative;
+      z-index: 1;
+      max-width: 1380px;
       margin: 0 auto;
-      padding: 34px 20px 46px;
+      padding: 28px 20px 42px;
     }
 
     .hero {
-      border: 1px solid rgba(244,211,94,.28);
-      border-radius: 30px;
-      padding: 28px;
+      border: 1px solid var(--border);
+      border-radius: 32px;
       background:
-        radial-gradient(circle at top left, rgba(244,211,94,.16), transparent 35%),
-        rgba(5,18,29,.88);
-      box-shadow: 0 24px 70px rgba(0,0,0,.36);
+        radial-gradient(circle at 18% 18%, rgba(244,211,94,.13), transparent 28%),
+        radial-gradient(circle at 86% 20%, rgba(125,211,252,.10), transparent 30%),
+        var(--panel);
+      box-shadow: 0 28px 84px rgba(0,0,0,.36);
+      padding: 22px;
       margin-bottom: 22px;
-    }
-
-    .topline {
-      display: flex;
-      gap: 18px;
+      display: grid;
+      grid-template-columns: 104px 1fr;
+      gap: 20px;
       align-items: center;
-      flex-wrap: wrap;
     }
 
-    .portrait {
-      width: 88px;
-      height: 88px;
+    .student-avatar {
+      width: 104px;
+      height: 122px;
       border-radius: 26px;
-      border: 1px solid rgba(244,211,94,.45);
-      background: rgba(244,211,94,.08);
+      border: 1px solid rgba(244,211,94,.36);
+      background:
+        radial-gradient(circle at 50% 26%, rgba(248,240,213,.22), transparent 24%),
+        linear-gradient(145deg, rgba(125,211,252,.12), rgba(244,211,94,.08));
+      overflow: hidden;
       display: grid;
       place-items: center;
-      overflow: hidden;
-      font-size: 2.4rem;
-      flex: 0 0 auto;
+      box-shadow: 0 16px 38px rgba(0,0,0,.30);
     }
 
-    .portrait img {
+    .student-avatar img {
       width: 100%;
       height: 100%;
       object-fit: cover;
+      display: block;
+    }
+
+    .avatar-fallback {
+      color: var(--gold);
+      text-transform: uppercase;
+      letter-spacing: .08em;
+      font-size: .68rem;
+      font-weight: 900;
+      text-align: center;
+      padding: 8px;
     }
 
     .kicker {
-      color: #7dd3fc;
+      color: var(--gold);
       text-transform: uppercase;
       letter-spacing: .14em;
-      font-size: .76rem;
-      font-weight: 800;
-      margin-bottom: 7px;
+      font-size: .80rem;
+      font-weight: 900;
+      margin-bottom: 10px;
     }
 
     h1 {
       margin: 0;
-      color: #f4d35e;
-      font-size: clamp(2.1rem, 5vw, 4.4rem);
+      color: #fff6d2;
+      font-size: clamp(2.3rem, 5vw, 4.9rem);
       line-height: .95;
-      letter-spacing: -.04em;
+      text-shadow: 0 14px 38px rgba(0,0,0,.36);
     }
 
-    p {
-      color: rgba(248,240,213,.78);
-      line-height: 1.55;
+    h2 {
+      margin: 0 0 10px;
+      color: #fff4cf;
+      font-size: clamp(1.45rem, 3vw, 2.15rem);
     }
 
-    .grid {
+    .sub,
+    .note {
+      color: var(--muted);
+      line-height: 1.62;
+      font-size: 1.02rem;
+    }
+
+    .sub {
+      margin: 14px 0 0;
+      max-width: 940px;
+    }
+
+    .mission-track {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-top: 18px;
+    }
+
+    .mission-pill {
+      border: 1px solid rgba(244,211,94,.20);
+      background: rgba(244,211,94,.07);
+      color: rgba(248,241,221,.82);
+      border-radius: 999px;
+      padding: 8px 12px;
+      font-size: .84rem;
+      font-weight: 900;
+    }
+
+    .layout {
       display: grid;
-      grid-template-columns: repeat(3, minmax(0, 1fr));
-      gap: 16px;
-      margin-top: 20px;
+      grid-template-columns: 1.08fr .92fr;
+      gap: 22px;
+      align-items: start;
     }
 
-    .card {
-      border: 1px solid rgba(255,255,255,.11);
-      border-radius: 22px;
-      background: rgba(255,255,255,.055);
-      padding: 18px;
-      min-height: 130px;
+    .panel {
+      border: 1px solid var(--border);
+      border-radius: 30px;
+      background: var(--panel);
+      box-shadow: 0 24px 72px rgba(0,0,0,.30);
+      padding: 22px;
+      overflow: hidden;
     }
 
-    .card strong {
+    .dashboard-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 12px;
+      margin-top: 16px;
+    }
+
+    .dash-card {
+      border: 1px solid rgba(255,255,255,.10);
+      background: var(--soft);
+      border-radius: 20px;
+      padding: 15px;
+      min-height: 132px;
+    }
+
+    .dash-card strong {
       display: block;
-      color: #7dd3fc;
-      text-transform: uppercase;
-      letter-spacing: .1em;
-      font-size: .75rem;
-      margin-bottom: 8px;
+      color: var(--gold);
+      margin-bottom: 7px;
+      font-size: .94rem;
     }
 
-    .card h2 {
-      color: #f4d35e;
-      margin: 0 0 8px;
-      font-size: 1.25rem;
+    .dash-card span,
+    .dash-card div {
+      display: block;
+      color: var(--muted);
+      line-height: 1.46;
+      font-size: .92rem;
     }
 
-    .card span, .card div {
-      color: rgba(248,240,213,.86);
-      line-height: 1.48;
+    .dash-card.complete {
+      border-color: rgba(244,211,94,.44);
+      background:
+        linear-gradient(135deg, rgba(244,211,94,.11), rgba(255,255,255,.04)),
+        rgba(255,255,255,.035);
     }
 
-    .wide {
-      grid-column: span 2;
+    .path-list {
+      display: grid;
+      gap: 10px;
+      margin: 16px 0 18px;
+    }
+
+    .path-item {
+      border: 1px solid rgba(255,255,255,.10);
+      background: rgba(255,255,255,.045);
+      border-radius: 16px;
+      padding: 12px 14px;
+      display: grid;
+      grid-template-columns: 32px 1fr;
+      gap: 10px;
+      align-items: center;
+    }
+
+    .check {
+      width: 28px;
+      height: 28px;
+      border-radius: 999px;
+      display: grid;
+      place-items: center;
+      background: rgba(244,211,94,.15);
+      border: 1px solid rgba(244,211,94,.28);
+      color: var(--gold);
+      font-weight: 900;
+    }
+
+    .path-copy strong {
+      color: #fff4cf;
+      margin: 0 0 3px;
+      display: block;
+    }
+
+    .path-copy span {
+      color: var(--muted);
+      line-height: 1.42;
+      font-size: .90rem;
     }
 
     .actions {
       display: flex;
-      flex-wrap: wrap;
       gap: 12px;
-      margin-top: 22px;
+      flex-wrap: wrap;
+      margin-top: 18px;
     }
 
-    .btn {
+    .button {
+      border: 0;
+      border-radius: 999px;
+      padding: 13px 20px;
+      font-family: inherit;
+      font-weight: 900;
+      cursor: pointer;
+      text-decoration: none;
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      border-radius: 999px;
-      padding: 13px 18px;
-      border: 1px solid rgba(244,211,94,.34);
-      text-decoration: none;
-      font-weight: 800;
-      cursor: pointer;
     }
 
-    .btn.primary {
-      color: #07131d;
-      background: linear-gradient(135deg,#f4d35e,#f7b955);
+    .primary {
+      background: linear-gradient(135deg, var(--gold), var(--gold2));
+      color: #171006;
+      box-shadow: 0 12px 36px rgba(244,211,94,.20);
     }
 
-    .btn.secondary {
-      color: #f8f0d5;
-      background: rgba(255,255,255,.065);
+    .secondary {
+      background: rgba(255,255,255,.10);
+      color: var(--text);
+      border: 1px solid rgba(255,255,255,.16);
     }
 
-    .section-title {
-      margin: 28px 0 12px;
-      color: #f4d35e;
-      font-size: 1.4rem;
-    }
-
-    .event-list {
-      display: grid;
-      gap: 10px;
-    }
-
-    .event {
-      border: 1px solid rgba(255,255,255,.1);
+    .side-box {
+      border: 1px solid rgba(255,255,255,.10);
+      background: rgba(255,255,255,.045);
       border-radius: 18px;
-      padding: 14px 16px;
-      background: rgba(0,0,0,.2);
+      padding: 14px;
+      margin-top: 14px;
     }
 
-    .event b {
-      color: #f4d35e;
+    .side-box strong {
+      color: var(--gold);
+      display: block;
+      margin-bottom: 6px;
     }
 
-    .note {
-      margin-top: 18px;
-      padding: 14px 16px;
-      border-left: 3px solid rgba(125,211,252,.6);
-      background: rgba(125,211,252,.08);
-      border-radius: 14px;
-      color: rgba(248,240,213,.78);
+    .side-box span,
+    .side-box div,
+    .side-box li {
+      color: rgba(248,241,221,.72);
+      line-height: 1.48;
+      font-size: .92rem;
     }
 
-    @media (max-width: 860px) {
-      .grid { grid-template-columns: 1fr; }
-      .wide { grid-column: span 1; }
-      .hero { padding: 22px; }
+    .saved-preview {
+      white-space: pre-wrap;
+      max-height: 220px;
+      overflow: auto;
+    }
+
+    .ranking-list {
+      margin: 8px 0 0;
+      padding-left: 20px;
+      color: var(--muted);
+      line-height: 1.55;
+    }
+
+    .readiness-seal {
+      margin-top: 16px;
+      border-radius: 24px;
+      border: 1px solid rgba(244,211,94,.24);
+      min-height: 190px;
+      display: grid;
+      place-items: center;
+      text-align: center;
+      background:
+        radial-gradient(circle at center, rgba(244,211,94,.16), transparent 30%),
+        radial-gradient(circle at 50% 65%, rgba(125,211,252,.10), transparent 34%),
+        linear-gradient(180deg, rgba(255,255,255,.035), rgba(255,255,255,.01));
+    }
+
+    .readiness-seal strong {
+      color: var(--gold);
+      text-transform: uppercase;
+      letter-spacing: .12em;
+      font-size: .88rem;
+      display: block;
+      margin-bottom: 8px;
+    }
+
+    .readiness-seal span {
+      color: rgba(248,241,221,.68);
+      line-height: 1.4;
+      display: block;
+      padding: 0 18px;
+    }
+
+    @media (max-width: 1080px) {
+      .layout { grid-template-columns: 1fr; }
+    }
+
+    @media (max-width: 760px) {
+      .hero { grid-template-columns: 1fr; }
+      .dashboard-grid { grid-template-columns: 1fr; }
+      h1 { font-size: 2.35rem; }
     }
   </style>
 </head>
+
 <body>
-  <main class="shell">
+  <div class="atmosphere"></div>
+
+  <main class="page">
     <section class="hero">
-      <div class="topline">
-        <div class="portrait" id="studentPortrait">🧭</div>
-        <div>
-          <div class="kicker">Student Command Hub</div>
-          <h1>Your Civilization Record</h1>
-          <p id="studentWelcome">
-            Your Academy inquiry has entered the student command hub.
-          </p>
+      <div class="student-avatar" id="studentAvatar">
+        <div class="avatar-fallback">Avatar</div>
+      </div>
+
+      <div>
+        <div class="kicker">Student Mission Dashboard</div>
+        <h1>Your Academy Record Is Open</h1>
+        <p class="sub" id="heroSub">
+          Academy Learner, your first inquiry path is complete. This hub keeps your Academy readiness record
+          and prepares you for the first world decision.
+        </p>
+
+        <div class="mission-track">
+          <div class="mission-pill" id="studentPill">Academy Learner</div>
+          <div class="mission-pill" id="readinessPill">Checking readiness</div>
+          <div class="mission-pill">Student-facing dashboard</div>
+          <div class="mission-pill">Next: Civilization Decision Path</div>
         </div>
       </div>
-
-      <div class="grid">
-        <article class="card">
-          <strong>Identity</strong>
-          <h2 id="studentName">New Arrival</h2>
-          <span id="studentRole">Academy Learner</span>
-        </article>
-
-        <article class="card">
-          <strong>Academy Trial</strong>
-          <h2 id="trialStatus">Checking...</h2>
-          <span>Observation, question ranking, justification, Council reaction, and debrief.</span>
-        </article>
-
-        <article class="card">
-          <strong>Next Action</strong>
-          <h2>First World Decision</h2>
-          <span>Use your Academy thinking to begin the civilization decision path.</span>
-        </article>
-
-        <article class="card wide">
-          <strong>First Inquiry Record</strong>
-          <div id="inquiryRecord">Loading saved inquiry record...</div>
-        </article>
-
-        <article class="card">
-          <strong>Readiness Signal</strong>
-          <h2 id="readinessSignal">Emerging Leader</h2>
-          <span id="readinessText">Your reasoning record will grow as you make decisions.</span>
-        </article>
-      </div>
-
-      <div class="actions">
-        <a class="btn primary" href="/map">Begin First World Decision</a>
-        <a class="btn secondary" href="/mission_debrief">Review Mission Debrief</a>
-        <a class="btn secondary" href="/student_command_entry">Return to Command Entry</a>
-      </div>
-
-      <div class="note">
-        This is the student hub. Teacher reflection, rubric scoring, class session controls, archive exports, and development tools are not part of this student-facing view.
-      </div>
     </section>
 
-    <h2 class="section-title">Mission Memory</h2>
-    <section class="event-list">
-      <div class="event"><b>Academy Opening:</b> You entered STEM Nation and created an Academy identity.</div>
-      <div class="event"><b>Guardian Bridge:</b> You entered the Council Hall and observed evidence before judging it.</div>
-      <div class="event"><b>Question Ranking:</b> You selected the questions that should guide the investigation.</div>
-      <div class="event"><b>Council Reaction:</b> The advisors reacted to the kind of thinking your questions revealed.</div>
-      <div class="event"><b>Mission Debrief:</b> You reflected before entering civilization command.</div>
-    </section>
+    <section class="layout">
+      <article class="panel">
+        <div class="kicker">Completed Academy Path</div>
+        <h2>Your first inquiry cycle</h2>
+        <p class="note">
+          The Academy did not test whether you guessed correctly. It tested whether you could observe, question,
+          justify, listen, and reflect before entering the civilization decision path.
+        </p>
 
-    <h2 class="section-title">Civilization Signals</h2>
-    <section class="grid">
-      <article class="card">
-        <strong>Observation</strong>
-        <h2 id="observationSignal">Pending</h2>
-        <span>What did you notice before deciding?</span>
+        <div class="path-list">
+          <div class="path-item">
+            <div class="check">✓</div>
+            <div class="path-copy">
+              <strong>Identity locked</strong>
+              <span>You chose or uploaded an Academy avatar and entered as a student.</span>
+            </div>
+          </div>
+          <div class="path-item">
+            <div class="check">✓</div>
+            <div class="path-copy">
+              <strong>Academy arrival</strong>
+              <span>You crossed into the Academy and entered the first gathering.</span>
+            </div>
+          </div>
+          <div class="path-item">
+            <div class="check" id="observationCheck">•</div>
+            <div class="path-copy">
+              <strong>Observation chamber</strong>
+              <span>You recorded evidence before deciding what the mystery meant.</span>
+            </div>
+          </div>
+          <div class="path-item">
+            <div class="check" id="rankingCheck">•</div>
+            <div class="path-copy">
+              <strong>Question ranking</strong>
+              <span>You selected the questions that should guide the investigation first.</span>
+            </div>
+          </div>
+          <div class="path-item">
+            <div class="check" id="briefingCheck">•</div>
+            <div class="path-copy">
+              <strong>Council briefing</strong>
+              <span>You explained why your questions deserved attention.</span>
+            </div>
+          </div>
+          <div class="path-item">
+            <div class="check" id="reactionCheck">•</div>
+            <div class="path-copy">
+              <strong>Advisor reactions</strong>
+              <span>The Council responded to the thinking shown in your priorities.</span>
+            </div>
+          </div>
+          <div class="path-item">
+            <div class="check" id="debriefCheck">•</div>
+            <div class="path-copy">
+              <strong>Mission debrief</strong>
+              <span>You reflected on what your choices revealed about your inquiry style.</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="dashboard-grid">
+          <article class="dash-card" id="observationCard">
+            <strong>Observation Signal</strong>
+            <span id="observationSignal">Checking...</span>
+          </article>
+
+          <article class="dash-card" id="questionCard">
+            <strong>Question Quality Signal</strong>
+            <span id="questionSignal">Checking...</span>
+          </article>
+
+          <article class="dash-card" id="briefingCard">
+            <strong>Reasoning Signal</strong>
+            <span id="briefingSignal">Checking...</span>
+          </article>
+
+          <article class="dash-card" id="reflectionCard">
+            <strong>Reflection Signal</strong>
+            <span id="reflectionSignal">Checking...</span>
+          </article>
+        </div>
+
+        <div class="actions">
+          <a class="button primary" href="/map">Begin First World Decision</a>
+          <a class="button secondary" href="/mission_debrief">Review Mission Debrief</a>
+          <a class="button secondary" href="/academy_identity">Review Identity</a>
+        </div>
       </article>
-      <article class="card">
-        <strong>Question Quality</strong>
-        <h2 id="questionSignal">Pending</h2>
-        <span>Which questions did you choose to guide the investigation?</span>
-      </article>
-      <article class="card">
-        <strong>Reflection</strong>
-        <h2 id="reflectionSignal">Pending</h2>
-        <span>What changed in your thinking?</span>
-      </article>
+
+      <aside class="panel">
+        <div class="kicker">Academy Readiness Record</div>
+        <h2 id="readinessTitle">Checking readiness...</h2>
+        <p class="note" id="readinessText">
+          The hub is reading your saved inquiry path on this device.
+        </p>
+
+        <div class="readiness-seal">
+          <div>
+            <strong id="sealTitle">Academy Record</strong>
+            <span id="sealText">Saved progress will appear here after the first inquiry cycle.</span>
+          </div>
+        </div>
+
+        <div class="side-box">
+          <strong>Saved observation notes</strong>
+          <div class="saved-preview" id="observationPreview">No saved observation notes found yet.</div>
+        </div>
+
+        <div class="side-box">
+          <strong>Question ranking</strong>
+          <ol class="ranking-list" id="rankingList"></ol>
+        </div>
+
+        <div class="side-box">
+          <strong>Mission reflection</strong>
+          <div class="saved-preview" id="reflectionPreview">No saved mission reflection found yet.</div>
+        </div>
+
+        <div class="side-box">
+          <strong>Student-facing note</strong>
+          <span>Teacher tools, rubric scoring, archive exports, and admin controls remain outside this student view.</span>
+        </div>
+      </aside>
     </section>
   </main>
 
   <script>
     const IDENTITY_KEY = "stemNationStudentIdentity";
-    const AVATAR_KEY = "stemNationAvatar";
-    const OBSERVATION_KEY = "stemNationObservationV1";
+    const OBSERVATION_KEY = "stemNationAcademyObservationV1";
     const RANKING_KEY = "stemNationQuestionPriorityRankingV1";
     const JUSTIFICATION_KEY = "stemNationQuestionJustificationV1";
     const REACTION_KEY = "stemNationAdvisorReactionV1";
     const DEBRIEF_KEY = "stemNationMissionDebriefV1";
 
+    const studentAvatar = document.getElementById("studentAvatar");
+    const studentPill = document.getElementById("studentPill");
+    const heroSub = document.getElementById("heroSub");
+    const readinessPill = document.getElementById("readinessPill");
+
+    const observationPreview = document.getElementById("observationPreview");
+    const rankingList = document.getElementById("rankingList");
+    const reflectionPreview = document.getElementById("reflectionPreview");
+
+    const readinessTitle = document.getElementById("readinessTitle");
+    const readinessText = document.getElementById("readinessText");
+    const sealTitle = document.getElementById("sealTitle");
+    const sealText = document.getElementById("sealText");
+
+    let identity = {
+      name: "Academy Learner",
+      portrait: "",
+      fallback: "",
+      avatarChoice: "Academy Avatar"
+    };
+
     function readJson(key) {
       try {
         return JSON.parse(localStorage.getItem(key) || "null");
-      } catch (err) {
-        console.warn("Invalid localStorage record ignored:", key, err);
+      } catch (error) {
+        console.warn("Could not read localStorage key:", key, error);
         return null;
       }
     }
 
-    function isImageSource(value) {
+    function looksLikeImageSource(value) {
       return typeof value === "string" && (
-        value.startsWith("/") ||
-        value.startsWith("data:image") ||
+        value.startsWith("data:image/") ||
+        value.startsWith("/static/") ||
         value.startsWith("http://") ||
         value.startsWith("https://")
       );
     }
 
-    const identity = readJson(IDENTITY_KEY);
-    const avatar = readJson(AVATAR_KEY);
+    const savedIdentity = readJson(IDENTITY_KEY);
+    if (savedIdentity) identity = { ...identity, ...savedIdentity };
+
     const observation = readJson(OBSERVATION_KEY);
-    const ranking = readJson(RANKING_KEY);
+    const rankingRecord = readJson(RANKING_KEY);
     const justification = readJson(JUSTIFICATION_KEY);
     const reaction = readJson(REACTION_KEY);
     const debrief = readJson(DEBRIEF_KEY);
 
-    const displayName =
-      identity?.teacherApprovedName ||
-      identity?.approvedName ||
-      identity?.name ||
-      avatar?.name ||
-      "New Arrival";
+    let displayName = identity.teacherApprovedName || identity.approvedName || identity.name || "Academy Learner";
+    displayName = String(displayName)
+      .replace(/^New Arrival\s*/i, "")
+      .replace(/^Academy Learner\s*/i, "")
+      .trim() || "Academy Learner";
 
-    const roleName =
-      avatar?.role ||
-      identity?.role ||
-      "Academy Learner";
+    const avatarChoice = identity.avatarChoice || identity.avatarTitle || "Academy Avatar";
+    const avatarSource = identity.portrait || identity.fallback || "";
 
-    document.getElementById("studentName").textContent = displayName;
-    document.getElementById("studentRole").textContent = roleName;
-    document.getElementById("studentWelcome").textContent =
-      `${displayName}, your Academy inquiry has entered the student command hub.`;
+    studentPill.textContent = `${avatarChoice} · ${displayName}`;
+    heroSub.textContent = `${displayName}, your first inquiry path is complete. This hub keeps your Academy readiness record and prepares you for the first world decision.`;
 
-    const portrait =
-      identity?.portrait ||
-      avatar?.portrait ||
-      avatar?.fallback ||
-      "/static/avatars/student_scout.svg";
-
-    const portraitBox = document.getElementById("studentPortrait");
-    if (isImageSource(portrait)) {
-      portraitBox.innerHTML = `<img src="${portrait}" alt="Student avatar">`;
+    studentAvatar.innerHTML = "";
+    if (looksLikeImageSource(avatarSource)) {
+      const img = document.createElement("img");
+      img.src = avatarSource;
+      img.alt = "Student Academy avatar";
+      studentAvatar.appendChild(img);
     } else {
-      portraitBox.textContent = portrait || "🧭";
+      const fallback = document.createElement("div");
+      fallback.className = "avatar-fallback";
+      fallback.textContent = "Avatar";
+      studentAvatar.appendChild(fallback);
     }
 
-    const savedPieces = [
-      observation ? "observations" : "",
-      ranking ? "ranked questions" : "",
-      justification ? "justification" : "",
-      reaction ? "Council reaction" : "",
-      debrief ? "mission debrief" : ""
-    ].filter(Boolean);
+    const ranking = rankingRecord && Array.isArray(rankingRecord.ranking)
+      ? rankingRecord.ranking.slice(0, 3)
+      : [];
 
-    document.getElementById("trialStatus").textContent =
-      debrief ? "Debrief Complete" : "Debrief Pending";
+    const complete = {
+      observation: !!(observation && observation.observations),
+      ranking: ranking.length === 3,
+      justification: !!(justification && Array.isArray(justification.justifications)),
+      reaction: !!(reaction && Array.isArray(reaction.reactions)),
+      debrief: !!(debrief && debrief.reflection)
+    };
 
-    document.getElementById("inquiryRecord").textContent =
-      savedPieces.length
-        ? `Saved record includes: ${savedPieces.join(", ")}.`
-        : "No saved inquiry record detected in this browser yet.";
+    function setCheck(id, done) {
+      const el = document.getElementById(id);
+      if (el) el.textContent = done ? "✓" : "•";
+    }
 
-    document.getElementById("observationSignal").textContent =
-      observation ? "Recorded" : "Pending";
+    setCheck("observationCheck", complete.observation);
+    setCheck("rankingCheck", complete.ranking);
+    setCheck("briefingCheck", complete.justification);
+    setCheck("reactionCheck", complete.reaction);
+    setCheck("debriefCheck", complete.debrief);
 
-    document.getElementById("questionSignal").textContent =
-      ranking ? "Ranked" : "Pending";
+    function setSignal(cardId, signalId, done, completeText, pendingText) {
+      const card = document.getElementById(cardId);
+      const signal = document.getElementById(signalId);
 
-    document.getElementById("reflectionSignal").textContent =
-      debrief ? "Saved" : "Pending";
+      if (card && done) card.classList.add("complete");
+      if (signal) signal.textContent = done ? completeText : pendingText;
+    }
 
-    const readinessSignal = document.getElementById("readinessSignal");
-    const readinessText = document.getElementById("readinessText");
+    setSignal("observationCard", "observationSignal", complete.observation, "Recorded — you noticed before judging.", "Pending — observation record not found.");
+    setSignal("questionCard", "questionSignal", complete.ranking, "Ranked — you chose three guiding questions.", "Pending — question ranking not found.");
+    setSignal("briefingCard", "briefingSignal", complete.justification, "Saved — you defended your priorities.", "Pending — Council briefing not found.");
+    setSignal("reflectionCard", "reflectionSignal", complete.debrief, "Saved — you reflected on your inquiry path.", "Pending — mission debrief not found.");
 
-    if (debrief && ranking && justification && reaction) {
-      readinessSignal.textContent = "Academy Trial Complete";
-      readinessText.textContent = "You completed the first inquiry cycle and are ready for the first world decision.";
-    } else if (ranking || observation) {
-      readinessSignal.textContent = "Inquiry In Progress";
-      readinessText.textContent = "Continue the Academy trial to complete your first reasoning record.";
+    if (complete.observation) {
+      observationPreview.textContent =
+        observation.observations +
+        (observation.uncertainties ? "\\n\\nStill uncertain: " + observation.uncertainties : "");
+    }
+
+    if (ranking.length) {
+      rankingList.innerHTML = ranking.map(item => `<li>${escapeHtml(item)}</li>`).join("");
+    } else {
+      rankingList.innerHTML = "<li>No saved ranking found yet.</li>";
+    }
+
+    if (complete.debrief) {
+      const reflection = debrief.reflection || {};
+      reflectionPreview.textContent =
+        "Choices revealed:\\n" + (reflection.choices || "") +
+        "\\n\\nCouncil reaction:\\n" + (reflection.council || "") +
+        "\\n\\nCarry forward:\\n" + (reflection.next || "");
+    }
+
+    if (complete.observation && complete.ranking && complete.justification && complete.reaction && complete.debrief) {
+      readinessPill.textContent = "Academy Trial Complete";
+      readinessTitle.textContent = "Academy Trial Complete";
+      readinessText.textContent = "Your first inquiry cycle is complete. You are ready to carry this thinking into the first world decision.";
+      sealTitle.textContent = "Ready for World Decision";
+      sealText.textContent = "You completed observation, question ranking, Council briefing, advisor reactions, and mission debrief.";
+    } else if (complete.observation || complete.ranking || complete.justification || complete.reaction) {
+      readinessPill.textContent = "Inquiry In Progress";
+      readinessTitle.textContent = "Inquiry In Progress";
+      readinessText.textContent = "Some parts of your inquiry path are saved. Complete the remaining Academy steps before the first world decision.";
+      sealTitle.textContent = "Progress Saved";
+      sealText.textContent = "Your inquiry record is still forming.";
+    } else {
+      readinessPill.textContent = "Academy Record Pending";
+      readinessTitle.textContent = "Academy Record Pending";
+      readinessText.textContent = "No full inquiry record was found on this device yet.";
+      sealTitle.textContent = "Begin Academy Path";
+      sealText.textContent = "Start with identity, gathering, observation, and question ranking.";
+    }
+
+    function escapeHtml(str) {
+      return String(str || "")
+        .replaceAll("&", "&amp;")
+        .replaceAll("<", "&lt;")
+        .replaceAll(">", "&gt;")
+        .replaceAll('"', "&quot;")
+        .replaceAll("'", "&#039;");
     }
   </script>
 </body>
