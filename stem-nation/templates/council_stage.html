@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>STEM Nation | Council Hall</title>
+<style>
+:root{
+  --gold:#f5d77a;
+  --blue:#58c9ff;
+  --dark:#02040b;
+}
+*{box-sizing:border-box}
+html,body{
+  margin:0;
+  min-height:100%;
+  font-family:Arial,Helvetica,sans-serif;
+  background:#02040b;
+  color:white;
+}
+body{overflow:hidden}
+
+.pre-entry{
+  position:fixed;
+  inset:0;
+  display:grid;
+  place-items:center;
+  cursor:pointer;
+  background:
+    radial-gradient(circle at 50% 18%,rgba(88,201,255,.16),transparent 28%),
+    radial-gradient(circle at 50% 76%,rgba(245,215,122,.10),transparent 28%),
+    linear-gradient(135deg,#01030a,#071326 50%,#02040b);
+}
+
+.pre-entry::before{
+  content:"";
+  position:absolute;
+  inset:0;
+  background:
+    linear-gradient(90deg,rgba(255,255,255,.025) 1px,transparent 1px),
+    linear-gradient(rgba(255,255,255,.025) 1px,transparent 1px);
+  background-size:64px 64px;
+  mask-image:radial-gradient(circle at center,black,transparent 76%);
+  pointer-events:none;
+}
+
+.pre-card{
+  position:relative;
+  z-index:2;
+  width:min(720px,90vw);
+  padding:34px 28px;
+  border-radius:32px;
+  border:1px solid rgba(245,215,122,.30);
+  background:rgba(8,15,32,.72);
+  text-align:center;
+  box-shadow:0 30px 90px rgba(0,0,0,.46), inset 0 0 60px rgba(88,201,255,.05);
+}
+
+.pre-kicker{
+  color:var(--gold);
+  text-transform:uppercase;
+  letter-spacing:.22em;
+  font-size:12px;
+  margin-bottom:12px;
+}
+
+.pre-title{
+  font-size:clamp(42px,7vw,88px);
+  line-height:.9;
+  margin:0 0 14px;
+  text-transform:uppercase;
+  letter-spacing:.08em;
+}
+
+.pre-copy{
+  color:rgba(255,255,255,.76);
+  font-size:clamp(16px,2vw,22px);
+  line-height:1.45;
+  margin:0 0 24px;
+}
+
+.pre-button{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  min-width:min(420px,86vw);
+  min-height:62px;
+  border-radius:999px;
+  border:1px solid rgba(245,215,122,.62);
+  background:
+    radial-gradient(circle at 50% 0%,rgba(88,201,255,.24),transparent 58%),
+    rgba(255,255,255,.07);
+  color:white;
+  font-weight:900;
+  letter-spacing:.12em;
+  text-transform:uppercase;
+  box-shadow:0 0 30px rgba(88,201,255,.18);
+}
+
+.opening{
+  position:fixed;
+  inset:0;
+  display:none;
+  cursor:pointer;
+  background:
+    linear-gradient(90deg,rgba(0,0,0,.10),transparent 18%,transparent 82%,rgba(0,0,0,.22)),
+    url("/static/storyboards/council_hall_guardian_concept.png");
+  background-size:cover;
+  background-position:center center;
+  background-repeat:no-repeat;
+}
+
+.opening.active{
+  display:block;
+}
+
+.opening::after{
+  content:"";
+  position:absolute;
+  inset:0;
+  pointer-events:none;
+  background:
+    radial-gradient(circle at 29% 46%,rgba(245,215,122,.06),transparent 14%),
+    linear-gradient(180deg,rgba(0,0,0,.00),rgba(0,0,0,.08));
+}
+
+.guardian-audio-pulse{
+  position:absolute;
+  left:29%;
+  top:46%;
+  width:170px;
+  height:170px;
+  transform:translate(-50%,-50%);
+  border-radius:50%;
+  border:1px solid rgba(245,215,122,.38);
+  opacity:0;
+  pointer-events:none;
+  z-index:3;
+}
+
+.guardian-audio-pulse.active{
+  animation:guardianPulse 1.35s infinite;
+}
+
+@keyframes guardianPulse{
+  0%{opacity:.15;transform:translate(-50%,-50%) scale(.82)}
+  50%{opacity:.65;transform:translate(-50%,-50%) scale(1.16)}
+  100%{opacity:0;transform:translate(-50%,-50%) scale(1.48)}
+}
+
+.audio-hint{
+  position:absolute;
+  right:18px;
+  bottom:18px;
+  z-index:5;
+  padding:8px 11px;
+  border-radius:999px;
+  border:1px solid rgba(255,255,255,.13);
+  background:rgba(2,8,18,.46);
+  color:rgba(255,255,255,.62);
+  font-size:12px;
+  backdrop-filter:blur(8px);
+}
+
+.next-panel{
+  display:none;
+  min-height:100vh;
+  padding:28px;
+  background:
+    radial-gradient(circle at 50% 10%,rgba(88,201,255,.20),transparent 28%),
+    linear-gradient(135deg,#02040b,#071326 52%,#02040b);
+}
+
+.next-panel.active{
+  display:grid;
+  place-items:center;
+}
+
+.card{
+  width:min(840px,92vw);
+  padding:28px;
+  border-radius:28px;
+  border:1px solid rgba(245,215,122,.32);
+  background:rgba(8,15,32,.82);
+  box-shadow:0 24px 70px rgba(0,0,0,.42);
+  text-align:center;
+}
+
+.kicker{
+  color:var(--gold);
+  letter-spacing:.18em;
+  text-transform:uppercase;
+  font-size:12px;
+  margin-bottom:10px;
+}
+
+h1{
+  margin:0 0 12px;
+  font-size:clamp(34px,5vw,62px);
+}
+
+p{
+  color:rgba(255,255,255,.78);
+  font-size:18px;
+  line-height:1.5;
+  margin:0 0 20px;
+}
+
+.actions{
+  display:flex;
+  justify-content:center;
+  gap:12px;
+  flex-wrap:wrap;
+}
+
+.actions a,
+.actions button{
+  color:#fff;
+  text-decoration:none;
+  border:1px solid rgba(255,255,255,.20);
+  background:rgba(255,255,255,.08);
+  border-radius:16px;
+  padding:13px 16px;
+  font-weight:800;
+  cursor:pointer;
+}
+
+.actions .primary{
+  background:rgba(245,215,122,.16);
+  border-color:rgba(245,215,122,.60);
+}
+
+@media(max-width:760px){
+  .opening{background-position:center top;}
+  .audio-hint{display:none;}
+}
+
+/* CI-STAGE-29E REMOVE DUPLICATE PRE-ENTRY BUTTON */
+.pre-button{
+  display:none!important;
+}
+
+.pre-instruction{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  color:rgba(255,255,255,.68);
+  font-size:14px;
+  letter-spacing:.12em;
+  text-transform:uppercase;
+  padding:10px 14px;
+  border-radius:999px;
+  border:1px solid rgba(255,255,255,.14);
+  background:rgba(255,255,255,.04);
+}
+
+</style>
+</head>
+<body>
+  <!-- CI-STAGE-26 HIDE VISUAL UNTIL FIRST CLICK -->
+  <main class="pre-entry" id="preEntry" onclick="startCouncilVisual()" aria-label="Council Hall pre-entry screen">
+    <section class="pre-card">
+      <div class="pre-kicker">STEM Nation Academy Readiness Evaluation</div>
+      <h1 class="pre-title">Council Hall</h1>
+      <p class="pre-copy">
+        Voices are rising behind the chamber doors. The Guardian is waiting at the threshold.
+      </p>
+      <div class="pre-instruction">Click anywhere to approach the chamber doors</div>
+    </section>
+  </main>
+
+  <main class="opening" id="opening" onclick="handleOpeningClick()" aria-label="Council Hall cinematic opening">
+    <div class="guardian-audio-pulse" id="guardianAudioPulse"></div>
+    <div class="audio-hint" id="audioHint">The Guardian is speaking...</div>
+
+    <audio id="guardianAudio" preload="auto">
+      <source src="/static/audio/guardian_welcome.wav" type="audio/wav">
+    </audio>
+  </main>
+
+  <section class="next-panel" id="nextPanel">
+    <div class="card">
+      <div class="kicker">Council Hall</div>
+      <h1>Evidence Briefing</h1>
+      <p>
+        The Guardian has welcomed you forward. The evidence table is now live.
+        Look for what changed, what is unknown, and what might become dangerous. Do not solve the mystery yet. First, observe the evidence.
+      </p>
+      <div class="actions">
+        <button class="primary" type="button">Begin Evidence Observation</button>
+        <a href="/project_hub">Project Hub</a>
+        <a href="/map">World Board Preview</a>
+      </div>
+    </div>
+  </section>
+
+<script>
+const guardianWelcomeDurationMs = 5200;
+let openingState = "pre";
+let guardianTimer = null;
+
+function startCouncilVisual(){
+  const pre = document.getElementById("preEntry");
+  const opening = document.getElementById("opening");
+
+  if(pre){ pre.style.display = "none"; }
+  if(opening){ opening.classList.add("active"); }
+
+  openingState = "speaking";
+  playGuardianAudioOnly();
+}
+
+function stopGuardianAudio(){
+  const audio = document.getElementById("guardianAudio");
+  const pulse = document.getElementById("guardianAudioPulse");
+  const hint = document.getElementById("audioHint");
+
+  clearTimeout(guardianTimer);
+
+  if(audio){
+    try{
+      audio.pause();
+      audio.currentTime = 0;
+      audio.removeAttribute("src");
+      audio.load();
+    }catch(e){}
+  }
+
+  // Extra safety: stop any old browser voice that may have been started by earlier patches.
+  if("speechSynthesis" in window){
+    try{
+      window.speechSynthesis.cancel();
+      setTimeout(() => window.speechSynthesis.cancel(), 100);
+      setTimeout(() => window.speechSynthesis.cancel(), 300);
+    }catch(e){}
+  }
+
+  if(pulse){ pulse.classList.remove("active"); }
+  if(hint){ hint.textContent = ""; }
+}
+
+function playGuardianAudioOnly(){
+  const audio = document.getElementById("guardianAudio");
+  const hint = document.getElementById("audioHint");
+  const pulse = document.getElementById("guardianAudioPulse");
+
+  if(pulse){ pulse.classList.add("active"); }
+  if(hint){ hint.textContent = "The Guardian is speaking..."; }
+
+  // Use only a real MP3 if present. No browser speech fallback.
+  if(audio){
+    try{
+      audio.currentTime = 0;
+      const attempt = audio.play();
+
+      if(attempt && typeof attempt.then === "function"){
+        attempt.then(() => {
+          if(hint){ hint.textContent = "Click again to continue"; }
+        }).catch(() => {
+          if(hint){ hint.textContent = "Click again to continue"; }
+        });
+      }
+    }catch(e){
+      if(hint){ hint.textContent = "Click again to continue"; }
+    }
+  }
+
+  clearTimeout(guardianTimer);
+  guardianTimer = setTimeout(() => {
+    openingState = "spoken";
+    if(pulse){ pulse.classList.remove("active"); }
+    if(hint){ hint.textContent = "Click again to continue"; }
+  }, guardianWelcomeDurationMs);
+}
+
+function handleOpeningClick(){
+  if(openingState === "speaking"){
+    return;
+  }
+
+  if(openingState === "spoken"){
+    enterCouncilHall();
+  }
+}
+
+function enterCouncilHall(){
+  stopGuardianAudio();
+
+  const opening = document.getElementById("opening");
+  const next = document.getElementById("nextPanel");
+
+  if(opening){ opening.style.display = "none"; }
+  if(next){ next.classList.add("active"); }
+
+  document.body.style.overflow = "auto";
+}
+</script>
+</body>
+</html>
