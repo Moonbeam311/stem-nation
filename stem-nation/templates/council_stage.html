@@ -104,7 +104,7 @@ body{overflow:hidden}
   cursor:pointer;
   background:
     linear-gradient(90deg,rgba(0,0,0,.10),transparent 18%,transparent 82%,rgba(0,0,0,.22)),
-    url("/static/storyboards/council_hall_guardian_concept.png");
+    radial-gradient(circle at 50% 28%, rgba(143,216,255,.18), transparent 40%);
   background-size:cover;
   background-position:center center;
   background-repeat:no-repeat;
@@ -254,9 +254,2078 @@ p{
   background:rgba(255,255,255,.04);
 }
 
+
+/* CI-STAGE-30 MINIMAL OBSERVATION CHOICE SCREEN */
+.observation-shell{
+  width:min(1100px,94vw);
+  display:grid;
+  gap:18px;
+}
+
+.observation-header{
+  text-align:center;
+  padding:22px;
+  border-radius:28px;
+  border:1px solid rgba(245,215,122,.28);
+  background:rgba(8,15,32,.78);
+  box-shadow:0 24px 70px rgba(0,0,0,.36);
+}
+
+.observation-header h1{
+  margin:0 0 10px;
+  font-size:clamp(34px,5vw,62px);
+}
+
+.observation-header p{
+  max-width:850px;
+  margin:0 auto;
+  color:rgba(255,255,255,.78);
+  font-size:18px;
+  line-height:1.5;
+}
+
+.evidence-layout{
+  display:grid;
+  grid-template-columns:1fr .95fr;
+  gap:18px;
+}
+
+.evidence-visual{
+  min-height:430px;
+  border-radius:28px;
+  border:1px solid rgba(143,216,255,.28);
+  background:
+    radial-gradient(circle at 36% 48%,rgba(226,252,255,.86) 0 18%,transparent 19%),
+    radial-gradient(circle at 68% 45%,rgba(42,78,88,.86) 0 14%,transparent 15%),
+    radial-gradient(circle at 55% 64%,rgba(245,215,122,.34) 0 7%,transparent 8%),
+    repeating-linear-gradient(45deg,rgba(255,255,255,.07) 0 4px,transparent 4px 18px),
+    linear-gradient(145deg,rgba(8,22,44,.94),rgba(3,8,18,.96));
+  box-shadow:inset 0 0 70px rgba(143,216,255,.12),0 24px 70px rgba(0,0,0,.35);
+  position:relative;
+  overflow:hidden;
+}
+
+.evidence-visual:before{
+  content:"SATELLITE SCAN · ICE BREAK MYSTERY";
+  position:absolute;
+  left:18px;
+  top:18px;
+  color:var(--gold);
+  font-size:12px;
+  letter-spacing:.16em;
+}
+
+.scan-label{
+  position:absolute;
+  padding:8px 10px;
+  border-radius:999px;
+  border:1px solid rgba(245,215,122,.38);
+  background:rgba(0,0,0,.42);
+  color:white;
+  font-size:11px;
+  letter-spacing:.08em;
+  text-transform:uppercase;
+}
+
+.scan-label.one{left:42%;top:42%;}
+.scan-label.two{right:12%;top:35%;}
+.scan-label.three{left:18%;bottom:22%;}
+
+.choice-panel{
+  border-radius:28px;
+  border:1px solid rgba(245,215,122,.28);
+  background:rgba(8,15,32,.82);
+  box-shadow:0 24px 70px rgba(0,0,0,.36);
+  padding:20px;
+}
+
+.choice-kicker{
+  color:var(--gold);
+  letter-spacing:.16em;
+  text-transform:uppercase;
+  font-size:12px;
+  margin-bottom:8px;
+}
+
+.choice-panel h2{
+  margin:0 0 8px;
+  font-size:28px;
+}
+
+.choice-directions{
+  color:rgba(255,255,255,.76);
+  line-height:1.45;
+  margin-bottom:14px;
+}
+
+.choice-count{
+  display:inline-flex;
+  margin-bottom:14px;
+  padding:8px 11px;
+  border-radius:999px;
+  border:1px solid rgba(143,216,255,.25);
+  background:rgba(143,216,255,.08);
+  color:var(--ice);
+  font-size:13px;
+  font-weight:800;
+}
+
+.observation-options{
+  display:grid;
+  gap:10px;
+}
+
+.obs-option{
+  width:100%;
+  text-align:left;
+  padding:13px 14px;
+  border-radius:18px;
+  border:1px solid rgba(255,255,255,.14);
+  background:rgba(255,255,255,.06);
+  color:white;
+  cursor:pointer;
+  font-size:15px;
+  line-height:1.35;
+  transition:.2s;
+}
+
+.obs-option:hover{
+  border-color:rgba(245,215,122,.48);
+  background:rgba(245,215,122,.08);
+  transform:translateY(-1px);
+}
+
+.obs-option.selected{
+  border-color:rgba(145,245,179,.58);
+  background:rgba(145,245,179,.13);
+  box-shadow:0 0 18px rgba(145,245,179,.10);
+}
+
+.obs-option.locked:not(.selected){
+  opacity:.42;
+}
+
+.observation-actions{
+  display:flex;
+  justify-content:space-between;
+  gap:10px;
+  flex-wrap:wrap;
+  margin-top:16px;
+  padding-top:14px;
+  border-top:1px solid rgba(255,255,255,.10);
+}
+
+.observation-actions button,
+.observation-actions a{
+  color:#fff;
+  text-decoration:none;
+  border:1px solid rgba(255,255,255,.20);
+  background:rgba(255,255,255,.08);
+  border-radius:16px;
+  padding:13px 16px;
+  font-weight:800;
+  cursor:pointer;
+}
+
+.observation-actions .primary{
+  background:rgba(245,215,122,.16);
+  border-color:rgba(245,215,122,.60);
+}
+
+.observation-actions .primary:disabled{
+  opacity:.42;
+  cursor:not-allowed;
+}
+
+.question-preview{
+  display:none;
+  width:min(840px,92vw);
+  padding:28px;
+  border-radius:28px;
+  border:1px solid rgba(245,215,122,.32);
+  background:rgba(8,15,32,.82);
+  box-shadow:0 24px 70px rgba(0,0,0,.42);
+  text-align:center;
+}
+
+.question-preview.active{
+  display:block;
+}
+
+.selected-summary{
+  margin:16px 0;
+  display:grid;
+  gap:8px;
+  text-align:left;
+}
+
+.selected-summary div{
+  padding:10px 12px;
+  border-radius:14px;
+  background:rgba(145,245,179,.10);
+  border:1px solid rgba(145,245,179,.22);
+}
+
+@media(max-width:900px){
+  .evidence-layout{
+    grid-template-columns:1fr;
+  }
+  .evidence-visual{
+    min-height:330px;
+  }
+}
+
+
+/* CI-STAGE-31 DETAILED EVIDENCE INSPECTION */
+.evidence-detail-panel{
+  margin-top:14px;
+  padding:14px;
+  border-radius:20px;
+  border:1px solid rgba(143,216,255,.24);
+  background:rgba(143,216,255,.07);
+}
+
+.evidence-detail-panel h3{
+  margin:0 0 8px;
+  color:var(--gold);
+  font-size:18px;
+}
+
+.evidence-detail-panel p{
+  margin:0 0 10px;
+  color:rgba(255,255,255,.78);
+  line-height:1.45;
+  font-size:14px;
+}
+
+.evidence-facts{
+  display:grid;
+  gap:8px;
+}
+
+.evidence-facts div{
+  padding:9px 10px;
+  border-radius:13px;
+  background:rgba(0,0,0,.22);
+  border:1px solid rgba(255,255,255,.10);
+  color:rgba(255,255,255,.82);
+  font-size:13px;
+  line-height:1.35;
+}
+
+.evidence-hotspot{
+  position:absolute;
+  border:1px solid rgba(245,215,122,.54);
+  background:rgba(245,215,122,.10);
+  color:white;
+  border-radius:18px;
+  padding:8px 10px;
+  font-size:11px;
+  letter-spacing:.09em;
+  text-transform:uppercase;
+  cursor:pointer;
+  z-index:4;
+  box-shadow:0 0 18px rgba(245,215,122,.16);
+}
+
+.evidence-hotspot:hover,
+.evidence-hotspot.reviewed{
+  background:rgba(145,245,179,.14);
+  border-color:rgba(145,245,179,.58);
+}
+
+.hotspot-edge{left:28%;top:37%;}
+.hotspot-exposure{right:18%;top:43%;}
+.hotspot-limits{left:16%;bottom:24%;}
+
+.review-progress{
+  display:inline-flex;
+  margin-bottom:12px;
+  padding:8px 11px;
+  border-radius:999px;
+  border:1px solid rgba(245,215,122,.24);
+  background:rgba(245,215,122,.08);
+  color:var(--gold);
+  font-size:13px;
+  font-weight:800;
+}
+
+.lock-note{
+  color:rgba(255,255,255,.62);
+  font-size:13px;
+  line-height:1.4;
+  margin-top:10px;
+}
+
+.choice-panel.locked-choices .observation-options{
+  opacity:.38;
+  pointer-events:none;
+}
+
+.choice-panel.locked-choices .observation-actions{
+  opacity:.55;
+}
+
+
+/* CI-STAGE-32 EVIDENCE STORYBOARD FLOW */
+.evidence-storyboard-shell{
+  width:min(1320px,96vw);
+  display:grid;
+  gap:16px;
+}
+.evidence-storyboard-card{
+  border-radius:28px;
+  border:1px solid rgba(245,215,122,.28);
+  background:rgba(8,15,32,.80);
+  box-shadow:0 24px 80px rgba(0,0,0,.44);
+  overflow:hidden;
+}
+.evidence-storyboard-image{
+  width:100%;
+  height:auto;
+  display:block;
+}
+.storyboard-action-bar{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:14px;
+  flex-wrap:wrap;
+  padding:16px 18px;
+  border-top:1px solid rgba(255,255,255,.10);
+  background:rgba(2,8,18,.72);
+}
+.storyboard-action-copy{
+  color:rgba(255,255,255,.76);
+  line-height:1.45;
+  font-size:15px;
+}
+.storyboard-action-copy strong{
+  color:var(--gold);
+}
+.storyboard-actions{
+  display:flex;
+  gap:10px;
+  flex-wrap:wrap;
+}
+.storyboard-actions button,
+.storyboard-actions a,
+.actions button,
+.actions a{
+  color:#fff;
+  text-decoration:none;
+  border:1px solid rgba(255,255,255,.20);
+  background:rgba(255,255,255,.08);
+  border-radius:16px;
+  padding:13px 16px;
+  font-weight:800;
+  cursor:pointer;
+}
+.storyboard-actions .primary,
+.actions .primary{
+  background:rgba(245,215,122,.16);
+  border-color:rgba(245,215,122,.60);
+}
+.advisor-intro-screen,
+.observation-choice-screen{
+  display:none;
+  width:min(1100px,94vw);
+  padding:26px;
+  border-radius:28px;
+  border:1px solid rgba(245,215,122,.32);
+  background:rgba(8,15,32,.84);
+  box-shadow:0 24px 70px rgba(0,0,0,.42);
+}
+.advisor-intro-screen.active,
+.observation-choice-screen.active{
+  display:block;
+}
+.advisor-grid{
+  display:grid;
+  grid-template-columns:repeat(4,minmax(0,1fr));
+  gap:12px;
+  margin:18px 0;
+}
+.advisor-card{
+  padding:14px;
+  border-radius:20px;
+  border:1px solid rgba(255,255,255,.13);
+  background:rgba(255,255,255,.055);
+}
+.advisor-card strong{
+  display:block;
+  color:var(--gold);
+  font-size:16px;
+  margin-bottom:6px;
+}
+.advisor-card span{
+  display:block;
+  color:rgba(255,255,255,.72);
+  font-size:13px;
+  line-height:1.4;
+}
+.obs-grid{
+  display:grid;
+  gap:10px;
+  margin:16px 0;
+}
+.obs-choice{
+  width:100%;
+  text-align:left;
+  padding:13px 14px;
+  border-radius:18px;
+  border:1px solid rgba(255,255,255,.14);
+  background:rgba(255,255,255,.06);
+  color:white;
+  cursor:pointer;
+  font-size:15px;
+  line-height:1.35;
+  transition:.2s;
+}
+.obs-choice:hover{
+  border-color:rgba(245,215,122,.48);
+  background:rgba(245,215,122,.08);
+}
+.obs-choice.selected{
+  border-color:rgba(145,245,179,.58);
+  background:rgba(145,245,179,.13);
+}
+.obs-count{
+  display:inline-flex;
+  margin-top:8px;
+  padding:8px 11px;
+  border-radius:999px;
+  border:1px solid rgba(143,216,255,.25);
+  background:rgba(143,216,255,.08);
+  color:var(--ice);
+  font-size:13px;
+  font-weight:800;
+}
+@media(max-width:900px){
+  .advisor-grid{
+    grid-template-columns:1fr;
+  }
+}
+
+
+/* CI-STAGE-32A APPROVED COUNCIL AVATAR ASSETS ONLY */
+.advisor-card{
+  display:grid;
+  grid-template-columns:74px 1fr;
+  gap:12px;
+  align-items:center;
+}
+
+.advisor-card img{
+  width:74px;
+  height:74px;
+  object-fit:cover;
+  border-radius:20px;
+  border:1px solid rgba(245,215,122,.34);
+  box-shadow:0 14px 34px rgba(0,0,0,.32);
+  background:rgba(255,255,255,.06);
+}
+
+.advisor-card strong{
+  margin-bottom:4px!important;
+}
+
+.approved-avatar-note{
+  margin-top:14px;
+  padding:12px 14px;
+  border-radius:18px;
+  border:1px solid rgba(145,245,179,.22);
+  background:rgba(145,245,179,.08);
+  color:rgba(255,255,255,.76);
+  font-size:13px;
+  line-height:1.45;
+}
+
+.approved-avatar-note strong{
+  color:var(--gold);
+}
+
+
+/* CI-STAGE-32B APPROVED AVATAR ASSET ENFORCEMENT */
+.approved-council-strip{
+  display:grid;
+  grid-template-columns:repeat(5,minmax(0,1fr));
+  gap:12px;
+  margin:16px 0;
+}
+
+.approved-council-card{
+  display:grid;
+  grid-template-columns:68px 1fr;
+  gap:12px;
+  align-items:center;
+  padding:12px;
+  border-radius:20px;
+  border:1px solid rgba(255,255,255,.13);
+  background:rgba(255,255,255,.055);
+}
+
+.approved-council-card img{
+  width:68px;
+  height:68px;
+  object-fit:cover;
+  border-radius:18px;
+  border:1px solid rgba(245,215,122,.34);
+  background:rgba(255,255,255,.06);
+  box-shadow:0 14px 34px rgba(0,0,0,.32);
+}
+
+.approved-council-card strong{
+  display:block;
+  color:var(--gold);
+  font-size:15px;
+  margin-bottom:4px;
+}
+
+.approved-council-card span{
+  display:block;
+  color:rgba(255,255,255,.72);
+  font-size:12px;
+  line-height:1.35;
+}
+
+.approved-asset-rule{
+  margin-top:14px;
+  padding:12px 14px;
+  border-radius:18px;
+  border:1px solid rgba(145,245,179,.22);
+  background:rgba(145,245,179,.08);
+  color:rgba(255,255,255,.76);
+  font-size:13px;
+  line-height:1.45;
+}
+
+.approved-asset-rule strong{
+  color:var(--gold);
+}
+
+@media(max-width:1100px){
+  .approved-council-strip{
+    grid-template-columns:1fr;
+  }
+}
+
+
+/* CI-STAGE-34 OBSERVATION TRIAL 1 */
+.ot1-shell{
+  width:min(1320px,96vw);
+  display:grid;
+  gap:16px;
+}
+
+.ot1-card{
+  border-radius:28px;
+  border:1px solid rgba(245,215,122,.28);
+  background:rgba(8,15,32,.82);
+  box-shadow:0 24px 80px rgba(0,0,0,.44);
+  overflow:hidden;
+}
+
+.ot1-image{
+  width:100%;
+  height:auto;
+  display:block;
+}
+
+.ot1-brief{
+  padding:18px;
+  border-top:1px solid rgba(255,255,255,.10);
+  background:rgba(2,8,18,.76);
+}
+
+.ot1-brief h1{
+  margin:0 0 8px;
+  font-size:clamp(28px,4vw,52px);
+}
+
+.ot1-brief p{
+  margin:0;
+  color:rgba(255,255,255,.78);
+  line-height:1.48;
+  font-size:16px;
+}
+
+.ot1-actions,
+.ot1-step-actions{
+  display:flex;
+  gap:10px;
+  flex-wrap:wrap;
+  margin-top:14px;
+}
+
+.ot1-actions button,
+.ot1-step-actions button,
+.ot1-actions a,
+.ot1-step-actions a{
+  color:#fff;
+  text-decoration:none;
+  border:1px solid rgba(255,255,255,.20);
+  background:rgba(255,255,255,.08);
+  border-radius:16px;
+  padding:13px 16px;
+  font-weight:800;
+  cursor:pointer;
+}
+
+.ot1-actions .primary,
+.ot1-step-actions .primary{
+  background:rgba(245,215,122,.16);
+  border-color:rgba(245,215,122,.60);
+}
+
+.ot1-actions .primary:disabled,
+.ot1-step-actions .primary:disabled{
+  opacity:.42;
+  cursor:not-allowed;
+}
+
+.ot1-step{
+  display:none;
+  width:min(1100px,94vw);
+  padding:26px;
+  border-radius:28px;
+  border:1px solid rgba(245,215,122,.32);
+  background:rgba(8,15,32,.86);
+  box-shadow:0 24px 70px rgba(0,0,0,.42);
+}
+
+.ot1-step.active{
+  display:block;
+}
+
+.ot1-kicker{
+  color:var(--gold);
+  letter-spacing:.16em;
+  text-transform:uppercase;
+  font-size:12px;
+  margin-bottom:8px;
+  font-weight:900;
+}
+
+.ot1-step h1{
+  margin:0 0 8px;
+  font-size:clamp(30px,4.5vw,56px);
+}
+
+.ot1-step p{
+  color:rgba(255,255,255,.78);
+  line-height:1.5;
+  font-size:16px;
+}
+
+.ot1-choice-grid{
+  display:grid;
+  gap:10px;
+  margin:16px 0;
+}
+
+.ot1-choice{
+  width:100%;
+  text-align:left;
+  padding:13px 14px;
+  border-radius:18px;
+  border:1px solid rgba(255,255,255,.14);
+  background:rgba(255,255,255,.06);
+  color:white;
+  cursor:pointer;
+  font-size:15px;
+  line-height:1.35;
+  transition:.2s;
+}
+
+.ot1-choice:hover{
+  border-color:rgba(245,215,122,.48);
+  background:rgba(245,215,122,.08);
+}
+
+.ot1-choice.selected{
+  border-color:rgba(145,245,179,.58);
+  background:rgba(145,245,179,.13);
+  box-shadow:0 0 18px rgba(145,245,179,.10);
+}
+
+.ot1-count{
+  display:inline-flex;
+  margin-top:8px;
+  padding:8px 11px;
+  border-radius:999px;
+  border:1px solid rgba(143,216,255,.25);
+  background:rgba(143,216,255,.08);
+  color:var(--ice);
+  font-size:13px;
+  font-weight:800;
+}
+
+.ot1-advisor-row{
+  display:grid;
+  grid-template-columns:repeat(4,minmax(0,1fr));
+  gap:12px;
+  margin:18px 0;
+}
+
+.ot1-advisor{
+  padding:14px;
+  border-radius:20px;
+  border:1px solid rgba(255,255,255,.13);
+  background:rgba(255,255,255,.055);
+}
+
+.ot1-advisor strong{
+  display:block;
+  color:var(--gold);
+  font-size:16px;
+  margin-bottom:6px;
+}
+
+.ot1-advisor span{
+  color:rgba(255,255,255,.74);
+  line-height:1.4;
+  font-size:13px;
+}
+
+.ot1-rank-list{
+  display:grid;
+  gap:10px;
+  margin:16px 0;
+}
+
+.ot1-rank-option{
+  display:grid;
+  grid-template-columns:46px 1fr;
+  gap:10px;
+  align-items:center;
+  padding:12px;
+  border-radius:18px;
+  border:1px solid rgba(255,255,255,.14);
+  background:rgba(255,255,255,.06);
+}
+
+.ot1-rank-badge{
+  width:42px;
+  height:42px;
+  border-radius:14px;
+  border:1px solid rgba(245,215,122,.42);
+  color:var(--gold);
+  display:grid;
+  place-items:center;
+  font-weight:900;
+}
+
+.ot1-rank-option button{
+  text-align:left;
+  color:white;
+  background:transparent;
+  border:0;
+  cursor:pointer;
+  font-size:15px;
+  line-height:1.35;
+}
+
+.ot1-rank-option.selected{
+  border-color:rgba(145,245,179,.58);
+  background:rgba(145,245,179,.13);
+}
+
+.ot1-summary{
+  display:grid;
+  gap:10px;
+  margin:16px 0;
+}
+
+.ot1-summary div{
+  padding:12px;
+  border-radius:16px;
+  border:1px solid rgba(145,245,179,.22);
+  background:rgba(145,245,179,.08);
+}
+
+@media(max-width:900px){
+  .ot1-advisor-row{
+    grid-template-columns:1fr;
+  }
+}
+
+
+/* CI-STAGE-36 INCIDENT BRIEFING BRIDGE */
+.incident-bridge{
+  display:none;
+  min-height:100vh;
+  padding:48px 20px;
+  place-items:center;
+  background:
+    radial-gradient(circle at 50% 18%, rgba(74,165,255,.18), transparent 34%),
+    radial-gradient(circle at 50% 88%, rgba(245,215,122,.10), transparent 30%),
+    linear-gradient(135deg,#01030a 0%,#071326 52%,#02040b 100%);
+  color:white;
+}
+
+.incident-bridge.active{
+  display:grid;
+}
+
+.incident-bridge-card{
+  width:min(1050px,94vw);
+  border-radius:30px;
+  border:1px solid rgba(245,215,122,.34);
+  background:
+    radial-gradient(circle at top left, rgba(143,216,255,.10), transparent 38%),
+    rgba(6,14,30,.86);
+  box-shadow:0 30px 90px rgba(0,0,0,.50);
+  overflow:hidden;
+}
+
+.incident-bridge-header{
+  padding:24px 28px 18px;
+  border-bottom:1px solid rgba(255,255,255,.10);
+  background:rgba(2,8,18,.55);
+}
+
+.incident-bridge-kicker{
+  color:var(--gold);
+  letter-spacing:.16em;
+  text-transform:uppercase;
+  font-size:12px;
+  font-weight:900;
+  margin-bottom:8px;
+}
+
+.incident-bridge-header h1{
+  margin:0;
+  font-size:clamp(34px,5vw,64px);
+  line-height:1.02;
+}
+
+.incident-bridge-subtitle{
+  margin-top:10px;
+  color:rgba(255,255,255,.72);
+  line-height:1.5;
+  font-size:16px;
+}
+
+.incident-bridge-grid{
+  display:grid;
+  grid-template-columns:1.05fr .95fr;
+  gap:18px;
+  padding:24px 28px;
+}
+
+.incident-report-panel,
+.investigator-duty-panel{
+  border-radius:24px;
+  border:1px solid rgba(255,255,255,.13);
+  background:rgba(255,255,255,.055);
+  padding:20px;
+}
+
+.incident-report-panel h2,
+.investigator-duty-panel h2{
+  margin:0 0 12px;
+  color:var(--gold);
+  font-size:22px;
+}
+
+.incident-fact-list{
+  display:grid;
+  gap:12px;
+}
+
+.incident-fact{
+  padding:13px 14px;
+  border-radius:16px;
+  border:1px solid rgba(143,216,255,.20);
+  background:rgba(143,216,255,.065);
+  line-height:1.45;
+}
+
+.incident-fact strong{
+  color:var(--ice);
+}
+
+.investigator-title-pill{
+  display:inline-flex;
+  margin:0 0 14px;
+  padding:9px 13px;
+  border-radius:999px;
+  border:1px solid rgba(245,215,122,.44);
+  background:rgba(245,215,122,.10);
+  color:var(--gold);
+  font-weight:900;
+  letter-spacing:.08em;
+  text-transform:uppercase;
+  font-size:12px;
+}
+
+.investigator-duty-panel p{
+  margin:0 0 14px;
+  color:rgba(255,255,255,.78);
+  line-height:1.55;
+}
+
+.bridge-observe-list{
+  display:grid;
+  gap:10px;
+  margin-top:12px;
+}
+
+.bridge-observe-item{
+  padding:11px 12px;
+  border-radius:15px;
+  background:rgba(0,0,0,.22);
+  border:1px solid rgba(255,255,255,.10);
+  color:rgba(255,255,255,.86);
+}
+
+.bridge-observe-item strong{
+  color:var(--gold);
+}
+
+.incident-bridge-actions{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:12px;
+  flex-wrap:wrap;
+  padding:18px 28px 24px;
+  border-top:1px solid rgba(255,255,255,.10);
+}
+
+.incident-bridge-actions button,
+.incident-bridge-actions a{
+  color:#fff;
+  text-decoration:none;
+  border:1px solid rgba(255,255,255,.20);
+  background:rgba(255,255,255,.08);
+  border-radius:16px;
+  padding:13px 16px;
+  font-weight:800;
+  cursor:pointer;
+}
+
+.incident-bridge-actions .primary{
+  background:rgba(245,215,122,.16);
+  border-color:rgba(245,215,122,.60);
+}
+
+.bridge-warning{
+  color:rgba(255,255,255,.66);
+  line-height:1.45;
+  max-width:560px;
+}
+
+.bridge-warning strong{
+  color:var(--gold);
+}
+
+@media(max-width:900px){
+  .incident-bridge-grid{
+    grid-template-columns:1fr;
+    padding:20px;
+  }
+
+  .incident-bridge-header,
+  .incident-bridge-actions{
+    padding-left:20px;
+    padding-right:20px;
+  }
+}
+
+
+/* CI-STAGE-36A ANIMATED COUNCIL BRIEFING */
+.council-briefing-bridge{
+  display:none;
+  min-height:100vh;
+  padding:44px 20px;
+  place-items:center;
+  background:
+    radial-gradient(circle at 50% 15%, rgba(74,165,255,.18), transparent 34%),
+    radial-gradient(circle at 50% 88%, rgba(245,215,122,.10), transparent 30%),
+    linear-gradient(135deg,#01030a 0%,#071326 52%,#02040b 100%);
+  color:white;
+}
+
+.council-briefing-bridge.active{
+  display:grid;
+}
+
+.council-briefing-card{
+  width:min(1180px,96vw);
+  border-radius:32px;
+  border:1px solid rgba(245,215,122,.34);
+  background:
+    radial-gradient(circle at top left, rgba(143,216,255,.10), transparent 38%),
+    rgba(6,14,30,.88);
+  box-shadow:0 30px 90px rgba(0,0,0,.52);
+  overflow:hidden;
+}
+
+.council-briefing-header{
+  padding:22px 28px 16px;
+  border-bottom:1px solid rgba(255,255,255,.10);
+  background:rgba(2,8,18,.58);
+}
+
+.council-briefing-kicker{
+  color:var(--gold);
+  letter-spacing:.16em;
+  text-transform:uppercase;
+  font-size:12px;
+  font-weight:900;
+  margin-bottom:8px;
+}
+
+.council-briefing-header h1{
+  margin:0;
+  font-size:clamp(32px,5vw,60px);
+  line-height:1.02;
+}
+
+.council-briefing-subtitle{
+  margin-top:10px;
+  color:rgba(255,255,255,.72);
+  line-height:1.5;
+  font-size:16px;
+}
+
+.council-briefing-stage{
+  display:grid;
+  grid-template-columns:320px 1fr;
+  gap:20px;
+  padding:24px 28px;
+}
+
+.council-speaker-panel{
+  border-radius:26px;
+  border:1px solid rgba(245,215,122,.26);
+  background:rgba(255,255,255,.055);
+  padding:18px;
+  display:grid;
+  align-content:start;
+  justify-items:center;
+  text-align:center;
+}
+
+.council-speaker-avatar-wrap{
+  width:190px;
+  height:220px;
+  border-radius:30px;
+  border:1px solid rgba(245,215,122,.42);
+  background:
+    radial-gradient(circle at top, rgba(245,215,122,.10), transparent 42%),
+    rgba(255,255,255,.06);
+  box-shadow:0 20px 55px rgba(0,0,0,.38);
+  overflow:hidden;
+  display:grid;
+  place-items:center;
+}
+
+.council-speaker-avatar-wrap img{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  object-position:center top;
+  display:block;
+}
+
+.council-speaker-name{
+  margin-top:13px;
+  color:var(--gold);
+  letter-spacing:.12em;
+  text-transform:uppercase;
+  font-size:14px;
+  font-weight:900;
+}
+
+.council-speaker-role{
+  margin-top:6px;
+  color:rgba(255,255,255,.68);
+  font-size:13px;
+  line-height:1.4;
+}
+
+.chief-investigator-pill{
+  margin-top:16px;
+  padding:10px 13px;
+  border-radius:999px;
+  border:1px solid rgba(143,216,255,.30);
+  background:rgba(143,216,255,.08);
+  color:var(--ice);
+  font-size:12px;
+  font-weight:900;
+  letter-spacing:.08em;
+  text-transform:uppercase;
+}
+
+.council-briefing-content{
+  display:grid;
+  gap:14px;
+}
+
+.council-dialogue-box{
+  min-height:210px;
+  border-radius:26px;
+  border:1px solid rgba(143,216,255,.24);
+  background:
+    radial-gradient(circle at top right, rgba(143,216,255,.12), transparent 38%),
+    rgba(2,8,18,.66);
+  padding:24px;
+  box-shadow:inset 0 0 40px rgba(143,216,255,.06);
+}
+
+.council-dialogue-label{
+  color:var(--gold);
+  letter-spacing:.14em;
+  text-transform:uppercase;
+  font-size:12px;
+  font-weight:900;
+  margin-bottom:10px;
+}
+
+.council-dialogue-line{
+  font-size:clamp(22px,3vw,36px);
+  line-height:1.25;
+  color:white;
+}
+
+.council-dialogue-note{
+  margin-top:14px;
+  color:rgba(255,255,255,.68);
+  line-height:1.45;
+}
+
+.council-step-track{
+  display:grid;
+  grid-template-columns:repeat(6,minmax(0,1fr));
+  gap:8px;
+}
+
+.council-step-dot{
+  min-height:74px;
+  padding:9px;
+  border-radius:16px;
+  border:1px solid rgba(255,255,255,.12);
+  background:rgba(255,255,255,.045);
+  color:rgba(255,255,255,.58);
+  font-size:11px;
+  line-height:1.25;
+  display:grid;
+  align-content:center;
+  gap:3px;
+}
+
+.council-step-dot strong{
+  color:rgba(255,255,255,.82);
+  font-size:12px;
+}
+
+.council-step-dot.active{
+  border-color:rgba(245,215,122,.60);
+  background:rgba(245,215,122,.12);
+  color:rgba(255,255,255,.86);
+  box-shadow:0 0 20px rgba(245,215,122,.12);
+}
+
+.council-briefing-controls{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:12px;
+  flex-wrap:wrap;
+  padding:18px 28px 24px;
+  border-top:1px solid rgba(255,255,255,.10);
+}
+
+.council-briefing-controls button,
+.council-briefing-controls a{
+  color:#fff;
+  text-decoration:none;
+  border:1px solid rgba(255,255,255,.20);
+  background:rgba(255,255,255,.08);
+  border-radius:16px;
+  padding:13px 16px;
+  font-weight:800;
+  cursor:pointer;
+}
+
+.council-briefing-controls .primary{
+  background:rgba(245,215,122,.16);
+  border-color:rgba(245,215,122,.60);
+}
+
+.council-briefing-controls .primary:disabled{
+  opacity:.45;
+  cursor:not-allowed;
+}
+
+.council-briefing-status{
+  color:rgba(255,255,255,.68);
+  line-height:1.4;
+  max-width:520px;
+}
+
+.council-briefing-status strong{
+  color:var(--gold);
+}
+
+@media(max-width:950px){
+  .council-briefing-stage{
+    grid-template-columns:1fr;
+    padding:20px;
+  }
+
+  .council-step-track{
+    grid-template-columns:1fr 1fr;
+  }
+
+  .council-briefing-header,
+  .council-briefing-controls{
+    padding-left:20px;
+    padding-right:20px;
+  }
+}
+
+
+/* CI-STAGE-36B AUTO-ANIMATED COUNCIL BRIEFING */
+.council-auto-progress-shell{
+  margin-top:12px;
+  height:8px;
+  border-radius:999px;
+  overflow:hidden;
+  background:rgba(255,255,255,.10);
+  border:1px solid rgba(255,255,255,.10);
+}
+
+.council-auto-progress-fill{
+  height:100%;
+  width:0%;
+  border-radius:999px;
+  background:linear-gradient(90deg, rgba(143,216,255,.80), rgba(245,215,122,.90));
+  transition:width .18s linear;
+}
+
+.council-auto-mode-note{
+  margin-top:10px;
+  color:rgba(255,255,255,.62);
+  font-size:12px;
+  line-height:1.35;
+}
+
+.council-briefing-controls .soft-control{
+  border-color:rgba(143,216,255,.28)!important;
+  background:rgba(143,216,255,.08)!important;
+  color:rgba(223,246,255,.92)!important;
+}
+
+
+/* CI-STAGE-37 OBSERVATION TRIAL UX POLISH + PROGRESS RAIL */
+.ot1-progress-rail{
+  width:min(1320px,96vw);
+  margin:0 auto 14px;
+  display:none;
+  grid-template-columns:repeat(6,minmax(0,1fr));
+  gap:8px;
+}
+
+.ot1-progress-rail.active{
+  display:grid;
+}
+
+.ot1-progress-step{
+  padding:10px 9px;
+  border-radius:15px;
+  border:1px solid rgba(255,255,255,.12);
+  background:rgba(255,255,255,.045);
+  color:rgba(255,255,255,.58);
+  font-size:11px;
+  line-height:1.25;
+  text-align:center;
+}
+
+.ot1-progress-step strong{
+  display:block;
+  color:rgba(255,255,255,.82);
+  font-size:12px;
+  margin-bottom:3px;
+}
+
+.ot1-progress-step.active{
+  border-color:rgba(245,215,122,.58);
+  background:rgba(245,215,122,.12);
+  color:rgba(255,255,255,.88);
+  box-shadow:0 0 20px rgba(245,215,122,.12);
+}
+
+.ot1-progress-step.done{
+  border-color:rgba(145,245,179,.38);
+  background:rgba(145,245,179,.09);
+}
+
+.ot1-mode-reminder{
+  width:min(1320px,96vw);
+  margin:0 auto 14px;
+  display:none;
+  padding:12px 14px;
+  border-radius:18px;
+  border:1px solid rgba(143,216,255,.24);
+  background:rgba(143,216,255,.075);
+  color:rgba(255,255,255,.78);
+  line-height:1.45;
+  font-size:14px;
+}
+
+.ot1-mode-reminder.active{
+  display:block;
+}
+
+.ot1-mode-reminder strong{
+  color:var(--gold);
+}
+
+.ot1-save-toast{
+  position:fixed;
+  right:20px;
+  bottom:20px;
+  z-index:50;
+  display:none;
+  padding:13px 16px;
+  border-radius:18px;
+  border:1px solid rgba(145,245,179,.36);
+  background:rgba(8,26,20,.92);
+  color:white;
+  box-shadow:0 20px 60px rgba(0,0,0,.38);
+  font-weight:800;
+}
+
+.ot1-save-toast.active{
+  display:block;
+  animation:ot1ToastFade 1.8s ease forwards;
+}
+
+@keyframes ot1ToastFade{
+  0%{opacity:0;transform:translateY(12px)}
+  15%{opacity:1;transform:translateY(0)}
+  75%{opacity:1;transform:translateY(0)}
+  100%{opacity:0;transform:translateY(12px)}
+}
+
+.ot1-step-microcopy{
+  margin:10px 0 0;
+  padding:11px 12px;
+  border-radius:16px;
+  border:1px solid rgba(245,215,122,.20);
+  background:rgba(245,215,122,.07);
+  color:rgba(255,255,255,.74);
+  font-size:14px;
+  line-height:1.45;
+}
+
+.ot1-step-microcopy strong{
+  color:var(--gold);
+}
+
+.council-speed-controls{
+  display:flex;
+  gap:8px;
+  flex-wrap:wrap;
+  margin-top:12px;
+}
+
+.council-speed-controls button{
+  padding:8px 11px!important;
+  border-radius:999px!important;
+  font-size:12px!important;
+}
+
+.council-speed-controls button.active{
+  border-color:rgba(245,215,122,.62)!important;
+  background:rgba(245,215,122,.16)!important;
+}
+
+@media(max-width:900px){
+  .ot1-progress-rail{
+    grid-template-columns:1fr 1fr;
+  }
+}
+
+
+/* CI-STAGE-38 APPROVED GUARDIAN WELCOME CLEANUP */
+.opening{
+  background:
+    radial-gradient(circle at 50% 20%, rgba(143,216,255,.18), transparent 38%),
+    radial-gradient(circle at 50% 88%, rgba(245,215,122,.10), transparent 34%),
+    linear-gradient(135deg,#01030a 0%,#071326 52%,#02040b 100%)!important;
+}
+
+.opening::before{
+  content:"";
+  position:absolute;
+  inset:0;
+  background:
+    linear-gradient(90deg, rgba(255,255,255,.026) 1px, transparent 1px),
+    linear-gradient(rgba(255,255,255,.020) 1px, transparent 1px);
+  background-size:70px 70px;
+  mask-image:radial-gradient(circle at center, black, transparent 78%);
+  pointer-events:none;
+}
+
+.approved-guardian-welcome{
+  position:absolute;
+  inset:0;
+  z-index:3;
+  display:grid;
+  place-items:center;
+  padding:28px;
+  pointer-events:none;
+}
+
+.approved-guardian-welcome-card{
+  width:min(1080px,94vw);
+  min-height:min(640px,78vh);
+  position:relative;
+  display:grid;
+  grid-template-columns:minmax(260px,360px) 1fr;
+  gap:26px;
+  align-items:center;
+  border-radius:38px;
+  border:1px solid rgba(245,215,122,.28);
+  background:
+    radial-gradient(circle at 30% 20%, rgba(245,215,122,.10), transparent 34%),
+    radial-gradient(circle at 72% 28%, rgba(143,216,255,.14), transparent 38%),
+    rgba(6,14,30,.78);
+  box-shadow:0 34px 110px rgba(0,0,0,.54), inset 0 0 70px rgba(143,216,255,.07);
+  overflow:hidden;
+  padding:28px;
+}
+
+.approved-guardian-welcome-card::before{
+  content:"";
+  position:absolute;
+  inset:0;
+  background:
+    linear-gradient(90deg, rgba(0,0,0,.48), transparent 30%, transparent 70%, rgba(0,0,0,.38)),
+    repeating-linear-gradient(90deg, rgba(255,255,255,.028) 0 2px, transparent 2px 86px);
+  pointer-events:none;
+}
+
+.approved-guardian-portrait{
+  position:relative;
+  z-index:2;
+  display:grid;
+  justify-items:center;
+  gap:12px;
+}
+
+.approved-guardian-portrait img{
+  width:min(300px,72vw);
+  height:min(390px,58vh);
+  object-fit:cover;
+  object-position:center top;
+  border-radius:34px;
+  border:1px solid rgba(245,215,122,.46);
+  background:rgba(255,255,255,.06);
+  box-shadow:0 28px 82px rgba(0,0,0,.54), 0 0 34px rgba(245,215,122,.12);
+}
+
+.approved-guardian-nameplate{
+  display:inline-flex;
+  padding:9px 14px;
+  border-radius:999px;
+  border:1px solid rgba(245,215,122,.42);
+  background:rgba(2,8,18,.76);
+  color:var(--gold);
+  letter-spacing:.14em;
+  text-transform:uppercase;
+  font-size:12px;
+  font-weight:900;
+}
+
+.approved-guardian-message{
+  position:relative;
+  z-index:2;
+  color:white;
+  max-width:640px;
+}
+
+.approved-guardian-kicker{
+  color:var(--gold);
+  letter-spacing:.16em;
+  text-transform:uppercase;
+  font-size:12px;
+  font-weight:900;
+  margin-bottom:10px;
+}
+
+.approved-guardian-message h1{
+  margin:0 0 12px;
+  font-size:clamp(38px,6vw,78px);
+  line-height:1;
+}
+
+.approved-guardian-message p{
+  margin:0;
+  color:rgba(255,255,255,.78);
+  font-size:clamp(17px,2vw,24px);
+  line-height:1.45;
+}
+
+.approved-guardian-directive{
+  margin-top:18px;
+  padding:14px 16px;
+  border-radius:20px;
+  border:1px solid rgba(143,216,255,.24);
+  background:rgba(143,216,255,.075);
+  color:rgba(255,255,255,.82);
+  line-height:1.45;
+}
+
+.approved-guardian-directive strong{
+  color:var(--gold);
+}
+
+.approved-guardian-click-note{
+  margin-top:16px;
+  color:rgba(255,255,255,.60);
+  font-size:13px;
+  line-height:1.4;
+}
+
+@media(max-width:900px){
+  .approved-guardian-welcome-card{
+    grid-template-columns:1fr;
+    min-height:auto;
+    padding:22px;
+  }
+
+  .approved-guardian-portrait img{
+    height:300px;
+  }
+}
+
+
+/* CI-STAGE-38R BOARD ROOM ENTRY WITH APPROVED GUARDIAN OVERLAY */
+.opening{
+  background:
+    linear-gradient(90deg, rgba(0,0,0,.68), rgba(0,0,0,.22), rgba(0,0,0,.72)),
+    radial-gradient(circle at 50% 18%, rgba(143,216,255,.16), transparent 34%),
+    url("/static/storyboards/council_hall_guardian_concept.png") center/cover no-repeat!important;
+}
+
+.opening::before{
+  content:"";
+  position:absolute;
+  inset:0;
+  background:
+    radial-gradient(circle at 28% 48%, rgba(245,215,122,.14), transparent 24%),
+    linear-gradient(180deg, rgba(0,0,0,.28), rgba(0,0,0,.68));
+  pointer-events:none;
+  z-index:1;
+}
+
+.approved-boardroom-entry{
+  position:absolute;
+  inset:0;
+  z-index:4;
+  display:grid;
+  grid-template-columns:minmax(260px,390px) 1fr;
+  gap:28px;
+  align-items:end;
+  padding:clamp(22px,4vw,52px);
+  pointer-events:none;
+}
+
+.approved-boardroom-guardian{
+  align-self:end;
+  display:grid;
+  justify-items:center;
+  gap:10px;
+  transform:translateY(-6px);
+}
+
+.approved-boardroom-guardian img{
+  width:min(300px,34vw);
+  height:min(420px,64vh);
+  object-fit:cover;
+  object-position:center top;
+  border-radius:34px;
+  border:1px solid rgba(245,215,122,.50);
+  background:rgba(255,255,255,.06);
+  box-shadow:
+    0 30px 90px rgba(0,0,0,.58),
+    0 0 38px rgba(245,215,122,.16);
+}
+
+.approved-boardroom-nameplate{
+  padding:9px 14px;
+  border-radius:999px;
+  border:1px solid rgba(245,215,122,.42);
+  background:rgba(2,8,18,.78);
+  color:var(--gold);
+  letter-spacing:.14em;
+  text-transform:uppercase;
+  font-size:12px;
+  font-weight:900;
+}
+
+.approved-boardroom-message{
+  align-self:center;
+  justify-self:start;
+  width:min(680px,92%);
+  padding:24px;
+  border-radius:28px;
+  border:1px solid rgba(245,215,122,.30);
+  background:rgba(2,8,18,.72);
+  box-shadow:0 24px 80px rgba(0,0,0,.46);
+  backdrop-filter:blur(8px);
+}
+
+.approved-boardroom-kicker{
+  color:var(--gold);
+  letter-spacing:.16em;
+  text-transform:uppercase;
+  font-size:12px;
+  font-weight:900;
+  margin-bottom:10px;
+}
+
+.approved-boardroom-message h1{
+  margin:0 0 12px;
+  color:white;
+  font-size:clamp(38px,6vw,78px);
+  line-height:1;
+}
+
+.approved-boardroom-message p{
+  margin:0;
+  color:rgba(255,255,255,.80);
+  font-size:clamp(17px,2vw,24px);
+  line-height:1.45;
+}
+
+.approved-boardroom-directive{
+  margin-top:18px;
+  padding:14px 16px;
+  border-radius:20px;
+  border:1px solid rgba(143,216,255,.24);
+  background:rgba(143,216,255,.08);
+  color:rgba(255,255,255,.84);
+  line-height:1.45;
+}
+
+.approved-boardroom-directive strong{
+  color:var(--gold);
+}
+
+.approved-boardroom-click-note{
+  margin-top:14px;
+  color:rgba(255,255,255,.62);
+  font-size:13px;
+  line-height:1.4;
+}
+
+.boardroom-asset-rule{
+  margin-top:12px;
+  color:rgba(255,255,255,.48);
+  font-size:11px;
+  line-height:1.35;
+}
+
+@media(max-width:900px){
+  .approved-boardroom-entry{
+    grid-template-columns:1fr;
+    align-items:center;
+    padding:22px;
+  }
+
+  .approved-boardroom-guardian img{
+    width:220px;
+    height:280px;
+  }
+
+  .approved-boardroom-message{
+    width:100%;
+  }
+}
+
+
+/* CI-STAGE-38S CLEAN BOARDROOM ATMOSPHERE + APPROVED GUARDIAN ONLY */
+
+/* The boardroom image is now atmosphere only. It is blurred, dimmed, and cannot act as a character source. */
+.opening{
+  background:
+    radial-gradient(circle at 50% 22%, rgba(143,216,255,.16), transparent 38%),
+    linear-gradient(135deg,#01030a 0%,#071326 52%,#02040b 100%)!important;
+  overflow:hidden;
+}
+
+.opening::after{
+  content:"";
+  position:absolute;
+  inset:-28px;
+  z-index:0;
+  background:
+    linear-gradient(90deg, rgba(0,0,0,.78), rgba(0,0,0,.34), rgba(0,0,0,.82)),
+    url("/static/storyboards/council_hall_guardian_concept.png") center/cover no-repeat;
+  filter:blur(8px) saturate(.78) brightness(.55);
+  transform:scale(1.04);
+  opacity:.62;
+  pointer-events:none;
+}
+
+/* Strong cinematic veil so baked-in storyboard figures/buttons do not read as active characters. */
+.opening::before{
+  content:"";
+  position:absolute;
+  inset:0;
+  z-index:1;
+  background:
+    radial-gradient(circle at 24% 54%, rgba(0,0,0,.70), transparent 26%),
+    radial-gradient(circle at 72% 48%, rgba(143,216,255,.10), transparent 28%),
+    linear-gradient(90deg, rgba(0,0,0,.76), rgba(0,0,0,.38), rgba(0,0,0,.78)),
+    linear-gradient(180deg, rgba(0,0,0,.25), rgba(0,0,0,.72));
+  pointer-events:none;
+}
+
+.approved-boardroom-entry{
+  z-index:5!important;
+  grid-template-columns:minmax(280px,390px) 1fr!important;
+  align-items:center!important;
+}
+
+.approved-boardroom-guardian{
+  z-index:6!important;
+  align-self:center!important;
+}
+
+.approved-boardroom-guardian img{
+  width:min(285px,32vw)!important;
+  height:min(390px,60vh)!important;
+  object-fit:cover!important;
+  object-position:center top!important;
+  border-radius:34px!important;
+  border:1px solid rgba(245,215,122,.56)!important;
+  background:rgba(2,8,18,.62)!important;
+  box-shadow:
+    0 34px 90px rgba(0,0,0,.68),
+    0 0 0 8px rgba(2,8,18,.28),
+    0 0 42px rgba(245,215,122,.18)!important;
+}
+
+.approved-boardroom-message{
+  z-index:6!important;
+  background:rgba(2,8,18,.82)!important;
+  border-color:rgba(245,215,122,.36)!important;
+  backdrop-filter:blur(12px)!important;
+}
+
+/* Prevent any older flat guardian overlay from appearing if CI-STAGE-38 was partially inserted. */
+.approved-guardian-welcome,
+#approvedGuardianWelcome{
+  display:none!important;
+  visibility:hidden!important;
+  pointer-events:none!important;
+}
+
+/* The real click target remains the opening container. Avoid duplicate visible CTA overlays. */
+.cta,
+.enter,
+.skip{
+  pointer-events:none!important;
+}
+
+.boardroom-asset-rule{
+  display:none!important;
+}
+
+@media(max-width:900px){
+  .opening::after{
+    filter:blur(9px) saturate(.72) brightness(.48);
+    opacity:.58;
+  }
+
+  .approved-boardroom-entry{
+    grid-template-columns:1fr!important;
+    align-content:center!important;
+  }
+
+  .approved-boardroom-guardian img{
+    width:220px!important;
+    height:280px!important;
+  }
+}
+
+
+/* CI-STAGE-39 MISSION LOG + TEMP COUNCIL AUDIO */
+.temp-audio-note{
+  margin-top:10px;
+  padding:9px 11px;
+  border-radius:14px;
+  border:1px solid rgba(143,216,255,.22);
+  background:rgba(143,216,255,.07);
+  color:rgba(255,255,255,.66);
+  font-size:12px;
+  line-height:1.35;
+}
+
+.temp-audio-note strong{
+  color:var(--gold);
+}
+
+.mission-log-panel{
+  display:none;
+  width:min(1100px,94vw);
+  padding:26px;
+  border-radius:28px;
+  border:1px solid rgba(245,215,122,.34);
+  background:
+    radial-gradient(circle at top right, rgba(143,216,255,.10), transparent 34%),
+    rgba(8,15,32,.88);
+  box-shadow:0 24px 70px rgba(0,0,0,.42);
+}
+
+.mission-log-panel.active{
+  display:block;
+}
+
+.mission-log-grid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:14px;
+  margin:18px 0;
+}
+
+.mission-log-card{
+  padding:14px;
+  border-radius:18px;
+  border:1px solid rgba(255,255,255,.13);
+  background:rgba(255,255,255,.055);
+  color:rgba(255,255,255,.78);
+  line-height:1.45;
+}
+
+.mission-log-card strong{
+  color:var(--gold);
+  display:block;
+  margin-bottom:6px;
+}
+
+.mission-reflection-box{
+  margin-top:16px;
+  display:grid;
+  gap:10px;
+}
+
+.mission-reflection-box label{
+  color:var(--gold);
+  font-weight:900;
+  letter-spacing:.06em;
+  text-transform:uppercase;
+  font-size:12px;
+}
+
+.mission-reflection-box textarea{
+  width:100%;
+  min-height:104px;
+  border-radius:18px;
+  border:1px solid rgba(143,216,255,.26);
+  background:rgba(2,8,18,.70);
+  color:white;
+  padding:13px 14px;
+  font-size:15px;
+  line-height:1.45;
+  resize:vertical;
+}
+
+.mission-reflection-box textarea:focus{
+  outline:2px solid rgba(245,215,122,.36);
+  border-color:rgba(245,215,122,.55);
+}
+
+.mission-log-status{
+  display:inline-flex;
+  margin-top:8px;
+  padding:8px 11px;
+  border-radius:999px;
+  border:1px solid rgba(145,245,179,.22);
+  background:rgba(145,245,179,.08);
+  color:rgba(145,245,179,.95);
+  font-size:13px;
+  font-weight:800;
+}
+
+@media(max-width:900px){
+  .mission-log-grid{
+    grid-template-columns:1fr;
+  }
+}
+
+
+/* CI-STAGE-39A AUDIO-SYNCED COUNCIL BRIEFING */
+.council-audio-sync-note{
+  margin-top:10px;
+  color:rgba(255,255,255,.62);
+  font-size:12px;
+  line-height:1.35;
+}
+
+.council-audio-sync-note strong{
+  color:var(--gold);
+}
+
+.council-audio-progress-fill{
+  height:100%;
+  width:0%;
+  border-radius:999px;
+  background:linear-gradient(90deg, rgba(145,245,179,.82), rgba(245,215,122,.90));
+  transition:width .12s linear;
+}
+
+
+/* CI-STAGE-39B LISTEN-SEE-CONTINUE COUNCIL BRIEFING */
+.listen-see-panel{
+  display:none;
+  margin-top:14px;
+  padding:15px;
+  border-radius:20px;
+  border:1px solid rgba(245,215,122,.26);
+  background:
+    radial-gradient(circle at top left, rgba(245,215,122,.10), transparent 38%),
+    rgba(255,255,255,.055);
+}
+
+.listen-see-panel.active{
+  display:block;
+  animation:listenSeeReveal .38s ease both;
+}
+
+@keyframes listenSeeReveal{
+  from{opacity:0;transform:translateY(8px)}
+  to{opacity:1;transform:translateY(0)}
+}
+
+.listen-see-kicker{
+  color:var(--gold);
+  letter-spacing:.14em;
+  text-transform:uppercase;
+  font-size:11px;
+  font-weight:900;
+  margin-bottom:8px;
+}
+
+.listen-see-title{
+  font-size:clamp(18px,2.4vw,28px);
+  font-weight:900;
+  color:white;
+  margin-bottom:8px;
+}
+
+.listen-see-body{
+  color:rgba(255,255,255,.78);
+  line-height:1.45;
+  font-size:14px;
+}
+
+.listen-see-chips{
+  display:flex;
+  flex-wrap:wrap;
+  gap:8px;
+  margin-top:12px;
+}
+
+.listen-see-chip{
+  padding:8px 10px;
+  border-radius:999px;
+  border:1px solid rgba(143,216,255,.24);
+  background:rgba(143,216,255,.075);
+  color:rgba(223,246,255,.92);
+  font-size:12px;
+  font-weight:800;
+}
+
+.listen-see-continue{
+  border-color:rgba(245,215,122,.62)!important;
+  background:rgba(245,215,122,.16)!important;
+}
+
+.listen-see-continue:disabled{
+  opacity:.42!important;
+  cursor:not-allowed!important;
+}
+
+.briefing-optional-controls{
+  display:none;
+  margin-top:10px;
+  padding:10px;
+  border-radius:16px;
+  border:1px solid rgba(255,255,255,.10);
+  background:rgba(255,255,255,.04);
+}
+
+.briefing-optional-controls.active{
+  display:block;
+}
+
+.briefing-tools-toggle{
+  margin-left:8px;
+  opacity:.78;
+}
+
+/* Hide the old noisy auto controls in first-run view. */
+#pauseCouncilAutoBtn,
+#resumeCouncilAutoBtn,
+#skipCouncilAutoBtn,
+#replayCouncilAutoBtn,
+#councilSpeedControls,
+#tempCouncilAudioNote,
+#councilAutoModeNote,
+#councilAudioSyncNote{
+  display:none!important;
+}
+
+
+/* CI-STAGE-39D CLEAN LEGACY AUDIO BLEED + SMOOTH BRIEFING START */
+.briefing-start-softener{
+  display:none;
+  margin-top:14px;
+  padding:14px;
+  border-radius:18px;
+  border:1px solid rgba(143,216,255,.24);
+  background:rgba(143,216,255,.075);
+  color:rgba(255,255,255,.76);
+  line-height:1.45;
+  font-size:14px;
+}
+
+.briefing-start-softener.active{
+  display:block;
+  animation:listenSeeReveal .35s ease both;
+}
+
+.briefing-start-softener strong{
+  color:var(--gold);
+}
+
 </style>
 </head>
 <body>
+<!--
+LOCKED STEM NATION COUNCIL HALL RULES — CI-STAGE-39
+1. Council members must load from approved local assets only:
+   static/avatars/student/guardian.png
+   static/avatars/student/scout.png
+   static/avatars/student/healer.png
+   static/avatars/student/builder.png
+   static/avatars/student/mapkeeper.png
+2. Evidence images must not contain baked-in Guardian, Scout, Healer, Builder, Mapkeeper, or locked student avatars.
+3. Student avatar appears only after final selection/creation.
+4. Until avatar finalization, the student role is: Chief Investigator in Training.
+5. Puzzle 1 flow is locked:
+   Compare scans → Select visible changes → Review advisor lenses → Rank first 3 Council questions → Choose 3 observations → Mission Log → Question Builder.
+-->
+
   <!-- CI-STAGE-26 HIDE VISUAL UNTIL FIRST CLICK -->
   <main class="pre-entry" id="preEntry" onclick="startCouncilVisual()" aria-label="Council Hall pre-entry screen">
     <section class="pre-card">
@@ -270,7 +2339,33 @@ p{
   </main>
 
   <main class="opening" id="opening" onclick="handleOpeningClick()" aria-label="Council Hall cinematic opening">
-    <div class="guardian-audio-pulse" id="guardianAudioPulse"></div>
+    <div class="approved-boardroom-entry" id="approvedBoardroomEntry" aria-label="Board room entry with approved Guardian">
+      <div class="approved-boardroom-guardian">
+        <img src="/static/avatars/student/guardian.png" alt="Approved Guardian avatar">
+        <div class="approved-boardroom-nameplate">The Guardian</div>
+      </div>
+
+      <section class="approved-boardroom-message">
+        <div class="approved-boardroom-kicker">STEM Nation Academy · Council Hall</div>
+        <h1>You made it.</h1>
+        <p>
+          The Council has found something in the ice. Before anyone decides what it means,
+          they need another set of eyes.
+        </p>
+
+        <div class="approved-boardroom-directive">
+          <strong>Your role:</strong>
+          Chief Investigator in Training. Observe first. Compare carefully.
+          Help the Council ask better questions before making a claim.
+        </div>
+
+        <div class="approved-boardroom-click-note">
+          Click after the Guardian welcome to enter the Council Briefing.
+        </div>
+
+      </section>
+    </div>
+<div class="guardian-audio-pulse" id="guardianAudioPulse"></div>
     <div class="audio-hint" id="audioHint">The Guardian is speaking...</div>
 
     <audio id="guardianAudio" preload="auto">
@@ -278,22 +2373,321 @@ p{
     </audio>
   </main>
 
-  <section class="next-panel" id="nextPanel">
-    <div class="card">
-      <div class="kicker">Council Hall</div>
-      <h1>Evidence Briefing</h1>
-      <p>
-        The Guardian has welcomed you forward. The evidence table is now live.
-        Look for what changed, what is unknown, and what might become dangerous. Do not solve the mystery yet. First, observe the evidence.
-      </p>
-      <div class="actions">
-        <button class="primary" type="button">Begin Evidence Observation</button>
-        <a href="/project_hub">Project Hub</a>
-        <a href="/map">World Board Preview</a>
+  <section class="investigator-duty-panel">
+          <div class="investigator-title-pill">Chief Investigator in Training</div>
+
+          <h2>Your First Responsibility</h2>
+
+          <p>
+            You are being called forward because the Council needs fresh eyes.
+            Do not guess. Do not name the unknown exposure yet. First, compare the scans.
+          </p>
+
+          <div class="bridge-observe-list">
+            <div class="bridge-observe-item"><strong>1 · What changed?</strong> Compare previous scan to current scan.</div>
+            <div class="bridge-observe-item"><strong>2 · What is visible?</strong> Notice what the evidence clearly shows.</div>
+            <div class="bridge-observe-item"><strong>3 · What is uncertain?</strong> Identify what the scan cannot prove yet.</div>
+            <div class="bridge-observe-item"><strong>4 · What could be risky?</strong> Look for danger before action.</div>
+          </div>
+        </section>
+      </div>
+
+      <div class="incident-bridge-actions">
+        <div class="bridge-warning">
+          <strong>Guardian Directive:</strong>
+          Observe first. Compare carefully. Rank the first questions before making a claim.
+        </div>
+
+        <div>
+          <button type="button" onclick="returnToGuardianWelcome()">Back to Guardian</button>
+          <button class="primary" type="button" onclick="beginObservationTrial()">Begin Observation Trial 1</button>
+        </div>
       </div>
     </div>
   </section>
 
+  <section class="council-briefing-bridge" id="councilBriefingBridge" aria-label="Animated Council Briefing before Observation Trial">
+    <div class="council-briefing-card">
+      <div class="council-briefing-header">
+        <div class="council-briefing-kicker">Council Briefing · Sector 7A</div>
+        <h1>The Council Opens the Evidence</h1>
+        <div class="council-briefing-subtitle">
+          Before Observation Trial 1 begins, the Council will tell you who is in the room,
+          what is known, what is risky, and why the first task is comparison.
+        </div>
+      </div>
+
+      <div class="council-briefing-stage">
+        <aside class="council-speaker-panel">
+          <div class="council-speaker-avatar-wrap">
+            <img id="councilBriefingAvatar" src="/static/avatars/student/guardian.png" alt="Approved Guardian avatar">
+          </div>
+
+          <div class="council-speaker-name" id="councilBriefingName">Guardian</div>
+          <div class="council-speaker-role" id="councilBriefingRole">Mission guide and keeper of the Council threshold.</div>
+
+          <div class="chief-investigator-pill">Chief Investigator in Training</div>
+        </aside>
+
+        <section class="council-briefing-content">
+          <div class="council-dialogue-box">
+            <div class="council-dialogue-label" id="councilBriefingLabel">Guardian</div>
+            <div class="council-dialogue-line" id="councilBriefingLine">
+              Council, the Chief Investigator in Training has arrived.
+            </div>
+            <div class="council-dialogue-note" id="councilBriefingNote">
+              Your role is to observe first, compare carefully, and help the Council ask better questions before anyone makes a claim.
+            </div>
+          </div>
+
+          <div class="council-step-track">
+            <div class="council-step-dot active" data-brief-step="0"><strong>Guardian</strong><span>Role assigned</span></div>
+            <div class="council-step-dot" data-brief-step="1"><strong>Scout</strong><span>What changed</span></div>
+            <div class="council-step-dot" data-brief-step="2"><strong>Healer</strong><span>What is risky</span></div>
+            <div class="council-step-dot" data-brief-step="3"><strong>Builder</strong><span>What can be tested</span></div>
+            <div class="council-step-dot" data-brief-step="4"><strong>Mapkeeper</strong><span>What records show</span></div>
+            <div class="council-step-dot" data-brief-step="5"><strong>Guardian</strong><span>Observe first</span></div>
+          </div>
+        </section>
+      </div>
+
+      <div class="council-briefing-controls">
+        <div class="council-briefing-status" id="councilBriefingStatus">
+          <strong>Briefing 1 of 6:</strong> The Guardian introduces your role.
+        </div>
+
+        <div>
+          <button type="button" onclick="returnToGuardianWelcome()">Back to Guardian</button>
+          <button type="button" onclick="advanceCouncilBriefing()">Next Briefing Line</button>
+          <button class="primary" type="button" id="beginObservationAfterBriefingBtn" onclick="beginObservationTrial()" disabled>Begin Observation Trial 1</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="next-panel" id="nextPanel">
+    <div class="ot1-progress-rail" id="ot1ProgressRail" aria-label="Observation Trial progress">
+      <div class="ot1-progress-step active" data-ot1-progress="board"><strong>1</strong>Board</div>
+      <div class="ot1-progress-step" data-ot1-progress="compare"><strong>2</strong>Compare</div>
+      <div class="ot1-progress-step" data-ot1-progress="advisors"><strong>3</strong>Advisor Lenses</div>
+      <div class="ot1-progress-step" data-ot1-progress="rank"><strong>4</strong>Rank Questions</div>
+      <div class="ot1-progress-step" data-ot1-progress="observe"><strong>5</strong>Observations</div>
+      <div class="ot1-progress-step" data-ot1-progress="question"><strong>6</strong>Question Builder</div>
+    </div>
+
+    <div class="ot1-mode-reminder" id="ot1ModeReminder">
+      <strong>Observation Mode:</strong> Describe the evidence. Do not solve the mystery yet.
+    </div>
+
+    <div class="ot1-shell" id="ot1Board">
+      <section class="ot1-card">
+        <img
+          class="ot1-image"
+          src="/static/storyboards/council_hall_evidence_briefing.png"
+          alt="Observation Trial 1 board comparing previous scan and current scan for the Ice Break Mystery."
+        >
+
+        <div class="ot1-brief">
+          <div class="ot1-kicker">Observation Trial 1 · Compare Before You Claim</div>
+          <h1>The Ice Break Mystery</h1>
+          <p>
+            Your first job is not to find the answer. Your first job is to notice what changed. Compare the previous scan with the current scan, then help the Council decide which questions should come first.
+          </p>
+
+          <div class="ot1-actions">
+            <button class="primary" type="button" onclick="ot1ShowStep('compare')">Begin Scan Comparison</button>
+            <a href="/council_stage">Replay Entry</a>
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <section class="ot1-step" id="ot1CompareStep">
+      <div class="ot1-kicker">Step 1 · Compare the Scans</div>
+      <h1>What changed?</h1>
+      <p>
+        Look at the previous scan and the current scan. Select the changes that are actually visible.
+        You are not explaining the cause yet — only noticing the change.
+      </p>
+
+      <div class="ot1-step-microcopy" id="CI37_COMPARE_MICROCOPY"><strong>Look first:</strong> Use the board to compare Previous Scan and Current Scan. Select at least two visible changes before moving on.</div>
+
+      <div class="ot1-count" id="ot1ChangeCount">0 changes selected</div>
+
+      <div class="ot1-choice-grid">
+        <button class="ot1-choice" type="button" data-change="I notice the previous scan showed a continuous ice sheet.">I notice the previous scan showed a continuous ice sheet.</button>
+        <button class="ot1-choice" type="button" data-change="I notice the current scan has a new broken ice edge.">I notice the current scan has a new broken ice edge.</button>
+        <button class="ot1-choice" type="button" data-change="I notice a dark unknown exposure in the current scan.">I notice a dark unknown exposure in the current scan.</button>
+        <button class="ot1-choice" type="button" data-change="I notice cloud, grain, shadow, or distortion limits in the current scan.">I notice cloud, grain, shadow, or distortion limits in the current scan.</button>
+      </div>
+
+      <div class="ot1-step-actions">
+        <button type="button" onclick="ot1ShowBoard()">Back to Board</button>
+        <button class="primary" id="ot1CompareContinue" type="button" onclick="ot1ShowStep('advisors')" disabled>Continue to Advisor Lenses</button>
+      </div>
+    </section>
+
+    <section class="ot1-step" id="ot1AdvisorStep">
+      <div class="ot1-kicker">Step 2 · Advisor Lenses</div>
+      <h1>What kind of evidence matters?</h1>
+      <p>
+        Each advisor looks at the same evidence through a different lens. Use their lenses to think before you rank questions.
+      </p>
+
+      <div class="ot1-advisor-row">
+        <div class="ot1-advisor">
+          <strong>Scout</strong>
+          <span>Looks for visible changes: broken edges, new terrain clues, and details that were not there before.</span>
+        </div>
+        <div class="ot1-advisor">
+          <strong>Healer</strong>
+          <span>Looks for safety concerns: unstable ice, risky approach zones, and possible harm if the Council rushes.</span>
+        </div>
+        <div class="ot1-advisor">
+          <strong>Builder</strong>
+          <span>Looks for action limits: tools, access routes, structural risks, and what can be tested safely.</span>
+        </div>
+        <div class="ot1-advisor">
+          <strong>Mapkeeper</strong>
+          <span>Compares records: previous scan, current scan, old boundaries, and what changed over time.</span>
+        </div>
+      </div>
+
+      <div class="ot1-step-actions">
+        <button type="button" onclick="ot1ShowStep('compare')">Back to Comparison</button>
+        <button class="primary" type="button" onclick="ot1ShowStep('rank')">Rank Council Questions</button>
+      </div>
+    </section>
+
+    <section class="ot1-step" id="ot1RankStep">
+      <div class="ot1-kicker">Step 3 · Rank the First Questions</div>
+      <h1>Which questions should the Council ask first?</h1>
+      <p>
+        Select the first, second, and third priority questions. A strong leader does not ask every question at once.
+        Rank the questions that should guide the investigation first.
+      </p>
+
+      <div class="ot1-step-microcopy" id="CI37_RANK_MICROCOPY"><strong>Question priority:</strong> Pick the questions that would help the Council investigate safely and avoid guessing.</div>
+
+      <div class="ot1-count" id="ot1RankCount">0 / 3 questions ranked</div>
+
+      <div class="ot1-rank-list">
+        <div class="ot1-rank-option" data-question="What exactly changed between the previous scan and the current scan?">
+          <div class="ot1-rank-badge">—</div>
+          <button type="button">What exactly changed between the previous scan and the current scan?</button>
+        </div>
+        <div class="ot1-rank-option" data-question="What is the unknown exposed area?">
+          <div class="ot1-rank-badge">—</div>
+          <button type="button">What is the unknown exposed area?</button>
+        </div>
+        <div class="ot1-rank-option" data-question="Is the ice stable enough for anyone to approach?">
+          <div class="ot1-rank-badge">—</div>
+          <button type="button">Is the ice stable enough for anyone to approach?</button>
+        </div>
+        <div class="ot1-rank-option" data-question="Could cloud, shadow, grain, or distortion be misleading us?">
+          <div class="ot1-rank-badge">—</div>
+          <button type="button">Could cloud, shadow, grain, or distortion be misleading us?</button>
+        </div>
+        <div class="ot1-rank-option" data-question="Do old records show this area before the ice covered it?">
+          <div class="ot1-rank-badge">—</div>
+          <button type="button">Do old records show this area before the ice covered it?</button>
+        </div>
+        <div class="ot1-rank-option" data-question="What tools or specialists are needed before sending anyone?">
+          <div class="ot1-rank-badge">—</div>
+          <button type="button">What tools or specialists are needed before sending anyone?</button>
+        </div>
+      </div>
+
+      <div class="ot1-step-actions">
+        <button type="button" onclick="ot1ResetRanks()">Reset Ranking</button>
+        <button type="button" onclick="ot1ShowStep('advisors')">Back to Advisors</button>
+        <button class="primary" id="ot1RankContinue" type="button" onclick="ot1ShowStep('observe')" disabled>Choose Observations</button>
+      </div>
+    </section>
+
+    <section class="ot1-step" id="ot1ObserveStep">
+      <div class="ot1-kicker">Step 4 · Evidence-Based Observations</div>
+      <h1>Choose 3 observations</h1>
+      <p>
+        Choose exactly three observations. Use evidence language: “I notice...” Do not guess the final answer yet.
+      </p>
+
+      <div class="ot1-step-microcopy" id="CI37_OBS_MICROCOPY"><strong>Observation language:</strong> A good observation describes what the scan shows. It does not name the answer too soon.</div>
+
+      <div class="ot1-count" id="ot1ObsCount">0 / 3 observations selected</div>
+
+      <div class="ot1-choice-grid">
+        <button class="ot1-choice ot1-obs-choice" type="button" data-obs="I notice the previous ice boundary and the new broken edge do not match.">I notice the previous ice boundary and the new broken edge do not match.</button>
+        <button class="ot1-choice ot1-obs-choice" type="button" data-obs="I notice a darker unknown exposure where ice used to cover the area.">I notice a darker unknown exposure where ice used to cover the area.</button>
+        <button class="ot1-choice ot1-obs-choice" type="button" data-obs="I notice the risk zone suggests the ice may be unstable if approached too quickly.">I notice the risk zone suggests the ice may be unstable if approached too quickly.</button>
+        <button class="ot1-choice ot1-obs-choice" type="button" data-obs="I notice cloud interference, scan grain, shadow, and distortion could make the image misleading.">I notice cloud interference, scan grain, shadow, and distortion could make the image misleading.</button>
+        <button class="ot1-choice ot1-obs-choice" type="button" data-obs="I notice the scan shows evidence, but it does not prove what the exposure is yet.">I notice the scan shows evidence, but it does not prove what the exposure is yet.</button>
+        <button class="ot1-choice ot1-obs-choice" type="button" data-obs="I notice the Council needs a better question before making a claim.">I notice the Council needs a better question before making a claim.</button>
+      </div>
+
+      <div class="ot1-step-actions">
+        <button type="button" onclick="ot1ResetObservations()">Reset Observations</button>
+        <button type="button" onclick="ot1ShowStep('rank')">Back to Question Ranking</button>
+        <button class="primary" id="ot1ObsContinue" type="button" onclick="ot1Finish()" disabled>Continue to Question Builder</button>
+      </div>
+    </section>
+
+    <section class="mission-log-panel" id="missionLogPanel">
+      <div class="kicker">Mission Log Updated</div>
+      <h1>Observation Trial 1 Complete</h1>
+      <p>
+        You compared the scans, selected visible changes, ranked the first Council questions,
+        and chose three evidence-based observations. Before Question Builder opens, explain why questions matter.
+      </p>
+
+      <div class="mission-log-grid">
+        <div class="mission-log-card">
+          <strong>Scan Comparison</strong>
+          You looked at the previous scan and the current scan before making a claim.
+        </div>
+        <div class="mission-log-card">
+          <strong>Visible Changes</strong>
+          You selected changes that could be seen in the evidence.
+        </div>
+        <div class="mission-log-card">
+          <strong>Question Ranking</strong>
+          You ranked the first three questions the Council should ask.
+        </div>
+        <div class="mission-log-card">
+          <strong>Evidence Observations</strong>
+          You chose three observations using “I notice...” language.
+        </div>
+      </div>
+
+      <div class="mission-reflection-box">
+        <label for="missionReflectionText">Reflection</label>
+        <textarea id="missionReflectionText" placeholder="Why should the Council ask questions before making a claim?"></textarea>
+        <div class="mission-log-status" id="missionLogStatus">Reflection not saved yet.</div>
+      </div>
+
+      <div class="actions">
+        <button type="button" onclick="ot1ShowStep('observe')">Back to Observations</button>
+        <button class="primary" type="button" onclick="completeMissionLogReflection()">Save Reflection + Open Question Builder</button>
+      </div>
+    </section>
+
+
+    <div class="question-preview" id="questionPreview">
+      <div class="kicker">Next Council Step</div>
+      <h1>Question Builder Opens</h1>
+      <p>
+        Good. You compared evidence, ranked the first Council questions, and chose observations before making a claim.
+      </p>
+
+      <div class="ot1-summary" id="ot1Summary"></div>
+
+      <div class="actions">
+        <button class="primary" type="button">Open Question Builder</button>
+        <a href="/council_stage">Replay Council Entry</a>
+        <a href="/project_hub">Project Hub</a>
+      </div>
+    </div>
+  </section>
 <script>
 const guardianWelcomeDurationMs = 5200;
 let openingState = "pre";
@@ -394,6 +2788,1953 @@ function enterCouncilHall(){
 
   document.body.style.overflow = "auto";
 }
+
+
+
+let selectedObservations = [];
+let reviewedZones = [];
+
+const evidenceZoneDetails = {
+  edge: {
+    title: "Evidence Zone 1 · Ice Edge Change",
+    body: "The edge of the ice does not match the earlier scan. Something shifted, broke, melted, or separated. This tells the Council that the scene changed, but it does not explain why.",
+    facts: [
+      ["Known", "The ice boundary is different from the previous record."],
+      ["Not Proven", "The scan does not prove what caused the change."],
+      ["Careful Observation", "Students should notice change before guessing cause."]
+    ]
+  },
+  exposure: {
+    title: "Evidence Zone 2 · Unknown Exposure",
+    body: "A darker exposed shape appears beneath or beyond the broken ice. It may be important, but the scan alone does not identify it.",
+    facts: [
+      ["Known", "A darker shape is visible where ice was expected."],
+      ["Possible", "It could be land, rock, water, shadow, or image distortion."],
+      ["Not Proven", "The Council cannot name it yet."]
+    ]
+  },
+  limits: {
+    title: "Evidence Zone 3 · Scan Limits",
+    body: "The image is useful, but it is not perfect. Weather, angle, light, distance, and scan quality may all affect what the Council thinks it sees.",
+    facts: [
+      ["Known", "The scan gives partial evidence."],
+      ["Risk", "A confident answer too early may be wrong."],
+      ["Next Step", "The Council needs a stronger question before action."]
+    ]
+  }
+};
+
+function renderEvidenceZone(zone){
+  const detail = document.getElementById("evidenceDetail");
+  const progress = document.getElementById("reviewProgress");
+  const choicePanel = document.getElementById("choicePanel");
+  const lockNote = document.getElementById("lockNote");
+
+  if(!reviewedZones.includes(zone)){
+    reviewedZones.push(zone);
+  }
+
+  const data = evidenceZoneDetails[zone];
+
+  if(detail && data){
+    detail.innerHTML = `
+      <h3>${data.title}</h3>
+      <p>${data.body}</p>
+      <div class="evidence-facts">
+        ${data.facts.map(item => `<div><strong>${item[0]}:</strong> ${item[1]}</div>`).join("")}
+      </div>
+    `;
+  }
+
+  document.querySelectorAll(".evidence-hotspot").forEach(btn => {
+    btn.classList.toggle("reviewed", reviewedZones.includes(btn.dataset.zone));
+  });
+
+  if(progress){
+    progress.textContent = reviewedZones.length + " / 3 evidence zones reviewed";
+  }
+
+  if(reviewedZones.length >= 3){
+    if(choicePanel){ choicePanel.classList.remove("locked-choices"); }
+    if(lockNote){ lockNote.textContent = "Observation choices unlocked. Choose exactly 3."; }
+  }
+
+  localStorage.setItem("stemNationCouncilReviewedZones", JSON.stringify(reviewedZones));
+}
+
+function updateObservationUI(){
+  const options = Array.from(document.querySelectorAll(".obs-option"));
+  const count = document.getElementById("observationCount");
+  const btn = document.getElementById("continueObservationBtn");
+  const unlocked = reviewedZones.length >= 3;
+
+  options.forEach(option => {
+    const value = option.dataset.obs;
+    option.classList.toggle("selected", selectedObservations.includes(value));
+    option.classList.toggle("locked", selectedObservations.length >= 3 && !selectedObservations.includes(value));
+  });
+
+  if(count){
+    count.textContent = selectedObservations.length + " / 3 observations selected";
+  }
+
+  if(btn){
+    btn.disabled = !(unlocked && selectedObservations.length === 3);
+  }
+}
+
+function toggleObservation(value){
+  if(reviewedZones.length < 3){
+    return;
+  }
+
+  if(selectedObservations.includes(value)){
+    selectedObservations = selectedObservations.filter(v => v !== value);
+  }else{
+    if(selectedObservations.length >= 3){
+      return;
+    }
+    selectedObservations.push(value);
+  }
+
+  localStorage.setItem("stemNationCouncilObservations", JSON.stringify(selectedObservations));
+  updateObservationUI();
+}
+
+function resetObservations(){
+  selectedObservations = [];
+  localStorage.removeItem("stemNationCouncilObservations");
+  updateObservationUI();
+}
+
+function continueObservation(){
+  if(reviewedZones.length < 3 || selectedObservations.length !== 3){
+    return;
+  }
+
+  const shell = document.getElementById("observationShell");
+  const preview = document.getElementById("questionPreview");
+  const summary = document.getElementById("selectedSummary");
+
+  if(shell){ shell.style.display = "none"; }
+  if(preview){ preview.classList.add("active"); }
+
+  if(summary){
+    summary.innerHTML = selectedObservations.map((item, index) => {
+      return `<div><strong>Observation ${index + 1}:</strong> ${item}</div>`;
+    }).join("");
+  }
+}
+
+document.addEventListener("DOMContentLoaded", () => {
+  try{
+    selectedObservations = JSON.parse(localStorage.getItem("stemNationCouncilObservations") || "[]");
+    reviewedZones = JSON.parse(localStorage.getItem("stemNationCouncilReviewedZones") || "[]");
+  }catch(e){
+    selectedObservations = [];
+    reviewedZones = [];
+  }
+
+  document.querySelectorAll(".evidence-hotspot").forEach(btn => {
+    btn.addEventListener("click", (event) => {
+      event.stopPropagation();
+      renderEvidenceZone(btn.dataset.zone);
+      updateObservationUI();
+    });
+  });
+
+  document.querySelectorAll(".obs-option").forEach(option => {
+    option.addEventListener("click", () => toggleObservation(option.dataset.obs));
+  });
+
+  reviewedZones.forEach(zone => {
+    document.querySelectorAll(".evidence-hotspot").forEach(btn => {
+      btn.classList.toggle("reviewed", reviewedZones.includes(btn.dataset.zone));
+    });
+  });
+
+  const progress = document.getElementById("reviewProgress");
+  const choicePanel = document.getElementById("choicePanel");
+  const lockNote = document.getElementById("lockNote");
+
+  if(progress){
+    progress.textContent = reviewedZones.length + " / 3 evidence zones reviewed";
+  }
+
+  if(reviewedZones.length >= 3){
+    if(choicePanel){ choicePanel.classList.remove("locked-choices"); }
+    if(lockNote){ lockNote.textContent = "Observation choices unlocked. Choose exactly 3."; }
+  }
+
+  updateObservationUI();
+});
+
+
+let storyObservations = [];
+
+function showEvidenceStoryboard(){
+  document.getElementById("evidenceStoryboardShell").style.display = "grid";
+  document.getElementById("advisorIntroScreen").classList.remove("active");
+  document.getElementById("observationChoiceScreen").classList.remove("active");
+  document.getElementById("questionPreview").classList.remove("active");
+}
+
+function showAdvisorIntro(){
+  document.getElementById("evidenceStoryboardShell").style.display = "none";
+  document.getElementById("advisorIntroScreen").classList.add("active");
+  document.getElementById("observationChoiceScreen").classList.remove("active");
+  document.getElementById("questionPreview").classList.remove("active");
+}
+
+function showObservationChoices(){
+  document.getElementById("advisorIntroScreen").classList.remove("active");
+  document.getElementById("observationChoiceScreen").classList.add("active");
+  document.getElementById("questionPreview").classList.remove("active");
+  updateStoryObservationUI();
+}
+
+function updateStoryObservationUI(){
+  const count = document.getElementById("storyObsCount");
+  const btn = document.getElementById("storyContinueBtn");
+
+  document.querySelectorAll(".obs-choice").forEach(choice => {
+    const value = choice.dataset.obs;
+    choice.classList.toggle("selected", storyObservations.includes(value));
+  });
+
+  if(count){
+    count.textContent = storyObservations.length + " / 3 observations selected";
+  }
+
+  if(btn){
+    btn.disabled = storyObservations.length !== 3;
+  }
+
+  localStorage.setItem("stemNationCouncilStoryObservations", JSON.stringify(storyObservations));
+}
+
+function toggleStoryObservation(value){
+  if(storyObservations.includes(value)){
+    storyObservations = storyObservations.filter(v => v !== value);
+  }else{
+    if(storyObservations.length >= 3){ return; }
+    storyObservations.push(value);
+  }
+  updateStoryObservationUI();
+}
+
+function resetStoryObservations(){
+  storyObservations = [];
+  localStorage.removeItem("stemNationCouncilStoryObservations");
+  updateStoryObservationUI();
+}
+
+function finishStoryObservation(){
+  if(storyObservations.length !== 3){ return; }
+
+  const choices = document.getElementById("observationChoiceScreen");
+  const preview = document.getElementById("questionPreview");
+  const summary = document.getElementById("selectedSummary");
+
+  if(choices){ choices.classList.remove("active"); }
+  if(preview){ preview.classList.add("active"); }
+
+  if(summary){
+    summary.innerHTML = storyObservations.map((item, index) => {
+      return `<div><strong>Observation ${index + 1}:</strong> ${item}</div>`;
+    }).join("");
+  }
+}
+
+document.addEventListener("DOMContentLoaded", () => {
+  try{
+    storyObservations = JSON.parse(localStorage.getItem("stemNationCouncilStoryObservations") || "[]");
+  }catch(e){
+    storyObservations = [];
+  }
+
+  document.querySelectorAll(".obs-choice").forEach(choice => {
+    choice.addEventListener("click", () => toggleStoryObservation(choice.dataset.obs));
+  });
+
+  updateStoryObservationUI();
+});
+
+
+let ot1Changes = [];
+let ot1Ranks = [];
+let ot1Observations = [];
+
+function ot1HideAll(){
+  const ids = ["ot1Board","ot1CompareStep","ot1AdvisorStep","ot1RankStep","ot1ObserveStep","questionPreview"];
+  ids.forEach(id => {
+    const el = document.getElementById(id);
+    if(!el){ return; }
+    el.classList.remove("active");
+    if(id === "ot1Board"){ el.style.display = "none"; }
+    else { el.style.display = "none"; }
+  });
+}
+
+function ot1ShowBoard(){
+  ot1HideAll();
+  const board = document.getElementById("ot1Board");
+  if(board){ board.style.display = "grid"; }
+}
+
+function ot1ShowStep(step){
+  ot1HideAll();
+  const map = {
+    compare:"ot1CompareStep",
+    advisors:"ot1AdvisorStep",
+    rank:"ot1RankStep",
+    observe:"ot1ObserveStep"
+  };
+  const el = document.getElementById(map[step]);
+  if(el){
+    el.style.display = "block";
+    el.classList.add("active");
+  }
+  ot1UpdateUI();
+}
+
+function ot1ToggleChange(value){
+  if(ot1Changes.includes(value)){
+    ot1Changes = ot1Changes.filter(v => v !== value);
+  }else{
+    ot1Changes.push(value);
+  }
+  ot1UpdateUI();
+}
+
+function ot1ToggleObservation(value){
+  if(ot1Observations.includes(value)){
+    ot1Observations = ot1Observations.filter(v => v !== value);
+  }else{
+    if(ot1Observations.length >= 3){ return; }
+    ot1Observations.push(value);
+  }
+  ot1UpdateUI();
+}
+
+function ot1RankQuestion(value){
+  if(ot1Ranks.includes(value)){
+    ot1Ranks = ot1Ranks.filter(v => v !== value);
+  }else{
+    if(ot1Ranks.length >= 3){ return; }
+    ot1Ranks.push(value);
+  }
+  ot1UpdateUI();
+}
+
+function ot1ResetRanks(){
+  ot1Ranks = [];
+  ot1UpdateUI();
+}
+
+function ot1ResetObservations(){
+  ot1Observations = [];
+  ot1UpdateUI();
+}
+
+function ot1UpdateUI(){
+  document.querySelectorAll("[data-change]").forEach(btn => {
+    btn.classList.toggle("selected", ot1Changes.includes(btn.dataset.change));
+  });
+
+  const changeCount = document.getElementById("ot1ChangeCount");
+  const compareContinue = document.getElementById("ot1CompareContinue");
+  if(changeCount){ changeCount.textContent = ot1Changes.length + " changes selected"; }
+  if(compareContinue){ compareContinue.disabled = ot1Changes.length < 2; }
+
+  document.querySelectorAll(".ot1-rank-option").forEach(option => {
+    const q = option.dataset.question;
+    const index = ot1Ranks.indexOf(q);
+    option.classList.toggle("selected", index !== -1);
+    const badge = option.querySelector(".ot1-rank-badge");
+    if(badge){ badge.textContent = index === -1 ? "—" : String(index + 1); }
+  });
+
+  const rankCount = document.getElementById("ot1RankCount");
+  const rankContinue = document.getElementById("ot1RankContinue");
+  if(rankCount){ rankCount.textContent = ot1Ranks.length + " / 3 questions ranked"; }
+  if(rankContinue){ rankContinue.disabled = ot1Ranks.length !== 3; }
+
+  document.querySelectorAll(".ot1-obs-choice").forEach(btn => {
+    btn.classList.toggle("selected", ot1Observations.includes(btn.dataset.obs));
+  });
+
+  const obsCount = document.getElementById("ot1ObsCount");
+  const obsContinue = document.getElementById("ot1ObsContinue");
+  if(obsCount){ obsCount.textContent = ot1Observations.length + " / 3 observations selected"; }
+  if(obsContinue){ obsContinue.disabled = ot1Observations.length !== 3; }
+
+  localStorage.setItem("stemNationOT1Changes", JSON.stringify(ot1Changes));
+  localStorage.setItem("stemNationOT1Ranks", JSON.stringify(ot1Ranks));
+  localStorage.setItem("stemNationOT1Observations", JSON.stringify(ot1Observations));
+}
+
+function ot1Finish(){
+  if(ot1Observations.length !== 3 || ot1Ranks.length !== 3){ return; }
+
+  ot1HideAll();
+
+  const preview = document.getElementById("questionPreview");
+  const summary = document.getElementById("ot1Summary");
+
+  if(preview){
+    preview.style.display = "block";
+    preview.classList.add("active");
+  }
+
+  if(summary){
+    summary.innerHTML = `
+      <div><strong>Changes noticed:</strong><br>${ot1Changes.map(x => "• " + x).join("<br>")}</div>
+      <div><strong>Ranked Council questions:</strong><br>${ot1Ranks.map((x,i) => (i+1) + ". " + x).join("<br>")}</div>
+      <div><strong>Evidence observations:</strong><br>${ot1Observations.map(x => "• " + x).join("<br>")}</div>
+    `;
+  }
+}
+
+document.addEventListener("DOMContentLoaded", () => {
+  try{ ot1Changes = JSON.parse(localStorage.getItem("stemNationOT1Changes") || "[]"); }catch(e){ ot1Changes = []; }
+  try{ ot1Ranks = JSON.parse(localStorage.getItem("stemNationOT1Ranks") || "[]"); }catch(e){ ot1Ranks = []; }
+  try{ ot1Observations = JSON.parse(localStorage.getItem("stemNationOT1Observations") || "[]"); }catch(e){ ot1Observations = []; }
+
+  document.querySelectorAll("[data-change]").forEach(btn => {
+    btn.addEventListener("click", () => ot1ToggleChange(btn.dataset.change));
+  });
+
+  document.querySelectorAll(".ot1-rank-option").forEach(option => {
+    option.addEventListener("click", () => ot1RankQuestion(option.dataset.question));
+  });
+
+  document.querySelectorAll(".ot1-obs-choice").forEach(btn => {
+    btn.addEventListener("click", () => ot1ToggleObservation(btn.dataset.obs));
+  });
+
+  ot1UpdateUI();
+});
+
+
+
+
+
+/* CI-STAGE-36A ANIMATED COUNCIL BRIEFING FLOW */
+const councilBriefingSteps = [
+  {
+    name: "Guardian",
+    role: "Mission guide and keeper of the Council threshold.",
+    avatar: "/static/avatars/student/guardian.png",
+    audio: "/static/audio/council_temp/briefing_0_guardian.wav",
+    label: "Guardian",
+    line: "Council, the Chief Investigator in Training has arrived.",
+    note: "Your role is to observe first, compare carefully, and help the Council ask better questions before anyone makes a claim.",
+    status: "Briefing 1 of 6: The Guardian introduces your role."
+  },
+  {
+    name: "Scout",
+    role: "Advisor of visible change, terrain clues, and first observations.",
+    avatar: "/static/avatars/student/scout.png",
+    audio: "/static/audio/council_temp/briefing_1_scout.wav",
+    label: "Scout Evidence Handoff",
+    line: "What we know is this: two scans came from Sector 7A. The previous scan showed a continuous ice sheet. The current scan shows a broken edge and an unknown exposure.",
+    note: "Scout is not naming the exposure yet. Scout is showing what changed.",
+    status: "Briefing 2 of 6: Scout explains what the Council knows."
+  },
+  {
+    name: "Healer",
+    role: "Advisor of safety, harm, and unstable conditions.",
+    avatar: "/static/avatars/student/healer.png",
+    audio: "/static/audio/council_temp/briefing_2_healer.wav",
+    label: "Healer Risk Warning",
+    line: "The broken edge may be unstable. No team should approach until we understand the evidence.",
+    note: "The first investigation must protect people from rushing into danger.",
+    status: "Briefing 3 of 6: Healer identifies possible risk."
+  },
+  {
+    name: "Builder",
+    role: "Advisor of tools, access, structure, and safe testing.",
+    avatar: "/static/avatars/student/builder.png",
+    audio: "/static/audio/council_temp/briefing_3_builder.wav",
+    label: "Builder Test Limit",
+    line: "Before anyone can build, cross, drill, or send equipment, we must know what can be tested safely.",
+    note: "Builder is asking what tools or specialists might be needed before action.",
+    status: "Briefing 4 of 6: Builder explains action limits."
+  },
+  {
+    name: "Mapkeeper",
+    role: "Advisor of records, boundaries, maps, and before-after comparison.",
+    avatar: "/static/avatars/student/mapkeeper.png",
+    audio: "/static/audio/council_temp/briefing_4_mapkeeper_david_slow.wav",
+    label: "Mapkeeper Record Check",
+    line: "The old boundary and the new scan do not match. That difference is where your investigation begins.",
+    note: "Mapkeeper points you back to the comparison: previous scan versus current scan.",
+    status: "Briefing 5 of 6: Mapkeeper explains why comparison matters."
+  },
+  {
+    name: "Guardian",
+    role: "Mission guide and keeper of the Council threshold.",
+    avatar: "/static/avatars/student/guardian.png",
+    audio: "/static/audio/council_temp/briefing_5_guardian.wav",
+    label: "Guardian Directive",
+    line: "Do not solve the mystery yet. Compare the scans first. Then rank the first questions the Council should ask.",
+    note: "Observation Trial 1 begins when you are ready.",
+    status: "Briefing 6 of 6: The Guardian gives the directive."
+  }
+];
+
+let councilBriefingIndex = 0;
+
+function renderCouncilBriefingStep(){
+  const step = councilBriefingSteps[councilBriefingIndex];
+
+  const avatar = document.getElementById("councilBriefingAvatar");
+  const name = document.getElementById("councilBriefingName");
+  const role = document.getElementById("councilBriefingRole");
+  const label = document.getElementById("councilBriefingLabel");
+  const line = document.getElementById("councilBriefingLine");
+  const note = document.getElementById("councilBriefingNote");
+  const status = document.getElementById("councilBriefingStatus");
+  const beginBtn = document.getElementById("beginObservationAfterBriefingBtn");
+
+  if(avatar){
+    avatar.src = step.avatar;
+    avatar.alt = "Approved " + step.name + " avatar";
+  }
+  if(name){ name.textContent = step.name; }
+  if(role){ role.textContent = step.role; }
+  if(label){ label.textContent = step.label; }
+  if(line){ line.textContent = step.line; }
+  if(note){ note.textContent = step.note; }
+  if(status){ status.innerHTML = "<strong>" + step.status.split(":")[0] + ":</strong>" + step.status.substring(step.status.indexOf(":") + 1); }
+
+  document.querySelectorAll(".council-step-dot").forEach(dot => {
+    dot.classList.toggle("active", Number(dot.dataset.briefStep) === councilBriefingIndex);
+  });
+
+  if(beginBtn){
+    beginBtn.disabled = councilBriefingIndex !== councilBriefingSteps.length - 1;
+  }
+}
+
+function advanceCouncilBriefing(){
+  if(councilBriefingIndex < councilBriefingSteps.length - 1){
+    councilBriefingIndex += 1;
+    renderCouncilBriefingStep();
+  }
+}
+
+function showCouncilBriefingBridge(){
+  if("speechSynthesis" in window){
+    window.speechSynthesis.cancel();
+  }
+
+  const opening = document.getElementById("opening");
+  const bridge = document.getElementById("councilBriefingBridge");
+  const oldBridge = document.getElementById("incidentBridge");
+  const next = document.getElementById("nextPanel");
+
+  if(opening){ opening.style.display = "none"; }
+  if(oldBridge){ oldBridge.classList.remove("active"); oldBridge.style.display = "none"; }
+  if(next){ next.classList.remove("active"); next.style.display = "none"; }
+
+  councilBriefingIndex = 0;
+  renderCouncilBriefingStep();
+
+  if(bridge){
+    bridge.classList.add("active");
+    bridge.style.display = "grid";
+    bridge.scrollIntoView({behavior:"smooth", block:"start"});
+  }
+
+  document.body.style.overflow = "auto";
+}
+
+function returnToGuardianWelcome(){
+  const opening = document.getElementById("opening");
+  const bridge = document.getElementById("councilBriefingBridge");
+  const oldBridge = document.getElementById("incidentBridge");
+  const next = document.getElementById("nextPanel");
+
+  if(bridge){ bridge.classList.remove("active"); bridge.style.display = "none"; }
+  if(oldBridge){ oldBridge.classList.remove("active"); oldBridge.style.display = "none"; }
+  if(next){ next.classList.remove("active"); next.style.display = "none"; }
+
+  if(opening){
+    opening.style.display = "block";
+    opening.scrollIntoView({behavior:"smooth", block:"start"});
+  }
+}
+
+function beginObservationTrial(){
+  const bridge = document.getElementById("councilBriefingBridge");
+  const oldBridge = document.getElementById("incidentBridge");
+  const next = document.getElementById("nextPanel");
+
+  if(bridge){
+    bridge.classList.remove("active");
+    bridge.style.display = "none";
+  }
+
+  if(oldBridge){
+    oldBridge.classList.remove("active");
+    oldBridge.style.display = "none";
+  }
+
+  if(next){
+    next.classList.add("active");
+    next.style.display = "grid";
+    next.scrollIntoView({behavior:"smooth", block:"start"});
+  }
+
+  if(typeof ot1ShowBoard === "function"){
+    ot1ShowBoard();
+  }
+
+  try{
+    localStorage.setItem("stemNationCouncilBriefingComplete", new Date().toISOString());
+  }catch(e){}
+}
+
+/* Override Guardian exit so second click goes to animated Council Briefing before Observation Trial. */
+function enterCouncilHall(){
+  showCouncilBriefingBridge();
+}
+
 </script>
+
+<script>
+/* CI-STAGE-36B AUTO-ANIMATED COUNCIL BRIEFING */
+
+let councilAutoTimer = null;
+let councilProgressTimer = null;
+let councilAutoPaused = false;
+let councilAutoRunning = false;
+const councilAutoDelayMs = 4300;
+
+function ensureCouncilAutoControls(){
+  const dialogueBox = document.querySelector(".council-dialogue-box");
+  const controls = document.querySelector(".council-briefing-controls div:last-child");
+
+  if(dialogueBox && !document.getElementById("councilAutoProgressShell")){
+    dialogueBox.insertAdjacentHTML("beforeend", `
+      <div class="council-auto-progress-shell" id="councilAutoProgressShell">
+        <div class="council-auto-progress-fill" id="councilAutoProgressFill"></div>
+      </div>
+      <div class="council-speed-controls" id="councilSpeedControls">
+        <button type="button" data-speed="slow" onclick="setCouncilBriefingSpeed('slow')">Slow</button>
+        <button type="button" data-speed="normal" class="active" onclick="setCouncilBriefingSpeed('normal')">Normal</button>
+        <button type="button" data-speed="fast" onclick="setCouncilBriefingSpeed('fast')">Fast</button>
+      </div>
+      <div class="temp-audio-note" id="tempCouncilAudioNote"><strong>Temporary voice mode:</strong> Council voices use Windows Zira/David samples for now. Final avatar voices can replace these files later.</div>
+      <div class="council-auto-mode-note" id="councilAutoModeNote">
+        Auto-briefing is active. Watch the Council hand off the evidence, then begin Observation Trial 1.
+      </div>
+    `);
+  }
+
+  if(controls && !document.getElementById("pauseCouncilAutoBtn")){
+    const nextButton = Array.from(controls.querySelectorAll("button"))
+      .find(btn => btn.textContent.trim().toLowerCase().includes("next briefing"));
+
+    if(nextButton){
+      nextButton.style.display = "none";
+    }
+
+    controls.insertAdjacentHTML("afterbegin", `
+      <button class="soft-control" type="button" id="pauseCouncilAutoBtn" onclick="pauseCouncilAutoBriefing()">Pause Auto-Briefing</button>
+      <button class="soft-control" type="button" id="resumeCouncilAutoBtn" onclick="resumeCouncilAutoBriefing()" style="display:none;">Resume Auto-Briefing</button>
+      <button class="soft-control" type="button" id="skipCouncilAutoBtn" onclick="skipCouncilAutoBriefing()">Skip to Final Directive</button>
+      <button class="soft-control" type="button" id="replayCouncilAutoBtn" onclick="replayCouncilAutoBriefing()">Replay Briefing</button>
+    `);
+  }
+}
+
+function setCouncilAutoNote(text){
+  const note = document.getElementById("councilAutoModeNote");
+  if(note){ note.textContent = text; }
+}
+
+function resetCouncilProgress(){
+  const fill = document.getElementById("councilAutoProgressFill");
+  if(fill){ fill.style.width = "0%"; }
+}
+
+function startCouncilProgress(){
+  clearInterval(councilProgressTimer);
+
+  const fill = document.getElementById("councilAutoProgressFill");
+  if(!fill){ return; }
+
+  let start = Date.now();
+  fill.style.width = "0%";
+
+  councilProgressTimer = setInterval(() => {
+    if(councilAutoPaused){ return; }
+
+    const elapsed = Date.now() - start;
+    const pct = Math.min(100, Math.round((elapsed / councilAutoDelayMs) * 100));
+    fill.style.width = pct + "%";
+
+    if(pct >= 100){
+      clearInterval(councilProgressTimer);
+    }
+  }, 100);
+}
+
+function scheduleCouncilAutoAdvance(){
+  clearTimeout(councilAutoTimer);
+  clearInterval(councilProgressTimer);
+
+  if(councilAutoPaused){ return; }
+
+  resetCouncilProgress();
+
+  if(councilBriefingIndex >= councilBriefingSteps.length - 1){
+    councilAutoRunning = false;
+    setCouncilAutoNote("Briefing complete. Begin Observation Trial 1 when you are ready.");
+    const beginBtn = document.getElementById("beginObservationAfterBriefingBtn");
+    if(beginBtn){ beginBtn.disabled = false; }
+    return;
+  }
+
+  councilAutoRunning = true;
+  setCouncilAutoNote("Auto-briefing is active. The next Council voice will step forward automatically.");
+  startCouncilProgress();
+
+  councilAutoTimer = setTimeout(() => {
+    if(councilAutoPaused){ return; }
+    if(typeof advanceCouncilBriefing === "function"){
+      advanceCouncilBriefing();
+    }
+    scheduleCouncilAutoAdvance();
+  }, councilAutoDelayMs);
+}
+
+function startCouncilAutoBriefing(){
+  ensureCouncilAutoControls();
+  councilAutoPaused = false;
+
+  const pauseBtn = document.getElementById("pauseCouncilAutoBtn");
+  const resumeBtn = document.getElementById("resumeCouncilAutoBtn");
+
+  if(pauseBtn){ pauseBtn.style.display = "inline-block"; }
+  if(resumeBtn){ resumeBtn.style.display = "none"; }
+
+  scheduleCouncilAutoAdvance();
+}
+
+function pauseCouncilAutoBriefing(){
+  councilAutoPaused = true;
+  councilAutoRunning = false;
+  clearTimeout(councilAutoTimer);
+  clearInterval(councilProgressTimer);
+
+  const pauseBtn = document.getElementById("pauseCouncilAutoBtn");
+  const resumeBtn = document.getElementById("resumeCouncilAutoBtn");
+
+  if(pauseBtn){ pauseBtn.style.display = "none"; }
+  if(resumeBtn){ resumeBtn.style.display = "inline-block"; }
+
+  setCouncilAutoNote("Auto-briefing paused. Resume when ready, or skip to the final directive.");
+}
+
+function resumeCouncilAutoBriefing(){
+  councilAutoPaused = false;
+
+  const pauseBtn = document.getElementById("pauseCouncilAutoBtn");
+  const resumeBtn = document.getElementById("resumeCouncilAutoBtn");
+
+  if(pauseBtn){ pauseBtn.style.display = "inline-block"; }
+  if(resumeBtn){ resumeBtn.style.display = "none"; }
+
+  scheduleCouncilAutoAdvance();
+}
+
+function skipCouncilAutoBriefing(){
+  councilAutoPaused = false;
+  clearTimeout(councilAutoTimer);
+  clearInterval(councilProgressTimer);
+
+  councilBriefingIndex = councilBriefingSteps.length - 1;
+  renderCouncilBriefingStep();
+  resetCouncilProgress();
+
+  const beginBtn = document.getElementById("beginObservationAfterBriefingBtn");
+  if(beginBtn){ beginBtn.disabled = false; }
+
+  setCouncilAutoNote("Final directive reached. Begin Observation Trial 1 when you are ready.");
+}
+
+function replayCouncilAutoBriefing(){
+  clearTimeout(councilAutoTimer);
+  clearInterval(councilProgressTimer);
+
+  councilBriefingIndex = 0;
+  councilAutoPaused = false;
+  renderCouncilBriefingStep();
+
+  const beginBtn = document.getElementById("beginObservationAfterBriefingBtn");
+  if(beginBtn){ beginBtn.disabled = true; }
+
+  startCouncilAutoBriefing();
+}
+
+/* Override the 36A bridge entry so the briefing auto-runs after it opens. */
+const originalShowCouncilBriefingBridge36A = window.showCouncilBriefingBridge;
+
+window.showCouncilBriefingBridge = function(){
+  if(typeof originalShowCouncilBriefingBridge36A === "function"){
+    originalShowCouncilBriefingBridge36A();
+  }else{
+    const opening = document.getElementById("opening");
+    const bridge = document.getElementById("councilBriefingBridge");
+    const next = document.getElementById("nextPanel");
+
+    if(opening){ opening.style.display = "none"; }
+    if(next){ next.classList.remove("active"); next.style.display = "none"; }
+
+    councilBriefingIndex = 0;
+    renderCouncilBriefingStep();
+
+    if(bridge){
+      bridge.classList.add("active");
+      bridge.style.display = "grid";
+      bridge.scrollIntoView({behavior:"smooth", block:"start"});
+    }
+
+    document.body.style.overflow = "auto";
+  }
+
+  startCouncilAutoBriefing();
+};
+
+/* Safety: stop timers when leaving briefing. */
+const originalBeginObservationTrial36A = window.beginObservationTrial;
+
+window.beginObservationTrial = function(){
+  clearTimeout(councilAutoTimer);
+  clearInterval(councilProgressTimer);
+  councilAutoRunning = false;
+
+  if(typeof originalBeginObservationTrial36A === "function"){
+    originalBeginObservationTrial36A();
+  }
+};
+
+console.log("CI-STAGE-36B AUTO-ANIMATED COUNCIL BRIEFING ACTIVE");
+</script>
+
+<div class="ot1-save-toast" id="ot1SaveToast">Progress saved.</div>
+
+<script>
+/* CI-STAGE-37 OBSERVATION TRIAL UX POLISH */
+
+const ot1ProgressOrder = ["board","compare","advisors","rank","observe","question"];
+let councilBriefingSpeedMode = localStorage.getItem("stemNationCouncilBriefingSpeed") || "normal";
+
+function showOt1Toast(message){
+  const toast = document.getElementById("ot1SaveToast");
+  if(!toast){ return; }
+
+  toast.textContent = message || "Progress saved.";
+  toast.classList.remove("active");
+  void toast.offsetWidth;
+  toast.classList.add("active");
+}
+
+function updateOt1ProgressRail(activeStep){
+  const rail = document.getElementById("ot1ProgressRail");
+  const reminder = document.getElementById("ot1ModeReminder");
+
+  if(rail){ rail.classList.add("active"); }
+  if(reminder){ reminder.classList.add("active"); }
+
+  const activeIndex = ot1ProgressOrder.indexOf(activeStep);
+
+  document.querySelectorAll(".ot1-progress-step").forEach(step => {
+    const key = step.dataset.ot1Progress;
+    const idx = ot1ProgressOrder.indexOf(key);
+
+    step.classList.toggle("active", key === activeStep);
+    step.classList.toggle("done", idx !== -1 && activeIndex !== -1 && idx < activeIndex);
+  });
+}
+
+function setCouncilBriefingSpeed(mode){
+  councilBriefingSpeedMode = mode;
+  localStorage.setItem("stemNationCouncilBriefingSpeed", mode);
+
+  document.querySelectorAll("[data-speed]").forEach(btn => {
+    btn.classList.toggle("active", btn.dataset.speed === mode);
+  });
+
+  if(typeof scheduleCouncilAutoAdvance === "function"){
+    clearTimeout(window.councilAutoTimer);
+  }
+
+  if(typeof replayCouncilAutoBriefing === "function"){
+    // Do not replay automatically. Just apply speed to next schedule if running.
+  }
+
+  const note = document.getElementById("councilAutoModeNote");
+  if(note){
+    note.textContent = "Briefing speed set to " + mode + ".";
+  }
+}
+
+function getCouncilAutoDelay(){
+  if(councilBriefingSpeedMode === "slow"){ return 6200; }
+  if(councilBriefingSpeedMode === "fast"){ return 2800; }
+  return 4300;
+}
+
+function applyCouncilSpeedButtonState(){
+  document.querySelectorAll("[data-speed]").forEach(btn => {
+    btn.classList.toggle("active", btn.dataset.speed === councilBriefingSpeedMode);
+  });
+}
+
+/* Patch 36B auto delay to respect speed without rebuilding the whole animation engine. */
+if(typeof scheduleCouncilAutoAdvance === "function"){
+  const originalScheduleCouncilAutoAdvance37 = scheduleCouncilAutoAdvance;
+
+  window.scheduleCouncilAutoAdvance = function(){
+    clearTimeout(councilAutoTimer);
+    clearInterval(councilProgressTimer);
+
+    if(councilAutoPaused){ return; }
+
+    resetCouncilProgress();
+
+    if(councilBriefingIndex >= councilBriefingSteps.length - 1){
+      councilAutoRunning = false;
+      setCouncilAutoNote("Briefing complete. Begin Observation Trial 1 when you are ready.");
+      const beginBtn = document.getElementById("beginObservationAfterBriefingBtn");
+      if(beginBtn){ beginBtn.disabled = false; }
+      return;
+    }
+
+    councilAutoRunning = true;
+    setCouncilAutoNote("Auto-briefing is active. The next Council voice will step forward automatically.");
+
+    const delay = getCouncilAutoDelay();
+
+    const fill = document.getElementById("councilAutoProgressFill");
+    if(fill){
+      let start = Date.now();
+      fill.style.width = "0%";
+
+      councilProgressTimer = setInterval(() => {
+        if(councilAutoPaused){ return; }
+
+        const elapsed = Date.now() - start;
+        const pct = Math.min(100, Math.round((elapsed / delay) * 100));
+        fill.style.width = pct + "%";
+
+        if(pct >= 100){
+          clearInterval(councilProgressTimer);
+        }
+      }, 100);
+    }
+
+    councilAutoTimer = setTimeout(() => {
+      if(councilAutoPaused){ return; }
+      if(typeof advanceCouncilBriefing === "function"){
+        advanceCouncilBriefing();
+      }
+      scheduleCouncilAutoAdvance();
+    }, delay);
+  };
+}
+
+/* Wrap OT1 functions to update progress and show confirmations. */
+if(typeof ot1ShowBoard === "function"){
+  const originalOt1ShowBoard37 = ot1ShowBoard;
+  window.ot1ShowBoard = function(){
+    originalOt1ShowBoard37();
+    updateOt1ProgressRail("board");
+  };
+}
+
+if(typeof ot1ShowStep === "function"){
+  const originalOt1ShowStep37 = ot1ShowStep;
+  window.ot1ShowStep = function(step){
+    originalOt1ShowStep37(step);
+    updateOt1ProgressRail(step);
+    if(step === "advisors"){ showOt1Toast("Comparison saved."); }
+    if(step === "rank"){ showOt1Toast("Advisor lenses reviewed."); }
+    if(step === "observe"){ showOt1Toast("Question ranking saved."); }
+  };
+}
+
+if(typeof ot1Finish === "function"){
+  const originalOt1Finish37 = ot1Finish;
+  window.ot1Finish = function(){
+    originalOt1Finish37();
+    updateOt1ProgressRail("question");
+    showOt1Toast("Observations saved. Question Builder ready.");
+  };
+}
+
+/* Make reset actions friendlier. */
+if(typeof ot1ResetRanks === "function"){
+  const originalOt1ResetRanks37 = ot1ResetRanks;
+  window.ot1ResetRanks = function(){
+    originalOt1ResetRanks37();
+    showOt1Toast("Question ranking reset.");
+  };
+}
+
+if(typeof ot1ResetObservations === "function"){
+  const originalOt1ResetObservations37 = ot1ResetObservations;
+  window.ot1ResetObservations = function(){
+    originalOt1ResetObservations37();
+    showOt1Toast("Observations reset.");
+  };
+}
+
+document.addEventListener("DOMContentLoaded", () => {
+  applyCouncilSpeedButtonState();
+
+  const nextPanel = document.getElementById("nextPanel");
+  if(nextPanel && nextPanel.classList.contains("active")){
+    updateOt1ProgressRail("board");
+  }
+});
+
+console.log("CI-STAGE-37 OBSERVATION TRIAL UX POLISH ACTIVE");
+</script>
+
+
+<script>
+/* CI-STAGE-39 TEMP COUNCIL AUDIO + MISSION LOG */
+
+let currentCouncilAudio = null;
+
+function playCouncilStepAudio(step){
+  try{
+    if(currentCouncilAudio){
+      currentCouncilAudio.pause();
+      currentCouncilAudio.currentTime = 0;
+    }
+
+    if(!step || !step.audio){ return; }
+
+    currentCouncilAudio = new Audio(step.audio);
+    currentCouncilAudio.volume = 0.95;
+
+    const promise = currentCouncilAudio.play();
+    if(promise && typeof promise.catch === "function"){
+      promise.catch(() => {
+        console.warn("Council temp audio could not autoplay. Browser may require user interaction.");
+      });
+    }
+  }catch(e){
+    console.warn("Council temp audio failed:", e);
+  }
+}
+
+if(typeof renderCouncilBriefingStep === "function"){
+  const originalRenderCouncilBriefingStep39 = renderCouncilBriefingStep;
+
+  window.renderCouncilBriefingStep = function(){
+    originalRenderCouncilBriefingStep39();
+
+    if(typeof councilBriefingSteps !== "undefined" && typeof councilBriefingIndex !== "undefined"){
+      playCouncilStepAudio(councilBriefingSteps[councilBriefingIndex]);
+    }
+  };
+}
+
+function showMissionLogPanel(){
+  const observe = document.getElementById("ot1ObserveStep");
+  const log = document.getElementById("missionLogPanel");
+  const preview = document.getElementById("questionPreview");
+
+  if(observe){ observe.classList.remove("active"); observe.style.display = "none"; }
+  if(preview){ preview.classList.remove("active"); preview.style.display = "none"; }
+
+  if(log){
+    log.classList.add("active");
+    log.style.display = "block";
+    log.scrollIntoView({behavior:"smooth", block:"start"});
+  }
+
+  if(typeof updateOt1ProgressRail === "function"){
+    updateOt1ProgressRail("question");
+  }
+
+  try{
+    const saved = localStorage.getItem("stemNationOT1Reflection") || "";
+    const box = document.getElementById("missionReflectionText");
+    if(box && !box.value){ box.value = saved; }
+
+    const status = document.getElementById("missionLogStatus");
+    if(status && saved.trim()){
+      status.textContent = "Reflection saved.";
+    }
+  }catch(e){}
+}
+
+function completeMissionLogReflection(){
+  const box = document.getElementById("missionReflectionText");
+  const status = document.getElementById("missionLogStatus");
+  const value = box ? box.value.trim() : "";
+
+  if(value.length < 12){
+    if(status){
+      status.textContent = "Add one complete sentence before continuing.";
+    }
+    if(box){ box.focus(); }
+    return;
+  }
+
+  try{
+    localStorage.setItem("stemNationOT1Reflection", value);
+  }catch(e){}
+
+  if(status){
+    status.textContent = "Reflection saved. Question Builder ready.";
+  }
+
+  const log = document.getElementById("missionLogPanel");
+  const preview = document.getElementById("questionPreview");
+  const summary = document.getElementById("ot1Summary");
+
+  if(log){ log.classList.remove("active"); log.style.display = "none"; }
+  if(preview){ preview.classList.add("active"); preview.style.display = "block"; }
+
+  if(summary && typeof ot1Changes !== "undefined" && typeof ot1Ranks !== "undefined" && typeof ot1Observations !== "undefined"){
+    summary.innerHTML = `
+      <div><strong>Changes noticed:</strong><br>${ot1Changes.map(x => "• " + x).join("<br>")}</div>
+      <div><strong>Ranked Council questions:</strong><br>${ot1Ranks.map((x,i) => (i+1) + ". " + x).join("<br>")}</div>
+      <div><strong>Evidence observations:</strong><br>${ot1Observations.map(x => "• " + x).join("<br>")}</div>
+      <div><strong>Reflection:</strong><br>${value}</div>
+    `;
+  }
+
+  if(typeof showOt1Toast === "function"){
+    showOt1Toast("Mission Log saved. Question Builder ready.");
+  }
+}
+
+/* Override OT1 finish so Mission Log appears before Question Builder. */
+if(typeof ot1Finish === "function"){
+  const originalOt1Finish39 = ot1Finish;
+
+  window.ot1Finish = function(){
+    if(typeof ot1Observations !== "undefined" && typeof ot1Ranks !== "undefined"){
+      if(ot1Observations.length !== 3 || ot1Ranks.length !== 3){ return; }
+    }
+
+    showMissionLogPanel();
+  };
+}
+
+/* Stop Council audio when entering Observation Trial. */
+if(typeof beginObservationTrial === "function"){
+  const originalBeginObservationTrial39 = beginObservationTrial;
+
+  window.beginObservationTrial = function(){
+    if(currentCouncilAudio){
+      currentCouncilAudio.pause();
+      currentCouncilAudio.currentTime = 0;
+    }
+    originalBeginObservationTrial39();
+  };
+}
+
+console.log("CI-STAGE-39 TEMP COUNCIL AUDIO + MISSION LOG ACTIVE");
+</script>
+
+
+<script>
+/* CI-STAGE-39A AUDIO-SYNCED COUNCIL BRIEFING */
+
+let councilAudioSyncTimer = null;
+let councilAudioProgressTimer = null;
+let councilAudioSyncActive = true;
+let councilAudioStepToken = 0;
+
+function stopCouncilAudioSyncTimers(){
+  clearTimeout(councilAudioSyncTimer);
+  clearInterval(councilAudioProgressTimer);
+}
+
+function getCouncilFallbackDelay(){
+  if(typeof getCouncilAutoDelay === "function"){
+    return Math.max(getCouncilAutoDelay(), 4500);
+  }
+  return 5200;
+}
+
+function setCouncilAudioSyncNote(message){
+  let note = document.getElementById("councilAudioSyncNote");
+  const dialogueBox = document.querySelector(".council-dialogue-box");
+
+  if(!note && dialogueBox){
+    dialogueBox.insertAdjacentHTML("beforeend", `
+      <div class="council-audio-sync-note" id="councilAudioSyncNote">
+        <strong>Audio synced:</strong> The next speaker appears after the current voice finishes.
+      </div>
+    `);
+    note = document.getElementById("councilAudioSyncNote");
+  }
+
+  if(note){
+    note.innerHTML = message;
+  }
+}
+
+function resetCouncilAudioProgress(){
+  const fill = document.getElementById("councilAutoProgressFill");
+  if(fill){
+    fill.style.width = "0%";
+  }
+}
+
+function startCouncilAudioProgressFromElement(audio){
+  const fill = document.getElementById("councilAutoProgressFill");
+  if(!fill || !audio){ return; }
+
+  clearInterval(councilAudioProgressTimer);
+  fill.style.width = "0%";
+
+  councilAudioProgressTimer = setInterval(() => {
+    if(councilAutoPaused){ return; }
+
+    if(audio.duration && isFinite(audio.duration) && audio.duration > 0){
+      const pct = Math.min(100, Math.round((audio.currentTime / audio.duration) * 100));
+      fill.style.width = pct + "%";
+    }
+  }, 120);
+}
+
+function advanceCouncilBriefingAfterAudio(){
+  if(councilAutoPaused){ return; }
+
+  if(councilBriefingIndex < councilBriefingSteps.length - 1){
+    councilBriefingIndex += 1;
+    renderCouncilBriefingStep();
+    scheduleCouncilAudioSyncedAdvance();
+    return;
+  }
+
+  const beginBtn = document.getElementById("beginObservationAfterBriefingBtn");
+  if(beginBtn){ beginBtn.disabled = false; }
+
+  resetCouncilAudioProgress();
+  setCouncilAudioSyncNote("<strong>Briefing complete:</strong> Begin Observation Trial 1 when you are ready.");
+}
+
+function scheduleCouncilAudioSyncedAdvance(){
+  stopCouncilAudioSyncTimers();
+  resetCouncilAudioProgress();
+
+  if(councilAutoPaused){ return; }
+
+  const step = councilBriefingSteps[councilBriefingIndex];
+  const isFinal = councilBriefingIndex >= councilBriefingSteps.length - 1;
+  const token = ++councilAudioStepToken;
+
+  if(isFinal){
+    const beginBtn = document.getElementById("beginObservationAfterBriefingBtn");
+    if(beginBtn){ beginBtn.disabled = false; }
+    setCouncilAudioSyncNote("<strong>Final directive:</strong> Listen, then begin Observation Trial 1 when ready.");
+    return;
+  }
+
+  setCouncilAudioSyncNote("<strong>Audio synced:</strong> The next Council speaker appears after this voice finishes.");
+
+  // Fallback if audio is blocked, missing, or metadata never loads.
+  councilAudioSyncTimer = setTimeout(() => {
+    if(token !== councilAudioStepToken){ return; }
+    advanceCouncilBriefingAfterAudio();
+  }, getCouncilFallbackDelay() + 2200);
+
+  // If the current audio object exists, let its real ending control the next step.
+  setTimeout(() => {
+    if(token !== councilAudioStepToken){ return; }
+
+    if(currentCouncilAudio){
+      startCouncilAudioProgressFromElement(currentCouncilAudio);
+
+      currentCouncilAudio.onended = () => {
+        if(token !== councilAudioStepToken){ return; }
+        stopCouncilAudioSyncTimers();
+        resetCouncilAudioProgress();
+        advanceCouncilBriefingAfterAudio();
+      };
+
+      currentCouncilAudio.onerror = () => {
+        if(token !== councilAudioStepToken){ return; }
+        stopCouncilAudioSyncTimers();
+        advanceCouncilBriefingAfterAudio();
+      };
+    }
+  }, 180);
+}
+
+/* Replace fixed-delay auto scheduling with audio-synced scheduling. */
+window.scheduleCouncilAutoAdvance = function(){
+  scheduleCouncilAudioSyncedAdvance();
+};
+
+/* Patch pause/resume/skip/replay so sync timers behave. */
+if(typeof pauseCouncilAutoBriefing === "function"){
+  const originalPauseCouncilAutoBriefing39A = pauseCouncilAutoBriefing;
+  window.pauseCouncilAutoBriefing = function(){
+    stopCouncilAudioSyncTimers();
+    if(currentCouncilAudio){
+      currentCouncilAudio.pause();
+    }
+    originalPauseCouncilAutoBriefing39A();
+    setCouncilAudioSyncNote("<strong>Paused:</strong> Audio and briefing progression are paused.");
+  };
+}
+
+if(typeof resumeCouncilAutoBriefing === "function"){
+  const originalResumeCouncilAutoBriefing39A = resumeCouncilAutoBriefing;
+  window.resumeCouncilAutoBriefing = function(){
+    originalResumeCouncilAutoBriefing39A();
+
+    if(currentCouncilAudio && currentCouncilAudio.paused){
+      currentCouncilAudio.play().catch(() => {});
+      startCouncilAudioProgressFromElement(currentCouncilAudio);
+    }
+
+    scheduleCouncilAudioSyncedAdvance();
+  };
+}
+
+if(typeof skipCouncilAutoBriefing === "function"){
+  const originalSkipCouncilAutoBriefing39A = skipCouncilAutoBriefing;
+  window.skipCouncilAutoBriefing = function(){
+    stopCouncilAudioSyncTimers();
+    if(currentCouncilAudio){
+      currentCouncilAudio.pause();
+      currentCouncilAudio.currentTime = 0;
+    }
+    originalSkipCouncilAutoBriefing39A();
+    setCouncilAudioSyncNote("<strong>Final directive reached:</strong> Begin Observation Trial 1 when ready.");
+  };
+}
+
+if(typeof replayCouncilAutoBriefing === "function"){
+  const originalReplayCouncilAutoBriefing39A = replayCouncilAutoBriefing;
+  window.replayCouncilAutoBriefing = function(){
+    stopCouncilAudioSyncTimers();
+    if(currentCouncilAudio){
+      currentCouncilAudio.pause();
+      currentCouncilAudio.currentTime = 0;
+    }
+    originalReplayCouncilAutoBriefing39A();
+    setTimeout(scheduleCouncilAudioSyncedAdvance, 260);
+  };
+}
+
+/* When the bridge opens, start audio-synced scheduling after first audio starts. */
+if(typeof showCouncilBriefingBridge === "function"){
+  const originalShowCouncilBriefingBridge39A = showCouncilBriefingBridge;
+  window.showCouncilBriefingBridge = function(){
+    originalShowCouncilBriefingBridge39A();
+    setTimeout(scheduleCouncilAudioSyncedAdvance, 360);
+  };
+}
+
+/* Stop all audio sync when entering the observation trial. */
+if(typeof beginObservationTrial === "function"){
+  const originalBeginObservationTrial39A = beginObservationTrial;
+  window.beginObservationTrial = function(){
+    stopCouncilAudioSyncTimers();
+
+    if(currentCouncilAudio){
+      currentCouncilAudio.pause();
+      currentCouncilAudio.currentTime = 0;
+    }
+
+    originalBeginObservationTrial39A();
+  };
+}
+
+console.log("CI-STAGE-39A AUDIO-SYNCED COUNCIL BRIEFING ACTIVE");
+</script>
+
+
+<script>
+/* CI-STAGE-39B LISTEN-SEE-CONTINUE COUNCIL BRIEFING */
+
+const listenSeeBriefingVisuals = [
+  {
+    kicker: "Role Assignment",
+    title: "You are the Chief Investigator in Training.",
+    body: "The Council is not asking you to guess. Your first responsibility is to observe carefully and help the Council ask better questions.",
+    chips: ["Observe first", "Compare carefully", "Do not solve yet"]
+  },
+  {
+    kicker: "Scout Evidence Handoff",
+    title: "The Council has two scans from the same location.",
+    body: "One scan shows the ice before the break. The other scan shows the ice after the break. Your investigation begins by comparing them.",
+    chips: ["Previous Scan", "Current Scan", "What changed?"]
+  },
+  {
+    kicker: "Healer Risk Alert",
+    title: "The broken ice edge may be unstable.",
+    body: "The evidence may affect safety. No team should approach the area until the Council understands what the scan can and cannot prove.",
+    chips: ["Risk Zone", "Possible collapse", "No approach yet"]
+  },
+  {
+    kicker: "Builder Action Limit",
+    title: "Action must wait until the evidence is clearer.",
+    body: "Before anyone builds, crosses, drills, or sends equipment, the Council must decide what can be tested safely.",
+    chips: ["Tools", "Access", "Safe testing"]
+  },
+  {
+    kicker: "Mapkeeper Record Check",
+    title: "The old boundary and new scan do not match.",
+    body: "This is why comparison matters. The previous scan gives you a reference. The current scan shows the change.",
+    chips: ["Old boundary", "New broken edge", "Compare records"]
+  },
+  {
+    kicker: "Guardian Directive",
+    title: "Begin with observation, not a claim.",
+    body: "Compare the scans first. Notice what changed. Then rank the first questions the Council should ask.",
+    chips: ["Compare scans", "Rank questions", "Choose observations"]
+  }
+];
+
+let listenSeeReadyToContinue = false;
+let listenSeeAudioEnded = false;
+let listenSeeModeActive = true;
+
+function ensureListenSeePanel(){
+  const dialogueBox = document.querySelector(".council-dialogue-box");
+  if(!dialogueBox){ return; }
+
+  if(!document.getElementById("listenSeePanel")){
+    dialogueBox.insertAdjacentHTML("beforeend", `
+      <section class="listen-see-panel" id="listenSeePanel" aria-label="Briefing visual clue">
+        <div class="listen-see-kicker" id="listenSeeKicker"></div>
+        <div class="listen-see-title" id="listenSeeTitle"></div>
+        <div class="listen-see-body" id="listenSeeBody"></div>
+        <div class="listen-see-chips" id="listenSeeChips"></div>
+      </section>
+    `);
+  }
+}
+
+function renderListenSeeVisual(index){
+  ensureListenSeePanel();
+
+  const visual = listenSeeBriefingVisuals[index] || listenSeeBriefingVisuals[0];
+  const panel = document.getElementById("listenSeePanel");
+  const kicker = document.getElementById("listenSeeKicker");
+  const title = document.getElementById("listenSeeTitle");
+  const body = document.getElementById("listenSeeBody");
+  const chips = document.getElementById("listenSeeChips");
+
+  if(kicker){ kicker.textContent = visual.kicker; }
+  if(title){ title.textContent = visual.title; }
+  if(body){ body.textContent = visual.body; }
+  if(chips){
+    chips.innerHTML = visual.chips.map(chip => `<span class="listen-see-chip">${chip}</span>`).join("");
+  }
+
+  if(panel){
+    panel.classList.remove("active");
+    void panel.offsetWidth;
+    panel.classList.add("active");
+  }
+}
+
+function hideListenSeeVisual(){
+  const panel = document.getElementById("listenSeePanel");
+  if(panel){ panel.classList.remove("active"); }
+}
+
+function ensureListenSeeControls(){
+  const controls = document.querySelector(".council-briefing-controls div:last-child");
+  if(!controls){ return; }
+
+  const oldNext = Array.from(controls.querySelectorAll("button")).find(btn =>
+    btn.textContent.trim().toLowerCase().includes("next briefing line")
+  );
+  if(oldNext){
+    oldNext.style.display = "none";
+  }
+
+  if(!document.getElementById("listenSeeContinueBtn")){
+    controls.insertAdjacentHTML("afterbegin", `
+      <button class="listen-see-continue" type="button" id="listenSeeContinueBtn" onclick="continueListenSeeBriefing()" disabled>Listen First</button>
+      <button class="briefing-tools-toggle" type="button" onclick="toggleBriefingOptionalControls()">Briefing Tools</button>
+    `);
+  }
+
+  if(!document.getElementById("briefingOptionalControls")){
+    controls.insertAdjacentHTML("beforeend", `
+      <div class="briefing-optional-controls" id="briefingOptionalControls">
+        <button type="button" onclick="replayCurrentListenSeeAudio()">Replay Current Line</button>
+        <button type="button" onclick="skipToFinalListenSeeDirective()">Skip to Final Directive</button>
+        <button type="button" onclick="restartListenSeeBriefing()">Restart Briefing</button>
+      </div>
+    `);
+  }
+}
+
+function toggleBriefingOptionalControls(){
+  const box = document.getElementById("briefingOptionalControls");
+  if(box){ box.classList.toggle("active"); }
+}
+
+function setListenSeeButton(state){
+  const btn = document.getElementById("listenSeeContinueBtn");
+  if(!btn){ return; }
+
+  if(state === "listening"){
+    btn.disabled = true;
+    btn.textContent = "Listen First";
+    return;
+  }
+
+  if(state === "visual"){
+    btn.disabled = false;
+    btn.textContent = councilBriefingIndex >= councilBriefingSteps.length - 1
+      ? "Begin Observation Trial 1"
+      : "Continue Briefing";
+    return;
+  }
+}
+
+function stopListenSeeTimersAndAudio(){
+  if(typeof stopCouncilAudioSyncTimers === "function"){
+    stopCouncilAudioSyncTimers();
+  }
+
+  if(typeof councilAutoTimer !== "undefined"){ clearTimeout(councilAutoTimer); }
+  if(typeof councilProgressTimer !== "undefined"){ clearInterval(councilProgressTimer); }
+  if(typeof councilAudioSyncTimer !== "undefined"){ clearTimeout(councilAudioSyncTimer); }
+  if(typeof councilAudioProgressTimer !== "undefined"){ clearInterval(councilAudioProgressTimer); }
+
+  if(typeof currentCouncilAudio !== "undefined" && currentCouncilAudio){
+    currentCouncilAudio.pause();
+    currentCouncilAudio.currentTime = 0;
+  }
+}
+
+function playListenSeeAudioForCurrentStep(){
+  listenSeeAudioEnded = false;
+  listenSeeReadyToContinue = false;
+  hideListenSeeVisual();
+  setListenSeeButton("listening");
+
+  const step = councilBriefingSteps[councilBriefingIndex];
+
+  try{
+    if(typeof currentCouncilAudio !== "undefined" && currentCouncilAudio){
+      currentCouncilAudio.pause();
+      currentCouncilAudio.currentTime = 0;
+    }
+
+    if(!step || !step.audio){
+      setTimeout(onListenSeeAudioEnded, 900);
+      return;
+    }
+
+    currentCouncilAudio = new Audio(step.audio);
+    currentCouncilAudio.volume = 0.95;
+
+    currentCouncilAudio.onended = onListenSeeAudioEnded;
+    currentCouncilAudio.onerror = onListenSeeAudioEnded;
+
+    const playPromise = currentCouncilAudio.play();
+
+    if(playPromise && typeof playPromise.catch === "function"){
+      playPromise.catch(() => {
+        // Browser may block audio. Still show the visual after a short pause.
+        setTimeout(onListenSeeAudioEnded, 1000);
+      });
+    }
+  }catch(e){
+    console.warn("Listen-see audio failed:", e);
+    setTimeout(onListenSeeAudioEnded, 1000);
+  }
+}
+
+function onListenSeeAudioEnded(){
+  if(listenSeeAudioEnded){ return; }
+  listenSeeAudioEnded = true;
+  listenSeeReadyToContinue = true;
+
+  renderListenSeeVisual(councilBriefingIndex);
+  setListenSeeButton("visual");
+
+  const fill = document.getElementById("councilAutoProgressFill");
+  if(fill){ fill.style.width = "100%"; }
+}
+
+function continueListenSeeBriefing(){
+  if(!listenSeeReadyToContinue){ return; }
+
+  if(councilBriefingIndex >= councilBriefingSteps.length - 1){
+    beginObservationTrial();
+    return;
+  }
+
+  councilBriefingIndex += 1;
+  renderCouncilBriefingStep();
+  playListenSeeAudioForCurrentStep();
+}
+
+function replayCurrentListenSeeAudio(){
+  renderCouncilBriefingStep();
+  playListenSeeAudioForCurrentStep();
+}
+
+function skipToFinalListenSeeDirective(){
+  stopListenSeeTimersAndAudio();
+  councilBriefingIndex = councilBriefingSteps.length - 1;
+  renderCouncilBriefingStep();
+  playListenSeeAudioForCurrentStep();
+}
+
+function restartListenSeeBriefing(){
+  stopListenSeeTimersAndAudio();
+  councilBriefingIndex = 0;
+  renderCouncilBriefingStep();
+  playListenSeeAudioForCurrentStep();
+}
+
+function startListenSeeBriefingMode(){
+  listenSeeModeActive = true;
+  ensureListenSeePanel();
+  ensureListenSeeControls();
+
+  stopListenSeeTimersAndAudio();
+
+  councilBriefingIndex = 0;
+  renderCouncilBriefingStep();
+
+  const beginBtn = document.getElementById("beginObservationAfterBriefingBtn");
+  if(beginBtn){
+    beginBtn.style.display = "none";
+    beginBtn.disabled = true;
+  }
+
+  playListenSeeAudioForCurrentStep();
+}
+
+/* Disable old fixed/audio-end auto-advance. The student now controls progression after each visual appears. */
+window.scheduleCouncilAutoAdvance = function(){};
+window.scheduleCouncilAudioSyncedAdvance = function(){};
+
+/* Override briefing entry to start listen-see-continue mode. */
+if(typeof showCouncilBriefingBridge === "function"){
+  const previousShowCouncilBriefingBridge39B = showCouncilBriefingBridge;
+
+  window.showCouncilBriefingBridge = function(){
+    previousShowCouncilBriefingBridge39B();
+    setTimeout(startListenSeeBriefingMode, 260);
+  };
+}
+
+/* Patch render so it updates text/avatar only; audio is controlled by listen-see mode. */
+if(typeof renderCouncilBriefingStep === "function"){
+  const previousRenderCouncilBriefingStep39B = renderCouncilBriefingStep;
+
+  window.renderCouncilBriefingStep = function(){
+    previousRenderCouncilBriefingStep39B();
+
+    const beginBtn = document.getElementById("beginObservationAfterBriefingBtn");
+    if(beginBtn){
+      beginBtn.style.display = "none";
+      beginBtn.disabled = true;
+    }
+  };
+}
+
+/* Stop briefing audio when leaving for observation. */
+if(typeof beginObservationTrial === "function"){
+  const previousBeginObservationTrial39B = beginObservationTrial;
+
+  window.beginObservationTrial = function(){
+    stopListenSeeTimersAndAudio();
+    previousBeginObservationTrial39B();
+  };
+}
+
+console.log("CI-STAGE-39B LISTEN-SEE-CONTINUE COUNCIL BRIEFING ACTIVE");
+</script>
+
+
+<script>
+/* CI-STAGE-39D CLEAN LEGACY AUDIO BLEED + SMOOTH BRIEFING START
+   This script intentionally becomes the final authority for Council Briefing audio.
+   It disables older auto-advance/audio-sync behavior that may still be stacked from earlier stages.
+*/
+
+let councilCleanAudio = null;
+let councilCleanStartTimer = null;
+let councilCleanFallbackTimer = null;
+let councilCleanModeActive = false;
+
+function stopAllCouncilAudioClean(){
+  try{
+    if(typeof currentCouncilAudio !== "undefined" && currentCouncilAudio){
+      currentCouncilAudio.pause();
+      currentCouncilAudio.currentTime = 0;
+      currentCouncilAudio.onended = null;
+      currentCouncilAudio.onerror = null;
+    }
+  }catch(e){}
+
+  try{
+    if(councilCleanAudio){
+      councilCleanAudio.pause();
+      councilCleanAudio.currentTime = 0;
+      councilCleanAudio.onended = null;
+      councilCleanAudio.onerror = null;
+    }
+  }catch(e){}
+
+  try{
+    if(typeof guardianAudio !== "undefined" && guardianAudio){
+      guardianAudio.pause();
+      guardianAudio.currentTime = 0;
+    }
+  }catch(e){}
+
+  clearTimeout(councilCleanStartTimer);
+  clearTimeout(councilCleanFallbackTimer);
+
+  try{ clearTimeout(councilAutoTimer); }catch(e){}
+  try{ clearInterval(councilProgressTimer); }catch(e){}
+  try{ clearTimeout(councilAudioSyncTimer); }catch(e){}
+  try{ clearInterval(councilAudioProgressTimer); }catch(e){}
+}
+
+/* Disable older audio/auto systems. */
+window.playCouncilStepAudio = function(){};
+window.scheduleCouncilAutoAdvance = function(){};
+window.scheduleCouncilAudioSyncedAdvance = function(){};
+window.pauseCouncilAutoBriefing = function(){ stopAllCouncilAudioClean(); };
+window.resumeCouncilAutoBriefing = function(){};
+window.advanceCouncilBriefing = function(){ continueListenSeeBriefingClean(); };
+
+function ensureBriefingStartSoftener(){
+  const dialogueBox = document.querySelector(".council-dialogue-box");
+  if(!dialogueBox){ return; }
+
+  if(!document.getElementById("briefingStartSoftener")){
+    dialogueBox.insertAdjacentHTML("beforeend", `
+      <div class="briefing-start-softener" id="briefingStartSoftener">
+        <strong>Council signal opening...</strong>
+        Listen first. A visual clue will appear after the speaker finishes.
+      </div>
+    `);
+  }
+}
+
+function showBriefingStartSoftener(show){
+  ensureBriefingStartSoftener();
+  const el = document.getElementById("briefingStartSoftener");
+  if(el){
+    el.classList.toggle("active", !!show);
+  }
+}
+
+function renderCouncilBriefingStepClean(){
+  const step = councilBriefingSteps[councilBriefingIndex];
+
+  const avatar = document.getElementById("councilBriefingAvatar");
+  const name = document.getElementById("councilBriefingName");
+  const role = document.getElementById("councilBriefingRole");
+  const label = document.getElementById("councilBriefingLabel");
+  const line = document.getElementById("councilBriefingLine");
+  const note = document.getElementById("councilBriefingNote");
+  const status = document.getElementById("councilBriefingStatus");
+  const beginBtn = document.getElementById("beginObservationAfterBriefingBtn");
+
+  if(avatar){
+    avatar.src = step.avatar;
+    avatar.alt = "Approved " + step.name + " avatar";
+  }
+  if(name){ name.textContent = step.name; }
+  if(role){ role.textContent = step.role; }
+  if(label){ label.textContent = step.label; }
+  if(line){ line.textContent = step.line; }
+  if(note){ note.textContent = step.note; }
+
+  if(status){
+    const parts = step.status.split(":");
+    status.innerHTML = "<strong>" + parts[0] + ":</strong>" + step.status.substring(step.status.indexOf(":") + 1);
+  }
+
+  document.querySelectorAll(".council-step-dot").forEach(dot => {
+    dot.classList.toggle("active", Number(dot.dataset.briefStep) === councilBriefingIndex);
+  });
+
+  if(beginBtn){
+    beginBtn.style.display = "none";
+    beginBtn.disabled = true;
+  }
+}
+
+function setListenSeeButtonClean(state){
+  const btn = document.getElementById("listenSeeContinueBtn");
+  if(!btn){ return; }
+
+  if(state === "preparing"){
+    btn.disabled = true;
+    btn.textContent = "Preparing Briefing";
+    return;
+  }
+
+  if(state === "listening"){
+    btn.disabled = true;
+    btn.textContent = "Listen First";
+    return;
+  }
+
+  if(state === "ready"){
+    btn.disabled = false;
+    btn.textContent = councilBriefingIndex >= councilBriefingSteps.length - 1
+      ? "Begin Observation Trial 1"
+      : "Continue Briefing";
+    return;
+  }
+}
+
+function hideListenSeeVisualClean(){
+  const panel = document.getElementById("listenSeePanel");
+  if(panel){ panel.classList.remove("active"); }
+}
+
+function renderListenSeeVisualClean(){
+  if(typeof renderListenSeeVisual === "function"){
+    renderListenSeeVisual(councilBriefingIndex);
+  }
+}
+
+function playCleanCouncilAudioForCurrentStep(){
+  stopAllCouncilAudioClean();
+  hideListenSeeVisualClean();
+  showBriefingStartSoftener(false);
+  setListenSeeButtonClean("listening");
+
+  const step = councilBriefingSteps[councilBriefingIndex];
+
+  if(!step || !step.audio){
+    councilCleanFallbackTimer = setTimeout(() => {
+      renderListenSeeVisualClean();
+      setListenSeeButtonClean("ready");
+    }, 900);
+    return;
+  }
+
+  councilCleanAudio = new Audio(step.audio);
+  councilCleanAudio.volume = 0.95;
+
+  councilCleanAudio.onended = () => {
+    renderListenSeeVisualClean();
+    setListenSeeButtonClean("ready");
+  };
+
+  councilCleanAudio.onerror = () => {
+    renderListenSeeVisualClean();
+    setListenSeeButtonClean("ready");
+  };
+
+  const playPromise = councilCleanAudio.play();
+
+  if(playPromise && typeof playPromise.catch === "function"){
+    playPromise.catch(() => {
+      councilCleanFallbackTimer = setTimeout(() => {
+        renderListenSeeVisualClean();
+        setListenSeeButtonClean("ready");
+      }, 1000);
+    });
+  }
+}
+
+function startListenSeeBriefingClean(){
+  councilCleanModeActive = true;
+  stopAllCouncilAudioClean();
+
+  if(typeof ensureListenSeePanel === "function"){ ensureListenSeePanel(); }
+  if(typeof ensureListenSeeControls === "function"){ ensureListenSeeControls(); }
+
+  councilBriefingIndex = 0;
+  renderCouncilBriefingStepClean();
+  hideListenSeeVisualClean();
+
+  showBriefingStartSoftener(true);
+  setListenSeeButtonClean("preparing");
+
+  councilCleanStartTimer = setTimeout(() => {
+    showBriefingStartSoftener(false);
+    playCleanCouncilAudioForCurrentStep();
+  }, 850);
+}
+
+function continueListenSeeBriefingClean(){
+  if(councilBriefingIndex >= councilBriefingSteps.length - 1){
+    beginObservationTrial();
+    return;
+  }
+
+  councilBriefingIndex += 1;
+  renderCouncilBriefingStepClean();
+  playCleanCouncilAudioForCurrentStep();
+}
+
+/* Replace prior continue function with clean version. */
+window.continueListenSeeBriefing = continueListenSeeBriefingClean;
+
+window.replayCurrentListenSeeAudio = function(){
+  renderCouncilBriefingStepClean();
+  playCleanCouncilAudioForCurrentStep();
+};
+
+window.skipToFinalListenSeeDirective = function(){
+  stopAllCouncilAudioClean();
+  councilBriefingIndex = councilBriefingSteps.length - 1;
+  renderCouncilBriefingStepClean();
+  playCleanCouncilAudioForCurrentStep();
+};
+
+window.restartListenSeeBriefing = function(){
+  startListenSeeBriefingClean();
+};
+
+/* Make bridge entry smooth and clean. */
+if(typeof showCouncilBriefingBridge === "function"){
+  const priorShowCouncilBriefingBridge39D = showCouncilBriefingBridge;
+
+  window.showCouncilBriefingBridge = function(){
+    stopAllCouncilAudioClean();
+    priorShowCouncilBriefingBridge39D();
+
+    setTimeout(() => {
+      stopAllCouncilAudioClean();
+      startListenSeeBriefingClean();
+    }, 180);
+  };
+}
+
+/* Stop audio when leaving for observation. */
+if(typeof beginObservationTrial === "function"){
+  const priorBeginObservationTrial39D = beginObservationTrial;
+
+  window.beginObservationTrial = function(){
+    stopAllCouncilAudioClean();
+    priorBeginObservationTrial39D();
+  };
+}
+
+console.log("CI-STAGE-39D CLEAN LEGACY AUDIO BLEED + SMOOTH BRIEFING START ACTIVE");
+</script>
+
 </body>
 </html>
