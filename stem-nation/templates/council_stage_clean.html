@@ -325,7 +325,134 @@
       .guardian-grid,.briefing-grid,.clue-grid{grid-template-columns:1fr}
       .step-track{grid-template-columns:1fr 1fr}
     }
-  </style>
+  
+/* CI-STAGE-43-RESET STATIC EVIDENCE BOARD ONLY
+   Clean flow remains unchanged.
+   No pulse circles. No moving markers. No overlay cards.
+*/
+#briefingScreen .card{
+  width:min(1380px,98vw);
+}
+
+.briefing-grid{
+  display:grid;
+  grid-template-columns:minmax(260px,340px) minmax(620px,1fr);
+  grid-template-areas:
+    "speaker evidence"
+    "message evidence";
+  gap:18px;
+  align-items:start;
+  padding:24px 26px 14px;
+}
+
+.speaker{
+  grid-area:speaker;
+}
+
+.dialogue{
+  grid-area:message;
+  padding:16px;
+}
+
+.dialogue-line{
+  font-size:clamp(19px,2.25vw,32px);
+  line-height:1.12;
+}
+
+.dialogue-note{
+  font-size:14px;
+}
+
+.visual-clue{
+  margin-top:14px;
+  font-size:13px;
+}
+
+.static-evidence-board{
+  grid-area:evidence;
+  min-height:560px;
+  border-radius:28px;
+  border:1px solid rgba(245,215,122,.30);
+  background:
+    linear-gradient(90deg, rgba(2,8,18,.22), rgba(2,8,18,.04), rgba(2,8,18,.28)),
+    url("/static/storyboards/council_hall_evidence_briefing.png") center/contain no-repeat,
+    radial-gradient(circle at 50% 40%, rgba(143,216,255,.10), transparent 35%),
+    rgba(2,8,18,.94);
+  box-shadow:
+    inset 0 0 44px rgba(143,216,255,.06),
+    0 28px 90px rgba(0,0,0,.44);
+  position:relative;
+  overflow:hidden;
+}
+
+.static-evidence-board::before{
+  content:"Mission Evidence · Previous Scan vs Current Scan";
+  position:absolute;
+  left:16px;
+  top:14px;
+  padding:8px 10px;
+  border-radius:999px;
+  border:1px solid rgba(245,215,122,.38);
+  background:rgba(2,8,18,.78);
+  color:var(--gold);
+  font-size:11px;
+  font-weight:900;
+  letter-spacing:.12em;
+  text-transform:uppercase;
+}
+
+.static-evidence-board::after{
+  content:"Observe the evidence. Listen to the Council. Compare before you claim.";
+  position:absolute;
+  right:16px;
+  bottom:14px;
+  max-width:330px;
+  padding:10px 12px;
+  border-radius:14px;
+  border:1px solid rgba(143,216,255,.24);
+  background:rgba(2,8,18,.76);
+  color:rgba(255,255,255,.80);
+  font-size:12px;
+  line-height:1.35;
+}
+
+/* Explicitly remove any old visual experiment elements if browser cache still sees them. */
+.passive-map-panel,
+.passive-map-pulse,
+.evidence-marker-board,
+.evidence-marker{
+  display:none!important;
+}
+
+#briefingScreen .actions{
+  position:relative;
+  z-index:5;
+  padding:18px 28px 24px;
+  background:rgba(2,8,18,.92);
+  border-top:1px solid rgba(245,215,122,.22);
+}
+
+@media(max-width:1050px){
+  .briefing-grid{
+    grid-template-columns:1fr;
+    grid-template-areas:
+      "speaker"
+      "message"
+      "evidence";
+  }
+
+  .static-evidence-board{
+    min-height:430px;
+  }
+}
+
+@media(max-width:700px){
+  .static-evidence-board{
+    min-height:340px;
+  }
+}
+
+</style>
 </head>
 
 <body>
@@ -396,6 +523,8 @@
           <div class="dialogue-note" id="speakerNote">If the ice break spreads, every nation could be affected. That is why the Council cannot guess.</div>
           <div class="visual-clue" id="visualClue"></div>
         </section>
+
+        <section class="static-evidence-board" aria-label="Static mission evidence board"></section>
       </div>
 
       <div class="step-track" id="stepTrack"></div>
