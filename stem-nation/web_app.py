@@ -10,6 +10,12 @@ def decision_bridge():
     return render_template("decision_bridge.html")
 
 
+
+@app.route("/council_stage")
+def council_stage():
+    return render_template("council_stage.html")
+
+
 # =========================
 # ZIP ENTRY (UNCHANGED)
 # =========================
@@ -195,9 +201,14 @@ def founding_complete():
 def founding_archive_print():
     return render_template("founding_archive_print.html")
 
+
+@app.route("/project_hub")
+def project_hub():
+    return render_template("project_hub.html")
+
 @app.route("/hub")
 def hub():
-    return render_template("project_hub.html")
+    return render_template("student_hub.html")
 
 
 # STEM_NATION_GAMEBOARD_GALLERY_ROUTE_V1
@@ -352,6 +363,11 @@ def student_command_entry():
 def student_hub():
     return render_template("student_hub.html")
 
+
+
+@app.route("/council_stage_clean")
+def council_stage_clean():
+    return render_template("council_stage_clean.html")
 
 if __name__ == "__main__":
     import os
