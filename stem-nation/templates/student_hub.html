@@ -1,21 +1,17 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>Student Hub | STEM Nation Academy</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>STEM Nation | Student Hub</title>
   <style>
-    /* CI-4K_B_STUDENT_HUB_MISSION_DASHBOARD_POLISH */
     :root {
-      --gold: #f4d35e;
-      --gold2: #d7a51e;
-      --blue: #7dd3fc;
-      --text: #f8f1dd;
-      --muted: rgba(248,241,221,.72);
-      --panel: rgba(5, 12, 24, .82);
-      --soft: rgba(255,255,255,.055);
-      --border: rgba(244,211,94,.26);
+      --gold: #f5d77a;
+      --ice: #dff6ff;
+      --good: #91f5b3;
+      --panel: rgba(8, 15, 32, 0.82);
+      --line: rgba(245, 215, 122, 0.34);
+      --soft: rgba(255, 255, 255, 0.72);
     }
 
     * { box-sizing: border-box; }
@@ -23,654 +19,314 @@
     body {
       margin: 0;
       min-height: 100vh;
-      color: var(--text);
-      font-family: Georgia, "Times New Roman", serif;
+      font-family: Arial, Helvetica, sans-serif;
+      color: white;
       background:
-        radial-gradient(circle at 18% 10%, rgba(244,211,94,.16), transparent 30%),
-        radial-gradient(circle at 84% 14%, rgba(125,211,252,.14), transparent 34%),
-        linear-gradient(135deg, #061826 0%, #07131d 58%, #03070d 100%);
-      overflow-x: hidden;
+        radial-gradient(circle at 48% 8%, rgba(143, 216, 255, 0.24), transparent 28%),
+        radial-gradient(circle at 18% 70%, rgba(245, 215, 122, 0.12), transparent 24%),
+        linear-gradient(135deg, #02030a 0%, #071326 48%, #02040b 100%);
     }
 
-    .atmosphere {
+    .hub-shell {
+      min-height: 100vh;
+      padding: 28px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hub-shell::before {
+      content: "";
       position: fixed;
       inset: 0;
       pointer-events: none;
       background:
-        linear-gradient(90deg, rgba(255,255,255,.024) 1px, transparent 1px),
-        linear-gradient(to bottom, rgba(255,255,255,.016) 1px, transparent 1px);
-      background-size: 78px 78px;
-      opacity: .22;
+        linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px),
+        linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px);
+      background-size: 58px 58px;
+      mask-image: radial-gradient(circle at center, black, transparent 78%);
     }
 
-    .page {
+    .topbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 16px;
+      margin-bottom: 24px;
       position: relative;
-      z-index: 1;
-      max-width: 1380px;
-      margin: 0 auto;
-      padding: 28px 20px 42px;
-    }
-
-    .hero {
-      border: 1px solid var(--border);
-      border-radius: 32px;
-      background:
-        radial-gradient(circle at 18% 18%, rgba(244,211,94,.13), transparent 28%),
-        radial-gradient(circle at 86% 20%, rgba(125,211,252,.10), transparent 30%),
-        var(--panel);
-      box-shadow: 0 28px 84px rgba(0,0,0,.36);
-      padding: 22px;
-      margin-bottom: 22px;
-      display: grid;
-      grid-template-columns: 104px 1fr;
-      gap: 20px;
-      align-items: center;
-    }
-
-    .student-avatar {
-      width: 104px;
-      height: 122px;
-      border-radius: 26px;
-      border: 1px solid rgba(244,211,94,.36);
-      background:
-        radial-gradient(circle at 50% 26%, rgba(248,240,213,.22), transparent 24%),
-        linear-gradient(145deg, rgba(125,211,252,.12), rgba(244,211,94,.08));
-      overflow: hidden;
-      display: grid;
-      place-items: center;
-      box-shadow: 0 16px 38px rgba(0,0,0,.30);
-    }
-
-    .student-avatar img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      display: block;
-    }
-
-    .avatar-fallback {
-      color: var(--gold);
-      text-transform: uppercase;
-      letter-spacing: .08em;
-      font-size: .68rem;
-      font-weight: 900;
-      text-align: center;
-      padding: 8px;
+      z-index: 2;
     }
 
     .kicker {
       color: var(--gold);
+      letter-spacing: 0.22em;
       text-transform: uppercase;
-      letter-spacing: .14em;
-      font-size: .80rem;
-      font-weight: 900;
-      margin-bottom: 10px;
+      font-size: 12px;
+      margin-bottom: 8px;
     }
 
     h1 {
       margin: 0;
-      color: #fff6d2;
-      font-size: clamp(2.3rem, 5vw, 4.9rem);
-      line-height: .95;
-      text-shadow: 0 14px 38px rgba(0,0,0,.36);
+      font-size: clamp(36px, 6vw, 68px);
+      line-height: 0.95;
+      text-shadow: 0 0 30px rgba(143,216,255,0.22);
     }
 
-    h2 {
-      margin: 0 0 10px;
-      color: #fff4cf;
-      font-size: clamp(1.45rem, 3vw, 2.15rem);
-    }
-
-    .sub,
-    .note {
-      color: var(--muted);
-      line-height: 1.62;
-      font-size: 1.02rem;
-    }
-
-    .sub {
-      margin: 14px 0 0;
-      max-width: 940px;
-    }
-
-    .mission-track {
-      display: flex;
-      gap: 10px;
-      flex-wrap: wrap;
-      margin-top: 18px;
-    }
-
-    .mission-pill {
-      border: 1px solid rgba(244,211,94,.20);
-      background: rgba(244,211,94,.07);
-      color: rgba(248,241,221,.82);
+    .status-pill {
+      border: 1px solid rgba(145,245,179,0.42);
+      background: rgba(145,245,179,0.10);
+      color: var(--good);
       border-radius: 999px;
-      padding: 8px 12px;
-      font-size: .84rem;
-      font-weight: 900;
+      padding: 10px 14px;
+      font-size: 13px;
+      white-space: nowrap;
     }
 
-    .layout {
+    .hero {
       display: grid;
-      grid-template-columns: 1.08fr .92fr;
-      gap: 22px;
-      align-items: start;
+      grid-template-columns: 1.2fr 0.8fr;
+      gap: 18px;
+      position: relative;
+      z-index: 2;
     }
 
     .panel {
-      border: 1px solid var(--border);
-      border-radius: 30px;
+      border: 1px solid var(--line);
       background: var(--panel);
-      box-shadow: 0 24px 72px rgba(0,0,0,.30);
-      padding: 22px;
-      overflow: hidden;
+      border-radius: 24px;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.36);
+      backdrop-filter: blur(10px);
+      padding: 20px;
     }
 
-    .dashboard-grid {
+    .badge-card {
+      min-height: 310px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      background:
+        radial-gradient(circle at 80% 12%, rgba(245,215,122,0.18), transparent 26%),
+        var(--panel);
+    }
+
+    .badge-title {
+      font-size: clamp(28px, 4vw, 46px);
+      line-height: 1.02;
+      margin: 0 0 12px;
+    }
+
+    .badge-sub {
+      color: var(--soft);
+      line-height: 1.55;
+      max-width: 720px;
+      margin: 0;
+    }
+
+    .badge-rank {
+      display: inline-flex;
+      margin-top: 20px;
+      padding: 13px 16px;
+      border-radius: 18px;
+      border: 1px solid rgba(245,215,122,0.48);
+      background: rgba(245,215,122,0.13);
+      color: var(--gold);
+      font-weight: 800;
+      letter-spacing: 0.04em;
+    }
+
+    .guardian-note {
+      color: var(--soft);
+      line-height: 1.55;
+      margin: 0;
+      font-size: 15px;
+    }
+
+    .section-title {
+      color: var(--gold);
+      text-transform: uppercase;
+      letter-spacing: 0.16em;
+      font-size: 12px;
+      margin-bottom: 12px;
+    }
+
+    .skill-grid {
       display: grid;
       grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: 12px;
-      margin-top: 16px;
-    }
-
-    .dash-card {
-      border: 1px solid rgba(255,255,255,.10);
-      background: var(--soft);
-      border-radius: 20px;
-      padding: 15px;
-      min-height: 132px;
-    }
-
-    .dash-card strong {
-      display: block;
-      color: var(--gold);
-      margin-bottom: 7px;
-      font-size: .94rem;
-    }
-
-    .dash-card span,
-    .dash-card div {
-      display: block;
-      color: var(--muted);
-      line-height: 1.46;
-      font-size: .92rem;
-    }
-
-    .dash-card.complete {
-      border-color: rgba(244,211,94,.44);
-      background:
-        linear-gradient(135deg, rgba(244,211,94,.11), rgba(255,255,255,.04)),
-        rgba(255,255,255,.035);
-    }
-
-    .path-list {
-      display: grid;
       gap: 10px;
-      margin: 16px 0 18px;
-    }
-
-    .path-item {
-      border: 1px solid rgba(255,255,255,.10);
-      background: rgba(255,255,255,.045);
-      border-radius: 16px;
-      padding: 12px 14px;
-      display: grid;
-      grid-template-columns: 32px 1fr;
-      gap: 10px;
-      align-items: center;
-    }
-
-    .check {
-      width: 28px;
-      height: 28px;
-      border-radius: 999px;
-      display: grid;
-      place-items: center;
-      background: rgba(244,211,94,.15);
-      border: 1px solid rgba(244,211,94,.28);
-      color: var(--gold);
-      font-weight: 900;
-    }
-
-    .path-copy strong {
-      color: #fff4cf;
-      margin: 0 0 3px;
-      display: block;
-    }
-
-    .path-copy span {
-      color: var(--muted);
-      line-height: 1.42;
-      font-size: .90rem;
-    }
-
-    .actions {
-      display: flex;
-      gap: 12px;
-      flex-wrap: wrap;
-      margin-top: 18px;
-    }
-
-    .button {
-      border: 0;
-      border-radius: 999px;
-      padding: 13px 20px;
-      font-family: inherit;
-      font-weight: 900;
-      cursor: pointer;
-      text-decoration: none;
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-    }
-
-    .primary {
-      background: linear-gradient(135deg, var(--gold), var(--gold2));
-      color: #171006;
-      box-shadow: 0 12px 36px rgba(244,211,94,.20);
-    }
-
-    .secondary {
-      background: rgba(255,255,255,.10);
-      color: var(--text);
-      border: 1px solid rgba(255,255,255,.16);
-    }
-
-    .side-box {
-      border: 1px solid rgba(255,255,255,.10);
-      background: rgba(255,255,255,.045);
-      border-radius: 18px;
-      padding: 14px;
       margin-top: 14px;
     }
 
-    .side-box strong {
-      color: var(--gold);
-      display: block;
-      margin-bottom: 6px;
+    .skill {
+      padding: 12px;
+      border-radius: 16px;
+      border: 1px solid rgba(255,255,255,0.12);
+      background: rgba(255,255,255,0.06);
     }
 
-    .side-box span,
-    .side-box div,
-    .side-box li {
-      color: rgba(248,241,221,.72);
-      line-height: 1.48;
-      font-size: .92rem;
-    }
+    .skill strong { color: white; display: block; margin-bottom: 5px; }
+    .skill span { color: var(--soft); font-size: 13px; line-height: 1.35; }
 
-    .saved-preview {
-      white-space: pre-wrap;
-      max-height: 220px;
-      overflow: auto;
-    }
-
-    .ranking-list {
-      margin: 8px 0 0;
-      padding-left: 20px;
-      color: var(--muted);
-      line-height: 1.55;
-    }
-
-    .readiness-seal {
-      margin-top: 16px;
-      border-radius: 24px;
-      border: 1px solid rgba(244,211,94,.24);
-      min-height: 190px;
+    .routes {
       display: grid;
-      place-items: center;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 16px;
+      margin-top: 18px;
+      position: relative;
+      z-index: 2;
+    }
+
+    .route-card {
+      min-height: 220px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .route-card h2 {
+      margin: 0 0 10px;
+      font-size: 24px;
+    }
+
+    .route-card p {
+      color: var(--soft);
+      line-height: 1.48;
+      margin: 0 0 18px;
+      font-size: 14px;
+    }
+
+    .btn-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    a.button {
+      color: white;
+      text-decoration: none;
+      border: 1px solid rgba(255,255,255,0.22);
+      background: rgba(255,255,255,0.08);
+      border-radius: 14px;
+      padding: 12px 14px;
+      font-weight: 800;
+      transition: 0.25s;
+    }
+
+    a.button.primary {
+      background: rgba(245,215,122,0.16);
+      border-color: rgba(245,215,122,0.64);
+    }
+
+    a.button.continue {
+      background: rgba(145,245,179,0.14);
+      border-color: rgba(145,245,179,0.50);
+    }
+
+    a.button:hover {
+      transform: translateY(-1px);
+      border-color: rgba(245,215,122,0.82);
+      background: rgba(245,215,122,0.17);
+    }
+
+    .locked {
+      opacity: 0.62;
+    }
+
+    .footer-note {
+      margin-top: 18px;
+      color: rgba(255,255,255,0.55);
       text-align: center;
-      background:
-        radial-gradient(circle at center, rgba(244,211,94,.16), transparent 30%),
-        radial-gradient(circle at 50% 65%, rgba(125,211,252,.10), transparent 34%),
-        linear-gradient(180deg, rgba(255,255,255,.035), rgba(255,255,255,.01));
+      font-size: 12px;
+      position: relative;
+      z-index: 2;
     }
 
-    .readiness-seal strong {
-      color: var(--gold);
-      text-transform: uppercase;
-      letter-spacing: .12em;
-      font-size: .88rem;
-      display: block;
-      margin-bottom: 8px;
+    @media (max-width: 980px) {
+      .hero, .routes { grid-template-columns: 1fr; }
+      .topbar { flex-direction: column; }
+      .status-pill { white-space: normal; }
     }
 
-    .readiness-seal span {
-      color: rgba(248,241,221,.68);
-      line-height: 1.4;
-      display: block;
-      padding: 0 18px;
-    }
-
-    @media (max-width: 1080px) {
-      .layout { grid-template-columns: 1fr; }
-    }
-
-    @media (max-width: 760px) {
-      .hero { grid-template-columns: 1fr; }
-      .dashboard-grid { grid-template-columns: 1fr; }
-      h1 { font-size: 2.35rem; }
+    @media (max-width: 620px) {
+      .hub-shell { padding: 16px; }
+      .skill-grid { grid-template-columns: 1fr; }
     }
   </style>
 </head>
-
 <body>
-  <div class="atmosphere"></div>
-
-  <main class="page">
-    <section class="hero">
-      <div class="student-avatar" id="studentAvatar">
-        <div class="avatar-fallback">Avatar</div>
-      </div>
-
+  <!-- CI-STAGE-9 — Student Hub Cleanup -->
+  <main class="hub-shell">
+    <section class="topbar">
       <div>
-        <div class="kicker">Student Mission Dashboard</div>
-        <h1>Your Academy Record Is Open</h1>
-        <p class="sub" id="heroSub">
-          Academy Learner, your first inquiry path is complete. This hub keeps your Academy readiness record
-          and prepares you for the first world decision.
-        </p>
-
-        <div class="mission-track">
-          <div class="mission-pill" id="studentPill">Academy Learner</div>
-          <div class="mission-pill" id="readinessPill">Checking readiness</div>
-          <div class="mission-pill">Student-facing dashboard</div>
-          <div class="mission-pill">Next: Civilization Decision Path</div>
-        </div>
+        <div class="kicker">STEM Nation Student Hub</div>
+        <h1>Mission Checkpoint</h1>
       </div>
+      <div class="status-pill">Academy Readiness Trial Complete</div>
     </section>
 
-    <section class="layout">
-      <article class="panel">
-        <div class="kicker">Completed Academy Path</div>
-        <h2>Your first inquiry cycle</h2>
-        <p class="note">
-          The Academy did not test whether you guessed correctly. It tested whether you could observe, question,
-          justify, listen, and reflect before entering the civilization decision path.
-        </p>
-
-        <div class="path-list">
-          <div class="path-item">
-            <div class="check">✓</div>
-            <div class="path-copy">
-              <strong>Identity locked</strong>
-              <span>You chose or uploaded an Academy avatar and entered as a student.</span>
-            </div>
-          </div>
-          <div class="path-item">
-            <div class="check">✓</div>
-            <div class="path-copy">
-              <strong>Academy arrival</strong>
-              <span>You crossed into the Academy and entered the first gathering.</span>
-            </div>
-          </div>
-          <div class="path-item">
-            <div class="check" id="observationCheck">•</div>
-            <div class="path-copy">
-              <strong>Observation chamber</strong>
-              <span>You recorded evidence before deciding what the mystery meant.</span>
-            </div>
-          </div>
-          <div class="path-item">
-            <div class="check" id="rankingCheck">•</div>
-            <div class="path-copy">
-              <strong>Question ranking</strong>
-              <span>You selected the questions that should guide the investigation first.</span>
-            </div>
-          </div>
-          <div class="path-item">
-            <div class="check" id="briefingCheck">•</div>
-            <div class="path-copy">
-              <strong>Council briefing</strong>
-              <span>You explained why your questions deserved attention.</span>
-            </div>
-          </div>
-          <div class="path-item">
-            <div class="check" id="reactionCheck">•</div>
-            <div class="path-copy">
-              <strong>Advisor reactions</strong>
-              <span>The Council responded to the thinking shown in your priorities.</span>
-            </div>
-          </div>
-          <div class="path-item">
-            <div class="check" id="debriefCheck">•</div>
-            <div class="path-copy">
-              <strong>Mission debrief</strong>
-              <span>You reflected on what your choices revealed about your inquiry style.</span>
-            </div>
-          </div>
-        </div>
-
-        <div class="dashboard-grid">
-          <article class="dash-card" id="observationCard">
-            <strong>Observation Signal</strong>
-            <span id="observationSignal">Checking...</span>
-          </article>
-
-          <article class="dash-card" id="questionCard">
-            <strong>Question Quality Signal</strong>
-            <span id="questionSignal">Checking...</span>
-          </article>
-
-          <article class="dash-card" id="briefingCard">
-            <strong>Reasoning Signal</strong>
-            <span id="briefingSignal">Checking...</span>
-          </article>
-
-          <article class="dash-card" id="reflectionCard">
-            <strong>Reflection Signal</strong>
-            <span id="reflectionSignal">Checking...</span>
-          </article>
-        </div>
-
-        <div class="actions">
-          <a class="button primary" href="/map">Begin First World Decision</a>
-          <a class="button secondary" href="/mission_debrief">Review Mission Debrief</a>
-          <a class="button secondary" href="/academy_identity">Review Identity</a>
+    <section class="hero">
+      <article class="panel badge-card">
+        <div>
+          <div class="section-title">Badge Earned</div>
+          <h2 class="badge-title">Academy Investigator</h2>
+          <p class="badge-sub">
+            You completed the Council Hall trial. You observed evidence, asked investigation questions,
+            ranked priorities, listened to Council advisor reports, and defended a final reflection.
+          </p>
+          <div class="badge-rank">Nation Builder Candidate</div>
         </div>
       </article>
 
       <aside class="panel">
-        <div class="kicker">Academy Readiness Record</div>
-        <h2 id="readinessTitle">Checking readiness...</h2>
-        <p class="note" id="readinessText">
-          The hub is reading your saved inquiry path on this device.
+        <div class="section-title">Guardian Note</div>
+        <p class="guardian-note">
+          You were not asked to rush into an answer. You were asked to slow down, notice what changed,
+          ask better questions, choose what matters first, and name what remains uncertain. That is the first
+          step toward governing a nation wisely.
         </p>
-
-        <div class="readiness-seal">
-          <div>
-            <strong id="sealTitle">Academy Record</strong>
-            <span id="sealText">Saved progress will appear here after the first inquiry cycle.</span>
-          </div>
-        </div>
-
-        <div class="side-box">
-          <strong>Saved observation notes</strong>
-          <div class="saved-preview" id="observationPreview">No saved observation notes found yet.</div>
-        </div>
-
-        <div class="side-box">
-          <strong>Question ranking</strong>
-          <ol class="ranking-list" id="rankingList"></ol>
-        </div>
-
-        <div class="side-box">
-          <strong>Mission reflection</strong>
-          <div class="saved-preview" id="reflectionPreview">No saved mission reflection found yet.</div>
-        </div>
-
-        <div class="side-box">
-          <strong>Student-facing note</strong>
-          <span>Teacher tools, rubric scoring, archive exports, and admin controls remain outside this student view.</span>
-        </div>
       </aside>
     </section>
+
+    <section class="panel" style="margin-top:18px; position:relative; z-index:2;">
+      <div class="section-title">Readiness Skills Activated</div>
+      <div class="skill-grid">
+        <div class="skill"><strong>Observation</strong><span>Recorded visible evidence before making a claim.</span></div>
+        <div class="skill"><strong>Questioning</strong><span>Asked investigable questions about missing evidence and risk.</span></div>
+        <div class="skill"><strong>Prioritization</strong><span>Selected only three priorities and ranked them in order.</span></div>
+        <div class="skill"><strong>Evidence Listening</strong><span>Reviewed Scout, Builder, Healer, Mapkeeper, and Guardian reports.</span></div>
+        <div class="skill"><strong>Reflection</strong><span>Named a claim, evidence, uncertainty, and next investigation step.</span></div>
+        <div class="skill"><strong>Leadership Readiness</strong><span>Moved from audience member to Council investigator.</span></div>
+      </div>
+    </section>
+
+    <section class="routes" aria-label="Next student destinations">
+      <article class="panel route-card">
+        <div>
+          <div class="section-title">Review</div>
+          <h2>Council Hall</h2>
+          <p>Return to the stage show if you want to replay the Ice Break Mystery and improve your reasoning path.</p>
+        </div>
+        <div class="btn-row"><a class="button" href="/council_stage">Replay Trial</a></div>
+      </article>
+
+      <article class="panel route-card">
+        <div>
+          <div class="section-title">Next</div>
+          <h2>World Board Preview</h2>
+          <p>Preview the larger STEM Nation world where future choices will affect regions, resources, and nation decisions.</p>
+        </div>
+        <div class="btn-row"><a class="button primary" href="/map">Preview World Board</a></div>
+      </article>
+
+      <article class="panel route-card locked">
+        <div>
+          <div class="section-title">Coming Next</div>
+          <h2>Mission 2 Locked</h2>
+          <p>The next mission will unlock after the Academy trial and World Board preview are stable.</p>
+        </div>
+        <div class="btn-row"><a class="button continue" href="/">Return Home</a></div>
+      </article>
+    </section>
+
+    <div class="footer-note">STEM Nation Prototype Build · CI-STAGE-9</div>
   </main>
-
-  <script>
-    const IDENTITY_KEY = "stemNationStudentIdentity";
-    const OBSERVATION_KEY = "stemNationAcademyObservationV1";
-    const RANKING_KEY = "stemNationQuestionPriorityRankingV1";
-    const JUSTIFICATION_KEY = "stemNationQuestionJustificationV1";
-    const REACTION_KEY = "stemNationAdvisorReactionV1";
-    const DEBRIEF_KEY = "stemNationMissionDebriefV1";
-
-    const studentAvatar = document.getElementById("studentAvatar");
-    const studentPill = document.getElementById("studentPill");
-    const heroSub = document.getElementById("heroSub");
-    const readinessPill = document.getElementById("readinessPill");
-
-    const observationPreview = document.getElementById("observationPreview");
-    const rankingList = document.getElementById("rankingList");
-    const reflectionPreview = document.getElementById("reflectionPreview");
-
-    const readinessTitle = document.getElementById("readinessTitle");
-    const readinessText = document.getElementById("readinessText");
-    const sealTitle = document.getElementById("sealTitle");
-    const sealText = document.getElementById("sealText");
-
-    let identity = {
-      name: "Academy Learner",
-      portrait: "",
-      fallback: "",
-      avatarChoice: "Academy Avatar"
-    };
-
-    function readJson(key) {
-      try {
-        return JSON.parse(localStorage.getItem(key) || "null");
-      } catch (error) {
-        console.warn("Could not read localStorage key:", key, error);
-        return null;
-      }
-    }
-
-    function looksLikeImageSource(value) {
-      return typeof value === "string" && (
-        value.startsWith("data:image/") ||
-        value.startsWith("/static/") ||
-        value.startsWith("http://") ||
-        value.startsWith("https://")
-      );
-    }
-
-    const savedIdentity = readJson(IDENTITY_KEY);
-    if (savedIdentity) identity = { ...identity, ...savedIdentity };
-
-    const observation = readJson(OBSERVATION_KEY);
-    const rankingRecord = readJson(RANKING_KEY);
-    const justification = readJson(JUSTIFICATION_KEY);
-    const reaction = readJson(REACTION_KEY);
-    const debrief = readJson(DEBRIEF_KEY);
-
-    let displayName = identity.teacherApprovedName || identity.approvedName || identity.name || "Academy Learner";
-    displayName = String(displayName)
-      .replace(/^New Arrival\s*/i, "")
-      .replace(/^Academy Learner\s*/i, "")
-      .trim() || "Academy Learner";
-
-    const avatarChoice = identity.avatarChoice || identity.avatarTitle || "Academy Avatar";
-    const avatarSource = identity.portrait || identity.fallback || "";
-
-    studentPill.textContent = `${avatarChoice} · ${displayName}`;
-    heroSub.textContent = `${displayName}, your first inquiry path is complete. This hub keeps your Academy readiness record and prepares you for the first world decision.`;
-
-    studentAvatar.innerHTML = "";
-    if (looksLikeImageSource(avatarSource)) {
-      const img = document.createElement("img");
-      img.src = avatarSource;
-      img.alt = "Student Academy avatar";
-      studentAvatar.appendChild(img);
-    } else {
-      const fallback = document.createElement("div");
-      fallback.className = "avatar-fallback";
-      fallback.textContent = "Avatar";
-      studentAvatar.appendChild(fallback);
-    }
-
-    const ranking = rankingRecord && Array.isArray(rankingRecord.ranking)
-      ? rankingRecord.ranking.slice(0, 3)
-      : [];
-
-    const complete = {
-      observation: !!(observation && observation.observations),
-      ranking: ranking.length === 3,
-      justification: !!(justification && Array.isArray(justification.justifications)),
-      reaction: !!(reaction && Array.isArray(reaction.reactions)),
-      debrief: !!(debrief && debrief.reflection)
-    };
-
-    function setCheck(id, done) {
-      const el = document.getElementById(id);
-      if (el) el.textContent = done ? "✓" : "•";
-    }
-
-    setCheck("observationCheck", complete.observation);
-    setCheck("rankingCheck", complete.ranking);
-    setCheck("briefingCheck", complete.justification);
-    setCheck("reactionCheck", complete.reaction);
-    setCheck("debriefCheck", complete.debrief);
-
-    function setSignal(cardId, signalId, done, completeText, pendingText) {
-      const card = document.getElementById(cardId);
-      const signal = document.getElementById(signalId);
-
-      if (card && done) card.classList.add("complete");
-      if (signal) signal.textContent = done ? completeText : pendingText;
-    }
-
-    setSignal("observationCard", "observationSignal", complete.observation, "Recorded — you noticed before judging.", "Pending — observation record not found.");
-    setSignal("questionCard", "questionSignal", complete.ranking, "Ranked — you chose three guiding questions.", "Pending — question ranking not found.");
-    setSignal("briefingCard", "briefingSignal", complete.justification, "Saved — you defended your priorities.", "Pending — Council briefing not found.");
-    setSignal("reflectionCard", "reflectionSignal", complete.debrief, "Saved — you reflected on your inquiry path.", "Pending — mission debrief not found.");
-
-    if (complete.observation) {
-      observationPreview.textContent =
-        observation.observations +
-        (observation.uncertainties ? "\\n\\nStill uncertain: " + observation.uncertainties : "");
-    }
-
-    if (ranking.length) {
-      rankingList.innerHTML = ranking.map(item => `<li>${escapeHtml(item)}</li>`).join("");
-    } else {
-      rankingList.innerHTML = "<li>No saved ranking found yet.</li>";
-    }
-
-    if (complete.debrief) {
-      const reflection = debrief.reflection || {};
-      reflectionPreview.textContent =
-        "Choices revealed:\\n" + (reflection.choices || "") +
-        "\\n\\nCouncil reaction:\\n" + (reflection.council || "") +
-        "\\n\\nCarry forward:\\n" + (reflection.next || "");
-    }
-
-    if (complete.observation && complete.ranking && complete.justification && complete.reaction && complete.debrief) {
-      readinessPill.textContent = "Academy Trial Complete";
-      readinessTitle.textContent = "Academy Trial Complete";
-      readinessText.textContent = "Your first inquiry cycle is complete. You are ready to carry this thinking into the first world decision.";
-      sealTitle.textContent = "Ready for World Decision";
-      sealText.textContent = "You completed observation, question ranking, Council briefing, advisor reactions, and mission debrief.";
-    } else if (complete.observation || complete.ranking || complete.justification || complete.reaction) {
-      readinessPill.textContent = "Inquiry In Progress";
-      readinessTitle.textContent = "Inquiry In Progress";
-      readinessText.textContent = "Some parts of your inquiry path are saved. Complete the remaining Academy steps before the first world decision.";
-      sealTitle.textContent = "Progress Saved";
-      sealText.textContent = "Your inquiry record is still forming.";
-    } else {
-      readinessPill.textContent = "Academy Record Pending";
-      readinessTitle.textContent = "Academy Record Pending";
-      readinessText.textContent = "No full inquiry record was found on this device yet.";
-      sealTitle.textContent = "Begin Academy Path";
-      sealText.textContent = "Start with identity, gathering, observation, and question ranking.";
-    }
-
-    function escapeHtml(str) {
-      return String(str || "")
-        .replaceAll("&", "&amp;")
-        .replaceAll("<", "&lt;")
-        .replaceAll(">", "&gt;")
-        .replaceAll('"', "&quot;")
-        .replaceAll("'", "&#039;");
-    }
-  </script>
 </body>
 </html>
