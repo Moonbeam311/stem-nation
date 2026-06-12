@@ -1,0 +1,115 @@
+{
+  "version": "VIS-1",
+  "title": "STEM Nation Visual Experience Layer",
+  "purpose": "Central registry for images, animation classes, cartoon scenes, advisor states, and mission visuals.",
+  "style_lock": {
+    "tone": "cinematic classroom adventure",
+    "look": "warm cartoon realism",
+    "student_age_fit": "upper elementary through middle school",
+    "rules": [
+      "Visuals support inquiry; they do not replace thinking.",
+      "Student identity remains separate from Inquiry Council advisors.",
+      "Council advisors guide the learner; students do not become advisor roles.",
+      "Animation should clarify progress, consequence, and reflection.",
+      "Avoid clutter, overstimulation, or childish decoration."
+    ]
+  },
+  "council_advisors": {
+    "scout": {
+      "verb": "Discover",
+      "question": "What do we notice?",
+      "states": [
+        "neutral",
+        "observing",
+        "concerned",
+        "excited"
+      ]
+    },
+    "mapkeeper": {
+      "verb": "Remember",
+      "question": "What do we know?",
+      "states": [
+        "neutral",
+        "remembering",
+        "warning",
+        "confirming"
+      ]
+    },
+    "builder": {
+      "verb": "Create",
+      "question": "What can we build?",
+      "states": [
+        "neutral",
+        "planning",
+        "testing",
+        "celebrating"
+      ]
+    },
+    "healer": {
+      "verb": "Restore",
+      "question": "What do people need?",
+      "states": [
+        "neutral",
+        "worried",
+        "caring",
+        "restored"
+      ]
+    },
+    "guardian": {
+      "verb": "Protect",
+      "question": "What should we protect?",
+      "states": [
+        "neutral",
+        "alert",
+        "protective",
+        "approving"
+      ]
+    }
+  },
+  "mission_visuals": {
+    "washed_out_crossing": {
+      "folder": "static/images/missions/washed_out_crossing",
+      "needed_assets": [
+        "background_flooded_crossing.png",
+        "bridge_damaged.png",
+        "river_current.png",
+        "supply_rope.png",
+        "supply_planks.png",
+        "supply_food.png",
+        "supply_medicine.png",
+        "supply_map.png",
+        "checkpoint_success.png",
+        "checkpoint_warning.png"
+      ],
+      "animation_roles": [
+        "scene entrance",
+        "water motion",
+        "wrong choice shake",
+        "checkpoint glow",
+        "journal slide-in"
+      ]
+    },
+    "river_crossing": {
+      "folder": "static/images/missions/river_crossing",
+      "needed_assets": [
+        "river_background.png",
+        "boat.png",
+        "farmer.png",
+        "wolf.png",
+        "goat.png",
+        "wheat.png"
+      ]
+    },
+    "backpack": {
+      "folder": "static/images/missions/backpack",
+      "needed_assets": [
+        "backpack_empty.png",
+        "item_water.png",
+        "item_snack.png",
+        "item_book.png",
+        "item_toy.png",
+        "item_jacket.png"
+      ]
+    }
+  }
+}

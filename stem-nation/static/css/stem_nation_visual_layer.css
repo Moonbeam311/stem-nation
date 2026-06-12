@@ -1,0 +1,215 @@
+/* ============================================================
+   VIS-1 — STEM Nation Visual Experience Layer
+   Purpose: shared image, cartoon, animation, and scene utilities
+   ============================================================ */
+
+:root {
+  --sn-visual-bg: #08111f;
+  --sn-panel-bg: rgba(9, 18, 34, 0.88);
+  --sn-panel-border: rgba(255, 221, 140, 0.24);
+  --sn-gold: #f4c95d;
+  --sn-blue: #6bbcff;
+  --sn-green: #7ee081;
+  --sn-warning: #ffcf5a;
+  --sn-danger: #ff6b6b;
+  --sn-text: #f7f1dc;
+  --sn-muted: #b7c2d8;
+}
+
+/* Main illustrated scene frame */
+.sn-scene-frame {
+  position: relative;
+  overflow: hidden;
+  min-height: 420px;
+  border: 1px solid var(--sn-panel-border);
+  border-radius: 24px;
+  background:
+    radial-gradient(circle at 20% 10%, rgba(107,188,255,0.18), transparent 35%),
+    radial-gradient(circle at 80% 0%, rgba(244,201,93,0.16), transparent 30%),
+    linear-gradient(145deg, #08111f, #101d33 55%, #07101e);
+  color: var(--sn-text);
+  box-shadow: 0 24px 70px rgba(0,0,0,0.38);
+}
+
+/* Background image layer */
+.sn-scene-bg {
+  position: absolute;
+  inset: 0;
+  background-position: center;
+  background-size: cover;
+  opacity: 0.86;
+  z-index: 1;
+}
+
+/* Atmospheric overlay */
+.sn-atmosphere {
+  position: absolute;
+  inset: -20%;
+  z-index: 2;
+  pointer-events: none;
+  background:
+    radial-gradient(circle at 30% 25%, rgba(255,255,255,0.09), transparent 18%),
+    radial-gradient(circle at 70% 45%, rgba(107,188,255,0.08), transparent 22%);
+  animation: snAtmosphereDrift 12s ease-in-out infinite alternate;
+}
+
+/* Character/advisor layer */
+.sn-character {
+  position: relative;
+  z-index: 5;
+  display: inline-flex;
+  align-items: center;
+  gap: 14px;
+  padding: 14px 16px;
+  border-radius: 18px;
+  background: rgba(5, 12, 24, 0.72);
+  border: 1px solid rgba(255,255,255,0.12);
+  backdrop-filter: blur(8px);
+}
+
+.sn-character img {
+  width: 74px;
+  height: 74px;
+  object-fit: cover;
+  border-radius: 18px;
+  border: 1px solid rgba(244,201,93,0.45);
+  background: rgba(255,255,255,0.08);
+}
+
+/* Mission object cards */
+.sn-object-tray {
+  position: relative;
+  z-index: 6;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+  gap: 12px;
+}
+
+.sn-object-card {
+  cursor: pointer;
+  user-select: none;
+  border-radius: 18px;
+  padding: 12px;
+  background: rgba(255,255,255,0.08);
+  border: 1px solid rgba(255,255,255,0.16);
+  color: var(--sn-text);
+  transition: transform 160ms ease, border-color 160ms ease, background 160ms ease;
+}
+
+.sn-object-card:hover {
+  transform: translateY(-3px);
+  border-color: rgba(244,201,93,0.55);
+  background: rgba(255,255,255,0.12);
+}
+
+.sn-object-card.selected {
+  border-color: var(--sn-gold);
+  box-shadow: 0 0 0 2px rgba(244,201,93,0.18);
+}
+
+/* Checkpoint / summary panel */
+.sn-checkpoint {
+  position: relative;
+  z-index: 7;
+  margin-top: 18px;
+  padding: 16px;
+  border-radius: 20px;
+  background: var(--sn-panel-bg);
+  border: 1px solid var(--sn-panel-border);
+}
+
+/* Animation utilities */
+.sn-anim-enter {
+  animation: snEnter 700ms ease both;
+}
+
+.sn-anim-rise {
+  animation: snRise 700ms ease both;
+}
+
+.sn-anim-glow {
+  animation: snGlow 1.4s ease-in-out infinite alternate;
+}
+
+.sn-anim-shake {
+  animation: snShake 420ms ease both;
+}
+
+.sn-anim-pulse {
+  animation: snPulse 1.2s ease-in-out infinite;
+}
+
+.sn-hidden {
+  display: none !important;
+}
+
+@keyframes snEnter {
+  from {
+    opacity: 0;
+    transform: translateY(18px) scale(.97);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes snRise {
+  from {
+    opacity: 0;
+    transform: translateY(28px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes snGlow {
+  from {
+    box-shadow: 0 0 0 rgba(244,201,93,0);
+  }
+  to {
+    box-shadow: 0 0 28px rgba(244,201,93,0.34);
+  }
+}
+
+@keyframes snShake {
+  0%, 100% { transform: translateX(0); }
+  20% { transform: translateX(-7px); }
+  40% { transform: translateX(7px); }
+  60% { transform: translateX(-5px); }
+  80% { transform: translateX(5px); }
+}
+
+@keyframes snPulse {
+  0%, 100% {
+    transform: scale(1);
+    opacity: 0.92;
+  }
+  50% {
+    transform: scale(1.025);
+    opacity: 1;
+  }
+}
+
+@keyframes snAtmosphereDrift {
+  from {
+    transform: translate3d(-2%, -1%, 0) rotate(0deg);
+  }
+  to {
+    transform: translate3d(2%, 1%, 0) rotate(1deg);
+  }
+}
+
+/* Reduced motion accessibility */
+@media (prefers-reduced-motion: reduce) {
+  .sn-anim-enter,
+  .sn-anim-rise,
+  .sn-anim-glow,
+  .sn-anim-shake,
+  .sn-anim-pulse,
+  .sn-atmosphere {
+    animation: none !important;
+  }
+}

@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>The Washed-Out Crossing · STEM Nation</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  {% if visual_css_exists %}
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/stem_nation_visual_layer.css') }}">
+  {% endif %}
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/washed_out_crossing_visual.css') }}">
+</head>
+
+<body class="woc-page">
+  <main class="woc-shell">
+    <section class="woc-topbar">
+      <div class="woc-title">
+        <div class="woc-kicker">{{ mission.subtitle }}</div>
+        <h1>{{ mission.title }}</h1>
+        <p>
+          The crossing has washed out after heavy rain. You must observe the scene,
+          choose only three priorities, explain why they matter, and test your survival plan.
+        </p>
+      </div>
+
+      <aside class="woc-progress">
+        <strong>Mission Progress <span data-woc-count>0/3</span></strong>
+        <div class="woc-progress-track">
+          <div class="woc-progress-fill" data-woc-progress-fill></div>
+        </div>
+      </aside>
+    </section>
+
+    <section class="woc-stage" data-woc-stage data-woc-mission-started="false">
+      {% if resolved_assets.background.exists %}
+      <div class="woc-real-bg" style="background-image: url('{{ url_for('static', filename=resolved_assets.background.url) }}');"></div>
+      {% endif %}
+
+      {% if resolved_assets.river.exists %}
+      <img class="woc-real-river" src="{{ url_for('static', filename=resolved_assets.river.url) }}" alt="" aria-hidden="true">
+      {% endif %}
+
+      {% if resolved_assets.bridge.exists %}
+      <img class="woc-real-bridge" src="{{ url_for('static', filename=resolved_assets.bridge.url) }}" alt="" aria-hidden="true">
+      {% endif %}
+
+      <div class="woc-sky"></div>
+      <div class="woc-hills"></div>
+      <div class="woc-rain"></div>
+      <div class="woc-river"></div>
+
+      <div class="woc-broken-bridge" aria-hidden="true">
+        <div class="woc-bridge-piece"></div>
+        <div class="woc-bridge-piece"></div>
+        <div class="woc-bridge-gap"></div>
+        <div class="woc-bridge-piece"></div>
+        <div class="woc-bridge-piece"></div>
+      </div>
+
+      <div class="woc-begin-overlay" data-woc-begin-overlay>
+        <div class="woc-begin-card">
+          <div class="woc-kicker">Mission Ready</div>
+          <h2>The crossing is not safe yet.</h2>
+          <p>
+            Review the incident. When you begin, the Guardian will step forward,
+            explain the challenge, and your priority choices will unlock.
+          </p>
+          <button class="woc-btn woc-begin-btn" type="button" data-woc-begin>Begin Mission</button>
+        </div>
+      </div>
+
+      <div class="woc-content">
+        <aside class="woc-panel">
+          <h2>Incident Report</h2>
+          <p class="woc-instructions">
+            A storm damaged the crossing. People may need to move, but rushing could make
+            the situation worse. Your job is not to grab everything. Your job is to decide
+            what matters first.
+          </p>
+
+          <div class="woc-advisor" data-woc-advisor>
+            <div class="woc-advisor-avatar woc-guardian-avatar" data-woc-advisor-avatar aria-label="Guardian advisor avatar">
+              {% if resolved_assets.guardian_neutral.exists %}
+              <img
+                class="woc-guardian-img"
+                data-woc-guardian-img
+                data-neutral-src="{{ url_for('static', filename=resolved_assets.guardian_neutral.url) }}"
+                data-alert-src="{% if resolved_assets.guardian_alert.exists %}{{ url_for('static', filename=resolved_assets.guardian_alert.url) }}{% endif %}"
+                data-speaking-src="{% if resolved_assets.guardian_speaking.exists %}{{ url_for('static', filename=resolved_assets.guardian_speaking.url) }}{% endif %}"
+                data-success-src="{% if resolved_assets.guardian_success.exists %}{{ url_for('static', filename=resolved_assets.guardian_success.url) }}{% endif %}"
+                src="{{ url_for('static', filename=resolved_assets.guardian_neutral.url) }}"
+                alt="Guardian advisor"
+                onerror="this.style.display='none'; this.closest('.woc-guardian-avatar').classList.add('asset-failed');"
+              >
+              {% else %}
+              <div class="woc-guardian-head">
+                <span class="woc-guardian-eye left"></span>
+                <span class="woc-guardian-eye right"></span>
+                <span class="woc-guardian-mouth"></span>
+              </div>
+              <div class="woc-guardian-body">
+                <span class="woc-guardian-shield">🛡️</span>
+              </div>
+              {% endif %}
+              <span class="woc-advisor-expression" data-woc-expression>!</span>
+            </div>
+            <div class="woc-advisor-text">
+              <small>{{ mission.advisor.verb }}</small>
+              <strong>{{ mission.advisor.name }}</strong>
+              <p>{{ mission.advisor.question }}</p>
+            </div>
+          </div>
+
+          <div class="woc-speech-bubble" aria-live="polite">
+            <strong>Guardian says</strong>
+            <span
+              class="woc-speech-text"
+              data-woc-speech-text
+              data-intro-line="{{ mission.advisor_dialogue.intro }}"
+              data-selecting-line="{{ mission.advisor_dialogue.selecting }}"
+              data-limit-warning-line="{{ mission.advisor_dialogue.limit_warning }}"
+              data-explain-line="{{ mission.advisor_dialogue.explain }}"
+              data-missing-reason-line="{{ mission.advisor_dialogue.missing_reason }}"
+              data-complete-line="{{ mission.advisor_dialogue.complete }}"
+            ></span>
+
+            <div class="woc-voice-row">
+              <button class="woc-mini-btn" type="button" data-woc-speak>Speak Aloud</button>
+              <button class="woc-mini-btn" type="button" data-woc-stop-speech>Stop Voice</button>
+              <span class="woc-voice-status" data-woc-voice-status>Checking voice…</span>
+            </div>
+          </div>
+
+          <div class="woc-visual-readiness" data-woc-visual-readiness>
+            <strong>Visual Mission Mode Active</strong>
+            <p>
+              The Guardian and mission scene are active. Some illustrated scene details
+              may continue to be refined as the Academy grows.
+            </p>
+          </div>
+
+          <details class="woc-asset-status woc-dev-asset-status" data-woc-asset-status>
+            <summary>Developer Asset Status</summary>
+            <ul>
+              <li>Background: {% if resolved_assets.background.exists %}READY{% else %}MISSING{% endif %}</li>
+              <li>Bridge: {% if resolved_assets.bridge.exists %}READY{% else %}MISSING{% endif %}</li>
+              <li>River: {% if resolved_assets.river.exists %}READY{% else %}MISSING{% endif %}</li>
+              <li>Guardian Neutral: {% if resolved_assets.guardian_neutral.exists %}READY{% else %}MISSING{% endif %}</li>
+              <li>Guardian Alert: {% if resolved_assets.guardian_alert.exists %}READY{% else %}MISSING{% endif %}</li>
+              <li>Guardian Speaking: {% if resolved_assets.guardian_speaking.exists %}READY{% else %}MISSING{% endif %}</li>
+              <li>Guardian Success: {% if resolved_assets.guardian_success.exists %}READY{% else %}MISSING{% endif %}</li>
+            </ul>
+          </details>
+
+          <div class="woc-rule">
+            Rule: Select exactly <strong>three priorities</strong>, in order of importance.
+            Then explain why each one matters.
+          </div>
+
+          <div class="woc-checkpoint active" data-woc-checkpoint>
+            Observe the damaged crossing. Choose only three priorities.
+          </div>
+
+          <div class="woc-warning" data-woc-warning></div>
+
+          <div class="woc-summary" data-woc-summary>
+            <h3>Mission Summary</h3>
+            <p>Your survival plan is based on these defended priorities:</p>
+            <ol data-woc-summary-list></ol>
+          </div>
+
+          <div class="woc-complete-banner" data-woc-complete>
+            <strong>Checkpoint Complete</strong>
+            <p>
+              You did not just pick supplies. You made a decision, explained your thinking,
+              and defended your order of importance. Next, this can transition into the
+              Council reflection or the next Academy step.
+            </p>
+          </div>
+        </aside>
+
+        <section class="woc-panel">
+          <h2>Choose Your Three Priorities</h2>
+          <p class="woc-instructions">
+            Click materials in the order you believe they matter. Your order becomes part
+            of your mission record.
+          </p>
+
+          <div class="woc-material-grid">
+            {% for item in mission.materials %}
+            <button
+              type="button"
+              class="woc-material-card"
+              data-woc-material="{{ item.id }}"
+              data-woc-label="{{ item.label }}"
+              data-woc-prompt="{{ item.student_prompt }}"
+            >
+              <span class="woc-choice-number" data-woc-choice-number></span>
+              <div class="woc-material-icon">{{ item.icon }}</div>
+              <strong>{{ item.label }}</strong>
+              <span>{{ item.student_prompt }}</span>
+            </button>
+            {% endfor %}
+          </div>
+
+          <div class="woc-explain-zone" data-woc-explain-zone>
+            <h3>Explain Your Choices</h3>
+            <p class="woc-instructions">
+              A strong plan includes reasons. Explain why each selected priority belongs
+              in your top three.
+            </p>
+            <div data-woc-explain-list></div>
+
+            <div class="woc-actions">
+              <button class="woc-btn" type="button" data-woc-test>Test My Plan</button>
+              <button class="woc-btn secondary" type="button" data-woc-reset>Start Over</button>
+            </div>
+          </div>
+        </section>
+      </div>
+    </section>
+  </main>
+
+  {% if visual_js_exists %}
+  <script src="{{ url_for('static', filename='js/stem_nation_visual_layer.js') }}"></script>
+  {% endif %}
+  <script src="{{ url_for('static', filename='js/washed_out_crossing_visual.js') }}"></script>
+</body>
+</html>

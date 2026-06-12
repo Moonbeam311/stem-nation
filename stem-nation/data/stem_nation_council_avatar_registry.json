@@ -1,0 +1,68 @@
+{
+  "version": "VIS-2G",
+  "title": "STEM Nation Council Avatar Registry",
+  "purpose": "Maps existing council/avatar assets already present in the project into the visual acting system.",
+  "important_rule": "These are advisor assets, not student identity choices. Student avatars remain separate.",
+  "avatars": {
+    "guardian": {
+      "name": "Guardian",
+      "verb": "Protect",
+      "question": "What should we protect?",
+      "existing_asset": "avatars/student/guardian.png",
+      "states": {
+        "neutral": "avatars/student/guardian.png",
+        "alert": "avatars/student/guardian.png",
+        "speaking": "avatars/student/guardian.png",
+        "success": "avatars/student/guardian.png"
+      }
+    },
+    "scout": {
+      "name": "Scout",
+      "verb": "Discover",
+      "question": "What do we notice?",
+      "existing_asset": "avatars/student/scout.png",
+      "states": {
+        "neutral": "avatars/student/scout.png",
+        "observing": "avatars/student/scout.png",
+        "excited": "avatars/student/scout.png",
+        "speaking": "avatars/student/scout.png"
+      }
+    },
+    "mapkeeper": {
+      "name": "Mapkeeper",
+      "verb": "Remember",
+      "question": "What do we know?",
+      "existing_asset": "avatars/student/mapkeeper.png",
+      "states": {
+        "neutral": "avatars/student/mapkeeper.png",
+        "remembering": "avatars/student/mapkeeper.png",
+        "warning": "avatars/student/mapkeeper.png",
+        "confirming": "avatars/student/mapkeeper.png"
+      }
+    },
+    "builder": {
+      "name": "Builder",
+      "verb": "Create",
+      "question": "What can we build?",
+      "existing_asset": "avatars/student/builder.png",
+      "states": {
+        "neutral": "avatars/student/builder.png",
+        "planning": "avatars/student/builder.png",
+        "testing": "avatars/student/builder.png",
+        "celebrating": "avatars/student/builder.png"
+      }
+    },
+    "healer": {
+      "name": "Healer",
+      "verb": "Restore",
+      "question": "What do people need?",
+      "existing_asset": "avatars/student/healer.png",
+      "states": {
+        "neutral": "avatars/student/healer.png",
+        "concerned": "avatars/student/healer.png",
+        "caring": "avatars/student/healer.png",
+        "restored": "avatars/student/healer.png"
+      }
+    }
+  }
+}

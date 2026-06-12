@@ -369,6 +369,49 @@ def student_hub():
 def council_stage_clean():
     return render_template("council_stage_clean.html")
 
+# VIS-1 — STEM Nation Visual Experience Layer Preview
+@app.route("/visual_layer_preview")
+def visual_layer_preview():
+    return render_template("visual_layer_preview.html")
+
+# VIS-2 — Washed-Out Crossing Illustrated Mission Prototype
+@app.route("/washed_out_crossing_visual")
+def washed_out_crossing_visual():
+    import json
+    from pathlib import Path
+
+    mission_path = Path("data/washed_out_crossing_visual_mission.json")
+    if mission_path.exists():
+        mission = json.loads(mission_path.read_text(encoding="utf-8"))
+    else:
+        mission = {
+            "title": "The Washed-Out Crossing",
+            "subtitle": "Academy Readiness Evaluation",
+            "advisor": {
+                "name": "Guardian",
+                "verb": "Protect",
+                "question": "What should we protect first?"
+            },
+            "materials": []
+        }
+
+    asset_hooks = mission.get("asset_hooks", {})
+    resolved_assets = {}
+    for key, rel_path in asset_hooks.items():
+        full_path = Path("static") / rel_path
+        resolved_assets[key] = {
+            "exists": full_path.exists(),
+            "url": rel_path
+        }
+
+    return render_template(
+        "washed_out_crossing_visual.html",
+        mission=mission,
+        resolved_assets=resolved_assets,
+        visual_css_exists=Path("static/css/stem_nation_visual_layer.css").exists(),
+        visual_js_exists=Path("static/js/stem_nation_visual_layer.js").exists()
+    )
+
 if __name__ == "__main__":
     import os
     port = int(os.environ.get("PORT", 5000))
