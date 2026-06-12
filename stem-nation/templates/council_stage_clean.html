@@ -666,6 +666,187 @@
   }
 }
 
+
+/* CI-STAGE-46R RECOVER QUESTION RANKING FLOW */
+.question-ranking-panel{
+  margin:0 28px 24px;
+  border-radius:24px;
+  border:1px solid rgba(245,215,122,.30);
+  background:rgba(255,255,255,.055);
+  padding:20px;
+  display:none;
+}
+
+.question-ranking-panel h2{
+  margin:0 0 8px;
+  color:var(--gold);
+  font-size:24px;
+}
+
+.question-ranking-panel p{
+  margin:0 0 14px;
+  color:rgba(255,255,255,.76);
+  line-height:1.45;
+}
+
+.question-ranking-count{
+  margin:0 0 14px;
+  border-radius:16px;
+  border:1px solid rgba(143,216,255,.22);
+  background:rgba(143,216,255,.07);
+  padding:12px;
+  color:rgba(255,255,255,.84);
+  font-size:14px;
+}
+
+.question-ranking-count strong{
+  color:var(--gold);
+}
+
+.question-rank-list{
+  display:grid;
+  gap:10px;
+}
+
+.question-rank-option{
+  display:grid;
+  grid-template-columns:52px 1fr;
+  gap:12px;
+  align-items:center;
+  border-radius:18px;
+  border:1px solid rgba(143,216,255,.20);
+  background:rgba(2,8,18,.48);
+  padding:14px;
+  cursor:pointer;
+}
+
+.question-rank-option:hover{
+  border-color:rgba(245,215,122,.50);
+  background:rgba(245,215,122,.07);
+}
+
+.question-rank-option.selected{
+  border-color:rgba(245,215,122,.72);
+  background:rgba(245,215,122,.12);
+}
+
+.question-rank-badge{
+  width:42px;
+  height:42px;
+  border-radius:14px;
+  display:grid;
+  place-items:center;
+  border:1px solid rgba(255,255,255,.18);
+  background:rgba(255,255,255,.06);
+  color:rgba(255,255,255,.72);
+  font-weight:900;
+}
+
+.question-rank-option.selected .question-rank-badge{
+  color:#0b1220;
+  background:var(--gold);
+  border-color:rgba(245,215,122,.90);
+}
+
+.question-rank-text{
+  color:rgba(255,255,255,.88);
+  line-height:1.42;
+  font-size:14px;
+}
+
+.question-rank-reason{
+  margin-top:14px;
+}
+
+.question-rank-reason label{
+  display:block;
+  color:var(--gold);
+  font-weight:900;
+  margin-bottom:8px;
+}
+
+.question-rank-reason textarea{
+  width:100%;
+  min-height:105px;
+  resize:vertical;
+  border-radius:16px;
+  border:1px solid rgba(143,216,255,.28);
+  background:rgba(2,8,18,.72);
+  color:white;
+  padding:13px 14px;
+  font:inherit;
+  line-height:1.45;
+}
+
+.question-rank-feedback{
+  display:none;
+  margin-top:14px;
+  border-radius:16px;
+  border:1px solid rgba(145,245,179,.30);
+  background:rgba(145,245,179,.08);
+  padding:12px;
+  color:rgba(255,255,255,.86);
+  line-height:1.4;
+}
+
+.question-rank-feedback strong{
+  color:var(--good, #91f5b3);
+}
+
+#saveQuestionRankingBtn{
+  margin-top:14px;
+  width:100%;
+}
+
+.resume-first-look-panel{
+  margin-top:16px;
+  border-radius:20px;
+  border:1px solid rgba(143,216,255,.28);
+  background:rgba(143,216,255,.07);
+  padding:14px;
+}
+
+.resume-first-look-panel p{
+  margin:0 0 10px;
+  color:rgba(255,255,255,.78);
+  font-size:14px;
+  line-height:1.4;
+}
+
+.resume-first-look-panel button{
+  width:100%;
+}
+
+
+/* CI-STAGE-46R-1 CONTINUE AFTER QUESTION RANKING */
+.question-ranking-next{
+  display:none;
+  margin-top:14px;
+  gap:10px;
+  flex-wrap:wrap;
+}
+
+.question-ranking-next.active{
+  display:flex;
+}
+
+.question-ranking-next button,
+.question-ranking-next a{
+  border:1px solid rgba(245,215,122,.55);
+  background:rgba(245,215,122,.14);
+  color:white;
+  border-radius:14px;
+  padding:12px 14px;
+  cursor:pointer;
+  font-weight:800;
+  text-decoration:none;
+}
+
+.question-ranking-next a.secondary{
+  border-color:rgba(143,216,255,.34);
+  background:rgba(143,216,255,.09);
+}
+
 </style>
 </head>
 
@@ -843,14 +1024,75 @@
 
           <div class="first-look-feedback" id="firstLookFeedback">
             <strong>First Look Saved.</strong><br>
-            You observed before explaining. Next: Question Builder.
+            You observed before explaining. Next: rank the Council questions.
           </div>
         </div>
       </section>
 
       <div class="actions">
-        <button id="questionBuilderPreviewBtn" disabled>Question Builder connects next</button>
+        <button id="questionBuilderPreviewBtn" disabled>Open Question Ranking</button>
       </div>
+
+      <section class="question-ranking-panel" id="questionRankingPanel">
+        <h2>Rank Council Questions</h2>
+        <p>
+          A strong investigator does not ask every question at once. Choose the first, second,
+          and third priority questions for the Council to investigate next.
+        </p>
+
+        <div class="question-ranking-count" id="questionRankingCount">
+          <strong>0 / 3</strong> questions ranked.
+        </div>
+
+        <div class="question-rank-list" id="questionRankList">
+          <div class="question-rank-option" data-question="What exactly changed between the previous scan and the current scan?">
+            <div class="question-rank-badge">—</div>
+            <div class="question-rank-text">What exactly changed between the previous scan and the current scan?</div>
+          </div>
+
+          <div class="question-rank-option" data-question="What is the unknown exposed area?">
+            <div class="question-rank-badge">—</div>
+            <div class="question-rank-text">What is the unknown exposed area?</div>
+          </div>
+
+          <div class="question-rank-option" data-question="Is the ice stable enough for anyone to approach?">
+            <div class="question-rank-badge">—</div>
+            <div class="question-rank-text">Is the ice stable enough for anyone to approach?</div>
+          </div>
+
+          <div class="question-rank-option" data-question="Could cloud, shadow, grain, or distortion be misleading us?">
+            <div class="question-rank-badge">—</div>
+            <div class="question-rank-text">Could cloud, shadow, grain, or distortion be misleading us?</div>
+          </div>
+
+          <div class="question-rank-option" data-question="Do old records show this area before the ice covered it?">
+            <div class="question-rank-badge">—</div>
+            <div class="question-rank-text">Do old records show this area before the ice covered it?</div>
+          </div>
+
+          <div class="question-rank-option" data-question="What tools or specialists are needed before sending anyone?">
+            <div class="question-rank-badge">—</div>
+            <div class="question-rank-text">What tools or specialists are needed before sending anyone?</div>
+          </div>
+        </div>
+
+        <div class="question-rank-reason">
+          <label for="questionRankingReason">Explain why your #1 question should be investigated first.</label>
+          <textarea id="questionRankingReason" placeholder="Example: I ranked this first because the Council needs this evidence before deciding what happened or what to do next."></textarea>
+        </div>
+
+        <button id="saveQuestionRankingBtn" disabled>Save Question Ranking</button>
+
+        <div class="question-rank-feedback" id="questionRankingFeedback">
+          <strong>Question ranking saved.</strong><br>
+          You selected the Council’s first three investigation questions and defended why the first one matters.
+        </div>
+
+        <div class="question-ranking-next" id="questionRankingNext">
+          <button id="continueAdvisorReactionsBtn" type="button">Continue to Advisor Reactions</button>
+          <a class="secondary" href="/student_hub">Return to Student Hub</a>
+        </div>
+      </section>
     </div>
   </section>
 
@@ -1108,7 +1350,7 @@ function initFirstLookResponseTools(){
     saveBtn.textContent = "First Look Saved";
     if(nextBtn){
       nextBtn.disabled = false;
-      nextBtn.textContent = "Question Builder connects next";
+      nextBtn.textContent = "Open Question Ranking";
     }
   });
 
@@ -1117,6 +1359,205 @@ function initFirstLookResponseTools(){
 
 document.addEventListener("DOMContentLoaded", initFirstLookResponseTools);
 console.log("CI-STAGE-45 FIRST LOOK RESPONSE TOOLS ACTIVE");
+</script>
+
+
+<script>
+/* CI-STAGE-46R RECOVER QUESTION RANKING FLOW */
+function ciStage46rShowFirstLook(){
+  const screen = document.getElementById("firstLookScreen");
+  if(!screen){ return; }
+
+  document.querySelectorAll(".screen").forEach(section => {
+    section.classList.remove("active");
+  });
+
+  screen.classList.add("active");
+
+  if(typeof hud === "function"){
+    hud("First Look","Resume observation");
+  }
+
+  window.scrollTo({top:0, behavior:"smooth"});
+}
+
+function ciStage46rHasSavedFirstLook(){
+  try{
+    const saved = JSON.parse(localStorage.getItem("stemNationFirstLookResponse") || "null");
+    return !!(saved && Array.isArray(saved.observations) && saved.observations.length === 3 && saved.question && saved.question.trim().length >= 12);
+  }catch(err){
+    return false;
+  }
+}
+
+function ciStage46rInitResumeShortcut(){
+  const params = new URLSearchParams(window.location.search);
+
+  if(params.get("skip") === "firstlook"){
+    setTimeout(ciStage46rShowFirstLook, 120);
+  }
+
+  if(!ciStage46rHasSavedFirstLook()){ return; }
+
+  const guardianCard = document.querySelector("#guardianScreen .card");
+  if(!guardianCard || document.getElementById("resumeFirstLookBtn")){ return; }
+
+  const panel = document.createElement("div");
+  panel.className = "resume-first-look-panel";
+  panel.innerHTML = '<p><strong>Resume available:</strong> First Look progress was found on this device.</p><button id="resumeFirstLookBtn">Resume at First Look</button>';
+  guardianCard.appendChild(panel);
+
+  const resumeBtn = document.getElementById("resumeFirstLookBtn");
+  if(resumeBtn){
+    resumeBtn.onclick = ciStage46rShowFirstLook;
+  }
+}
+
+function ciStage46rInitQuestionRanking(){
+  const panel = document.getElementById("questionRankingPanel");
+  const openBtn = document.getElementById("questionBuilderPreviewBtn");
+  const saveFirstLookBtn = document.getElementById("saveFirstLookBtn");
+  const count = document.getElementById("questionRankingCount");
+  const reason = document.getElementById("questionRankingReason");
+  const saveBtn = document.getElementById("saveQuestionRankingBtn");
+  const feedback = document.getElementById("questionRankingFeedback");
+  const options = Array.from(document.querySelectorAll(".question-rank-option"));
+
+  if(!panel || !openBtn || !options.length){ return; }
+
+  let ranking = [];
+
+  function updateRankingUI(){
+    options.forEach(option => {
+      const q = option.dataset.question;
+      const index = ranking.indexOf(q);
+      const badge = option.querySelector(".question-rank-badge");
+
+      option.classList.toggle("selected", index >= 0);
+
+      if(badge){
+        badge.textContent = index >= 0 ? "#" + (index + 1) : "—";
+      }
+    });
+
+    if(count){
+      count.innerHTML = "<strong>" + ranking.length + " / 3</strong> questions ranked.";
+      if(ranking.length === 3){
+        count.innerHTML += " Explain why #1 matters.";
+      }
+    }
+
+    const reasonReady = reason && reason.value.trim().length >= 20;
+    if(saveBtn){
+      saveBtn.disabled = !(ranking.length === 3 && reasonReady);
+    }
+  }
+
+  function openRankingPanel(){
+    panel.style.display = "block";
+    panel.scrollIntoView({behavior:"smooth", block:"start"});
+    updateRankingUI();
+  }
+
+  openBtn.onclick = openRankingPanel;
+
+  if(ciStage46rHasSavedFirstLook()){
+    openBtn.disabled = false;
+    openBtn.textContent = "Open Question Ranking";
+  }
+
+  if(saveFirstLookBtn){
+    saveFirstLookBtn.addEventListener("click", () => {
+      setTimeout(() => {
+        openBtn.disabled = false;
+        openBtn.textContent = "Open Question Ranking";
+      }, 0);
+    });
+  }
+
+  options.forEach(option => {
+    option.addEventListener("click", () => {
+      const q = option.dataset.question;
+      if(!q){ return; }
+
+      const existing = ranking.indexOf(q);
+
+      if(existing >= 0){
+        ranking.splice(existing, 1);
+      }else{
+        if(ranking.length >= 3){
+          return;
+        }
+        ranking.push(q);
+      }
+
+      updateRankingUI();
+    });
+  });
+
+  if(reason){
+    reason.addEventListener("input", updateRankingUI);
+  }
+
+  if(saveBtn){
+    saveBtn.addEventListener("click", () => {
+      const payload = {
+        ranking: ranking.slice(0, 3),
+        topReason: reason ? reason.value.trim() : "",
+        savedAt: new Date().toISOString()
+      };
+
+      try{
+        localStorage.setItem("stemNationQuestionRanking", JSON.stringify(payload));
+        localStorage.setItem("STEM_NATION_QUESTION_RANKING", JSON.stringify(payload));
+        localStorage.setItem("stemNationQuestionPriorities", JSON.stringify(payload));
+        localStorage.setItem("STEM_NATION_QUESTION_PRIORITIES", JSON.stringify(payload));
+      }catch(err){}
+
+      if(feedback){
+        feedback.style.display = "block";
+      }
+
+      const nextPanel = document.getElementById("questionRankingNext");
+      if(nextPanel){
+        nextPanel.classList.add("active");
+      }
+
+      const continueBtn = document.getElementById("continueAdvisorReactionsBtn");
+      if(continueBtn){
+        continueBtn.onclick = () => {
+          window.location.href = "/advisor_reactions";
+        };
+      }
+
+      saveBtn.disabled = true;
+      saveBtn.textContent = "Question Ranking Saved";
+    });
+  }
+
+  updateRankingUI();
+}
+
+document.addEventListener("DOMContentLoaded", () => {
+  ciStage46rInitResumeShortcut();
+  ciStage46rInitQuestionRanking();
+});
+
+console.log("CI-STAGE-46R RECOVER QUESTION RANKING FLOW ACTIVE");
+</script>
+
+
+<script>
+/* CI-STAGE-46R-1 CONTINUE AFTER QUESTION RANKING */
+document.addEventListener("DOMContentLoaded", () => {
+  const continueBtn = document.getElementById("continueAdvisorReactionsBtn");
+  if(continueBtn){
+    continueBtn.onclick = () => {
+      window.location.href = "/advisor_reactions";
+    };
+  }
+});
+console.log("CI-STAGE-46R-1 CONTINUE AFTER QUESTION RANKING ACTIVE");
 </script>
 
 </body>
