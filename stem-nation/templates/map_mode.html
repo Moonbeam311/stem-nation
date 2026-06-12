@@ -2636,6 +2636,8 @@
   }
 }
 
+
+/* CI-STAGE-51B CLARIFY REGION SELECTION VS SETTLEMENT DECISION */
 </style>
 
 <style>
@@ -2692,12 +2694,12 @@
           <span>Look for water, food, movement paths, defense, danger, and trade possibilities.</span>
         </div>
         <div class="academy-world-brief-card">
-          <strong>2 · Choose a settlement site</strong>
-          <span>Your people need a beginning. Every region offers a strength and a risk.</span>
+          <strong>2 · Choose a possible settlement site</strong>
+          <span>Your people need a beginning, but selection is not the same as a final decision. Every region offers a strength and a risk.</span>
         </div>
         <div class="academy-world-brief-card">
           <strong>3 · Defend the decision</strong>
-          <span>Use evidence from the World Board before your nation records its first founding choice.</span>
+          <span>Use evidence from the World Board before your nation records its first official founding choice.</span>
         </div>
       </div>
 
@@ -3182,12 +3184,12 @@
   <h2>Mission 1 · Claim the Land</h2>
 
   <p>
-    Observe the World Board. Choose a settlement region. Record why your people can survive there.
+    Observe the World Board. Select a possible settlement region. Record why your people could survive there before making it official.
   </p>
 
   <div class="compact-objectives">
     <div>👁️ Observe terrain</div>
-    <div>📍 Place settlement</div>
+    <div>📍 Plan settlement</div>
     <div>❓ Ask a question</div>
     <div>📜 Record evidence</div>
     <div>⚖️ Defend the decision</div>
@@ -4797,7 +4799,7 @@ boardTerrainTiles.forEach((tile) => {
 
     if (boardWorldFeedback) {
       boardWorldFeedback.classList.remove("hidden");
-      boardWorldFeedback.textContent = `${selectedRegion} selected on the World Board. Settlement and infrastructure placed.`;
+      boardWorldFeedback.textContent = `${selectedRegion} selected on the World Board. Review the intel, record evidence, then defend whether this should become your first settlement.`;
     }
 
     showRegionConsequencePreview(selectedRegion);
@@ -6207,8 +6209,8 @@ function ciStage50bBuildWorldFirstUseGuide(){
       </div>
 
       <div class="world-first-use-step">
-        <strong>4 · Place settlement</strong>
-        <span>Choose a beginning only after the evidence makes sense.</span>
+        <strong>4 · Plan settlement</strong>
+        <span>Plan the settlement only after the evidence makes sense.</span>
       </div>
     </div>
   `;
@@ -6233,6 +6235,33 @@ function ciStage50bBuildWorldFirstUseGuide(){
 }
 
 document.addEventListener("DOMContentLoaded", ciStage50bBuildWorldFirstUseGuide);
+</script>
+
+
+<script>
+/* CI-STAGE-51B CLARIFY REGION SELECTION VS SETTLEMENT DECISION */
+function ciStage51bAddSelectionDecisionNote(){
+  if(document.getElementById("ciStage51bSelectionDecisionNote")){ return; }
+
+  const guide = document.getElementById("ciStage50bWorldFirstUseGuide");
+  if(!guide){ return; }
+
+  const note = document.createElement("div");
+  note.id = "ciStage51bSelectionDecisionNote";
+  note.style.marginTop = "14px";
+  note.style.borderRadius = "16px";
+  note.style.border = "1px solid rgba(143,216,255,.28)";
+  note.style.background = "rgba(143,216,255,.08)";
+  note.style.padding = "12px 14px";
+  note.style.color = "rgba(255,255,255,.78)";
+  note.style.lineHeight = "1.45";
+  note.innerHTML = "<strong style='color:rgba(245,215,122,.96)'>Investigator Rule:</strong> Selecting a region reveals evidence. It does not finish the founding decision. A settlement becomes official only after you defend it with evidence.";
+
+  guide.appendChild(note);
+}
+
+document.addEventListener("DOMContentLoaded", ciStage51bAddSelectionDecisionNote);
+console.log("CI-STAGE-51B CLARIFY REGION SELECTION VS SETTLEMENT DECISION ACTIVE");
 </script>
 
 </body>
