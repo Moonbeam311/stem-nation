@@ -550,6 +550,122 @@
   }
 }
 
+
+/* CI-STAGE-45 FIRST LOOK RESPONSE TOOLS */
+.first-look-response{
+  margin:0 28px 24px;
+  display:grid;
+  grid-template-columns:1.15fr .85fr;
+  gap:16px;
+}
+
+.response-panel{
+  border-radius:22px;
+  border:1px solid rgba(245,215,122,.26);
+  background:rgba(255,255,255,.055);
+  padding:18px;
+}
+
+.response-panel h2{
+  margin:0 0 8px;
+  color:var(--gold);
+  font-size:22px;
+}
+
+.response-panel p{
+  margin:0 0 14px;
+  font-size:14px;
+  color:rgba(255,255,255,.76);
+}
+
+.observation-options{
+  display:grid;
+  gap:10px;
+}
+
+.obs-choice{
+  display:flex;
+  gap:10px;
+  align-items:flex-start;
+  border-radius:16px;
+  border:1px solid rgba(143,216,255,.18);
+  background:rgba(2,8,18,.44);
+  padding:12px;
+  cursor:pointer;
+  color:rgba(255,255,255,.84);
+  line-height:1.35;
+  font-size:14px;
+}
+
+.obs-choice input{
+  margin-top:3px;
+  transform:scale(1.15);
+}
+
+.obs-choice.selected{
+  border-color:rgba(245,215,122,.62);
+  background:rgba(245,215,122,.10);
+}
+
+.obs-choice.locked{
+  opacity:.45;
+  cursor:not-allowed;
+}
+
+.first-look-counter{
+  margin-top:12px;
+  color:rgba(255,255,255,.75);
+  font-size:13px;
+}
+
+.first-look-counter strong{
+  color:var(--gold);
+}
+
+.question-box{
+  width:100%;
+  min-height:118px;
+  resize:vertical;
+  border-radius:16px;
+  border:1px solid rgba(143,216,255,.28);
+  background:rgba(2,8,18,.72);
+  color:white;
+  padding:13px 14px;
+  font:inherit;
+  line-height:1.45;
+}
+
+.question-box::placeholder{
+  color:rgba(255,255,255,.42);
+}
+
+.first-look-feedback{
+  margin-top:12px;
+  border-radius:16px;
+  border:1px solid rgba(145,245,179,.30);
+  background:rgba(145,245,179,.08);
+  color:rgba(255,255,255,.84);
+  padding:12px;
+  display:none;
+  line-height:1.4;
+  font-size:14px;
+}
+
+.first-look-feedback strong{
+  color:var(--good, #91f5b3);
+}
+
+#saveFirstLookBtn{
+  margin-top:14px;
+  width:100%;
+}
+
+@media(max-width:920px){
+  .first-look-response{
+    grid-template-columns:1fr;
+  }
+}
+
 </style>
 </head>
 
@@ -675,8 +791,65 @@
         <strong>Investigator Rule:</strong> A good first look does not solve the whole mystery. It separates observation from explanation.
       </div>
 
+      <section class="first-look-response" aria-label="First Look response tools">
+        <div class="response-panel">
+          <h2>Select exactly 3 visible observations</h2>
+          <p>Choose only what the scan shows. Do not explain the cause yet.</p>
+
+          <div class="observation-options" id="firstLookOptions">
+            <label class="obs-choice">
+              <input type="checkbox" value="The current scan shows a broken edge.">
+              <span>The current scan shows a broken edge.</span>
+            </label>
+
+            <label class="obs-choice">
+              <input type="checkbox" value="The current scan shows a darker exposed area.">
+              <span>The current scan shows a darker exposed area.</span>
+            </label>
+
+            <label class="obs-choice">
+              <input type="checkbox" value="The previous scan looks more continuous.">
+              <span>The previous scan looks more continuous.</span>
+            </label>
+
+            <label class="obs-choice">
+              <input type="checkbox" value="The two scans do not match.">
+              <span>The two scans do not match.</span>
+            </label>
+
+            <label class="obs-choice">
+              <input type="checkbox" value="The exact cause is not visible yet.">
+              <span>The exact cause is not visible yet.</span>
+            </label>
+
+            <label class="obs-choice">
+              <input type="checkbox" value="The scan may have limits such as shadow, grain, or distortion.">
+              <span>The scan may have limits such as shadow, grain, or distortion.</span>
+            </label>
+          </div>
+
+          <div class="first-look-counter" id="firstLookCounter">
+            <strong>0 of 3</strong> observations selected.
+          </div>
+        </div>
+
+        <div class="response-panel">
+          <h2>Ask the next investigation question</h2>
+          <p>Write one question the Council should investigate next. It should help the team gather evidence, not guess an answer.</p>
+
+          <textarea class="question-box" id="firstLookQuestion" placeholder="Example: What evidence would help us know whether the dark area is rock, water, shadow, or something else?"></textarea>
+
+          <button id="saveFirstLookBtn" disabled>Save First Look</button>
+
+          <div class="first-look-feedback" id="firstLookFeedback">
+            <strong>First Look Saved.</strong><br>
+            You observed before explaining. Next: Question Builder.
+          </div>
+        </div>
+      </section>
+
       <div class="actions">
-        <button disabled>Observation response tools connect next</button>
+        <button id="questionBuilderPreviewBtn" disabled>Question Builder connects next</button>
       </div>
     </div>
   </section>
@@ -870,5 +1043,81 @@
       show(screens.firstLook);
     };
   </script>
+
+<script>
+/* CI-STAGE-45 FIRST LOOK RESPONSE TOOLS */
+function initFirstLookResponseTools(){
+  const options = Array.from(document.querySelectorAll("#firstLookOptions input[type='checkbox']"));
+  const counter = document.getElementById("firstLookCounter");
+  const question = document.getElementById("firstLookQuestion");
+  const saveBtn = document.getElementById("saveFirstLookBtn");
+  const feedback = document.getElementById("firstLookFeedback");
+  const nextBtn = document.getElementById("questionBuilderPreviewBtn");
+
+  if(!options.length || !counter || !question || !saveBtn){ return; }
+
+  function selectedOptions(){
+    return options.filter(opt => opt.checked);
+  }
+
+  function updateFirstLookState(){
+    const selected = selectedOptions();
+    const selectedCount = selected.length;
+    const questionReady = question.value.trim().length >= 12;
+
+    options.forEach(opt => {
+      const label = opt.closest(".obs-choice");
+      if(label){
+        label.classList.toggle("selected", opt.checked);
+        label.classList.toggle("locked", !opt.checked && selectedCount >= 3);
+      }
+      opt.disabled = !opt.checked && selectedCount >= 3;
+    });
+
+    counter.innerHTML = "<strong>" + selectedCount + " of 3</strong> observations selected.";
+
+    if(selectedCount === 3){
+      counter.innerHTML += " Ready for your investigation question.";
+    } else {
+      counter.innerHTML += " Select exactly 3.";
+    }
+
+    saveBtn.disabled = !(selectedCount === 3 && questionReady);
+  }
+
+  options.forEach(opt => {
+    opt.addEventListener("change", updateFirstLookState);
+  });
+
+  question.addEventListener("input", updateFirstLookState);
+
+  saveBtn.addEventListener("click", () => {
+    const selected = selectedOptions().map(opt => opt.value);
+    const response = {
+      observations: selected,
+      question: question.value.trim(),
+      savedAt: new Date().toISOString()
+    };
+
+    try{
+      localStorage.setItem("stemNationFirstLookResponse", JSON.stringify(response));
+    }catch(err){}
+
+    feedback.style.display = "block";
+    saveBtn.disabled = true;
+    saveBtn.textContent = "First Look Saved";
+    if(nextBtn){
+      nextBtn.disabled = false;
+      nextBtn.textContent = "Question Builder connects next";
+    }
+  });
+
+  updateFirstLookState();
+}
+
+document.addEventListener("DOMContentLoaded", initFirstLookResponseTools);
+console.log("CI-STAGE-45 FIRST LOOK RESPONSE TOOLS ACTIVE");
+</script>
+
 </body>
 </html>
