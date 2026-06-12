@@ -379,7 +379,9 @@
       .path-grid { grid-template-columns: 1fr; }
       h1 { font-size: 2.35rem; }
     }
-  </style>
+  
+/* CI-STAGE-47 MISSION DEBRIEF ALIGNMENT */
+</style>
 </head>
 
 <body>
@@ -466,7 +468,7 @@
         <div class="kicker">Your Inquiry Record</div>
         <h2>The Academy has a record of your path.</h2>
         <p class="note">
-          Your saved observation, question ranking, Council briefing, and advisor response are summarized here.
+          Your saved observation, question ranking, Council advisor response, and mission reflection are summarized here.
         </p>
 
         <div class="completion-seal">
@@ -531,6 +533,32 @@
 
     let displayName = "Academy Learner";
     let ranking = [];
+
+    // CI-STAGE-47 MISSION DEBRIEF ALIGNMENT
+    function loadCouncilQuestionRanking(){
+      const keys = [
+        "stemNationQuestionRanking",
+        "STEM_NATION_QUESTION_RANKING",
+        "stemNationQuestionPriorities",
+        "STEM_NATION_QUESTION_PRIORITIES",
+        typeof RANKING_KEY !== "undefined" ? RANKING_KEY : null
+      ].filter(Boolean);
+
+      for(const key of keys){
+        try{
+          const saved = JSON.parse(localStorage.getItem(key) || "null");
+          if(saved && Array.isArray(saved.ranking) && saved.ranking.length){
+            return saved.ranking.slice(0, 3);
+          }
+          if(saved && Array.isArray(saved.rankedQuestions) && saved.rankedQuestions.length){
+            return saved.rankedQuestions.slice(0, 3);
+          }
+        }catch(error){}
+      }
+
+      return [];
+    }
+
     let observation = null;
     let justification = null;
     let advisorReaction = null;
@@ -600,7 +628,7 @@
     }
 
     if (!ranking.length) {
-      ranking = ["What changed?", "Has this happened before?", "What should be protected?"];
+      ranking = ["What exactly changed between the previous scan and the current scan?", "What is the unknown exposed area?", "Is the ice stable enough for anyone to approach?"];
     }
 
     rankingList.innerHTML = ranking.map(item => `<li>${escapeHtml(item)}</li>`).join("");

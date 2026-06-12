@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Advisor Reactions | STEM Nation Academy</title>
+  <title>Council Advisor Reactions | STEM Nation Academy</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
   <style>
@@ -376,7 +376,9 @@
       .advisor-line { grid-template-columns: 1fr; }
       h1 { font-size: 2.35rem; }
     }
-  </style>
+  
+/* CI-STAGE-47 ADVISOR REACTIONS ALIGNMENT */
+</style>
 </head>
 
 <body>
@@ -389,11 +391,11 @@
       </div>
 
       <div>
-        <div class="kicker">Advisor Reactions Chamber</div>
+        <div class="kicker">Council Advisor Reactions</div>
         <h1>The Council Responds</h1>
         <p class="sub" id="heroSub">
           Academy Learner, the Council has reviewed your question priorities.
-          The advisors are not giving answers yet. They are reacting to the kind of thinking you brought into the room.
+          The Council advisors are not giving answers yet. They are reacting to the kind of thinking you brought into the room.
         </p>
 
         <div class="mission-track">
@@ -426,7 +428,7 @@
 
         <div class="reaction-feed" id="reactionFeed"></div>
 
-        <div class="hud" id="hud">The Council is reading your question priorities.</div>
+        <div class="hud" id="hud">The Council is reading your ranked investigation questions.</div>
 
         <div class="actions">
           <button class="secondary" type="button" onclick="replayReactions()">Replay Reactions</button>
@@ -438,7 +440,7 @@
         <div class="kicker">Your Briefing Record</div>
         <h2>What guided the advisors?</h2>
         <p class="note" id="rankingNote">
-          Your saved ranking will appear here. Advisor reactions are based on the kinds of questions you prioritized.
+          Your saved ranking will appear here. Council advisor reactions are based on the investigation questions you prioritized.
         </p>
 
         <div class="side-box">
@@ -491,6 +493,32 @@
 
     let displayName = "Academy Learner";
     let ranking = [];
+
+    // CI-STAGE-47 ADVISOR REACTIONS ALIGNMENT
+    function loadCouncilQuestionRanking(){
+      const keys = [
+        "stemNationQuestionRanking",
+        "STEM_NATION_QUESTION_RANKING",
+        "stemNationQuestionPriorities",
+        "STEM_NATION_QUESTION_PRIORITIES",
+        typeof RANKING_KEY !== "undefined" ? RANKING_KEY : null
+      ].filter(Boolean);
+
+      for(const key of keys){
+        try{
+          const saved = JSON.parse(localStorage.getItem(key) || "null");
+          if(saved && Array.isArray(saved.ranking) && saved.ranking.length){
+            return saved.ranking.slice(0, 3);
+          }
+          if(saved && Array.isArray(saved.rankedQuestions) && saved.rankedQuestions.length){
+            return saved.rankedQuestions.slice(0, 3);
+          }
+        }catch(error){}
+      }
+
+      return [];
+    }
+
     let justifications = [];
 
     const advisorMap = {
@@ -565,7 +593,7 @@
       const avatarChoice = identity.avatarChoice || identity.avatarTitle || "Academy Avatar";
 
       studentPill.textContent = `${avatarChoice} · ${displayName}`;
-      heroSub.textContent = `${displayName}, the Council has reviewed your question priorities. The advisors are not giving answers yet. They are reacting to the kind of thinking you brought into the room.`;
+      heroSub.textContent = `${displayName}, the Council has reviewed your question priorities. The Council advisors are not giving answers yet. They are reacting to the kind of thinking you brought into the room.`;
 
       studentAvatar.innerHTML = "";
 
@@ -601,10 +629,10 @@
     }
 
     if (ranking.length !== 3) {
-      ranking = ["What changed?", "Has this happened before?", "What should be protected?"];
+      ranking = ["What exactly changed between the previous scan and the current scan?", "What is the unknown exposed area?", "Is the ice stable enough for anyone to approach?"];
       rankingNote.textContent = "No saved ranking was found. A default ranking is shown for testing.";
     } else {
-      rankingNote.textContent = "These are the questions you ranked. The Council reacts to what you placed first, second, and third.";
+      rankingNote.textContent = "These are the questions you ranked. The Council advisors react to what you placed first, second, and third.";
     }
 
     rankingList.innerHTML = ranking.map(item => `<li>${escapeHtml(item)}</li>`).join("");
@@ -657,7 +685,7 @@
           card.classList.add("show");
           hud.textContent = index === 0
             ? "The Council reacts first to your highest-priority question."
-            : "Another advisor responds to the thinking in your ranking.";
+            : "Another Council advisor responds to the thinking in your ranking.";
         }, 700 + index * 1450);
       });
 
