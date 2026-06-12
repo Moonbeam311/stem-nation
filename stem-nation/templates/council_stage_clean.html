@@ -847,6 +847,19 @@
   background:rgba(143,216,255,.09);
 }
 
+
+/* CI-STAGE-46R-2 REWIRE FIRST LOOK SAVE CONTROLLER */
+.first-look-debug-note{
+  display:none;
+  margin-top:10px;
+  border-radius:14px;
+  border:1px solid rgba(143,216,255,.22);
+  background:rgba(143,216,255,.07);
+  padding:10px 12px;
+  color:rgba(255,255,255,.74);
+  font-size:13px;
+}
+
 </style>
 </head>
 
@@ -1558,6 +1571,134 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 });
 console.log("CI-STAGE-46R-1 CONTINUE AFTER QUESTION RANKING ACTIVE");
+</script>
+
+
+<script>
+/* CI-STAGE-46R-2 REWIRE FIRST LOOK SAVE CONTROLLER */
+function ciStage46r2InitFirstLookSaveController(){
+  const options = Array.from(document.querySelectorAll("#firstLookOptions input[type='checkbox']"));
+  const count = document.getElementById("firstLookCount");
+  const question = document.getElementById("firstLookQuestion");
+  const saveBtn = document.getElementById("saveFirstLookBtn");
+  const feedback = document.getElementById("firstLookFeedback");
+  const rankingBtn = document.getElementById("questionBuilderPreviewBtn");
+  const rankingPanel = document.getElementById("questionRankingPanel");
+
+  if(!options.length || !question || !saveBtn){
+    console.warn("CI-STAGE-46R-2: First Look controls not found.");
+    return;
+  }
+
+  function selectedObservations(){
+    return options.filter(input => input.checked).map(input => input.value);
+  }
+
+  function updateFirstLookState(){
+    const selected = selectedObservations();
+    const questionText = question.value.trim();
+
+    options.forEach(input => {
+      const label = input.closest("label");
+      if(label){
+        label.classList.toggle("selected", input.checked);
+      }
+    });
+
+    if(count){
+      if(selected.length === 3){
+        count.textContent = "3 of 3 observations selected. Ready for your investigation question.";
+      }else{
+        count.textContent = selected.length + " of 3 observations selected. Select exactly 3.";
+      }
+    }
+
+    // Lock extra choices after 3 are selected, but allow unchecking selected choices.
+    options.forEach(input => {
+      input.disabled = selected.length >= 3 && !input.checked;
+    });
+
+    saveBtn.disabled = !(selected.length === 3 && questionText.length >= 12);
+  }
+
+  options.forEach(input => {
+    input.addEventListener("change", updateFirstLookState);
+  });
+
+  question.addEventListener("input", updateFirstLookState);
+
+  saveBtn.onclick = function(event){
+    event.preventDefault();
+
+    const selected = selectedObservations();
+    const questionText = question.value.trim();
+
+    if(selected.length !== 3){
+      if(count){
+        count.textContent = selected.length + " of 3 observations selected. Select exactly 3 before saving.";
+      }
+      return;
+    }
+
+    if(questionText.length < 12){
+      question.focus();
+      return;
+    }
+
+    const response = {
+      observations: selected,
+      question: questionText,
+      savedAt: new Date().toISOString()
+    };
+
+    try{
+      localStorage.setItem("stemNationFirstLookResponse", JSON.stringify(response));
+      localStorage.setItem("STEM_NATION_FIRST_LOOK_RESPONSE", JSON.stringify(response));
+    }catch(err){}
+
+    if(feedback){
+      feedback.style.display = "block";
+    }
+
+    saveBtn.textContent = "First Look Saved";
+    saveBtn.disabled = true;
+
+    if(rankingBtn){
+      rankingBtn.disabled = false;
+      rankingBtn.textContent = "Open Question Ranking";
+      rankingBtn.onclick = function(){
+        if(rankingPanel){
+          rankingPanel.style.display = "block";
+          rankingPanel.scrollIntoView({behavior:"smooth", block:"start"});
+        }
+      };
+    }
+
+    console.log("CI-STAGE-46R-2: First Look saved and ranking unlocked.", response);
+  };
+
+  // Restore unlock if First Look was already saved on this device.
+  try{
+    const saved = JSON.parse(localStorage.getItem("stemNationFirstLookResponse") || localStorage.getItem("STEM_NATION_FIRST_LOOK_RESPONSE") || "null");
+    if(saved && Array.isArray(saved.observations) && saved.observations.length === 3 && saved.question){
+      if(rankingBtn){
+        rankingBtn.disabled = false;
+        rankingBtn.textContent = "Open Question Ranking";
+        rankingBtn.onclick = function(){
+          if(rankingPanel){
+            rankingPanel.style.display = "block";
+            rankingPanel.scrollIntoView({behavior:"smooth", block:"start"});
+          }
+        };
+      }
+    }
+  }catch(err){}
+
+  updateFirstLookState();
+}
+
+document.addEventListener("DOMContentLoaded", ciStage46r2InitFirstLookSaveController);
+console.log("CI-STAGE-46R-2 REWIRE FIRST LOOK SAVE CONTROLLER ACTIVE");
 </script>
 
 </body>
