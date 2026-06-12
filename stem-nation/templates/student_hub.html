@@ -251,6 +251,166 @@
     }
   
 /* CI-STAGE-47 STUDENT HUB ALIGNMENT */
+
+/* CI-STAGE-48 MISSION CHECKPOINT STUDENT HUB POLISH */
+.mission-checkpoint-polish{
+  margin:24px auto;
+  max-width:1120px;
+  border-radius:28px;
+  border:1px solid rgba(245,215,122,.34);
+  background:
+    radial-gradient(circle at top left, rgba(245,215,122,.14), transparent 34%),
+    radial-gradient(circle at bottom right, rgba(143,216,255,.13), transparent 38%),
+    rgba(2,8,18,.72);
+  box-shadow:0 24px 70px rgba(0,0,0,.34);
+  padding:24px;
+}
+
+.mission-checkpoint-polish .checkpoint-kicker{
+  display:inline-flex;
+  align-items:center;
+  gap:8px;
+  border-radius:999px;
+  border:1px solid rgba(245,215,122,.32);
+  background:rgba(245,215,122,.10);
+  color:rgba(245,215,122,.96);
+  padding:8px 12px;
+  font-size:12px;
+  font-weight:900;
+  letter-spacing:.08em;
+  text-transform:uppercase;
+}
+
+.mission-checkpoint-polish h2{
+  margin:14px 0 8px;
+  color:#fff;
+  font-size:clamp(28px,4vw,46px);
+  line-height:1.02;
+}
+
+.mission-checkpoint-polish .checkpoint-lede{
+  margin:0;
+  max-width:760px;
+  color:rgba(255,255,255,.76);
+  line-height:1.5;
+}
+
+.checkpoint-grid{
+  display:grid;
+  grid-template-columns:repeat(5, minmax(130px, 1fr));
+  gap:12px;
+  margin-top:20px;
+}
+
+.checkpoint-step{
+  min-height:120px;
+  border-radius:20px;
+  border:1px solid rgba(143,216,255,.24);
+  background:rgba(255,255,255,.055);
+  padding:14px;
+}
+
+.checkpoint-step .step-icon{
+  width:36px;
+  height:36px;
+  border-radius:13px;
+  display:grid;
+  place-items:center;
+  border:1px solid rgba(245,215,122,.34);
+  background:rgba(245,215,122,.12);
+  margin-bottom:10px;
+}
+
+.checkpoint-step strong{
+  display:block;
+  color:#fff;
+  line-height:1.2;
+  margin-bottom:6px;
+}
+
+.checkpoint-step span{
+  display:block;
+  color:rgba(255,255,255,.68);
+  font-size:13px;
+  line-height:1.35;
+}
+
+.checkpoint-summary{
+  margin-top:18px;
+  display:grid;
+  grid-template-columns:1.15fr .85fr;
+  gap:14px;
+}
+
+.checkpoint-card{
+  border-radius:20px;
+  border:1px solid rgba(255,255,255,.13);
+  background:rgba(2,8,18,.48);
+  padding:16px;
+}
+
+.checkpoint-card strong{
+  display:block;
+  color:rgba(245,215,122,.96);
+  margin-bottom:8px;
+}
+
+.checkpoint-card p,
+.checkpoint-card li{
+  color:rgba(255,255,255,.74);
+  line-height:1.45;
+}
+
+.checkpoint-card ol{
+  margin:8px 0 0;
+  padding-left:20px;
+}
+
+.checkpoint-actions{
+  display:flex;
+  flex-wrap:wrap;
+  gap:10px;
+  margin-top:18px;
+}
+
+.checkpoint-actions a,
+.checkpoint-actions button{
+  border-radius:15px;
+  border:1px solid rgba(245,215,122,.48);
+  background:rgba(245,215,122,.13);
+  color:white;
+  padding:12px 14px;
+  font-weight:900;
+  text-decoration:none;
+  cursor:pointer;
+}
+
+.checkpoint-actions a.secondary,
+.checkpoint-actions button.secondary{
+  border-color:rgba(143,216,255,.28);
+  background:rgba(143,216,255,.08);
+}
+
+.checkpoint-actions button[disabled]{
+  opacity:.62;
+  cursor:not-allowed;
+}
+
+@media (max-width:900px){
+  .checkpoint-grid{ grid-template-columns:1fr 1fr; }
+  .checkpoint-summary{ grid-template-columns:1fr; }
+}
+
+@media (max-width:560px){
+  .checkpoint-grid{ grid-template-columns:1fr; }
+}
+
+
+/* CI-STAGE-48A STUDENT HUB DUPLICATE CHECKPOINT CLEANUP */
+
+/* CI-STAGE-48B REPAIR STUDENT HUB WORDING AFTER BROAD REPLACE */
+
+/* CI-STAGE-48C FINAL READINESS RECORD SUMMARY CLEANUP */
 </style>
 </head>
 <body>
@@ -259,9 +419,9 @@
     <section class="topbar">
       <div>
         <div class="kicker">STEM Nation Student Hub</div>
-        <h1>Mission Checkpoint</h1>
+        <h1>Readiness Record</h1>
       </div>
-      <div class="status-pill">Academy Readiness Trial Complete</div>
+      <div class="status-pill">Academy Readiness Record Updated</div>
     </section>
 
     <section class="hero">
@@ -306,7 +466,7 @@
           <h2>Council Hall</h2>
           <p>Return to the stage show if you want to replay the Ice Break Mystery and improve your reasoning path.</p>
         </div>
-        <div class="btn-row"><a class="button" href="/council_stage">Replay Trial</a></div>
+        <div class="btn-row"><a class="button" href="/council_stage">Replay Council Trial</a></div>
       </article>
 
       <article class="panel route-card">
@@ -330,5 +490,153 @@
 
     <div class="footer-note">STEM Nation Prototype Build · CI-STAGE-9</div>
   </main>
+
+<script>
+/* CI-STAGE-48 MISSION CHECKPOINT STUDENT HUB POLISH */
+function ciStage48EscapeHtml(value){
+  return String(value || "").replace(/[&<>"']/g, char => ({
+    "&":"&amp;",
+    "<":"&lt;",
+    ">":"&gt;",
+    '"':"&quot;",
+    "'":"&#039;"
+  }[char]));
+}
+
+function ciStage48ReadJson(keys){
+  for(const key of keys){
+    try{
+      const value = JSON.parse(localStorage.getItem(key) || "null");
+      if(value){ return value; }
+    }catch(error){}
+  }
+  return null;
+}
+
+function ciStage48BuildMissionCheckpoint(){
+  if(document.getElementById("ciStage48MissionCheckpoint")){ return; }
+
+  const firstLook = ciStage48ReadJson([
+    "stemNationFirstLookResponse",
+    "STEM_NATION_FIRST_LOOK_RESPONSE"
+  ]);
+
+  const ranking = ciStage48ReadJson([
+    "stemNationQuestionRanking",
+    "STEM_NATION_QUESTION_RANKING",
+    "stemNationQuestionPriorities",
+    "STEM_NATION_QUESTION_PRIORITIES"
+  ]);
+
+  const advisor = ciStage48ReadJson([
+    "stemNationAdvisorReactions",
+    "stemNationCouncilAdvisorReactions",
+    "stemNationAdvisorReactionContext",
+    "STEM_NATION_ADVISOR_REACTIONS"
+  ]);
+
+  const debrief = ciStage48ReadJson([
+    "stemNationMissionDebrief",
+    "STEM_NATION_MISSION_DEBRIEF",
+    "stemNationDebrief"
+  ]);
+
+  const rankedQuestions = ranking && Array.isArray(ranking.ranking)
+    ? ranking.ranking.slice(0, 3)
+    : [];
+
+  const firstQuestion = firstLook && firstLook.question
+    ? firstLook.question
+    : "Your investigation question will appear here after First Look is saved.";
+
+  const rankingHtml = rankedQuestions.length
+    ? rankedQuestions.map(q => `<li>${ciStage48EscapeHtml(q)}</li>`).join("")
+    : "<li>Your ranked Council questions will appear here after Question Ranking is saved.</li>";
+
+  const panel = document.createElement("section");
+  panel.className = "mission-checkpoint-polish";
+  panel.id = "ciStage48MissionCheckpoint";
+
+  panel.innerHTML = `
+    <div class="checkpoint-kicker">Mission 01 Checkpoint Complete</div>
+    <h2>You completed the Council Hall trial.</h2>
+    <p class="checkpoint-lede">
+      You observed evidence before explaining, asked an investigation question, ranked what the Council should study first,
+      listened to advisor reactions, and reached the mission checkpoint.
+    </p>
+
+    <div class="checkpoint-grid" aria-label="Completed mission steps">
+      <div class="checkpoint-step">
+        <div class="step-icon">👁️</div>
+        <strong>First Look</strong>
+        <span>Observed visible evidence only.</span>
+      </div>
+
+      <div class="checkpoint-step">
+        <div class="step-icon">❓</div>
+        <strong>Investigation Question</strong>
+        <span>Asked for evidence instead of guessing.</span>
+      </div>
+
+      <div class="checkpoint-step">
+        <div class="step-icon">#1</div>
+        <strong>Question Ranking</strong>
+        <span>Chose the top three Council investigation priorities.</span>
+      </div>
+
+      <div class="checkpoint-step">
+        <div class="step-icon">🏛️</div>
+        <strong>Advisor Reactions</strong>
+        <span>Reviewed how the Council advisors responded.</span>
+      </div>
+
+      <div class="checkpoint-step">
+        <div class="step-icon">📜</div>
+        <strong>Mission Debrief</strong>
+        <span>Reached the checkpoint summary.</span>
+      </div>
+    </div>
+
+    <div class="checkpoint-summary">
+      <div class="checkpoint-card">
+        <strong>Your investigation question</strong>
+        <p>${ciStage48EscapeHtml(firstQuestion)}</p>
+      </div>
+
+      <div class="checkpoint-card">
+        <strong>Your ranked Council questions</strong>
+        <ol>${rankingHtml}</ol>
+      </div>
+    </div>
+
+    <div class="checkpoint-actions">
+      <a href="/council_stage?skip=firstlook">Review Council Hall</a>
+      <a class="secondary" href="/advisor_reactions">Review Advisor Reactions</a>
+      <a class="secondary" href="/mission_debrief">Review Mission Debrief</a>
+      <button class="secondary" type="button" disabled>Next Mission Connects Later</button>
+    </div>
+  `;
+
+  const main = document.querySelector("main") || document.querySelector(".container") || document.body;
+  const firstChild = main.firstElementChild;
+
+  if(firstChild){
+    main.insertBefore(panel, firstChild);
+  }else{
+    main.appendChild(panel);
+  }
+
+  console.log("CI-STAGE-48 loaded.", {
+    hasFirstLook: !!firstLook,
+    hasRanking: !!ranking,
+    hasAdvisor: !!advisor,
+    hasDebrief: !!debrief
+  });
+}
+
+document.addEventListener("DOMContentLoaded", ciStage48BuildMissionCheckpoint);
+console.log("CI-STAGE-48 MISSION CHECKPOINT STUDENT HUB POLISH ACTIVE");
+</script>
+
 </body>
 </html>
