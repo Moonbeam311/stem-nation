@@ -452,6 +452,104 @@
   }
 }
 
+
+/* CI-STAGE-44 EVIDENCE UNLOCK TO FIRST LOOK CLEANUP */
+#evidenceScreen .card,
+#firstLookScreen .card{
+  width:min(1180px,96vw);
+}
+
+#evidenceScreen .card-header p,
+#firstLookScreen .card-header p{
+  max-width:920px;
+  font-size:17px;
+}
+
+.clue-grid{
+  grid-template-columns:repeat(4,minmax(0,1fr));
+}
+
+.clue{
+  min-height:150px;
+  display:flex;
+  flex-direction:column;
+  justify-content:flex-start;
+}
+
+.clue strong{
+  color:var(--gold);
+  line-height:1.18;
+}
+
+.clue p{
+  font-size:14px;
+  line-height:1.42;
+  margin-bottom:0;
+}
+
+.first-look-directions{
+  display:grid;
+  grid-template-columns:1fr 1fr 1fr;
+  gap:12px;
+  padding:0 28px 22px;
+}
+
+.look-step{
+  border-radius:18px;
+  border:1px solid rgba(143,216,255,.22);
+  background:rgba(143,216,255,.07);
+  padding:14px;
+  color:rgba(255,255,255,.82);
+  font-size:14px;
+  line-height:1.42;
+}
+
+.look-step strong{
+  display:block;
+  color:var(--gold);
+  margin-bottom:6px;
+  text-transform:uppercase;
+  letter-spacing:.08em;
+  font-size:12px;
+}
+
+.scan-img{
+  width:min(1080px,96%);
+  max-height:58vh;
+  object-fit:contain;
+  background:rgba(2,8,18,.72);
+}
+
+.first-look-reminder{
+  margin:0 28px 22px;
+  border-radius:18px;
+  border:1px solid rgba(245,215,122,.30);
+  background:rgba(245,215,122,.08);
+  padding:14px 16px;
+  color:rgba(255,255,255,.84);
+  line-height:1.45;
+}
+
+.first-look-reminder strong{
+  color:var(--gold);
+}
+
+@media(max-width:980px){
+  .clue-grid{
+    grid-template-columns:1fr 1fr;
+  }
+
+  .first-look-directions{
+    grid-template-columns:1fr;
+  }
+}
+
+@media(max-width:620px){
+  .clue-grid{
+    grid-template-columns:1fr;
+  }
+}
+
 </style>
 </head>
 
@@ -539,20 +637,20 @@
   <section class="screen" id="evidenceScreen">
     <div class="card">
       <div class="card-header">
-        <div class="kicker">Evidence Unlock · Before First Look Challenge</div>
-        <h1>Review the Clues Before You Respond</h1>
-        <p>The Council cannot guess. Before you answer anything, review what the evidence is about.</p>
+        <div class="kicker">Evidence Briefing Unlocked</div>
+        <h1>Prepare Your First Look</h1>
+        <p>The Council has opened the evidence. You are not solving the mystery yet. First, review what each clue means so your first observation is careful, not rushed.</p>
       </div>
 
       <div class="clue-grid">
-        <div class="clue"><strong>Clue 1 · Sector 7A</strong><p>Sector 7A is the first warning zone on the Northern Ice Shelf.</p></div>
-        <div class="clue"><strong>Clue 2 · Previous Scan</strong><p>The earlier scan showed a continuous ice sheet. No unknown exposure was visible.</p></div>
-        <div class="clue"><strong>Clue 3 · Current Scan</strong><p>The current scan shows a broken edge and a dark unknown exposure. Something changed.</p></div>
-        <div class="clue"><strong>Clue 4 · Limits + Risk</strong><p>Clouds, shadows, grain, distortion, and unstable ice mean the Council must observe before acting.</p></div>
+        <div class="clue"><strong>1 · Location</strong><p>Sector 7A is the first warning zone on the Northern Ice Shelf.</p></div>
+        <div class="clue"><strong>2 · Previous Scan</strong><p>The earlier scan gives you the “before” picture.</p></div>
+        <div class="clue"><strong>3 · Current Scan</strong><p>The current scan shows what changed after the break appeared.</p></div>
+        <div class="clue"><strong>4 · Limits + Risk</strong><p>Shadows, distortion, and unstable ice mean you must observe before making a claim.</p></div>
       </div>
 
       <div class="actions">
-        <button id="firstLookBtn">Start First Look Challenge</button>
+        <button id="firstLookBtn">Begin First Look</button>
       </div>
     </div>
   </section>
@@ -560,15 +658,25 @@
   <section class="screen" id="firstLookScreen">
     <div class="card">
       <div class="card-header">
-        <div class="kicker">Observation Trial 1 · First Look Challenge</div>
-        <h1>Compare Before You Claim</h1>
-        <p>Look at the previous scan and current scan. Notice what changed. Do not solve the mystery yet.</p>
+        <div class="kicker">Observation Trial 1 · First Look</div>
+        <h1>Compare Only What You Can See</h1>
+        <p>Your first task is simple: compare the previous scan and the current scan. Notice visible changes only. Do not explain the cause yet.</p>
+      </div>
+
+      <div class="first-look-directions">
+        <div class="look-step"><strong>Step 1</strong>Find the previous scan. What was visible before?</div>
+        <div class="look-step"><strong>Step 2</strong>Find the current scan. What changed?</div>
+        <div class="look-step"><strong>Step 3</strong>Name only what you can see. Save explanations for later.</div>
       </div>
 
       <img class="scan-img" src="/static/storyboards/council_hall_evidence_briefing.png" alt="Two-panel ice scan comparison evidence board">
 
+      <div class="first-look-reminder">
+        <strong>Investigator Rule:</strong> A good first look does not solve the whole mystery. It separates observation from explanation.
+      </div>
+
       <div class="actions">
-        <button disabled>Response flow connects next</button>
+        <button disabled>Observation response tools connect next</button>
       </div>
     </div>
   </section>
