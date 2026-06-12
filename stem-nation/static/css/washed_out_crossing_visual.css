@@ -1279,3 +1279,62 @@
   color: #f4c95d;
   font-weight: 800;
 }
+/* VIS-3G — Locked Guardian Face Display */
+
+.woc-guardian-avatar {
+  display: grid;
+  place-items: center;
+}
+
+.woc-guardian-img {
+  width: 116px;
+  height: 116px;
+  object-fit: cover;
+  object-position: center;
+  border-radius: 999px;
+  background:
+    radial-gradient(circle at 50% 40%, rgba(244,201,93,.20), transparent 48%),
+    rgba(5,12,24,.42);
+  border: 2px solid rgba(244,201,93,.45);
+  box-shadow:
+    0 12px 24px rgba(0,0,0,.35),
+    0 0 0 5px rgba(244,201,93,.08);
+}
+
+.woc-advisor.speaking .woc-guardian-img {
+  animation: wocLockedGuardianSpeak 650ms ease-in-out infinite;
+}
+
+.woc-advisor.warning .woc-guardian-img {
+  animation: wocLockedGuardianWarn 420ms ease both;
+}
+
+.woc-advisor.success .woc-guardian-img {
+  animation: wocLockedGuardianSuccess 1.25s ease-in-out infinite alternate;
+}
+
+@keyframes wocLockedGuardianSpeak {
+  0%, 100% { transform: translateY(0) scale(1); }
+  50% { transform: translateY(-3px) scale(1.025); }
+}
+
+@keyframes wocLockedGuardianWarn {
+  0%, 100% { transform: translateX(0); }
+  25% { transform: translateX(-4px); }
+  50% { transform: translateX(4px); }
+  75% { transform: translateX(-2px); }
+}
+
+@keyframes wocLockedGuardianSuccess {
+  from {
+    box-shadow:
+      0 12px 24px rgba(0,0,0,.35),
+      0 0 0 5px rgba(244,201,93,.08);
+  }
+  to {
+    box-shadow:
+      0 12px 24px rgba(0,0,0,.35),
+      0 0 0 5px rgba(126,224,129,.16),
+      0 0 18px rgba(126,224,129,.45);
+  }
+}

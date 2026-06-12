@@ -412,6 +412,32 @@ def washed_out_crossing_visual():
         visual_js_exists=Path("static/js/stem_nation_visual_layer.js").exists()
     )
 
+# VIS-3D — Advisor Animation Preview
+@app.route("/advisor_animation_preview")
+def advisor_animation_preview():
+    import json
+    from pathlib import Path
+
+    registry_path = Path("data/stem_nation_animated_advisor_registry.json")
+    registry = json.loads(registry_path.read_text(encoding="utf-8"))
+
+    advisors = registry.get("advisors", {})
+    for key, advisor in advisors.items():
+        locked_face = advisor.get("locked_face_asset", "")
+        fallback = advisor.get("fallback_asset", "")
+
+        display_asset = locked_face or fallback
+
+        advisor["display_asset"] = display_asset
+        advisor["display_asset_exists"] = (Path("static") / display_asset).exists()
+        advisor["fallback_exists"] = (Path("static") / fallback).exists()
+        advisor["locked_face_exists"] = (Path("static") / locked_face).exists() if locked_face else False
+
+    return render_template(
+        "advisor_animation_pipeline_preview.html",
+        advisors=advisors
+    )
+
 if __name__ == "__main__":
     import os
     port = int(os.environ.get("PORT", 5000))

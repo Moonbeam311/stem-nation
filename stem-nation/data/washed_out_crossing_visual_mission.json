@@ -81,10 +81,10 @@
     "background": "world_river.jpg",
     "bridge": "images/missions/washed_out_crossing/bridge_damaged.png",
     "river": "images/missions/washed_out_crossing/river_current.png",
-    "guardian_neutral": "avatars/student/guardian.png",
-    "guardian_alert": "avatars/student/guardian.png",
-    "guardian_speaking": "avatars/student/guardian.png",
-    "guardian_success": "avatars/student/guardian.png"
+    "guardian_neutral": "images/advisors/guardian/states/guardian_face_neutral.png",
+    "guardian_alert": "images/advisors/guardian/states/guardian_face_neutral.png",
+    "guardian_speaking": "images/advisors/guardian/states/guardian_face_neutral.png",
+    "guardian_success": "images/advisors/guardian/states/guardian_face_neutral.png"
   },
   "start_mode": {
     "requires_begin_button": true,
@@ -95,5 +95,7 @@
   "advisor_asset_note": "VIS-2G maps all existing council avatars into a registry and hardens the Guardian display for the Washed-Out Crossing prototype. Separate expression/state images may be added later.",
   "scene_asset_note": "VIS-2H-1 corrected the background hook so the route resolves it as static/world_river.jpg, not static/static/world_river.jpg.",
   "asset_checklist": "docs/washed_out_crossing_asset_checklist.md",
-  "visual_status_note": "VIS-2I confirms Guardian and Background are mapped. Bridge and River remain custom art slots and are supported by CSS placeholders until final assets are added."
+  "visual_status_note": "VIS-2I confirms Guardian and Background are mapped. Bridge and River remain custom art slots and are supported by CSS placeholders until final assets are added.",
+  "advisor_asset_source": "VIS-3G locked Guardian face asset",
+  "advisor_asset_rule": "Washed-Out Crossing uses the locked Guardian face crop for neutral, alert, speaking, and success states until separate animated Guardian states are created."
 }

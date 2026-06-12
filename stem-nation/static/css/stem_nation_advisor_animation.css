@@ -1,0 +1,103 @@
+/* ============================================================
+   VIS-3C — STEM Nation Animated Advisor Shared CSS
+   ============================================================ */
+
+.sn-advisor-actor {
+  position: relative;
+  display: inline-grid;
+  place-items: center;
+  width: 132px;
+  min-height: 156px;
+  border-radius: 28px;
+  background:
+    radial-gradient(circle at 50% 42%, rgba(244,201,93,.22), transparent 45%),
+    rgba(5,12,24,.32);
+  border: 1px solid rgba(244,201,93,.28);
+  box-shadow:
+    0 18px 34px rgba(0,0,0,.28),
+    inset 0 0 22px rgba(255,255,255,.06);
+  overflow: visible;
+}
+
+.sn-advisor-actor img,
+.sn-advisor-actor video {
+  width: 100%;
+  height: 156px;
+  object-fit: contain;
+  object-position: center bottom;
+  filter: drop-shadow(0 12px 14px rgba(0,0,0,.35));
+  transform-origin: center bottom;
+}
+
+.sn-advisor-actor.idle img {
+  animation: snAdvisorIdle 3.8s ease-in-out infinite;
+}
+
+.sn-advisor-actor.speaking img,
+.sn-advisor-actor.speaking video {
+  animation: snAdvisorSpeak 620ms ease-in-out infinite;
+}
+
+.sn-advisor-actor.warning img,
+.sn-advisor-actor.warning video {
+  animation: snAdvisorWarn 420ms ease both;
+}
+
+.sn-advisor-actor.success img,
+.sn-advisor-actor.success video {
+  animation: snAdvisorSuccess 1.4s ease-in-out infinite alternate;
+}
+
+.sn-advisor-state-badge {
+  position: absolute;
+  right: -5px;
+  bottom: -5px;
+  width: 30px;
+  height: 30px;
+  display: grid;
+  place-items: center;
+  border-radius: 999px;
+  background: #07101e;
+  border: 1px solid rgba(255,255,255,.25);
+  font-size: .92rem;
+  z-index: 4;
+}
+
+@keyframes snAdvisorIdle {
+  0%, 100% { transform: translateY(0) rotate(-.3deg); }
+  50% { transform: translateY(-5px) rotate(.3deg); }
+}
+
+@keyframes snAdvisorSpeak {
+  0%, 100% { transform: translateY(0) scale(1); }
+  50% { transform: translateY(-4px) scale(1.025); }
+}
+
+@keyframes snAdvisorWarn {
+  0%, 100% { transform: translateX(0); }
+  20% { transform: translateX(-5px) rotate(-2deg); }
+  40% { transform: translateX(5px) rotate(2deg); }
+  60% { transform: translateX(-3px) rotate(-1deg); }
+  80% { transform: translateX(3px) rotate(1deg); }
+}
+
+@keyframes snAdvisorSuccess {
+  from {
+    filter: drop-shadow(0 12px 14px rgba(0,0,0,.35));
+  }
+  to {
+    filter: drop-shadow(0 12px 14px rgba(0,0,0,.35)) drop-shadow(0 0 18px rgba(126,224,129,.55));
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .sn-advisor-actor.idle img,
+  .sn-advisor-actor.speaking img,
+  .sn-advisor-actor.speaking video,
+  .sn-advisor-actor.warning img,
+  .sn-advisor-actor.warning video,
+  .sn-advisor-actor.success img,
+  .sn-advisor-actor.success video {
+    animation: none !important;
+  }
+}
