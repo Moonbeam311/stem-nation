@@ -2638,6 +2638,8 @@
 
 
 /* CI-STAGE-51B CLARIFY REGION SELECTION VS SETTLEMENT DECISION */
+
+/* CI-STAGE-51C REGION INTEL SYNC ARCHIVE LABEL */
 </style>
 
 <style>
@@ -3052,7 +3054,7 @@
 <div id="archiveLogPanel" class="archive-log-panel hidden">
 
   <div class="archive-log-label">
-    CIVILIZATION ARCHIVE
+    NATION ARCHIVE
   </div>
 
   
@@ -6262,6 +6264,163 @@ function ciStage51bAddSelectionDecisionNote(){
 
 document.addEventListener("DOMContentLoaded", ciStage51bAddSelectionDecisionNote);
 console.log("CI-STAGE-51B CLARIFY REGION SELECTION VS SETTLEMENT DECISION ACTIVE");
+</script>
+
+
+<script>
+/* CI-STAGE-51C REGION INTEL SYNC ARCHIVE LABEL */
+function ciStage51cSyncWorldRegion(region){
+  if(!region){ return; }
+
+  const intel = {
+    "River Corridor": {
+      name: "🌊 River Corridor",
+      description: "Fresh water, fertile soil, fish, and travel routes make the river powerful, but rising water can flood early settlements.",
+      advantage: "Water, food, farming, fishing, and travel.",
+      risk: "Flooding, exposed banks, and settlement loss.",
+      clue: "Watch how water shapes movement, farming, and danger.",
+      focus: "The river offers life and movement, but flood danger must shape the settlement plan.",
+      compare: "River Corridor vs Highland Ridge — Which is stronger for survival, trade, defense, or growth?"
+    },
+    "Forest Edge": {
+      name: "🌲 Forest Edge",
+      description: "Wood, shelter, medicine, and hidden food sources can support a people, but limited visibility can hide danger.",
+      advantage: "Wood, shelter, medicine, and hidden food sources.",
+      risk: "Hidden threats, limited visibility, and slower travel.",
+      clue: "Watch what the forest protects and what it conceals.",
+      focus: "The forest gives shelter and resources, but hidden danger limits what people can see.",
+      compare: "Forest Edge vs Open Plain — Which gives safer survival, and what risk must be managed?"
+    },
+    "Highland Ridge": {
+      name: "⛰️ Highland Ridge",
+      description: "High ground improves visibility and defense, but steep land can make farming, water access, and supply movement harder.",
+      advantage: "Defense, visibility, signal points, and protection from some floods.",
+      risk: "Limited farming, difficult movement, and supply challenges.",
+      clue: "Watch how elevation changes safety, food, and travel.",
+      focus: "The highland protects from above, but steep land challenges farming and supply movement.",
+      compare: "Highland Ridge vs River Corridor — Which gives the stronger beginning, and what cost comes with it?"
+    },
+    "Coastal Bay": {
+      name: "⚓ Coastal Bay",
+      description: "Fishing, travel, trade, and exchange make the coast valuable, but storms and outside routes can create danger.",
+      advantage: "Fishing, travel, trade, boats, and exchange routes.",
+      risk: "Storm exposure, flooding, invasion routes, and unstable shoreline.",
+      clue: "Watch how the coast connects opportunity with danger.",
+      focus: "The coast connects fishing, travel, and trade, but storms and invasion routes create risk.",
+      compare: "Coastal Bay vs River Corridor — Which gives stronger trade and survival, and what danger must be planned for?"
+    },
+    "Open Plain": {
+      name: "🌾 Open Plain",
+      description: "Open land supports farming, growth, and movement, but exposure can make defense more difficult.",
+      advantage: "Agriculture, expansion, livestock, and movement.",
+      risk: "Weak defense, exposure, drought, and few natural barriers.",
+      clue: "Watch how open space helps growth but creates vulnerability.",
+      focus: "The plain supports farming and expansion, but exposure makes defense harder.",
+      compare: "Open Plain vs Forest Edge — Which gives better growth, and what danger comes with visibility?"
+    },
+    "Balanced Crossroads": {
+      name: "🛤️ Balanced Crossroads",
+      description: "Crossroads connect people, goods, and ideas, but contact can also bring conflict, pressure, and competition.",
+      advantage: "Trade, communication, flexibility, and movement.",
+      risk: "Conflict, competition, pressure, and exposure to outside problems.",
+      clue: "Watch how connection brings both opportunity and responsibility.",
+      focus: "The crossroads brings trade and ideas, but connection also brings pressure and conflict.",
+      compare: "Balanced Crossroads vs Coastal Bay — Which gives stronger connection, and what risk follows?"
+    }
+  };
+
+  const data = intel[region];
+  if(!data){ return; }
+
+  const setText = (id, value) => {
+    const el = document.getElementById(id);
+    if(el){ el.textContent = value; }
+  };
+
+  setText("regionIntelName", data.name);
+  setText("regionIntelDescription", data.description);
+  setText("regionIntelAdvantage", data.advantage);
+  setText("regionIntelRisk", data.risk);
+  setText("regionIntelClue", data.clue);
+  setText("cinematicFocusText", data.focus);
+  setText("dynamicInquiryPrompt", `What does ${region} offer, and what danger must your nation plan for?`);
+
+  const comparisonBanner = document.getElementById("regionComparisonBanner");
+  const comparisonText = document.getElementById("regionComparisonText");
+  if(comparisonBanner && comparisonText){
+    comparisonBanner.classList.remove("hidden");
+    comparisonText.textContent = "Region Comparison: " + data.compare;
+  }
+
+  const comparisonPanel = document.getElementById("studentComparisonResponsePanel");
+  if(comparisonPanel){
+    comparisonPanel.classList.remove("hidden");
+  }
+
+  const comparisonPrompt = comparisonPanel ? comparisonPanel.querySelector("p") : null;
+  if(comparisonPrompt){
+    comparisonPrompt.textContent = data.compare.replace(" — ", ". ");
+  }
+
+  document.querySelectorAll(".board-terrain-tile, .terrain-zone, .region-card").forEach(el => {
+    const match = el.getAttribute("data-region") === region;
+    el.classList.toggle("selected", match);
+    el.classList.toggle("region-focused", match);
+    el.classList.toggle("active", match);
+  });
+
+  document.querySelectorAll("[data-atmosphere-zone]").forEach(el => {
+    el.classList.toggle("region-focused", el.getAttribute("data-atmosphere-zone") === region);
+  });
+
+  document.querySelectorAll("*").forEach(el => {
+    if(el.children.length === 0 && el.textContent && el.textContent.trim().startsWith("Teacher Focus:")){
+      el.textContent = "Region Focus: " + region;
+    }
+  });
+
+  const feedback = document.getElementById("regionSelectionFeedback");
+  if(feedback){
+    feedback.classList.remove("hidden");
+    feedback.textContent = `${region} selected for review. Region intel is synced. Record evidence before making the founding decision official.`;
+  }
+
+  try{
+    localStorage.setItem("stemNationWorldSelectedRegionV1", JSON.stringify({
+      region,
+      syncedAt: new Date().toISOString()
+    }));
+  }catch(error){}
+
+  console.log("CI-STAGE-51C synced region intel:", region);
+}
+
+function ciStage51cBindRegionSync(){
+  document.querySelectorAll(".board-terrain-tile, .terrain-zone, .region-card").forEach(el => {
+    if(el.dataset.ciStage51cBound === "true"){ return; }
+    el.dataset.ciStage51cBound = "true";
+
+    el.addEventListener("click", () => {
+      const region = el.getAttribute("data-region");
+      setTimeout(() => ciStage51cSyncWorldRegion(region), 80);
+    });
+  });
+
+  const selected =
+    document.querySelector(".board-terrain-tile.selected") ||
+    document.querySelector(".terrain-zone.selected") ||
+    document.querySelector(".region-card.selected") ||
+    document.querySelector(".board-terrain-tile.active") ||
+    document.querySelector(".terrain-zone.active") ||
+    document.querySelector(".region-card.active");
+
+  if(selected && selected.getAttribute("data-region")){
+    setTimeout(() => ciStage51cSyncWorldRegion(selected.getAttribute("data-region")), 120);
+  }
+}
+
+document.addEventListener("DOMContentLoaded", ciStage51cBindRegionSync);
+console.log("CI-STAGE-51C REGION INTEL SYNC ARCHIVE LABEL ACTIVE");
 </script>
 
 </body>
