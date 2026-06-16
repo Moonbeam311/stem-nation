@@ -1,0 +1,16 @@
+STEM Nation Permanent Version Lock
+==================================
+
+Version ID: STEM-NATION-COUNCIL-ARRIVAL-V1
+Status: LOCKED — browser confirmed
+Branch: local/advanced-build-snapshot
+Base Commit: c15874817a4e68b6c2c129062f2f09bfd479f59a
+Base Commit Summary: Lock First Gathering handoff and Guardian Council arrival
+Entry Route: /first_gathering
+Primary Route: /council_stage
+Locked Flow: First Gathering -> Guardian Arrival -> Council Briefing -> Evidence -> First Look -> Question Ranking
+Snapshot Directory: version_locks/STEM-NATION-COUNCIL-ARRIVAL-V1/files
+Restore Script: scripts/restore_stem_nation_council_arrival_v1.sh
+Git Tag: stem-nation-council-arrival-v1
+
+Locked Files: 11
