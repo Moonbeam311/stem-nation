@@ -3039,6 +3039,40 @@
       }
     ];
 
+    // PHASE_2A_SIGNAL_DRIVEN_COUNCIL_ORDER
+    const assignedAdvisor =
+      localStorage.getItem("stemNationFirstAdvisor") || "";
+
+    const advisorNames = [
+      "Scout",
+      "Healer",
+      "Builder",
+      "Mapkeeper"
+    ];
+
+    if (advisorNames.includes(assignedAdvisor)) {
+      const openingGuardian = steps[0];
+      const closingGuardian = steps[steps.length - 1];
+      const middleAdvisors = steps.slice(1, -1);
+
+      const assignedStep = middleAdvisors.find(
+        step => step.name === assignedAdvisor
+      );
+
+      const remainingSteps = middleAdvisors.filter(
+        step => step.name !== assignedAdvisor
+      );
+
+      steps.splice(
+        0,
+        steps.length,
+        openingGuardian,
+        assignedStep,
+        ...remainingSteps,
+        closingGuardian
+      );
+    }
+
     let current = 0;
     let ready = false;
     let activeAudio = null;
