@@ -19,6 +19,16 @@
   const arrivalMessage =
     document.getElementById("fgArrivalMessage");
 
+  // PHASE_1B_VISIBLE_SIGNAL_LOGIC
+  const signalAssignmentTitle =
+    document.getElementById("fgSignalAssignmentTitle");
+
+  const signalAssignmentAdvisor =
+    document.getElementById("fgSignalAssignmentAdvisor");
+
+  const FIRST_SIGNAL_KEY = "stemNationFirstSignal";
+  const FIRST_ADVISOR_KEY = "stemNationFirstAdvisor";
+
   const chamberStatus =
     document.getElementById("fgChamberStatus");
 
@@ -100,11 +110,53 @@
     }
   }
 
+  function renderFirstSignalAssignment() {
+    let signal = null;
+
+    try {
+      signal = JSON.parse(
+        window.localStorage.getItem(FIRST_SIGNAL_KEY) || "null"
+      );
+    } catch (error) {
+      signal = null;
+    }
+
+    if (!signal || !signal.title || !signal.advisor) {
+      signal = {
+        id: "crossing",
+        title: "Damaged Crossing",
+        advisor: "Builder",
+        summary:
+          "A route has failed after severe weather. People and supplies may be cut off."
+      };
+    }
+
+    if (signalAssignmentTitle) {
+      signalAssignmentTitle.textContent = signal.title;
+    }
+
+    if (signalAssignmentAdvisor) {
+      signalAssignmentAdvisor.textContent =
+        `${signal.advisor} will respond first.`;
+    }
+
+    if (arrivalMessage) {
+      arrivalMessage.textContent =
+        `Assignment received: ${signal.title}.`;
+    }
+
+    window.localStorage.setItem(
+      FIRST_ADVISOR_KEY,
+      signal.advisor
+    );
+  }
+
   function beginIdentityRecognition() {
     const identity = resolveIdentity();
 
     applyIdentity();
     applyRecognitionMetadata(identity);
+    renderFirstSignalAssignment();
 
     if (identityCard) {
       identityCard.classList.add("recognizing");

@@ -1498,3 +1498,43 @@ body > .atmosphere {
   }
 }
 
+
+/* PHASE_1B_VISIBLE_SIGNAL_HANDOFF */
+.fg-signal-assignment {
+  display: grid;
+  gap: 0.22rem;
+  margin-top: 0.72rem;
+  padding: 0.72rem 0.82rem;
+  border: 1px solid rgba(240, 198, 108, 0.34);
+  border-radius: 14px;
+  background:
+    linear-gradient(
+      135deg,
+      rgba(240, 198, 108, 0.11),
+      rgba(81, 217, 250, 0.08)
+    ),
+    rgba(3, 18, 28, 0.56);
+  box-shadow:
+    inset 0 0 20px rgba(142, 234, 255, 0.04),
+    0 8px 28px rgba(0, 0, 0, 0.22);
+}
+
+.fg-signal-assignment-label {
+  color: var(--fg-gold);
+  font-size: 0.62rem;
+  font-weight: 800;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+#fgSignalAssignmentTitle {
+  color: var(--fg-text);
+  font-size: 0.95rem;
+  line-height: 1.25;
+}
+
+#fgSignalAssignmentAdvisor {
+  color: var(--fg-blue);
+  font-size: 0.76rem;
+  line-height: 1.35;
+}

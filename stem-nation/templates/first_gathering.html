@@ -610,6 +610,68 @@
       line-height: 1.55;
     }
 
+  
+    /* PHASE_1B_SIGNAL_HANDOFF_PANEL */
+    .signal-handoff {
+      margin: 18px 0 22px;
+      display: grid;
+      grid-template-columns: auto 1fr;
+      align-items: center;
+      gap: 16px;
+      border: 1px solid rgba(125,211,252,.28);
+      border-radius: 20px;
+      padding: 17px 19px;
+      background:
+        linear-gradient(135deg, rgba(125,211,252,.10), rgba(244,211,94,.07)),
+        rgba(4,18,31,.72);
+      box-shadow: 0 16px 38px rgba(0,0,0,.22);
+    }
+
+    .signal-handoff-icon {
+      width: 54px;
+      height: 54px;
+      display: grid;
+      place-items: center;
+      border: 1px solid rgba(244,211,94,.38);
+      border-radius: 16px;
+      background: rgba(244,211,94,.09);
+      color: #f4d35e;
+      font-size: 1.55rem;
+    }
+
+    .signal-handoff-label {
+      display: block;
+      margin-bottom: 4px;
+      color: #7dd3fc;
+      font-size: .72rem;
+      font-weight: 900;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+    }
+
+    .signal-handoff strong {
+      display: block;
+      color: #fff5cf;
+      font-size: 1.12rem;
+    }
+
+    .signal-handoff p {
+      margin: 6px 0;
+      color: rgba(248,240,213,.72);
+      line-height: 1.45;
+    }
+
+    .signal-handoff small {
+      color: #f4d35e;
+      font-weight: 900;
+    }
+
+    @media (max-width: 620px) {
+      .signal-handoff {
+        grid-template-columns: 1fr;
+      }
+    }
+
   </style>
 
   <!-- VIS-5D — First Gathering cinematic CSS -->
@@ -711,6 +773,13 @@
         <span id="fgArrivalMessage">
           Your identity has been confirmed.
         </span>
+
+        <!-- PHASE_1B_VISIBLE_SIGNAL_HANDOFF -->
+        <div class="fg-signal-assignment" id="fgSignalAssignment" aria-live="polite">
+          <span class="fg-signal-assignment-label">Your First Assignment</span>
+          <strong id="fgSignalAssignmentTitle">Signal record loading</strong>
+          <span id="fgSignalAssignmentAdvisor">Advisor assignment loading</span>
+        </div>
       </div>
     </aside>
 
@@ -905,6 +974,21 @@
 
         <div class="status-line">First chamber active</div>
 
+        <!-- PHASE_1B_SIGNAL_HANDOFF_PANEL -->
+        <section class="signal-handoff" id="signalHandoff" aria-live="polite">
+          <div class="signal-handoff-icon" id="signalHandoffIcon" aria-hidden="true">◆</div>
+          <div class="signal-handoff-copy">
+            <span class="signal-handoff-label">Your First Assignment</span>
+            <strong id="signalHandoffTitle">Signal record loading</strong>
+            <p id="signalHandoffSummary">
+              The Academy is retrieving the situation you selected.
+            </p>
+            <small id="signalHandoffAdvisor">
+              Your first Council advisor is being assigned.
+            </small>
+          </div>
+        </section>
+
         <div class="voice-grid">
           <div class="voice-card">
             <strong>Voice One</strong>
@@ -954,6 +1038,8 @@
 
   <script>
     const IDENTITY_KEY = "stemNationStudentIdentity";
+    const SIGNAL_KEY = "stemNationFirstSignal";
+    const FIRST_ADVISOR_KEY = "stemNationFirstAdvisor";
 
     const studentAvatarMini = document.getElementById("studentAvatarMini");
     const studentWelcome = document.getElementById("studentWelcome");
@@ -961,6 +1047,12 @@
     const guardianLine = document.getElementById("guardianLine");
     const guardianNextBtn = document.getElementById("guardianNextBtn");
     const replayBtn = document.getElementById("replayBtn");
+
+    // PHASE_1B_SIGNAL_HANDOFF_LOGIC
+    const signalHandoffIcon = document.getElementById("signalHandoffIcon");
+    const signalHandoffTitle = document.getElementById("signalHandoffTitle");
+    const signalHandoffSummary = document.getElementById("signalHandoffSummary");
+    const signalHandoffAdvisor = document.getElementById("signalHandoffAdvisor");
 
     let identity = {
       name: "Academy Learner",
@@ -972,6 +1064,20 @@
     try {
       const saved = JSON.parse(localStorage.getItem(IDENTITY_KEY) || "null");
       if (saved) identity = { ...identity, ...saved };
+    } catch (err) {}
+
+    let firstSignal = {
+      id: "crossing",
+      title: "Damaged Crossing",
+      advisor: "Builder",
+      summary: "A route has failed after severe weather. People and supplies may be cut off."
+    };
+
+    try {
+      const savedSignal = JSON.parse(localStorage.getItem(SIGNAL_KEY) || "null");
+      if (savedSignal && savedSignal.id) {
+        firstSignal = { ...firstSignal, ...savedSignal };
+      }
     } catch (err) {}
 
     function looksLikeImageSource(value) {
@@ -1006,10 +1112,26 @@
       }
     }
 
+    function renderFirstSignal() {
+      const signalIcons = {
+        crossing: "🌉",
+        water: "💧",
+        settlement: "📡"
+      };
+
+      signalHandoffIcon.textContent = signalIcons[firstSignal.id] || "◆";
+      signalHandoffTitle.textContent = firstSignal.title;
+      signalHandoffSummary.textContent = firstSignal.summary;
+      signalHandoffAdvisor.textContent =
+        `${firstSignal.advisor} has been assigned as your first responding advisor.`;
+
+      localStorage.setItem(FIRST_ADVISOR_KEY, firstSignal.advisor);
+    }
+
     const guardianLines = [
-      "You made it into the Hall.",
-      "The room needs another set of eyes.",
-      "Step closer. Begin with what you notice."
+      `Your assignment has been received: ${firstSignal.title}.`,
+      `${firstSignal.advisor} will respond first, but every voice in this chamber matters.`,
+      "Step closer. Begin with what you notice before deciding what it means."
     ];
 
     let guardianIndex = 0;
@@ -1028,6 +1150,7 @@
     replayBtn.addEventListener("click", replayGathering);
 
     renderStudentIdentity();
+    renderFirstSignal();
   </script>
 
   <!-- VIS-5D — First Gathering cinematic JS -->
