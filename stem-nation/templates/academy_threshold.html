@@ -297,6 +297,21 @@
       transform: scaleY(1);
     }
 
+    .gate.threshold-open {
+      border-color: rgba(244,211,94,.95);
+      background:
+        radial-gradient(
+          ellipse at 50% 62%,
+          rgba(244,211,94,.82),
+          rgba(117,220,255,.54) 42%,
+          rgba(2,10,17,.76) 78%
+        );
+      box-shadow:
+        inset 0 0 68px rgba(244,211,94,.46),
+        0 0 58px rgba(244,211,94,.40),
+        0 0 120px rgba(117,220,255,.30);
+    }
+
     .ground {
       position: absolute;
       left: -5%;
@@ -374,11 +389,136 @@
     }
 
     .threshold.walking .path-lights,
-    .threshold.gate-ready .path-lights {
+    .threshold.gate-ready .path-lights,
+    .threshold.threshold-open .path-lights {
       opacity: .95;
       filter:
         drop-shadow(0 0 8px rgba(117,220,255,.74))
         drop-shadow(0 0 18px rgba(244,211,94,.20));
+    }
+
+    .recognition-field {
+      /* THR_2_ACADEMY_RECOGNITION_GATE */
+      position: absolute;
+      right: min(22vw, 270px);
+      bottom: 21vh;
+      z-index: 8;
+      width: min(24vw, 270px);
+      aspect-ratio: 1;
+      opacity: 0;
+      pointer-events: none;
+      transform: scale(.74);
+      transition:
+        opacity 520ms ease,
+        transform 720ms ease;
+    }
+
+    .recognition-ring {
+      position: absolute;
+      inset: 12%;
+      border: 1px solid rgba(117,220,255,.5);
+      border-radius: 50%;
+      box-shadow:
+        0 0 26px rgba(117,220,255,.28),
+        inset 0 0 24px rgba(117,220,255,.12);
+      animation: recognitionPulse 2.8s ease-in-out infinite;
+    }
+
+    .recognition-ring.two {
+      inset: 24%;
+      border-color: rgba(244,211,94,.5);
+      animation-delay: .45s;
+    }
+
+    .scan-beam {
+      position: absolute;
+      inset: 4% 26%;
+      opacity: 0;
+      border-radius: 999px;
+      background:
+        linear-gradient(
+          90deg,
+          transparent,
+          rgba(117,220,255,.36),
+          rgba(244,211,94,.35),
+          transparent
+        );
+      filter: blur(2px);
+      transform: translateX(-32%);
+    }
+
+    .threshold.recognizing .recognition-field,
+    .threshold.threshold-open .recognition-field {
+      opacity: 1;
+      transform: scale(1);
+    }
+
+    .threshold.recognizing .scan-beam {
+      opacity: 1;
+      animation: scanPass 2.1s ease-in-out 2;
+    }
+
+    .academy-seal {
+      position: absolute;
+      right: min(19vw, 242px);
+      bottom: 33vh;
+      z-index: 24;
+      display: grid;
+      place-items: center;
+      width: 78px;
+      aspect-ratio: 1;
+      border: 1px solid rgba(244,211,94,.42);
+      border-radius: 50%;
+      color: rgba(255,247,220,.46);
+      background:
+        radial-gradient(circle, rgba(244,211,94,.18), transparent 56%),
+        rgba(2,13,22,.72);
+      box-shadow:
+        inset 0 0 22px rgba(244,211,94,.10),
+        0 0 28px rgba(117,220,255,.08);
+      opacity: 0;
+      pointer-events: none;
+      transform: translateY(12px) scale(.86);
+      transition:
+        opacity 420ms ease,
+        transform 420ms ease,
+        box-shadow 220ms ease,
+        border-color 220ms ease,
+        color 220ms ease;
+    }
+
+    .academy-seal::before {
+      content: "";
+      width: 42%;
+      aspect-ratio: 1;
+      border: 2px solid currentColor;
+      border-radius: 50%;
+      box-shadow:
+        0 0 0 8px rgba(244,211,94,.08),
+        0 0 18px rgba(244,211,94,.22);
+    }
+
+    .academy-seal.ready {
+      opacity: 1;
+      pointer-events: auto;
+      cursor: pointer;
+      color: rgba(255,247,220,.94);
+      border-color: rgba(244,211,94,.86);
+      transform: translateY(0) scale(1);
+      box-shadow:
+        inset 0 0 24px rgba(244,211,94,.28),
+        0 0 34px rgba(244,211,94,.30),
+        0 0 70px rgba(117,220,255,.20);
+    }
+
+    .academy-seal.ready:hover,
+    .academy-seal.ready:focus-visible {
+      outline: none;
+      transform: translateY(-2px) scale(1.04);
+      box-shadow:
+        inset 0 0 26px rgba(244,211,94,.35),
+        0 0 44px rgba(244,211,94,.38),
+        0 0 88px rgba(117,220,255,.28);
     }
 
     .fog {
@@ -802,6 +942,82 @@
       white-space: nowrap;
     }
 
+    .gate-dialogue {
+      position: absolute;
+      left: clamp(18px, 5vw, 72px);
+      bottom: clamp(78px, 11vh, 118px);
+      z-index: 31;
+      display: grid;
+      gap: 10px;
+      width: min(390px, calc(100% - 36px));
+      padding: 15px 16px;
+      border: 1px solid rgba(117,220,255,.32);
+      border-radius: 18px;
+      color: rgba(239,250,255,.92);
+      background: rgba(2,13,22,.76);
+      box-shadow:
+        0 20px 52px rgba(0,0,0,.38),
+        0 0 30px rgba(117,220,255,.13);
+      backdrop-filter: blur(12px);
+      opacity: 0;
+      pointer-events: none;
+      transform: translateY(14px);
+      transition:
+        opacity 360ms ease,
+        transform 360ms ease;
+    }
+
+    .gate-dialogue.show {
+      opacity: 1;
+      pointer-events: auto;
+      transform: translateY(0);
+    }
+
+    .gate-dialogue-label {
+      color: rgba(244,211,94,.82);
+      font-size: .68rem;
+      font-weight: 950;
+      letter-spacing: .13em;
+      text-transform: uppercase;
+    }
+
+    .gate-dialogue-title {
+      margin: 0;
+      color: #fff7dc;
+      font-size: clamp(1.08rem, 2.4vw, 1.45rem);
+      line-height: 1.08;
+    }
+
+    .gate-dialogue-text {
+      margin: 0;
+      color: rgba(235,249,255,.76);
+      font-size: .86rem;
+      line-height: 1.45;
+    }
+
+    .gate-action {
+      justify-self: start;
+      min-height: 42px;
+      padding: 10px 15px;
+      border: 1px solid rgba(244,211,94,.62);
+      border-radius: 999px;
+      color: #06131f;
+      background:
+        linear-gradient(135deg, #75dcff, #f4d35e);
+      box-shadow:
+        0 12px 28px rgba(0,0,0,.30),
+        0 0 24px rgba(244,211,94,.18);
+      cursor: pointer;
+      font-size: .82rem;
+      font-weight: 950;
+    }
+
+    .gate-action:disabled {
+      cursor: default;
+      opacity: .52;
+      filter: grayscale(.28);
+    }
+
     .transition-cover {
       position: absolute;
       inset: 0;
@@ -953,6 +1169,33 @@
       }
     }
 
+    @keyframes recognitionPulse {
+      0%,
+      100% {
+        opacity: .32;
+        transform: scale(.9);
+      }
+
+      50% {
+        opacity: .92;
+        transform: scale(1.05);
+      }
+    }
+
+    @keyframes scanPass {
+      0% {
+        transform: translateX(-34%);
+      }
+
+      50% {
+        transform: translateX(34%);
+      }
+
+      100% {
+        transform: translateX(-34%);
+      }
+    }
+
     @media (max-width: 760px) {
       .academy {
         right: -2vw;
@@ -982,6 +1225,25 @@
 
       .status {
         display: none;
+      }
+
+      .recognition-field {
+        right: 20vw;
+        bottom: 24vh;
+        width: 42vw;
+      }
+
+      .academy-seal {
+        right: 21vw;
+        bottom: 38vh;
+        width: 62px;
+      }
+
+      .gate-dialogue {
+        left: 18px;
+        right: 18px;
+        bottom: 82px;
+        width: auto;
       }
     }
 
@@ -1020,8 +1282,21 @@
     <div class="path" aria-hidden="true"></div>
     <div class="path-lights" aria-hidden="true"></div>
 
+    <div class="recognition-field" aria-hidden="true">
+      <span class="recognition-ring"></span>
+      <span class="recognition-ring two"></span>
+      <span class="scan-beam"></span>
+    </div>
+
     <div class="fog left" aria-hidden="true"></div>
     <div class="fog right" aria-hidden="true"></div>
+
+    <button
+      class="academy-seal"
+      id="academySeal"
+      type="button"
+      aria-label="Activate the Academy Threshold"
+    ></button>
 
     <header class="top-hud">
       <div class="location">
@@ -1081,6 +1356,33 @@
       </button>
     </section>
 
+    <section
+      class="gate-dialogue"
+      id="gateDialogue"
+      aria-live="polite"
+    >
+      <span class="gate-dialogue-label" id="gateDialogueLabel">
+        Academy Recognition
+      </span>
+
+      <h1 class="gate-dialogue-title" id="gateDialogueTitle">
+        The Academy is reading your signal.
+      </h1>
+
+      <p class="gate-dialogue-text" id="gateDialogueText">
+        Hold your place at the gate.
+      </p>
+
+      <button
+        class="gate-action"
+        id="gateAction"
+        type="button"
+        disabled
+      >
+        Activate the Threshold
+      </button>
+    </section>
+
     <button class="skip" id="skipButton" type="button">
       Skip Threshold
     </button>
@@ -1113,6 +1415,24 @@
     const academyGate =
       document.getElementById("academyGate");
 
+    const academySeal =
+      document.getElementById("academySeal");
+
+    const gateDialogue =
+      document.getElementById("gateDialogue");
+
+    const gateDialogueLabel =
+      document.getElementById("gateDialogueLabel");
+
+    const gateDialogueTitle =
+      document.getElementById("gateDialogueTitle");
+
+    const gateDialogueText =
+      document.getElementById("gateDialogueText");
+
+    const gateAction =
+      document.getElementById("gateAction");
+
     const instruction =
       document.getElementById("instruction");
 
@@ -1134,6 +1454,8 @@
       fallback: "",
       avatarChoice: "Academy Avatar"
     };
+
+    let thresholdActivated = false;
 
     try {
       const saved =
@@ -1210,10 +1532,16 @@
       }
     }
 
-    function speak(text) {
+    function speak(text, voice = "student") {
       studentSpeech.textContent = text;
-      studentSpeech.classList.add("show");
-      character.classList.add("talking");
+
+      if (voice === "student") {
+        studentSpeech.classList.add("show");
+        character.classList.add("talking");
+      } else {
+        studentSpeech.classList.remove("show");
+        character.classList.remove("talking");
+      }
 
       if (
         "speechSynthesis" in window &&
@@ -1224,8 +1552,8 @@
         const utterance =
           new SpeechSynthesisUtterance(text);
 
-        utterance.rate = 0.92;
-        utterance.pitch = 1.04;
+        utterance.rate = voice === "academy" ? 0.82 : 0.92;
+        utterance.pitch = voice === "academy" ? 0.82 : 1.04;
         utterance.volume = 0.88;
 
         utterance.onend = () => {
@@ -1244,6 +1572,10 @@
       }
     }
 
+    function academySpeak(text) {
+      speak(text, "academy");
+    }
+
     function enterCinematic() {
       transitionCover.classList.add("show");
 
@@ -1251,6 +1583,74 @@
         window.location.href =
           "/academy_cinematic";
       }, 1050);
+    }
+
+    function beginRecognition() {
+      const displayName =
+        resolveDisplayName(identity);
+
+      threshold.classList.add("recognizing");
+      gateDialogue.classList.add("show");
+
+      gateDialogueLabel.textContent =
+        "Academy Recognition";
+
+      gateDialogueTitle.textContent =
+        "Identity signal found";
+
+      gateDialogueText.textContent =
+        `${displayName}, the Academy recognizes your arrival. Activate the seal when you are ready.`;
+
+      statusText.textContent =
+        "Recognition active";
+
+      academySpeak(
+        `${displayName}. Your identity has been recognized. The Threshold is waiting for your choice.`
+      );
+
+      window.setTimeout(() => {
+        academySeal.classList.add("ready");
+        gateAction.disabled = false;
+      }, 1700);
+    }
+
+    function openThreshold() {
+      thresholdActivated = true;
+      threshold.classList.remove("recognizing");
+      threshold.classList.add("threshold-open");
+      academyGate.classList.add("threshold-open");
+      academySeal.classList.remove("ready");
+
+      statusText.textContent =
+        "Threshold open";
+
+      gateDialogueLabel.textContent =
+        "Threshold Active";
+
+      gateDialogueTitle.textContent =
+        "The gate is open";
+
+      gateDialogueText.textContent =
+        "Step through when you are ready. Your first inquiry begins beyond the light.";
+
+      gateAction.textContent =
+        "Enter STEM Nation";
+
+      gateAction.disabled = false;
+
+      academySpeak(
+        "The Threshold is open. Enter STEM Nation when you are ready."
+      );
+    }
+
+    function handleGateAction() {
+      if (thresholdActivated) {
+        enterCinematic();
+        return;
+      }
+
+      gateAction.disabled = true;
+      openThreshold();
     }
 
     function beginThresholdSequence() {
@@ -1271,7 +1671,7 @@
         threshold.classList.add("gate-ready");
 
         statusText.textContent =
-          "Identity recognized";
+          "Awaiting recognition";
 
         academyGate.classList.add("active");
 
@@ -1284,16 +1684,8 @@
       }, 5300);
 
       window.setTimeout(() => {
-        studentSpeech.textContent =
-          "The Academy is responding.";
-
-        statusText.textContent =
-          "Academy entry authorized";
+        beginRecognition();
       }, 7600);
-
-      window.setTimeout(() => {
-        enterCinematic();
-      }, 9600);
     }
 
     approachButton.addEventListener(
@@ -1304,6 +1696,16 @@
     skipButton.addEventListener(
       "click",
       enterCinematic
+    );
+
+    academySeal.addEventListener(
+      "click",
+      openThreshold
+    );
+
+    gateAction.addEventListener(
+      "click",
+      handleGateAction
     );
 
     renderIdentity();

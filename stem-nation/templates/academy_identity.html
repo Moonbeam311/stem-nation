@@ -523,7 +523,7 @@
           </p>
 
           <label for="studentName">Academy Name</label>
-          <input id="studentName" autocomplete="off" placeholder="Enter your first name or Academy name">
+          <input id="studentName" autocomplete="off" placeholder="Enter your name/nickname">
 
           <label>Choose your Academy avatar</label>
           <div class="avatar-grid" id="avatarGrid"></div>
@@ -700,7 +700,7 @@
       }
 
       previewRole.innerHTML = `
-        <strong>${customAvatarDataUrl ? "Custom Avatar" : selectedAvatar.label}</strong>
+        <strong>${customAvatarDataUrl ? "Custom avatar selected" : "Academy avatar selected"}</strong>
         Choose the avatar that feels most like you.
       `;
     }
@@ -768,14 +768,11 @@
 
         if (!saved && !savedAvatar) return;
 
-        if (saved?.name) studentName.value = saved.name;
-
         const role = saved?.role || savedAvatar?.role;
         if (role) {
           selectedAvatar = avatars.find(item => item.role === role) || avatars[0];
         }
 
-        identityStorageNotice.classList.add("show");
       } catch (err) {
         console.warn("Saved Academy identity ignored.", err);
       }
@@ -812,6 +809,7 @@
     document.getElementById("clearIdentityBtn").addEventListener("click", clearIdentity);
 
     loadSavedIdentity();
+    studentName.value = "";
     renderAvatarGrid();
     updatePreview();
   </script>
