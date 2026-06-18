@@ -1,0 +1,31 @@
+VIS-5A — FIRST GATHERING CINEMATIC ASSET AND INTERACTION AUDIT
+
+IDENTITY LOCK
+- Student names must load dynamically from the saved Academy identity.
+- Student avatars must load dynamically from the student's selected avatar.
+- Moonbeam311 is sample data only.
+- No Photoshop asset may contain a baked-in student name or avatar.
+
+NARRATIVE BOUNDARY
+- First Gathering contains arrival, unidentified voices, and Council-door entry.
+- Sector 7A evidence begins in Council Stage.
+- Inquiry Council portraits are formally revealed in Council Stage.
+- Dr. and Mrs. Mishoe belong to a separate later Council experience.
+
+RECOMMENDED VISUAL MODEL
+- Layered antechamber background
+- Dynamic student identity hologram
+- Three spatial unidentified voice zones
+- Interactive illuminated Council doors
+- Browser-rendered cinematic transition
+
+RISKS
+- HIGH — No shared localStorage key was detected between Academy Identity and First Gathering.
+- MEDIUM — No reduced-motion alternative detected.
+- MEDIUM — No explicit caption control detected.
+
+RECOMMENDED NEXT PHASE
+VIS-5B — First Gathering Cinematic Environment Asset Selection
+
+Do not generate or edit final assets until the strongest existing
+Academy/Council Hall artwork is selected as the visual base.

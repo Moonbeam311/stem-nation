@@ -338,6 +338,12 @@ def academy_opening():
 def academy_identity():
     return render_template("academy_identity.html")
 
+
+@app.route("/academy_threshold")
+def academy_threshold():
+    return render_template("academy_threshold.html")
+
+
 @app.route("/academy_cinematic")
 def academy_cinematic():
     return render_template("academy_cinematic.html")

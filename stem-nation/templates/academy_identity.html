@@ -511,7 +511,7 @@
     <section class="academy-shell">
       <div class="topbar">
         <div class="brand">STEM Nation Academy</div>
-        <div class="rank-pill">New Arrival · Academy Learner</div>
+        <div class="rank-pill">New Arrival · Chief Investigator in Training</div>
       </div>
 
       <section class="hero">
@@ -542,16 +542,6 @@
             <div class="custom-avatar-badge" id="customAvatarBadge">Custom avatar selected</div>
           </div>
 
-          <div class="actions">
-            <button class="primary" id="saveIdentityBtn" type="button">Lock Identity & Begin Journey</button>
-            <button class="secondary" id="clearIdentityBtn" type="button">Clear Current Identity</button>
-          </div>
-
-          <div class="status" id="status"></div>
-
-          <p class="note">
-            Choose the avatar that feels most like you. Realistic avatar portraits will be added as the Academy grows. Eight avatar slots are reserved for student choice.
-          </p>
         </article>
 
         <aside class="panel preview-card">
@@ -559,7 +549,7 @@
             <div class="kicker">Academy Profile Preview</div>
             <div class="preview-image-frame" id="previewAvatarFrame"><div class="avatar-placeholder"></div></div>
             <div class="preview-name" id="previewName">New Arrival</div>
-            <div class="preview-rank">Academy Learner</div>
+            <div class="preview-rank">Chief Investigator in Training</div>
             <div class="preview-role" id="previewRole">
               <strong>Academy Avatar</strong>
               Choose the avatar that feels most like you.
@@ -569,6 +559,12 @@
               <strong>Saved identity detected.</strong><br>
               Your Academy profile was loaded from this browser. You can keep it or clear it.
             </div>
+
+            <div class="actions">
+              <button class="primary" id="saveIdentityBtn" type="button">Lock Identity & Begin Journey</button>
+              <button class="secondary" id="clearIdentityBtn" type="button">Clear Current Identity</button>
+            </div>
+            <div class="status" id="status"></div>
           </div>
         </aside>
       </section>
@@ -711,10 +707,13 @@
 
     function saveIdentity() {
       const savedAt = new Date().toISOString();
+      const academyName = safeName();
 
       const identity = {
-        name: safeName(),
-        status: "Academy Learner",
+        name: academyName,
+        approvedName: academyName,
+        teacherApprovedName: academyName,
+        status: "Chief Investigator in Training",
         leadershipStage: "New Arrival",
         portraitType: "realistic-avatar-slot",
         portrait: customAvatarDataUrl || selectedAvatar.image || "",
@@ -740,10 +739,11 @@
 
       localStorage.setItem(STORAGE_KEY, JSON.stringify(identity));
       localStorage.setItem(AVATAR_KEY, JSON.stringify(avatarRecord));
+      window.STEMNationMissionRecord?.update?.();
 
       statusBox.textContent = "Identity locked. The Academy doors are opening...";
       setTimeout(() => {
-        window.location.href = "/academy_cinematic";
+        window.location.href = "/academy_threshold";
       }, 650);
     }
 
@@ -815,5 +815,6 @@
     renderAvatarGrid();
     updatePreview();
   </script>
+  <script src="{{ url_for('static', filename='js/academy_mission_record.js') }}?v=step2c1"></script>
 </body>
 </html>

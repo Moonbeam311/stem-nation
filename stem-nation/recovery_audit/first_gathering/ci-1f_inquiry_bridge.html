@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>STEM Nation | The First Gathering</title>
+  <style>
+    :root {
+      --gold: #f4d35e;
+      --gold2: #d7a51e;
+      --text: #f8f1dd;
+      --muted: #d8cfb0;
+      --panel: rgba(5, 12, 24, .78);
+      --border: rgba(244, 211, 94, .28);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      background:
+        radial-gradient(circle at 20% 10%, rgba(244,211,94,.14), transparent 30%),
+        radial-gradient(circle at 80% 0%, rgba(80,160,220,.18), transparent 34%),
+        linear-gradient(180deg, #06111f, #0a192b 56%, #030914);
+      color: var(--text);
+      font-family: Georgia, "Times New Roman", serif;
+      overflow-x: hidden;
+    }
+
+    .hall {
+      position: relative;
+      min-height: 100vh;
+      padding: 38px 22px 70px;
+      overflow: hidden;
+    }
+
+    .hall::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      background:
+        linear-gradient(90deg, rgba(255,255,255,.04) 1px, transparent 1px),
+        radial-gradient(circle at 50% 18%, rgba(244,211,94,.12), transparent 36%);
+      background-size: 74px 74px, auto;
+      opacity: .22;
+      pointer-events: none;
+    }
+
+    .light-scan {
+      position: fixed;
+      top: 0;
+      bottom: 0;
+      width: 24%;
+      left: -30%;
+      background: linear-gradient(90deg, transparent, rgba(244,211,94,.12), transparent);
+      animation: scan 7s linear infinite;
+      pointer-events: none;
+    }
+
+    @keyframes scan {
+      to { left: 120%; }
+    }
+
+    .wrap {
+      position: relative;
+      z-index: 2;
+      max-width: 1120px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1.1fr .9fr;
+      gap: 22px;
+      align-items: start;
+    }
+
+    .panel {
+      border: 1px solid var(--border);
+      background:
+        linear-gradient(135deg, rgba(244,211,94,.09), rgba(255,255,255,.035)),
+        var(--panel);
+      border-radius: 28px;
+      padding: clamp(20px, 3vw, 34px);
+      box-shadow: 0 28px 80px rgba(0,0,0,.36);
+      backdrop-filter: blur(8px);
+    }
+
+    .badge {
+      display: inline-block;
+      color: var(--gold);
+      letter-spacing: .16em;
+      text-transform: uppercase;
+      font-size: .78rem;
+      font-weight: 900;
+      margin-bottom: 12px;
+    }
+
+    h1 {
+      margin: 0 0 14px;
+      font-size: clamp(2.2rem, 5vw, 4.4rem);
+      line-height: .96;
+    }
+
+    .lead {
+      color: var(--muted);
+      line-height: 1.65;
+      font-size: 1.08rem;
+      margin: 0;
+    }
+
+    .conversation {
+      display: grid;
+      gap: 14px;
+      margin-top: 24px;
+    }
+
+    .voice {
+      opacity: 0;
+      transform: translateY(12px);
+      transition: opacity .65s ease, transform .65s ease;
+      padding: 14px 16px;
+      border-radius: 18px;
+      border: 1px solid rgba(255,255,255,.12);
+      background: rgba(255,255,255,.065);
+      line-height: 1.5;
+    }
+
+    .voice.show {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .voice strong {
+      color: var(--gold);
+      display: block;
+      margin-bottom: 4px;
+      letter-spacing: .04em;
+    }
+
+    .guardian-card {
+      margin-top: 22px;
+      display: none;
+      border: 1px solid rgba(244,211,94,.34);
+      background: rgba(244,211,94,.09);
+      border-radius: 22px;
+      padding: 18px;
+    }
+
+    .guardian-card.show {
+      display: block;
+      animation: rise .65s ease both;
+    }
+
+    @keyframes rise {
+      from { opacity: 0; transform: translateY(14px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .guardian-line {
+      font-size: clamp(1.2rem, 2.6vw, 1.9rem);
+      line-height: 1.32;
+      margin: 0;
+    }
+
+    .actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-top: 18px;
+    }
+
+    button,
+    .button {
+      border: 0;
+      border-radius: 999px;
+      padding: 13px 21px;
+      font-family: inherit;
+      font-weight: 900;
+      cursor: pointer;
+      text-decoration: none;
+    }
+
+    .primary {
+      background: linear-gradient(135deg, var(--gold), var(--gold2));
+      color: #171006;
+      box-shadow: 0 12px 36px rgba(244,211,94,.22);
+    }
+
+    .secondary {
+      background: rgba(255,255,255,.1);
+      color: var(--text);
+      border: 1px solid rgba(255,255,255,.16);
+    }
+
+    .evidence-panel {
+      opacity: 0;
+      transform: translateY(16px);
+      transition: opacity .85s ease, transform .85s ease;
+    }
+
+    .evidence-panel.show {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .evidence-table {
+      display: grid;
+      gap: 12px;
+      margin-top: 18px;
+    }
+
+    .evidence-card {
+      border: 1px solid rgba(255,255,255,.13);
+      background: rgba(0,0,0,.24);
+      border-radius: 18px;
+      padding: 14px;
+    }
+
+    .evidence-card .label {
+      color: var(--gold);
+      font-size: .78rem;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      font-weight: 900;
+      margin-bottom: 6px;
+    }
+
+    .evidence-card p {
+      color: var(--muted);
+      margin: 0;
+      line-height: 1.45;
+    }
+
+    .note {
+      margin-top: 16px;
+      color: #cfc4a3;
+      line-height: 1.5;
+      font-size: .96rem;
+    }
+
+    @media (max-width: 880px) {
+      .wrap {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main class="hall">
+    <div class="light-scan" aria-hidden="true"></div>
+
+    <section class="wrap">
+      <article class="panel">
+        <div class="badge">The First Gathering</div>
+        <h1>The Council Hall</h1>
+        <p class="lead">
+          You arrive near the edge of a gathering already in motion.
+          No one has introduced the problem yet, but the room feels tense.
+          You hear different voices trying to make sense of the same evidence.
+        </p>
+
+        <div class="conversation">
+          <div class="voice" id="voice1">
+            <strong>Voice One</strong>
+            The crossing is unsafe. The water changed overnight.
+          </div>
+
+          <div class="voice" id="voice2">
+            <strong>Voice Two</strong>
+            If we wait too long, the group loses daylight.
+          </div>
+
+          <div class="voice" id="voice3">
+            <strong>Voice Three</strong>
+            We do not know enough yet. The signs are not all pointing in the same direction.
+          </div>
+        </div>
+
+        <div class="guardian-card" id="guardianCard">
+          <p class="guardian-line" id="guardianLine">Ah. You made it.</p>
+          <div class="actions">
+            <button class="primary" id="guardianNextBtn" type="button">Continue</button>
+          </div>
+        </div>
+      </article>
+
+      <aside class="panel evidence-panel" id="evidencePanel">
+        <div class="badge">Unlabeled Evidence</div>
+        <h1 style="font-size:clamp(1.8rem,3.4vw,3rem);">What do you notice?</h1>
+        <p class="lead">
+          No one tells you what the evidence means.
+          Your first task is to observe before deciding.
+        </p>
+
+        <div class="evidence-table">
+          <div class="evidence-card">
+            <div class="label">Evidence A</div>
+            <p>Fresh water marks appear higher than expected near the crossing.</p>
+          </div>
+
+          <div class="evidence-card">
+            <div class="label">Evidence B</div>
+            <p>Footprints stop near the bank, then turn away from the river.</p>
+          </div>
+
+          <div class="evidence-card">
+            <div class="label">Evidence C</div>
+            <p>A broken branch points toward a higher path through the trees.</p>
+          </div>
+
+          <div class="evidence-card">
+            <div class="label">Evidence D</div>
+            <p>The sky is clearing, but the ground is still soft.</p>
+          </div>
+        </div>
+
+        <p class="note">
+          The evidence is unlabeled on purpose. The Academy wants to see what you notice first.
+        </p>
+
+        <div class="actions">
+          <a class="button primary" href="/baseline_inquiry">Begin Observation</a>
+          <button class="secondary" type="button" onclick="replayScene()">Replay Gathering</button>
+        </div>
+      </aside>
+    </section>
+  </main>
+
+  <script>
+    const voices = [
+      document.getElementById("voice1"),
+      document.getElementById("voice2"),
+      document.getElementById("voice3")
+    ];
+
+    const guardianCard = document.getElementById("guardianCard");
+    const guardianLine = document.getElementById("guardianLine");
+    const guardianNextBtn = document.getElementById("guardianNextBtn");
+    const evidencePanel = document.getElementById("evidencePanel");
+
+    const guardianLines = [
+      "Ah. You made it.",
+      "We need another set of eyes.",
+      "Come take a look."
+    ];
+
+    let guardianIndex = 0;
+
+    function revealVoices() {
+      voices.forEach((voice, index) => {
+        setTimeout(() => {
+          voice.classList.add("show");
+        }, 800 + index * 1300);
+      });
+
+      setTimeout(() => {
+        guardianCard.classList.add("show");
+      }, 5000);
+    }
+
+    function nextGuardianLine() {
+      guardianIndex += 1;
+
+      if (guardianIndex < guardianLines.length) {
+        guardianLine.textContent = guardianLines[guardianIndex];
+      } else {
+        guardianNextBtn.style.display = "none";
+        evidencePanel.classList.add("show");
+      }
+    }
+
+    function replayScene() {
+      location.reload();
+    }
+
+    guardianNextBtn.addEventListener("click", nextGuardianLine);
+
+    revealVoices();
+  </script>
+</body>
+</html>

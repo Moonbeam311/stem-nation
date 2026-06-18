@@ -378,7 +378,469 @@
     }
   
 /* CI-STAGE-47 ADVISOR REACTIONS ALIGNMENT */
-</style>
+
+    /* PHASE_2B_COMPLETE_ASSIGNMENT_EXPERIENCE */
+    .assignment-context {
+      position: relative;
+      width: min(920px, 100%);
+      margin: 24px auto 30px;
+      padding: clamp(18px, 3vw, 28px);
+      overflow: hidden;
+      border: 1px solid rgba(244, 211, 94, 0.34);
+      border-radius: 24px;
+      background:
+        radial-gradient(
+          circle at 92% 12%,
+          rgba(125, 211, 252, 0.16),
+          transparent 34%
+        ),
+        linear-gradient(
+          135deg,
+          rgba(244, 211, 94, 0.13),
+          rgba(125, 211, 252, 0.08)
+        ),
+        rgba(5, 18, 30, 0.84);
+      box-shadow:
+        0 24px 60px rgba(0, 0, 0, 0.32),
+        inset 0 0 34px rgba(125, 211, 252, 0.035);
+      transition:
+        border-color 220ms ease,
+        box-shadow 220ms ease,
+        transform 220ms ease;
+    }
+
+    .assignment-context::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 12%;
+      right: 12%;
+      height: 2px;
+      background:
+        linear-gradient(
+          90deg,
+          transparent,
+          rgba(125, 211, 252, 0.9),
+          rgba(244, 211, 94, 0.95),
+          transparent
+        );
+      box-shadow: 0 0 18px rgba(125, 211, 252, 0.42);
+    }
+
+    .assignment-context.assignment-ready {
+      border-color: rgba(125, 211, 252, 0.52);
+      box-shadow:
+        0 26px 68px rgba(0, 0, 0, 0.36),
+        0 0 34px rgba(125, 211, 252, 0.10),
+        inset 0 0 34px rgba(244, 211, 94, 0.035);
+    }
+
+    .assignment-context-heading {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 14px;
+      margin-bottom: 13px;
+    }
+
+    .assignment-context-label {
+      color: #f4d35e;
+      font-size: 0.72rem;
+      font-weight: 900;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+    }
+
+    .assignment-context-status {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      padding: 6px 10px;
+      border: 1px solid rgba(125, 211, 252, 0.32);
+      border-radius: 999px;
+      color: #a9efff;
+      background: rgba(125, 211, 252, 0.08);
+      font-size: 0.67rem;
+      font-weight: 800;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .assignment-context-status::before {
+      content: "";
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: #7dd3fc;
+      box-shadow: 0 0 12px rgba(125, 211, 252, 0.9);
+    }
+
+    #assignmentSignalTitle {
+      display: block;
+      color: #fff5cf;
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: clamp(1.55rem, 3.4vw, 2.5rem);
+      line-height: 1.08;
+    }
+
+    #assignmentSignalSummary {
+      max-width: 760px;
+      margin: 12px 0 0;
+      color: rgba(239, 248, 255, 0.78);
+      font-size: 0.98rem;
+      line-height: 1.6;
+    }
+
+    .assignment-advisor-line {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 18px;
+      margin-top: 20px;
+      padding-top: 16px;
+      border-top: 1px solid rgba(244, 211, 94, 0.16);
+      color: rgba(248, 240, 213, 0.66);
+      font-size: 0.84rem;
+    }
+
+    #assignmentAdvisorLine {
+      color: #7dd3fc;
+      text-align: right;
+      font-size: 0.95rem;
+    }
+
+    .phase-2b-assigned-advisor {
+      position: relative;
+      z-index: 2;
+      border-color: rgba(244, 211, 94, 0.62) !important;
+      box-shadow:
+        0 22px 56px rgba(0, 0, 0, 0.34),
+        0 0 32px rgba(244, 211, 94, 0.14) !important;
+      transform: translateY(-2px);
+    }
+
+    .phase-2b-assigned-advisor::after {
+      content: "First Response";
+      position: absolute;
+      top: 12px;
+      right: 12px;
+      z-index: 5;
+      padding: 5px 9px;
+      border: 1px solid rgba(125, 211, 252, 0.42);
+      border-radius: 999px;
+      color: #dff8ff;
+      background: rgba(6, 31, 48, 0.90);
+      font-size: 0.61rem;
+      font-weight: 900;
+      letter-spacing: 0.09em;
+      text-transform: uppercase;
+      pointer-events: none;
+    }
+
+    .phase-2b-assigned-reaction {
+      border-color: rgba(125, 211, 252, 0.56) !important;
+      background:
+        linear-gradient(
+          135deg,
+          rgba(125, 211, 252, 0.11),
+          rgba(244, 211, 94, 0.07)
+        ),
+        rgba(5, 18, 30, 0.76) !important;
+      box-shadow:
+        0 18px 46px rgba(0, 0, 0, 0.28),
+        0 0 26px rgba(125, 211, 252, 0.10) !important;
+    }
+
+    .phase-2b-assigned-reaction::before {
+      content: "Assigned Advisor Response";
+      display: block;
+      margin-bottom: 10px;
+      color: #f4d35e;
+      font-size: 0.64rem;
+      font-weight: 900;
+      letter-spacing: 0.11em;
+      text-transform: uppercase;
+    }
+
+    @media (max-width: 680px) {
+      .assignment-context-heading,
+      .assignment-advisor-line {
+        align-items: flex-start;
+        flex-direction: column;
+      }
+
+      #assignmentAdvisorLine {
+        text-align: left;
+      }
+
+      .phase-2b-assigned-advisor::after {
+        position: static;
+        display: inline-flex;
+        margin: 10px;
+      }
+    }
+
+  
+    /* PHASE_2B_COUNCIL_DAIS_AVATARS */
+    .council-dais {
+      min-height: 240px;
+      overflow: visible;
+      margin-top: 28px;
+      margin-bottom: 34px;
+    }
+
+    .seat {
+      width: 82px;
+      height: 98px;
+      padding: 5px;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-start;
+      gap: 5px;
+      overflow: visible;
+      border-radius: 24px;
+      background:
+        linear-gradient(
+          180deg,
+          rgba(125, 211, 252, 0.12),
+          rgba(244, 211, 94, 0.07)
+        ),
+        rgba(2, 13, 23, 0.90);
+      transition:
+        transform 220ms ease,
+        border-color 220ms ease,
+        box-shadow 220ms ease;
+    }
+
+    .seat img {
+      width: 70px;
+      height: 70px;
+      display: block;
+      flex: 0 0 auto;
+      object-fit: cover;
+      object-position: center top;
+      border-radius: 19px;
+      border: 1px solid rgba(244, 211, 94, 0.28);
+      background: rgba(4, 20, 31, 0.92);
+      box-shadow:
+        inset 0 0 18px rgba(125, 211, 252, 0.06),
+        0 8px 20px rgba(0, 0, 0, 0.30);
+    }
+
+    .seat span {
+      width: 100%;
+      color: rgba(255, 246, 210, 0.90);
+      font-size: 0.58rem;
+      font-weight: 900;
+      line-height: 1;
+      letter-spacing: 0.06em;
+      text-align: center;
+      text-transform: uppercase;
+      white-space: nowrap;
+    }
+
+    .seat.scout {
+      left: 7%;
+      top: 33%;
+    }
+
+    .seat.mapkeeper {
+      left: 26%;
+      top: 16%;
+    }
+
+    .seat.builder {
+      left: 50%;
+      top: 7%;
+      transform: translateX(-50%);
+    }
+
+    .seat.healer {
+      right: 26%;
+      top: 16%;
+    }
+
+    .seat.guardian {
+      right: 7%;
+      top: 33%;
+    }
+
+    .seat.builder.phase-2b-assigned-advisor {
+      transform: translateX(-50%) translateY(-4px);
+    }
+
+    .seat.phase-2b-assigned-advisor {
+      border-color: rgba(244, 211, 94, 0.76) !important;
+      box-shadow:
+        0 18px 44px rgba(0, 0, 0, 0.38),
+        0 0 30px rgba(244, 211, 94, 0.24) !important;
+    }
+
+    .seat.phase-2b-assigned-advisor img {
+      border-color: rgba(125, 211, 252, 0.82);
+      box-shadow:
+        0 0 24px rgba(125, 211, 252, 0.26),
+        0 10px 26px rgba(0, 0, 0, 0.34);
+    }
+
+    @media (max-width: 720px) {
+      .council-dais {
+        min-height: 300px;
+      }
+
+      .seat {
+        width: 68px;
+        height: 84px;
+      }
+
+      .seat img {
+        width: 56px;
+        height: 56px;
+        border-radius: 16px;
+      }
+
+      .seat span {
+        font-size: 0.49rem;
+      }
+
+      .seat.scout {
+        left: 3%;
+        top: 48%;
+      }
+
+      .seat.mapkeeper {
+        left: 20%;
+        top: 18%;
+      }
+
+      .seat.builder {
+        top: 5%;
+      }
+
+      .seat.healer {
+        right: 20%;
+        top: 18%;
+      }
+
+      .seat.guardian {
+        right: 3%;
+        top: 48%;
+      }
+    }
+
+  
+    /* PHASE_2B_REACTION_CARD_AVATARS */
+    .advisor-mark {
+      position: relative;
+      width: 76px;
+      height: 88px;
+      padding: 5px;
+      overflow: hidden;
+      border-radius: 22px;
+      background:
+        linear-gradient(
+          180deg,
+          rgba(125, 211, 252, 0.13),
+          rgba(244, 211, 94, 0.08)
+        ),
+        rgba(3, 16, 26, 0.94);
+      box-shadow:
+        0 14px 34px rgba(0, 0, 0, 0.32),
+        inset 0 0 22px rgba(125, 211, 252, 0.05);
+    }
+
+    .advisor-mark img {
+      width: 100%;
+      height: 100%;
+      display: block;
+      object-fit: cover;
+      object-position: center top;
+      border-radius: 17px;
+      border: 1px solid rgba(244, 211, 94, 0.30);
+      background: rgba(3, 18, 29, 0.95);
+    }
+
+    .advisor-line {
+      grid-template-columns: 76px minmax(0, 1fr);
+      gap: 18px;
+      align-items: center;
+    }
+
+    .advisor-response-copy {
+      min-width: 0;
+    }
+
+    .reaction-card.primary-reaction .advisor-mark {
+      border-color: rgba(125, 211, 252, 0.72);
+      box-shadow:
+        0 16px 38px rgba(0, 0, 0, 0.36),
+        0 0 28px rgba(125, 211, 252, 0.16);
+    }
+
+    .reaction-card.primary-reaction .advisor-mark img {
+      border-color: rgba(244, 211, 94, 0.72);
+    }
+
+    @media (max-width: 620px) {
+      .advisor-line {
+        grid-template-columns: 62px minmax(0, 1fr);
+        gap: 13px;
+        align-items: start;
+      }
+
+      .advisor-mark {
+        width: 62px;
+        height: 74px;
+        border-radius: 18px;
+      }
+
+      .advisor-mark img {
+        border-radius: 14px;
+      }
+    }
+
+  
+    /* PHASE_2B_FIRST_RESPONSE_BADGE_CLEAR_FACE */
+    .seat.phase-2b-assigned-advisor::after {
+      content: "First Response";
+      position: absolute;
+      top: -30px;
+      left: 50%;
+      right: auto;
+      z-index: 8;
+      width: max-content;
+      margin: 0;
+      transform: translateX(-50%);
+      padding: 5px 10px;
+      border: 1px solid rgba(125, 211, 252, 0.48);
+      border-radius: 999px;
+      color: #dff8ff;
+      background: rgba(6, 31, 48, 0.96);
+      box-shadow:
+        0 8px 20px rgba(0, 0, 0, 0.34),
+        0 0 18px rgba(125, 211, 252, 0.18);
+      font-size: 0.60rem;
+      font-weight: 900;
+      letter-spacing: 0.09em;
+      line-height: 1;
+      text-transform: uppercase;
+      white-space: nowrap;
+      pointer-events: none;
+    }
+
+    @media (max-width: 720px) {
+      .seat.phase-2b-assigned-advisor::after {
+        position: absolute;
+        top: -27px;
+        left: 50%;
+        margin: 0;
+        transform: translateX(-50%);
+        font-size: 0.54rem;
+        padding: 5px 8px;
+      }
+    }
+
+  </style>
 </head>
 
 <body>
@@ -418,12 +880,65 @@
           is beginning to shape the investigation.
         </p>
 
-        <div class="council-dais" aria-hidden="true">
-          <div class="seat scout">S</div>
-          <div class="seat mapkeeper">M</div>
-          <div class="seat builder">B</div>
-          <div class="seat healer">H</div>
-          <div class="seat guardian">G</div>
+        <!-- PHASE_2B_ASSIGNMENT_CONTEXT_PANEL -->
+        <section class="assignment-context" id="assignmentContext" aria-live="polite">
+          <div class="assignment-context-heading">
+            <span class="assignment-context-label">Current Investigation Signal</span>
+            <span class="assignment-context-status">Assignment Active</span>
+          </div>
+
+          <strong id="assignmentSignalTitle">Signal record loading</strong>
+          <p id="assignmentSignalSummary">
+            The Academy is retrieving your first investigation assignment.
+          </p>
+
+          <div class="assignment-advisor-line">
+            <span>First responding advisor</span>
+            <strong id="assignmentAdvisorLine">Advisor assignment loading</strong>
+          </div>
+        </section>
+
+        <!-- PHASE_2B_COUNCIL_DAIS_AVATARS -->
+        <div class="council-dais" aria-label="Inquiry Council advisors">
+          <div class="seat scout" data-advisor="Scout">
+            <img
+              src="/static/animations/scout.png"
+              alt="Scout, Council advisor for discovery"
+            >
+            <span>Scout</span>
+          </div>
+
+          <div class="seat mapkeeper" data-advisor="Mapkeeper">
+            <img
+              src="/static/animations/mapkeeper_face_centered_crop_only.png"
+              alt="Mapkeeper, Council advisor for memory"
+            >
+            <span>Mapkeeper</span>
+          </div>
+
+          <div class="seat builder" data-advisor="Builder">
+            <img
+              src="/static/animations/builder_face_centered_crop_only.png"
+              alt="Builder, Council advisor for creation"
+            >
+            <span>Builder</span>
+          </div>
+
+          <div class="seat healer" data-advisor="Healer">
+            <img
+              src="/static/animations/healer_top_text_removed_crop_only.png"
+              alt="Healer, Council advisor for restoration"
+            >
+            <span>Healer</span>
+          </div>
+
+          <div class="seat guardian" data-advisor="Guardian">
+            <img
+              src="/static/animations/guardian_face_centered_crop_only.png"
+              alt="Guardian, Council advisor for protection"
+            >
+            <span>Guardian</span>
+          </div>
         </div>
 
         <div class="reaction-feed" id="reactionFeed"></div>
@@ -654,20 +1169,52 @@
       console.warn("Could not load observation.", error);
     }
 
+    // PHASE_2B_REACTION_CARD_AVATARS
+    const advisorPortraits = {
+      Scout: "/static/animations/scout.png",
+      Mapkeeper: "/static/animations/mapkeeper_face_centered_crop_only.png",
+      Builder: "/static/animations/builder_face_centered_crop_only.png",
+      Healer: "/static/animations/healer_top_text_removed_crop_only.png",
+      Guardian: "/static/animations/guardian_face_centered_crop_only.png"
+    };
+
     function buildReaction(question, index) {
       const reaction = advisorMap[question] || advisorMap["What changed?"];
-      const priorityLabel = index === 0 ? "Primary Council Response" : `Council Response ${index + 1}`;
+      const priorityLabel = index === 0
+        ? "Primary Council Response"
+        : `Council Response ${index + 1}`;
+
       const primaryClass = index === 0 ? " primary-reaction" : "";
+      const portrait = advisorPortraits[reaction.advisor] || advisorPortraits.Guardian;
 
       return `
-        <div class="reaction-card${primaryClass}" id="reaction${index}">
+        <div
+          class="reaction-card${primaryClass}"
+          id="reaction${index}"
+          data-advisor-reaction="${escapeHtml(reaction.advisor)}"
+        >
           <div class="advisor-line">
-            <div class="advisor-mark">${reaction.code}</div>
-            <div>
-              <div class="advisor-title">${priorityLabel} · ${escapeHtml(question)}</div>
-              <div class="advisor-name">${reaction.advisor} — ${reaction.chamberRole}</div>
-              <p class="advisor-text">${reaction.line}</p>
-              <div class="discovery-note">${reaction.discovery}</div>
+            <div class="advisor-mark">
+              <img
+                src="${portrait}"
+                alt="${escapeHtml(reaction.advisor)} Council advisor"
+              >
+            </div>
+
+            <div class="advisor-response-copy">
+              <div class="advisor-title">
+                ${priorityLabel} · ${escapeHtml(question)}
+              </div>
+
+              <div class="advisor-name">
+                ${escapeHtml(reaction.advisor)} — ${escapeHtml(reaction.chamberRole)}
+              </div>
+
+              <p class="advisor-text">${escapeHtml(reaction.line)}</p>
+
+              <div class="discovery-note">
+                ${escapeHtml(reaction.discovery)}
+              </div>
             </div>
           </div>
         </div>
@@ -702,6 +1249,8 @@
           reactions: ranking.map(q => advisorMap[q] || advisorMap["What changed?"]),
           completedAt: new Date().toISOString()
         }));
+
+        window.STEMNationMissionRecord?.update?.();
       }, 700 + cards.length * 1450 + 500);
     }
 
@@ -725,5 +1274,267 @@
     renderReactions();
     revealReactions();
   </script>
+
+  <script>
+    // PHASE_2B_ASSIGNMENT_REACTION_PRIORITY
+    (() => {
+      "use strict";
+
+      const SIGNAL_KEY = "stemNationFirstSignal";
+      const ADVISOR_KEY = "stemNationFirstAdvisor";
+
+      const signalAdvisorMap = {
+        "Damaged Crossing": "Builder",
+        "Water Shortage": "Healer",
+        "Unknown Settlement Signal": "Scout"
+      };
+
+      const advisorDescriptions = {
+        Scout:
+          "Scout will respond first by identifying what remains unknown and what must be discovered.",
+        Healer:
+          "Healer will respond first by examining human needs, recovery, and the effects of the situation.",
+        Builder:
+          "Builder will respond first by examining structures, materials, and what may need to be created or repaired.",
+        Mapkeeper:
+          "Mapkeeper will respond first by connecting this signal to prior knowledge, records, and patterns.",
+        Guardian:
+          "Guardian will respond first by identifying risks, responsibilities, and what must be protected."
+      };
+
+      function readSignal() {
+        try {
+          const parsed = JSON.parse(
+            localStorage.getItem(SIGNAL_KEY) || "null"
+          );
+
+          return parsed && typeof parsed === "object"
+            ? parsed
+            : null;
+        } catch (error) {
+          return null;
+        }
+      }
+
+      function resolveAdvisor(signal) {
+        const storedAdvisor =
+          localStorage.getItem(ADVISOR_KEY) || "";
+
+        if (storedAdvisor) {
+          return storedAdvisor;
+        }
+
+        if (signal?.advisor) {
+          return signal.advisor;
+        }
+
+        return signalAdvisorMap[signal?.title] || "";
+      }
+
+      function normalizedText(element) {
+        return String(
+          element?.dataset?.advisor ||
+          element?.dataset?.name ||
+          element?.getAttribute?.("data-advisor-name") ||
+          element?.textContent ||
+          ""
+        ).toLowerCase();
+      }
+
+      function matchesAdvisor(element, advisor) {
+        return normalizedText(element).includes(
+          String(advisor || "").toLowerCase()
+        );
+      }
+
+      function populateAssignmentPanel(signal, advisor) {
+        const panel =
+          document.getElementById("assignmentContext");
+
+        const title =
+          document.getElementById("assignmentSignalTitle");
+
+        const summary =
+          document.getElementById("assignmentSignalSummary");
+
+        const advisorLine =
+          document.getElementById("assignmentAdvisorLine");
+
+        if (!panel || !title || !advisorLine) {
+          return;
+        }
+
+        if (!signal && !advisor) {
+          title.textContent =
+            "No signal assignment has been recorded";
+
+          if (summary) {
+            summary.textContent =
+              "Return to Academy Arrival to select an investigation signal.";
+          }
+
+          advisorLine.textContent =
+            "No first responding advisor assigned";
+
+          return;
+        }
+
+        const signalTitle =
+          signal?.title ||
+          "Academy Investigation Signal";
+
+        const signalSummary =
+          signal?.summary ||
+          "The Council is reviewing the signal selected during Academy Arrival.";
+
+        const resolvedAdvisor =
+          advisor ||
+          signal?.advisor ||
+          "Council Advisor";
+
+        title.textContent = signalTitle;
+
+        if (summary) {
+          summary.textContent = signalSummary;
+        }
+
+        advisorLine.textContent =
+          advisorDescriptions[resolvedAdvisor] ||
+          `${resolvedAdvisor} will provide the first Council response.`;
+
+        panel.dataset.advisor = resolvedAdvisor;
+        panel.classList.add("assignment-ready");
+      }
+
+      function emphasizeCouncilAdvisor(advisor) {
+        if (!advisor) return;
+
+        const candidates = Array.from(
+          document.querySelectorAll(
+            [
+              "[data-advisor]",
+              "[data-name]",
+              "[data-advisor-name]",
+              ".advisor-card",
+              ".council-member",
+              ".council-advisor",
+              ".advisor"
+            ].join(",")
+          )
+        );
+
+        candidates.forEach(element => {
+          element.classList.toggle(
+            "phase-2b-assigned-advisor",
+            matchesAdvisor(element, advisor)
+          );
+        });
+      }
+
+      function prioritizeReaction(advisor) {
+        if (!advisor) return false;
+
+        const candidates = Array.from(
+          document.querySelectorAll(
+            [
+              "[data-advisor-reaction]",
+              ".advisor-reaction",
+              ".reaction-card",
+              ".reaction-entry",
+              ".reaction-item",
+              "#reactionFeed > *"
+            ].join(",")
+          )
+        ).filter(element => {
+          return (
+            element.nodeType === 1 &&
+            element.textContent.trim()
+          );
+        });
+
+        const assignedReaction =
+          candidates.find(element =>
+            matchesAdvisor(element, advisor)
+          );
+
+        if (!assignedReaction) {
+          return false;
+        }
+
+        assignedReaction.classList.add(
+          "phase-2b-assigned-reaction"
+        );
+
+        const parent = assignedReaction.parentElement;
+
+        if (
+          parent &&
+          parent.firstElementChild !== assignedReaction
+        ) {
+          parent.insertBefore(
+            assignedReaction,
+            parent.firstElementChild
+          );
+        }
+
+        return true;
+      }
+
+      function applyPhase2B() {
+        const signal = readSignal();
+        const advisor = resolveAdvisor(signal);
+
+        if (advisor) {
+          localStorage.setItem(ADVISOR_KEY, advisor);
+        }
+
+        populateAssignmentPanel(signal, advisor);
+        emphasizeCouncilAdvisor(advisor);
+        prioritizeReaction(advisor);
+
+        return advisor;
+      }
+
+      function watchReactionFeed(advisor) {
+        if (!advisor || !document.body) return;
+
+        let scheduled = false;
+
+        const observer = new MutationObserver(() => {
+          if (scheduled) return;
+
+          scheduled = true;
+
+          requestAnimationFrame(() => {
+            scheduled = false;
+            emphasizeCouncilAdvisor(advisor);
+            prioritizeReaction(advisor);
+          });
+        });
+
+        observer.observe(document.body, {
+          childList: true,
+          subtree: true
+        });
+      }
+
+      function initializePhase2B() {
+        const advisor = applyPhase2B();
+        watchReactionFeed(advisor);
+      }
+
+      if (document.readyState === "loading") {
+        document.addEventListener(
+          "DOMContentLoaded",
+          initializePhase2B,
+          { once: true }
+        );
+      } else {
+        initializePhase2B();
+      }
+    })();
+  </script>
+
+  <script src="{{ url_for('static', filename='js/academy_mission_record.js') }}?v=step2c1"></script>
 </body>
 </html>

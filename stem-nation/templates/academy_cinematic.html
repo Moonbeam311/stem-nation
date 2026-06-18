@@ -278,6 +278,602 @@
         justify-items: center;
       }
     }
+  
+    /* CI-5A_CINEMATIC_LIGHT_VIRTUAL_PASS */
+    body {
+      background: #07182c;
+    }
+
+    .cinematic {
+      background:
+        radial-gradient(circle at 50% 34%, #173f67 0%, #0a223d 48%, #061426 100%);
+    }
+
+    .scene {
+      filter: brightness(1.16) saturate(1.12) contrast(.96);
+    }
+
+    .scene::after {
+      background:
+        radial-gradient(
+          circle at center,
+          rgba(5,18,32,0) 0%,
+          rgba(5,18,32,.08) 48%,
+          rgba(4,14,27,.38) 100%
+        ),
+        linear-gradient(
+          180deg,
+          rgba(5,18,32,.08) 0%,
+          rgba(5,18,32,.04) 48%,
+          rgba(4,14,27,.38) 100%
+        );
+    }
+
+    .stars {
+      opacity: .24;
+      background-image:
+        radial-gradient(circle, rgba(194,239,255,.9) 1px, transparent 1px),
+        radial-gradient(circle, rgba(255,218,104,.76) 1px, transparent 1px);
+    }
+
+    .mist {
+      opacity: .5;
+      background:
+        radial-gradient(circle at 18% 72%, rgba(93,210,255,.16), transparent 34%),
+        radial-gradient(circle at 82% 28%, rgba(255,214,103,.11), transparent 35%),
+        linear-gradient(90deg, rgba(126,220,255,.04), transparent, rgba(255,221,125,.04));
+    }
+
+    .route-line {
+      height: 4px;
+      background: linear-gradient(
+        90deg,
+        transparent,
+        rgba(91,216,255,.92),
+        rgba(255,215,94,.96),
+        transparent
+      );
+      box-shadow:
+        0 0 16px rgba(83,211,255,.55),
+        0 0 28px rgba(244,211,94,.32);
+    }
+
+    .caption {
+      text-shadow:
+        0 3px 8px rgba(3,12,24,.82),
+        0 12px 34px rgba(3,12,24,.48);
+    }
+
+    .caption h1,
+    .caption p {
+      color: #fff9e8;
+    }
+
+    .identity-card {
+      border-color: rgba(116,220,255,.5);
+      background:
+        linear-gradient(135deg, rgba(80,194,244,.2), rgba(244,211,94,.12)),
+        rgba(10,35,58,.78);
+      box-shadow:
+        0 24px 70px rgba(3,17,31,.42),
+        0 0 42px rgba(68,194,238,.13);
+    }
+
+    .identity-face {
+      border-color: rgba(112,221,255,.72);
+      background: rgba(11,43,69,.72);
+      box-shadow:
+        0 0 30px rgba(74,205,248,.24),
+        inset 0 0 24px rgba(255,255,255,.06);
+    }
+
+    .identity-text p {
+      color: #e8f5ff;
+    }
+
+    .skip {
+      border-color: rgba(137,225,255,.42);
+      background: rgba(10,38,62,.7);
+      color: #effaff;
+      backdrop-filter: blur(8px);
+    }
+
+    .progress {
+      height: 4px;
+      background: linear-gradient(
+        90deg,
+        #4fd4ff,
+        var(--gold),
+        #8174e8
+      );
+      box-shadow: 0 0 16px rgba(79,212,255,.52);
+    }
+
+  
+    /* CI-5B_FINAL_STOP_AND_JOURNEY_CTA */
+    .journey-ready {
+      position: fixed;
+      left: 50%;
+      bottom: 64px;
+      z-index: 32;
+      display: grid;
+      justify-items: center;
+      gap: 10px;
+      opacity: 0;
+      pointer-events: none;
+      transform: translate(-50%, 18px);
+      transition:
+        opacity 600ms ease,
+        transform 600ms ease;
+    }
+
+    .journey-ready.show {
+      opacity: 1;
+      pointer-events: auto;
+      transform: translate(-50%, 0);
+    }
+
+    .journey-ready-label {
+      color: #dff7ff;
+      font-size: .72rem;
+      font-weight: 900;
+      letter-spacing: .18em;
+      text-transform: uppercase;
+      text-shadow: 0 3px 14px rgba(3,15,29,.8);
+    }
+
+    .journey-ready-button {
+      min-width: 240px;
+      border: 1px solid rgba(255,255,255,.82);
+      border-radius: 999px;
+      padding: 15px 24px;
+      background: linear-gradient(135deg, #5bdcff, #f4d35e);
+      color: #08213a;
+      font-family: inherit;
+      font-size: 1rem;
+      font-weight: 900;
+      cursor: pointer;
+      box-shadow:
+        0 18px 44px rgba(3,18,34,.42),
+        0 0 28px rgba(91,220,255,.26);
+      transition:
+        transform 180ms ease,
+        box-shadow 180ms ease,
+        filter 180ms ease;
+    }
+
+    .journey-ready-button:hover,
+    .journey-ready-button:focus-visible {
+      transform: translateY(-3px) scale(1.02);
+      filter: brightness(1.04);
+      box-shadow:
+        0 22px 48px rgba(3,18,34,.48),
+        0 0 34px rgba(244,211,94,.34);
+      outline: none;
+    }
+
+    @media (max-width: 720px) {
+      .journey-ready {
+        bottom: 72px;
+        width: calc(100% - 36px);
+      }
+
+      .journey-ready-button {
+        width: 100%;
+        max-width: 340px;
+      }
+    }
+
+  
+    /* CI-5C_OVERLAY_FINAL_FRAME_CLEANUP */
+    .stars {
+      opacity: .14;
+      transition: opacity 700ms ease;
+    }
+
+    .mist {
+      opacity: .28;
+      filter: blur(10px);
+      transition: opacity 700ms ease;
+    }
+
+    .route-line.show {
+      opacity: .62;
+    }
+
+    .final-fade {
+      background:
+        radial-gradient(circle at center, #173e63 0%, #091a30 58%, #030a14 100%);
+      transition: opacity 700ms ease;
+    }
+
+    .skip {
+      transition: opacity 400ms ease, transform 400ms ease;
+    }
+
+    .cinematic.final-state .stars,
+    .cinematic.final-state .mist,
+    .cinematic.final-state .route-line {
+      opacity: 0;
+    }
+
+    .cinematic.final-state .skip {
+      opacity: 0;
+      pointer-events: none;
+      transform: translateY(12px);
+    }
+
+    .cinematic.final-state .caption.active {
+      transform: translateY(-66px);
+    }
+
+    .cinematic.final-state .scene.active {
+      transform: scale(1);
+    }
+
+    @media (max-width: 720px) {
+      .cinematic.final-state .caption.active {
+        transform: translateY(-88px);
+      }
+    }
+
+  
+    /* CI-5E_FINAL_INQUIRY_HANDOFF */
+    .cinematic.final-state .caption-wrap {
+      align-items: start;
+      padding-top: clamp(90px, 15vh, 150px);
+      padding-bottom: 210px;
+    }
+
+    .cinematic.final-state .caption.active {
+      transform: none;
+    }
+
+    .final-inquiry-caption {
+      width: min(900px, calc(100vw - 44px));
+    }
+
+    .final-inquiry-caption h1 {
+      max-width: 820px;
+      margin: 0 auto;
+      font-size: clamp(2.5rem, 6.5vw, 5.6rem);
+      line-height: 1.02;
+      text-wrap: balance;
+    }
+
+    .cinematic.final-state .journey-ready {
+      bottom: clamp(58px, 9vh, 96px);
+    }
+
+    .cinematic.final-state .journey-ready.show {
+      animation: academyEntryReveal 850ms ease both;
+    }
+
+    @keyframes academyEntryReveal {
+      from {
+        opacity: 0;
+        transform: translate(-50%, 26px) scale(.97);
+      }
+
+      to {
+        opacity: 1;
+        transform: translate(-50%, 0) scale(1);
+      }
+    }
+
+    @media (max-width: 720px) {
+      .cinematic.final-state .caption-wrap {
+        padding-top: 88px;
+        padding-bottom: 220px;
+      }
+
+      .cinematic.final-state .caption.active {
+        transform: none;
+      }
+
+      .final-inquiry-caption h1 {
+        font-size: clamp(2.25rem, 11vw, 4rem);
+      }
+
+      .cinematic.final-state .journey-ready {
+        bottom: 54px;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .cinematic.final-state .journey-ready.show {
+        animation: none;
+      }
+    }
+
+  
+    /* CI-5E_STUDENT_FLOW_MOTION_SYSTEM */
+
+    .scene {
+      will-change: transform, opacity;
+      transform-origin: center center;
+    }
+
+    /* Scene 1 — entering the unknown map */
+    .scene-1.active {
+      animation: cinematicPushForward 7.4s ease-out both;
+    }
+
+    /* Scene 2 — question becomes movement */
+    .scene-2.active {
+      transform-origin: 38% 52%;
+      animation: cinematicTravelRight 6.8s ease-out both;
+    }
+
+    /* Scene 3 — following the path */
+    .scene-3.active {
+      transform-origin: 62% 48%;
+      animation: cinematicTravelLeft 7.2s ease-out both;
+    }
+
+    /* Scene 4 — people and settlements emerge */
+    .scene-4.active {
+      animation: cinematicNationReveal 7.5s ease-out both;
+    }
+
+    /* Scene 5 — decisions leave visible consequences */
+    .scene-5.active {
+      transform-origin: 50% 58%;
+      animation: cinematicDecisionApproach 6.9s ease-out both;
+    }
+
+    /* Scene 6 — World Board approach */
+    .scene-6.active {
+      transform-origin: center center;
+      animation: cinematicWorldBoardApproach 7.4s ease-out both;
+    }
+
+    /* Scene 7 — Academy arrival and final settling */
+    .scene-7.active {
+      transform-origin: center center;
+      animation: cinematicAcademyArrival 8s cubic-bezier(.2,.72,.2,1) both;
+    }
+
+    .cinematic.route-state .route-line.show {
+      animation: routeEnergyTravel 2.8s ease-in-out infinite;
+    }
+
+    .cinematic.route-state .mist {
+      transform: translateX(0);
+      animation-duration: 13s;
+    }
+
+    .identity-card {
+      position: relative;
+      overflow: hidden;
+    }
+
+    .identity-card::after {
+      content: "";
+      position: absolute;
+      left: 5%;
+      right: 5%;
+      top: -16%;
+      height: 3px;
+      opacity: 0;
+      pointer-events: none;
+      background: linear-gradient(
+        90deg,
+        transparent,
+        rgba(111,225,255,.96),
+        rgba(244,211,94,.82),
+        transparent
+      );
+      box-shadow:
+        0 0 16px rgba(93,216,255,.64),
+        0 0 30px rgba(244,211,94,.22);
+    }
+
+    .cinematic.identity-state .identity-card::after {
+      animation: academyIdentityScan 2.1s ease-in-out .35s both;
+    }
+
+    .cinematic.identity-state .identity-face {
+      animation: identityPortraitResolve 1.35s ease-out both;
+    }
+
+    .cinematic.identity-state .identity-text {
+      animation: identityTextResolve 1.2s ease-out .22s both;
+    }
+
+    .cinematic.final-state .scene-7.active {
+      animation: cinematicFinalSettle 2.4s ease-out both;
+    }
+
+    @keyframes cinematicPushForward {
+      from {
+        transform: scale(1.12) translate3d(0, 1.5%, 0);
+      }
+      to {
+        transform: scale(1.025) translate3d(0, 0, 0);
+      }
+    }
+
+    @keyframes cinematicTravelRight {
+      from {
+        transform: scale(1.11) translate3d(-2.8%, 1%, 0);
+      }
+      to {
+        transform: scale(1.035) translate3d(1.2%, 0, 0);
+      }
+    }
+
+    @keyframes cinematicTravelLeft {
+      from {
+        transform: scale(1.115) translate3d(2.8%, .8%, 0);
+      }
+      to {
+        transform: scale(1.035) translate3d(-1.2%, 0, 0);
+      }
+    }
+
+    @keyframes cinematicNationReveal {
+      from {
+        transform: scale(1.14) translate3d(0, 2%, 0);
+        filter: brightness(1.06) saturate(.96) contrast(.96);
+      }
+      to {
+        transform: scale(1.025) translate3d(0, 0, 0);
+        filter: brightness(1.18) saturate(1.14) contrast(.96);
+      }
+    }
+
+    @keyframes cinematicDecisionApproach {
+      from {
+        transform: scale(1.095) translate3d(0, -1.2%, 0);
+      }
+      to {
+        transform: scale(1.025) translate3d(0, .5%, 0);
+      }
+    }
+
+    @keyframes cinematicWorldBoardApproach {
+      from {
+        transform: scale(1.13) translate3d(0, 1.8%, 0);
+      }
+      to {
+        transform: scale(1.018) translate3d(0, 0, 0);
+      }
+    }
+
+    @keyframes cinematicAcademyArrival {
+      0% {
+        transform: scale(1.12) translate3d(0, 2.2%, 0);
+        filter: brightness(1.03) saturate(.96);
+      }
+      58% {
+        transform: scale(1.045) translate3d(0, .4%, 0);
+        filter: brightness(1.17) saturate(1.12);
+      }
+      100% {
+        transform: scale(1.015) translate3d(0, 0, 0);
+        filter: brightness(1.15) saturate(1.1);
+      }
+    }
+
+    @keyframes cinematicFinalSettle {
+      from {
+        transform: scale(1.035);
+      }
+      to {
+        transform: scale(1);
+      }
+    }
+
+    @keyframes routeEnergyTravel {
+      0%, 100% {
+        opacity: .38;
+        filter: brightness(.94);
+      }
+      50% {
+        opacity: .78;
+        filter: brightness(1.24);
+      }
+    }
+
+    @keyframes academyIdentityScan {
+      0% {
+        top: -16%;
+        opacity: 0;
+      }
+      16% {
+        opacity: .9;
+      }
+      78% {
+        opacity: .72;
+      }
+      100% {
+        top: 116%;
+        opacity: 0;
+      }
+    }
+
+    @keyframes identityPortraitResolve {
+      from {
+        opacity: 0;
+        transform: scale(.9);
+        filter: blur(8px) brightness(1.45);
+      }
+      to {
+        opacity: 1;
+        transform: scale(1);
+        filter: blur(0) brightness(1);
+      }
+    }
+
+    @keyframes identityTextResolve {
+      from {
+        opacity: 0;
+        transform: translateX(22px);
+      }
+      to {
+        opacity: 1;
+        transform: translateX(0);
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .scene-1.active,
+      .scene-2.active,
+      .scene-3.active,
+      .scene-4.active,
+      .scene-5.active,
+      .scene-6.active,
+      .scene-7.active,
+      .cinematic.final-state .scene-7.active,
+      .cinematic.route-state .route-line.show,
+      .cinematic.identity-state .identity-card::after,
+      .cinematic.identity-state .identity-face,
+      .cinematic.identity-state .identity-text {
+        animation: none;
+      }
+    }
+
+  
+    /* CI-5F_PROCEDURAL_CINEMATIC_AUDIO */
+    .audio-toggle {
+      position: fixed;
+      left: 18px;
+      bottom: 18px;
+      z-index: 34;
+      border: 1px solid rgba(137,225,255,.38);
+      border-radius: 999px;
+      padding: 10px 14px;
+      background: rgba(10,38,62,.72);
+      color: rgba(239,250,255,.82);
+      font-family: inherit;
+      cursor: pointer;
+      backdrop-filter: blur(8px);
+      transition:
+        background 180ms ease,
+        color 180ms ease,
+        opacity 400ms ease,
+        transform 400ms ease;
+    }
+
+    .audio-toggle.active {
+      border-color: rgba(244,211,94,.62);
+      background: rgba(24,70,94,.88);
+      color: #fff6d8;
+      box-shadow: 0 0 20px rgba(91,220,255,.18);
+    }
+
+    .cinematic.final-state .audio-toggle {
+      opacity: .72;
+    }
+
+    @media (max-width: 720px) {
+      .audio-toggle {
+        left: 12px;
+        bottom: 14px;
+      }
+    }
+
   </style>
 </head>
 <body>
@@ -334,12 +930,25 @@
         </article>
       </div>
 
-      <div class="caption" data-route="false">
+      <div class="caption final-inquiry-caption" data-route="false">
         <h1>Your first inquiry begins now.</h1>
       </div>
     </section>
 
     <div class="final-fade" id="finalFade" aria-hidden="true"></div>
+
+    <div class="journey-ready" id="journeyReady" aria-hidden="true">
+      <div class="journey-ready-label">Academy Entry Ready</div>
+      <button class="journey-ready-button" id="beginJourneyBtn" type="button">
+        Begin Your Journey
+      </button>
+    </div>
+
+    <button class="audio-toggle" id="audioToggle" type="button"
+            aria-pressed="false">
+      Audio Off
+    </button>
+
     <button class="skip" type="button" onclick="goArrival()">Skip Cinematic</button>
     <div class="progress" id="progress"></div>
   </main>
@@ -351,6 +960,10 @@
     const captions = Array.from(document.querySelectorAll(".caption"));
     const progress = document.getElementById("progress");
     const routeLine = document.getElementById("routeLine");
+    const cinematic = document.querySelector(".cinematic");
+    const journeyReady = document.getElementById("journeyReady");
+    const beginJourneyBtn = document.getElementById("beginJourneyBtn");
+    const audioToggle = document.getElementById("audioToggle");
 
     const studentFace = document.getElementById("studentFace");
     const studentName = document.getElementById("studentName");
@@ -359,7 +972,7 @@
     // CI-4C_B_CLEAN_FINAL_NEW_ARRIVAL_PANEL
     let identity = {
       name: "Academy Learner",
-      status: "Academy Learner",
+      status: "Chief Investigator in Training",
       leadershipStage: "New Arrival",
       portraitType: "realistic-avatar-slot",
       portrait: "",
@@ -382,6 +995,18 @@
       );
     }
 
+    function resolveDisplayName(record) {
+      return String(
+        record.teacherApprovedName ||
+        record.approvedName ||
+        record.name ||
+        "Academy Learner"
+      )
+        .replace(/^New Arrival\s*/i, "")
+        .replace(/^Academy Learner\s*/i, "")
+        .trim() || "Academy Learner";
+    }
+
     const portraitSource = identity.portrait || identity.fallback || "";
 
     studentFace.innerHTML = "";
@@ -402,27 +1027,236 @@
       studentFace.appendChild(fallback);
     }
 
-    const displayName = identity.name || "Academy Learner";
+    const displayName = resolveDisplayName(identity);
     const avatarLabel = identity.avatarChoice || identity.avatarTitle || "Academy avatar";
 
     studentName.textContent = displayName;
     studentLine.textContent = `${avatarLabel} confirmed. The Academy has recorded your arrival.`;
 
     // CI-2B_TIMING_POLISH: smoother cinematic pacing
+    // CI-5G1_NARRATION_SAFE_TIMING
+    // Each timed frame allows the full voice file plus breathing room.
     const durations = [
-      2400,
-      2500,
-      3000,
-      3200,
       3400,
-      3100,
+      3400,
+      3200,
+      3200,
+      3700,
       3300,
-      3900,
+      4200,
+      6600,
       3400
     ];
 
     let index = 0;
     let timer = null;
+
+
+    // CI-5F_PROCEDURAL_CINEMATIC_AUDIO
+    let audioContext = null;
+    let masterGain = null;
+    let ambienceGain = null;
+    let ambienceOscillator = null;
+    let audioEnabled = false;
+
+    // CI-5G_CINEMATIC_VOICE_NARRATION
+    const narrationTracks = Array.from({length: 9}, (_, i) => {
+      const number = String(i + 1).padStart(2, "0");
+      const track = new Audio(
+        `/static/audio/academy_cinematic/scene_${number}.wav`
+      );
+      track.preload = "auto";
+      track.volume = 0.92;
+      return track;
+    });
+
+    let currentNarration = null;
+
+    function stopNarration() {
+      narrationTracks.forEach(track => {
+        track.pause();
+        track.currentTime = 0;
+      });
+
+      currentNarration = null;
+    }
+
+    function playNarration(sceneNumber) {
+      if (!audioEnabled) return;
+
+      stopNarration();
+
+      const track = narrationTracks[sceneNumber];
+      if (!track) return;
+
+      currentNarration = track;
+      track.currentTime = 0;
+
+      const playPromise = track.play();
+
+      if (playPromise && typeof playPromise.catch === "function") {
+        playPromise.catch(err => {
+          console.warn("Narration playback was blocked:", err);
+        });
+      }
+    }
+
+    function ensureAudioContext() {
+      if (audioContext) return audioContext;
+
+      const AudioContextClass =
+        window.AudioContext || window.webkitAudioContext;
+
+      if (!AudioContextClass) return null;
+
+      audioContext = new AudioContextClass();
+
+      masterGain = audioContext.createGain();
+      masterGain.gain.value = 0.18;
+      masterGain.connect(audioContext.destination);
+
+      ambienceGain = audioContext.createGain();
+      ambienceGain.gain.value = 0.022;
+      ambienceGain.connect(masterGain);
+
+      ambienceOscillator = audioContext.createOscillator();
+      ambienceOscillator.type = "sine";
+      ambienceOscillator.frequency.value = 54;
+
+      const secondTone = audioContext.createOscillator();
+      secondTone.type = "sine";
+      secondTone.frequency.value = 81;
+
+      const secondGain = audioContext.createGain();
+      secondGain.gain.value = 0.008;
+
+      ambienceOscillator.connect(ambienceGain);
+      secondTone.connect(secondGain);
+      secondGain.connect(masterGain);
+
+      ambienceOscillator.start();
+      secondTone.start();
+
+      return audioContext;
+    }
+
+    async function enableAudio() {
+      const ctx = ensureAudioContext();
+      if (!ctx) return;
+
+      if (ctx.state === "suspended") {
+        await ctx.resume();
+      }
+
+      audioEnabled = true;
+
+      if (masterGain) {
+        masterGain.gain.cancelScheduledValues(ctx.currentTime);
+        masterGain.gain.setTargetAtTime(
+          0.18,
+          ctx.currentTime,
+          0.16
+        );
+      }
+
+      if (audioToggle) {
+        audioToggle.textContent = "Audio On";
+        audioToggle.classList.add("active");
+        audioToggle.setAttribute("aria-pressed", "true");
+      }
+
+      playSceneTone(index);
+      playNarration(index);
+    }
+
+    function disableAudio() {
+      audioEnabled = false;
+      stopNarration();
+
+      if (audioContext && masterGain) {
+        masterGain.gain.cancelScheduledValues(audioContext.currentTime);
+        masterGain.gain.setTargetAtTime(
+          0.0001,
+          audioContext.currentTime,
+          0.12
+        );
+      }
+
+      if (audioToggle) {
+        audioToggle.textContent = "Audio Off";
+        audioToggle.classList.remove("active");
+        audioToggle.setAttribute("aria-pressed", "false");
+      }
+    }
+
+    function playTone(frequency, duration, volume, delay = 0) {
+      if (!audioEnabled || !audioContext || !masterGain) return;
+
+      const now = audioContext.currentTime + delay;
+      const oscillator = audioContext.createOscillator();
+      const gain = audioContext.createGain();
+
+      oscillator.type = "sine";
+      oscillator.frequency.setValueAtTime(frequency, now);
+
+      gain.gain.setValueAtTime(0.0001, now);
+      gain.gain.exponentialRampToValueAtTime(volume, now + 0.05);
+      gain.gain.exponentialRampToValueAtTime(
+        0.0001,
+        now + duration
+      );
+
+      oscillator.connect(gain);
+      gain.connect(masterGain);
+
+      oscillator.start(now);
+      oscillator.stop(now + duration + 0.08);
+    }
+
+    function playSceneTone(sceneNumber) {
+      if (!audioEnabled) return;
+
+      const tones = [
+        174.61,
+        196.00,
+        220.00,
+        246.94,
+        261.63,
+        293.66,
+        329.63
+      ];
+
+      const sceneIndex = sceneIndexForCaption(sceneNumber);
+      playTone(tones[sceneIndex] || 220, 0.72, 0.055);
+    }
+
+    function playRoutePulse() {
+      playTone(261.63, 0.42, 0.045);
+      playTone(392.00, 0.52, 0.035, 0.14);
+    }
+
+    function playIdentityChord() {
+      playTone(261.63, 0.9, 0.05);
+      playTone(329.63, 1.0, 0.045, 0.09);
+      playTone(392.00, 1.1, 0.04, 0.18);
+    }
+
+    function playFinalChord() {
+      playTone(293.66, 1.15, 0.05);
+      playTone(369.99, 1.25, 0.045, 0.12);
+      playTone(440.00, 1.4, 0.04, 0.24);
+    }
+
+    if (audioToggle) {
+      audioToggle.addEventListener("click", async () => {
+        if (audioEnabled) {
+          disableAudio();
+        } else {
+          await enableAudio();
+        }
+      });
+    }
+
 
     function sceneIndexForCaption(i) {
       if (i <= 1) return 0;
@@ -455,15 +1289,53 @@
       const showRoute = captions[index]?.dataset.route === "true";
       routeLine.classList.toggle("show", showRoute);
 
+      if (audioEnabled) {
+        playSceneTone(index);
+        playNarration(index);
+
+        if (showRoute) {
+          playRoutePulse();
+        }
+
+        if (index === 7) {
+          playIdentityChord();
+        }
+
+        if (index === captions.length - 1) {
+          playFinalChord();
+        }
+      }
+
+      if (cinematic) {
+        cinematic.classList.toggle("route-state", showRoute);
+        cinematic.classList.toggle("identity-state", index === 7);
+      }
+
       const pct = Math.min(100, Math.round((index / (captions.length - 1)) * 100));
       progress.style.width = pct + "%";
 
       clearTimeout(timer);
 
+      const finalScene = index === captions.length - 1;
+
+      if (cinematic) {
+        cinematic.classList.toggle("final-state", finalScene);
+      }
+
+      if (journeyReady) {
+        journeyReady.classList.remove("show");
+        journeyReady.setAttribute("aria-hidden", "true");
+
+        if (finalScene) {
+          timer = setTimeout(() => {
+            journeyReady.classList.add("show");
+            journeyReady.setAttribute("aria-hidden", "false");
+          }, 1150);
+        }
+      }
+
       if (index < captions.length - 1) {
         timer = setTimeout(() => showIndex(index + 1), durations[index]);
-      } else {
-        timer = setTimeout(goArrival, durations[index]);
       }
     }
 
@@ -479,6 +1351,10 @@
       }
     }
 
+    if (beginJourneyBtn) {
+      beginJourneyBtn.addEventListener("click", goArrival);
+    }
+
     document.addEventListener("keydown", (event) => {
       if (event.key === "Enter" || event.key === " ") {
         event.preventDefault();
@@ -492,5 +1368,6 @@
 
     showIndex(0);
   </script>
+  <script src="{{ url_for('static', filename='js/academy_mission_record.js') }}?v=step2c1"></script>
 </body>
 </html>

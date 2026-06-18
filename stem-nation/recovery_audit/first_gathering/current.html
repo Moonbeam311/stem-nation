@@ -588,363 +588,12 @@
         font-size: 2.3rem;
       }
     }
-
-    /* FLOW-3B — FIRST GATHERING HANDOFF */
-    .gathering-handoff {
-      display: grid;
-      gap: 0.4rem;
-      margin: 1.1rem 0 0.85rem;
-      padding: 0.9rem 1rem;
-      border: 1px solid rgba(218, 185, 111, 0.32);
-      border-radius: 14px;
-      background: rgba(8, 20, 34, 0.72);
-    }
-
-    .gathering-handoff strong {
-      color: #f0d99b;
-      letter-spacing: 0.03em;
-    }
-
-    .gathering-handoff span {
-      color: rgba(238, 244, 248, 0.86);
-      line-height: 1.55;
-    }
-
-  
-    /* PHASE_1B_SIGNAL_HANDOFF_PANEL */
-    .signal-handoff {
-      margin: 18px 0 22px;
-      display: grid;
-      grid-template-columns: auto 1fr;
-      align-items: center;
-      gap: 16px;
-      border: 1px solid rgba(125,211,252,.28);
-      border-radius: 20px;
-      padding: 17px 19px;
-      background:
-        linear-gradient(135deg, rgba(125,211,252,.10), rgba(244,211,94,.07)),
-        rgba(4,18,31,.72);
-      box-shadow: 0 16px 38px rgba(0,0,0,.22);
-    }
-
-    .signal-handoff-icon {
-      width: 54px;
-      height: 54px;
-      display: grid;
-      place-items: center;
-      border: 1px solid rgba(244,211,94,.38);
-      border-radius: 16px;
-      background: rgba(244,211,94,.09);
-      color: #f4d35e;
-      font-size: 1.55rem;
-    }
-
-    .signal-handoff-label {
-      display: block;
-      margin-bottom: 4px;
-      color: #7dd3fc;
-      font-size: .72rem;
-      font-weight: 900;
-      letter-spacing: .1em;
-      text-transform: uppercase;
-    }
-
-    .signal-handoff strong {
-      display: block;
-      color: #fff5cf;
-      font-size: 1.12rem;
-    }
-
-    .signal-handoff p {
-      margin: 6px 0;
-      color: rgba(248,240,213,.72);
-      line-height: 1.45;
-    }
-
-    .signal-handoff small {
-      color: #f4d35e;
-      font-weight: 900;
-    }
-
-    @media (max-width: 620px) {
-      .signal-handoff {
-        grid-template-columns: 1fr;
-      }
-    }
-
   </style>
-
-  <!-- VIS-5D — First Gathering cinematic CSS -->
-  <link
-    rel="stylesheet"
-    href="{{ url_for('static', filename='css/first_gathering_cinematic.css') }}?v=phase1b2"
-  >
-
+  <!-- VIS-4C — Shared Council Face Strip CSS -->
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/stem_nation_council_faces.css') }}">
 </head>
 
 <body>
-
-  <!-- VIS-5D — FIRST GATHERING LIVE CINEMATIC INTERFACE -->
-  <!-- VIS-5D-1A-R — IDENTITY RECOGNITION + DOOR ENTRY FOCUS -->
-  <section
-    class="fg-cinematic fg-entry-focus-mode"
-    id="fgCinematic"
-    data-stage="arrival"
-    aria-labelledby="fgSceneTitle"
-  >
-    <div class="fg-scene-background" aria-hidden="true"></div>
-    <div class="fg-scene-vignette" aria-hidden="true"></div>
-    <div class="fg-scene-fog fg-fog-left" aria-hidden="true"></div>
-    <div class="fg-scene-fog fg-fog-right" aria-hidden="true"></div>
-    <div class="fg-particles" id="fgParticles" aria-hidden="true"></div>
-
-    <header class="fg-top-hud">
-      <div class="fg-location">
-        <span class="fg-eyebrow">STEM Nation Academy</span>
-        <h1 id="fgSceneTitle">Outside the Council Hall</h1>
-      </div>
-
-      <div class="fg-status">
-        <span class="fg-status-dot" aria-hidden="true"></span>
-        <span id="fgChamberStatus">Chamber awakening</span>
-      </div>
-    </header>
-
-    <aside
-      class="fg-identity-hologram fg-recognition-card"
-      id="fgIdentityCard"
-      aria-label="Student Academy identity"
-    >
-      <div class="fg-hologram-scan" aria-hidden="true"></div>
-
-      <div class="fg-avatar-recognition-stage">
-        <span
-          class="fg-avatar-recognition-ring fg-avatar-ring-one"
-          aria-hidden="true"
-        ></span>
-
-        <span
-          class="fg-avatar-recognition-ring fg-avatar-ring-two"
-          aria-hidden="true"
-        ></span>
-
-        <span
-          class="fg-avatar-scan-beam"
-          aria-hidden="true"
-        ></span>
-
-        <div class="fg-avatar-frame">
-          <img
-            id="fgStudentAvatar"
-            src="/static/avatars/student_choices/avatar_01.png"
-            alt=""
-          >
-        </div>
-
-        <span
-          class="fg-avatar-recognition-base"
-          aria-hidden="true"
-        ></span>
-      </div>
-
-      <div class="fg-identity-copy">
-        <span class="fg-eyebrow">
-          Academy identity recognized
-        </span>
-
-        <strong id="fgStudentName">
-          Academy Learner
-        </strong>
-
-        <span
-          class="fg-portrait-confirmation"
-          id="fgPortraitConfirmation"
-        >
-          Academy portrait confirmed
-        </span>
-
-        <span
-          class="fg-avatar-choice-label"
-          id="fgAvatarChoiceLabel"
-        >
-          Avatar 1
-        </span>
-
-        <span id="fgArrivalMessage">
-          Your identity has been confirmed.
-        </span>
-
-        <!-- PHASE_1B_VISIBLE_SIGNAL_HANDOFF -->
-        <div class="fg-signal-assignment" id="fgSignalAssignment" aria-live="polite">
-          <span class="fg-signal-assignment-label">Your First Assignment</span>
-          <strong id="fgSignalAssignmentTitle">Signal record loading</strong>
-          <span id="fgSignalAssignmentAdvisor">Advisor assignment loading</span>
-        </div>
-      </div>
-    </aside>
-
-    <main class="fg-interaction-stage">
-      <button
-        class="fg-voice-panel fg-voice-left"
-        type="button"
-        data-voice-index="0"
-        aria-describedby="fgVoiceCaption"
-      >
-        <span class="fg-signal-number">Signal 01</span>
-
-        <span class="fg-speaker-ring" aria-hidden="true">
-          <span class="fg-speaker-icon">◖</span>
-        </span>
-
-        <span class="fg-waveform" aria-hidden="true">
-          <i></i><i></i><i></i><i></i>
-          <i></i><i></i><i></i><i></i>
-        </span>
-
-        <span class="fg-signal-state">Unresolved signal</span>
-      </button>
-
-      <button
-        class="fg-voice-panel fg-voice-right"
-        type="button"
-        data-voice-index="1"
-        aria-describedby="fgVoiceCaption"
-      >
-        <span class="fg-signal-number">Signal 02</span>
-
-        <span class="fg-speaker-ring" aria-hidden="true">
-          <span class="fg-speaker-icon">◖</span>
-        </span>
-
-        <span class="fg-waveform" aria-hidden="true">
-          <i></i><i></i><i></i><i></i>
-          <i></i><i></i><i></i><i></i>
-        </span>
-
-        <span class="fg-signal-state">Unresolved signal</span>
-      </button>
-
-      <button
-        class="fg-voice-panel fg-voice-center"
-        type="button"
-        data-voice-index="2"
-        aria-describedby="fgVoiceCaption"
-      >
-        <span class="fg-signal-number">Signal 03</span>
-
-        <span class="fg-speaker-ring" aria-hidden="true">
-          <span class="fg-speaker-icon">◖</span>
-        </span>
-
-        <span class="fg-waveform" aria-hidden="true">
-          <i></i><i></i><i></i><i></i>
-          <i></i><i></i><i></i><i></i>
-        </span>
-
-        <span class="fg-signal-state">Unresolved signal</span>
-      </button>
-
-      <button
-        class="fg-door-target"
-        id="fgDoorTarget"
-        type="button"
-        aria-describedby="fgDoorInstruction"
-        disabled
-      >
-        <span class="fg-door-pulse" aria-hidden="true"></span>
-
-        <span class="fg-door-label fg-entry-door-label">
-          <span id="fgDoorState">
-            Identity recognition in progress
-          </span>
-
-          <strong id="fgDoorAction">
-            Please wait
-          </strong>
-        </span>
-      </button>
-    </main>
-
-    <section
-      class="fg-caption-stage"
-      id="fgCaptionStage"
-      aria-live="polite"
-    >
-      <span
-        class="fg-caption-speaker"
-        id="fgCaptionSpeaker"
-      >
-        An unidentified voice
-      </span>
-
-      <p id="fgVoiceCaption">
-        Select one of the three signals to listen.
-      </p>
-    </section>
-
-    <footer class="fg-control-deck">
-      <div
-        class="fg-progress"
-        aria-label="First Gathering progress"
-      >
-        <span class="fg-progress-node active" data-node="0">
-          <i></i>
-          <b>Arrival</b>
-        </span>
-
-        <span class="fg-progress-node" data-node="1">
-          <i></i>
-          <b>Listen</b>
-        </span>
-
-        <span class="fg-progress-node" data-node="2">
-          <i></i>
-          <b>Reflect</b>
-        </span>
-
-        <span class="fg-progress-node locked" data-node="3">
-          <i></i>
-          <b>Enter</b>
-        </span>
-      </div>
-
-      <div class="fg-controls">
-        <button type="button" id="fgReplayButton">
-          Replay
-        </button>
-
-        <button
-          type="button"
-          id="fgCaptionButton"
-          aria-pressed="true"
-        >
-          Captions On
-        </button>
-
-        <button
-          type="button"
-          id="fgMuteButton"
-          aria-pressed="false"
-        >
-          Sound On
-        </button>
-      </div>
-
-      <p
-        class="fg-door-instruction"
-        id="fgDoorInstruction"
-      >
-        The Council Hall will open when recognition is complete.
-      </p>
-    </footer>
-
-    <div
-      class="fg-transition-flash"
-      aria-hidden="true"
-    ></div>
-  </section>
-
-  <!-- FLOW-3A — FIRST GATHERING TO COUNCIL STAGE ROUTE LOCK -->
   <div class="atmosphere"></div>
 
   <main class="page">
@@ -964,30 +613,15 @@
         </div>
 
         <div class="badge">The First Gathering</div>
-        <h1>Outside the Council Hall</h1>
+        <h1>The Council Hall</h1>
 
         <p class="lead">
-          You step into a quiet chamber where an urgent gathering is already in motion.
+          You step into a quiet chamber where a gathering is already in motion.
           No one has explained the problem yet. The room is tense, the evidence is waiting,
           and your first task is to listen before deciding.
         </p>
 
         <div class="status-line">First chamber active</div>
-
-        <!-- PHASE_1B_SIGNAL_HANDOFF_PANEL -->
-        <section class="signal-handoff" id="signalHandoff" aria-live="polite">
-          <div class="signal-handoff-icon" id="signalHandoffIcon" aria-hidden="true">◆</div>
-          <div class="signal-handoff-copy">
-            <span class="signal-handoff-label">Your First Assignment</span>
-            <strong id="signalHandoffTitle">Signal record loading</strong>
-            <p id="signalHandoffSummary">
-              The Academy is retrieving the situation you selected.
-            </p>
-            <small id="signalHandoffAdvisor">
-              Your first Council advisor is being assigned.
-            </small>
-          </div>
-        </section>
 
         <div class="voice-grid">
           <div class="voice-card">
@@ -1017,29 +651,88 @@
         </div>
 
         <div class="bottom-actions">
-
-        <!-- FLOW-3B — FIRST GATHERING NARRATIVE HANDOFF -->
-        <div class="gathering-handoff" aria-live="polite">
-          <strong>The inner chamber is waiting.</strong>
-          <span>
-            You have heard the disagreement. Enter Council Hall to learn
-            what happened and begin your first investigation.
-          </span>
-        </div>
-<a class="button primary" href="/council_stage">Enter Council Hall</a>
+          <a class="button primary" href="/academy_observation">Enter Observation Chamber</a>
         </div>
       </section>
 
+      <aside class="intel-chamber">
+        <div class="intel-header">
+          <strong>Unlabeled Evidence</strong>
+          <span>
+            No one tells you what the images mean. Your first task is to notice what changed
+            before anyone explains it.
+          </span>
+        </div>
 
+        <div class="map-wall">
+          <div class="map-board">
+            <div class="map-label">Earlier Image</div>
+            <div class="river-line"></div>
+            <div class="marker one"></div>
+            <div class="marker two blue"></div>
+          </div>
+
+          <div class="map-board">
+            <div class="map-label">Marked Change Zone</div>
+            <div class="river-line" style="left:34px; top:56px; width:160px; height:112px; transform:rotate(24deg);"></div>
+            <div class="zone-mark"></div>
+            <div class="marker three blue"></div>
+            <div class="marker four"></div>
+          </div>
+        </div>
+
+        <div class="evidence-panel" id="evidencePanel">
+          <h3>What do you notice?</h3>
+
+          <div class="evidence-grid">
+            <div class="evidence-card">
+              <strong>Evidence A — Earlier Image</strong>
+              <span>An older view of the land before the dramatic change appeared.</span>
+            </div>
+            <div class="evidence-card">
+              <strong>Evidence B — New Image</strong>
+              <span>A recent image of the same area shows a visible shift that no one has explained yet.</span>
+            </div>
+            <div class="evidence-card">
+              <strong>Evidence C — Marked Change Zone</strong>
+              <span>A highlighted area shows where the land no longer matches the earlier record.</span>
+            </div>
+            <div class="evidence-card">
+              <strong>Evidence D — Conflicting Notes</strong>
+              <span>Observers disagree about whether the change means danger, opportunity, damage, or movement.</span>
+            </div>
+          </div>
+
+          <div class="evidence-note">
+            The evidence is unlabeled on purpose. The Academy wants to see what you notice before anyone gives you an interpretation.
+          </div>
+        </div>
+      </aside>
     </div>
   <!-- VIS-4C — LOCKED COUNCIL FACES IN FIRST GATHERING -->
+    <section class="first-gathering-council-wrap" data-first-gathering-council>
+      <div class="first-gathering-council-intro">
+        <div class="first-gathering-council-eyebrow">Your Inquiry Guides</div>
 
+        <h2>Meet the Inquiry Council</h2>
+
+        <p>
+          The Council will not choose your identity or make decisions for you.
+          Each advisor helps you examine a challenge through a different kind
+          of question.
+        </p>
+      </div>
+
+      {% set council_strip_title = "The Council Is Assembled" %}
+      {% set council_strip_subtitle = "Notice what each advisor asks. Their questions will guide your investigation, but the decisions remain yours." %}
+      {% set council_strip_compact = false %}
+      {% set council_strip_animated = true %}
+      {% include "_council_face_strip.html" %}
+    </section>
   </main>
 
   <script>
     const IDENTITY_KEY = "stemNationStudentIdentity";
-    const SIGNAL_KEY = "stemNationFirstSignal";
-    const FIRST_ADVISOR_KEY = "stemNationFirstAdvisor";
 
     const studentAvatarMini = document.getElementById("studentAvatarMini");
     const studentWelcome = document.getElementById("studentWelcome");
@@ -1047,12 +740,6 @@
     const guardianLine = document.getElementById("guardianLine");
     const guardianNextBtn = document.getElementById("guardianNextBtn");
     const replayBtn = document.getElementById("replayBtn");
-
-    // PHASE_1B_SIGNAL_HANDOFF_LOGIC
-    const signalHandoffIcon = document.getElementById("signalHandoffIcon");
-    const signalHandoffTitle = document.getElementById("signalHandoffTitle");
-    const signalHandoffSummary = document.getElementById("signalHandoffSummary");
-    const signalHandoffAdvisor = document.getElementById("signalHandoffAdvisor");
 
     let identity = {
       name: "Academy Learner",
@@ -1064,20 +751,6 @@
     try {
       const saved = JSON.parse(localStorage.getItem(IDENTITY_KEY) || "null");
       if (saved) identity = { ...identity, ...saved };
-    } catch (err) {}
-
-    let firstSignal = {
-      id: "crossing",
-      title: "Damaged Crossing",
-      advisor: "Builder",
-      summary: "A route has failed after severe weather. People and supplies may be cut off."
-    };
-
-    try {
-      const savedSignal = JSON.parse(localStorage.getItem(SIGNAL_KEY) || "null");
-      if (savedSignal && savedSignal.id) {
-        firstSignal = { ...firstSignal, ...savedSignal };
-      }
     } catch (err) {}
 
     function looksLikeImageSource(value) {
@@ -1095,7 +768,7 @@
       const avatarChoice = identity.avatarChoice || identity.avatarTitle || "Academy Avatar";
 
       studentWelcome.textContent = `Welcome, ${displayName}.`;
-      studentArrivalLine.textContent = `${displayName} has arrived at the First Gathering. Listen carefully. The Council has not explained what happened yet.`;
+      studentArrivalLine.textContent = `${avatarChoice} has entered the Council Hall. Listen carefully before choosing what to believe.`;
 
       studentAvatarMini.innerHTML = "";
 
@@ -1112,26 +785,10 @@
       }
     }
 
-    function renderFirstSignal() {
-      const signalIcons = {
-        crossing: "🌉",
-        water: "💧",
-        settlement: "📡"
-      };
-
-      signalHandoffIcon.textContent = signalIcons[firstSignal.id] || "◆";
-      signalHandoffTitle.textContent = firstSignal.title;
-      signalHandoffSummary.textContent = firstSignal.summary;
-      signalHandoffAdvisor.textContent =
-        `${firstSignal.advisor} has been assigned as your first responding advisor.`;
-
-      localStorage.setItem(FIRST_ADVISOR_KEY, firstSignal.advisor);
-    }
-
     const guardianLines = [
-      `Your assignment has been received: ${firstSignal.title}.`,
-      `${firstSignal.advisor} will respond first, but every voice in this chamber matters.`,
-      "Step closer. Begin with what you notice before deciding what it means."
+      "You made it into the Hall.",
+      "The room needs another set of eyes.",
+      "Step closer. Begin with what you notice."
     ];
 
     let guardianIndex = 0;
@@ -1150,14 +807,8 @@
     replayBtn.addEventListener("click", replayGathering);
 
     renderStudentIdentity();
-    renderFirstSignal();
   </script>
-
-  <!-- VIS-5D — First Gathering cinematic JS -->
-  <script
-    src="{{ url_for('static', filename='js/first_gathering_cinematic.js') }}?v=phase1b2"
-  ></script>
-
-  <script src="{{ url_for('static', filename='js/academy_mission_record.js') }}?v=step2c1"></script>
+  <!-- VIS-4C — Shared Council Face Strip JS -->
+  <script src="{{ url_for('static', filename='js/stem_nation_council_faces.js') }}"></script>
 </body>
 </html>

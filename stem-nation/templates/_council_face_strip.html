@@ -1,0 +1,118 @@
+{# ============================================================
+   VIS-4B — Shared Council Face Strip
+
+   Optional variables:
+   council_strip_title
+   council_strip_subtitle
+   council_strip_compact
+   council_strip_animated
+   ============================================================ #}
+
+{% set strip_title = council_strip_title|default("The Inquiry Council") %}
+{% set strip_subtitle = council_strip_subtitle|default("Five advisors. Five ways of examining a challenge.") %}
+{% set strip_compact = council_strip_compact|default(false) %}
+{% set strip_animated = council_strip_animated|default(true) %}
+
+<section
+  class="sn-council-strip{% if strip_compact %} is-compact{% endif %}"
+  data-sn-council-strip
+  aria-labelledby="sn-council-strip-title"
+>
+  <header class="sn-council-strip-header">
+    <div class="sn-council-strip-kicker">STEM Nation Inquiry Council</div>
+    <h2 id="sn-council-strip-title">{{ strip_title }}</h2>
+    <p>{{ strip_subtitle }}</p>
+  </header>
+
+  <div class="sn-council-face-grid">
+    <article
+      class="sn-council-face-card scout{% if strip_animated %} is-animated{% endif %}"
+      data-sn-council-advisor="scout"
+    >
+      <div class="sn-council-face-frame">
+        <img
+          src="{{ url_for('static', filename='images/advisors/scout/states/scout_face_neutral.png') }}"
+          alt="Scout advisor"
+        >
+        <span class="sn-council-face-state" aria-hidden="true">•</span>
+      </div>
+      <div class="sn-council-face-copy">
+        <div class="sn-council-face-verb">Discover</div>
+        <h3>Scout</h3>
+        <p>What do we notice?</p>
+      </div>
+    </article>
+
+    <article
+      class="sn-council-face-card mapkeeper{% if strip_animated %} is-animated{% endif %}"
+      data-sn-council-advisor="mapkeeper"
+    >
+      <div class="sn-council-face-frame">
+        <img
+          src="{{ url_for('static', filename='images/advisors/mapkeeper/states/mapkeeper_face_neutral.png') }}"
+          alt="Mapkeeper advisor"
+        >
+        <span class="sn-council-face-state" aria-hidden="true">•</span>
+      </div>
+      <div class="sn-council-face-copy">
+        <div class="sn-council-face-verb">Remember</div>
+        <h3>Mapkeeper</h3>
+        <p>What do we know?</p>
+      </div>
+    </article>
+
+    <article
+      class="sn-council-face-card builder{% if strip_animated %} is-animated{% endif %}"
+      data-sn-council-advisor="builder"
+    >
+      <div class="sn-council-face-frame">
+        <img
+          src="{{ url_for('static', filename='images/advisors/builder/states/builder_face_neutral.png') }}"
+          alt="Builder advisor"
+        >
+        <span class="sn-council-face-state" aria-hidden="true">•</span>
+      </div>
+      <div class="sn-council-face-copy">
+        <div class="sn-council-face-verb">Create</div>
+        <h3>Builder</h3>
+        <p>What can we build?</p>
+      </div>
+    </article>
+
+    <article
+      class="sn-council-face-card healer{% if strip_animated %} is-animated{% endif %}"
+      data-sn-council-advisor="healer"
+    >
+      <div class="sn-council-face-frame">
+        <img
+          src="{{ url_for('static', filename='images/advisors/healer/states/healer_face_neutral.png') }}"
+          alt="Healer advisor"
+        >
+        <span class="sn-council-face-state" aria-hidden="true">•</span>
+      </div>
+      <div class="sn-council-face-copy">
+        <div class="sn-council-face-verb">Restore</div>
+        <h3>Healer</h3>
+        <p>What do people need?</p>
+      </div>
+    </article>
+
+    <article
+      class="sn-council-face-card guardian{% if strip_animated %} is-animated{% endif %}"
+      data-sn-council-advisor="guardian"
+    >
+      <div class="sn-council-face-frame">
+        <img
+          src="{{ url_for('static', filename='images/advisors/guardian/states/guardian_face_neutral.png') }}"
+          alt="Guardian advisor"
+        >
+        <span class="sn-council-face-state" aria-hidden="true">•</span>
+      </div>
+      <div class="sn-council-face-copy">
+        <div class="sn-council-face-verb">Protect</div>
+        <h3>Guardian</h3>
+        <p>What should we protect?</p>
+      </div>
+    </article>
+  </div>
+</section>

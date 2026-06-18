@@ -96,6 +96,26 @@
       padding: 18px;
     }
 
+    .learner-nameplate {
+      margin: 0 0 4px;
+      color: #fff5cf;
+      font-size: 1.35rem;
+      font-weight: 900;
+      line-height: 1.15;
+      overflow-wrap: anywhere;
+      text-shadow: 0 10px 28px rgba(0,0,0,.34);
+    }
+
+    .learner-role {
+      margin: 0 0 12px;
+      color: #7dd3fc;
+      font-size: .86rem;
+      font-weight: 900;
+      letter-spacing: .08em;
+      line-height: 1.25;
+      text-transform: uppercase;
+    }
+
     .badge {
       display: inline-flex;
       align-items: center;
@@ -416,6 +436,8 @@
         <div class="avatar-frame" id="avatarFrame">
           <div class="avatar-fallback">Academy Avatar</div>
         </div>
+        <div class="learner-nameplate" id="avatarLearnerName">Academy Learner</div>
+        <div class="learner-role" id="avatarLearnerRole">Chief Investigator in Training</div>
         <div class="badge" id="avatarBadge">Arrival Recorded</div>
       </aside>
 
@@ -508,6 +530,8 @@
     const IDENTITY_KEY = "stemNationStudentIdentity";
 
     const avatarFrame = document.getElementById("avatarFrame");
+    const avatarLearnerName = document.getElementById("avatarLearnerName");
+    const avatarLearnerRole = document.getElementById("avatarLearnerRole");
     const avatarBadge = document.getElementById("avatarBadge");
     const arrivalTitle = document.getElementById("arrivalTitle");
     const arrivalLead = document.getElementById("arrivalLead");
@@ -523,6 +547,7 @@
 
     let identity = {
       name: "Academy Learner",
+      status: "Chief Investigator in Training",
       portrait: "",
       fallback: "",
       avatarChoice: "Academy Avatar"
@@ -542,7 +567,22 @@
       );
     }
 
-    const displayName = identity.name || "Academy Learner";
+    function resolveDisplayName(record) {
+      return String(
+        record.teacherApprovedName ||
+        record.approvedName ||
+        record.name ||
+        "Academy Learner"
+      )
+        .replace(/^New Arrival\s*/i, "")
+        .replace(/^Academy Learner\s*/i, "")
+        .trim() || "Academy Learner";
+    }
+
+    const displayName = resolveDisplayName(identity);
+    const learnerRole = identity.status === "Academy Learner"
+      ? "Chief Investigator in Training"
+      : identity.status || "Chief Investigator in Training";
     const avatarSource = identity.portrait || identity.fallback || "";
     const avatarChoice = identity.avatarChoice || identity.avatarTitle || "Academy Avatar";
 
@@ -560,6 +600,8 @@
       avatarFrame.appendChild(fallback);
     }
 
+    avatarLearnerName.textContent = displayName;
+    avatarLearnerRole.textContent = learnerRole;
     avatarBadge.textContent = `${avatarChoice} locked`;
     arrivalTitle.textContent = `Welcome, ${displayName}.`;
     arrivalLead.textContent = "You have crossed the Academy threshold. Your avatar is ready, and the first gathering is about to begin.";
@@ -624,5 +666,6 @@
       }
     } catch (err) {}
   </script>
+  <script src="{{ url_for('static', filename='js/academy_mission_record.js') }}?v=step2c1"></script>
 </body>
 </html>

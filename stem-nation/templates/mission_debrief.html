@@ -686,6 +686,8 @@
         completedAt: new Date().toISOString()
       }));
 
+      window.STEMNationMissionRecord?.update?.();
+
       summaryBox.innerHTML = `
         <strong>Mission Debrief Saved</strong><br><br>
         <strong>What your choices revealed:</strong><br>
@@ -727,5 +729,6 @@
 
     renderStudentIdentity();
   </script>
+  <script src="{{ url_for('static', filename='js/academy_mission_record.js') }}?v=step2c1"></script>
 </body>
 </html>
