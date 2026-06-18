@@ -1,0 +1,1172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>STEM Nation | Survival Scenario 1</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- STEM_NATION_STAGED_SURVIVAL_SCENARIO_V1 -->
+
+  <style>
+    :root {
+      --bg: #07100c;
+      --panel: rgba(8, 12, 9, 0.92);
+      --panel-soft: rgba(255,255,255,0.055);
+      --gold: #d4b45f;
+      --gold-soft: rgba(212,180,95,0.34);
+      --text: #f6edd1;
+      --muted: rgba(246,237,209,0.72);
+      --green: #8aaa62;
+      --river: #3d94bd;
+      --danger: #c66a4c;
+    }
+
+    * { box-sizing: border-box; }
+
+    html, body {
+      margin: 0;
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      background:
+        radial-gradient(circle at 18% 16%, rgba(212,180,95,0.14), transparent 28%),
+        radial-gradient(circle at 80% 22%, rgba(60,140,87,0.13), transparent 30%),
+        linear-gradient(135deg, #050705, #101810 58%, #070907);
+      color: var(--text);
+      font-family: Arial, sans-serif;
+    }
+
+    .app {
+      height: 100vh;
+      display: grid;
+      grid-template-rows: 78px minmax(0, 1fr) 82px;
+      gap: 10px;
+      padding: 10px;
+    }
+
+    .top {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      align-items: center;
+      gap: 16px;
+      padding: 10px 14px;
+      border: 1px solid var(--gold-soft);
+      border-radius: 16px;
+      background: rgba(0,0,0,0.42);
+    }
+
+    .top h1 {
+      margin: 0;
+      color: var(--gold);
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 1.08rem;
+      letter-spacing: 0.07em;
+      text-transform: uppercase;
+    }
+
+    .top .sub {
+      margin-top: 3px;
+      color: var(--muted);
+      font-size: 0.78rem;
+    }
+
+    .progress {
+      display: flex;
+      gap: 6px;
+      align-items: center;
+      color: var(--muted);
+      font-size: 0.7rem;
+      white-space: nowrap;
+    }
+
+    .step-dot {
+      width: 28px;
+      height: 28px;
+      display: grid;
+      place-items: center;
+      border: 1px solid rgba(212,180,95,0.30);
+      border-radius: 999px;
+      background: rgba(255,255,255,0.05);
+    }
+
+    .step-dot.active {
+      background: rgba(212,180,95,0.26);
+      color: var(--text);
+      border-color: rgba(212,180,95,0.68);
+    }
+
+    .stage-shell {
+      min-height: 0;
+      overflow: hidden;
+      border: 1px solid var(--gold-soft);
+      border-radius: 20px;
+      background: rgba(0,0,0,0.28);
+      position: relative;
+    }
+
+    .stage {
+      display: none;
+      height: 100%;
+      padding: 18px;
+    }
+
+    .stage.active {
+      display: block;
+      animation: fadeIn 0.35s ease both;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(8px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .brief-stage {
+      height: 100%;
+      display: grid;
+      place-items: center;
+    }
+
+    .brief-card {
+      width: min(920px, 94vw);
+      border: 1px solid rgba(212,180,95,0.28);
+      border-radius: 24px;
+      background:
+        linear-gradient(180deg, rgba(0,0,0,0.62), rgba(0,0,0,0.38)),
+        var(--panel);
+      padding: 34px;
+      box-shadow: 0 28px 80px rgba(0,0,0,0.42);
+    }
+
+    .brief-card h2 {
+      margin: 0 0 12px;
+      color: var(--gold);
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: clamp(1.8rem, 4vw, 3.2rem);
+    }
+
+    .brief-card p {
+      color: rgba(246,237,209,0.84);
+      font-size: 1rem;
+      line-height: 1.58;
+      margin: 10px 0;
+    }
+
+    .scenario-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+      margin-top: 18px;
+    }
+
+    .mini-card {
+      border: 1px solid rgba(212,180,95,0.18);
+      border-radius: 16px;
+      background: rgba(255,255,255,0.045);
+      padding: 12px;
+    }
+
+    .mini-card strong {
+      display: block;
+      color: var(--gold);
+      margin-bottom: 5px;
+    }
+
+    .mini-card span {
+      color: var(--muted);
+      font-size: 0.82rem;
+      line-height: 1.35;
+    }
+
+    .observe-stage,
+    .ask-stage,
+    .test-stage,
+    .reflect-stage {
+      height: 100%;
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) 340px;
+      gap: 12px;
+      min-height: 0;
+    }
+
+    .side-panel {
+      min-height: 0;
+      overflow-y: auto;
+      border: 1px solid rgba(212,180,95,0.22);
+      border-radius: 18px;
+      background: var(--panel);
+      padding: 14px;
+    }
+
+    .side-panel h2 {
+      margin: 0 0 8px;
+      color: var(--gold);
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 1.08rem;
+      letter-spacing: 0.04em;
+    }
+
+    .side-panel p {
+      margin: 0 0 10px;
+      color: var(--muted);
+      font-size: 0.82rem;
+      line-height: 1.42;
+    }
+
+    label {
+      display: block;
+      margin: 12px 0 5px;
+      color: var(--gold);
+      font-size: 0.72rem;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+    }
+
+    textarea {
+      width: 100%;
+      min-height: 86px;
+      resize: vertical;
+      padding: 10px;
+      border: 1px solid rgba(255,255,255,0.15);
+      border-radius: 12px;
+      background: rgba(0,0,0,0.30);
+      color: var(--text);
+      font-family: Arial, sans-serif;
+      font-size: 0.86rem;
+      line-height: 1.4;
+    }
+
+    .board-wrap {
+      min-height: 0;
+      display: grid;
+      grid-template-rows: 42px minmax(0, 1fr) 48px;
+      gap: 8px;
+    }
+
+    .event-feed,
+    .board-help {
+      border: 1px solid rgba(212,180,95,0.22);
+      border-radius: 14px;
+      background: rgba(0,0,0,0.36);
+      padding: 9px 12px;
+      color: rgba(246,237,209,0.82);
+      font-size: 0.82rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+    }
+
+    .board {
+      position: relative;
+      overflow: hidden;
+      border: 1px solid rgba(212,180,95,0.28);
+      border-radius: 18px;
+      background: #142014;
+      box-shadow: inset 0 0 100px rgba(0,0,0,0.48);
+    }
+
+    .map {
+      position: absolute;
+      inset: 0;
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      isolation: isolate;
+    }
+
+    .map::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      z-index: 9;
+      pointer-events: none;
+      background:
+        radial-gradient(circle at center, transparent 46%, rgba(0,0,0,0.26) 100%),
+        linear-gradient(180deg, rgba(255,255,255,0.05), transparent 40%, rgba(0,0,0,0.18));
+    }
+
+    .zone {
+      position: relative;
+      overflow: hidden;
+      border-right: 1px solid rgba(255,255,255,0.10);
+      transition: 0.2s ease;
+    }
+
+    .zone:last-child { border-right: none; }
+
+    .zone.drag-over {
+      outline: 3px solid var(--gold);
+      filter: brightness(1.12) saturate(1.08);
+      box-shadow: inset 0 0 90px rgba(212,180,95,0.28);
+      z-index: 10;
+    }
+
+    .zone-tag {
+      position: absolute;
+      top: 12px;
+      left: 12px;
+      z-index: 20;
+      border: 1px solid rgba(212,180,95,0.28);
+      border-radius: 999px;
+      background: rgba(0,0,0,0.42);
+      padding: 6px 10px;
+      color: rgba(246,237,209,0.84);
+      font-size: 0.72rem;
+      pointer-events: none;
+    }
+
+    .river {
+      background:
+        linear-gradient(115deg, rgba(35,91,120,0.96), rgba(68,136,88,0.72)),
+        radial-gradient(circle at 68% 72%, rgba(90,150,74,0.55), transparent 25%);
+    }
+
+    .river::before {
+      content: "";
+      position: absolute;
+      left: -15%;
+      top: -10%;
+      width: 55%;
+      height: 125%;
+      border-radius: 48%;
+      background:
+        linear-gradient(105deg,
+          transparent,
+          rgba(82,170,212,0.18) 20%,
+          rgba(104,195,228,0.64) 42%,
+          rgba(39,111,147,0.78) 60%,
+          transparent
+        );
+      transform: rotate(8deg);
+      animation: riverMove 6s ease-in-out infinite alternate;
+      box-shadow: 0 0 35px rgba(73,165,207,0.34);
+    }
+
+    .river::after {
+      content: "";
+      position: absolute;
+      left: 10%;
+      top: 45%;
+      width: 130px;
+      height: 80px;
+      background:
+        radial-gradient(ellipse at 20% 52%, rgba(230,238,214,0.72) 0 8px, transparent 9px),
+        radial-gradient(ellipse at 48% 40%, rgba(230,238,214,0.58) 0 6px, transparent 7px),
+        radial-gradient(ellipse at 76% 64%, rgba(230,238,214,0.52) 0 5px, transparent 6px);
+      opacity: 0.75;
+      animation: fishDrift 5s ease-in-out infinite alternate;
+    }
+
+    @keyframes riverMove {
+      from { transform: rotate(8deg) translateY(0); filter: brightness(0.95); }
+      to { transform: rotate(8deg) translateY(15px); filter: brightness(1.18); }
+    }
+
+    @keyframes fishDrift {
+      from { transform: translateX(0) translateY(0); }
+      to { transform: translateX(28px) translateY(10px); }
+    }
+
+    .high {
+      background:
+        linear-gradient(180deg, rgba(155,132,78,0.96), rgba(65,55,39,0.97)),
+        radial-gradient(circle at 44% 36%, rgba(235,211,148,0.50), transparent 24%);
+    }
+
+    .high::before {
+      content: "";
+      position: absolute;
+      left: 8%;
+      top: 10%;
+      width: 86%;
+      height: 74%;
+      background:
+        radial-gradient(circle at 35% 40%, rgba(210,199,160,0.72) 0 16px, transparent 17px),
+        radial-gradient(circle at 55% 55%, rgba(116,105,84,0.70) 0 28px, transparent 29px),
+        radial-gradient(circle at 72% 68%, rgba(90,81,65,0.62) 0 18px, transparent 19px);
+      clip-path: polygon(50% 2%, 96% 90%, 6% 90%);
+      filter: drop-shadow(0 22px 16px rgba(0,0,0,0.35));
+    }
+
+    .high::after {
+      content: "";
+      position: absolute;
+      left: 42%;
+      bottom: 25%;
+      width: 115px;
+      height: 72px;
+      background:
+        linear-gradient(38deg, transparent 45%, rgba(55,38,24,0.58) 46% 49%, transparent 50%),
+        linear-gradient(118deg, transparent 42%, rgba(55,38,24,0.52) 43% 47%, transparent 48%),
+        linear-gradient(8deg, transparent 48%, rgba(55,38,24,0.48) 49% 52%, transparent 53%);
+      opacity: 0.85;
+    }
+
+    .forest {
+      background:
+        linear-gradient(90deg, rgba(23,76,39,0.97), rgba(9,31,18,0.98)),
+        radial-gradient(circle at 48% 54%, rgba(82,151,78,0.46), transparent 36%);
+    }
+
+    .forest::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(circle at 18% 25%, rgba(97,162,86,0.95) 0 16px, transparent 17px),
+        radial-gradient(circle at 36% 40%, rgba(74,135,73,0.95) 0 19px, transparent 20px),
+        radial-gradient(circle at 60% 28%, rgba(58,121,62,0.95) 0 18px, transparent 19px),
+        radial-gradient(circle at 78% 52%, rgba(80,145,75,0.95) 0 18px, transparent 19px),
+        radial-gradient(circle at 28% 70%, rgba(47,101,51,0.95) 0 19px, transparent 20px),
+        radial-gradient(circle at 58% 75%, rgba(88,154,82,0.95) 0 18px, transparent 19px);
+      filter: drop-shadow(0 12px 10px rgba(0,0,0,0.45));
+      animation: treeWind 4.5s ease-in-out infinite alternate;
+    }
+
+    .forest::after {
+      content: "";
+      position: absolute;
+      right: 12%;
+      bottom: 28%;
+      width: 120px;
+      height: 75px;
+      background:
+        radial-gradient(ellipse at 10% 70%, rgba(35,22,12,0.65) 0 5px, transparent 6px),
+        radial-gradient(ellipse at 28% 58%, rgba(35,22,12,0.65) 0 5px, transparent 6px),
+        radial-gradient(ellipse at 45% 46%, rgba(35,22,12,0.65) 0 5px, transparent 6px),
+        radial-gradient(ellipse at 62% 34%, rgba(35,22,12,0.65) 0 5px, transparent 6px),
+        radial-gradient(ellipse at 80% 23%, rgba(35,22,12,0.65) 0 5px, transparent 6px);
+      transform: rotate(-18deg);
+      opacity: 0.76;
+    }
+
+    @keyframes treeWind {
+      from { transform: translateX(-4px) rotate(-0.3deg); }
+      to { transform: translateX(8px) rotate(0.5deg); }
+    }
+
+    .effect {
+      position: absolute;
+      inset: 0;
+      z-index: 8;
+      pointer-events: none;
+      opacity: 0;
+      transition: 0.3s ease;
+    }
+
+    .effect.active { opacity: 1; }
+
+    .flood {
+      background: linear-gradient(180deg, transparent 44%, rgba(62,151,194,0.50));
+      animation: floodRise 2.6s ease-in-out infinite alternate;
+    }
+
+    .dry {
+      background: repeating-linear-gradient(45deg, rgba(204,151,79,0.24) 0 4px, transparent 4px 16px);
+      animation: dryPulse 2.4s ease-in-out infinite alternate;
+    }
+
+    .predator {
+      background: radial-gradient(circle at 76% 52%, rgba(196,95,73,0.36), transparent 38%);
+      animation: predatorPulse 1.9s ease-in-out infinite alternate;
+    }
+
+    @keyframes floodRise {
+      from { transform: translateY(20px); opacity: 0.35; }
+      to { transform: translateY(-8px); opacity: 0.82; }
+    }
+
+    @keyframes dryPulse {
+      from { opacity: 0.26; filter: brightness(1); }
+      to { opacity: 0.76; filter: brightness(1.25); }
+    }
+
+    @keyframes predatorPulse {
+      from { opacity: 0.26; transform: scale(0.98); }
+      to { opacity: 0.72; transform: scale(1.03); }
+    }
+
+    .pieces {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+      margin-top: 12px;
+    }
+
+    .object {
+      min-height: 66px;
+      display: grid;
+      grid-template-columns: 48px 1fr;
+      align-items: center;
+      gap: 8px;
+      border: 1px solid rgba(212,180,95,0.34);
+      border-radius: 12px;
+      background: rgba(30,33,24,0.94);
+      color: var(--text);
+      padding: 8px;
+      font-size: 0.76rem;
+      font-weight: 700;
+      cursor: grab;
+      user-select: none;
+    }
+
+    .object.placed { opacity: 0.45; }
+
+    .object::before, .placed-object::before {
+      content: "";
+      display: block;
+      width: 44px;
+      height: 30px;
+      filter: drop-shadow(0 5px 4px rgba(0,0,0,0.35));
+    }
+
+    .object[data-object="home_camp"]::before,
+    .placed-object[data-object="home_camp"]::before {
+      background:
+        conic-gradient(from 210deg at 50% 100%, transparent 0 18%, #d9c58a 18% 42%, #7b4b2d 42% 49%, #d9c58a 49% 72%, transparent 72%),
+        radial-gradient(circle at 48% 84%, #d66a3c 0 5px, #f0c35c 6px 9px, transparent 10px);
+    }
+
+    .object[data-object="food_storage"]::before,
+    .placed-object[data-object="food_storage"]::before {
+      background:
+        radial-gradient(ellipse at 28% 65%, #c9a45a 0 12px, transparent 13px),
+        radial-gradient(ellipse at 52% 60%, #d9bd73 0 14px, transparent 15px),
+        linear-gradient(#8a5d35, #5b3822);
+      border-radius: 8px;
+    }
+
+    .object[data-object="water_spot"]::before,
+    .placed-object[data-object="water_spot"]::before {
+      background:
+        radial-gradient(ellipse at 50% 70%, #5aa6c9 0 20px, transparent 21px),
+        linear-gradient(90deg, #7a4e2d, #b3834b, #7a4e2d);
+      border-radius: 12px;
+    }
+
+    .object[data-object="path_marker"]::before,
+    .placed-object[data-object="path_marker"]::before {
+      background:
+        linear-gradient(90deg, transparent 0 20%, #a2763d 21% 27%, transparent 28% 44%, #a2763d 45% 51%, transparent 52%),
+        repeating-linear-gradient(90deg, rgba(220,190,118,0.72) 0 9px, transparent 9px 18px);
+      border-radius: 999px;
+      transform: rotate(-4deg);
+    }
+
+    .placed-object {
+      position: absolute;
+      z-index: 30;
+      min-width: 74px;
+      min-height: 52px;
+      display: grid;
+      place-items: center;
+      text-align: center;
+      border: 1px solid rgba(232,199,93,0.70);
+      border-radius: 12px;
+      background: rgba(9,9,6,0.76);
+      color: var(--text);
+      font-size: 0.64rem;
+      font-weight: 700;
+      pointer-events: none;
+      box-shadow: 0 10px 20px rgba(0,0,0,0.42);
+    }
+
+    .attempt-log {
+      margin-top: 10px;
+      padding: 9px;
+      border-radius: 12px;
+      background: var(--panel-soft);
+      color: var(--muted);
+      font-size: 0.76rem;
+      line-height: 1.4;
+    }
+
+    .actions {
+      height: 100%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      border: 1px solid var(--gold-soft);
+      border-radius: 18px;
+      background: rgba(0,0,0,0.42);
+      padding: 10px 14px;
+    }
+
+    .actions-left {
+      min-width: 0;
+      color: var(--muted);
+      font-size: 0.82rem;
+      line-height: 1.35;
+    }
+
+    .actions-right {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+    }
+
+    button, .advance-link {
+      border: 1px solid var(--gold-soft);
+      background: rgba(212,180,95,0.15);
+      color: var(--text);
+      border-radius: 999px;
+      padding: 10px 15px;
+      font-size: 0.84rem;
+      cursor: pointer;
+      text-align: center;
+      text-decoration: none;
+      white-space: nowrap;
+    }
+
+    button:hover:not(:disabled), .advance-link:hover {
+      background: rgba(212,180,95,0.27);
+    }
+
+    button:disabled {
+      opacity: 0.45;
+      cursor: not-allowed;
+    }
+
+    .advance-link {
+      border-color: rgba(138,170,98,0.74);
+      background: rgba(138,170,98,0.24);
+      font-weight: 700;
+    }
+
+    .hidden {
+      display: none !important;
+    }
+
+    @media (max-width: 980px) {
+      html, body { overflow: auto; }
+      .app {
+        height: auto;
+        min-height: 100vh;
+        grid-template-rows: auto auto auto;
+      }
+      .top {
+        grid-template-columns: 1fr;
+      }
+      .progress {
+        flex-wrap: wrap;
+      }
+      .stage-shell {
+        min-height: 680px;
+      }
+      .observe-stage,
+      .ask-stage,
+      .test-stage,
+      .reflect-stage {
+        grid-template-columns: 1fr;
+      }
+      .actions {
+        flex-direction: column;
+        align-items: stretch;
+      }
+      .actions-right {
+        justify-content: stretch;
+      }
+      button, .advance-link {
+        width: 100%;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <main class="app">
+    <header class="top">
+      <div>
+        <h1>Academy Readiness Evaluation</h1>
+        <div class="sub">Survival Scenario 1: The Living Land</div>
+      </div>
+      <div class="progress">
+        <span class="step-dot active" data-step-dot="0">1</span><span>Situation</span>
+        <span class="step-dot" data-step-dot="1">2</span><span>Observe</span>
+        <span class="step-dot" data-step-dot="2">3</span><span>Ask</span>
+        <span class="step-dot" data-step-dot="3">4</span><span>Test</span>
+        <span class="step-dot" data-step-dot="4">5</span><span>Reflect</span>
+      </div>
+    </header>
+
+    <section class="stage-shell">
+      <section class="stage active" data-stage="0">
+        <div class="brief-stage">
+          <article class="brief-card">
+            <h2>Your group has reached unfamiliar land before nightfall.</h2>
+            <p>This scenario is fictional, but it is based on real survival decisions people have faced throughout history when entering new territory.</p>
+            <p>You are part of the group now. The food is limited. The water jars are nearly empty. The group is tired, and night is coming.</p>
+            <p>Before dark, you must help decide where to place shelter, food supplies, water access, and a path.</p>
+
+            <div class="scenario-grid">
+              <div class="mini-card">
+                <strong>Living things need</strong>
+                <span>Water, food or energy, air, space, shelter, and suitable conditions.</span>
+              </div>
+              <div class="mini-card">
+                <strong>Your survival team thinks like</strong>
+                <span>A scout, builder, gatherer, and caretaker. Each sees different risks and possibilities.</span>
+              </div>
+              <div class="mini-card">
+                <strong>Your first materials</strong>
+                <span>Home Place, Food Supplies, Water Place, and Path Marker.</span>
+              </div>
+              <div class="mini-card">
+                <strong>Your mission</strong>
+                <span>Observe first. Ask a question. Test your survival plan. Improve your thinking.</span>
+              </div>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <section class="stage" data-stage="1">
+        <div class="observe-stage">
+          <div class="board-wrap">
+            <div id="eventFeedObserve" class="event-feed">Observe the land before moving anything.</div>
+            <section class="board">
+              <div class="map">
+                <div class="zone river" data-zone="river_area"><div class="zone-tag">River Area</div></div>
+                <div class="zone high" data-zone="high_ground"><div class="zone-tag">High Ground</div></div>
+                <div class="zone forest" data-zone="forest_edge"><div class="zone-tag">Forest Edge</div></div>
+              </div>
+            </section>
+            <div class="board-help">Look for water, height, trees, food clues, movement clues, safety, and risk.</div>
+          </div>
+
+          <aside class="side-panel">
+            <h2>Observe</h2>
+            <p>Do not guess yet. Study the land like someone whose group must survive the night.</p>
+            <label for="observations">What do you notice that could help or hurt survival?</label>
+            <textarea id="observations" placeholder="Example: I notice water near the river, but the ground looks low and wet."></textarea>
+          </aside>
+        </div>
+      </section>
+
+      <section class="stage" data-stage="2">
+        <div class="ask-stage">
+          <div class="board-wrap">
+            <div class="event-feed">A strong question grows from what you notice.</div>
+            <section class="board">
+              <div class="map">
+                <div class="zone river" data-zone="river_area"><div class="zone-tag">River Area</div></div>
+                <div class="zone high" data-zone="high_ground"><div class="zone-tag">High Ground</div></div>
+                <div class="zone forest" data-zone="forest_edge"><div class="zone-tag">Forest Edge</div></div>
+              </div>
+            </section>
+            <div class="board-help">Question examples: Where is food safest? Could water become danger? What path helps movement?</div>
+          </div>
+
+          <aside class="side-panel">
+            <h2>Ask</h2>
+            <p>Your question matters because the group is depending on your thinking.</p>
+            <label for="questions">What survival question do you have?</label>
+            <textarea id="questions" placeholder="Example: Could flooding or animals reach the food supplies?"></textarea>
+
+            <label for="patterns">What survival needs or risks might be connected?</label>
+            <textarea id="patterns" placeholder="Example: Water helps the group survive, but low land may flood before morning."></textarea>
+          </aside>
+        </div>
+      </section>
+
+      <section class="stage" data-stage="3">
+        <div class="test-stage">
+          <div class="board-wrap">
+            <div id="eventFeed" class="event-feed">Place your survival pieces. Then test your plan.</div>
+            <section class="board">
+              <div id="map" class="map">
+                <div class="zone river" data-zone="river_area">
+                  <div class="zone-tag">River Area</div>
+                  <div class="effect flood" id="floodEffect"></div>
+                </div>
+                <div class="zone high" data-zone="high_ground">
+                  <div class="zone-tag">High Ground</div>
+                  <div class="effect dry" id="dryEffect"></div>
+                </div>
+                <div class="zone forest" data-zone="forest_edge">
+                  <div class="zone-tag">Forest Edge</div>
+                  <div class="effect predator" id="predatorEffect"></div>
+                </div>
+              </div>
+            </section>
+            <div class="board-help">Drag pieces onto the land. A partial test still counts.</div>
+          </div>
+
+          <aside class="side-panel">
+            <h2>Place & Test</h2>
+            <p>Use your observations and question to create a survival plan.</p>
+
+            <div class="pieces">
+              <div class="object" draggable="true" data-object="home_camp">Home Place</div>
+              <div class="object" draggable="true" data-object="food_storage">Food Supplies</div>
+              <div class="object" draggable="true" data-object="water_spot">Water Place</div>
+              <div class="object" draggable="true" data-object="path_marker">Path Marker</div>
+            </div>
+
+            <label for="hypothesis">What survival plan will you test?</label>
+            <textarea id="hypothesis" placeholder="Example: I will test placing food on high ground and water access near the river."></textarea>
+          </aside>
+        </div>
+      </section>
+
+      <section class="stage" data-stage="4">
+        <div class="reflect-stage">
+          <div class="board-wrap">
+            <div class="event-feed">Reflect before continuing into the larger world.</div>
+            <section class="board">
+              <div class="map">
+                <div class="zone river" data-zone="river_area"><div class="zone-tag">River Area</div></div>
+                <div class="zone high" data-zone="high_ground"><div class="zone-tag">High Ground</div></div>
+                <div class="zone forest" data-zone="forest_edge"><div class="zone-tag">Forest Edge</div></div>
+              </div>
+            </section>
+            <div class="board-help">What changed? What would your group improve before nightfall?</div>
+          </div>
+
+          <aside class="side-panel">
+            <h2>Reflect</h2>
+            <p>Strong thinking improves after testing. Your first answer does not have to be final.</p>
+
+            <label for="strategy">What changed after testing your survival plan?</label>
+            <textarea id="strategy" placeholder="What happened? What new question do you have? What would your group change before nightfall?"></textarea>
+
+            <div id="attemptLog" class="attempt-log"><strong>Attempt Log</strong><br>No tests yet.</div>
+          </aside>
+        </div>
+      </section>
+    </section>
+
+    <footer class="actions">
+      <div id="readyStatus" class="actions-left">Stage 1: Read the survival situation.</div>
+      <div class="actions-right">
+        <button id="backBtn" disabled>Back</button>
+        <button id="nextBtn">Begin Observation</button>
+        <button id="testBtn" class="hidden">Test Survival Plan</button>
+        <button id="retryBtn" class="hidden" disabled>Try New Plan</button>
+        <button id="compareBtn" class="hidden" disabled>Compare Attempts</button>
+        <a id="continueLink" class="advance-link hidden" href="/world_select.html">Continue to World Selection</a>
+      </div>
+    </footer>
+  </main>
+
+  <script>
+    let currentStage = 0;
+    const totalStages = 5;
+
+    const placements = {};
+    const attempts = [];
+    let draggedObject = null;
+    let attemptNumber = 0;
+
+    const requiredObjects = ["home_camp", "food_storage", "water_spot", "path_marker"];
+
+    const stages = Array.from(document.querySelectorAll(".stage"));
+    const dots = Array.from(document.querySelectorAll("[data-step-dot]"));
+
+    const backBtn = document.getElementById("backBtn");
+    const nextBtn = document.getElementById("nextBtn");
+    const testBtn = document.getElementById("testBtn");
+    const retryBtn = document.getElementById("retryBtn");
+    const compareBtn = document.getElementById("compareBtn");
+    const continueLink = document.getElementById("continueLink");
+    const readyStatus = document.getElementById("readyStatus");
+
+    const eventFeed = document.getElementById("eventFeed");
+    const observations = document.getElementById("observations");
+    const questions = document.getElementById("questions");
+    const patterns = document.getElementById("patterns");
+    const hypothesis = document.getElementById("hypothesis");
+    const strategy = document.getElementById("strategy");
+    const attemptLog = document.getElementById("attemptLog");
+
+    function setStage(index) {
+      currentStage = Math.max(0, Math.min(totalStages - 1, index));
+
+      stages.forEach((stage, i) => stage.classList.toggle("active", i === currentStage));
+      dots.forEach((dot, i) => dot.classList.toggle("active", i === currentStage));
+
+      backBtn.disabled = currentStage === 0;
+
+      nextBtn.classList.toggle("hidden", currentStage >= 3);
+      testBtn.classList.toggle("hidden", currentStage !== 3);
+      retryBtn.classList.toggle("hidden", currentStage !== 3);
+      compareBtn.classList.toggle("hidden", currentStage !== 3);
+      continueLink.classList.toggle("hidden", currentStage !== 4);
+
+      const statusText = [
+        "Stage 1: Read the survival situation.",
+        "Stage 2: Observe the land before moving anything.",
+        "Stage 3: Ask a survival question.",
+        "Stage 4: Place pieces and test your survival plan.",
+        "Stage 5: Reflect and continue into World Selection."
+      ];
+
+      readyStatus.textContent = statusText[currentStage];
+
+      const nextLabels = [
+        "Begin Observation",
+        "Ask a Question",
+        "Prepare Survival Plan",
+        "",
+        ""
+      ];
+
+      if (currentStage < 3) {
+        nextBtn.textContent = nextLabels[currentStage];
+      }
+    }
+
+    function saveNotebook() {
+      const data = {
+        observations: observations ? observations.value : "",
+        questions: questions ? questions.value : "",
+        patterns: patterns ? patterns.value : "",
+        hypothesis: hypothesis ? hypothesis.value : "",
+        strategy: strategy ? strategy.value : "",
+        attempts
+      };
+      localStorage.setItem("STEM_NATION_STAGED_SURVIVAL_SCENARIO_V1", JSON.stringify(data));
+    }
+
+    function loadNotebook() {
+      const raw = localStorage.getItem("STEM_NATION_STAGED_SURVIVAL_SCENARIO_V1");
+      if (!raw) return;
+
+      try {
+        const data = JSON.parse(raw);
+        if (observations) observations.value = data.observations || "";
+        if (questions) questions.value = data.questions || "";
+        if (patterns) patterns.value = data.patterns || "";
+        if (hypothesis) hypothesis.value = data.hypothesis || "";
+        if (strategy) strategy.value = data.strategy || "";
+        if (Array.isArray(data.attempts)) {
+          attempts.push(...data.attempts);
+          attemptNumber = attempts.length;
+          renderAttempts();
+        }
+      } catch (err) {
+        console.warn("Could not load saved survival scenario.", err);
+      }
+    }
+
+    [observations, questions, patterns, hypothesis, strategy].forEach(field => {
+      if (!field) return;
+      field.addEventListener("input", saveNotebook);
+    });
+
+    function wireDragAndDrop() {
+      document.querySelectorAll(".object").forEach(obj => {
+        obj.addEventListener("dragstart", e => {
+          draggedObject = obj.dataset.object;
+          e.dataTransfer.setData("text/plain", draggedObject);
+        });
+      });
+
+      document.querySelectorAll("#map .zone").forEach(zone => {
+        zone.addEventListener("dragover", e => {
+          e.preventDefault();
+          zone.classList.add("drag-over");
+        });
+
+        zone.addEventListener("dragleave", () => {
+          zone.classList.remove("drag-over");
+        });
+
+        zone.addEventListener("drop", e => {
+          e.preventDefault();
+          zone.classList.remove("drag-over");
+
+          const objectType = e.dataTransfer.getData("text/plain") || draggedObject;
+          if (!objectType) return;
+
+          placements[objectType] = zone.dataset.zone;
+          placeVisualObject(objectType, zone);
+          markObjectPlaced(objectType);
+
+          if (eventFeed) {
+            eventFeed.textContent = `${labelObject(objectType)} placed in ${labelZone(zone.dataset.zone)}.`;
+          }
+
+          saveNotebook();
+        });
+      });
+    }
+
+    function placeVisualObject(objectType, zone) {
+      document.querySelectorAll(`.placed-object[data-object="${objectType}"]`).forEach(el => el.remove());
+
+      const tag = document.createElement("div");
+      tag.className = "placed-object";
+      tag.dataset.object = objectType;
+      tag.textContent = labelObject(objectType);
+
+      const offsetMap = {
+        home_camp: ["18%", "26%"],
+        food_storage: ["56%", "34%"],
+        water_spot: ["28%", "58%"],
+        path_marker: ["62%", "68%"]
+      };
+
+      tag.style.left = offsetMap[objectType][0];
+      tag.style.top = offsetMap[objectType][1];
+
+      zone.appendChild(tag);
+    }
+
+    function markObjectPlaced(objectType) {
+      const obj = document.querySelector(`.object[data-object="${objectType}"]`);
+      if (obj) obj.classList.add("placed");
+    }
+
+    function labelObject(objectType) {
+      return {
+        home_camp: "Home Place",
+        food_storage: "Food Supplies",
+        water_spot: "Water Place",
+        path_marker: "Path Marker"
+      }[objectType] || objectType;
+    }
+
+    function labelZone(zone) {
+      return {
+        river_area: "River Area",
+        high_ground: "High Ground",
+        forest_edge: "Forest Edge"
+      }[zone] || zone;
+    }
+
+    function allObjectsPlaced() {
+      return requiredObjects.every(obj => placements[obj]);
+    }
+
+    function clearEffects() {
+      document.querySelectorAll(".effect").forEach(effect => effect.classList.remove("active"));
+    }
+
+    function testPlan() {
+      clearEffects();
+
+      attemptNumber += 1;
+
+      const events = [];
+      let mainResult = "Test recorded";
+
+      const camp = placements.home_camp || "not_placed";
+      const storage = placements.food_storage || "not_placed";
+      const water = placements.water_spot || "not_placed";
+      const path = placements.path_marker || "not_placed";
+
+      if (!allObjectsPlaced()) {
+        events.push("Some pieces were not placed. This still counts as a test.");
+        mainResult = "Partial test";
+      }
+
+      if (storage === "river_area") {
+        events.push("Water rose near the river and reached the food supplies.");
+        const flood = document.getElementById("floodEffect");
+        if (flood) flood.classList.add("active");
+        mainResult = "Food supplies were exposed to flood risk";
+      }
+
+      if (camp === "high_ground" && water !== "river_area") {
+        events.push("The people are safer from flooding, but water is harder to reach.");
+        const dry = document.getElementById("dryEffect");
+        if (dry) dry.classList.add("active");
+        mainResult = "Safe height, but water challenge";
+      }
+
+      if (storage === "forest_edge") {
+        events.push("Animal tracks appeared near the stored food.");
+        const predator = document.getElementById("predatorEffect");
+        if (predator) predator.classList.add("active");
+        mainResult = "Animal activity near food";
+      }
+
+      if (path === "high_ground") {
+        events.push("The path helped people move toward safer ground.");
+      }
+
+      if (water === "river_area") {
+        events.push("Water access improved because the water place is close to the river.");
+      }
+
+      if (events.length === 0) {
+        events.push("Your idea avoided major danger, but the land still needs more testing.");
+        mainResult = "Stable first result";
+      }
+
+      const attempt = {
+        number: attemptNumber,
+        placements: {...placements},
+        events,
+        mainResult,
+        bestQuestion: questions ? firstLine(questions.value) : "No question recorded.",
+        createdAt: new Date().toISOString()
+      };
+
+      attempts.push(attempt);
+      saveNotebook();
+      renderAttempts();
+
+      if (eventFeed) eventFeed.textContent = events[0];
+
+      retryBtn.disabled = false;
+      compareBtn.disabled = attempts.length < 2;
+
+      setStage(4);
+      if (strategy) strategy.focus();
+    }
+
+    function firstLine(text) {
+      return text.split(/\n/).map(x => x.trim()).filter(Boolean)[0] || "No question recorded.";
+    }
+
+    function renderAttempts() {
+      if (!attemptLog) return;
+
+      if (!attempts.length) {
+        attemptLog.innerHTML = "<strong>Attempt Log</strong><br>No tests yet.";
+        return;
+      }
+
+      attemptLog.innerHTML = "<strong>Attempt Log</strong><br>" + attempts.map(attempt => {
+        return `Attempt ${attempt.number}: ${attempt.mainResult}<br>`;
+      }).join("");
+    }
+
+    function retryPlan() {
+      Object.keys(placements).forEach(k => delete placements[k]);
+      document.querySelectorAll(".placed-object").forEach(el => el.remove());
+      document.querySelectorAll(".object").forEach(el => el.classList.remove("placed"));
+      clearEffects();
+
+      if (eventFeed) eventFeed.textContent = "Your notes stayed. Move pieces and test a new survival plan.";
+      retryBtn.disabled = true;
+      setStage(3);
+    }
+
+    function compareAttempts() {
+      if (attempts.length < 2) return;
+
+      const lastTwo = attempts.slice(-2);
+      alert(
+        `Compare Attempts:\n\n` +
+        `Attempt ${lastTwo[0].number}: ${lastTwo[0].mainResult}\n` +
+        `Attempt ${lastTwo[1].number}: ${lastTwo[1].mainResult}\n\n` +
+        `What changed between your plans?`
+      );
+    }
+
+    backBtn.addEventListener("click", () => setStage(currentStage - 1));
+    nextBtn.addEventListener("click", () => setStage(currentStage + 1));
+    testBtn.addEventListener("click", testPlan);
+    retryBtn.addEventListener("click", retryPlan);
+    compareBtn.addEventListener("click", compareAttempts);
+
+    loadNotebook();
+    wireDragAndDrop();
+    setStage(0);
+  </script>
+</body>
+</html>

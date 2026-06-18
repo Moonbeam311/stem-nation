@@ -1,0 +1,1132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>The River Crossing Inquiry</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <style>
+    :root {
+      --bg:#07111f;
+      --panel:rgba(12,24,43,.94);
+      --panel2:rgba(20,38,64,.96);
+      --gold:#f4c95d;
+      --text:#f7f2df;
+      --muted:#b9c4d6;
+      --blue:#78c7ff;
+      --green:#82e28c;
+      --red:#ff8585;
+      --line:rgba(244,201,93,.28);
+    }
+
+    * { box-sizing:border-box; }
+
+    body {
+      margin:0;
+      min-height:100vh;
+      font-family:Georgia,"Times New Roman",serif;
+      color:var(--text);
+      background:
+        radial-gradient(circle at 15% 10%,rgba(244,201,93,.12),transparent 32%),
+        radial-gradient(circle at 85% 82%,rgba(120,199,255,.10),transparent 36%),
+        linear-gradient(135deg,#040812,var(--bg));
+    }
+
+    .page {
+      max-width:1240px;
+      margin:0 auto;
+      padding:24px 18px 44px;
+    }
+
+    .topbar {
+      display:flex;
+      justify-content:space-between;
+      gap:14px;
+      align-items:center;
+      margin-bottom:16px;
+    }
+
+    .brand {
+      color:var(--gold);
+      text-transform:uppercase;
+      letter-spacing:.16em;
+      font-size:.76rem;
+      font-weight:bold;
+    }
+
+    .home-link {
+      color:var(--muted);
+      text-decoration:none;
+      border:1px solid rgba(255,255,255,.15);
+      background:rgba(255,255,255,.04);
+      padding:8px 13px;
+      border-radius:999px;
+      font-size:.84rem;
+    }
+
+    .hero,.card {
+      border:1px solid var(--line);
+      background:var(--panel);
+      border-radius:22px;
+      padding:20px;
+      box-shadow:0 18px 50px rgba(0,0,0,.28);
+    }
+
+    .hero { margin-bottom:16px; }
+
+    h1 {
+      margin:0 0 8px;
+      color:var(--gold);
+      font-size:clamp(2rem,4vw,3.5rem);
+      line-height:1;
+    }
+
+    h2 {
+      margin:0 0 10px;
+      color:var(--gold);
+      font-size:1.2rem;
+    }
+
+    p,.hint {
+      color:var(--muted);
+      line-height:1.5;
+    }
+
+    .pill-row {
+      display:flex;
+      flex-wrap:wrap;
+      gap:8px;
+      margin-top:14px;
+    }
+
+    .pill {
+      border:1px solid rgba(244,201,93,.26);
+      background:rgba(244,201,93,.08);
+      color:#ffe8a4;
+      border-radius:999px;
+      padding:7px 10px;
+      font-size:.82rem;
+    }
+
+    .layout {
+      display:grid;
+      grid-template-columns:.92fr 1.08fr;
+      gap:16px;
+      align-items:start;
+    }
+
+    .mission {
+      background:rgba(244,201,93,.09);
+      border:1px solid rgba(244,201,93,.28);
+      border-radius:15px;
+      padding:13px;
+      margin-bottom:13px;
+      color:#fff7d4;
+      line-height:1.45;
+    }
+
+    .rules {
+      color:var(--muted);
+      line-height:1.45;
+      font-size:.92rem;
+      margin:0 0 12px;
+      padding-left:18px;
+    }
+
+    .discovery-strip {
+      display:grid;
+      grid-template-columns:repeat(4,1fr);
+      gap:8px;
+      margin:12px 0;
+    }
+
+    .discovery-step {
+      border:1px solid rgba(255,255,255,.14);
+      background:rgba(255,255,255,.06);
+      color:var(--muted);
+      border-radius:12px;
+      padding:9px;
+      text-align:center;
+      font-size:.78rem;
+      line-height:1.25;
+    }
+
+    .discovery-step.active {
+      border-color:rgba(244,201,93,.55);
+      background:rgba(244,201,93,.13);
+      color:var(--gold);
+    }
+
+    .inquiry-card {
+      margin-top: 13px;
+      padding: 13px;
+      border-radius: 16px;
+      background: rgba(255,255,255,0.055);
+      border: 1px solid rgba(255,255,255,0.12);
+    }
+
+    .inquiry-card h3 {
+      margin: 0 0 8px;
+      color: var(--gold);
+      font-size: 1rem;
+    }
+
+    .inquiry-card.compact {
+      padding: 11px;
+    }
+
+    .inquiry-field { margin-top:12px; }
+
+    .move-chips {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 7px;
+      margin: 9px 0 4px;
+    }
+
+    .move-chip {
+      border-radius: 999px;
+      padding: 7px 10px;
+      background: rgba(120,199,255,0.13);
+      color: #dff3ff;
+      border: 1px solid rgba(120,199,255,0.26);
+      font-size: 0.78rem;
+      cursor: pointer;
+    }
+
+    .move-chip:hover {
+      filter: brightness(1.12);
+    }
+
+    .status-strip {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 8px;
+      margin-bottom: 12px;
+    }
+
+    .status-box {
+      border-radius: 14px;
+      border: 1px solid rgba(255,255,255,0.13);
+      background: rgba(0,0,0,0.23);
+      padding: 9px;
+      min-height: 58px;
+    }
+
+    .status-label {
+      color: rgba(255,255,255,0.56);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      font-size: 0.64rem;
+      margin-bottom: 4px;
+    }
+
+    .status-value {
+      color: #f7f2df;
+      font-weight: bold;
+      font-size: 0.88rem;
+      line-height: 1.25;
+    }
+
+    .observation-status {
+      margin-top: 10px;
+      padding: 10px;
+      border-radius: 14px;
+      border: 1px solid rgba(255,255,255,0.13);
+      background: rgba(0,0,0,0.22);
+      color: #e9f1ff;
+      line-height: 1.38;
+      font-size: 0.9rem;
+    }
+
+    .observation-status.success {
+      border-color: rgba(130,226,140,0.35);
+      background: rgba(130,226,140,0.09);
+      color: #ddffe1;
+    }
+
+    .observation-status.danger {
+      border-color: rgba(255,133,133,0.45);
+      background: rgba(255,133,133,0.10);
+      color: #ffe3e3;
+    }
+
+    label {
+      display:block;
+      color:var(--gold);
+      font-weight:bold;
+      margin-bottom:6px;
+      font-size:.95rem;
+    }
+
+    .small-input,textarea {
+      width:100%;
+      border-radius:14px;
+      border:1px solid rgba(255,255,255,.18);
+      background:rgba(0,0,0,.28);
+      color:var(--text);
+      padding:12px;
+      font-family:inherit;
+      font-size:.95rem;
+      outline:none;
+    }
+
+    textarea {
+      min-height:86px;
+      resize:vertical;
+      font-family:Consolas,Monaco,monospace;
+      line-height:1.45;
+    }
+
+    .button-row {
+      display:flex;
+      flex-wrap:wrap;
+      gap:9px;
+      margin-top:11px;
+    }
+
+    button {
+      cursor:pointer;
+      border:none;
+      border-radius:14px;
+      padding:10px 12px;
+      font-family:inherit;
+      font-weight:bold;
+      color:#09111f;
+      background:var(--gold);
+    }
+
+    button.secondary {
+      background:rgba(255,255,255,.1);
+      color:var(--text);
+      border:1px solid rgba(255,255,255,.16);
+    }
+
+    button.blue { background:var(--blue); }
+    button.green { background:var(--green); }
+
+    .observation-log {
+      margin-top:14px;
+      padding:12px;
+      min-height:170px;
+      max-height:310px;
+      overflow:auto;
+      border-radius:15px;
+      background:rgba(0,0,0,.25);
+      border:1px solid rgba(255,255,255,.13);
+      color:#e9f1ff;
+      font-size:.91rem;
+      line-height:1.45;
+      white-space:pre-wrap;
+    }
+
+    .checkpoint {
+      margin-top:13px;
+      padding:13px;
+      border-radius:15px;
+      background:var(--panel2);
+      border:1px solid rgba(120,199,255,.25);
+    }
+
+    .reflection {
+      display:grid;
+      gap:9px;
+      margin-top:9px;
+    }
+
+    .reveal {
+      display:none;
+      margin-top:13px;
+      padding:13px;
+      border-radius:15px;
+      border:1px solid rgba(130,226,140,.35);
+      background:rgba(130,226,140,.1);
+      color:#ddffe1;
+      line-height:1.5;
+    }
+
+    .reveal.active { display:block; }
+
+    .board {
+      position:relative;
+      min-height:560px;
+      overflow:hidden;
+      border-radius:22px;
+      border:1px solid rgba(255,255,255,.14);
+      background:
+        radial-gradient(circle at 20% 16%,rgba(244,201,93,.08),transparent 20%),
+        linear-gradient(135deg,#172944,#0d1a2d);
+    }
+
+    .board-title {
+      position:absolute;
+      left:20px;
+      top:18px;
+      right:20px;
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      z-index:5;
+      gap:12px;
+    }
+
+    .board-title span {
+      color:rgba(255,255,255,.78);
+      font-size:.8rem;
+      text-transform:uppercase;
+      letter-spacing:.1em;
+    }
+
+    .puzzle-grid {
+      position:absolute;
+      left:18px;
+      right:18px;
+      top:62px;
+      bottom:22px;
+      display:grid;
+      grid-template-columns:1fr 150px 1fr;
+      gap:14px;
+      z-index:4;
+    }
+
+    .bank {
+      border-radius:22px;
+      border:1px solid rgba(255,255,255,.14);
+      padding:16px;
+      background:
+        linear-gradient(180deg,rgba(255,255,255,.08),rgba(255,255,255,.03)),
+        #2f542d;
+      display:flex;
+      flex-direction:column;
+      min-height:430px;
+    }
+
+    .bank.safe {
+      background:
+        linear-gradient(180deg,rgba(255,255,255,.08),rgba(255,255,255,.03)),
+        #365b31;
+    }
+
+    .bank h3 {
+      margin:0 0 12px;
+      color:#ffe8a4;
+      font-size:1rem;
+      letter-spacing:.08em;
+      text-transform:uppercase;
+    }
+
+    .token-area {
+      display:flex;
+      flex-direction:column;
+      gap:10px;
+      flex:1;
+    }
+
+    .token {
+      display:flex;
+      align-items:center;
+      gap:10px;
+      border:1px solid rgba(255,255,255,.17);
+      background:rgba(0,0,0,.20);
+      border-radius:16px;
+      padding:10px;
+      min-height:58px;
+      box-shadow:0 8px 14px rgba(0,0,0,.18);
+    }
+
+    .token.unsafe {
+      border-color:rgba(255,133,133,.8);
+      background:rgba(120,0,0,.32);
+      box-shadow:0 0 0 3px rgba(255,133,133,.16),0 8px 14px rgba(0,0,0,.25);
+    }
+
+    .token-icon { font-size:2rem; width:36px; text-align:center; }
+    .token-name { font-weight:bold; color:#f3f6ff; }
+    .token-note { color:rgba(255,255,255,.64); font-size:.76rem; margin-top:2px; }
+
+    .river-column {
+      border-radius:24px;
+      border:1px solid rgba(120,199,255,.28);
+      background:
+        linear-gradient(180deg,rgba(255,255,255,.14),transparent 24%),
+        repeating-linear-gradient(180deg,rgba(255,255,255,.10) 0 14px,transparent 14px 28px),
+        #2d78b8;
+      position:relative;
+      overflow:hidden;
+      min-height:430px;
+    }
+
+    .river-label {
+      position:absolute;
+      top:14px;
+      left:50%;
+      transform:translateX(-50%);
+      color:#eaf8ff;
+      background:rgba(0,0,0,.22);
+      border:1px solid rgba(255,255,255,.18);
+      border-radius:999px;
+      padding:5px 10px;
+      font-size:.72rem;
+      letter-spacing:.1em;
+      text-transform:uppercase;
+      z-index:4;
+    }
+
+    .boat-card {
+      position:absolute;
+      left:50%;
+      transform:translateX(-50%);
+      width:126px;
+      min-height:112px;
+      border-radius:18px;
+      background:rgba(75,43,18,.94);
+      border:4px solid #2e1b0e;
+      box-shadow:0 16px 24px rgba(0,0,0,.34);
+      z-index:8;
+      transition:top .35s ease;
+      padding:9px;
+      text-align:center;
+    }
+
+    .boat-card.left {
+      top:68px;
+    }
+
+    .boat-card.right {
+      top:280px;
+    }
+
+    .boat-icon {
+      font-size:2.1rem;
+      line-height:1;
+      margin-bottom:4px;
+    }
+
+    .boat-label {
+      color:#ffe2b3;
+      font-size:.7rem;
+      letter-spacing:.1em;
+      font-weight:bold;
+      text-transform:uppercase;
+    }
+
+    .boat-side {
+      color:rgba(255,255,255,.68);
+      font-size:.72rem;
+      margin-top:3px;
+    }
+
+    .boat-passenger {
+      margin-top:7px;
+      border-radius:10px;
+      background:rgba(255,255,255,.12);
+      border:1px solid rgba(255,255,255,.16);
+      padding:6px;
+      color:#fff7d4;
+      font-size:.84rem;
+      min-height:34px;
+    }
+
+    .rule-watch {
+      position:absolute;
+      left:20px;
+      right:20px;
+      bottom:18px;
+      z-index:9;
+      border-radius:16px;
+      padding:11px;
+      background:rgba(0,0,0,.30);
+      border:1px solid rgba(255,255,255,.14);
+      color:#e9f1ff;
+      line-height:1.35;
+      font-size:.9rem;
+    }
+
+    .rule-watch.danger {
+      border-color:rgba(255,133,133,.55);
+      background:rgba(90,0,0,.42);
+      color:#ffe3e3;
+    }
+
+    @media(max-width:980px){
+      .layout{grid-template-columns:1fr}
+    }
+
+    @media(max-width:650px){
+      .puzzle-grid{grid-template-columns:1fr; position:relative; top:auto; bottom:auto; left:auto; right:auto; padding:64px 14px 110px;}
+      .board{min-height:auto}
+      .bank,.river-column{min-height:260px}
+      .boat-card.left,.boat-card.right{top:84px}
+    }
+  </style>
+</head>
+
+<body>
+  <main class="page">
+    <div class="topbar">
+      <div class="brand">Instruction & Process Lab</div>
+      <a class="home-link" href="/">Return Home</a>
+    </div>
+
+    <section class="hero">
+      <h1>The River Crossing Inquiry</h1>
+      <p>Ask a question. Make a prediction. Test one move. Observe the puzzle board. Then decide what to try next.</p>
+      <div class="pill-row">
+        <span class="pill">Farmer • Wolf • Goat • Wheat</span>
+        <span class="pill">Boat Required</span>
+        <span class="pill">Ask</span>
+        <span class="pill">Predict</span>
+        <span class="pill">Test</span>
+        <span class="pill">Observe</span>
+      </div>
+    </section>
+
+    <section class="layout">
+      <div class="card">
+        <h2>Mission</h2>
+        <div class="mission">
+          Solve the crossing by testing your own ideas. The farmer, wolf, goat, and wheat must all reach the Safe Bank without breaking the rules.
+        </div>
+
+        <ol class="rules">
+          <li>The wolf cannot be left alone with the goat.</li>
+          <li>The goat cannot be left alone with the wheat.</li>
+          <li>The farmer must ride in the boat.</li>
+          <li>The boat carries the farmer plus only one passenger/item.</li>
+        </ol>
+
+        <div class="discovery-strip">
+          <div class="discovery-step active">1<br>Ask</div>
+          <div class="discovery-step">2<br>Predict</div>
+          <div class="discovery-step">3<br>Test</div>
+          <div class="discovery-step">4<br>Observe</div>
+        </div>
+
+        <div class="inquiry-card">
+          <h3>1. Ask + Predict</h3>
+
+          <div class="inquiry-field">
+            <label for="testQuestion">My Testable Question</label>
+            <input id="testQuestion" class="small-input" placeholder="Example: What happens if I take the wolf across first?" />
+          </div>
+
+          <div class="inquiry-field">
+            <label for="prediction">My Prediction</label>
+            <input id="prediction" class="small-input" placeholder="Example: I think the goat and wheat will be safe." />
+          </div>
+        </div>
+
+        <div class="inquiry-card">
+          <h3>2. Test One Move</h3>
+          <div class="hint">Use one clear move at a time. These chips help with format, not answers.</div>
+
+          <div class="move-chips">
+            <button class="move-chip" type="button" onclick="setMove('Take the goat across.')">Take goat across</button>
+            <button class="move-chip" type="button" onclick="setMove('Take the wolf across.')">Take wolf across</button>
+            <button class="move-chip" type="button" onclick="setMove('Take the wheat across.')">Take wheat across</button>
+            <button class="move-chip" type="button" onclick="setMove('Return alone.')">Return alone</button>
+            <button class="move-chip" type="button" onclick="setMove('Bring the goat back.')">Bring goat back</button>
+          </div>
+
+          <textarea id="currentStep" aria-label="Current crossing move" placeholder="Example:
+Take the goat across."></textarea>
+
+          <div class="button-row">
+            <button class="green" onclick="testCurrentStep()">Test Move</button>
+            <button class="blue" onclick="useStarter()">Use Starter Question</button>
+            <button class="secondary" onclick="runAllSteps()">Run My Sequence</button>
+            <button class="secondary" onclick="resetLab()">Reset</button>
+          </div>
+        </div>
+
+        <div class="inquiry-card">
+          <h3>3. Observe</h3>
+          <div id="observationStatus" class="observation-status">
+            No test yet. Ask a question, make a prediction, then test one move.
+          </div>
+
+          <h2 style="margin-top:14px;">Observation Log</h2>
+          <div id="observationLog" class="observation-log">No moves tested yet. Ask a question, make a prediction, then test one move.</div>
+        </div>
+
+        <div class="inquiry-card compact">
+          <h3>4. Try Next</h3>
+          <div class="inquiry-field">
+            <label for="nextMove">My Next Move</label>
+            <input id="nextMove" class="small-input" placeholder="What will you try next?" />
+          </div>
+
+          <div class="button-row">
+            <button class="green" onclick="commitNextMove()">Use My Next Move</button>
+            <button class="secondary" onclick="removeLastMove()">Remove Last Move</button>
+          </div>
+        </div>
+
+        <div id="finalReflection" class="checkpoint" style="display:none;">
+          <h2>Inquiry Complete</h2>
+          <div class="hint">Everyone crossed safely. Explain what you learned from your tests.</div>
+          <div class="reflection">
+            <input id="reflect1" class="small-input" placeholder="My first question was..." />
+            <input id="reflect2" class="small-input" placeholder="One prediction I tested was..." />
+            <input id="reflect3" class="small-input" placeholder="One observation that changed my thinking was..." />
+            <input id="reflect4" class="small-input" placeholder="The final pattern that worked was..." />
+            <button onclick="finishReflection()">Finish Inquiry Reflection</button>
+          </div>
+        </div>
+
+        <div id="reveal" class="reveal">
+          <strong>You solved a constraint puzzle through inquiry.</strong><br>
+          You asked a question, made a prediction, tested moves, observed consequences, and revised your sequence until it worked.
+        </div>
+      </div>
+
+      <div class="card">
+        <h2>Puzzle Board</h2>
+        <div class="hint" style="margin-bottom:10px;">
+          Watch the boat and both banks. Unsafe pairs will highlight on the board.
+        </div>
+
+        <div class="status-strip">
+          <div class="status-box">
+            <div class="status-label">Boat</div>
+            <div id="statusBoat" class="status-value">Start Bank</div>
+          </div>
+          <div class="status-box">
+            <div class="status-label">Last Move</div>
+            <div id="statusMove" class="status-value">None yet</div>
+          </div>
+          <div class="status-box">
+            <div class="status-label">Status</div>
+            <div id="statusRule" class="status-value">Ready</div>
+          </div>
+        </div>
+
+        <div class="board" aria-label="River crossing puzzle board">
+          <div class="board-title">
+            <span>Start Bank</span>
+            <span>River / Boat</span>
+            <span>Safe Bank</span>
+          </div>
+
+          <div class="puzzle-grid">
+            <div class="bank start">
+              <h3>Start Bank</h3>
+              <div id="leftTokens" class="token-area"></div>
+            </div>
+
+            <div class="river-column">
+              <div class="river-label">River</div>
+              <div id="boatCard" class="boat-card left">
+                <div class="boat-icon">🚣</div>
+                <div class="boat-label">Boat</div>
+                <div id="boatSide" class="boat-side">At Start Bank</div>
+                <div id="boatPassenger" class="boat-passenger">Empty</div>
+              </div>
+            </div>
+
+            <div class="bank safe">
+              <h3>Safe Bank</h3>
+              <div id="rightTokens" class="token-area"></div>
+            </div>
+          </div>
+
+          <div id="ruleWatch" class="rule-watch">
+            Rule Watch: No unsafe pair has been left alone yet.
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <script>
+    let steps = [];
+    let state = freshState();
+    let lastPassenger = "Empty";
+
+    const testQuestion = document.getElementById("testQuestion");
+    const prediction = document.getElementById("prediction");
+    const currentStep = document.getElementById("currentStep");
+    const nextMove = document.getElementById("nextMove");
+    const observationLog = document.getElementById("observationLog");
+    const observationStatus = document.getElementById("observationStatus");
+    const statusBoat = document.getElementById("statusBoat");
+    const statusMove = document.getElementById("statusMove");
+    const statusRule = document.getElementById("statusRule");
+
+    const leftTokens = document.getElementById("leftTokens");
+    const rightTokens = document.getElementById("rightTokens");
+    const boatCard = document.getElementById("boatCard");
+    const boatSide = document.getElementById("boatSide");
+    const boatPassenger = document.getElementById("boatPassenger");
+    const ruleWatch = document.getElementById("ruleWatch");
+
+    const tokenInfo = {
+      farmer: { icon:"🧑‍🌾", name:"Farmer", note:"must ride the boat" },
+      wolf: { icon:"🐺", name:"Wolf", note:"cannot stay with goat alone" },
+      goat: { icon:"🐐", name:"Goat", note:"cannot stay with wolf or wheat alone" },
+      wheat: { icon:"🌾", name:"Wheat", note:"cannot stay with goat alone" }
+    };
+
+    function freshState() {
+      return {
+        farmer:"left",
+        wolf:"left",
+        goat:"left",
+        wheat:"left",
+        boat:"left",
+        ruleBroken:false,
+        warning:""
+      };
+    }
+
+    function includesAny(text, words) {
+      return words.some(word => text.includes(word));
+    }
+
+    function otherSide(side) {
+      return side === "left" ? "right" : "left";
+    }
+
+    function analyze(raw) {
+      const t = raw.toLowerCase();
+
+      const passenger = includesAny(t, ["wolf"]) ? "wolf"
+        : includesAny(t, ["goat"]) ? "goat"
+        : includesAny(t, ["wheat", "grain", "cabbage"]) ? "wheat"
+        : includesAny(t, ["alone", "farmer only", "by himself", "by herself"]) ? "alone"
+        : null;
+
+      const saysMove = includesAny(t, ["take", "bring", "carry", "move", "cross", "return", "come back", "go back"]);
+      const saysAcross = includesAny(t, ["across", "other side", "safe bank", "right bank"]);
+      const saysBack = includesAny(t, ["back", "return", "come back", "start bank", "left bank"]);
+
+      return { passenger, saysMove, saysAcross, saysBack };
+    }
+
+    function processInstruction(raw, s) {
+      const r = analyze(raw);
+      const messages = [];
+
+      lastPassenger = "Empty";
+
+      if (!r.saysMove) {
+        messages.push("No clear crossing move was detected.");
+        return messages;
+      }
+
+      let destination = r.saysBack ? "left" : r.saysAcross ? "right" : otherSide(s.boat);
+
+      if (destination === s.boat) {
+        messages.push("The boat is already on that bank.");
+        return messages;
+      }
+
+      if (s.farmer !== s.boat) {
+        messages.push("The farmer is not with the boat, so the boat cannot move.");
+        return messages;
+      }
+
+      if (!r.passenger || r.passenger === "alone") {
+        messages.push("The farmer crossed alone to the " + bankName(destination) + ".");
+        s.farmer = destination;
+        s.boat = destination;
+        lastPassenger = "Farmer only";
+      } else {
+        if (s[r.passenger] !== s.boat) {
+          messages.push("The " + tokenInfo[r.passenger].name + " is not on the same side as the boat.");
+          return messages;
+        }
+
+        messages.push("The farmer took the " + tokenInfo[r.passenger].name + " to the " + bankName(destination) + ".");
+        s.farmer = destination;
+        s[r.passenger] = destination;
+        s.boat = destination;
+        lastPassenger = "Farmer + " + tokenInfo[r.passenger].name;
+      }
+
+      const ruleMessage = checkRules(s);
+
+      if (ruleMessage) {
+        s.ruleBroken = true;
+        s.warning = ruleMessage;
+        messages.push("Rule broken: " + ruleMessage);
+      } else {
+        s.ruleBroken = false;
+        s.warning = "";
+        messages.push("No rule was broken.");
+      }
+
+      return messages;
+    }
+
+    function checkRules(s) {
+      const farmerSide = s.farmer;
+
+      if (s.wolf === s.goat && s.wolf !== farmerSide) {
+        return "The wolf was left alone with the goat.";
+      }
+
+      if (s.goat === s.wheat && s.goat !== farmerSide) {
+        return "The goat was left alone with the wheat.";
+      }
+
+      return "";
+    }
+
+    function bankName(side) {
+      return side === "left" ? "Start Bank" : "Safe Bank";
+    }
+
+    function setDiscoveryPhase(index) {
+      document.querySelectorAll(".discovery-step").forEach((card, i) => {
+        card.classList.toggle("active", i === index);
+      });
+    }
+
+    function testCurrentStep() {
+      const raw = currentStep.value.trim();
+
+      if (!raw) {
+        observationLog.textContent = "Write one move to test.";
+        return;
+      }
+
+      const question = testQuestion.value.trim() || "No question written yet.";
+      const guess = prediction.value.trim() || "No prediction written yet.";
+      const temp = cloneStateFromSteps(null);
+      const messages = processInstruction(raw, temp);
+
+      steps.push({
+        question,
+        prediction: guess,
+        move: raw,
+        result: messages.join(" ")
+      });
+
+      replayAllSteps();
+      renderObservationLog();
+      updateObservationStatus(messages);
+      setDiscoveryPhase(3);
+      currentStep.value = "";
+      maybeUnlockReflection();
+    }
+
+    function commitNextMove() {
+      const value = nextMove.value.trim();
+
+      if (!value) {
+        alert("Write your next move first.");
+        return;
+      }
+
+      currentStep.value = value;
+      nextMove.value = "";
+      currentStep.scrollIntoView({ behavior:"smooth", block:"center" });
+      currentStep.focus();
+      setDiscoveryPhase(2);
+    }
+
+    function removeLastMove() {
+      if (!steps.length) {
+        alert("No moves to remove yet.");
+        return;
+      }
+
+      steps.pop();
+      replayAllSteps();
+      renderObservationLog();
+    }
+
+    function cloneStateFromSteps(stopBeforeIndex) {
+      const temp = freshState();
+      const limit = stopBeforeIndex === null ? steps.length : stopBeforeIndex;
+
+      for (let i=0; i<limit; i++) {
+        processInstruction(steps[i].move, temp);
+      }
+
+      return temp;
+    }
+
+    function replayAllSteps() {
+      state = freshState();
+      lastPassenger = "Empty";
+
+      for (const s of steps) {
+        processInstruction(s.move, state);
+      }
+
+      renderBoard();
+    }
+
+    function runAllSteps() {
+      if (!steps.length) {
+        observationLog.textContent = "No moves tested yet.";
+        return;
+      }
+
+      replayAllSteps();
+      renderObservationLog();
+
+      if (isComplete()) {
+        observationLog.textContent += "\\n\\nPROCESS COMPLETE: The farmer, wolf, goat, and wheat all crossed safely.";
+      } else {
+        observationLog.textContent += "\\n\\nPROCESS NOT COMPLETE: Someone is still on the Start Bank or a rule was broken.";
+      }
+
+      maybeUnlockReflection();
+    }
+
+    function isComplete() {
+      return (
+        state.farmer === "right" &&
+        state.wolf === "right" &&
+        state.goat === "right" &&
+        state.wheat === "right" &&
+        state.boat === "right" &&
+        !state.ruleBroken
+      );
+    }
+
+    function updateObservationStatus(messages) {
+      const joined = messages.join(" ").toLowerCase();
+
+      observationStatus.classList.remove("success", "danger");
+
+      if (joined.includes("rule broken") || joined.includes("cannot") || joined.includes("not on the same side") || joined.includes("no clear")) {
+        observationStatus.classList.add("danger");
+        observationStatus.textContent = "Observation: Something failed or a rule was broken. Use the board to decide the next move.";
+      } else {
+        observationStatus.classList.add("success");
+        observationStatus.textContent = "Observation: This move worked. Now decide whether the farmer must return, or what should cross next.";
+      }
+    }
+
+    function renderObservationLog() {
+      if (!steps.length) {
+        observationLog.textContent = "No moves tested yet. Ask a question, make a prediction, then test one move.";
+        return;
+      }
+
+      observationLog.textContent = steps.map((step, index) => {
+        return [
+          `Test ${index + 1}`,
+          `Question: ${step.question}`,
+          `Prediction: ${step.prediction}`,
+          `Move: ${step.move}`,
+          `Observation: ${step.result}`
+        ].join("\\n");
+      }).join("\\n\\n");
+    }
+
+    function renderBoard() {
+      leftTokens.innerHTML = "";
+      rightTokens.innerHTML = "";
+
+      const unsafe = getUnsafeTokens(state);
+
+      ["farmer","wolf","goat","wheat"].forEach(key => {
+        const token = createToken(key, unsafe.includes(key));
+        if (state[key] === "left") {
+          leftTokens.appendChild(token);
+        } else {
+          rightTokens.appendChild(token);
+        }
+      });
+
+      boatCard.classList.toggle("left", state.boat === "left");
+      boatCard.classList.toggle("right", state.boat === "right");
+      boatSide.textContent = state.boat === "left" ? "At Start Bank" : "At Safe Bank";
+      boatPassenger.textContent = lastPassenger;
+
+      statusBoat.textContent = state.boat === "left" ? "Start Bank" : "Safe Bank";
+      statusMove.textContent = lastPassenger || "None yet";
+      statusRule.textContent = state.ruleBroken || state.warning ? "Rule Broken" : "Safe So Far";
+
+      if (state.ruleBroken || state.warning) {
+        ruleWatch.classList.add("danger");
+        ruleWatch.textContent = "Rule Watch: " + (state.warning || "A rule was broken.");
+      } else {
+        ruleWatch.classList.remove("danger");
+        ruleWatch.textContent = "Rule Watch: No unsafe pair has been left alone yet.";
+      }
+    }
+
+    function createToken(key, unsafe) {
+      const info = tokenInfo[key];
+      const div = document.createElement("div");
+      div.className = "token" + (unsafe ? " unsafe" : "");
+      div.innerHTML = `
+        <div class="token-icon">${info.icon}</div>
+        <div>
+          <div class="token-name">${info.name}</div>
+          <div class="token-note">${info.note}</div>
+        </div>
+      `;
+      return div;
+    }
+
+    function getUnsafeTokens(s) {
+      const farmerSide = s.farmer;
+      if (s.wolf === s.goat && s.wolf !== farmerSide) return ["wolf","goat"];
+      if (s.goat === s.wheat && s.goat !== farmerSide) return ["goat","wheat"];
+      return [];
+    }
+
+    function setMove(value) {
+      currentStep.value = value;
+      currentStep.focus();
+      setDiscoveryPhase(2);
+    }
+
+    function useStarter() {
+      setDiscoveryPhase(0);
+      testQuestion.value = "What happens if I take the wolf across first?";
+      prediction.value = "I think the goat and wheat might be safe.";
+      currentStep.value = "Take the wolf across.";
+      currentStep.focus();
+    }
+
+    function maybeUnlockReflection() {
+      if (isComplete()) {
+        document.getElementById("finalReflection").style.display = "block";
+      }
+    }
+
+    function finishReflection() {
+      const fields = ["reflect1","reflect2","reflect3","reflect4"];
+      const missing = fields.filter(id => !document.getElementById(id).value.trim());
+
+      if (missing.length) {
+        alert("Complete all reflection lines before finishing.");
+        return;
+      }
+
+      document.getElementById("reveal").classList.add("active");
+    }
+
+    function resetLab() {
+      steps = [];
+      state = freshState();
+      lastPassenger = "Empty";
+
+      testQuestion.value = "";
+      prediction.value = "";
+      currentStep.value = "";
+      nextMove.value = "";
+
+      renderBoard();
+      renderObservationLog();
+      observationStatus.classList.remove("success", "danger");
+      observationStatus.textContent = "No test yet. Ask a question, make a prediction, then test one move.";
+      setDiscoveryPhase(0);
+
+      document.getElementById("finalReflection").style.display = "none";
+      document.getElementById("reveal").classList.remove("active");
+    }
+
+    renderBoard();
+    renderObservationLog();
+  </script>
+</body>
+</html>

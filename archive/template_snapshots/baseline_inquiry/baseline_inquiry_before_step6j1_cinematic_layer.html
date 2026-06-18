@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>STEM Nation | The Washed-Out Crossing</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<!-- STEM_NATION_6G3_FULL_LEADER_COMMAND_V1 -->
+<style>
+:root{--gold:#d4b45f;--soft:rgba(212,180,95,.32);--text:#f6edd1;--muted:rgba(246,237,209,.72);--green:#8aaa62;}
+*{box-sizing:border-box} body{margin:0;background:linear-gradient(135deg,#050705,#101810 60%,#070907);color:var(--text);font-family:Arial,sans-serif}
+.app{min-height:100vh;display:grid;grid-template-rows:76px 1fr 82px;gap:10px;padding:10px}
+.top,.foot,.stage{border:1px solid var(--soft);border-radius:18px;background:rgba(0,0,0,.45)}
+.top{display:flex;justify-content:space-between;align-items:center;padding:12px 16px}
+h1,h2{font-family:Georgia,serif;color:var(--gold);margin:0 0 8px}.sub,.muted{color:var(--muted);font-size:.85rem;line-height:1.4}
+.time{border:1px solid var(--soft);border-radius:999px;padding:9px 14px}.stage{display:none;padding:18px;overflow:auto}.stage.active{display:block}
+.grid{display:grid;grid-template-columns:330px 1fr;gap:14px}.cards{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+.card,.role,.mat,.report,.bundle,.q{border:1px solid rgba(212,180,95,.18);border-radius:14px;background:rgba(255,255,255,.05);padding:12px}
+.role,.mat,.q{cursor:pointer}.selected{border-color:rgba(138,170,98,.8);background:rgba(138,170,98,.16)}
+.card strong,.role strong,.mat strong,.report strong,.bundle strong,.q strong{display:block;color:var(--gold);margin-bottom:5px}
+.card span,.role span,.mat span,.report span,.bundle span,.q span{display:block;color:var(--muted);font-size:.82rem;line-height:1.35}
+.mat .size{color:rgba(212,180,95,.9);font-size:.74rem;margin:4px 0}.mat .desc{color:rgba(246,237,209,.86);font-size:.78rem}
+textarea{width:100%;min-height:95px;border-radius:12px;background:rgba(0,0,0,.35);color:var(--text);border:1px solid rgba(255,255,255,.15);padding:10px}
+button,a{display:inline-block;border:1px solid var(--soft);background:rgba(212,180,95,.15);color:var(--text);border-radius:999px;padding:10px 15px;text-decoration:none;cursor:pointer}
+button:hover,a:hover{background:rgba(212,180,95,.28)}button:disabled{opacity:.45;cursor:not-allowed}.primary{border-color:rgba(138,170,98,.74);background:rgba(138,170,98,.24);font-weight:700}
+.foot{display:flex;justify-content:space-between;align-items:center;padding:12px 16px}.actions{display:flex;gap:8px;flex-wrap:wrap}.hidden{display:none!important}
+.board{min-height:420px;position:relative;border:1px solid var(--soft);border-radius:18px;overflow:hidden;background:#142014}
+.map{position:absolute;inset:0;display:grid;grid-template-columns:1fr 1fr 1fr}.zone{position:relative;border-right:1px solid rgba(255,255,255,.12)}.zone:last-child{border-right:0}.zone.drag-over{outline:3px solid var(--gold);filter:brightness(1.15)}
+.tag{position:absolute;top:12px;left:12px;z-index:4;border:1px solid var(--soft);border-radius:999px;padding:6px 10px;background:rgba(0,0,0,.45);font-size:.75rem}
+.river{background:linear-gradient(115deg,rgba(35,91,120,.95),rgba(68,136,88,.72))}.high{background:linear-gradient(180deg,rgba(155,132,78,.96),rgba(65,55,39,.97))}.forest{background:linear-gradient(90deg,rgba(23,76,39,.97),rgba(9,31,18,.98))}
+.effect{position:absolute;inset:0;opacity:0;pointer-events:none}.effect.active{opacity:1}.flood{background:linear-gradient(180deg,transparent 42%,rgba(62,151,194,.55))}.dry{background:repeating-linear-gradient(45deg,rgba(204,151,79,.24) 0 4px,transparent 4px 16px)}.predator{background:radial-gradient(circle at 75% 55%,rgba(196,95,73,.4),transparent 38%)}
+.bundle{cursor:grab}.bundle.placed{opacity:.45}.placed{position:absolute;z-index:5;min-width:95px;min-height:58px;display:grid;place-items:center;text-align:center;border:1px solid rgba(232,199,93,.75);border-radius:12px;background:rgba(8,8,6,.8);font-size:.68rem;padding:6px}
+@media(max-width:900px){.app{display:block}.top,.stage,.foot{margin:10px}.grid,.cards{grid-template-columns:1fr}.foot{display:block}.actions{margin-top:10px}}
+
+.depth-note{border:1px solid rgba(138,170,98,.42);background:rgba(138,170,98,.10);border-radius:16px;padding:14px;margin:12px 0;color:var(--muted);line-height:1.45}
+.warning-note{border:1px solid rgba(198,106,76,.45);background:rgba(198,106,76,.10);border-radius:16px;padding:14px;margin:12px 0;color:var(--muted);line-height:1.45}
+.report b{color:#d4b45f}
+
+</style>
+<!-- STEM_NATION_6G3A_LOCKED_INCIDENT_NARRATIVE_V1 -->
+<!-- STEM_NATION_6G4_DEPTH_LAYER_V1 -->
+</head>
+<body>
+<main class="app">
+<header class="top">
+  <div><h1>The Washed-Out Crossing</h1><div class="sub">Academy Readiness Evaluation — Survival Scenario 1: Leader Command Trial</div></div>
+  <div id="timeBox" class="time">Nightfall: 40 minutes</div>
+</header>
+
+<section class="stage active" data-stage="0">
+  <h2>Incident Briefing</h2>
+
+<p>Your group was traveling along an old route when rising water and mud loosened the riverbank. The crossing behind you became unsafe. Part of the path washed out, and the group cannot safely return before dark.</p>
+<p>You have reached unfamiliar land with only 40 minutes before nightfall.</p>
+<p>The group has 12 people: four adults, three older youth, two young children, two elders, and one injured traveler.</p>
+<p>The youngest are tired. The elders are moving slowly. The injured traveler needs rest. Some supplies are damp. The water jars are nearly empty.</p>
+<p><strong>You are the acting field leader.</strong></p>
+<p>That does not mean you know all the answers.</p>
+<p>It means you must organize the questions, assign materials to specialists, listen to reports, weigh risks, and make the first survival decision before nightfall.</p>
+
+  
+  <div class="depth-note">
+    <strong>Leadership Pressure</strong><br>
+    You are not being asked to guess. You are being asked to lead under uncertainty.
+    Your first duty is to protect the most vulnerable people, preserve the materials that cannot be replaced, and ask the question that matters most before nightfall.
+  </div>
+
+  <div class="warning-note">
+    <strong>What can go wrong tonight?</strong><br>
+    Food can spoil. Matches can get wet. Elders and children can become exhausted. A wrong path can separate the group. Low ground can flood. Animals may follow food scent near the forest edge.
+  </div>
+
+  <div class="cards">
+    <div class="card"><strong>Why you cannot go back</strong><span>The crossing is unstable, the riverbank is muddy, and daylight is fading.</span></div>
+    <div class="card"><strong>What is at stake</strong><span>Water, food, shelter, warmth, safety, health, and movement.</span></div>
+    <div class="card"><strong>Your first job</strong><span>Ask what must be known before giving orders.</span></div>
+    <div class="card"><strong>Map clue</strong><span>The torn map scrap shows “FLO…” near the riverbend.</span></div>
+  </div>
+</section>
+
+<section class="stage" data-stage="1">
+  <div class="grid">
+    <aside>
+      <h2>Leader’s First Questions</h2>
+      <p class="muted">Before giving orders, choose or write what must be known first. A leader does not begin by moving pieces. A leader begins by deciding what must be protected, what risk must be understood, and what evidence is missing.</p>
+      <div class="q" data-question="Is the river rising, and could low ground flood before morning?"><strong>River Risk</strong><span>Is the river rising, and could low ground flood before morning?</span></div><br>
+      <div class="q" data-question="Where is the safest dry ground for children, elders, and the injured traveler?"><strong>Safe Rest</strong><span>Where is the safest dry ground for vulnerable group members?</span></div><br>
+      <div class="q" data-question="Where can food be protected from both water and animals?"><strong>Food Protection</strong><span>Where can food be protected from water and animals?</span></div>
+    </aside>
+    <section>
+      <h2>Your First Question</h2><div class="depth-note"><strong>What are you protecting?</strong><br>Think about people, food, water, warmth, shelter, movement, and health. Your question should help the group survive the first night.</div>
+      <textarea id="firstQuestion" placeholder="What must be known before giving orders?"></textarea>
+      <h2 style="margin-top:14px">Why does it matter?</h2>
+      <textarea id="firstReason" placeholder="Why would this question help the group survive the first night?"></textarea>
+    </section>
+  </div>
+</section>
+
+<section class="stage" data-stage="2">
+  <div class="grid">
+    <aside>
+      <h2>Assign Materials</h2>
+      <p class="muted">Select a role, then click materials to assign them.</p>
+      <div class="role selected" data-role="scout"><strong>Scout</strong><span>Movement, paths, danger signs, animal tracks.</span></div><br>
+      <div class="role" data-role="builder"><strong>Builder</strong><span>Shelter, dry ground, usable materials.</span></div><br>
+      <div class="role" data-role="gatherer"><strong>Gatherer</strong><span>Food, water, plants, storage safety.</span></div><br>
+      <div class="role" data-role="caretaker"><strong>Caretaker</strong><span>Health, warmth, rest, injury risk.</span></div>
+      <div id="assignBox" class="card" style="margin-top:12px"><strong>Scout</strong><span>No materials assigned yet.</span></div>
+    </aside>
+    <section>
+      <h2>Survival Materials</h2><div class="depth-note"><strong>Inventory Reality</strong><br>These materials have size, weight, and weakness. Cloth, blankets, food sacks, and matches must stay dry. Water jars are heavy and breakable. Rope, stones, and the map scrap help movement and memory. Tools help build, clear, scrape, and protect.</div>
+      <div class="cards" id="materials"></div>
+    </section>
+  </div>
+</section>
+
+<section class="stage" data-stage="3">
+  <div class="grid">
+    <aside>
+      <h2>Send Specialists</h2>
+      <p class="muted">Each report takes 10 minutes. You have 40 minutes before nightfall.</p>
+      <button class="send" data-role="scout">Send Scout</button><br><br>
+      <button class="send" data-role="builder">Send Builder</button><br><br>
+      <button class="send" data-role="gatherer">Send Gatherer</button><br><br>
+      <button class="send" data-role="caretaker">Send Caretaker</button>
+    </aside>
+    <section>
+      <h2>Reports</h2>
+      <div id="reports"><div class="report"><strong>No reports yet.</strong><span>Send specialists to inspect the land.</span></div></div>
+    </section>
+  </div>
+</section>
+
+<section class="stage" data-stage="4">
+  <div class="grid">
+    <aside>
+      <h2>Main Survival Question</h2><div class="warning-note"><strong>What risk will you accept?</strong><br>No plan removes all danger. Choose the question that helps you decide what to protect first and what risk the group can survive until morning.</div>
+      <textarea id="mainQuestion" placeholder="What question should guide your survival plan now?"></textarea>
+      <h2 style="margin-top:14px">Report Evidence</h2>
+      <textarea id="evidence" placeholder="Which report influenced you most?"></textarea>
+    </aside>
+    <section><h2>Returned Evidence</h2><div id="reportsReview"></div></section>
+  </div>
+</section>
+
+<section class="stage" data-stage="5">
+  <div class="grid">
+    <aside>
+      <h2>Place Survival Bundles</h2>
+      <p class="muted">Drag bundles to River Area, High Ground, or Forest Edge.</p>
+      <div class="bundle" draggable="true" data-object="home">Home Place<span>2 shelter cloths, 2 blankets, stakes, dry fire starter.</span></div><br>
+      <div class="bundle" draggable="true" data-object="food">Food Supplies<span>3 food sacks, small tools, protected storage.</span></div><br>
+      <div class="bundle" draggable="true" data-object="water">Water Place<span>4 water jars, collection point, carrying route.</span></div><br>
+      <div class="bundle" draggable="true" data-object="path">Path Marker<span>40 ft rope, 10 marker stones, torn map scrap.</span></div>
+    </aside>
+    <section>
+      <div id="eventFeed" class="card"><strong>Board</strong><span>Place bundles, then test the survival plan.</span></div><br>
+      <div class="board"><div id="map" class="map">
+        <div class="zone river" data-zone="river"><div class="tag">River Area</div><div id="flood" class="effect flood"></div></div>
+        <div class="zone high" data-zone="high"><div class="tag">High Ground</div><div id="dry" class="effect dry"></div></div>
+        <div class="zone forest" data-zone="forest"><div class="tag">Forest Edge</div><div id="predator" class="effect predator"></div></div>
+      </div></div>
+    </section>
+  </div>
+</section>
+
+<section class="stage" data-stage="6">
+  <div class="grid">
+    <aside>
+      <h2>Reflect</h2>
+      <textarea id="reflection" placeholder="What changed? Which report helped? What would you order differently next time?"></textarea>
+    </aside>
+    <section><h2>Survival Result</h2><div id="result" class="report"><strong>No result yet.</strong><span>Test your plan to see consequences.</span></div></section>
+  </div>
+</section>
+
+<footer class="foot">
+  <div id="status" class="muted">Stage 1: Incident Briefing</div>
+  <div class="actions">
+    <button id="back" disabled>Back</button>
+    <button id="next" class="primary">Leader’s First Question</button>
+    <button id="test" class="primary hidden">Test Survival Plan</button>
+    <button id="retry" class="hidden">Try New Plan</button>
+    <a id="continue" href="/world_select.html" class="primary hidden">Continue to World Selection</a>
+  </div>
+</footer>
+</main>
+
+<script>
+let stage=0,time=40,selectedRole="scout",dragged=null,attempt=0;
+const labels={scout:"Scout",builder:"Builder",gatherer:"Gatherer",caretaker:"Caretaker"};
+const assignments={scout:[],builder:[],gatherer:[],caretaker:[]}, reports={}, placements={};
+const materialData=[
+["shelter","2 Rolled Shelter Cloths","Canvas-like cover for windbreak or emergency roof.","Approx. 8 ft × 10 ft each; rolled bundle about 3 ft long."],
+["food","3 Food Sacks","Dry food, gathered food, and basic preparation items.","Each sack about 2 ft tall; heavy enough to slow travel."],
+["waterjars","4 Water Jars","Clay or sealed jars for collecting and rationing water.","About 1 gallon each when full; heavy and breakable."],
+["rope","1 Coil of Rope","For tying shelter, marking routes, or helping movement.","Approx. 40 ft coil; light enough for one person."],
+["stakes","12 Wooden Stakes","For shelter supports, boundaries, or route markers.","Approx. 18 inches each; bundled together."],
+["axe","1 Small Hand Axe","For cutting branches, shaping stakes, clearing brush.","Approx. 14-inch handle; sharp."],
+["dig","1 Digging / Scraping Tool","For drainage, checking soil, clearing camp space.","Approx. 18 inches long."],
+["fire","1 Fire Starter / Match Tin","For warmth, signaling, and food preparation.","Palm-sized tin; useless if soaked."],
+["blankets","2 Blankets","For warmth, rest, and injury care.","Approx. 5 ft × 7 ft each; bulky if wet."],
+["stones","10 Marker Stones","For marking a safe route or warning spot.","Palm-sized stones in a pouch."],
+["map","1 Torn Map Scrap","Broken river line, old trail mark, hill symbol, tree marks, X near riverbend, partial “FLO…”","Approx. 6 in × 8 in, torn and water-stained."]
+];
+document.getElementById("materials").innerHTML=materialData.map(m=>`<div class="mat" data-material="${m[0]}"><strong>${m[1]}</strong><span class="desc">${m[2]}</span><span class="size">${m[3]}</span></div>`).join("");
+
+function show(n){stage=Math.max(0,Math.min(6,n));document.querySelectorAll(".stage").forEach((s,i)=>s.classList.toggle("active",i===stage));back.disabled=stage===0;next.classList.toggle("hidden",stage>=5);test.classList.toggle("hidden",stage!==5);retry.classList.toggle("hidden",stage!==6);continue.classList.toggle("hidden",stage!==6);const st=["Incident Briefing","Leader’s First Question","Assign Materials","Send Specialists","Main Survival Question","Place Bundles","Reflect / Continue"];status.textContent=`Stage ${stage+1}: ${st[stage]}`;next.textContent=["Leader’s First Question","Assign Materials","Send Specialists","Main Survival Question","Place Bundles","",""][stage]||"Next";document.getElementById("timeBox").textContent=`Nightfall: ${time} minutes`;if(stage===4)reportsReview.innerHTML=renderReportsHtml();}
+back.onclick=()=>show(stage-1);next.onclick=()=>show(stage+1);test.onclick=testPlan;retry.onclick=()=>{Object.keys(placements).forEach(k=>delete placements[k]);document.querySelectorAll(".placed").forEach(e=>e.remove());document.querySelectorAll(".bundle").forEach(e=>e.classList.remove("placed"));["flood","dry","predator"].forEach(id=>document.getElementById(id).classList.remove("active"));show(5);}
+document.querySelectorAll(".q").forEach(q=>q.onclick=()=>{document.querySelectorAll(".q").forEach(x=>x.classList.remove("selected"));q.classList.add("selected");firstQuestion.value=q.dataset.question;});
+document.querySelectorAll(".role").forEach(r=>r.onclick=()=>{selectedRole=r.dataset.role;document.querySelectorAll(".role").forEach(x=>x.classList.remove("selected"));r.classList.add("selected");document.querySelectorAll(".mat").forEach(m=>m.classList.toggle("selected",assignments[selectedRole].includes(m.dataset.material)));updateAssign();});
+document.querySelectorAll(".mat").forEach(m=>m.onclick=()=>{const a=assignments[selectedRole],id=m.dataset.material;if(a.includes(id))assignments[selectedRole]=a.filter(x=>x!==id);else assignments[selectedRole].push(id);m.classList.toggle("selected",assignments[selectedRole].includes(id));updateAssign();});
+function updateAssign(){assignBox.innerHTML=`<strong>${labels[selectedRole]}</strong><span>${assignments[selectedRole].length?assignments[selectedRole].join(", "):"No materials assigned yet."}</span>`;}
+document.querySelectorAll(".send").forEach(b=>b.onclick=()=>send(b.dataset.role));
+function send(role){if(reports[role]||time<=0)return;reports[role]=buildReport(role);time=Math.max(0,time-10);b=document.querySelector(`.send[data-role="${role}"]`);if(b){b.disabled=true;b.textContent=labels[role]+" Sent"}reports.innerHTML=renderReportsHtml();document.getElementById("timeBox").textContent=`Nightfall: ${time} minutes`;}
+function buildReport(role){
+  const assigned = assignments[role] || [];
+  const mat = assigned.length ? assigned.join(", ") : "no special materials";
+
+  const base = {
+    scout: {
+      observation: "The old route is broken near the riverbend. The riverbank is muddy, and the torn map scrap shows an X near the same bend with the partial warning “FLO…”.",
+      opportunity: "High ground gives a better view of the three nearby areas. Rope, marker stones, or the map scrap can help mark a safe path before dark.",
+      risk: "The low river path may flood again. The forest edge has animal tracks crossing a narrow route.",
+      material: assigned.includes("rope") || assigned.includes("stones") || assigned.includes("map")
+        ? "The Scout can use route materials to mark a path between water, shelter, and food before the group loses daylight."
+        : "Without route materials, the Scout can observe danger but may not be able to mark a safe path clearly.",
+      question: "How can the group move between water, shelter, and food without getting trapped or lost?"
+    },
+    builder: {
+      observation: "The river area is flat, but the soil is wet and soft. Stakes may not hold if the ground loosens overnight.",
+      opportunity: "High ground is drier and safer from rising water. The forest edge offers wood, shade, and possible wind cover.",
+      risk: "High ground is rocky and harder to build on. The forest may hide animal movement.",
+      material: assigned.includes("shelter") || assigned.includes("stakes") || assigned.includes("axe") || assigned.includes("dig")
+        ? "The Builder can use shelter cloth, stakes, axe, or digging tool to test dry ground, clear brush, and prepare shelter."
+        : "Without building materials, the Builder can recommend a site but cannot fully test shelter stability.",
+      question: "Where can the group sleep without being flooded, exposed, or trapped?"
+    },
+    gatherer: {
+      observation: "The river has water and fish, but low ground could soak food sacks. The forest may offer plants or wood, but animal signs are nearby.",
+      opportunity: "Water jars can be filled near the river if a safe route is marked. Food may be safer away from low ground.",
+      risk: "Food near the river may spoil. Food near the forest may attract animals.",
+      material: assigned.includes("food") || assigned.includes("waterjars") || assigned.includes("axe")
+        ? "The Gatherer can use sacks, jars, or tools to judge food storage, water access, and carrying distance."
+        : "Without food or water materials, the Gatherer can identify resources but cannot test how supplies will be protected.",
+      question: "Where can food and water be reached while keeping supplies protected?"
+    },
+    caretaker: {
+      observation: "The children, elders, and injured traveler need dry rest soon. Damp blankets and wet matches would weaken the group overnight.",
+      opportunity: "A dry shelter area with access to water gives the group the best chance to recover by morning.",
+      risk: "Muddy ground may cause cold, discomfort, or sickness. If the fire starter gets wet, warmth and food preparation become harder.",
+      material: assigned.includes("blankets") || assigned.includes("fire") || assigned.includes("waterjars") || assigned.includes("shelter")
+        ? "The Caretaker can use blankets, dry cloth, water jars, or fire starter to judge warmth, health, and safe rest."
+        : "Without care materials, the Caretaker can warn about health risks but cannot protect the most vulnerable members well.",
+      question: "What placement keeps the group warm, dry, healthy, and together until morning?"
+    }
+  };
+
+  return {role, mat, ...base[role]};
+}
+
+function renderReportsHtml(){
+  const vals=Object.values(reports);
+  return vals.length?vals.map(r=>`
+    <div class="report">
+      <strong>${labels[r.role]} Report — 10 minutes used</strong>
+      <span>
+        <b>Materials sent:</b> ${r.mat}<br><br>
+        <b>Observation:</b> ${r.observation}<br><br>
+        <b>Opportunity:</b> ${r.opportunity}<br><br>
+        <b>Risk:</b> ${r.risk}<br><br>
+        <b>Material Insight:</b> ${r.material}<br><br>
+        <b>Leader Question:</b> ${r.question}
+      </span>
+    </div>
+  `).join(""):`<div class="report"><strong>No reports yet.</strong><span>Send specialists to inspect the land.</span></div>`;
+}
+
+document.querySelectorAll(".bundle").forEach(o=>o.addEventListener("dragstart",e=>{dragged=o.dataset.object;e.dataTransfer.setData("text/plain",dragged)}));
+document.querySelectorAll(".zone").forEach(z=>{z.addEventListener("dragover",e=>{e.preventDefault();z.classList.add("drag-over")});z.addEventListener("dragleave",()=>z.classList.remove("drag-over"));z.addEventListener("drop",e=>{e.preventDefault();z.classList.remove("drag-over");const obj=e.dataTransfer.getData("text/plain")||dragged;if(!obj)return;placements[obj]=z.dataset.zone;document.querySelectorAll(`.placed[data-object="${obj}"]`).forEach(x=>x.remove());let p=document.createElement("div");p.className="placed";p.dataset.object=obj;p.textContent={home:"Home Place",food:"Food Supplies",water:"Water Place",path:"Path Marker"}[obj];p.style.left={home:"18%",food:"55%",water:"28%",path:"62%"}[obj];p.style.top={home:"25%",food:"34%",water:"58%",path:"68%"}[obj];z.appendChild(p);document.querySelector(`.bundle[data-object="${obj}"]`).classList.add("placed");eventFeed.innerHTML=`<strong>Placed</strong><span>${p.textContent} placed in ${z.querySelector(".tag").textContent}.</span>`})});
+function testPlan(){attempt++;["flood","dry","predator"].forEach(id=>document.getElementById(id).classList.remove("active"));let ev=[],main="Survival plan tested";if(placements.food==="river"){ev.push("Water rose near the river and reached the food supplies.");flood.classList.add("active");main="Food exposed to flood risk"}if(placements.home==="high"&&placements.water!=="river"){ev.push("The group rests above flood risk, but water is harder to reach.");dry.classList.add("active");main="Safe height, water challenge"}if(placements.food==="forest"){ev.push("Animal tracks appeared near the food supplies.");predator.classList.add("active");main="Animal activity near food"}if(placements.water==="river")ev.push("Water jars can be filled near the river.");if(placements.path==="high")ev.push("The path helps the group move toward safer ground.");if(!ev.length)ev.push("The plan avoided obvious danger, but the land still needs more testing.");result.innerHTML=`<strong>${main}</strong><span>${ev.join("<br>")}</span>`;show(6);}
+show(0);updateAssign();
+</script>
+</body>
+</html>

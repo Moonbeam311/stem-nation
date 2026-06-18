@@ -1,0 +1,993 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>STEM Nation | Academy Readiness Evaluation</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- STEM_NATION_ACTIVE_READINESS_REBUILD_V1 -->
+
+  <style>
+    :root {
+      --bg: #0b100d;
+      --panel: rgba(9, 13, 10, 0.92);
+      --panel-soft: rgba(255,255,255,0.055);
+      --gold: #d1b25b;
+      --gold-soft: rgba(209,178,91,0.28);
+      --text: #f5ecd1;
+      --muted: rgba(245,236,209,0.72);
+      --river: #357d9f;
+      --high: #88704a;
+      --forest: #2e6a42;
+      --green: #87ad62;
+      --warning: #c8854a;
+      --danger: #c45f49;
+    }
+
+    * { box-sizing: border-box; }
+
+    html, body {
+      margin: 0;
+      height: 100%;
+      overflow: hidden;
+      background:
+        radial-gradient(circle at 20% 20%, rgba(209,178,91,0.14), transparent 25%),
+        linear-gradient(135deg, #060806, #111a12 58%, #070907);
+      color: var(--text);
+      font-family: Arial, sans-serif;
+    }
+
+    .page {
+      height: 100vh;
+      display: grid;
+      grid-template-rows: 72px minmax(0, 1fr) 112px;
+      grid-template-columns: minmax(0, 1fr) 340px;
+      gap: 10px;
+      padding: 10px;
+    }
+
+    .mission-bar {
+      grid-column: 1 / 3;
+      grid-row: 1;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 14px;
+      padding: 10px 14px;
+      border: 1px solid var(--gold-soft);
+      border-radius: 16px;
+      background: rgba(0,0,0,0.42);
+    }
+
+    .mission-title {
+      min-width: 0;
+    }
+
+    .mission-title h1 {
+      margin: 0;
+      color: var(--gold);
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 1.15rem;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+    }
+
+    .mission-title div {
+      margin-top: 3px;
+      color: var(--muted);
+      font-size: 0.78rem;
+    }
+
+    .event-feed {
+      flex: 0 1 520px;
+      padding: 8px 12px;
+      border: 1px solid rgba(209,178,91,0.22);
+      border-radius: 999px;
+      background: rgba(0,0,0,0.28);
+      color: rgba(245,236,209,0.86);
+      font-size: 0.8rem;
+      text-align: center;
+    }
+
+    .world {
+      grid-column: 1;
+      grid-row: 2;
+      position: relative;
+      overflow: hidden;
+      min-height: 0;
+      border: 1px solid var(--gold-soft);
+      border-radius: 18px;
+      background: #162216;
+      box-shadow:
+        inset 0 0 100px rgba(0,0,0,0.48),
+        0 18px 48px rgba(0,0,0,0.35);
+    }
+
+    .map {
+      position: absolute;
+      inset: 0;
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      isolation: isolate;
+    }
+
+    .map::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      z-index: 7;
+      pointer-events: none;
+      background:
+        radial-gradient(circle at center, transparent 48%, rgba(0,0,0,0.25) 100%),
+        linear-gradient(180deg, rgba(255,255,255,0.06), transparent 35%, rgba(0,0,0,0.18));
+    }
+
+    .zone {
+      position: relative;
+      overflow: hidden;
+      border-right: 1px solid rgba(255,255,255,0.10);
+      transition: 0.2s ease;
+    }
+
+    .zone:last-child { border-right: none; }
+
+    .zone.drag-over {
+      outline: 3px solid var(--gold);
+      box-shadow: inset 0 0 90px rgba(209,178,91,0.28);
+      filter: brightness(1.08);
+      z-index: 9;
+    }
+
+    .zone-tag {
+      position: absolute;
+      left: 12px;
+      top: 12px;
+      z-index: 12;
+      padding: 6px 9px;
+      border-radius: 999px;
+      background: rgba(0,0,0,0.42);
+      border: 1px solid rgba(209,178,91,0.25);
+      color: rgba(245,236,209,0.84);
+      font-size: 0.72rem;
+      pointer-events: none;
+    }
+
+    .river {
+      background:
+        linear-gradient(115deg, rgba(40,100,122,0.94), rgba(72,138,87,0.74)),
+        radial-gradient(circle at 66% 70%, rgba(85,150,69,0.55), transparent 25%);
+    }
+
+    .river::before {
+      content: "";
+      position: absolute;
+      left: -14%;
+      top: -10%;
+      width: 54%;
+      height: 125%;
+      border-radius: 48%;
+      background:
+        linear-gradient(105deg,
+          transparent,
+          rgba(83,174,214,0.18) 20%,
+          rgba(105,196,228,0.62) 43%,
+          rgba(39,111,147,0.70) 60%,
+          transparent
+        );
+      transform: rotate(8deg);
+      animation: riverMove 6s ease-in-out infinite alternate;
+      box-shadow: 0 0 35px rgba(73,165,207,0.34);
+    }
+
+    @keyframes riverMove {
+      from { transform: rotate(8deg) translateY(0); filter: brightness(0.95); }
+      to { transform: rotate(8deg) translateY(14px); filter: brightness(1.18); }
+    }
+
+    .river::after {
+      content: "";
+      position: absolute;
+      left: 9%;
+      top: 44%;
+      width: 130px;
+      height: 80px;
+      background:
+        radial-gradient(ellipse at 20% 52%, rgba(230,238,214,0.72) 0 8px, transparent 9px),
+        radial-gradient(ellipse at 48% 40%, rgba(230,238,214,0.58) 0 6px, transparent 7px),
+        radial-gradient(ellipse at 76% 64%, rgba(230,238,214,0.52) 0 5px, transparent 6px);
+      opacity: 0.75;
+      animation: fishDrift 5s ease-in-out infinite alternate;
+    }
+
+    @keyframes fishDrift {
+      from { transform: translateX(0) translateY(0); }
+      to { transform: translateX(28px) translateY(10px); }
+    }
+
+    .high {
+      background:
+        linear-gradient(180deg, rgba(155,132,78,0.96), rgba(65,55,39,0.96)),
+        radial-gradient(circle at 44% 36%, rgba(235,211,148,0.48), transparent 24%);
+    }
+
+    .high::before {
+      content: "";
+      position: absolute;
+      left: 8%;
+      top: 10%;
+      width: 86%;
+      height: 74%;
+      background:
+        radial-gradient(circle at 35% 40%, rgba(210,199,160,0.72) 0 16px, transparent 17px),
+        radial-gradient(circle at 55% 55%, rgba(116,105,84,0.70) 0 28px, transparent 29px),
+        radial-gradient(circle at 72% 68%, rgba(90,81,65,0.62) 0 18px, transparent 19px);
+      clip-path: polygon(50% 2%, 96% 90%, 6% 90%);
+      filter: drop-shadow(0 22px 16px rgba(0,0,0,0.35));
+    }
+
+    .high::after {
+      content: "";
+      position: absolute;
+      left: 43%;
+      bottom: 25%;
+      width: 110px;
+      height: 70px;
+      background:
+        linear-gradient(38deg, transparent 45%, rgba(55,38,24,0.58) 46% 49%, transparent 50%),
+        linear-gradient(118deg, transparent 42%, rgba(55,38,24,0.52) 43% 47%, transparent 48%),
+        linear-gradient(8deg, transparent 48%, rgba(55,38,24,0.48) 49% 52%, transparent 53%);
+      opacity: 0.85;
+    }
+
+    .forest {
+      background:
+        linear-gradient(90deg, rgba(23,76,39,0.96), rgba(9,31,18,0.98)),
+        radial-gradient(circle at 48% 54%, rgba(82,151,78,0.44), transparent 36%);
+    }
+
+    .forest::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(circle at 18% 25%, rgba(97,162,86,0.95) 0 16px, transparent 17px),
+        radial-gradient(circle at 36% 40%, rgba(74,135,73,0.95) 0 19px, transparent 20px),
+        radial-gradient(circle at 60% 28%, rgba(58,121,62,0.95) 0 18px, transparent 19px),
+        radial-gradient(circle at 78% 52%, rgba(80,145,75,0.95) 0 18px, transparent 19px),
+        radial-gradient(circle at 28% 70%, rgba(47,101,51,0.95) 0 19px, transparent 20px),
+        radial-gradient(circle at 58% 75%, rgba(88,154,82,0.95) 0 18px, transparent 19px);
+      filter: drop-shadow(0 12px 10px rgba(0,0,0,0.45));
+      animation: treeWind 4.5s ease-in-out infinite alternate;
+    }
+
+    @keyframes treeWind {
+      from { transform: translateX(-4px) rotate(-0.3deg); }
+      to { transform: translateX(8px) rotate(0.5deg); }
+    }
+
+    .forest::after {
+      content: "";
+      position: absolute;
+      right: 12%;
+      bottom: 28%;
+      width: 120px;
+      height: 75px;
+      background:
+        radial-gradient(ellipse at 10% 70%, rgba(35,22,12,0.65) 0 5px, transparent 6px),
+        radial-gradient(ellipse at 28% 58%, rgba(35,22,12,0.65) 0 5px, transparent 6px),
+        radial-gradient(ellipse at 45% 46%, rgba(35,22,12,0.65) 0 5px, transparent 6px),
+        radial-gradient(ellipse at 62% 34%, rgba(35,22,12,0.65) 0 5px, transparent 6px),
+        radial-gradient(ellipse at 80% 23%, rgba(35,22,12,0.65) 0 5px, transparent 6px);
+      transform: rotate(-18deg);
+      opacity: 0.76;
+    }
+
+    .effect {
+      position: absolute;
+      inset: 0;
+      z-index: 8;
+      pointer-events: none;
+      opacity: 0;
+      transition: 0.3s ease;
+    }
+
+    .effect.active { opacity: 1; }
+
+    .effect.flood {
+      background: linear-gradient(180deg, transparent 44%, rgba(62,151,194,0.50));
+      animation: floodRise 2.6s ease-in-out infinite alternate;
+    }
+
+    .effect.dry {
+      background: repeating-linear-gradient(45deg, rgba(204,151,79,0.24) 0 4px, transparent 4px 16px);
+      animation: dryPulse 2.4s ease-in-out infinite alternate;
+    }
+
+    .effect.predator {
+      background: radial-gradient(circle at 76% 52%, rgba(196,95,73,0.36), transparent 38%);
+      animation: predatorPulse 1.9s ease-in-out infinite alternate;
+    }
+
+    @keyframes floodRise {
+      from { transform: translateY(20px); opacity: 0.35; }
+      to { transform: translateY(-8px); opacity: 0.82; }
+    }
+
+    @keyframes dryPulse {
+      from { opacity: 0.26; filter: brightness(1); }
+      to { opacity: 0.76; filter: brightness(1.25); }
+    }
+
+    @keyframes predatorPulse {
+      from { opacity: 0.26; transform: scale(0.98); }
+      to { opacity: 0.72; transform: scale(1.03); }
+    }
+
+    .placed-object {
+      position: absolute;
+      z-index: 20;
+      min-width: 74px;
+      min-height: 52px;
+      display: grid;
+      place-items: center;
+      text-align: center;
+      border: 1px solid rgba(232,199,93,0.70);
+      border-radius: 12px;
+      background: rgba(9,9,6,0.76);
+      color: var(--text);
+      font-size: 0.64rem;
+      font-weight: 700;
+      pointer-events: none;
+      box-shadow: 0 10px 20px rgba(0,0,0,0.42);
+    }
+
+    .placed-object::before {
+      content: "";
+      display: block;
+      width: 44px;
+      height: 28px;
+      margin-bottom: 2px;
+    }
+
+    .placed-object[data-object="home_camp"]::before,
+    .object[data-object="home_camp"]::before {
+      background:
+        conic-gradient(from 210deg at 50% 100%, transparent 0 18%, #d9c58a 18% 42%, #7b4b2d 42% 49%, #d9c58a 49% 72%, transparent 72%),
+        radial-gradient(circle at 48% 84%, #d66a3c 0 5px, #f0c35c 6px 9px, transparent 10px);
+    }
+
+    .placed-object[data-object="food_storage"]::before,
+    .object[data-object="food_storage"]::before {
+      background:
+        radial-gradient(ellipse at 28% 65%, #c9a45a 0 12px, transparent 13px),
+        radial-gradient(ellipse at 52% 60%, #d9bd73 0 14px, transparent 15px),
+        linear-gradient(#8a5d35, #5b3822);
+      border-radius: 8px;
+    }
+
+    .placed-object[data-object="water_spot"]::before,
+    .object[data-object="water_spot"]::before {
+      background:
+        radial-gradient(ellipse at 50% 70%, #5aa6c9 0 20px, transparent 21px),
+        linear-gradient(90deg, #7a4e2d, #b3834b, #7a4e2d);
+      border-radius: 12px;
+    }
+
+    .placed-object[data-object="path_marker"]::before,
+    .object[data-object="path_marker"]::before {
+      background:
+        linear-gradient(90deg, transparent 0 20%, #a2763d 21% 27%, transparent 28% 44%, #a2763d 45% 51%, transparent 52%),
+        repeating-linear-gradient(90deg, rgba(220,190,118,0.72) 0 9px, transparent 9px 18px);
+      border-radius: 999px;
+      transform: rotate(-4deg);
+    }
+
+    .journal {
+      grid-column: 2;
+      grid-row: 2 / 4;
+      min-height: 0;
+      overflow-y: auto;
+      border: 1px solid var(--gold-soft);
+      border-radius: 18px;
+      background: var(--panel);
+      padding: 12px;
+    }
+
+    .journal h2 {
+      margin: 0 0 6px;
+      color: var(--gold);
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 1rem;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+    }
+
+    .journal p {
+      margin: 0 0 10px;
+      color: var(--muted);
+      font-size: 0.76rem;
+      line-height: 1.35;
+    }
+
+    label {
+      display: block;
+      margin: 10px 0 4px;
+      color: var(--gold);
+      font-size: 0.68rem;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+    }
+
+    textarea {
+      width: 100%;
+      min-height: 58px;
+      max-height: 110px;
+      resize: vertical;
+      padding: 8px;
+      border: 1px solid rgba(255,255,255,0.15);
+      border-radius: 10px;
+      background: rgba(0,0,0,0.28);
+      color: var(--text);
+      font-family: Arial, sans-serif;
+      font-size: 0.78rem;
+      line-height: 1.35;
+    }
+
+    .attempt-log {
+      margin-top: 10px;
+      padding: 8px;
+      border-radius: 12px;
+      background: var(--panel-soft);
+      color: var(--muted);
+      font-size: 0.72rem;
+      line-height: 1.35;
+    }
+
+    .action-rail {
+      grid-column: 1;
+      grid-row: 3;
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) 190px;
+      gap: 10px;
+      min-height: 0;
+      border: 1px solid var(--gold-soft);
+      border-radius: 18px;
+      background: rgba(0,0,0,0.44);
+      padding: 10px;
+    }
+
+    .objects {
+      display: flex;
+      gap: 8px;
+      align-items: center;
+      overflow-x: auto;
+    }
+
+    .objects::before {
+      content: "Move:";
+      color: var(--muted);
+      font-size: 0.72rem;
+      flex: 0 0 auto;
+    }
+
+    .object {
+      flex: 0 0 auto;
+      min-width: 105px;
+      min-height: 74px;
+      display: grid;
+      place-items: center;
+      gap: 3px;
+      padding: 7px;
+      border: 1px solid rgba(209,178,91,0.36);
+      border-radius: 12px;
+      background: rgba(30,33,24,0.94);
+      color: var(--text);
+      font-size: 0.72rem;
+      font-weight: 700;
+      cursor: grab;
+      user-select: none;
+    }
+
+    .object::before {
+      content: "";
+      display: block;
+      width: 44px;
+      height: 28px;
+      filter: drop-shadow(0 5px 4px rgba(0,0,0,0.35));
+    }
+
+    .object.placed {
+      opacity: 0.42;
+    }
+
+    .controls {
+      display: grid;
+      gap: 6px;
+    }
+
+    button {
+      border: 1px solid var(--gold-soft);
+      background: rgba(209,178,91,0.15);
+      color: var(--text);
+      border-radius: 10px;
+      padding: 7px 9px;
+      font-size: 0.75rem;
+      cursor: pointer;
+    }
+
+    button:hover:not(:disabled) {
+      background: rgba(209,178,91,0.27);
+    }
+
+    button:disabled {
+      opacity: 0.45;
+      cursor: not-allowed;
+    }
+
+    #continueWorldBtn {
+      border-color: rgba(135,173,98,0.72);
+      background: rgba(135,173,98,0.18);
+    }
+
+    #continueWorldBtn.ready:not(:disabled) {
+      background: rgba(135,173,98,0.34);
+      box-shadow: 0 0 18px rgba(135,173,98,0.18);
+    }
+
+    .status-line {
+      color: var(--muted);
+      font-size: 0.62rem;
+      line-height: 1.25;
+    }
+
+    .help-strip {
+      position: absolute;
+      left: 16px;
+      bottom: 16px;
+      z-index: 30;
+      max-width: 620px;
+      padding: 8px 10px;
+      border: 1px solid rgba(209,178,91,0.22);
+      border-radius: 999px;
+      background: rgba(0,0,0,0.48);
+      color: rgba(245,236,209,0.75);
+      font-size: 0.74rem;
+      pointer-events: none;
+    }
+
+    @media (max-width: 980px) {
+      html, body { overflow: auto; }
+
+      .page {
+        height: auto;
+        min-height: 100vh;
+        grid-template-columns: 1fr;
+        grid-template-rows: auto 560px auto auto;
+      }
+
+      .mission-bar, .world, .journal, .action-rail {
+        grid-column: 1;
+      }
+
+      .journal {
+        grid-row: auto;
+        max-height: none;
+      }
+
+      .action-rail {
+        grid-template-columns: 1fr;
+      }
+    }
+  
+/* STEM_NATION_ALWAYS_VISIBLE_ADVANCE_LINK_V1 */
+.advance-link {
+  display: block;
+  width: 100%;
+  text-align: center;
+  border: 1px solid rgba(135,173,98,0.85);
+  background: rgba(135,173,98,0.28);
+  color: var(--text);
+  border-radius: 10px;
+  padding: 9px 10px;
+  font-size: 0.75rem;
+  text-decoration: none;
+  font-weight: 700;
+}
+
+.advance-link:hover {
+  background: rgba(135,173,98,0.42);
+}
+
+</style>
+  <!-- STEM_NATION_REDUCE_READINESS_GATE_FRICTION_V1 -->
+  <!-- STEM_NATION_ALWAYS_VISIBLE_ADVANCE_LINK_V1 -->
+</head>
+
+<body>
+  <main class="page">
+    <header class="mission-bar">
+      <div class="mission-title">
+        <h1>Academy Readiness Evaluation</h1>
+        <div>Inquiry Trial 1: The Living Land</div>
+      </div>
+      <div id="eventFeed" class="event-feed">Study the land. Record observations, ask a question, move the pieces, then test an idea.</div>
+    </header>
+
+    <section class="world" aria-label="Living Land Board">
+      <div id="map" class="map">
+        <div class="zone river" data-zone="river_area">
+          <div class="zone-tag">River Area</div>
+          <div class="effect flood" id="floodEffect"></div>
+        </div>
+
+        <div class="zone high" data-zone="high_ground">
+          <div class="zone-tag">High Ground</div>
+          <div class="effect dry" id="dryEffect"></div>
+        </div>
+
+        <div class="zone forest" data-zone="forest_edge">
+          <div class="zone-tag">Forest Edge</div>
+          <div class="effect predator" id="predatorEffect"></div>
+        </div>
+      </div>
+
+      <div class="help-strip">
+        You are studying three land areas. Look for water, height, trees, food clues, movement clues, safety, and risk.
+      </div>
+    </section>
+
+    <aside class="journal">
+      <h2>Field Journal</h2>
+      <p>Good questions grow from careful observation, recognized patterns, tested ideas, and refined thinking.</p>
+
+      <label for="observations">Observations — record at least 3 things you notice</label>
+      <textarea id="observations" placeholder="Example: I notice water near the river area."></textarea>
+
+      <label for="questions">Questions — ask at least 1 question before testing</label>
+      <textarea id="questions" placeholder="Example: What might happen if food is too close to water?"></textarea>
+
+      <label for="patterns">Patterns — which details may be connected?</label>
+      <textarea id="patterns" placeholder="Example: Water can help people, but too much water may create risk."></textarea>
+
+      <label for="hypothesis">Idea to Test — what do you think might happen?</label>
+      <textarea id="hypothesis" placeholder="Example: I think placing food on higher land may protect it."></textarea>
+
+      <label for="strategy">After Testing — what changed and what would you test next?</label>
+      <textarea id="strategy" placeholder="Use this after you test your idea."></textarea>
+
+      <div id="attemptLog" class="attempt-log"><strong>Attempt Log</strong><br>No tests yet.</div>
+    </aside>
+
+    <section class="action-rail">
+      <div class="objects">
+        <div class="object" draggable="true" data-object="home_camp">Home Place</div>
+        <div class="object" draggable="true" data-object="food_storage">Food Supplies</div>
+        <div class="object" draggable="true" data-object="water_spot">Water Place</div>
+        <div class="object" draggable="true" data-object="path_marker">Path Marker</div>
+      </div>
+
+      <div class="controls">
+        <button id="testBtn">Test My Idea</button>
+        <button id="retryBtn" disabled>Try New Idea</button>
+        <button id="compareBtn" disabled>Compare Attempts</button>
+        <button id="continueWorldBtn" type="button" disabled>Continue to World Selection</button>
+        <a class="advance-link" href="/world_select.html">Continue to World Selection</a>
+        <div id="readyStatus" class="status-line">Need 3 observations, 1 question, and all objects placed.</div>
+      </div>
+    </section>
+  </main>
+
+  <script>
+    const placements = {};
+    const attempts = [];
+    let draggedObject = null;
+    let attemptNumber = 0;
+
+    const requiredObjects = ["home_camp", "food_storage", "water_spot", "path_marker"];
+
+    const eventFeed = document.getElementById("eventFeed");
+    const testBtn = document.getElementById("testBtn");
+    const retryBtn = document.getElementById("retryBtn");
+    const compareBtn = document.getElementById("compareBtn");
+    const continueWorldBtn = document.getElementById("continueWorldBtn");
+    const readyStatus = document.getElementById("readyStatus");
+    const attemptLog = document.getElementById("attemptLog");
+
+    const observations = document.getElementById("observations");
+    const questions = document.getElementById("questions");
+    const patterns = document.getElementById("patterns");
+    const hypothesis = document.getElementById("hypothesis");
+    const strategy = document.getElementById("strategy");
+
+    const notebookFields = [observations, questions, patterns, hypothesis, strategy];
+
+    function countLines(text) {
+      return text
+        .split(/\n|\.|;/)
+        .map(x => x.trim())
+        .filter(Boolean).length;
+    }
+
+    function allObjectsPlaced() {
+      return requiredObjects.every(obj => placements[obj]);
+    }
+
+    function inquiryReady() {
+      return true;
+    }
+
+    function updateReadyState() {
+      testBtn.disabled = false;
+
+      const placedCount = requiredObjects.filter(obj => placements[obj]).length;
+      const obsCount = countLines(observations.value);
+      const qCount = countLines(questions.value);
+
+      if (placedCount < requiredObjects.length) {
+        readyStatus.textContent = `You can test now. For a stronger test, place all pieces. Placed: ${placedCount}/${requiredObjects.length}.`;
+      } else if (obsCount < 3 || qCount < 1) {
+        readyStatus.textContent = `You can test now. Stronger inquiry: add observations/questions. Observations: ${obsCount}/3, Questions: ${qCount}/1.`;
+      } else {
+        readyStatus.textContent = "Ready. Test your idea, then notice what changed.";
+      }
+
+      updateWorldHandoffState();
+    }
+
+    function updateWorldHandoffState() {
+      const canContinue = attempts.length >= 1;
+      if (continueWorldBtn) {
+        continueWorldBtn.disabled = !canContinue;
+        continueWorldBtn.classList.toggle("ready", canContinue);
+      }
+    }
+
+    function saveNotebook() {
+      const data = {
+        observations: observations.value,
+        questions: questions.value,
+        patterns: patterns.value,
+        hypothesis: hypothesis.value,
+        strategy: strategy.value,
+        attempts
+      };
+      localStorage.setItem("STEM_NATION_ACADEMY_READINESS_V1", JSON.stringify(data));
+    }
+
+    function loadNotebook() {
+      const raw = localStorage.getItem("STEM_NATION_ACADEMY_READINESS_V1");
+      if (!raw) return;
+      try {
+        const data = JSON.parse(raw);
+        observations.value = data.observations || "";
+        questions.value = data.questions || "";
+        patterns.value = data.patterns || "";
+        hypothesis.value = data.hypothesis || "";
+        strategy.value = data.strategy || "";
+        if (Array.isArray(data.attempts)) {
+          attempts.push(...data.attempts);
+          attemptNumber = attempts.length;
+          renderAttempts();
+        }
+      } catch (err) {
+        console.warn("Could not load saved inquiry notebook.", err);
+      }
+    }
+
+    notebookFields.forEach(field => {
+      field.addEventListener("input", () => {
+        saveNotebook();
+        updateReadyState();
+      });
+    });
+
+    document.querySelectorAll(".object").forEach(obj => {
+      obj.addEventListener("dragstart", e => {
+        draggedObject = obj.dataset.object;
+        e.dataTransfer.setData("text/plain", draggedObject);
+      });
+    });
+
+    document.querySelectorAll(".zone").forEach(zone => {
+      zone.addEventListener("dragover", e => {
+        e.preventDefault();
+        zone.classList.add("drag-over");
+      });
+
+      zone.addEventListener("dragleave", () => {
+        zone.classList.remove("drag-over");
+      });
+
+      zone.addEventListener("drop", e => {
+        e.preventDefault();
+        zone.classList.remove("drag-over");
+
+        const objectType = e.dataTransfer.getData("text/plain") || draggedObject;
+        if (!objectType) return;
+
+        placements[objectType] = zone.dataset.zone;
+        placeVisualObject(objectType, zone);
+        markObjectPlaced(objectType);
+
+        eventFeed.textContent = `${labelObject(objectType)} placed in ${labelZone(zone.dataset.zone)}.`;
+        updateReadyState();
+      });
+    });
+
+    function placeVisualObject(objectType, zone) {
+      document.querySelectorAll(`.placed-object[data-object="${objectType}"]`).forEach(el => el.remove());
+
+      const tag = document.createElement("div");
+      tag.className = "placed-object";
+      tag.dataset.object = objectType;
+      tag.textContent = labelObject(objectType);
+
+      const offsetMap = {
+        home_camp: ["18%", "26%"],
+        food_storage: ["56%", "34%"],
+        water_spot: ["28%", "58%"],
+        path_marker: ["62%", "68%"]
+      };
+
+      tag.style.left = offsetMap[objectType][0];
+      tag.style.top = offsetMap[objectType][1];
+
+      zone.appendChild(tag);
+    }
+
+    function markObjectPlaced(objectType) {
+      const obj = document.querySelector(`.object[data-object="${objectType}"]`);
+      if (obj) obj.classList.add("placed");
+    }
+
+    function labelObject(objectType) {
+      return {
+        home_camp: "Home Place",
+        food_storage: "Food Supplies",
+        water_spot: "Water Place",
+        path_marker: "Path Marker"
+      }[objectType] || objectType;
+    }
+
+    function labelZone(zone) {
+      return {
+        river_area: "River Area",
+        high_ground: "High Ground",
+        forest_edge: "Forest Edge"
+      }[zone] || zone;
+    }
+
+    function clearEffects() {
+      document.querySelectorAll(".effect").forEach(effect => {
+        effect.classList.remove("active");
+      });
+    }
+
+    function testPlan() {
+      clearEffects();
+
+      attemptNumber += 1;
+
+      const events = [];
+      let mainResult = "Mixed results";
+
+      const camp = placements.home_camp || "not_placed";
+      const storage = placements.food_storage || "not_placed";
+      const water = placements.water_spot || "not_placed";
+      const path = placements.path_marker || "not_placed";
+
+      if (!allObjectsPlaced()) {
+        events.push("Some pieces were not placed. This is still a test, but a stronger test uses all pieces.");
+        mainResult = "Partial test";
+      }
+
+      if (storage === "river_area") {
+        events.push("Water rose near the river and reached the food supplies.");
+        document.getElementById("floodEffect").classList.add("active");
+        mainResult = "Food supplies were exposed to flood risk";
+      }
+
+      if (camp === "high_ground" && water !== "river_area") {
+        events.push("The people are safer from flooding, but water is harder to reach.");
+        document.getElementById("dryEffect").classList.add("active");
+        mainResult = "Safe height, but water challenge";
+      }
+
+      if (storage === "forest_edge") {
+        events.push("Animal tracks appeared near the stored food.");
+        document.getElementById("predatorEffect").classList.add("active");
+        mainResult = "Animal activity near food";
+      }
+
+      if (path === "high_ground") {
+        events.push("The path helped people move toward safer ground.");
+      }
+
+      if (water === "river_area") {
+        events.push("Water access improved because the water place is close to the river.");
+      }
+
+      if (events.length === 0) {
+        events.push("Your idea avoided major danger, but the land still needs more testing.");
+        mainResult = "Stable first result";
+      }
+
+      const attempt = {
+        number: attemptNumber,
+        placements: {...placements},
+        events,
+        mainResult,
+        bestQuestion: firstLine(questions.value),
+        createdAt: new Date().toISOString()
+      };
+
+      attempts.push(attempt);
+      saveNotebook();
+      renderAttempts();
+      updateWorldHandoffState();
+
+      eventFeed.textContent = events[0];
+      retryBtn.disabled = false;
+      compareBtn.disabled = attempts.length < 2;
+      strategy.focus();
+    }
+
+    function firstLine(text) {
+      return text.split(/\n/).map(x => x.trim()).filter(Boolean)[0] || "No question recorded.";
+    }
+
+    function renderAttempts() {
+      if (!attempts.length) {
+        attemptLog.innerHTML = "<strong>Attempt Log</strong><br>No tests yet.";
+        updateWorldHandoffState();
+        return;
+      }
+
+      attemptLog.innerHTML = "<strong>Attempt Log</strong><br>" + attempts.map(attempt => {
+        return `Attempt ${attempt.number}: ${attempt.mainResult}<br>`;
+      }).join("");
+
+      updateWorldHandoffState();
+    }
+
+    function retryPlan() {
+      Object.keys(placements).forEach(k => delete placements[k]);
+      document.querySelectorAll(".placed-object").forEach(el => el.remove());
+      document.querySelectorAll(".object").forEach(el => el.classList.remove("placed"));
+      clearEffects();
+
+      eventFeed.textContent = "Your notes stayed. Move the pieces and test a new idea.";
+      retryBtn.disabled = true;
+      updateReadyState();
+    }
+
+    function compareAttempts() {
+      if (attempts.length < 2) return;
+
+      const lastTwo = attempts.slice(-2);
+      alert(
+        `Compare Attempts:\n\n` +
+        `Attempt ${lastTwo[0].number}: ${lastTwo[0].mainResult}\n` +
+        `Attempt ${lastTwo[1].number}: ${lastTwo[1].mainResult}\n\n` +
+        `What changed between your ideas?`
+      );
+    }
+
+    if (continueWorldBtn) {
+      continueWorldBtn.addEventListener("click", () => {
+        if (!continueWorldBtn.disabled) {
+          window.location.href = "/world_select.html";
+        }
+      });
+    }
+
+    testBtn.addEventListener("click", testPlan);
+    retryBtn.addEventListener("click", retryPlan);
+    compareBtn.addEventListener("click", compareAttempts);
+
+    loadNotebook();
+    updateReadyState();
+    updateWorldHandoffState();
+  </script>
+</body>
+</html>

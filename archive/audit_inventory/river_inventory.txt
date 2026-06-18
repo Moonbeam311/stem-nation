@@ -1,0 +1,9 @@
+./river_inventory.txt
+./static/world_river.jpg
+./static_backup/world_river.jpg
+./STEM_NATION_DEPLOY_PACKAGE/static/world_river.jpg
+./STEM_NATION_DEPLOY_PACKAGE/STEM_NATION_DEPLOY_PACKAGE/static/world_river.jpg
+./STEM_NATION_DEPLOY_PACKAGE/STEM_NATION_DEPLOY_PACKAGE/templates/region_river.html
+./STEM_NATION_DEPLOY_PACKAGE/templates/region_river.html
+./templates/region_river.html
+./templates/river_crossing_lab.html

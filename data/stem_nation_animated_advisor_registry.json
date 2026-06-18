@@ -1,0 +1,214 @@
+{
+  "version": "VIS-3F-1",
+  "title": "STEM Nation Animated Advisor Registry",
+  "purpose": "Maps advisor fallback images and future animated state slots.",
+  "important_rule": "Council advisors are guide characters, not student identity choices.",
+  "advisors": {
+    "guardian": {
+      "name": "Guardian",
+      "verb": "Protect",
+      "question": "What should we protect?",
+      "fallback_asset": "avatars/student/guardian.png",
+      "core_states": [
+        "neutral",
+        "alert",
+        "speaking",
+        "approving",
+        "success"
+      ],
+      "folders": {
+        "states": "static/images/advisors/guardian/states",
+        "loops": "static/images/advisors/guardian/loops",
+        "sprites": "static/images/advisors/guardian/sprites",
+        "exports": "static/images/advisors/guardian/exports"
+      },
+      "expected_still_files": {
+        "neutral": "images/advisors/guardian/states/guardian_neutral.png",
+        "alert": "images/advisors/guardian/states/guardian_alert.png",
+        "speaking": "images/advisors/guardian/states/guardian_speaking.png",
+        "approving": "images/advisors/guardian/states/guardian_approving.png",
+        "success": "images/advisors/guardian/states/guardian_success.png"
+      },
+      "expected_loop_files": {
+        "idle": "images/advisors/guardian/loops/guardian_idle.webp",
+        "speaking": "images/advisors/guardian/loops/guardian_speaking.webp",
+        "warning": "images/advisors/guardian/loops/guardian_warning.webp",
+        "success": "images/advisors/guardian/loops/guardian_success.webp"
+      },
+      "expected_sprite_files": {
+        "idle_sheet": "images/advisors/guardian/sprites/guardian_idle_sheet.png",
+        "speaking_sheet": "images/advisors/guardian/sprites/guardian_speaking_sheet.png"
+      },
+      "locked_face_asset": "images/advisors/guardian/states/guardian_face_neutral.png",
+      "locked_status": "LOCKED",
+      "face_asset_rule": "Use this locked face asset for neutral advisor card display unless a specific animated state overrides it."
+    },
+    "scout": {
+      "name": "Scout",
+      "verb": "Discover",
+      "question": "What do we notice?",
+      "fallback_asset": "avatars/student/scout.png",
+      "core_states": [
+        "neutral",
+        "observing",
+        "curious",
+        "excited",
+        "speaking"
+      ],
+      "folders": {
+        "states": "static/images/advisors/scout/states",
+        "loops": "static/images/advisors/scout/loops",
+        "sprites": "static/images/advisors/scout/sprites",
+        "exports": "static/images/advisors/scout/exports"
+      },
+      "expected_still_files": {
+        "neutral": "images/advisors/scout/states/scout_neutral.png",
+        "observing": "images/advisors/scout/states/scout_observing.png",
+        "curious": "images/advisors/scout/states/scout_curious.png",
+        "excited": "images/advisors/scout/states/scout_excited.png",
+        "speaking": "images/advisors/scout/states/scout_speaking.png"
+      },
+      "expected_loop_files": {
+        "idle": "images/advisors/scout/loops/scout_idle.webp",
+        "speaking": "images/advisors/scout/loops/scout_speaking.webp",
+        "warning": "images/advisors/scout/loops/scout_warning.webp",
+        "success": "images/advisors/scout/loops/scout_success.webp"
+      },
+      "expected_sprite_files": {
+        "idle_sheet": "images/advisors/scout/sprites/scout_idle_sheet.png",
+        "speaking_sheet": "images/advisors/scout/sprites/scout_speaking_sheet.png"
+      },
+      "locked_face_asset": "images/advisors/scout/states/scout_face_neutral.png",
+      "locked_status": "LOCKED",
+      "face_asset_rule": "Use this locked face asset for neutral advisor card display unless a specific animated state overrides it."
+    },
+    "mapkeeper": {
+      "name": "Mapkeeper",
+      "verb": "Remember",
+      "question": "What do we know?",
+      "fallback_asset": "avatars/student/mapkeeper.png",
+      "core_states": [
+        "neutral",
+        "remembering",
+        "warning",
+        "confirming",
+        "speaking"
+      ],
+      "folders": {
+        "states": "static/images/advisors/mapkeeper/states",
+        "loops": "static/images/advisors/mapkeeper/loops",
+        "sprites": "static/images/advisors/mapkeeper/sprites",
+        "exports": "static/images/advisors/mapkeeper/exports"
+      },
+      "expected_still_files": {
+        "neutral": "images/advisors/mapkeeper/states/mapkeeper_neutral.png",
+        "remembering": "images/advisors/mapkeeper/states/mapkeeper_remembering.png",
+        "warning": "images/advisors/mapkeeper/states/mapkeeper_warning.png",
+        "confirming": "images/advisors/mapkeeper/states/mapkeeper_confirming.png",
+        "speaking": "images/advisors/mapkeeper/states/mapkeeper_speaking.png"
+      },
+      "expected_loop_files": {
+        "idle": "images/advisors/mapkeeper/loops/mapkeeper_idle.webp",
+        "speaking": "images/advisors/mapkeeper/loops/mapkeeper_speaking.webp",
+        "warning": "images/advisors/mapkeeper/loops/mapkeeper_warning.webp",
+        "success": "images/advisors/mapkeeper/loops/mapkeeper_success.webp"
+      },
+      "expected_sprite_files": {
+        "idle_sheet": "images/advisors/mapkeeper/sprites/mapkeeper_idle_sheet.png",
+        "speaking_sheet": "images/advisors/mapkeeper/sprites/mapkeeper_speaking_sheet.png"
+      },
+      "locked_face_asset": "images/advisors/mapkeeper/states/mapkeeper_face_neutral.png",
+      "locked_status": "LOCKED",
+      "face_asset_rule": "Use this locked face asset for neutral advisor card display unless a specific animated state overrides it."
+    },
+    "builder": {
+      "name": "Builder",
+      "verb": "Create",
+      "question": "What can we build?",
+      "fallback_asset": "avatars/student/builder.png",
+      "core_states": [
+        "neutral",
+        "planning",
+        "testing",
+        "frustrated",
+        "celebrating",
+        "speaking"
+      ],
+      "folders": {
+        "states": "static/images/advisors/builder/states",
+        "loops": "static/images/advisors/builder/loops",
+        "sprites": "static/images/advisors/builder/sprites",
+        "exports": "static/images/advisors/builder/exports"
+      },
+      "expected_still_files": {
+        "neutral": "images/advisors/builder/states/builder_neutral.png",
+        "planning": "images/advisors/builder/states/builder_planning.png",
+        "testing": "images/advisors/builder/states/builder_testing.png",
+        "frustrated": "images/advisors/builder/states/builder_frustrated.png",
+        "celebrating": "images/advisors/builder/states/builder_celebrating.png",
+        "speaking": "images/advisors/builder/states/builder_speaking.png"
+      },
+      "expected_loop_files": {
+        "idle": "images/advisors/builder/loops/builder_idle.webp",
+        "speaking": "images/advisors/builder/loops/builder_speaking.webp",
+        "warning": "images/advisors/builder/loops/builder_warning.webp",
+        "success": "images/advisors/builder/loops/builder_success.webp"
+      },
+      "expected_sprite_files": {
+        "idle_sheet": "images/advisors/builder/sprites/builder_idle_sheet.png",
+        "speaking_sheet": "images/advisors/builder/sprites/builder_speaking_sheet.png"
+      },
+      "locked_face_asset": "images/advisors/builder/states/builder_face_neutral.png",
+      "locked_status": "LOCKED",
+      "face_asset_rule": "Use this locked face asset for neutral advisor card display unless a specific animated state overrides it."
+    },
+    "healer": {
+      "name": "Healer",
+      "verb": "Restore",
+      "question": "What do people need?",
+      "fallback_asset": "avatars/student/healer.png",
+      "core_states": [
+        "neutral",
+        "concerned",
+        "caring",
+        "relieved",
+        "restored",
+        "speaking"
+      ],
+      "folders": {
+        "states": "static/images/advisors/healer/states",
+        "loops": "static/images/advisors/healer/loops",
+        "sprites": "static/images/advisors/healer/sprites",
+        "exports": "static/images/advisors/healer/exports"
+      },
+      "expected_still_files": {
+        "neutral": "images/advisors/healer/states/healer_neutral.png",
+        "concerned": "images/advisors/healer/states/healer_concerned.png",
+        "caring": "images/advisors/healer/states/healer_caring.png",
+        "relieved": "images/advisors/healer/states/healer_relieved.png",
+        "restored": "images/advisors/healer/states/healer_restored.png",
+        "speaking": "images/advisors/healer/states/healer_speaking.png"
+      },
+      "expected_loop_files": {
+        "idle": "images/advisors/healer/loops/healer_idle.webp",
+        "speaking": "images/advisors/healer/loops/healer_speaking.webp",
+        "warning": "images/advisors/healer/loops/healer_warning.webp",
+        "success": "images/advisors/healer/loops/healer_success.webp"
+      },
+      "expected_sprite_files": {
+        "idle_sheet": "images/advisors/healer/sprites/healer_idle_sheet.png",
+        "speaking_sheet": "images/advisors/healer/sprites/healer_speaking_sheet.png"
+      },
+      "locked_face_asset": "images/advisors/healer/states/healer_face_neutral.png",
+      "locked_status": "LOCKED",
+      "face_asset_rule": "Use this locked face asset for neutral advisor card display unless a specific animated state overrides it."
+    }
+  },
+  "locked_advisor_face_assets": {
+    "builder": "images/advisors/builder/states/builder_face_neutral.png",
+    "guardian": "images/advisors/guardian/states/guardian_face_neutral.png",
+    "healer": "images/advisors/healer/states/healer_face_neutral.png",
+    "mapkeeper": "images/advisors/mapkeeper/states/mapkeeper_face_neutral.png",
+    "scout": "images/advisors/scout/states/scout_face_neutral.png"
+  }
+}

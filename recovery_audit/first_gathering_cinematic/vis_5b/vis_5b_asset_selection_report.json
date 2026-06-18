@@ -1,0 +1,250 @@
+{
+  "audit": "VIS-5B \u2014 First Gathering Cinematic Environment Asset Selection",
+  "generated": "2026-06-15T07:56:30",
+  "candidates": [
+    {
+      "id": "GAMEBOARD_COUNCIL_CHAMBER",
+      "path": "static\\gameboard\\04_council_chamber_locked.png",
+      "role": "Possible Council Hall destination or exterior visual language",
+      "width": 1536,
+      "height": 1024,
+      "aspect_ratio": 1.5,
+      "mode": "RGB",
+      "has_alpha": false,
+      "size_bytes": 2394626,
+      "technical_score": 5,
+      "technical_notes": [
+        "usable with moderate crop",
+        "acceptable desktop resolution",
+        "strong architecture candidate"
+      ]
+    },
+    {
+      "id": "ACADEMY_MEMORY_CHAMBER",
+      "path": "static\\inspiration\\academy_memory_chamber.png",
+      "role": "Possible antechamber or Academy architectural base",
+      "width": 1536,
+      "height": 1024,
+      "aspect_ratio": 1.5,
+      "mode": "RGB",
+      "has_alpha": false,
+      "size_bytes": 3659813,
+      "technical_score": 5,
+      "technical_notes": [
+        "usable with moderate crop",
+        "acceptable desktop resolution",
+        "strong Academy continuity candidate"
+      ]
+    },
+    {
+      "id": "COUNCIL_GUARDIAN_CONCEPT",
+      "path": "static\\storyboards\\council_hall_guardian_concept.png",
+      "role": "Council Hall architectural and lighting reference",
+      "width": 1672,
+      "height": 941,
+      "aspect_ratio": 1.777,
+      "mode": "RGBA",
+      "has_alpha": true,
+      "size_bytes": 2991252,
+      "technical_score": 5,
+      "technical_notes": [
+        "strong widescreen ratio",
+        "sufficient desktop resolution"
+      ]
+    },
+    {
+      "id": "COUNCIL_MISSION_BRIEFING",
+      "path": "static\\storyboards\\council_hall_mission_briefing.png",
+      "role": "Council Hall scale and cinematic staging reference",
+      "width": 1535,
+      "height": 1024,
+      "aspect_ratio": 1.499,
+      "mode": "RGB",
+      "has_alpha": false,
+      "size_bytes": 2535276,
+      "technical_score": 2,
+      "technical_notes": [
+        "usable with moderate crop",
+        "acceptable desktop resolution",
+        "may reveal Council environment too fully"
+      ]
+    },
+    {
+      "id": "COUNCIL_EVIDENCE_BRIEFING",
+      "path": "static\\storyboards\\council_hall_evidence_briefing.png",
+      "role": "Council Stage continuity reference only",
+      "width": 1672,
+      "height": 941,
+      "aspect_ratio": 1.777,
+      "mode": "RGB",
+      "has_alpha": false,
+      "size_bytes": 2350708,
+      "technical_score": 3,
+      "technical_notes": [
+        "strong widescreen ratio",
+        "sufficient desktop resolution",
+        "contains later-stage narrative material"
+      ]
+    },
+    {
+      "id": "INTRO_SCENE_1",
+      "path": "static\\intro_scene1.png",
+      "role": "Opening cinematic visual continuity reference",
+      "width": 1536,
+      "height": 1024,
+      "aspect_ratio": 1.5,
+      "mode": "RGB",
+      "has_alpha": false,
+      "size_bytes": 3307027,
+      "technical_score": 3,
+      "technical_notes": [
+        "usable with moderate crop",
+        "acceptable desktop resolution"
+      ]
+    },
+    {
+      "id": "INTRO_SCENE_2",
+      "path": "static\\intro_scene2.jpg",
+      "role": "Opening cinematic visual continuity reference",
+      "width": 1200,
+      "height": 630,
+      "aspect_ratio": 1.905,
+      "mode": "RGB",
+      "has_alpha": false,
+      "size_bytes": 94523,
+      "technical_score": 2,
+      "technical_notes": [
+        "requires substantial crop",
+        "acceptable desktop resolution"
+      ]
+    },
+    {
+      "id": "INTRO_SCENE_3",
+      "path": "static\\intro_scene3.jpg",
+      "role": "Opening cinematic visual continuity reference",
+      "width": 1536,
+      "height": 1024,
+      "aspect_ratio": 1.5,
+      "mode": "RGB",
+      "has_alpha": false,
+      "size_bytes": 2852836,
+      "technical_score": 3,
+      "technical_notes": [
+        "usable with moderate crop",
+        "acceptable desktop resolution"
+      ]
+    },
+    {
+      "id": "INTRO_SCENE_4",
+      "path": "static\\intro_scene4.jpg",
+      "role": "Opening cinematic visual continuity reference",
+      "width": 1536,
+      "height": 1024,
+      "aspect_ratio": 1.5,
+      "mode": "RGB",
+      "has_alpha": false,
+      "size_bytes": 2688683,
+      "technical_score": 3,
+      "technical_notes": [
+        "usable with moderate crop",
+        "acceptable desktop resolution"
+      ]
+    },
+    {
+      "id": "INTRO_SCENE_5",
+      "path": "static\\intro_scene5.jpg",
+      "role": "Opening cinematic visual continuity reference",
+      "width": 1536,
+      "height": 1024,
+      "aspect_ratio": 1.5,
+      "mode": "RGB",
+      "has_alpha": false,
+      "size_bytes": 2664476,
+      "technical_score": 3,
+      "technical_notes": [
+        "usable with moderate crop",
+        "acceptable desktop resolution"
+      ]
+    }
+  ],
+  "ranked_candidates": [
+    {
+      "rank": 1,
+      "id": "GAMEBOARD_COUNCIL_CHAMBER",
+      "path": "static\\gameboard\\04_council_chamber_locked.png",
+      "technical_score": 5
+    },
+    {
+      "rank": 2,
+      "id": "ACADEMY_MEMORY_CHAMBER",
+      "path": "static\\inspiration\\academy_memory_chamber.png",
+      "technical_score": 5
+    },
+    {
+      "rank": 3,
+      "id": "COUNCIL_GUARDIAN_CONCEPT",
+      "path": "static\\storyboards\\council_hall_guardian_concept.png",
+      "technical_score": 5
+    },
+    {
+      "rank": 4,
+      "id": "COUNCIL_EVIDENCE_BRIEFING",
+      "path": "static\\storyboards\\council_hall_evidence_briefing.png",
+      "technical_score": 3
+    },
+    {
+      "rank": 5,
+      "id": "INTRO_SCENE_1",
+      "path": "static\\intro_scene1.png",
+      "technical_score": 3
+    },
+    {
+      "rank": 6,
+      "id": "INTRO_SCENE_3",
+      "path": "static\\intro_scene3.jpg",
+      "technical_score": 3
+    },
+    {
+      "rank": 7,
+      "id": "INTRO_SCENE_4",
+      "path": "static\\intro_scene4.jpg",
+      "technical_score": 3
+    },
+    {
+      "rank": 8,
+      "id": "INTRO_SCENE_5",
+      "path": "static\\intro_scene5.jpg",
+      "technical_score": 3
+    },
+    {
+      "rank": 9,
+      "id": "COUNCIL_MISSION_BRIEFING",
+      "path": "static\\storyboards\\council_hall_mission_briefing.png",
+      "technical_score": 2
+    },
+    {
+      "rank": 10,
+      "id": "INTRO_SCENE_2",
+      "path": "static\\intro_scene2.jpg",
+      "technical_score": 2
+    }
+  ],
+  "contact_sheet": "recovery_audit\\first_gathering_cinematic\\vis_5b\\first_gathering_asset_contact_sheet.jpg",
+  "preview_files": [
+    "recovery_audit\\first_gathering_cinematic\\vis_5b\\previews\\gameboard_council_chamber.jpg",
+    "recovery_audit\\first_gathering_cinematic\\vis_5b\\previews\\academy_memory_chamber.jpg",
+    "recovery_audit\\first_gathering_cinematic\\vis_5b\\previews\\council_guardian_concept.jpg",
+    "recovery_audit\\first_gathering_cinematic\\vis_5b\\previews\\council_mission_briefing.jpg",
+    "recovery_audit\\first_gathering_cinematic\\vis_5b\\previews\\council_evidence_briefing.jpg",
+    "recovery_audit\\first_gathering_cinematic\\vis_5b\\previews\\intro_scene_1.jpg",
+    "recovery_audit\\first_gathering_cinematic\\vis_5b\\previews\\intro_scene_2.jpg",
+    "recovery_audit\\first_gathering_cinematic\\vis_5b\\previews\\intro_scene_3.jpg",
+    "recovery_audit\\first_gathering_cinematic\\vis_5b\\previews\\intro_scene_4.jpg",
+    "recovery_audit\\first_gathering_cinematic\\vis_5b\\previews\\intro_scene_5.jpg"
+  ],
+  "identity_lock": {
+    "name": "dynamic",
+    "avatar": "dynamic",
+    "bake_into_artwork": false
+  }
+}

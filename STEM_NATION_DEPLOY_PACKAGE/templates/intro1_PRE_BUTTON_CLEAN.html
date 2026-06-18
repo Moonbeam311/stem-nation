@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html>
+<body style="margin:0;overflow:hidden;font-family:Arial">
+
+<div style="
+width:100vw;height:100vh;
+background:url('/static/intro_scene1.png') center center / cover no-repeat;
+display:flex;align-items:flex-end;justify-content:center;
+color:white;font-size:34px;text-align:center;
+padding-bottom:100px;
+">
+
+<div id="text" style="transition:1.5s;white-space:pre-line;">
+Every civilization begins with a decision.
+</div>
+
+
+
+</div>
+
+
+
+
+
+
+<script>
+
+window.onload = function() {
+
+  const text = document.getElementById("text");
+
+  const btn = document.getElementById("btn");
+
+
+
+  setTimeout(() => {
+
+    text.style.opacity = 1;
+
+  }, 300);
+
+
+
+  setTimeout(() => {
+
+    btn.style.opacity = 1;
+
+    btn.style.transition = "opacity 1s ease";
+
+  }, 2000);
+
+};
+
+</script>
+
+
+<script>
+
+window.onload = function() {
+
+  const btn = document.getElementById("btn");
+
+  setTimeout(() => {
+
+    btn.style.opacity = 1;
+
+  }, 2000);
+
+};
+
+</script>
+
+
+<script>
+
+window.onload = function() {
+
+  const text = document.getElementById("text");
+
+  const btn = document.getElementById("btn");
+
+
+
+  setTimeout(() => {
+
+    text.style.opacity = 1;
+
+  }, 400);
+
+
+
+  if (btn) {
+
+    btn.style.opacity = 0;
+
+    btn.style.transition = "opacity 1s ease";
+
+
+
+    setTimeout(() => {
+
+      btn.style.opacity = 1;
+
+    }, 2200);
+
+  }
+
+};
+
+</script>
+
+
+</body>
+</html>
+
+
+<script>
+document.body.onclick = function() {
+    window.location.href = getNextPage();
+};
+
+function getNextPage() {
+    const page = window.location.pathname.replace("/", "");
+    const num = parseInt(page.replace("intro", ""));
+    return "/intro" + (num + 1);
+}
+</script>

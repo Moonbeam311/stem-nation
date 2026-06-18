@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>STEM Nation Academy | Command Center Entry</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      font-family: "Georgia", "Times New Roman", serif;
+      color: #f8f0d5;
+      background:
+        radial-gradient(circle at top, rgba(244, 211, 94, 0.18), transparent 34%),
+        linear-gradient(135deg, #061826 0%, #0b2233 45%, #05070c 100%);
+      overflow-x: hidden;
+    }
+
+    .atmosphere {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      background:
+        linear-gradient(115deg, rgba(255,255,255,0.05), transparent 24%),
+        radial-gradient(circle at 75% 20%, rgba(76, 201, 240, 0.13), transparent 28%),
+        radial-gradient(circle at 20% 80%, rgba(244, 211, 94, 0.12), transparent 30%);
+      opacity: 0.9;
+    }
+
+    .shell {
+      position: relative;
+      z-index: 1;
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 48px 22px 38px;
+      min-height: 100vh;
+      display: grid;
+      place-items: center;
+    }
+
+    .entry-card {
+      width: 100%;
+      border: 1px solid rgba(244, 211, 94, 0.26);
+      border-radius: 30px;
+      background: rgba(5, 18, 29, 0.84);
+      box-shadow: 0 24px 80px rgba(0,0,0,0.45);
+      padding: 34px;
+      backdrop-filter: blur(12px);
+    }
+
+    .topline {
+      display: flex;
+      align-items: center;
+      gap: 18px;
+      flex-wrap: wrap;
+      margin-bottom: 22px;
+    }
+
+    .portrait-frame {
+      width: 88px;
+      height: 88px;
+      border-radius: 28px;
+      border: 1px solid rgba(244, 211, 94, 0.45);
+      background: rgba(244, 211, 94, 0.08);
+      display: grid;
+      place-items: center;
+      overflow: hidden;
+      flex: 0 0 auto;
+      box-shadow: 0 0 30px rgba(244, 211, 94, 0.12);
+    }
+
+    .portrait-frame img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .portrait-fallback {
+      font-size: 2.4rem;
+    }
+
+    .identity h1 {
+      margin: 0 0 8px;
+      font-size: clamp(2.1rem, 5vw, 4.4rem);
+      line-height: 0.95;
+      color: #f4d35e;
+      letter-spacing: -0.04em;
+    }
+
+    .identity p {
+      margin: 0;
+      color: rgba(248, 240, 213, 0.78);
+      font-size: 1.05rem;
+      line-height: 1.55;
+    }
+
+    .kicker {
+      color: #7dd3fc;
+      text-transform: uppercase;
+      letter-spacing: 0.14em;
+      font-size: 0.78rem;
+      font-weight: 800;
+      margin-bottom: 8px;
+    }
+
+    .briefing {
+      display: grid;
+      grid-template-columns: 1.25fr 0.75fr;
+      gap: 22px;
+      margin-top: 26px;
+    }
+
+    .panel {
+      border: 1px solid rgba(255,255,255,0.12);
+      border-radius: 24px;
+      background: rgba(255,255,255,0.055);
+      padding: 22px;
+    }
+
+    .panel h2 {
+      margin: 0 0 10px;
+      color: #f4d35e;
+      font-size: 1.25rem;
+    }
+
+    .panel p {
+      color: rgba(248, 240, 213, 0.78);
+      line-height: 1.58;
+      margin: 0 0 12px;
+    }
+
+    .mission-seal {
+      border-left: 3px solid rgba(244, 211, 94, 0.65);
+      padding-left: 16px;
+      margin-top: 16px;
+      color: rgba(248, 240, 213, 0.86);
+      line-height: 1.6;
+    }
+
+    .summary-grid {
+      display: grid;
+      gap: 10px;
+      margin-top: 14px;
+    }
+
+    .summary-item {
+      border-radius: 16px;
+      background: rgba(0,0,0,0.22);
+      border: 1px solid rgba(255,255,255,0.08);
+      padding: 12px 14px;
+    }
+
+    .summary-item strong {
+      display: block;
+      color: #7dd3fc;
+      font-size: 0.78rem;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      margin-bottom: 5px;
+    }
+
+    .summary-item span {
+      color: rgba(248, 240, 213, 0.84);
+      line-height: 1.45;
+    }
+
+    .actions {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+      margin-top: 26px;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 999px;
+      padding: 14px 20px;
+      text-decoration: none;
+      font-weight: 800;
+      letter-spacing: 0.03em;
+      border: 1px solid rgba(244, 211, 94, 0.35);
+      cursor: pointer;
+    }
+
+    .btn.primary {
+      color: #08131d;
+      background: linear-gradient(135deg, #f4d35e, #f7b955);
+      box-shadow: 0 14px 36px rgba(244, 211, 94, 0.18);
+    }
+
+    .btn.secondary {
+      color: #f8f0d5;
+      background: rgba(255,255,255,0.06);
+    }
+
+    .status {
+      margin-top: 16px;
+      color: rgba(248, 240, 213, 0.66);
+      font-size: 0.92rem;
+    }
+
+    @media (max-width: 850px) {
+      .briefing {
+        grid-template-columns: 1fr;
+      }
+
+      .entry-card {
+        padding: 24px;
+      }
+
+      .portrait-frame {
+        width: 72px;
+        height: 72px;
+        border-radius: 22px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="atmosphere"></div>
+
+  <main class="shell">
+    <section class="entry-card">
+      <div class="topline">
+        <div class="portrait-frame" id="portraitFrame">
+          <span class="portrait-fallback">🧭</span>
+        </div>
+
+        <div class="identity">
+          <div class="kicker">Academy Trial Complete</div>
+          <h1>Command Center Opened</h1>
+          <p id="studentLine">
+            Your first inquiry has been recorded. The Council has opened the next chamber.
+          </p>
+        </div>
+      </div>
+
+      <div class="briefing">
+        <article class="panel">
+          <h2>Guardian Briefing</h2>
+          <p>
+            You observed evidence before judging it. You ranked the questions that should guide the investigation.
+            You explained your reasoning, listened to the Council react, and completed your mission debrief.
+          </p>
+          <p>
+            The Command Center is where your Academy record begins to connect with the larger civilization system.
+            Enter carefully. What you notice, ask, and defend will shape what happens next.
+          </p>
+
+          <div class="mission-seal">
+            This is not a worksheet handoff. This is the first official transfer from Academy inquiry into
+            civilization command.
+          </div>
+
+          <div class="actions">
+            <a class="btn primary" href="/student_hub">Enter Student Hub</a>
+            <a class="btn secondary" href="/mission_debrief">Review Debrief</a>
+          </div>
+
+          <div class="status" id="statusLine">
+            Mission record check pending...
+          </div>
+        </article>
+
+        <aside class="panel">
+          <h2>Mission Record</h2>
+          <div class="summary-grid">
+            <div class="summary-item">
+              <strong>Identity</strong>
+              <span id="identitySummary">Academy Learner</span>
+            </div>
+            <div class="summary-item">
+              <strong>Observation</strong>
+              <span id="observationSummary">Evidence observed.</span>
+            </div>
+            <div class="summary-item">
+              <strong>First Question</strong>
+              <span id="questionSummary">Question ranking saved.</span>
+            </div>
+            <div class="summary-item">
+              <strong>Council Reaction</strong>
+              <span id="reactionSummary">Council response recorded.</span>
+            </div>
+            <div class="summary-item">
+              <strong>Debrief</strong>
+              <span id="debriefSummary">Reflection saved.</span>
+            </div>
+          </div>
+        </aside>
+      </div>
+    </section>
+  </main>
+
+  <script>
+    const IDENTITY_KEY = "stemNationStudentIdentity";
+    const AVATAR_KEY = "stemNationAvatar";
+    const OBSERVATION_KEY = "stemNationObservationV1";
+    const RANKING_KEY = "stemNationQuestionPriorityRankingV1";
+    const REACTION_KEY = "stemNationAdvisorReactionV1";
+    const DEBRIEF_KEY = "stemNationMissionDebriefV1";
+
+    function readJson(key) {
+      try {
+        return JSON.parse(localStorage.getItem(key) || "null");
+      } catch (error) {
+        console.warn("Could not read", key, error);
+        return null;
+      }
+    }
+
+    function textFrom(value, fallback) {
+      if (!value) return fallback;
+      if (typeof value === "string") return value;
+      if (Array.isArray(value)) return value.filter(Boolean).join(", ") || fallback;
+      return fallback;
+    }
+
+    const identity = readJson(IDENTITY_KEY);
+    const avatar = readJson(AVATAR_KEY);
+    const observation = readJson(OBSERVATION_KEY);
+    const ranking = readJson(RANKING_KEY);
+    const reaction = readJson(REACTION_KEY);
+    const debrief = readJson(DEBRIEF_KEY);
+
+    const displayName =
+      identity?.teacherApprovedName ||
+      identity?.approvedName ||
+      identity?.name ||
+      avatar?.name ||
+      "Academy Learner";
+
+    document.getElementById("studentLine").textContent =
+      `${displayName}, your first inquiry has been recorded. The Council has opened the next chamber.`;
+
+    document.getElementById("identitySummary").textContent = displayName;
+
+    const portraitFrame = document.getElementById("portraitFrame");
+    const portrait =
+      identity?.portrait ||
+      avatar?.portrait ||
+      avatar?.fallback ||
+      "/static/avatars/student_scout.svg";
+
+    function isImageSource(value) {
+      return typeof value === "string" && (
+        value.startsWith("/") ||
+        value.startsWith("data:image") ||
+        value.startsWith("http://") ||
+        value.startsWith("https://")
+      );
+    }
+
+    if (isImageSource(portrait)) {
+      portraitFrame.innerHTML = `<img src="${portrait}" alt="Student avatar">`;
+    } else {
+      portraitFrame.innerHTML = `<span class="portrait-fallback">${portrait || "🧭"}</span>`;
+    }
+
+    let observationCount = 0;
+    if (observation?.observations && Array.isArray(observation.observations)) {
+      observationCount = observation.observations.filter(Boolean).length;
+    } else if (observation?.noticed && Array.isArray(observation.noticed)) {
+      observationCount = observation.noticed.filter(Boolean).length;
+    }
+
+    document.getElementById("observationSummary").textContent =
+      observationCount
+        ? `${observationCount} observation${observationCount === 1 ? "" : "s"} recorded.`
+        : "Observation record found or pending.";
+
+    let topQuestion = "";
+    if (ranking?.rankedQuestions && Array.isArray(ranking.rankedQuestions)) {
+      topQuestion = ranking.rankedQuestions[0] || "";
+    } else if (ranking?.selectedQuestions && Array.isArray(ranking.selectedQuestions)) {
+      topQuestion = ranking.selectedQuestions[0] || "";
+    } else if (ranking?.topQuestion) {
+      topQuestion = ranking.topQuestion;
+    }
+
+    document.getElementById("questionSummary").textContent =
+      topQuestion ? `Top question: ${topQuestion}` : "Question priority record found or pending.";
+
+    document.getElementById("reactionSummary").textContent =
+      reaction
+        ? "Advisor reaction recorded."
+        : "Council reaction record pending.";
+
+    document.getElementById("debriefSummary").textContent =
+      debrief?.reflectQuestion
+        ? "Mission debrief reflection saved."
+        : "Mission debrief record pending.";
+
+    const readyPieces = [identity || avatar, observation, ranking, reaction, debrief].filter(Boolean).length;
+    document.getElementById("statusLine").textContent =
+      `Command entry ready. ${readyPieces} of 5 mission records detected in this browser.`;
+  </script>
+</body>
+</html>

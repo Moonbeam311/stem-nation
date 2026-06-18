@@ -1,0 +1,1310 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>STEM Nation | Leader Command Trial</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- STEM_NATION_LEADER_COMMAND_6G2_INCIDENT_MATERIALS_V1 -->
+
+  <style>
+    :root {
+      --bg: #07100c;
+      --panel: rgba(8, 12, 9, 0.94);
+      --panel-soft: rgba(255,255,255,0.055);
+      --gold: #d4b45f;
+      --gold-soft: rgba(212,180,95,0.34);
+      --text: #f6edd1;
+      --muted: rgba(246,237,209,0.72);
+      --green: #8aaa62;
+      --danger: #c66a4c;
+      --river: #3d94bd;
+    }
+
+    * { box-sizing: border-box; }
+
+    html, body {
+      margin: 0;
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      color: var(--text);
+      font-family: Arial, sans-serif;
+      background:
+        radial-gradient(circle at 18% 16%, rgba(212,180,95,0.14), transparent 28%),
+        radial-gradient(circle at 80% 22%, rgba(60,140,87,0.13), transparent 30%),
+        linear-gradient(135deg, #050705, #101810 58%, #070907);
+    }
+
+    .app {
+      height: 100vh;
+      display: grid;
+      grid-template-rows: 78px minmax(0, 1fr) 84px;
+      gap: 10px;
+      padding: 10px;
+    }
+
+    .top,
+    .actions {
+      border: 1px solid var(--gold-soft);
+      border-radius: 16px;
+      background: rgba(0,0,0,0.42);
+      padding: 10px 14px;
+    }
+
+    .top {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .top h1 {
+      margin: 0;
+      color: var(--gold);
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 1.08rem;
+      letter-spacing: 0.07em;
+      text-transform: uppercase;
+    }
+
+    .sub {
+      margin-top: 3px;
+      color: var(--muted);
+      font-size: 0.78rem;
+    }
+
+    .time-box {
+      border: 1px solid rgba(212,180,95,0.28);
+      border-radius: 999px;
+      padding: 9px 14px;
+      color: rgba(246,237,209,0.88);
+      background: rgba(0,0,0,0.28);
+      font-size: 0.84rem;
+      white-space: nowrap;
+    }
+
+    .stage-shell {
+      min-height: 0;
+      overflow: hidden;
+      border: 1px solid var(--gold-soft);
+      border-radius: 20px;
+      background: rgba(0,0,0,0.28);
+      position: relative;
+    }
+
+    .stage {
+      display: none;
+      height: 100%;
+      padding: 18px;
+      overflow: hidden;
+    }
+
+    .stage.active {
+      display: block;
+      animation: fadeIn 0.35s ease both;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(8px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .brief {
+      height: 100%;
+      display: grid;
+      place-items: center;
+    }
+
+    .brief-card {
+      width: min(1040px, 96vw);
+      max-height: 100%;
+      overflow-y: auto;
+      border: 1px solid rgba(212,180,95,0.28);
+      border-radius: 24px;
+      background:
+        linear-gradient(180deg, rgba(0,0,0,0.64), rgba(0,0,0,0.40)),
+        var(--panel);
+      padding: 30px;
+      box-shadow: 0 28px 80px rgba(0,0,0,0.42);
+    }
+
+    .brief-card h2 {
+      margin: 0 0 12px;
+      color: var(--gold);
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: clamp(1.55rem, 3.2vw, 2.7rem);
+    }
+
+    .brief-card p {
+      color: rgba(246,237,209,0.84);
+      font-size: 0.98rem;
+      line-height: 1.56;
+      margin: 9px 0;
+    }
+
+    .grid-2 {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+      margin-top: 18px;
+    }
+
+    .grid-3 {
+      display: grid;
+      grid-template-columns: 350px minmax(0,1fr);
+      gap: 12px;
+      height: 100%;
+      min-height: 0;
+    }
+
+    .panel {
+      min-height: 0;
+      overflow-y: auto;
+      border: 1px solid rgba(212,180,95,0.22);
+      border-radius: 18px;
+      background: var(--panel);
+      padding: 14px;
+    }
+
+    .panel h2 {
+      margin: 0 0 8px;
+      color: var(--gold);
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 1.08rem;
+      letter-spacing: 0.04em;
+    }
+
+    .panel p {
+      margin: 0 0 10px;
+      color: var(--muted);
+      font-size: 0.82rem;
+      line-height: 1.42;
+    }
+
+    .mini-card,
+    .role-card,
+    .material-card,
+    .report-card,
+    .question-card {
+      border: 1px solid rgba(212,180,95,0.18);
+      border-radius: 16px;
+      background: rgba(255,255,255,0.045);
+      padding: 12px;
+    }
+
+    .mini-card strong,
+    .role-card strong,
+    .material-card strong,
+    .report-card strong,
+    .question-card strong {
+      display: block;
+      color: var(--gold);
+      margin-bottom: 5px;
+    }
+
+    .mini-card span,
+    .role-card span,
+    .material-card span,
+    .report-card span,
+    .question-card span {
+      color: var(--muted);
+      font-size: 0.82rem;
+      line-height: 1.35;
+    }
+
+    .role-list,
+    .materials-list,
+    .reports-list,
+    .question-list {
+      display: grid;
+      gap: 10px;
+    }
+
+    .role-card,
+    .material-card,
+    .question-card {
+      cursor: pointer;
+      transition: 0.2s ease;
+    }
+
+    .role-card.selected,
+    .material-card.selected,
+    .question-card.selected {
+      border-color: rgba(138,170,98,0.76);
+      background: rgba(138,170,98,0.14);
+    }
+
+    .material-card .meta {
+      display: block;
+      color: rgba(246,237,209,0.88);
+      font-size: 0.76rem;
+      margin: 5px 0 4px;
+    }
+
+    .material-card .size {
+      display: block;
+      color: rgba(212,180,95,0.88);
+      font-size: 0.72rem;
+      margin-bottom: 4px;
+    }
+
+    .assignment-box {
+      margin-top: 12px;
+      padding: 10px;
+      border-radius: 14px;
+      border: 1px solid rgba(138,170,98,0.30);
+      background: rgba(138,170,98,0.08);
+      color: var(--muted);
+      font-size: 0.8rem;
+      line-height: 1.4;
+    }
+
+    .command-row {
+      display: grid;
+      gap: 10px;
+      margin-top: 12px;
+    }
+
+    .report-card {
+      margin-bottom: 10px;
+    }
+
+    .report-card.returned {
+      border-color: rgba(138,170,98,0.48);
+      background: rgba(138,170,98,0.08);
+    }
+
+    label {
+      display: block;
+      margin: 12px 0 5px;
+      color: var(--gold);
+      font-size: 0.72rem;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+    }
+
+    textarea {
+      width: 100%;
+      min-height: 92px;
+      resize: vertical;
+      padding: 10px;
+      border: 1px solid rgba(255,255,255,0.15);
+      border-radius: 12px;
+      background: rgba(0,0,0,0.30);
+      color: var(--text);
+      font-family: Arial, sans-serif;
+      font-size: 0.86rem;
+      line-height: 1.4;
+    }
+
+    .board-wrap {
+      min-height: 0;
+      display: grid;
+      grid-template-rows: 42px minmax(0, 1fr) 48px;
+      gap: 8px;
+      height: 100%;
+    }
+
+    .event-feed,
+    .board-help {
+      border: 1px solid rgba(212,180,95,0.22);
+      border-radius: 14px;
+      background: rgba(0,0,0,0.36);
+      padding: 9px 12px;
+      color: rgba(246,237,209,0.82);
+      font-size: 0.82rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+    }
+
+    .board {
+      position: relative;
+      overflow: hidden;
+      border: 1px solid rgba(212,180,95,0.28);
+      border-radius: 18px;
+      background: #142014;
+      box-shadow: inset 0 0 100px rgba(0,0,0,0.48);
+    }
+
+    .map {
+      position: absolute;
+      inset: 0;
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      isolation: isolate;
+    }
+
+    .map::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      z-index: 9;
+      pointer-events: none;
+      background:
+        radial-gradient(circle at center, transparent 46%, rgba(0,0,0,0.26) 100%),
+        linear-gradient(180deg, rgba(255,255,255,0.05), transparent 40%, rgba(0,0,0,0.18));
+    }
+
+    .zone {
+      position: relative;
+      overflow: hidden;
+      border-right: 1px solid rgba(255,255,255,0.10);
+      transition: 0.2s ease;
+    }
+
+    .zone:last-child { border-right: none; }
+
+    .zone.drag-over {
+      outline: 3px solid var(--gold);
+      filter: brightness(1.12) saturate(1.08);
+      box-shadow: inset 0 0 90px rgba(212,180,95,0.28);
+      z-index: 10;
+    }
+
+    .zone-tag {
+      position: absolute;
+      top: 12px;
+      left: 12px;
+      z-index: 20;
+      border: 1px solid rgba(212,180,95,0.28);
+      border-radius: 999px;
+      background: rgba(0,0,0,0.42);
+      padding: 6px 10px;
+      color: rgba(246,237,209,0.84);
+      font-size: 0.72rem;
+      pointer-events: none;
+    }
+
+    .river {
+      background:
+        linear-gradient(115deg, rgba(35,91,120,0.96), rgba(68,136,88,0.72)),
+        radial-gradient(circle at 68% 72%, rgba(90,150,74,0.55), transparent 25%);
+    }
+
+    .river::before {
+      content: "";
+      position: absolute;
+      left: -15%;
+      top: -10%;
+      width: 55%;
+      height: 125%;
+      border-radius: 48%;
+      background:
+        linear-gradient(105deg,
+          transparent,
+          rgba(82,170,212,0.18) 20%,
+          rgba(104,195,228,0.64) 42%,
+          rgba(39,111,147,0.78) 60%,
+          transparent
+        );
+      transform: rotate(8deg);
+      animation: riverMove 6s ease-in-out infinite alternate;
+      box-shadow: 0 0 35px rgba(73,165,207,0.34);
+    }
+
+    .river::after {
+      content: "";
+      position: absolute;
+      left: 10%;
+      top: 45%;
+      width: 130px;
+      height: 80px;
+      background:
+        radial-gradient(ellipse at 20% 52%, rgba(230,238,214,0.72) 0 8px, transparent 9px),
+        radial-gradient(ellipse at 48% 40%, rgba(230,238,214,0.58) 0 6px, transparent 7px),
+        radial-gradient(ellipse at 76% 64%, rgba(230,238,214,0.52) 0 5px, transparent 6px);
+      opacity: 0.75;
+      animation: fishDrift 5s ease-in-out infinite alternate;
+    }
+
+    @keyframes riverMove {
+      from { transform: rotate(8deg) translateY(0); filter: brightness(0.95); }
+      to { transform: rotate(8deg) translateY(15px); filter: brightness(1.18); }
+    }
+
+    @keyframes fishDrift {
+      from { transform: translateX(0) translateY(0); }
+      to { transform: translateX(28px) translateY(10px); }
+    }
+
+    .high {
+      background:
+        linear-gradient(180deg, rgba(155,132,78,0.96), rgba(65,55,39,0.97)),
+        radial-gradient(circle at 44% 36%, rgba(235,211,148,0.50), transparent 24%);
+    }
+
+    .high::before {
+      content: "";
+      position: absolute;
+      left: 8%;
+      top: 10%;
+      width: 86%;
+      height: 74%;
+      background:
+        radial-gradient(circle at 35% 40%, rgba(210,199,160,0.72) 0 16px, transparent 17px),
+        radial-gradient(circle at 55% 55%, rgba(116,105,84,0.70) 0 28px, transparent 29px),
+        radial-gradient(circle at 72% 68%, rgba(90,81,65,0.62) 0 18px, transparent 19px);
+      clip-path: polygon(50% 2%, 96% 90%, 6% 90%);
+      filter: drop-shadow(0 22px 16px rgba(0,0,0,0.35));
+    }
+
+    .forest {
+      background:
+        linear-gradient(90deg, rgba(23,76,39,0.97), rgba(9,31,18,0.98)),
+        radial-gradient(circle at 48% 54%, rgba(82,151,78,0.46), transparent 36%);
+    }
+
+    .forest::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(circle at 18% 25%, rgba(97,162,86,0.95) 0 16px, transparent 17px),
+        radial-gradient(circle at 36% 40%, rgba(74,135,73,0.95) 0 19px, transparent 20px),
+        radial-gradient(circle at 60% 28%, rgba(58,121,62,0.95) 0 18px, transparent 19px),
+        radial-gradient(circle at 78% 52%, rgba(80,145,75,0.95) 0 18px, transparent 19px),
+        radial-gradient(circle at 28% 70%, rgba(47,101,51,0.95) 0 19px, transparent 20px),
+        radial-gradient(circle at 58% 75%, rgba(88,154,82,0.95) 0 18px, transparent 19px);
+      filter: drop-shadow(0 12px 10px rgba(0,0,0,0.45));
+      animation: treeWind 4.5s ease-in-out infinite alternate;
+    }
+
+    @keyframes treeWind {
+      from { transform: translateX(-4px) rotate(-0.3deg); }
+      to { transform: translateX(8px) rotate(0.5deg); }
+    }
+
+    .effect {
+      position: absolute;
+      inset: 0;
+      z-index: 8;
+      pointer-events: none;
+      opacity: 0;
+      transition: 0.3s ease;
+    }
+
+    .effect.active { opacity: 1; }
+
+    .flood {
+      background: linear-gradient(180deg, transparent 44%, rgba(62,151,194,0.50));
+    }
+
+    .dry {
+      background: repeating-linear-gradient(45deg, rgba(204,151,79,0.24) 0 4px, transparent 4px 16px);
+    }
+
+    .predator {
+      background: radial-gradient(circle at 76% 52%, rgba(196,95,73,0.36), transparent 38%);
+    }
+
+    .bundle-list {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+      margin-top: 12px;
+    }
+
+    .object {
+      min-height: 74px;
+      display: grid;
+      align-items: center;
+      border: 1px solid rgba(212,180,95,0.34);
+      border-radius: 12px;
+      background: rgba(30,33,24,0.94);
+      color: var(--text);
+      padding: 9px;
+      font-size: 0.76rem;
+      font-weight: 700;
+      cursor: grab;
+      user-select: none;
+    }
+
+    .object small {
+      display: block;
+      color: var(--muted);
+      font-size: 0.65rem;
+      margin-top: 4px;
+      font-weight: 400;
+      line-height: 1.25;
+    }
+
+    .object.placed { opacity: 0.45; }
+
+    .placed-object {
+      position: absolute;
+      z-index: 30;
+      min-width: 92px;
+      min-height: 62px;
+      display: grid;
+      place-items: center;
+      text-align: center;
+      border: 1px solid rgba(232,199,93,0.70);
+      border-radius: 12px;
+      background: rgba(9,9,6,0.78);
+      color: var(--text);
+      font-size: 0.65rem;
+      font-weight: 700;
+      pointer-events: none;
+      box-shadow: 0 10px 20px rgba(0,0,0,0.42);
+      padding: 6px;
+    }
+
+    .actions {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .actions-left {
+      min-width: 0;
+      color: var(--muted);
+      font-size: 0.82rem;
+      line-height: 1.35;
+    }
+
+    .actions-right {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+    }
+
+    button,
+    .advance-link {
+      border: 1px solid var(--gold-soft);
+      background: rgba(212,180,95,0.15);
+      color: var(--text);
+      border-radius: 999px;
+      padding: 10px 15px;
+      font-size: 0.84rem;
+      cursor: pointer;
+      text-align: center;
+      text-decoration: none;
+      white-space: nowrap;
+    }
+
+    button:hover:not(:disabled),
+    .advance-link:hover {
+      background: rgba(212,180,95,0.27);
+    }
+
+    button:disabled {
+      opacity: 0.45;
+      cursor: not-allowed;
+    }
+
+    .advance-link {
+      border-color: rgba(138,170,98,0.74);
+      background: rgba(138,170,98,0.24);
+      font-weight: 700;
+    }
+
+    .hidden { display: none !important; }
+
+    @media (max-width: 980px) {
+      html, body { overflow: auto; }
+
+      .app {
+        height: auto;
+        min-height: 100vh;
+        grid-template-rows: auto auto auto;
+      }
+
+      .top {
+        grid-template-columns: 1fr;
+      }
+
+      .grid-2,
+      .grid-3 {
+        grid-template-columns: 1fr;
+        height: auto;
+      }
+
+      .stage-shell {
+        min-height: 880px;
+      }
+
+      .actions {
+        flex-direction: column;
+        align-items: stretch;
+      }
+
+      .actions-right {
+        justify-content: stretch;
+      }
+
+      button,
+      .advance-link {
+        width: 100%;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <main class="app">
+    <header class="top">
+      <div>
+        <h1>Academy Readiness Evaluation</h1>
+        <div class="sub">Survival Scenario 1: Leader Command Trial</div>
+      </div>
+      <div id="timeBox" class="time-box">Time until nightfall: 40 minutes</div>
+    </header>
+
+    <section class="stage-shell">
+
+      <section class="stage active" data-stage="0">
+        <div class="brief">
+          <article class="brief-card">
+            <h2>The crossing behind you is gone.</h2>
+            <p>Your group was traveling along an old route when rising water and mud loosened the riverbank. The crossing behind you became unsafe. Part of the path washed out, and the group cannot safely return before dark.</p>
+            <p>You have reached unfamiliar land with only 40 minutes before nightfall. The group has 12 people: four adults, three older youth, two young children, two elders, and one injured traveler.</p>
+            <p>The youngest are tired. The elders are moving slowly. The injured traveler needs rest. Some supplies are damp. The water jars are nearly empty.</p>
+            <p>You are the acting field leader. That does not mean you know all the answers. It means you must organize the questions, assign materials to specialists, listen to reports, weigh risks, and make the first survival decision before nightfall.</p>
+
+            <div class="grid-2">
+              <div class="mini-card"><strong>Why you cannot go back</strong><span>The river crossing behind the group is unsafe. Mud, rising water, and fading daylight make return too dangerous before nightfall.</span></div>
+              <div class="mini-card"><strong>Who depends on you</strong><span>12 people: 4 adults, 3 older youth, 2 young children, 2 elders, and 1 injured traveler.</span></div>
+              <div class="mini-card"><strong>Your leadership job</strong><span>Ask what must be known, assign materials, send specialists, read reports, and decide what risk to accept.</span></div>
+              <div class="mini-card"><strong>Survival needs</strong><span>Water, food or energy, air, space, shelter, warmth, safety, health, and suitable conditions.</span></div>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <section class="stage" data-stage="1">
+        <div class="grid-3">
+          <aside class="panel">
+            <h2>Leader’s First Questions</h2>
+            <p>Before giving orders, decide what you need to know first. The quality of your question may shape whether your group survives the first night.</p>
+
+            <div class="question-list">
+              <div class="question-card" data-question="Is the river rising, and could it flood the low ground before morning?"><strong>River Risk</strong><span>Is the river rising, and could it flood the low ground before morning?</span></div>
+              <div class="question-card" data-question="Where is the safest dry ground for children, elders, and the injured traveler to rest?"><strong>Safe Rest</strong><span>Where is the safest dry ground for children, elders, and the injured traveler to rest?</span></div>
+              <div class="question-card" data-question="Where can food be protected from both water and animals?"><strong>Food Protection</strong><span>Where can food be protected from both water and animals?</span></div>
+              <div class="question-card" data-question="How can the group reach water without sleeping on dangerous low ground?"><strong>Water Access</strong><span>How can the group reach water without sleeping on dangerous low ground?</span></div>
+              <div class="question-card" data-question="What path can be marked before dark so no one gets lost?"><strong>Movement</strong><span>What path can be marked before dark so no one gets lost?</span></div>
+            </div>
+          </aside>
+
+          <section class="panel">
+            <h2>Your First Question</h2>
+            <p>You may choose one of the question cards or write your own.</p>
+            <label for="firstQuestion">Before giving orders, what must be known?</label>
+            <textarea id="firstQuestion" placeholder="Example: Where can food stay dry and safe from animals?"></textarea>
+
+            <label for="questionReason">Why does this question matter?</label>
+            <textarea id="questionReason" placeholder="Example: If food is lost tonight, the group may not have enough energy tomorrow."></textarea>
+          </section>
+        </div>
+      </section>
+
+      <section class="stage" data-stage="2">
+        <div class="grid-3">
+          <aside class="panel">
+            <h2>Assign Materials</h2>
+            <p>Choose a specialist, then select materials to send with them. Materials have size, weight, and purpose. Choose carefully.</p>
+
+            <div class="role-list">
+              <div class="role-card selected" data-role="scout"><strong>Scout</strong><span>Movement, paths, danger signs, distance, animal tracks.</span></div>
+              <div class="role-card" data-role="builder"><strong>Builder</strong><span>Shelter, dry ground, flat land, wood, stone, flood protection.</span></div>
+              <div class="role-card" data-role="gatherer"><strong>Gatherer</strong><span>Food, water, fish, plants, storage safety, animal signs.</span></div>
+              <div class="role-card" data-role="caretaker"><strong>Caretaker</strong><span>Health, rest, clean water, warmth, injury risk, safe overnight conditions.</span></div>
+            </div>
+
+            <div id="assignmentBox" class="assignment-box">Selected: Scout. Choose materials below.</div>
+          </aside>
+
+          <section class="panel">
+            <h2>Survival Materials</h2>
+            <p>These are the materials your group carried from the washed-out crossing.</p>
+
+            <div class="materials-list">
+              <div class="material-card" data-material="shelter_cloth"><strong>2 Rolled Shelter Cloths</strong><span class="meta">Canvas-like cloth for cover, windbreak, shade, or emergency roof.</span><span class="size">Approx. 8 ft × 10 ft each; rolled bundle about 3 ft long.</span><span>Must stay as dry as possible. Useful for Builder or Caretaker.</span></div>
+
+              <div class="material-card" data-material="food_sacks"><strong>3 Food Sacks</strong><span class="meta">Dry food, gathered food, and basic preparation items.</span><span class="size">Each sack about 2 ft tall; heavy enough to slow travel.</span><span>Must be protected from water, mud, and animals. Useful for Gatherer.</span></div>
+
+              <div class="material-card" data-material="water_jars"><strong>4 Water Jars</strong><span class="meta">Clay or sealed carrying jars for collecting and rationing water.</span><span class="size">About 1 gallon each when full; heavy and breakable.</span><span>Useful for Gatherer or Caretaker. Empty jars mean water must be found soon.</span></div>
+
+              <div class="material-card" data-material="rope"><strong>1 Coil of Rope</strong><span class="meta">For tying shelter, marking routes, securing loads, or helping movement.</span><span class="size">Approx. 40 ft coil; light enough for one person to carry.</span><span>Useful for Scout or Builder.</span></div>
+
+              <div class="material-card" data-material="wooden_stakes"><strong>12 Wooden Stakes</strong><span class="meta">For shelter supports, boundary markers, or route markers.</span><span class="size">Approx. 18 inches each; bundled together.</span><span>Useful for Builder or Scout. Wet soil may not hold stakes well.</span></div>
+
+              <div class="material-card" data-material="hand_axe"><strong>1 Small Hand Axe</strong><span class="meta">For cutting branches, shaping stakes, clearing brush, or preparing wood.</span><span class="size">Approx. 14-inch handle; sharp and must be handled carefully.</span><span>Useful for Builder or Gatherer.</span></div>
+
+              <div class="material-card" data-material="digging_tool"><strong>1 Digging / Scraping Tool</strong><span class="meta">For scraping ground, digging shallow drainage, checking soil, or clearing camp space.</span><span class="size">Approx. 18 inches long; small enough to carry by hand.</span><span>Useful for Builder or Caretaker.</span></div>
+
+              <div class="material-card" data-material="fire_starter"><strong>1 Fire Starter Kit / Match Tin</strong><span class="meta">For warmth, signaling, preparing food, and morale.</span><span class="size">Small palm-sized tin; useless if soaked.</span><span>Useful for Caretaker. Must stay dry.</span></div>
+
+              <div class="material-card" data-material="blankets"><strong>2 Blankets</strong><span class="meta">For warmth, rest, injury care, and keeping vulnerable group members protected.</span><span class="size">Approx. 5 ft × 7 ft each; bulky if wet.</span><span>Useful for Caretaker. Important for elders, children, and injured traveler.</span></div>
+
+              <div class="material-card" data-material="marker_stones"><strong>10 Marker Stones</strong><span class="meta">For marking a safe route, warning spot, return point, or boundary.</span><span class="size">Palm-sized stones; carried in a small pouch.</span><span>Useful for Scout. Helps prevent getting lost before dark.</span></div>
+
+              <div class="material-card" data-material="map_scrap"><strong>1 Torn Map Scrap</strong><span class="meta">Shows a broken river line, one old trail mark, a hill symbol, three faded tree marks, an X near the riverbend, and the partial warning “FLO…”</span><span class="size">Approx. 6 in × 8 in, torn and water-stained.</span><span>Could mean flood, flow, floor, or something else. Useful for Scout.</span></div>
+            </div>
+          </section>
+        </div>
+      </section>
+
+      <section class="stage" data-stage="3">
+        <div class="grid-3">
+          <aside class="panel">
+            <h2>Send Specialists</h2>
+            <p>Each report takes 10 minutes. You have 40 minutes before nightfall.</p>
+            <div class="command-row">
+              <button class="send-btn" data-role="scout">Send Scout</button>
+              <button class="send-btn" data-role="builder">Send Builder</button>
+              <button class="send-btn" data-role="gatherer">Send Gatherer</button>
+              <button class="send-btn" data-role="caretaker">Send Caretaker</button>
+            </div>
+          </aside>
+
+          <section class="panel">
+            <h2>Specialist Reports</h2>
+            <div id="reportsList" class="reports-list">
+              <div class="report-card"><strong>No reports yet.</strong><span>Send specialists to inspect the land.</span></div>
+            </div>
+          </section>
+        </div>
+      </section>
+
+      <section class="stage" data-stage="4">
+        <div class="grid-3">
+          <aside class="panel">
+            <h2>Main Survival Question</h2>
+            <p>Now that reports have returned, choose the question that should guide your placement plan.</p>
+
+            <label for="leaderQuestion">What question matters most now?</label>
+            <textarea id="leaderQuestion" placeholder="Example: How can we keep food dry and safe while staying close enough to water?"></textarea>
+
+            <label for="reasoning">Which report influenced you most?</label>
+            <textarea id="reasoning" placeholder="Example: The Gatherer report warned that food sacks near the river may get wet."></textarea>
+          </aside>
+
+          <section class="panel">
+            <h2>Report Evidence</h2>
+            <div id="reportsListReview" class="reports-list"></div>
+          </section>
+        </div>
+      </section>
+
+      <section class="stage" data-stage="5">
+        <div class="grid-3">
+          <aside class="panel">
+            <h2>Place Survival Bundles</h2>
+            <p>These bundles organize the detailed materials into first-night survival decisions.</p>
+
+            <div class="bundle-list">
+              <div class="object" draggable="true" data-object="home_camp">Home Place <small>2 shelter cloths, 2 blankets, 12 stakes, fire starter if kept dry</small></div>
+              <div class="object" draggable="true" data-object="food_storage">Food Supplies <small>3 food sacks, small tools, protected storage bundle</small></div>
+              <div class="object" draggable="true" data-object="water_spot">Water Place <small>4 water jars, clean-water point, carrying route</small></div>
+              <div class="object" draggable="true" data-object="path_marker">Path Marker <small>40 ft rope, 10 marker stones, torn map scrap</small></div>
+            </div>
+          </aside>
+
+          <section class="board-wrap">
+            <div id="eventFeed" class="event-feed">Drag each survival bundle onto the land. Partial plans can still be tested.</div>
+            <section class="board">
+              <div id="map" class="map">
+                <div class="zone river" data-zone="river_area"><div class="zone-tag">River Area</div><div class="effect flood" id="floodEffect"></div></div>
+                <div class="zone high" data-zone="high_ground"><div class="zone-tag">High Ground</div><div class="effect dry" id="dryEffect"></div></div>
+                <div class="zone forest" data-zone="forest_edge"><div class="zone-tag">Forest Edge</div><div class="effect predator" id="predatorEffect"></div></div>
+              </div>
+            </section>
+            <div class="board-help">River: water/fish/flood. High Ground: safety/dry rest/distance from water. Forest: shelter/wood/animal risk.</div>
+          </section>
+        </div>
+      </section>
+
+      <section class="stage" data-stage="6">
+        <div class="grid-3">
+          <aside class="panel">
+            <h2>Reflect</h2>
+            <p>Your first plan does not have to be perfect. Leadership improves through evidence and revision.</p>
+
+            <label for="reflection">What changed after testing?</label>
+            <textarea id="reflection" placeholder="What happened? What report helped? What would you order differently next time?"></textarea>
+
+            <div id="attemptLog" class="report-card"><strong>Attempt Log</strong><span>No tests yet.</span></div>
+          </aside>
+
+          <section class="panel">
+            <h2>Survival Result</h2>
+            <div id="resultBox" class="report-card"><strong>No result yet.</strong><span>Test your plan to see consequences.</span></div>
+          </section>
+        </div>
+      </section>
+    </section>
+
+    <footer class="actions">
+      <div id="statusText" class="actions-left">Stage 1: Read the incident and leadership situation.</div>
+      <div class="actions-right">
+        <button id="backBtn" disabled>Back</button>
+        <button id="nextBtn">Ask First Question</button>
+        <button id="testBtn" class="hidden">Test Survival Plan</button>
+        <button id="retryBtn" class="hidden">Try New Plan</button>
+        <a id="continueLink" class="advance-link hidden" href="/world_select.html">Continue to World Selection</a>
+      </div>
+    </footer>
+  </main>
+
+  <script>
+    const roleLabels = {
+      scout: "Scout",
+      builder: "Builder",
+      gatherer: "Gatherer",
+      caretaker: "Caretaker"
+    };
+
+    const materials = {
+      shelter_cloth: "2 Rolled Shelter Cloths",
+      food_sacks: "3 Food Sacks",
+      water_jars: "4 Water Jars",
+      rope: "1 Coil of Rope",
+      wooden_stakes: "12 Wooden Stakes",
+      hand_axe: "1 Small Hand Axe",
+      digging_tool: "1 Digging / Scraping Tool",
+      fire_starter: "1 Fire Starter Kit / Match Tin",
+      blankets: "2 Blankets",
+      marker_stones: "10 Marker Stones",
+      map_scrap: "1 Torn Map Scrap"
+    };
+
+    const assignments = {
+      scout: [],
+      builder: [],
+      gatherer: [],
+      caretaker: []
+    };
+
+    const reports = {};
+    const placements = {};
+    const attempts = [];
+
+    let currentStage = 0;
+    let selectedRole = "scout";
+    let timeRemaining = 40;
+    let draggedObject = null;
+    let attemptNumber = 0;
+
+    const stages = Array.from(document.querySelectorAll(".stage"));
+    const timeBox = document.getElementById("timeBox");
+    const statusText = document.getElementById("statusText");
+    const backBtn = document.getElementById("backBtn");
+    const nextBtn = document.getElementById("nextBtn");
+    const testBtn = document.getElementById("testBtn");
+    const retryBtn = document.getElementById("retryBtn");
+    const continueLink = document.getElementById("continueLink");
+    const assignmentBox = document.getElementById("assignmentBox");
+    const reportsList = document.getElementById("reportsList");
+    const reportsListReview = document.getElementById("reportsListReview");
+    const firstQuestion = document.getElementById("firstQuestion");
+    const questionReason = document.getElementById("questionReason");
+    const leaderQuestion = document.getElementById("leaderQuestion");
+    const reasoning = document.getElementById("reasoning");
+    const eventFeed = document.getElementById("eventFeed");
+    const resultBox = document.getElementById("resultBox");
+    const attemptLog = document.getElementById("attemptLog");
+
+    function setStage(index) {
+      currentStage = Math.max(0, Math.min(6, index));
+
+      stages.forEach((stage, i) => stage.classList.toggle("active", i === currentStage));
+
+      backBtn.disabled = currentStage === 0;
+
+      nextBtn.classList.toggle("hidden", currentStage >= 5);
+      testBtn.classList.toggle("hidden", currentStage !== 5);
+      retryBtn.classList.toggle("hidden", currentStage !== 6);
+      continueLink.classList.toggle("hidden", currentStage !== 6);
+
+      const statuses = [
+        "Stage 1: Read the incident and leadership situation.",
+        "Stage 2: Ask what must be known before giving orders.",
+        "Stage 3: Assign materials to specialists.",
+        "Stage 4: Send specialists and read reports.",
+        "Stage 5: Choose the main survival question.",
+        "Stage 6: Place survival bundles and test the plan.",
+        "Stage 7: Reflect, try again, or continue."
+      ];
+
+      const nextLabels = [
+        "Ask First Question",
+        "Assign Materials",
+        "Send Specialists",
+        "Choose Main Question",
+        "Place Survival Bundles",
+        "",
+        ""
+      ];
+
+      statusText.textContent = statuses[currentStage];
+      if (currentStage < 5) nextBtn.textContent = nextLabels[currentStage];
+
+      if (currentStage === 4) renderReports();
+      updateTime();
+    }
+
+    function updateTime() {
+      timeBox.textContent = `Time until nightfall: ${timeRemaining} minutes`;
+    }
+
+    document.querySelectorAll(".question-card").forEach(card => {
+      card.addEventListener("click", () => {
+        document.querySelectorAll(".question-card").forEach(c => c.classList.remove("selected"));
+        card.classList.add("selected");
+        if (firstQuestion) firstQuestion.value = card.dataset.question;
+      });
+    });
+
+    function updateAssignmentBox() {
+      if (!assignmentBox) return;
+      const assigned = assignments[selectedRole].map(m => materials[m]).join(", ") || "No materials assigned yet.";
+      assignmentBox.textContent = `Selected: ${roleLabels[selectedRole]}. Materials: ${assigned}`;
+    }
+
+    document.querySelectorAll(".role-card").forEach(card => {
+      card.addEventListener("click", () => {
+        selectedRole = card.dataset.role;
+        document.querySelectorAll(".role-card").forEach(c => c.classList.remove("selected"));
+        card.classList.add("selected");
+
+        document.querySelectorAll(".material-card").forEach(m => {
+          m.classList.toggle("selected", assignments[selectedRole].includes(m.dataset.material));
+        });
+
+        updateAssignmentBox();
+      });
+    });
+
+    document.querySelectorAll(".material-card").forEach(card => {
+      card.addEventListener("click", () => {
+        const material = card.dataset.material;
+        const list = assignments[selectedRole];
+
+        if (list.includes(material)) {
+          assignments[selectedRole] = list.filter(x => x !== material);
+        } else {
+          assignments[selectedRole].push(material);
+        }
+
+        card.classList.toggle("selected", assignments[selectedRole].includes(material));
+        updateAssignmentBox();
+      });
+    });
+
+    function buildReport(role) {
+      const assigned = assignments[role];
+
+      const assignedText = assigned.length
+        ? assigned.map(m => materials[m]).join(", ")
+        : "no special materials";
+
+      const reportIntro = assigned.length
+        ? `Materials sent: ${assignedText}.`
+        : "Materials sent: none. The report is limited because the specialist had no tools.";
+
+      const base = {
+        scout: {
+          observation: "The old route is no longer safe. The river edge is muddy, and the torn map scrap may connect to the riverbend marked with an X.",
+          opportunity: "High ground gives the best view of the three areas. A marked path could help the group move without getting lost.",
+          risk: "The forest edge has animal tracks, and the low river path may be unsafe if water rises.",
+          question: "Can the group mark a safe route between water, shelter, and food before dark?"
+        },
+        builder: {
+          observation: "The river area is flat, but the soil is wet and soft. Stakes may not hold well there overnight.",
+          opportunity: "High ground is drier and safer from rising water. The forest edge offers wood and wind protection.",
+          risk: "Rocky ground makes building harder, and forest cover may hide animal movement.",
+          question: "Where can the group sleep without being flooded, exposed, or trapped?"
+        },
+        gatherer: {
+          observation: "The river has water and fish, but food sacks near low ground could get wet. Forest signs suggest possible food and animal movement.",
+          opportunity: "Water jars can be filled near the river if a safe route is marked. Food may be safer on higher ground.",
+          risk: "Food stored near the river may spoil; food stored near the forest may attract animals.",
+          question: "Where can food and water be reached while keeping supplies protected?"
+        },
+        caretaker: {
+          observation: "The youngest children, elders, and injured traveler need dry rest soon. Damp blankets and a wet match tin would be dangerous.",
+          opportunity: "A dry shelter area with a path to water would protect health through the night.",
+          risk: "Muddy low ground may cause cold, discomfort, or sickness. Fire starter/matches must stay dry.",
+          question: "What placement keeps the group alive, warm, and healthy until morning?"
+        }
+      };
+
+      const boosts = [];
+
+      if (role === "scout" && (assigned.includes("rope") || assigned.includes("marker_stones") || assigned.includes("map_scrap"))) {
+        boosts.push("Material insight: Rope, marker stones, or the torn map scrap help the Scout mark a safer path and compare the X near the riverbend with the visible land.");
+      }
+
+      if (role === "builder" && (assigned.includes("shelter_cloth") || assigned.includes("wooden_stakes") || assigned.includes("hand_axe") || assigned.includes("digging_tool"))) {
+        boosts.push("Material insight: Shelter cloth, stakes, hand axe, or digging tool help the Builder test whether the ground can hold shelter and whether drainage is possible.");
+      }
+
+      if (role === "gatherer" && (assigned.includes("food_sacks") || assigned.includes("water_jars") || assigned.includes("small_tools") || assigned.includes("hand_axe"))) {
+        boosts.push("Material insight: Food sacks and water jars make storage and water access urgent; tools can help prepare or protect supplies.");
+      }
+
+      if (role === "caretaker" && (assigned.includes("blankets") || assigned.includes("fire_starter") || assigned.includes("water_jars") || assigned.includes("shelter_cloth"))) {
+        boosts.push("Material insight: Blankets, dry shelter cloth, water jars, and the match tin matter most for warmth, health, and safe rest.");
+      }
+
+      return {
+        role,
+        title: `${roleLabels[role]} Report — 10 minutes used`,
+        reportIntro,
+        observation: base[role].observation,
+        opportunity: base[role].opportunity,
+        risk: base[role].risk,
+        question: base[role].question,
+        boosts
+      };
+    }
+
+    function sendSpecialist(role) {
+      if (reports[role]) return;
+      if (timeRemaining <= 0) return;
+
+      reports[role] = buildReport(role);
+      timeRemaining = Math.max(0, timeRemaining - 10);
+
+      updateTime();
+      renderReports();
+
+      const btn = document.querySelector(`.send-btn[data-role="${role}"]`);
+      if (btn) {
+        btn.disabled = true;
+        btn.textContent = `${roleLabels[role]} Sent`;
+      }
+
+      if (Object.keys(reports).length === 4 || timeRemaining === 0) {
+        statusText.textContent = "Night has arrived. Use the reports to choose the main survival question.";
+      }
+    }
+
+    document.querySelectorAll(".send-btn").forEach(btn => {
+      btn.addEventListener("click", () => sendSpecialist(btn.dataset.role));
+    });
+
+    function renderReports() {
+      const reportValues = Object.values(reports);
+
+      const html = reportValues.length
+        ? reportValues.map(report => `
+          <div class="report-card returned">
+            <strong>${report.title}</strong>
+            <span>
+              ${report.reportIntro}<br><br>
+              <b>Observation:</b> ${report.observation}<br>
+              <b>Opportunity:</b> ${report.opportunity}<br>
+              <b>Risk:</b> ${report.risk}<br>
+              <b>Leader Question:</b> ${report.question}<br>
+              ${report.boosts.length ? "<br>" + report.boosts.join("<br>") : ""}
+            </span>
+          </div>
+        `).join("")
+        : `<div class="report-card"><strong>No reports yet.</strong><span>Send specialists to inspect the land.</span></div>`;
+
+      if (reportsList) reportsList.innerHTML = html;
+      if (reportsListReview) reportsListReview.innerHTML = html;
+    }
+
+    function wireDragAndDrop() {
+      document.querySelectorAll(".object").forEach(obj => {
+        obj.addEventListener("dragstart", e => {
+          draggedObject = obj.dataset.object;
+          e.dataTransfer.setData("text/plain", draggedObject);
+        });
+      });
+
+      document.querySelectorAll("#map .zone").forEach(zone => {
+        zone.addEventListener("dragover", e => {
+          e.preventDefault();
+          zone.classList.add("drag-over");
+        });
+
+        zone.addEventListener("dragleave", () => {
+          zone.classList.remove("drag-over");
+        });
+
+        zone.addEventListener("drop", e => {
+          e.preventDefault();
+          zone.classList.remove("drag-over");
+
+          const objectType = e.dataTransfer.getData("text/plain") || draggedObject;
+          if (!objectType) return;
+
+          placements[objectType] = zone.dataset.zone;
+          placeVisualObject(objectType, zone);
+          markObjectPlaced(objectType);
+
+          if (eventFeed) {
+            eventFeed.textContent = `${labelObject(objectType)} placed in ${labelZone(zone.dataset.zone)}.`;
+          }
+        });
+      });
+    }
+
+    function placeVisualObject(objectType, zone) {
+      document.querySelectorAll(`.placed-object[data-object="${objectType}"]`).forEach(el => el.remove());
+
+      const tag = document.createElement("div");
+      tag.className = "placed-object";
+      tag.dataset.object = objectType;
+      tag.textContent = labelObject(objectType);
+
+      const offsetMap = {
+        home_camp: ["18%", "26%"],
+        food_storage: ["56%", "34%"],
+        water_spot: ["28%", "58%"],
+        path_marker: ["62%", "68%"]
+      };
+
+      tag.style.left = offsetMap[objectType][0];
+      tag.style.top = offsetMap[objectType][1];
+
+      zone.appendChild(tag);
+    }
+
+    function markObjectPlaced(objectType) {
+      const obj = document.querySelector(`.object[data-object="${objectType}"]`);
+      if (obj) obj.classList.add("placed");
+    }
+
+    function labelObject(objectType) {
+      return {
+        home_camp: "Home Place",
+        food_storage: "Food Supplies",
+        water_spot: "Water Place",
+        path_marker: "Path Marker"
+      }[objectType] || objectType;
+    }
+
+    function labelZone(zone) {
+      return {
+        river_area: "River Area",
+        high_ground: "High Ground",
+        forest_edge: "Forest Edge"
+      }[zone] || zone;
+    }
+
+    function allObjectsPlaced() {
+      return ["home_camp", "food_storage", "water_spot", "path_marker"].every(obj => placements[obj]);
+    }
+
+    function clearEffects() {
+      document.querySelectorAll(".effect").forEach(effect => effect.classList.remove("active"));
+    }
+
+    function testPlan() {
+      clearEffects();
+
+      attemptNumber += 1;
+
+      const events = [];
+      let mainResult = "Test recorded";
+
+      const camp = placements.home_camp || "not_placed";
+      const storage = placements.food_storage || "not_placed";
+      const water = placements.water_spot || "not_placed";
+      const path = placements.path_marker || "not_placed";
+
+      if (!allObjectsPlaced()) {
+        events.push("Some survival bundles were not placed. This still counts as a test, but leadership should account for missing resources.");
+        mainResult = "Partial plan tested";
+      }
+
+      if (storage === "river_area") {
+        events.push("Water rose near the river and reached the food supplies. The food sacks are at risk of spoiling.");
+        const flood = document.getElementById("floodEffect");
+        if (flood) flood.classList.add("active");
+        mainResult = "Food supplies exposed to flood risk";
+      }
+
+      if (camp === "high_ground" && water !== "river_area") {
+        events.push("The group rests above flood risk, but water is harder to reach. The path marker becomes more important.");
+        const dry = document.getElementById("dryEffect");
+        if (dry) dry.classList.add("active");
+        mainResult = "Safe height, but water challenge";
+      }
+
+      if (storage === "forest_edge") {
+        events.push("Animal tracks appeared near the stored food. The food sacks may attract risk near the forest edge.");
+        const predator = document.getElementById("predatorEffect");
+        if (predator) predator.classList.add("active");
+        mainResult = "Animal activity near food";
+      }
+
+      if (path === "high_ground") {
+        events.push("The path marker helps the group move toward safer ground before dark.");
+      }
+
+      if (water === "river_area") {
+        events.push("Water access improved because the water jars can be filled close to the river.");
+      }
+
+      if (camp === "forest_edge") {
+        events.push("The forest edge offers wood and wind cover, but hidden movement nearby should be watched.");
+      }
+
+      if (events.length === 0) {
+        events.push("Your plan avoided the most obvious danger, but the land still needs more testing.");
+        mainResult = "Stable first-night plan";
+      }
+
+      const attempt = {
+        number: attemptNumber,
+        mainResult,
+        events,
+        firstQuestion: firstQuestion ? firstQuestion.value : "",
+        leaderQuestion: leaderQuestion ? leaderQuestion.value : "",
+        reasoning: reasoning ? reasoning.value : "",
+        placements: {...placements}
+      };
+
+      attempts.push(attempt);
+      renderAttempt();
+
+      if (eventFeed) eventFeed.textContent = events[0];
+      setStage(6);
+    }
+
+    function renderAttempt() {
+      const last = attempts[attempts.length - 1];
+      if (!last) return;
+
+      if (resultBox) {
+        resultBox.innerHTML = `<strong>${last.mainResult}</strong><span>${last.events.join("<br>")}</span>`;
+      }
+
+      if (attemptLog) {
+        attemptLog.innerHTML = `<strong>Attempt ${last.number}</strong><span>${last.mainResult}<br>${last.events.join("<br>")}</span>`;
+      }
+    }
+
+    function retryPlan() {
+      Object.keys(placements).forEach(k => delete placements[k]);
+      document.querySelectorAll(".placed-object").forEach(el => el.remove());
+      document.querySelectorAll(".object").forEach(el => el.classList.remove("placed"));
+      clearEffects();
+
+      if (eventFeed) eventFeed.textContent = "Move the bundles and test a new survival plan.";
+      setStage(5);
+    }
+
+    backBtn.addEventListener("click", () => setStage(currentStage - 1));
+    nextBtn.addEventListener("click", () => setStage(currentStage + 1));
+    testBtn.addEventListener("click", testPlan);
+    retryBtn.addEventListener("click", retryPlan);
+
+    updateTime();
+    updateAssignmentBox();
+    wireDragAndDrop();
+    setStage(0);
+  </script>
+</body>
+</html>

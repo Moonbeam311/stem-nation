@@ -1,0 +1,330 @@
+{
+  "audit": "VIS-5A \u2014 First Gathering Cinematic Asset and Interaction Audit",
+  "generated": "2026-06-15T07:55:01",
+  "identity": {
+    "identity_storage_keys": [],
+    "first_gathering_storage_keys": [],
+    "academy_arrival_storage_keys": [],
+    "shared_identity_first_gathering_keys": [],
+    "name_terms_in_first_gathering": [
+      "displayName"
+    ],
+    "avatar_terms_in_first_gathering": [
+      "avatarChoice",
+      "portrait",
+      "studentAvatar"
+    ],
+    "hardcoded_checks": {
+      "Moonbeam311 hard-coded in First Gathering": false,
+      "Avatar 1 hard-coded in First Gathering": false,
+      "generic student fallback exists": true,
+      "display name inserted dynamically": true,
+      "avatar inserted dynamically": true
+    }
+  },
+  "current_scene": {
+    "headings": [
+      "Outside the Council Hall"
+    ],
+    "buttons": [
+      "Continue",
+      "Replay Gathering"
+    ],
+    "links": [
+      "/council_stage"
+    ],
+    "scene_checks": {
+      "student identity panel": true,
+      "arrival status": true,
+      "three voice lines": true,
+      "replay control": true,
+      "Council Hall destination": true,
+      "duplicate evidence panel remains": false,
+      "duplicate Council strip remains": false
+    }
+  },
+  "motion": {
+    "animation_names": [],
+    "transition_declarations": 0,
+    "animation_declarations": 0,
+    "timers": [],
+    "event_types": [
+      "click"
+    ],
+    "cinematic_checks": {
+      "scene state system": false,
+      "progress tracker": true,
+      "typewriter effect": false,
+      "parallax": false,
+      "camera movement": true,
+      "door interaction": false,
+      "full-screen scene": true,
+      "video element": false,
+      "canvas element": false
+    }
+  },
+  "audio": {
+    "checks": {
+      "<audio> element": false,
+      "new Audio": false,
+      "play calls": false,
+      "pause calls": false,
+      "speech synthesis": false,
+      "mute control": true,
+      "caption control": false,
+      "replay voice logic": true
+    },
+    "files": [
+      "static\\academy_decision_demo.mp3",
+      "static\\academy_individual_demo.mp3",
+      "static\\academy_role_demo.mp3",
+      "static\\audio\\council_temp\\briefing_0_guardian.wav",
+      "static\\audio\\council_temp\\briefing_1_scout.wav",
+      "static\\audio\\council_temp\\briefing_2_healer.wav",
+      "static\\audio\\council_temp\\briefing_3_builder.wav",
+      "static\\audio\\council_temp\\briefing_4_mapkeeper.wav",
+      "static\\audio\\council_temp\\briefing_4_mapkeeper_david_slow.wav",
+      "static\\audio\\council_temp\\briefing_5_guardian.wav",
+      "static\\audio\\guardian_variations\\guardian_zira_crisp_guardian.wav",
+      "static\\audio\\guardian_variations\\guardian_zira_fast_urgent.wav",
+      "static\\audio\\guardian_variations\\guardian_zira_faster_clear.wav",
+      "static\\audio\\guardian_variations\\guardian_zira_faster_direct.wav",
+      "static\\audio\\guardian_variations\\guardian_zira_short_pauses.wav",
+      "static\\audio\\guardian_welcome.wav",
+      "static\\audio\\trials\\guardian_trial_0_Microsoft_David_Desktop.wav",
+      "static\\audio\\trials\\guardian_trial_1_Microsoft_Zira_Desktop.wav",
+      "static\\demo_voice.mp3",
+      "static\\environment_bridge_demo.mp3",
+      "static\\intro1.mp3",
+      "static\\intro1_demo.mp3",
+      "static\\intro2.mp3",
+      "static\\intro2_demo.mp3",
+      "static\\intro3.mp3",
+      "static\\intro3_demo.mp3",
+      "static\\intro4.mp3",
+      "static\\intro4_demo.mp3",
+      "static\\intro5.mp3",
+      "static\\intro5_demo.mp3"
+    ]
+  },
+  "visual_assets": [
+    {
+      "path": "static\\gameboard\\03_build_chamber_locked.png",
+      "size": 2748311,
+      "terms": [
+        "chamber"
+      ]
+    },
+    {
+      "path": "static\\gameboard\\04_council_chamber_locked.png",
+      "size": 2394626,
+      "terms": [
+        "council",
+        "chamber"
+      ]
+    },
+    {
+      "path": "static\\inspiration\\academy_memory_chamber.png",
+      "size": 3659813,
+      "terms": [
+        "chamber",
+        "academy",
+        "memory"
+      ]
+    },
+    {
+      "path": "static\\storyboards\\council_hall_evidence_briefing.png",
+      "size": 2350708,
+      "terms": [
+        "council",
+        "hall",
+        "storyboard"
+      ]
+    },
+    {
+      "path": "static\\storyboards\\council_hall_guardian_concept.png",
+      "size": 2991252,
+      "terms": [
+        "council",
+        "hall",
+        "storyboard"
+      ]
+    },
+    {
+      "path": "static\\storyboards\\council_hall_mission_briefing.png",
+      "size": 2535276,
+      "terms": [
+        "council",
+        "hall",
+        "storyboard"
+      ]
+    },
+    {
+      "path": "static\\storyboards\\ice_sheet_scan_comparison_dashboard.png",
+      "size": 2350708,
+      "terms": [
+        "storyboard"
+      ]
+    }
+  ],
+  "nearby_asset_references": {
+    "academy_arrival": [],
+    "academy_cinematic": [
+      "/static/intro_scene1.png",
+      "/static/intro_scene2.jpg",
+      "/static/intro_scene3.jpg",
+      "/static/intro_scene4.jpg",
+      "/static/intro_scene5.jpg",
+      "/static/gameboard/02_world_board_locked.png",
+      "/static/inspiration/academy_memory_chamber.png"
+    ],
+    "council_stage": [
+      "/static/storyboards/council_hall_guardian_concept.png",
+      "/static/storyboards/council_hall_evidence_briefing.png",
+      "/static/avatars/student/guardian.png"
+    ]
+  },
+  "recommended_photoshop_layers": [
+    {
+      "asset": "first_gathering_antechamber_background",
+      "purpose": "Full widescreen Academy antechamber establishing the physical space",
+      "format": "JPG or WebP",
+      "status": "SEARCH EXISTING ASSETS FIRST"
+    },
+    {
+      "asset": "first_gathering_council_doors_closed",
+      "purpose": "Central interactive Council Hall doorway before entry",
+      "format": "Transparent PNG or WebP",
+      "status": "LIKELY NEEDED"
+    },
+    {
+      "asset": "first_gathering_council_doors_open",
+      "purpose": "Door-open state for final route transition",
+      "format": "Transparent PNG or WebP",
+      "status": "LIKELY NEEDED"
+    },
+    {
+      "asset": "first_gathering_door_light",
+      "purpose": "Animated seam and doorway glow",
+      "format": "Transparent PNG",
+      "status": "LIKELY NEEDED"
+    },
+    {
+      "asset": "first_gathering_foreground_arch",
+      "purpose": "Foreground depth and parallax framing",
+      "format": "Transparent PNG",
+      "status": "OPTIONAL HIGH VALUE"
+    },
+    {
+      "asset": "first_gathering_shadow_figures",
+      "purpose": "Unidentified speakers without revealing Inquiry Council portraits",
+      "format": "Transparent PNG",
+      "status": "LIKELY NEEDED"
+    },
+    {
+      "asset": "first_gathering_floor_path",
+      "purpose": "Illuminated path guiding the learner toward Council Hall",
+      "format": "Transparent PNG",
+      "status": "OPTIONAL HIGH VALUE"
+    },
+    {
+      "asset": "first_gathering_fog_overlay",
+      "purpose": "Slow atmospheric drift",
+      "format": "Transparent PNG or WebP",
+      "status": "OPTIONAL"
+    },
+    {
+      "asset": "first_gathering_light_particles",
+      "purpose": "Subtle animated depth particles",
+      "format": "Transparent PNG or CSS-generated",
+      "status": "OPTIONAL"
+    },
+    {
+      "asset": "first_gathering_hologram_frame",
+      "purpose": "Frame for whichever student name and avatar were selected",
+      "format": "Transparent PNG or CSS",
+      "status": "DO NOT BAKE IN A NAME OR AVATAR"
+    }
+  ],
+  "accessibility": {
+    "prefers-reduced-motion CSS": false,
+    "keyboard event support": false,
+    "visible focus styles": false,
+    "ARIA live region": true,
+    "ARIA labels": false,
+    "captions or transcript": false,
+    "skip cinematic control": false,
+    "replay control": true,
+    "mute control": true
+  },
+  "narrative_boundaries": {
+    "Sector 7A appears too early": false,
+    "earlier/current evidence appears too early": false,
+    "Inquiry Council portraits appear too early": false,
+    "formal Chief Investigator announcement appears too early": false,
+    "First Gathering correctly hands off to Council Stage": true
+  },
+  "interaction_plan": [
+    {
+      "order": 1,
+      "interaction": "Identity Recognition",
+      "student_action": "Enter or begin scene",
+      "system_response": "Load the saved student-selected name and avatar dynamically",
+      "asset_need": "Hologram frame only; student image remains dynamic"
+    },
+    {
+      "order": 2,
+      "interaction": "Chamber Activation",
+      "student_action": "Observe initial environment",
+      "system_response": "Lights, ambient hum, floor path, and status HUD activate",
+      "asset_need": "Background, light overlay, floor path"
+    },
+    {
+      "order": 3,
+      "interaction": "Voice One",
+      "student_action": "Select or approach left voice source",
+      "system_response": "Spatial light, caption, waveform, and first statement play",
+      "asset_need": "Left speaker silhouette/light zone"
+    },
+    {
+      "order": 4,
+      "interaction": "Voice Two",
+      "student_action": "Select or approach right voice source",
+      "system_response": "Second voice source activates",
+      "asset_need": "Right speaker silhouette/light zone"
+    },
+    {
+      "order": 5,
+      "interaction": "Voice Three",
+      "student_action": "Select central warning source",
+      "system_response": "Third voice and warning pulse activate",
+      "asset_need": "Central silhouette/warning light"
+    },
+    {
+      "order": 6,
+      "interaction": "Attention Choice",
+      "student_action": "Choose what caught their attention",
+      "system_response": "Short acknowledgment; no grading or investigation yet",
+      "asset_need": "CSS interface only"
+    },
+    {
+      "order": 7,
+      "interaction": "Approach Council Hall",
+      "student_action": "Activate door",
+      "system_response": "Door glow and route transition begin",
+      "asset_need": "Closed doors, open doors, doorway glow"
+    },
+    {
+      "order": 8,
+      "interaction": "Enter Council Hall",
+      "student_action": "Confirm entry",
+      "system_response": "Cinematic white/gold transition to /council_stage",
+      "asset_need": "Door-open state and transition overlay"
+    }
+  ],
+  "risks": [
+    "HIGH \u2014 No shared localStorage key was detected between Academy Identity and First Gathering.",
+    "MEDIUM \u2014 No reduced-motion alternative detected.",
+    "MEDIUM \u2014 No explicit caption control detected."
+  ]
+}

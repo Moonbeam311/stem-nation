@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Teacher Resource Library</title>
+
+  <style>
+    html, body {
+      margin: 0;
+      width: 100%;
+      min-height: 100%;
+      background:
+        radial-gradient(circle at center, rgba(212,175,55,0.10), transparent 46%),
+        linear-gradient(135deg, #050505 0%, #101827 55%, #050505 100%);
+      color: white;
+      font-family: Arial, sans-serif;
+      overflow-x: hidden;
+    }
+
+    .academy-line {
+      height: 3px;
+      background: linear-gradient(90deg, transparent, #d4af37, transparent);
+      opacity: 0.82;
+    }
+
+    .container {
+      max-width: 1180px;
+      margin: 0 auto;
+      padding: 42px 22px 70px;
+      box-sizing: border-box;
+    }
+
+    .label {
+      text-align: center;
+      font-size: 13px;
+      letter-spacing: 4px;
+      text-transform: uppercase;
+      color: #d4af37;
+      margin-bottom: 12px;
+    }
+
+    h1 {
+      text-align: center;
+      font-size: clamp(42px, 6vw, 74px);
+      color: #f0df9a;
+      margin: 0 0 18px;
+      line-height: 1.04;
+    }
+
+    .subtitle {
+      max-width: 920px;
+      margin: 0 auto 40px;
+      text-align: center;
+      font-size: 20px;
+      line-height: 1.7;
+      opacity: 0.94;
+    }
+
+    .section {
+      background: rgba(0,0,0,0.34);
+      border: 1px solid rgba(212,175,55,0.20);
+      border-radius: 22px;
+      padding: 28px;
+      margin-bottom: 26px;
+      box-shadow: 0 14px 50px rgba(0,0,0,0.45);
+    }
+
+    .section h2 {
+      margin-top: 0;
+      color: #d4af37;
+      font-size: 28px;
+      margin-bottom: 18px;
+    }
+
+    .section p,
+    .section li {
+      line-height: 1.75;
+      font-size: 16px;
+      opacity: 0.95;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 18px;
+    }
+
+    .card {
+      background: rgba(255,255,255,0.055);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 16px;
+      padding: 20px;
+    }
+
+    .card h3 {
+      margin-top: 0;
+      color: #f0df9a;
+      font-size: 20px;
+    }
+
+    .tag {
+      display: inline-block;
+      border-radius: 999px;
+      border: 1px solid rgba(212,175,55,0.28);
+      padding: 6px 12px;
+      margin: 5px;
+      font-size: 13px;
+      color: #f0df9a;
+      background: rgba(255,255,255,0.05);
+    }
+
+    .btn-row {
+      margin-top: 22px;
+    }
+
+    .btn {
+      display: inline-block;
+      text-decoration: none;
+      border-radius: 999px;
+      border: 1px solid rgba(212,175,55,0.55);
+      color: #f0df9a;
+      padding: 12px 20px;
+      margin: 6px;
+      background: rgba(0,0,0,0.32);
+      letter-spacing: 0.5px;
+    }
+
+    .btn.primary {
+      background: #d4af37;
+      color: #111;
+      font-weight: bold;
+    }
+
+    .btn:hover {
+      background: rgba(212,175,55,0.14);
+    }
+
+    .btn.primary:hover {
+      background: #f0df9a;
+    }
+
+    .planned {
+      color: #d4af37;
+      font-size: 14px;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      opacity: 0.85;
+    }
+
+    .note {
+      margin-top: 16px;
+      font-size: 14px;
+      line-height: 1.6;
+      opacity: 0.76;
+    }
+
+  </style>
+</head>
+
+<body>
+
+<div class="academy-line"></div>
+
+<div class="container">
+
+  <div class="label">STEM Nation · Teacher Resource Engine</div>
+
+  <h1>Teacher Resource Library</h1>
+
+  <div class="subtitle">
+    The Teacher Resource Library is the future educator-side instructional workspace for organizing, attaching, aligning, and exporting civilization-based learning resources.
+  </div>
+
+  <!-- Purpose -->
+
+  <div class="section">
+
+    <h2>Instructional Resource Engine</h2>
+
+    <p>
+      STEM Nation is designed to support customizable teacher-driven instruction. Educators should eventually be able to upload, organize, edit, attach, and align instructional materials directly to simulation experiences.
+    </p>
+
+    <div class="planned">
+      Prototype Architecture · Upload System Not Yet Active
+    </div>
+
+  </div>
+
+  <!-- Resource Categories -->
+
+  <div class="section">
+
+    <h2>Planned Resource Categories</h2>
+
+    <div class="grid">
+
+      <div class="card">
+        <h3>Lesson Plans</h3>
+        <p>
+          Editable pacing guides, objectives, discussion prompts, extensions, and facilitation notes.
+        </p>
+      </div>
+
+      <div class="card">
+        <h3>Primary Sources</h3>
+        <p>
+          First-hand accounts, speeches, letters, treaties, interviews, and historical evidence.
+        </p>
+      </div>
+
+      <div class="card">
+        <h3>Archives & Government Records</h3>
+        <p>
+          National Archives materials, congressional records, treaties, hearings, court records, public laws, government reports, census records, and official historical documents.
+        </p>
+      </div>
+
+      <div class="card">
+        <h3>Maps & Geography</h3>
+        <p>
+          Cartographic material, trade routes, regional comparisons, environmental analysis, and migration maps.
+        </p>
+      </div>
+
+      <div class="card">
+        <h3>Media & Visuals</h3>
+        <p>
+          Images, documentary clips, oral histories, visual evidence, audio, and presentation media.
+        </p>
+      </div>
+
+      <div class="card">
+        <h3>Assessment Materials</h3>
+        <p>
+          Rubrics, reflection prompts, discussion checkpoints, evidence trackers, and archive evaluation tools.
+        </p>
+      </div>
+
+    </div>
+
+  </div>
+
+  <!-- Workflow -->
+
+  <div class="section">
+
+    <h2>Planned Teacher Workflow</h2>
+
+    <div class="grid">
+
+      <div class="card">
+        <h3>1. Upload or Create</h3>
+        <p>
+          Teachers upload or create instructional resources tied to a civilization topic or simulation phase.
+        </p>
+      </div>
+
+      <div class="card">
+        <h3>2. Tag & Organize</h3>
+        <p>
+          Resources are tagged by week, module, theme, civilization focus, standards alignment, and artifact type.
+        </p>
+      </div>
+
+      <div class="card">
+        <h3>3. Attach to Simulation</h3>
+        <p>
+          Teachers attach selected resources to student experiences such as Baseline Inquiry, Strategic Map Defense, or Survival Planning.
+        </p>
+      </div>
+
+      <div class="card">
+        <h3>4. Align & Export</h3>
+        <p>
+          Future systems help align resources to district/state standards and export teacher/student classroom packets.
+        </p>
+      </div>
+
+    </div>
+
+  </div>
+
+  <!-- Sample Tags -->
+
+  <div class="section">
+
+    <h2>Example Resource Tags</h2>
+
+    <div>
+      <span class="tag">Module 0</span>
+      <span class="tag">Week 1</span>
+      <span class="tag">Week 2</span>
+      <span class="tag">Cartography</span>
+      <span class="tag">Survival</span>
+      <span class="tag">Geography</span>
+      <span class="tag">Primary Source</span>
+      <span class="tag">Government Records</span>
+      <span class="tag">Assessment</span>
+      <span class="tag">Extension</span>
+      <span class="tag">Media</span>
+      <span class="tag">Civilization Growth</span>
+    </div>
+
+  </div>
+
+  <!-- Security -->
+
+  <div class="section">
+
+    <h2>Security & Storage Planning</h2>
+
+    <p>
+      Real uploads are intentionally not active yet. Before enabling teacher uploads, STEM Nation must establish secure storage architecture, authentication systems, file ownership rules, privacy controls, and classroom/district separation policies.
+    </p>
+
+    <div class="note">
+      Future upload systems may include PDFs, DOCX files, images, maps, audio/video references, and teacher-created instructional packets.
+    </div>
+
+  </div>
+
+  <!-- Navigation -->
+
+  <div class="btn-row" style="text-align:center;">
+    <a class="btn primary" href="/teacher">Return to Teacher Command Center</a>
+    <a class="btn" href="/teacher_resource_attach">Resource Attachment Workflow</a>
+    <a class="btn" href="/hub">Week 1 Founding Archive</a>
+    <a class="btn" href="/week2_survival_archive">Week 2 Survival Archive</a>
+  </div>
+
+</div>
+
+</body>
+</html>

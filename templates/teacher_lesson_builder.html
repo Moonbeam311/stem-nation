@@ -1,0 +1,482 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Teacher Lesson Builder</title>
+
+  <style>
+    html, body {
+      margin: 0;
+      width: 100%;
+      min-height: 100%;
+      background:
+        radial-gradient(circle at center, rgba(212,175,55,0.10), transparent 46%),
+        linear-gradient(135deg, #050505 0%, #101827 55%, #050505 100%);
+      color: white;
+      font-family: Arial, sans-serif;
+      overflow-x: hidden;
+    }
+
+    .academy-line {
+      height: 3px;
+      background: linear-gradient(90deg, transparent, #d4af37, transparent);
+      opacity: 0.82;
+    }
+
+    .container {
+      max-width: 1240px;
+      margin: 0 auto;
+      padding: 42px 22px 70px;
+      box-sizing: border-box;
+    }
+
+    .label {
+      text-align: center;
+      font-size: 13px;
+      letter-spacing: 4px;
+      text-transform: uppercase;
+      color: #d4af37;
+      margin-bottom: 12px;
+    }
+
+    h1 {
+      text-align: center;
+      font-size: clamp(40px, 6vw, 74px);
+      color: #f0df9a;
+      margin: 0 0 18px;
+      line-height: 1.04;
+    }
+
+    .subtitle {
+      max-width: 960px;
+      margin: 0 auto 40px;
+      text-align: center;
+      font-size: 20px;
+      line-height: 1.7;
+      opacity: 0.94;
+    }
+
+    .section {
+      background: rgba(0,0,0,0.34);
+      border: 1px solid rgba(212,175,55,0.20);
+      border-radius: 22px;
+      padding: 28px;
+      margin-bottom: 26px;
+      box-shadow: 0 14px 50px rgba(0,0,0,0.45);
+    }
+
+    .section h2 {
+      margin-top: 0;
+      color: #d4af37;
+      font-size: 28px;
+      margin-bottom: 18px;
+    }
+
+    .section p,
+    .section li,
+    label {
+      line-height: 1.75;
+      font-size: 16px;
+      opacity: 0.95;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 18px;
+    }
+
+    .field {
+      margin-bottom: 22px;
+    }
+
+    .field label {
+      display: block;
+      margin-bottom: 8px;
+      color: #f0df9a;
+      font-weight: bold;
+    }
+
+    input,
+    textarea,
+    select {
+      width: 100%;
+      box-sizing: border-box;
+      background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(212,175,55,0.18);
+      border-radius: 12px;
+      padding: 14px;
+      color: white;
+      font-size: 15px;
+      resize: vertical;
+    }
+
+    textarea {
+      min-height: 120px;
+    }
+
+    .card {
+      background: rgba(255,255,255,0.055);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 16px;
+      padding: 20px;
+    }
+
+    .card h3 {
+      margin-top: 0;
+      color: #f0df9a;
+      font-size: 20px;
+    }
+
+    .planned {
+      color: #d4af37;
+      font-size: 14px;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      opacity: 0.85;
+      margin-top: 14px;
+    }
+
+    .note {
+      margin-top: 16px;
+      font-size: 14px;
+      line-height: 1.6;
+      opacity: 0.76;
+    }
+
+    .btn-row {
+      margin-top: 26px;
+      text-align: center;
+    }
+
+    .btn {
+      display: inline-block;
+      text-decoration: none;
+      border-radius: 999px;
+      border: 1px solid rgba(212,175,55,0.55);
+      color: #f0df9a;
+      padding: 12px 20px;
+      margin: 6px;
+      background: rgba(0,0,0,0.32);
+      letter-spacing: 0.5px;
+    }
+
+    .btn.primary {
+      background: #d4af37;
+      color: #111;
+      font-weight: bold;
+    }
+
+    .btn:hover {
+      background: rgba(212,175,55,0.14);
+    }
+
+    .btn.primary:hover {
+      background: #f0df9a;
+    }
+
+  </style>
+</head>
+
+<body>
+
+<div class="academy-line"></div>
+
+<div class="container">
+
+  <div class="label">STEM Nation · Instructional Authoring System</div>
+
+  <h1>Teacher Lesson Builder</h1>
+
+  <div class="subtitle">
+    The Teacher Lesson Builder is the future educator-side authoring system for creating, modifying, organizing, and customizing civilization-based lessons connected to the STEM Nation simulation.
+  </div>
+
+  <!-- Overview -->
+
+  <div class="section">
+
+    <h2>Lesson Authoring Philosophy</h2>
+
+    <p>
+      STEM Nation lessons are designed around inquiry, evidence, systems thinking, consequence, and reflection. Teachers should eventually be able to customize pacing, prompts, artifacts, facilitation guidance, and instructional framing around simulation experiences.
+    </p>
+
+    <div class="planned">
+      Prototype Instructional Authoring Interface · No Backend Persistence Yet
+    </div>
+
+  </div>
+
+  <!-- Lesson Fields -->
+
+  <div class="section">
+
+    <h2>Lesson Structure</h2>
+
+    <div class="grid">
+
+      <div class="field">
+        <label>Lesson Title</label>
+        <input type="text" value="Week 1 — Strategic Settlement & Civilization Foundations">
+      </div>
+
+      <div class="field">
+        <label>Module / Week</label>
+        <select>
+          <option>Module 0 — Cartography & Orientation</option>
+          <option>Week 1 — Founding & Settlement</option>
+          <option>Week 2 — Survival & Consequence</option>
+        </select>
+      </div>
+
+    </div>
+
+    <div class="field">
+      <label>Essential Question</label>
+
+      <textarea>How does geography influence the survival, growth, and long-term stability of civilizations?</textarea>
+    </div>
+
+    <div class="field">
+      <label>Lesson Objective</label>
+
+      <textarea>Students will analyze geography, identify strategic advantages and risks, and defend settlement decisions using evidence-based reasoning.</textarea>
+    </div>
+
+    <div class="field">
+      <label>Enduring Understandings</label>
+
+      <textarea>Civilizations develop through interaction between geography, resources, cooperation, scarcity, and human decision-making.</textarea>
+    </div>
+
+  </div>
+
+
+  <!-- Step-by-Step Sequence -->
+
+  <div class="section">
+
+    <h2>Step-by-Step Teaching Sequence</h2>
+
+    <p>
+      STEM Nation lessons are designed as guided classroom experiences. Teachers should eventually be able to customize and follow a structured instructional sequence that supports inquiry, discussion, evidence usage, artifact creation, and consequence-based reasoning.
+    </p>
+
+    <div class="grid">
+
+      <div class="card">
+        <h3>1. Launch / Hook</h3>
+
+        <p>
+          Introduce the civilization challenge, geography problem, historical framing, or inquiry question that begins the lesson experience.
+        </p>
+      </div>
+
+      <div class="card">
+        <h3>2. Baseline Inquiry / Observation</h3>
+
+        <p>
+          Students observe maps, identify risks/resources, and record initial observations before major decisions are made.
+        </p>
+      </div>
+
+      <div class="card">
+        <h3>3. Teacher Pause & Probe</h3>
+
+        <p>
+          Teacher pauses the simulation flow to compare responses, surface assumptions, and deepen reasoning through guided questioning.
+        </p>
+      </div>
+
+      <div class="card">
+        <h3>4. Student Decision Workspace</h3>
+
+        <p>
+          Students collaborate, debate, and develop strategic decisions connected to settlement, survival, trade, or governance.
+        </p>
+      </div>
+
+      <div class="card">
+        <h3>5. Evidence Challenge</h3>
+
+        <p>
+          Students defend decisions using maps, primary sources, attached resources, or historical evidence.
+        </p>
+      </div>
+
+      <div class="card">
+        <h3>6. Archive Creation</h3>
+
+        <p>
+          Students create Founding Archives, Survival Archives, or other artifact records documenting reasoning and consequence analysis.
+        </p>
+      </div>
+
+      <div class="card">
+        <h3>7. Reflection & Discussion</h3>
+
+        <p>
+          Teacher facilitates consequence discussion, systems thinking, comparison between civilizations, and reflection on tradeoffs.
+        </p>
+      </div>
+
+      <div class="card">
+        <h3>8. Export / Packet Collection</h3>
+
+        <p>
+          Teacher reviews artifacts, archive exports, and packet materials connected to the lesson sequence.
+        </p>
+      </div>
+
+      <div class="card">
+        <h3>9. Extension / Next Lesson Bridge</h3>
+
+        <p>
+          Transition students into future lessons involving survival, trade, diplomacy, governance, expansion, or conflict.
+        </p>
+      </div>
+
+    </div>
+
+    <div class="planned">
+      Prototype Guided Teaching Workflow · Future Editable Sequencing Planned
+    </div>
+
+  </div>
+
+  <!-- Teacher Guidance -->
+
+  <div class="section">
+
+    <h2>Teacher Guidance & Facilitation</h2>
+
+    <div class="field">
+      <label>Teacher Notes</label>
+
+      <textarea>Pause before Strategic Map Defense to compare how different civilizations prioritize risk, trade, and sustainability.</textarea>
+    </div>
+
+    <div class="field">
+      <label>Discussion Prompts</label>
+
+      <textarea>What evidence supports your settlement choice?
+What tradeoffs did your civilization accept?
+Can strong geography still lead to failure?</textarea>
+    </div>
+
+    <div class="field">
+      <label>Misconceptions To Watch For</label>
+
+      <textarea>Students may assume:
+- resources solve every problem
+- good land guarantees survival
+- defense is always more important than trade</textarea>
+    </div>
+
+  </div>
+
+  <!-- Pacing & Artifact -->
+
+  <div class="section">
+
+    <h2>Pacing & Artifact Design</h2>
+
+    <div class="grid">
+
+      <div class="field">
+        <label>Pacing Model</label>
+
+        <select>
+          <option>45–60 Minute Classroom Block</option>
+          <option>Afterschool Session</option>
+          <option>Daycamp / Intensive</option>
+        </select>
+      </div>
+
+      <div class="field">
+        <label>Primary Artifact Requirement</label>
+
+        <select>
+          <option>Strategic Map Defense</option>
+          <option>Founding Archive</option>
+          <option>Survival Archive</option>
+          <option>Evidence Reflection</option>
+        </select>
+      </div>
+
+    </div>
+
+    <div class="field">
+      <label>Assessment Focus</label>
+
+      <textarea>Evaluate evidence usage, consequence reasoning, tradeoff explanation, and systems-thinking depth.</textarea>
+    </div>
+
+  </div>
+
+  <!-- Connected Systems -->
+
+  <div class="section">
+
+    <h2>Connected Teacher Systems</h2>
+
+    <div class="grid">
+
+      <div class="card">
+        <h3>Teacher Resource Library</h3>
+
+        <p>
+          Attach maps, primary sources, archives, media, and instructional resources to this lesson.
+        </p>
+      </div>
+
+      <div class="card">
+        <h3>Facilitation Engine</h3>
+
+        <p>
+          Connect teacher moves, pause points, differentiation supports, and misconception guidance.
+        </p>
+      </div>
+
+      <div class="card">
+        <h3>Packet Builder</h3>
+
+        <p>
+          Assemble lesson plans, resources, facilitation notes, and archive materials into classroom packets.
+        </p>
+      </div>
+
+    </div>
+
+  </div>
+
+  <!-- AI Layer -->
+
+  <div class="section">
+
+    <h2>Future AI-Assisted Lesson Support</h2>
+
+    <p>
+      Future educator-side AI systems may eventually help generate lesson drafts, pacing suggestions, differentiation supports, standards alignment, discussion prompts, and evidence-based inquiry questions.
+    </p>
+
+    <div class="note">
+      AI-assisted lesson generation is intentionally deferred until the instructional architecture is fully stabilized.
+    </div>
+
+  </div>
+
+  <!-- Navigation -->
+
+  <div class="btn-row">
+    <a class="btn primary" href="/teacher">Return to Teacher Command Center</a>
+    <a class="btn" href="/teacher_resource_library">Teacher Resource Library</a>
+    <a class="btn" href="/teacher_resource_attach">Resource Attachment Workflow</a>
+    <a class="btn" href="/teacher_facilitation_engine">Teacher Facilitation Engine</a>
+    <a class="btn" href="/teacher_packet_builder">Teacher Packet Builder</a>
+  </div>
+
+</div>
+
+</body>
+</html>

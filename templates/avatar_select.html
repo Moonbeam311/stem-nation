@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>STEM Nation | Choose Your Avatar</title>
+  <style>
+    * { box-sizing: border-box; }
+    body {
+      margin: 0; min-height: 100vh;
+      background: radial-gradient(circle at 20% 10%, rgba(78,151,210,.26), transparent 34%),
+                  radial-gradient(circle at 84% 0%, rgba(244,211,94,.18), transparent 30%),
+                  linear-gradient(135deg, #06111f, #101d35 46%, #05080f);
+      color: #f8f1dd; font-family: Georgia, "Times New Roman", serif;
+    }
+    .page { width: min(1180px, 94vw); margin: 0 auto; padding: 30px 0 38px; }
+    .topbar { display:flex; justify-content:space-between; align-items:center; gap:12px; margin-bottom:18px; }
+    .brand { color:#f4d35e; letter-spacing:.18em; text-transform:uppercase; font-size:.78rem; font-weight:900; }
+    .home { text-decoration:none; color:#f4d35e; border:1px solid rgba(244,211,94,.36); padding:9px 12px; border-radius:999px; background:rgba(0,0,0,.24); }
+    .hero { border:1px solid rgba(244,211,94,.3); background:linear-gradient(135deg, rgba(244,211,94,.12), rgba(255,255,255,.04)), rgba(7,15,28,.84); border-radius:30px; padding:26px; box-shadow:0 22px 80px rgba(0,0,0,.38); margin-bottom:20px; }
+    .kicker { color:rgba(244,211,94,.86); letter-spacing:.16em; text-transform:uppercase; font-size:.75rem; font-weight:900; margin-bottom:8px; }
+    h1 { margin:0 0 10px; color:#f4d35e; font-size:clamp(2.2rem, 5.7vw, 4.8rem); line-height:.93; }
+    .hero p { max-width:850px; margin:0; color:rgba(248,241,221,.88); line-height:1.6; font-size:1.08rem; }
+    .grid { display:grid; grid-template-columns:repeat(3, 1fr); gap:16px; }
+    .card { border:1px solid rgba(255,255,255,.14); background:rgba(255,255,255,.065); border-radius:24px; padding:14px; cursor:pointer; box-shadow:0 18px 46px rgba(0,0,0,.26); transition:.25s ease; overflow:hidden; }
+    .card:hover, .card.selected { transform:translateY(-4px); border-color:rgba(244,211,94,.56); background:rgba(244,211,94,.105); box-shadow:0 0 34px rgba(244,211,94,.18), 0 20px 52px rgba(0,0,0,.34); }
+    .portrait { width:100%; aspect-ratio: 1 / 1.05; object-fit:cover; border-radius:20px; border:1px solid rgba(255,255,255,.16); background:rgba(0,0,0,.2); }
+    .card h2 { color:#f4d35e; margin:12px 0 6px; font-size:1.35rem; }
+    .symbol { color:#91c8ff; font-weight:900; letter-spacing:.08em; font-size:.82rem; text-transform:uppercase; }
+    .card p { margin:8px 0 0; color:rgba(248,241,221,.84); line-height:1.45; }
+    .setup { margin-top:18px; border:1px solid rgba(255,255,255,.13); background:rgba(255,255,255,.065); border-radius:24px; padding:18px; display:grid; grid-template-columns:1fr auto; gap:12px; align-items:end; }
+    label { display:block; color:#f4d35e; font-weight:900; margin-bottom:8px; }
+    input { width:100%; padding:13px 14px; border-radius:14px; border:1px solid rgba(255,255,255,.18); background:rgba(0,0,0,.25); color:#fff; font-family:inherit; font-size:1rem; }
+    button { border:0; border-radius:16px; padding:14px 18px; font-family:inherit; font-size:1rem; font-weight:900; cursor:pointer; background:linear-gradient(135deg, #f4d35e, #d7a51e); color:#171006; }
+    .status { grid-column:1 / -1; color:rgba(248,241,221,.78); min-height:22px; }
+    @media(max-width:900px){ .grid{grid-template-columns:1fr;} .setup{grid-template-columns:1fr;} }
+  </style>
+<!-- STEM_NATION_AVATAR_PNG_WITH_SVG_FALLBACK_V1 -->
+</head>
+<body>
+  <main class="page">
+    <div class="topbar">
+      <div class="brand">STEM Nation Academy · Identity Entry</div>
+      <a class="home" href="/">Return Home</a>
+    </div>
+    <section class="hero">
+      <div class="kicker">Step Into The Mission</div>
+      <h1>Choose Your Avatar</h1>
+      <p>Choose your student avatar and starting role. This is the face you bring into the Academy mission.</p>
+    </section>
+    <section class="grid" id="avatarGrid"></section>
+    <section class="setup">
+      <div>
+        <label for="leaderName">Leader name or nickname</label>
+        <input id="leaderName" placeholder="Example: Kai, Maya, Sonny, Team Falcon" />
+      </div>
+      <button type="button" onclick="continueMission()">Continue</button>
+      <div id="status" class="status">Choose an avatar to continue.</div>
+    </section>
+  </main>
+  <script>
+    const avatars = [
+      { role:"Scout", symbol:"Eye / Trail Marker", portrait:"/static/avatars/student_scout.png", fallback:"/static/avatars/student_scout.svg", line:"I notice what others miss." },
+      { role:"Builder", symbol:"Beam / Tool", portrait:"/static/avatars/student_builder.png", fallback:"/static/avatars/student_builder.svg", line:"I turn ideas into structure." },
+      { role:"Caretaker", symbol:"Shield / Protection", portrait:"/static/avatars/student_caretaker.png", fallback:"/static/avatars/student_caretaker.svg", line:"I protect the people." },
+      { role:"Mapkeeper", symbol:"Map / Memory", portrait:"/static/avatars/student_mapkeeper.png", fallback:"/static/avatars/student_mapkeeper.svg", line:"I remember the land." },
+      { role:"Inventor", symbol:"Gear / Solution", portrait:"/static/avatars/student_inventor.png", fallback:"/static/avatars/student_inventor.svg", line:"I solve problems with tools." },
+      { role:"Diplomat", symbol:"Circle / Agreement", portrait:"/static/avatars/student_diplomat.png", fallback:"/static/avatars/student_diplomat.svg", line:"I help the group decide together." }
+    ];
+    let selected = null;
+    function renderAvatars(){
+      const grid = document.getElementById("avatarGrid");
+      grid.innerHTML = "";
+      avatars.forEach(a => {
+        const card = document.createElement("article");
+        card.className = "card";
+        card.innerHTML = `<img class="portrait" src="${a.portrait}" onerror="this.onerror=null; this.src=a.fallback;" alt="${a.role} student avatar"><h2>${a.role}</h2><div class="symbol">${a.symbol}</div><p>${a.line}</p>`;
+        card.onclick = () => {
+          selected = a;
+          document.querySelectorAll(".card").forEach(c => c.classList.remove("selected"));
+          card.classList.add("selected");
+          document.getElementById("status").textContent = `${a.role} selected. Enter a name or continue as ${a.role}.`;
+        };
+        grid.appendChild(card);
+      });
+    }
+    function continueMission(){
+      if(!selected){ document.getElementById("status").textContent = "Choose an avatar first."; return; }
+      const name = document.getElementById("leaderName").value.trim() || selected.role;
+      localStorage.setItem("stemNationAvatar", JSON.stringify({...selected, name, portrait: selected.portrait, fallback: selected.fallback}));
+      window.location.href = "/avatar_confirm";
+    }
+    renderAvatars();
+  </script>
+</body>
+</html>

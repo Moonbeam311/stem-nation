@@ -1,0 +1,842 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Printable Founding Archive</title>
+
+  <style>
+    body {
+      margin: 0;
+      font-family: Georgia, "Times New Roman", serif;
+      background: #f7f2e7;
+      color: #111;
+      padding: 40px;
+      box-sizing: border-box;
+    }
+
+    .page {
+      max-width: 850px;
+      margin: 0 auto;
+      background: white;
+      border: 1px solid #d4af37;
+      padding: 42px;
+      box-shadow: 0 14px 40px rgba(0,0,0,0.18);
+    }
+
+    .header {
+      text-align: center;
+      border-bottom: 2px solid #d4af37;
+      padding-bottom: 18px;
+      margin-bottom: 28px;
+    }
+
+    .label {
+      font-family: Arial, sans-serif;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      font-size: 12px;
+      color: #8a6d1d;
+      margin-bottom: 8px;
+    }
+
+    h1 {
+      margin: 0;
+      font-size: 34px;
+    }
+
+    .subtitle {
+      margin-top: 10px;
+      font-family: Arial, sans-serif;
+      font-size: 14px;
+      color: #555;
+    }
+
+    .field {
+      margin: 24px 0;
+      page-break-inside: avoid;
+    }
+
+    .field h2 {
+      font-family: Arial, sans-serif;
+      color: #8a6d1d;
+      font-size: 16px;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      border-bottom: 1px solid #ddd;
+      padding-bottom: 6px;
+      margin-bottom: 10px;
+    }
+
+    .answer {
+      min-height: 38px;
+      line-height: 1.6;
+      white-space: pre-wrap;
+      font-size: 16px;
+    }
+
+    .empty {
+      color: #777;
+      font-style: italic;
+    }
+
+    .footer {
+      margin-top: 36px;
+      border-top: 1px solid #d4af37;
+      padding-top: 14px;
+      font-family: Arial, sans-serif;
+      font-size: 12px;
+      color: #555;
+      text-align: center;
+    }
+
+    .btn-row {
+      max-width: 850px;
+      margin: 22px auto;
+      text-align: center;
+      font-family: Arial, sans-serif;
+    }
+
+    .btn {
+      border: 1px solid #8a6d1d;
+      background: #d4af37;
+      color: #111;
+      padding: 12px 20px;
+      border-radius: 999px;
+      cursor: pointer;
+      font-weight: bold;
+      margin: 6px;
+      text-decoration: none;
+      display: inline-block;
+    }
+
+    .btn.secondary {
+      background: transparent;
+      color: #8a6d1d;
+    }
+
+    @media print {
+      body {
+        background: white;
+        padding: 0;
+      }
+
+      .page {
+        box-shadow: none;
+        border: none;
+        max-width: none;
+      }
+
+      .btn-row {
+        display: none;
+      }
+    }
+  </style>
+
+<style>
+/* STEM_NATION_PRINT_ARCHIVE_STUDENT_IDENTITY_AND_COMPARISON_V1 */
+.print-section {
+  margin-top: 22px;
+  border-top: 1px solid rgba(0,0,0,0.16);
+  padding-top: 18px;
+}
+
+.print-section h2 {
+  font-size: 18px;
+  margin: 0 0 12px;
+}
+
+.print-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 10px;
+}
+
+.print-item {
+  margin-bottom: 10px;
+}
+
+.print-label {
+  font-weight: bold;
+  margin-bottom: 4px;
+}
+
+.print-answer {
+  white-space: pre-wrap;
+  line-height: 1.45;
+}
+</style>
+
+</head>
+
+<body>
+  <div class="page">
+    <div class="header">
+      <div class="label">STEM Nation · Founding Archive</div>
+      <h1>Settlement Decision Defense</h1>
+
+<!-- STEM_NATION_PRINT_ARCHIVE_STUDENT_IDENTITY_AND_COMPARISON_V1 -->
+<section class="print-section" id="studentIdentityPrintSection">
+  <h2>Student Information</h2>
+  <div class="print-grid">
+    <div class="print-item">
+      <div class="print-label">Student Name:</div>
+      <div id="printStudentName" class="print-answer">—</div>
+    </div>
+    <div class="print-item">
+      <div class="print-label">Class / Period:</div>
+      <div id="printStudentClass" class="print-answer">—</div>
+    </div>
+    <div class="print-item">
+      <div class="print-label">Teacher:</div>
+      <div id="printTeacherName" class="print-answer">—</div>
+    </div>
+    <div class="print-item">
+      <div class="print-label">Archive Date:</div>
+      <div id="printArchiveDate" class="print-answer">—</div>
+    </div>
+  </div>
+</section>
+
+
+<!-- STEM_NATION_PRINT_TEACHER_EVALUATION_FEEDBACK_V1 -->
+
+<!-- STEM_NATION_PRINT_CIVILIZATION_SCORE_SUMMARY_V1 -->
+
+<!-- STEM_NATION_PRINT_CIVILIZATION_COMPETENCY_PROFILE_V1 -->
+<section class="print-section" id="civilizationCompetencyPrintSection">
+  <h2>Civilization Competency Profile</h2>
+
+  <div class="print-grid">
+    <div class="print-item">
+      <div class="print-label">Risk Awareness</div>
+      <div id="printCompetencyRisk" class="print-answer">—</div>
+    </div>
+
+    <div class="print-item">
+      <div class="print-label">Systems Thinking</div>
+      <div id="printCompetencySystems" class="print-answer">—</div>
+    </div>
+
+    <div class="print-item">
+      <div class="print-label">Settlement Strategy</div>
+      <div id="printCompetencySettlement" class="print-answer">—</div>
+    </div>
+
+    <div class="print-item">
+      <div class="print-label">Evidence Reasoning</div>
+      <div id="printCompetencyEvidence" class="print-answer">—</div>
+    </div>
+
+    <div class="print-item">
+      <div class="print-label">Trade & Movement Logic</div>
+      <div id="printCompetencyTrade" class="print-answer">—</div>
+    </div>
+
+    <div class="print-item">
+      <div class="print-label">Defense Logic</div>
+      <div id="printCompetencyDefense" class="print-answer">—</div>
+    </div>
+
+    <div class="print-item">
+      <div class="print-label">Environmental Adaptation</div>
+      <div id="printCompetencyEnvironment" class="print-answer">—</div>
+    </div>
+
+    <div class="print-item">
+      <div class="print-label">Collaboration & Discussion</div>
+      <div id="printCompetencyCollaboration" class="print-answer">—</div>
+    </div>
+  </div>
+</section>
+
+
+<section class="print-section" id="civilizationScorePrintSection">
+  <h2>Civilization Score / Badge Summary</h2>
+
+  <div class="print-grid">
+    <div class="print-item">
+      <div class="print-label">Observation Score:</div>
+      <div id="printScoreObservation" class="print-answer">—</div>
+    </div>
+
+    <div class="print-item">
+      <div class="print-label">Evidence Score:</div>
+      <div id="printScoreEvidence" class="print-answer">—</div>
+    </div>
+
+    <div class="print-item">
+      <div class="print-label">Risk Analysis:</div>
+      <div id="printScoreRisk" class="print-answer">—</div>
+    </div>
+
+    <div class="print-item">
+      <div class="print-label">Settlement Planning:</div>
+      <div id="printScoreSettlement" class="print-answer">—</div>
+    </div>
+
+    <div class="print-item">
+      <div class="print-label">Systems Thinking:</div>
+      <div id="printScoreSystems" class="print-answer">—</div>
+    </div>
+
+    <div class="print-item">
+      <div class="print-label">Teacher Evaluation Average:</div>
+      <div id="printScoreTeacherEval" class="print-answer">—</div>
+    </div>
+
+    <div class="print-item">
+      <div class="print-label">Civilization Readiness:</div>
+      <div id="printReadinessSummary" class="print-answer">—</div>
+    </div>
+
+    <div class="print-item">
+      <div class="print-label">Achievement Badges:</div>
+      <div id="printBadgeSummary" class="print-answer">—</div>
+    </div>
+  </div>
+</section>
+
+
+
+<!-- STEM_NATION_PRINT_RUBRIC_GUIDELINES_REFERENCE_V1 -->
+<section class="print-section">
+  <h2>Rubric Guidelines Reference</h2>
+
+  <div class="print-grid">
+
+    <div class="print-item">
+      <div class="print-label">Observation Quality</div>
+      <div class="print-answer">
+        Strong observation explains terrain relationships and predicts consequences.
+      </div>
+    </div>
+
+    <div class="print-item">
+      <div class="print-label">Evidence Use</div>
+      <div class="print-answer">
+        Strong evidence uses map details and geography to support decisions.
+      </div>
+    </div>
+
+    <div class="print-item">
+      <div class="print-label">Risk Awareness</div>
+      <div class="print-answer">
+        Strong reasoning identifies long-term dangers and tradeoffs.
+      </div>
+    </div>
+
+    <div class="print-item">
+      <div class="print-label">Settlement Logic</div>
+      <div class="print-answer">
+        Strong settlement plans connect survival, defense, food, and growth.
+      </div>
+    </div>
+
+    <div class="print-item">
+      <div class="print-label">Systems Thinking</div>
+      <div class="print-answer">
+        Strong systems thinking connects trade, defense, movement, and resources.
+      </div>
+    </div>
+
+    <div class="print-item">
+      <div class="print-label">Collaboration / Discussion</div>
+      <div class="print-answer">
+        Strong discussion builds on ideas and contributes thoughtful reasoning.
+      </div>
+    </div>
+
+  </div>
+</section>
+
+
+<section class="print-section" id="teacherEvaluationPrintSection">
+  <h2>Teacher Evaluation / Feedback</h2>
+
+  <div class="print-grid">
+    <div class="print-item">
+      <div class="print-label">Observation Quality:</div>
+      <div id="printEvalObservationQuality" class="print-answer">—</div>
+    </div>
+    <div class="print-item">
+      <div class="print-label">Evidence Use:</div>
+      <div id="printEvalEvidenceUse" class="print-answer">—</div>
+    </div>
+    <div class="print-item">
+      <div class="print-label">Risk Awareness:</div>
+      <div id="printEvalRiskAwareness" class="print-answer">—</div>
+    </div>
+    <div class="print-item">
+      <div class="print-label">Settlement Logic:</div>
+      <div id="printEvalSettlementLogic" class="print-answer">—</div>
+    </div>
+    <div class="print-item">
+      <div class="print-label">Systems Thinking:</div>
+      <div id="printEvalSystemsThinking" class="print-answer">—</div>
+    </div>
+    <div class="print-item">
+      <div class="print-label">Collaboration / Discussion:</div>
+      <div id="printEvalCollaboration" class="print-answer">—</div>
+    </div>
+    <div class="print-item">
+      <div class="print-label">Strengths / Positive Feedback:</div>
+      <div id="printEvalStrengths" class="print-answer">—</div>
+    </div>
+    <div class="print-item">
+      <div class="print-label">Next Steps / Growth Guidance:</div>
+      <div id="printEvalNextSteps" class="print-answer">—</div>
+    </div>
+    <div class="print-item">
+      <div class="print-label">Additional Teacher Notes:</div>
+      <div id="printEvalNotes" class="print-answer">—</div>
+    </div>
+    <div class="print-item">
+      <div class="print-label">Evaluation Saved At:</div>
+      <div id="printEvalSavedAt" class="print-answer">—</div>
+    </div>
+  </div>
+</section>
+
+
+
+<!-- STEM_NATION_PRINT_STUDENT_REFLECTION_GROWTH_V1 -->
+<section class="print-section" id="studentReflectionPrintSection">
+  <h2>Student Reflection / Growth Statement</h2>
+
+  <div class="print-grid">
+
+    <div class="print-item">
+      <div class="print-label">Thinking Change</div>
+      <div id="printReflectionThinkingChange" class="print-answer">—</div>
+    </div>
+
+    <div class="print-item">
+      <div class="print-label">Strongest Civilization Decision</div>
+      <div id="printReflectionStrongestDecision" class="print-answer">—</div>
+    </div>
+
+    <div class="print-item">
+      <div class="print-label">Improvement / Risk Reflection</div>
+      <div id="printReflectionImprovement" class="print-answer">—</div>
+    </div>
+
+    <div class="print-item">
+      <div class="print-label">Competency to Strengthen</div>
+      <div id="printReflectionCompetencyGoal" class="print-answer">—</div>
+    </div>
+
+    <div class="print-item">
+      <div class="print-label">Leadership / Society Lesson</div>
+      <div id="printReflectionLesson" class="print-answer">—</div>
+    </div>
+
+  </div>
+</section>
+
+
+<section class="print-section" id="comparisonResponsePrintSection">
+  <h2>Region Comparison Response</h2>
+  <div class="print-grid">
+    <div class="print-item">
+      <div class="print-label">Compared Regions:</div>
+      <div id="printComparedRegions" class="print-answer">—</div>
+    </div>
+    <div class="print-item">
+      <div class="print-label">Stronger Beginning:</div>
+      <div id="printStrongerRegion" class="print-answer">—</div>
+    </div>
+    <div class="print-item">
+      <div class="print-label">Advantage / Evidence:</div>
+      <div id="printComparisonAdvantage" class="print-answer">—</div>
+    </div>
+    <div class="print-item">
+      <div class="print-label">Risk / Tradeoff:</div>
+      <div id="printComparisonRisk" class="print-answer">—</div>
+    </div>
+    <div class="print-item">
+      <div class="print-label">Comparison Saved At:</div>
+      <div id="printComparisonSavedAt" class="print-answer">—</div>
+    </div>
+  </div>
+</section>
+
+      <div id="savedTime" class="subtitle">Saved record loading...</div>
+    </div>
+
+    <div class="field">
+      <h2>Chosen Region</h2>
+      <div id="chosenRegion" class="answer empty">No response recorded.</div>
+    </div>
+
+    <div class="field">
+      <h2>Strongest Advantage</h2>
+      <div id="strongestAdvantage" class="answer empty">No response recorded.</div>
+    </div>
+
+    <div class="field">
+      <h2>Greatest Risk</h2>
+      <div id="greatestRisk" class="answer empty">No response recorded.</div>
+    </div>
+
+    <div class="field">
+      <h2>Evidence From the Land</h2>
+      <div id="landEvidence" class="answer empty">No response recorded.</div>
+    </div>
+
+    <div class="field">
+      <h2>Survival Plan</h2>
+      <div id="survivalPlan" class="answer empty">No response recorded.</div>
+    </div>
+
+    <div class="footer">
+      Generated from STEM Nation Project Hub · Printable classroom artifact
+    </div>
+  </div>
+
+  <div class="btn-row">
+    <button class="btn" onclick="window.print()">Print / Save as PDF</button>
+    <a class="btn secondary" href="/hub">Return to Project Hub</a>
+  </div>
+
+<script>
+const STORAGE_KEY = "STEM_NATION_SETTLEMENT_DEFENSE_V1";
+
+function safeSetText(id, value) {
+  const el = document.getElementById(id);
+  if (!el) return;
+
+  if (value && value.trim().length > 0) {
+    el.textContent = value;
+    el.classList.remove("empty");
+  }
+}
+
+function loadPrintableArchive() {
+  const raw = localStorage.getItem(STORAGE_KEY);
+  const savedTime = document.getElementById("savedTime");
+
+  if (!raw) {
+    if (savedTime) {
+      savedTime.textContent = "No saved local record found.";
+    }
+    return;
+  }
+
+  try {
+    const record = JSON.parse(raw);
+
+    safeSetText("chosenRegion", record.chosenRegion || "");
+    safeSetText("strongestAdvantage", record.strongestAdvantage || "");
+    safeSetText("greatestRisk", record.greatestRisk || "");
+    safeSetText("landEvidence", record.landEvidence || "");
+    safeSetText("survivalPlan", record.survivalPlan || "");
+
+    if (savedTime) {
+      savedTime.textContent = record.savedAt
+        ? `Saved locally: ${new Date(record.savedAt).toLocaleString()}`
+        : "Saved local record";
+    }
+  } catch (error) {
+    if (savedTime) {
+      savedTime.textContent = "Could not load saved local record.";
+    }
+  }
+}
+
+loadPrintableArchive();
+</script>
+
+
+<script>
+// STEM_NATION_PRINT_ARCHIVE_STUDENT_IDENTITY_AND_COMPARISON_V1
+(function renderStudentIdentityAndComparisonForPrint() {
+  function readJSON(key) {
+    const raw = localStorage.getItem(key);
+    if (!raw) return null;
+
+    try {
+      return JSON.parse(raw);
+    } catch (err) {
+      console.warn("Printable archive ignored invalid JSON:", key, err);
+      return null;
+    }
+  }
+
+  function setText(id, value) {
+    const el = document.getElementById(id);
+    if (el) el.textContent = value || "—";
+  }
+
+  const identity = readJSON("STEM_NATION_STUDENT_IDENTITY_ARCHIVE_V1");
+  if (identity) {
+    setText("printStudentName", identity.studentName);
+    setText("printStudentClass", identity.studentClass);
+    setText("printTeacherName", identity.teacherName);
+    setText("printArchiveDate", identity.archiveDate);
+  }
+
+  const comparison = readJSON("STEM_NATION_STUDENT_COMPARISON_RESPONSE_V1");
+  if (comparison) {
+    setText(
+      "printComparedRegions",
+      Array.isArray(comparison.regions) ? comparison.regions.join(" vs ") : ""
+    );
+    setText("printStrongerRegion", comparison.strongerRegion);
+    setText("printComparisonAdvantage", comparison.advantageEvidence);
+    setText("printComparisonRisk", comparison.riskTradeoff);
+    setText(
+      "printComparisonSavedAt",
+      comparison.savedAt ? new Date(comparison.savedAt).toLocaleString() : ""
+    );
+  }
+})();
+</script>
+
+
+<script>
+// STEM_NATION_PRINT_TEACHER_EVALUATION_FEEDBACK_V1
+(function renderTeacherEvaluationForPrint() {
+  function readJSON(key) {
+    const raw = localStorage.getItem(key);
+    if (!raw) return null;
+
+    try {
+      return JSON.parse(raw);
+    } catch (err) {
+      console.warn("Printable archive ignored invalid JSON:", key, err);
+      return null;
+    }
+  }
+
+  function setText(id, value) {
+    const el = document.getElementById(id);
+    if (el) el.textContent = value || "—";
+  }
+
+  const evaluation = readJSON("STEM_NATION_TEACHER_EVALUATION_FEEDBACK_V1");
+  if (!evaluation) return;
+
+  setText("printEvalObservationQuality", evaluation.observationQuality);
+  setText("printEvalEvidenceUse", evaluation.evidenceUse);
+  setText("printEvalRiskAwareness", evaluation.riskAwareness);
+  setText("printEvalSettlementLogic", evaluation.settlementLogic);
+  setText("printEvalSystemsThinking", evaluation.systemsThinking);
+  setText("printEvalCollaboration", evaluation.collaboration);
+  setText("printEvalStrengths", evaluation.strengths);
+  setText("printEvalNextSteps", evaluation.nextSteps);
+  setText("printEvalNotes", evaluation.notes);
+  setText(
+    "printEvalSavedAt",
+    evaluation.savedAt ? new Date(evaluation.savedAt).toLocaleString() : ""
+  );
+})();
+</script>
+
+
+<script>
+// STEM_NATION_PRINT_CIVILIZATION_SCORE_SUMMARY_V1
+(function renderCivilizationScoreSummaryForPrint() {
+
+  function readJSON(key) {
+    try {
+      return JSON.parse(localStorage.getItem(key) || "null");
+    } catch (err) {
+      return null;
+    }
+  }
+
+  function setText(id, value) {
+    const el = document.getElementById(id);
+    if (el) el.textContent = value || "—";
+  }
+
+  const comparison = readJSON("STEM_NATION_STUDENT_COMPARISON_RESPONSE_V1");
+  const evaluation = readJSON("STEM_NATION_TEACHER_EVALUATION_FEEDBACK_V1");
+
+  const scoreMap = {
+    "4 · Strong": 95,
+    "3 · Proficient": 82,
+    "2 · Developing": 68,
+    "1 · Beginning": 52
+  };
+
+  function evalScore(value) {
+    return scoreMap[value] || 0;
+  }
+
+  const observationScore = evalScore(evaluation?.observationQuality);
+  const evidenceScore = evalScore(evaluation?.evidenceUse);
+  const riskScore = evalScore(evaluation?.riskAwareness);
+  const settlementScore = evalScore(evaluation?.settlementLogic);
+  const systemsScore = evalScore(evaluation?.systemsThinking);
+
+  // STEM_NATION_SCORE_AVERAGING_COMPLETED_ONLY_V1
+  const completedScores = [
+    observationScore,
+    evidenceScore,
+    riskScore,
+    settlementScore,
+    systemsScore
+  ].filter((score) => score > 0);
+
+  const completedCount = completedScores.length;
+
+  const teacherAverage = completedCount
+    ? Math.round(completedScores.reduce((sum, score) => sum + score, 0) / completedCount)
+    : 0;
+
+  setText("printScoreObservation", observationScore);
+  setText("printScoreEvidence", evidenceScore);
+  setText("printScoreRisk", riskScore);
+  setText("printScoreSettlement", settlementScore);
+  setText("printScoreSystems", systemsScore);
+  setText(
+    "printScoreTeacherEval",
+    teacherAverage ? `${teacherAverage} (${completedCount} / 5 complete)` : ""
+  );
+
+  // STEM_NATION_READINESS_THRESHOLD_LOGIC_V1
+  let readiness = "Rubric Pending";
+
+  if (completedCount >= 4 && teacherAverage >= 90) {
+    readiness = "Advanced Civilization Readiness";
+  } else if (completedCount >= 3 && teacherAverage >= 75) {
+    readiness = "Stable Civilization Readiness";
+  } else if (completedCount >= 2 && teacherAverage >= 60) {
+    readiness = "Developing Civilization Readiness";
+  } else if (completedCount >= 1) {
+    readiness = "Emerging Civilization";
+  }
+
+  setText("printReadinessSummary", readiness);
+
+  // STEM_NATION_BADGE_ELIGIBILITY_THRESHOLDS_V1
+  const badges = [];
+
+  if (comparison?.regions?.includes("River Corridor")) {
+    badges.push("🌊 Water Systems Thinker");
+  }
+
+  if (riskScore >= 75 && completedCount >= 2) {
+    badges.push("⚖️ Risk Awareness Builder");
+  }
+
+  if (settlementScore >= 75 && completedCount >= 2) {
+    badges.push("🛖 Settlement Strategist");
+  }
+
+  if (systemsScore >= 75 && completedCount >= 2) {
+    badges.push("🧠 Systems Thinker");
+  }
+
+  if (evidenceScore >= 75 && completedCount >= 2) {
+    badges.push("📜 Evidence-Based Reasoner");
+  }
+
+  if (teacherAverage >= 90 && completedCount >= 4) {
+    badges.push("🏛️ Civilization Architect");
+  }
+
+  if (!badges.length) {
+    badges.push("🌱 Founding Civilization");
+  }
+
+  setText("printBadgeSummary", badges.join(" · "));
+})();
+</script>
+
+
+<script>
+// STEM_NATION_PRINT_CIVILIZATION_COMPETENCY_PROFILE_V1
+(function renderCivilizationCompetencyProfileForPrint() {
+  function readJSON(key) {
+    try {
+      return JSON.parse(localStorage.getItem(key) || "null");
+    } catch (err) {
+      return null;
+    }
+  }
+
+  function setText(id, value) {
+    const el = document.getElementById(id);
+    if (el) el.textContent = value || "—";
+  }
+
+  const evaluation = readJSON("STEM_NATION_TEACHER_EVALUATION_FEEDBACK_V1");
+  const comparison = readJSON("STEM_NATION_STUDENT_COMPARISON_RESPONSE_V1");
+  const defense = readJSON("STEM_NATION_SETTLEMENT_DEFENSE_V1");
+
+  const scoreMap = {
+    "4 · Strong": 4,
+    "3 · Proficient": 3,
+    "2 · Developing": 2,
+    "1 · Beginning": 1
+  };
+
+  function level(score) {
+    if (score >= 4) return "Strongly Developing";
+    if (score >= 3) return "Developing";
+    if (score >= 2) return "Emerging";
+    if (score >= 1) return "Beginning";
+    return "Not Yet Scored";
+  }
+
+  const chosenRegion = defense?.chosenRegion || "";
+  const comparedRegions = Array.isArray(comparison?.regions) ? comparison.regions.join(" vs ") : "";
+
+  setText("printCompetencyRisk", level(scoreMap[evaluation?.riskAwareness] || 0));
+  setText("printCompetencySystems", level(scoreMap[evaluation?.systemsThinking] || 0));
+  setText("printCompetencySettlement", level(scoreMap[evaluation?.settlementLogic] || 0));
+  setText("printCompetencyEvidence", level((scoreMap[evaluation?.evidenceUse] || 0) || (scoreMap[evaluation?.observationQuality] || 0)));
+  setText(
+    "printCompetencyTrade",
+    comparedRegions.includes("Coastal") || comparedRegions.includes("Crossroads") || chosenRegion.includes("Coastal") || chosenRegion.includes("Crossroads")
+      ? "Emerging"
+      : "Not Yet Scored"
+  );
+  setText(
+    "printCompetencyDefense",
+    comparedRegions.includes("Highland") || chosenRegion.includes("Highland") || scoreMap[evaluation?.riskAwareness] || scoreMap[evaluation?.settlementLogic]
+      ? "Emerging"
+      : "Not Yet Scored"
+  );
+  setText(
+    "printCompetencyEnvironment",
+    chosenRegion || comparedRegions ? "Emerging" : "Not Yet Scored"
+  );
+  setText("printCompetencyCollaboration", level(scoreMap[evaluation?.collaboration] || 0));
+})();
+</script>
+
+
+<script>
+// STEM_NATION_PRINT_STUDENT_REFLECTION_GROWTH_V1
+(function renderStudentReflectionForPrint() {
+
+  const STORAGE_KEY = "STEM_NATION_STUDENT_REFLECTION_GROWTH_V1";
+
+  function setText(id, value) {
+    const el = document.getElementById(id);
+    if (el) el.textContent = value || "—";
+  }
+
+  try {
+    const raw = localStorage.getItem(STORAGE_KEY);
+    if (!raw) return;
+
+    const data = JSON.parse(raw);
+
+    setText("printReflectionThinkingChange", data.thinkingChange);
+    setText("printReflectionStrongestDecision", data.strongestDecision);
+    setText("printReflectionImprovement", data.improvement);
+    setText("printReflectionCompetencyGoal", data.competencyGoal);
+    setText("printReflectionLesson", data.lesson);
+
+  } catch (err) {
+    console.log("Could not render reflection for print.", err);
+  }
+
+})();
+</script>
+
+</body>
+</html>

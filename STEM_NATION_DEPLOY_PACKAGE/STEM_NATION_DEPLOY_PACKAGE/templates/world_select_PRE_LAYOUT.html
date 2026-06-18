@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Select Your Civilization</title>
+  <style>
+    body {
+      text-align: center;
+      font-family: Arial;
+      background-color: #0f172a;
+      color: white;
+    }
+
+    .card {
+      width: 250px;
+      display: inline-block;
+      margin: 15px;
+      vertical-align: top;
+      cursor: pointer;
+    }
+
+    img {
+      width: 100%;
+      height: 180px;
+      object-fit: cover;
+      border-radius: 8px;
+    }
+
+    p {
+      font-weight: bold;
+      margin: 10px 0 5px;
+    }
+
+    small {
+      display: block;
+      font-size: 12px;
+      opacity: 0.85;
+    }
+  </style>
+
+  <script>
+    function go(world) {
+      window.location.href = "/academy_individual?world=" + world;
+    }
+  </script>
+</head>
+
+<body>
+
+<h1>Select Your Civilization</h1>
+
+<div class="card" onclick="go('river')">
+  <img src="/static/world_river.jpg">
+  <p>River Nexus</p>
+  <small>Water sustains life. Agriculture and settlement depend on control and access.</small>
+</div>
+
+<div class="card" onclick="go('coastal')">
+  <img src="/static/world_coastal.jpg">
+  <p>Coastal Exchange</p>
+  <small>Trade, migration, and exposure define opportunity and risk.</small>
+</div>
+
+<div class="card" onclick="go('forest')">
+  <img src="/static/world_forest.jpg">
+  <p>Forest Intelligence</p>
+  <small>Dense terrain. Survival depends on understanding the ecosystem.</small>
+</div>
+
+<div class="card" onclick="go('desert')">
+  <img src="/static/world_desert.jpg">
+  <p>Desert Adaptation</p>
+  <small>Scarcity forces discipline. Every resource matters.</small>
+</div>
+
+<div class="card" onclick="go('mountain')">
+  <img src="/static/world_mountain.jpg">
+  <p>Mountain Stronghold</p>
+  <small>Isolation and elevation provide defense and control.</small>
+</div>
+
+<div class="card" onclick="go('balanced')">
+  <img src="/static/world_balanced.jpg">
+  <p>Balanced Core</p>
+  <small>No advantage. Strategy determines your path.</small>
+</div>
+
+</body>
+</html>

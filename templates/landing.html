@@ -1,103 +1,110 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>STEM Nation</title>
+  <title>STEM Nation</title>
 
-<style>
-body {
-  margin:0;
-  font-family:Arial, sans-serif;
-  color:white;
-  text-align:center;
+  <style>
+    body {
+      margin: 0;
+      color: white;
+      font-family: Arial, sans-serif;
+      text-align: center;
 
-  background:
-    linear-gradient(rgba(0,0,0,0.32), rgba(0,0,0,0.55)),
-    url("/static/landing_bg.jpg") center/cover no-repeat;
-}
+      /* 🔥 YOUR IMAGE + OVERLAY */
+      background:
+        linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.25)),
+        url("/static/landing_bg.jpg") center/cover no-repeat;
+    }
 
-.container {
-  display:flex;
-  flex-direction:column;
-  justify-content:center;
-  align-items:center;
-  height:100vh;
-  padding: 0 20px;
-  box-sizing: border-box;
-}
+    .container {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
 
-h1 {
-  font-size:64px;
-  margin-bottom:10px;
-  text-shadow: 0 2px 10px rgba(0,0,0,0.55);
-}
+    h1 {
+      font-size: 64px;
+      margin-bottom: 10px;
+      letter-spacing: 2px;
+    }
 
-.premise {
-  font-size:26px;
-  margin-bottom:20px;
-  text-shadow: 0 2px 8px rgba(0,0,0,0.5);
-}
+    .premise {
+      font-size: 26px;
+      margin-bottom: 20px;
+      opacity: 0.9;
+    }
 
-.tagline {
-  font-size:16px;
-  margin-bottom:50px;
-  letter-spacing:2px;
-  text-shadow: 0 2px 8px rgba(0,0,0,0.5);
-}
+    .tagline {
+      font-size: 16px;
+      margin-bottom: 50px;
+      opacity: 0.7;
+      letter-spacing: 2px;
+    }
 
-.buttons {
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:20px;
-}
+    .buttons {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+    }
 
-button {
-  width:240px;
-  padding:16px;
-  font-size:18px;
-  border:1px solid rgba(255,255,255,0.92);
-  background:rgba(0,0,0,0.22);
-  color:white;
-  cursor:pointer;
-  transition:0.3s;
-  backdrop-filter: blur(2px);
-}
+    button {
+      width: 240px;
+      padding: 16px;
+      font-size: 18px;
+      border: 1px solid white;
+      background: transparent;
+      color: white;
+      cursor: pointer;
+      transition: all 0.3s;
+    }
 
-button:hover {
-  background:white;
-  color:black;
-}
-</style>
+    button:hover {
+      background: white;
+      color: black;
+    }
+  </style>
+  <!-- STEM_NATION_LANDING_STUDENT_ENTRY_WIRED_V1 -->
 </head>
 
 <body>
 
 <div class="container">
 
-<h1>STEM Nation</h1>
+  <h1>STEM Nation</h1>
 
-<div class="premise">
-Civilization Did Not Begin With Us
-</div>
+  <div class="premise">
+    Civilization Did Not Begin With Us
+  </div>
 
-<div class="tagline">
-Power • Policy • Code • Consequence
-</div>
+  <div class="tagline">
+    Power • Policy • Code • Consequence
+  </div>
 
-<div class="buttons">
-<button onclick="go('student')">Student Experience</button>
-<button onclick="go('teacher')">Educator Access</button>
-<button onclick="go('simulation')">Simulation Mode</button>
-<button onclick="go('partners')">Partnerships & Grants</button>
-</div>
+  <div class="buttons">
+    <button onclick="go('student')">Student Experience</button>
+    <button onclick="go('teacher')">Educator Access</button>
+    <button onclick="go('simulation')">Simulation Mode · Living World</button>
+    <button onclick="go('partners')">Partnerships & Grants</button>
+  </div>
 
 </div>
 
 <script>
 function go(type) {
-  if (type === "student") window.location.href = "/intro1";
-  if (type === "teacher") window.location.href = "/teacher";
-  if (type === "simulation") window.location.href = "/map";
-  if (type === "partners") window.location.href = "/partners";
+  if (type === "student") {
+    window.location.href = "/academy_opening";
+  }
+  else if (type === "teacher") {
+    window.location.href = "/teacher";
+  }
+  else if (type === "simulation") {
+    window.location.href = "/map";
+  }
+  else if (type === "partners") {
+    window.location.href = "/partners";
+  }
 }
 </script>
 

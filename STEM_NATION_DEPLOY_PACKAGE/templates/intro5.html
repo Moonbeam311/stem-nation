@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+<body style="margin:0;overflow:hidden;font-family:Arial">
+
+<div style="
+width:100vw;height:100vh;
+background:url('/static/intro_scene5.jpg') center center / cover no-repeat;
+display:flex;align-items:flex-end;justify-content:center;
+color:white;font-size:34px;text-align:center;
+padding-bottom:100px;
+">
+
+<div id="text" style="opacity:0;transition:1.5s;white-space:pre-line;">
+To think
+before you decide.
+</div>
+
+<button id="continueBtn" onclick="goNext()" style="
+display:none;
+position:absolute;
+bottom:42px;
+left:50%;
+transform:translateX(-50%);
+padding:12px 22px;
+font-size:18px;
+border:none;
+border-radius:8px;
+background:#B98B2F;
+color:black;
+cursor:pointer;
+">
+Begin Journey
+</button>
+
+</div>
+
+
+
+
+
+
+
+
+
+
+<script>
+function goNext() {
+  window.location.href = "/decision_bridge.html";
+}
+
+window.onload = function() {
+
+  const text = document.getElementById("text");
+  const continueBtn = document.getElementById("continueBtn");
+
+  setTimeout(() => {
+    if (text) text.style.opacity = 1;
+  }, 420);
+
+  setTimeout(() => {
+    if (continueBtn) continueBtn.style.display = "inline-block";
+  }, 1800);
+
+  const audio = new Audio("/static/intro5.mp3");
+  audio.volume = 0.28;
+
+  audio.play();
+
+  audio.onended = function() {
+    goNext();
+  };
+};
+</script>
+
+</body>
+</html>

@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+<body style="margin:0;overflow:hidden;background:black;font-family:Arial;">
+
+<div style="
+width:100vw;height:100vh;
+background:url('/static/world_river.jpg') center/cover no-repeat;
+display:flex;
+align-items:center;
+justify-content:center;
+color:white;
+text-align:center;
+">
+
+<div>
+
+  <div id="text" style="
+    opacity:1;
+    transition:opacity 0.3s;
+    white-space:pre-line;
+    font-size:30px;
+    text-shadow:0 0 16px rgba(255,255,255,0.35);
+  ">
+You arrive in a river valley.
+
+Water flows steadily.
+The land is fertile.
+
+But the river is unpredictable.
+
+What do you observe?
+  </div>
+
+  <div id="choices" style="
+    opacity:1;
+    margin-top:30px;
+    transition:opacity 0.5s;
+  ">
+    <button onclick="choose('food')" style="padding:10px 20px;">Focus on food production</button><br><br>
+    <button onclick="choose('shelter')" style="padding:10px 20px;">Build shelter</button><br><br>
+    <button onclick="choose('explore')" style="padding:10px 20px;">Explore the area</button>
+  </div>
+
+</div>
+
+</div>
+
+<script>
+window.onload = function() {
+
+  const text = document.getElementById("text");
+  const choices = document.getElementById("choices");
+
+  // show text
+  setTimeout(() => {
+    text.style.opacity = 1;
+  }, 420);
+
+  // show choices AFTER text
+  setTimeout(() => {
+    choices.style.opacity = 1;
+  }, 2000);
+};
+
+function choose(option) {
+  console.log("CHOICE CLICKED:", option);
+  alert("You chose: " + option);
+}
+</script>
+
+</body>
+</html>

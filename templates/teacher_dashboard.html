@@ -1,0 +1,891 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Teacher Dashboard</title>
+
+  <style>
+    html, body {
+      margin: 0;
+      width: 100%;
+      min-height: 100%;
+      background:
+        radial-gradient(circle at center, rgba(212,175,55,0.10), transparent 46%),
+        linear-gradient(135deg, #050505 0%, #101827 55%, #050505 100%);
+      color: white;
+      font-family: Arial, sans-serif;
+      overflow-x: hidden;
+    }
+
+    .academy-line {
+      height: 3px;
+      background: linear-gradient(90deg, transparent, #d4af37, transparent);
+      opacity: 0.82;
+    }
+
+    .container {
+      max-width: 1320px;
+      margin: 0 auto;
+      padding: 42px 22px 70px;
+      box-sizing: border-box;
+    }
+
+    .label {
+      text-align: center;
+      font-size: 13px;
+      letter-spacing: 4px;
+      text-transform: uppercase;
+      color: #d4af37;
+      margin-bottom: 12px;
+    }
+
+    h1 {
+      text-align: center;
+      font-size: clamp(42px, 6vw, 76px);
+      color: #f0df9a;
+      margin: 0 0 18px;
+      line-height: 1.04;
+    }
+
+    .subtitle {
+      max-width: 980px;
+      margin: 0 auto 40px;
+      text-align: center;
+      font-size: 20px;
+      line-height: 1.7;
+      opacity: 0.94;
+    }
+
+    .section {
+      background: rgba(0,0,0,0.34);
+      border: 1px solid rgba(212,175,55,0.20);
+      border-radius: 22px;
+      padding: 28px;
+      margin-bottom: 26px;
+      box-shadow: 0 14px 50px rgba(0,0,0,0.45);
+    }
+
+    .section h2 {
+      margin-top: 0;
+      color: #d4af37;
+      font-size: 28px;
+      margin-bottom: 18px;
+    }
+
+    .section p,
+    .section li {
+      line-height: 1.75;
+      font-size: 16px;
+      opacity: 0.95;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 18px;
+    }
+
+    .card {
+      background: rgba(255,255,255,0.055);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 16px;
+      padding: 20px;
+    }
+
+    .card h3 {
+      margin-top: 0;
+      color: #f0df9a;
+      font-size: 20px;
+    }
+
+    .status {
+      display: inline-block;
+      border-radius: 999px;
+      padding: 6px 12px;
+      margin-top: 10px;
+      background: rgba(212,175,55,0.16);
+      border: 1px solid rgba(212,175,55,0.30);
+      color: #f0df9a;
+      font-size: 13px;
+    }
+
+    .planned {
+      color: #d4af37;
+      font-size: 14px;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      opacity: 0.85;
+      margin-top: 14px;
+    }
+
+    .note {
+      margin-top: 16px;
+      font-size: 14px;
+      line-height: 1.6;
+      opacity: 0.76;
+    }
+
+    .btn-row {
+      margin-top: 26px;
+      text-align: center;
+    }
+
+    .btn {
+      display: inline-block;
+      text-decoration: none;
+      border-radius: 999px;
+      border: 1px solid rgba(212,175,55,0.55);
+      color: #f0df9a;
+      padding: 12px 20px;
+      margin: 6px;
+      background: rgba(0,0,0,0.32);
+      letter-spacing: 0.5px;
+    }
+
+    .btn.primary {
+      background: #d4af37;
+      color: #111;
+      font-weight: bold;
+    }
+
+    .btn:hover {
+      background: rgba(212,175,55,0.14);
+    }
+
+    .btn.primary:hover {
+      background: #f0df9a;
+    }
+
+  
+    .launch-link {
+      display: inline-block;
+      margin-top: 12px;
+      color: #111;
+      background: #d4af37;
+      text-decoration: none;
+      padding: 5px 8px;
+      border-radius: 10px;
+      font-weight: bold;
+    }
+
+    .launch-link:hover {
+      opacity: 0.88;
+    }
+
+  
+    /* =========================================================
+       PHASE 7 STEP 4 — STEM NATION TEACHER CONTROL PANEL POLISH V1
+       ========================================================= */
+    .teacher-control-shell {
+      border: 1px solid rgba(212,175,55,0.34);
+      background:
+        radial-gradient(circle at top right, rgba(212,175,55,0.14), transparent 34%),
+        rgba(0,0,0,0.44);
+    }
+
+    .teacher-control-header {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: center;
+      gap: 14px;
+      margin-bottom: 18px;
+    }
+
+    .teacher-control-header h2 {
+      margin-bottom: 4px;
+    }
+
+    .live-demo-badge {
+      display: inline-block;
+      border: 1px solid rgba(120, 255, 180, 0.46);
+      background: rgba(0, 80, 40, 0.35);
+      color: #9ff0b8;
+      padding: 8px 12px;
+      border-radius: 999px;
+      font-size: 13px;
+      font-weight: bold;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .teacher-quick-launch-bar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin: 18px 0 22px;
+      padding: 14px;
+      border: 1px solid rgba(255,255,255,0.10);
+      border-radius: 16px;
+      background: rgba(255,255,255,0.045);
+    }
+
+    .teacher-quick-launch-bar a {
+      display: inline-block;
+      text-decoration: none;
+      color: #111;
+      background: #d4af37;
+      padding: 10px 13px;
+      border-radius: 10px;
+      font-weight: bold;
+      font-size: 14px;
+    }
+
+    .teacher-quick-launch-bar a.secondary {
+      color: #f0df9a;
+      background: transparent;
+      border: 1px solid rgba(212,175,55,0.45);
+    }
+
+    .teacher-control-note {
+      margin-top: 12px;
+      font-size: 14px;
+      line-height: 1.65;
+      opacity: 0.86;
+    }
+
+  </style>
+
+<style>
+.teacher-dashboard-timeline-status {
+  border: 1px solid rgba(218,165,32,0.45);
+  border-radius: 16px;
+  padding: 18px;
+  margin: 22px 0;
+  background: rgba(8,12,22,0.88);
+  color: #f7e7b0;
+  box-shadow: 0 0 18px rgba(0,0,0,0.25);
+}
+
+.teacher-dashboard-timeline-status h2 {
+  margin-top: 0;
+  color: #ffd76a;
+}
+
+.teacher-dashboard-timeline-status .status-line {
+  margin: 8px 0;
+}
+</style>
+
+
+<style>
+.timeline-state-audit-panel {
+  border: 1px solid rgba(255,215,106,0.45);
+  border-radius: 16px;
+  padding: 16px;
+  margin-bottom: 18px;
+  background: rgba(20,16,10,0.86);
+  color: #f7e7b0;
+}
+
+.timeline-state-audit-panel h3 {
+  color: #ffd76a;
+  margin-top: 0;
+}
+
+.timeline-state-audit-panel pre {
+  white-space: pre-wrap;
+  max-height: 180px;
+  overflow: auto;
+  background: rgba(0,0,0,0.28);
+  padding: 10px;
+  border-radius: 10px;
+}
+
+.timeline-state-audit-panel button {
+  border: none;
+  border-radius: 10px;
+  padding: 8px 12px;
+  margin-right: 8px;
+  cursor: pointer;
+  font-weight: 700;
+  max-width: 150px;
+  font-size: 0.68rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+#timelineAuditRefreshBtn {
+  background: rgba(218,165,32,0.25);
+  color: #ffd76a;
+}
+
+#timelineAuditResetBtn {
+  background: rgba(160,40,40,0.75);
+  color: #fff0f0;
+}
+</style>
+
+
+<style>
+.session-health-indicator {
+  position: fixed;
+  top: 18px;
+  right: 18px;
+  z-index: 9999;
+  padding: 10px 14px;
+  border-radius: 999px;
+  border: 1px solid rgba(218,165,32,0.45);
+  background: rgba(8,12,22,0.92);
+  color: #f7e7b0;
+  font-weight: 700;
+  box-shadow: 0 0 14px rgba(0,0,0,0.3);
+}
+.session-health-indicator.active {
+  color: #b7ffcf;
+}
+.session-health-indicator.idle {
+  color: #ffd76a;
+}
+.session-health-indicator.missing {
+  color: #ffb3b3;
+}
+</style>
+
+</head>
+
+<body>
+
+<div class="academy-line"></div>
+
+<div class="container">
+
+  <div class="label">STEM Nation · Educator Orchestration Layer</div>
+
+  <h1>Teacher Dashboard</h1>
+
+  <div class="subtitle">
+    The Teacher Dashboard is the future educator-side coordination system for managing classroom pacing, civilization tracking, archive review, facilitation flow, instructional resources, and lesson orchestration across STEM Nation.
+  </div>
+
+  <!-- Overview -->
+
+  <div class="section">
+
+    <h2>Dashboard Overview</h2>
+
+    <p>
+      The Teacher Dashboard is designed to become the central educator operating layer that connects lessons, facilitation, resources, artifacts, pacing, and future classroom analytics into one coordinated system.
+    </p>
+
+    <div class="planned">
+      Prototype Orchestration Architecture · No Live Student Database Yet
+    </div>
+
+  </div>
+
+  <!-- Classroom Snapshot -->
+
+  <div class="section">
+
+    <h2>Classroom / Session Snapshot</h2>
+
+    <div class="grid">
+
+      <div class="card">
+        <h3>Active Civilization Teams</h3>
+
+        <p>
+          Future dashboard area for tracking civilizations, group progress, decision stages, and collaboration flow.
+        </p>
+
+        <div class="status">Planned Tracking System</div>
+      </div>
+
+      <div class="card">
+        <h3>Lesson Progress</h3>
+
+        <p>
+          Future pacing visibility for Module 0, Week 1, Week 2, and future civilization-growth stages.
+        </p>
+
+        <div class="status">Prototype Only</div>
+      </div>
+
+      <div class="card">
+        <h3>Participation Monitoring</h3>
+
+        <p>
+          Future support for identifying disengagement, uneven participation, or facilitation intervention needs.
+        </p>
+
+        <div class="status">Planned Facilitation Layer</div>
+      </div>
+
+    </div>
+
+  </div>
+
+  <!-- Archive Tracking -->
+
+  <div class="section">
+
+    <h2>Archive & Artifact Tracking</h2>
+
+    <div class="grid">
+
+      <div class="card">
+        <h3>Week 1 Founding Archive</h3>
+
+        <p>
+          Future dashboard area for reviewing strategic settlement reasoning, evidence use, and archive exports.
+        </p>
+
+        <div class="status">Archive Review Planned</div>
+      </div>
+
+      <div class="card">
+        <h3>Week 2 Survival Archive</h3>
+
+        <p>
+          Future dashboard area for reviewing scarcity planning, tradeoff reasoning, and consequence analysis.
+        </p>
+
+        <div class="status">Artifact Tracking Planned</div>
+      </div>
+
+      <div class="card">
+        <h3>Evidence & Reflection Checks</h3>
+
+        <p>
+          Future teacher-side visibility into evidence usage, systems thinking depth, and reflection quality.
+        </p>
+
+        <div class="status">Reasoning Review Layer</div>
+      </div>
+
+    </div>
+
+  </div>
+
+  <!-- Facilitation -->
+
+  <div class="section">
+
+    <h2>Facilitation & Teacher Guidance</h2>
+
+    <div class="grid">
+
+      <div class="card">
+        <h3>Suggested Teacher Moves</h3>
+
+        <ul>
+          <li>Pause & Probe</li>
+          <li>Evidence Challenge</li>
+          <li>Compare Civilizations</li>
+          <li>Consequence Prediction</li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <h3>Facilitation Alerts</h3>
+
+        <p>
+          Future system for highlighting misconception risks, pacing slowdowns, or discussion opportunities.
+        </p>
+
+        <div class="status">Planned Facilitation Intelligence</div>
+      </div>
+
+      <div class="card">
+        <h3>Differentiation Supports</h3>
+
+        <p>
+          Future dashboard area for sentence starters, scaffolded prompts, extension tasks, and pacing supports.
+        </p>
+
+        <div class="status">Planned Instructional Support</div>
+      </div>
+
+    </div>
+
+  </div>
+
+  <!-- Resource Systems -->
+
+  <div class="section">
+
+    <h2>Resource & Packet Systems</h2>
+
+    <div class="grid">
+
+      <div class="card">
+        <h3>Resource Library</h3>
+
+        <p>
+          Organize lesson plans, primary sources, Archives & Government Records, maps, media, and instructional materials.
+        </p>
+      </div>
+
+      <div class="card">
+        <h3>Resource Attachment Workflow</h3>
+
+        <p>
+          Attach instructional resources directly to simulation stages and inquiry moments.
+        </p>
+      </div>
+
+      <div class="card">
+        <h3>Packet Builder</h3>
+
+        <p>
+          Assemble classroom packets containing facilitation guidance, archives, resources, and lesson sequencing.
+        </p>
+      </div>
+
+    </div>
+
+  </div>
+
+  <!-- Future Data -->
+
+  <div class="section">
+
+    <h2>Future Data & AI Layers</h2>
+
+    <p>
+      Future educator-side systems may eventually support live classroom tracking, archive analytics, AI-assisted pacing support, standards alignment, lesson suggestions, and artifact review assistance.
+    </p>
+
+    <div class="note">
+      These systems are intentionally deferred until the human instructional architecture and teacher workflow systems are fully stabilized.
+    </div>
+
+  </div>
+
+  <!-- Navigation -->
+
+  <div class="btn-row">
+    <a class="btn primary" href="/teacher">Return to Teacher Command Center</a>
+    <a class="btn" href="/teacher_resource_library">Teacher Resource Library</a>
+    <a class="btn" href="/teacher_resource_attach">Resource Attachment Workflow</a>
+    <a class="btn" href="/teacher_facilitation_engine">Teacher Facilitation Engine</a>
+    <a class="btn" href="/teacher_packet_builder">Teacher Packet Builder</a>
+    <a class="btn" href="/teacher_lesson_builder">Teacher Lesson Builder</a>
+  </div>
+
+</div>
+
+
+
+    <!-- =========================================================
+    PHASE 7 STEP 1 — STEM NATION TEACHER DEMO MODE V1
+    ========================================================= -->
+    <div class="section teacher-control-shell" id="teacherDemoControls">
+      <!-- STEM_NATION_TEACHER_CONTROL_PANEL_POLISH_V1 -->
+      <div class="teacher-control-header">
+        <div>
+          <h2>Teacher Demo Mode / Classroom Launch Controls</h2>
+          <p>
+            Launch the live student simulation, open the civilization command center,
+            and manage classroom demonstration flow from one teacher-facing control area.
+          </p>
+        </div>
+
+        <span id="liveDemoBadge" class="live-demo-badge">Live Demo Ready</span>
+      </div>
+
+      <div id="teacherQuickLaunchBar" class="teacher-quick-launch-bar">
+        <a href="/class_session">Class Session</a>
+        <a href="/session_control">Session Control</a>
+        <a href="/teacher_demo">Teacher Demo</a>
+        <a href="/classroom_launch">Classroom Launch</a>
+        <a href="/map">Student Map</a>
+        <a href="/hub">Command Center</a>
+        <a class="secondary" href="/">Landing</a>
+      </div>
+
+      <p class="teacher-control-note">
+        Recommended flow: launch the Student Map first, let students make and save decisions,
+        then return to the Command Center to review evidence, alerts, and civilization progress.
+      </p>
+
+      <div class="grid">
+        
+        <!-- PHASE 8 STEP 1 — CLASS SESSION QUICK LINKS -->
+        <div class="card">
+          <h3>Class Session Controls</h3>
+          <p>Set session status, teacher prompt, instructional mode, and active mission focus.</p>
+          <a class="launch-link" href="/class_session">Open Class Session Controls</a>
+
+<!-- STEM_NATION_TEACHER_DASHBOARD_TIMELINE_STATUS_V1 -->
+<section id="teacherDashboardTimelineStatus" class="teacher-dashboard-timeline-status">
+  <h2>Live Timeline Status</h2>
+  <div id="teacherDashboardTimelineStep" class="status-line">
+    Current Step: Not started
+  </div>
+  <div id="teacherDashboardTeacherMove" class="status-line">
+    Teacher Move: Waiting for class session timeline.
+  </div>
+  <div id="teacherDashboardStudentMove" class="status-line">
+    Student Move: Waiting for class session timeline.
+  </div>
+  <div id="teacherDashboardTimelineUpdated" class="status-line">
+    Updated: —
+  </div>
+  <p>
+    <a href="/class_session">Open Class Session Controls</a>
+  </p>
+</section>
+
+<!-- STEM_NATION_TIMELINE_STATE_AUDIT_PANEL_V1 -->
+<section id="timelineStateAuditPanel" class="timeline-state-audit-panel">
+  <h3>Timeline Reset / Session State Audit</h3>
+  <p id="timelineAuditSummary">Timeline Key: Checking...</p>
+  <p id="timelineAuditActiveStep">Active Step: —</p>
+  <p id="timelineAuditUpdated">Updated: —</p>
+
+  <button id="timelineAuditRefreshBtn" type="button">Refresh Audit</button>
+  <button id="timelineAuditResetBtn" type="button">Reset Timeline State</button>
+
+  <pre id="timelineAuditRaw">No timeline state loaded.</pre>
+</section>
+
+
+        </div>
+
+        <div class="card">
+          <h3>Session Control View</h3>
+          <p>View the current class session state before moving students into the map or command center.</p>
+          <a class="launch-link" href="/session_control">Open Session Control View</a>
+        </div>
+
+        <div class="card">
+          <h3>Teacher Demo Mode</h3>
+          <p>Use a guided demonstration sequence for live classroom or investor walkthroughs.</p>
+          <a class="launch-link" href="/teacher_demo">Open Teacher Demo Mode</a>
+        </div>
+
+        <div class="card">
+          <h3>Classroom Launch Panel</h3>
+          <p>Start the student map, guide the room, and return to the command center.</p>
+          <a class="launch-link" href="/classroom_launch">Open Classroom Launch Panel</a>
+        </div>
+
+        <div class="card">
+          <h3>Student Strategic Map</h3>
+          <p>Enter the live student world board and settlement decision experience.</p>
+          <a class="launch-link" href="/map">Launch Student Map</a>
+        </div>
+
+        <div class="card">
+          <h3>Civilization Command Center</h3>
+          <p>Review saved student evidence, civilization state, archive records, alerts, and cleanup tools.</p>
+          <a class="launch-link" href="/hub">Open Command Center</a>
+        </div>
+      </div>
+
+      <p class="planned">
+        STEM_NATION_TEACHER_DEMO_MODE_V1 · STEM_NATION_CLASSROOM_LAUNCH_V1
+      </p>
+    </div>
+
+
+<script>
+// STEM_NATION_TEACHER_DASHBOARD_TIMELINE_STATUS_V1
+(function syncTeacherDashboardTimelineStatus() {
+
+  const stepEl = document.getElementById("teacherDashboardTimelineStep");
+  const teacherMoveEl = document.getElementById("teacherDashboardTeacherMove");
+  const studentMoveEl = document.getElementById("teacherDashboardStudentMove");
+  const updatedEl = document.getElementById("teacherDashboardTimelineUpdated");
+
+  if (!stepEl || !teacherMoveEl || !studentMoveEl || !updatedEl) return;
+
+  function renderStatus() {
+    const raw = localStorage.getItem("STEM_NATION_CLASS_TIMELINE_V1");
+
+    if (!raw) {
+      stepEl.textContent = "Current Step: Not started";
+      teacherMoveEl.textContent = "Teacher Move: Waiting for class session timeline.";
+      studentMoveEl.textContent = "Student Move: Waiting for class session timeline.";
+      updatedEl.textContent = "Updated: —";
+      return;
+    }
+
+    try {
+      const state = JSON.parse(raw);
+      const step = state.activeStep || state.currentStep || state.step || {};
+
+      const number =
+        step.number ||
+        step.step ||
+        state.activeStepNumber ||
+        state.currentStepIndex ||
+        "";
+
+      const title =
+        step.title ||
+        step.name ||
+        state.activeStepTitle ||
+        "Active Step";
+
+      const teacherMove =
+        step.teacherMove ||
+        step.teacher_move ||
+        state.teacherMove ||
+        state.move ||
+        "Follow the current class timeline.";
+
+      const studentMove =
+        step.studentMove ||
+        step.student_move ||
+        state.studentMove ||
+        "Students follow the teacher-directed timeline step.";
+
+      const updated =
+        state.updated ||
+        state.updatedAt ||
+        state.lastUpdated ||
+        new Date().toLocaleString();
+
+      stepEl.textContent =
+        `Current Step: ${number ? number + " · " : ""}${title}`;
+
+      teacherMoveEl.textContent =
+        `Teacher Move: ${teacherMove}`;
+
+      studentMoveEl.textContent =
+        `Student Move: ${studentMove}`;
+
+      updatedEl.textContent =
+        `Updated: ${updated}`;
+
+    } catch (err) {
+      stepEl.textContent = "Current Step: Timeline unavailable";
+      teacherMoveEl.textContent = "Teacher Move: Refresh class session controls.";
+      studentMoveEl.textContent = "Student Move: Refresh class session controls.";
+      updatedEl.textContent = "Updated: —";
+    }
+  }
+
+  renderStatus();
+  window.addEventListener("storage", renderStatus);
+  setInterval(renderStatus, 1000);
+
+})();
+</script>
+
+
+<script>
+// STEM_NATION_TIMELINE_STATE_AUDIT_PANEL_V1
+(function installTimelineStateAuditPanel() {
+
+  const KEY = "STEM_NATION_CLASS_TIMELINE_V1";
+
+  const summary = document.getElementById("timelineAuditSummary");
+  const activeStep = document.getElementById("timelineAuditActiveStep");
+  const updated = document.getElementById("timelineAuditUpdated");
+  const rawBox = document.getElementById("timelineAuditRaw");
+  const refreshBtn = document.getElementById("timelineAuditRefreshBtn");
+  const resetBtn = document.getElementById("timelineAuditResetBtn");
+
+  if (!summary || !activeStep || !updated || !rawBox || !refreshBtn || !resetBtn) return;
+
+  function renderAudit() {
+    const raw = localStorage.getItem(KEY);
+
+    if (!raw) {
+      summary.textContent = "Timeline Key: Missing";
+      activeStep.textContent = "Active Step: Not started";
+      updated.textContent = "Updated: —";
+      rawBox.textContent = "No timeline state found in localStorage.";
+      return;
+    }
+
+    try {
+      const state = JSON.parse(raw);
+      const step = state.activeStep || state.currentStep || state.step || {};
+      const number = step.number || step.step || state.activeStepNumber || "";
+      const title = step.title || step.name || state.activeStepTitle || "Active Step";
+      const stamp = state.updated || state.updatedAt || state.lastUpdated || "Timestamp unavailable";
+
+      summary.textContent = "Timeline Key: Present";
+      activeStep.textContent = `Active Step: ${number ? number + " · " : ""}${title}`;
+      updated.textContent = `Updated: ${stamp}`;
+      rawBox.textContent = JSON.stringify(state, null, 2);
+
+    } catch (err) {
+      summary.textContent = "Timeline Key: Present but unreadable";
+      activeStep.textContent = "Active Step: Error";
+      updated.textContent = "Updated: —";
+      rawBox.textContent = raw;
+    }
+  }
+
+  refreshBtn.addEventListener("click", renderAudit);
+
+  resetBtn.addEventListener("click", function () {
+    const confirmed = window.confirm(
+      "Reset the live class timeline state? This clears STEM_NATION_CLASS_TIMELINE_V1 for this browser."
+    );
+
+    if (!confirmed) return;
+
+    localStorage.removeItem(KEY);
+    renderAudit();
+  });
+
+  renderAudit();
+  window.addEventListener("storage", renderAudit);
+  setInterval(renderAudit, 1500);
+
+})();
+</script>
+
+
+<!-- STEM_NATION_SESSION_HEALTH_INDICATOR_V1 -->
+<div id="sessionHealthIndicator" class="session-health-indicator missing">
+  Session Health: Checking...
+</div>
+
+
+<script>
+// STEM_NATION_SESSION_HEALTH_INDICATOR_V1
+(function installSessionHealthIndicator() {
+  const KEY = "STEM_NATION_CLASS_TIMELINE_V1";
+  const el = document.getElementById("sessionHealthIndicator");
+  if (!el) return;
+
+  function renderHealth() {
+    const raw = localStorage.getItem(KEY);
+
+    el.classList.remove("active", "idle", "missing");
+
+    if (!raw) {
+      el.classList.add("missing");
+      el.textContent = "Session Health: No Timeline";
+      return;
+    }
+
+    try {
+      const state = JSON.parse(raw);
+      const title = state.title || state.activeStepTitle || "Timeline Active";
+      const updated = state.updatedAt || state.updated || state.lastUpdated;
+
+      el.classList.add("active");
+      el.textContent = `Session Health: Active · ${title}`;
+
+      if (updated) {
+        const age = Date.now() - new Date(updated).getTime();
+        if (!Number.isNaN(age) && age > 1000 * 60 * 30) {
+          el.classList.remove("active");
+          el.classList.add("idle");
+          el.textContent = `Session Health: Idle · ${title}`;
+        }
+      }
+
+    } catch (err) {
+      el.classList.add("missing");
+      el.textContent = "Session Health: Timeline Error";
+    }
+  }
+
+  renderHealth();
+  window.addEventListener("storage", renderHealth);
+  setInterval(renderHealth, 1500);
+})();
+</script>
+
+</body>
+</html>

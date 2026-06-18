@@ -1,0 +1,700 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>STEM Nation Academy | Region Investigation Entry</title>
+
+  <style>
+    html, body {
+      margin: 0;
+      width: 100%;
+      min-height: 100%;
+      overflow: hidden;
+      font-family: Arial, sans-serif;
+      background: black;
+      color: white;
+    }
+
+    .scene {
+      position: relative;
+      width: 100vw;
+      height: 100vh;
+      overflow: hidden;
+    }
+
+    .bg {
+      position: absolute;
+      inset: -5%;
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      animation: livingCamera 12s ease-in-out forwards;
+      z-index: 0;
+    }
+
+    .shade {
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(circle at center, rgba(0,0,0,0.05), rgba(0,0,0,0.45)),
+        linear-gradient(to top, rgba(0,0,0,0.92), rgba(0,0,0,0.25), rgba(0,0,0,0.52));
+      z-index: 1;
+    }
+
+    .content {
+      position: relative;
+      z-index: 2;
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-start;
+      padding: 24px;
+      box-sizing: border-box;
+    }
+
+    .label {
+      font-size: 13px;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      opacity: 0.72;
+      margin-bottom: 10px;
+    }
+
+    h1 {
+      font-size: clamp(26px, 3.5vw, 42px);
+      line-height: 1;
+      margin: 0 0 8px;
+      color: #f4d35e;
+      text-shadow: 0 6px 26px rgba(0,0,0,0.92);
+    }
+
+    .description {
+      max-width: 860px;
+      font-size: clamp(18px, 2.3vw, 27px);
+      line-height: 1.35;
+      margin-bottom: 22px;
+      text-shadow: 0 4px 18px rgba(0,0,0,0.95);
+    }
+
+    .resources {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      max-width: 940px;
+      margin-bottom: 20px;
+    }
+
+    .resource {
+      background: rgba(0,0,0,0.46);
+      border: 1px solid rgba(244,211,94,0.45);
+      color: #f4d35e;
+      border-radius: 999px;
+      padding: 8px 13px;
+      font-size: 14px;
+      letter-spacing: 0.5px;
+    }
+
+    .question {
+      max-width: 860px;
+      padding: 16px 18px;
+      border-left: 4px solid #d4af37;
+      background: rgba(0,0,0,0.38);
+      font-size: 18px;
+      line-height: 1.45;
+      margin-bottom: 22px;
+    }
+
+    .btn-row {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .btn {
+      border: none;
+      border-radius: 999px;
+      background: #d4af37;
+      color: black;
+      padding: 12px 22px;
+      font-size: 15px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    .btn.secondary {
+      background: rgba(0,0,0,0.42);
+      color: white;
+      border: 1px solid rgba(255,255,255,0.35);
+    }
+
+
+    .hidden-observation-text {
+      display: none;
+    }
+
+    .corner-actions {
+      position: absolute;
+      right: 24px;
+      bottom: 22px;
+      z-index: 6;
+      margin: 0;
+    }
+
+    .corner-actions .btn {
+      padding: 10px 16px;
+      font-size: 13px;
+      opacity: 0.9;
+    }
+
+    .corner-actions .btn.secondary {
+      opacity: 0.72;
+    }
+
+    .motion {
+      position: absolute;
+      inset: 0;
+      z-index: 2;
+      pointer-events: none;
+      opacity: 0.55;
+    }
+
+    .particle {
+      position: absolute;
+      width: 5px;
+      height: 5px;
+      background: rgba(244,211,94,0.55);
+      border-radius: 50%;
+      animation: drift 8s linear infinite;
+    }
+
+
+    .audio-start {
+      position: absolute;
+      left: 24px;
+      top: 24px;
+      z-index: 8;
+      border: 1px solid rgba(244,211,94,0.55);
+      border-radius: 999px;
+      background: rgba(0,0,0,0.48);
+      color: #f4d35e;
+      padding: 9px 14px;
+      font-size: 12px;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      cursor: pointer;
+      backdrop-filter: blur(4px);
+      opacity: 0.86;
+    }
+
+    .audio-start.hidden {
+      display: none;
+    }
+
+    .tool-panel {
+      position: absolute;
+      left: 22px;
+      bottom: 22px;
+      z-index: 6;
+      background: rgba(0,0,0,0.42);
+      border: 1px solid rgba(244,211,94,0.28);
+      border-radius: 16px;
+      padding: 10px;
+      width: auto;
+      max-width: min(560px, 92vw);
+      box-sizing: border-box;
+      backdrop-filter: blur(5px);
+    }
+
+    .tool-panel.collapsed .tool-body {
+      display: none;
+    }
+
+    .tool-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      cursor: pointer;
+      user-select: none;
+    }
+
+    .tool-header h3 {
+      margin: 0;
+      color: #f4d35e;
+      font-size: 14px;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+    }
+
+    .collapse-note {
+      font-size: 11px;
+      opacity: 0.7;
+    }
+
+    .tool-panel p {
+      margin: 8px 0 10px;
+      font-size: 12px;
+      line-height: 1.3;
+      opacity: 0.78;
+    }
+
+    .tool-grid {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 7px;
+    }
+
+    .tool {
+      border: 1px solid rgba(255,255,255,0.22);
+      background: rgba(255,255,255,0.08);
+      color: white;
+      border-radius: 999px;
+      width: 38px;
+      height: 38px;
+      padding: 0;
+      font-size: 20px;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .tool.active {
+      background: #d4af37;
+      color: black;
+      border-color: #d4af37;
+      font-weight: bold;
+    }
+
+    .placed-marker {
+      position: absolute;
+      z-index: 5;
+      transform: translate(-50%, -50%);
+      background: rgba(212,175,55,0.92);
+      color: black;
+      border-radius: 999px;
+      width: 36px;
+      height: 36px;
+      font-size: 20px;
+      font-weight: bold;
+      box-shadow: 0 8px 22px rgba(0,0,0,0.55);
+      pointer-events: none;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+
+    .tool-actions {
+      display: flex;
+      gap: 7px;
+      margin-top: 9px;
+      flex-wrap: wrap;
+    }
+
+    .mini-action {
+      border: 1px solid rgba(255,255,255,0.20);
+      background: rgba(0,0,0,0.30);
+      color: rgba(255,255,255,0.86);
+      border-radius: 999px;
+      padding: 6px 9px;
+      font-size: 11px;
+      cursor: pointer;
+    }
+
+    .legend {
+      display: none;
+      margin-top: 9px;
+      padding: 9px;
+      border-radius: 12px;
+      background: rgba(0,0,0,0.35);
+      border: 1px solid rgba(244,211,94,0.20);
+      font-size: 12px;
+      line-height: 1.7;
+    }
+
+    .legend.show {
+      display: block;
+    }
+
+
+    .ai-guide {
+      margin-top: 10px;
+      padding: 10px;
+      border-radius: 12px;
+      background: rgba(0,0,0,0.36);
+      border: 1px solid rgba(244,211,94,0.22);
+      font-size: 12px;
+      line-height: 1.35;
+    }
+
+    .ai-guide strong {
+      color: #f4d35e;
+    }
+
+    .ai-guide textarea {
+      width: 100%;
+      min-height: 52px;
+      margin-top: 8px;
+      border-radius: 10px;
+      border: 1px solid rgba(255,255,255,0.20);
+      background: rgba(0,0,0,0.34);
+      color: white;
+      padding: 8px;
+      box-sizing: border-box;
+      font-family: Arial, sans-serif;
+      font-size: 12px;
+      resize: vertical;
+    }
+
+    .marker-count {
+      margin-top: 8px;
+      font-size: 11px;
+      opacity: 0.72;
+    }
+
+    @keyframes livingCamera {
+      0% { transform: scale(1.02) translate3d(-1%, 0, 0); }
+      50% { transform: scale(1.08) translate3d(1%, -0.8%, 0); }
+      100% { transform: scale(1.12) translate3d(0.4%, -1.2%, 0); }
+    }
+
+    @keyframes drift {
+      0% { transform: translateY(35vh) translateX(0); opacity: 0; }
+      20% { opacity: 0.65; }
+      100% { transform: translateY(-85vh) translateX(60px); opacity: 0; }
+    }
+  
+/* STEM_NATION_ENVIRONMENT_VISUAL_CLEANUP_V1 */
+.content {
+  max-width: 980px;
+}
+
+.label {
+  color: rgba(244,211,94,0.86);
+  font-weight: 700;
+}
+
+.question {
+  max-width: 760px;
+  border-radius: 16px;
+  border-left: 4px solid #d4af37;
+  backdrop-filter: blur(4px);
+}
+
+.btn-row.corner-actions {
+  background: rgba(0,0,0,0.38);
+  border: 1px solid rgba(244,211,94,0.22);
+  border-radius: 18px;
+  padding: 12px;
+  backdrop-filter: blur(5px);
+}
+
+.tool-panel {
+  background: rgba(0,0,0,0.58);
+  border-color: rgba(244,211,94,0.38);
+}
+
+.tool-header h3 {
+  color: #f4d35e;
+}
+
+</style>
+<!-- STEM_NATION_ENVIRONMENT_BRIDGE_LANGUAGE_V1 -->
+</head>
+
+<body>
+  <div class="scene">
+    <div id="bg" class="bg"></div>
+    <div class="shade"></div>
+    <div id="motion" class="motion"></div>
+    <button id="audioStart" class="audio-start" onclick="playBridgeAudio(event)">Play Guide Audio</button>
+
+    <audio id="bridgeAudio" preload="auto">
+      <source src="/static/environment_bridge_demo.mp3" type="audio/mpeg">
+    </audio>
+
+<div id="toolPanel" class="tool-panel">
+      <div class="tool-header" onclick="toggleTools()">
+        <h3>Region Marking Tools</h3>
+        <span class="collapse-note">tap to hide/show</span>
+      </div>
+      <div class="tool-body">
+        <p>Mark what you notice before continuing to Settlement Design.</p>
+        <div class="tool-grid">
+          <button class="tool active" data-tool="Settlement" data-symbol="🏠" title="Settlement">🏠</button>
+          <button class="tool" data-tool="Farm" data-symbol="🌾" title="Farm / Food">🌾</button>
+          <button class="tool" data-tool="Trade Route" data-symbol="🛤️" title="Trade Route">🛤️</button>
+          <button class="tool" data-tool="Resource" data-symbol="💎" title="Resource">💎</button>
+          <button class="tool" data-tool="Risk" data-symbol="⚠️" title="Risk">⚠️</button>
+        </div>
+
+        <div class="tool-actions">
+          <button class="mini-action" onclick="undoLastMarker(event)">Undo</button>
+          <button class="mini-action" onclick="toggleLegend(event)">Legend</button>
+        </div>
+
+        <div id="legend" class="legend">
+          🏠 Settlement<br>
+          🌾 Food / Farm<br>
+          🛤️ Trade Route<br>
+          💎 Resource<br>
+          ⚠️ Risk
+        </div>
+
+        <div id="aiGuide" class="ai-guide">
+          <div><strong>Clue:</strong> <span id="guideClue"></span></div>
+          <div><strong>Look for:</strong> <span id="guideLook"></span></div>
+          <div><strong>Reasoning:</strong> <span id="guidePrompt"></span></div>
+          <textarea id="reasoningBox" placeholder="Explain your thinking before moving on..."></textarea>
+        </div>
+
+        <div id="markerCount" class="marker-count">Markers placed: 0</div>
+        <div id="readinessMessage" class="marker-count">Place at least 3 markers and explain one decision before continuing.</div>
+      </div>
+    </div>
+
+    <div class="content">
+      <div class="label">STEM Nation Academy · Region Investigation</div>
+      <h1 id="title">Region Investigation Entry</h1>
+      <div id="description" class="description hidden-observation-text"></div>
+
+      <div id="resources" class="resources hidden-observation-text"></div>
+
+      <div id="question" class="question hidden-observation-text"></div>
+
+      <div class="btn-row corner-actions">
+        <button class="btn" onclick="checkReadiness()">Continue to Settlement Design</button>
+        <button class="btn secondary" onclick="window.location.href='/world_select.html'">Investigate Another Environment</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const world = "{{ world }}";
+
+    const environments = {
+      river: {
+        title: "River Corridor",
+        image: "/static/world_river.jpg",
+        description: "Water moves through the land. Fertile soil gathers near the banks. Food, travel, and danger all begin here.",
+        resources: ["running water", "fertile soil", "fish", "reeds", "flood risk"],
+        question: "What does the river offer — and what might it take away?"
+      },
+      forest: {
+        title: "Forest Belt",
+        image: "/static/world_forest.jpg",
+        description: "Trees surround the path. Animals move through the shadows. Shelter, timber, medicine, and hidden danger live here.",
+        resources: ["timber", "wildlife", "berries", "shelter", "limited movement"],
+        question: "What does the forest protect — and what does it hide?"
+      },
+      desert: {
+        title: "Desert Route",
+        image: "/static/world_desert.jpg",
+        description: "Heat rises from the ground. Water is rare. Those who survive here must master distance, discipline, and trade.",
+        resources: ["sunlight", "salt", "stone", "oasis routes", "water scarcity"],
+        question: "What would survival require in a land with little water?"
+      },
+      mountain: {
+        title: "Highland Ridge",
+        image: "/static/world_mountain.jpg",
+        description: "The land rises into stone. Movement is difficult, but defense is strong. Minerals may sleep beneath the cliffs.",
+        resources: ["stone", "minerals", "high ground", "defense", "limited farming"],
+        question: "What does high ground make possible — and what does it make difficult?"
+      },
+      coastal: {
+        title: "Coastal Exchange",
+        image: "/static/world_coastal.jpg",
+        description: "Waves strike the shore. Fish, travel, and outside contact are close. The sea offers opportunity and threat.",
+        resources: ["fish", "shells", "boats", "trade access", "storm risk"],
+        question: "What can arrive from the sea?"
+      },
+      balanced: {
+        title: "Valley Basin",
+        image: "/static/world_balanced.jpg",
+        description: "The land is balanced: open space, nearby resources, and room to grow. But balance still requires strategy.",
+        resources: ["grassland", "mixed resources", "settlement space", "moderate food", "unclear advantage"],
+        question: "Is balance enough to survive?"
+      }
+    };
+
+    const data = environments[world] || environments.river;
+
+    document.getElementById("title").textContent = data.title;
+    document.getElementById("description").textContent = data.description;
+    document.getElementById("question").textContent = data.question;
+    document.getElementById("bg").style.backgroundImage = `url('${data.image}')`;
+
+    const resourceBox = document.getElementById("resources");
+    data.resources.forEach(item => {
+      const span = document.createElement("span");
+      span.className = "resource";
+      span.textContent = item;
+      resourceBox.appendChild(span);
+    });
+
+    const motion = document.getElementById("motion");
+    for (let i = 0; i < 18; i++) {
+      const p = document.createElement("div");
+      p.className = "particle";
+      p.style.left = Math.random() * 100 + "vw";
+      p.style.top = (20 + Math.random() * 80) + "vh";
+      p.style.animationDelay = (Math.random() * 7) + "s";
+      p.style.animationDuration = (6 + Math.random() * 7) + "s";
+      motion.appendChild(p);
+    }
+
+
+
+    function toggleTools() {
+      document.getElementById("toolPanel").classList.toggle("collapsed");
+    }
+
+    let selectedTool = "Settlement";
+    let selectedSymbol = "🏠";
+    let markerTotal = 0;
+    const placedMarkers = [];
+
+    const guidance = {
+      "Settlement": {
+        clue: "People usually settle where survival needs are close together.",
+        look: "water, food, shelter, open space, and protection",
+        prompt: "Why might this be a strong place for people to begin living?"
+      },
+      "Farm": {
+        clue: "Food systems need land, water, sunlight, and access.",
+        look: "flat land, riverbanks, open spaces, grassland, and soil",
+        prompt: "What makes this place useful for growing or gathering food?"
+      },
+      "Trade Route": {
+        clue: "Trade routes often follow the easiest path through the land.",
+        look: "rivers, valleys, coastline, passes, and open corridors",
+        prompt: "Why might people move goods or ideas through this path?"
+      },
+      "Resource": {
+        clue: "Resources are not always obvious. Some are visible; others must be predicted.",
+        look: "trees, water, stone, fish, minerals, animals, and fertile land",
+        prompt: "What resource do you notice or predict here?"
+      },
+      "Risk": {
+        clue: "Every environment offers something, but also demands something.",
+        look: "flooding, storms, predators, drought, cliffs, or blocked movement",
+        prompt: "What danger could threaten survival here?"
+      }
+    };
+
+    function updateGuidance() {
+      const guide = guidance[selectedTool] || guidance["Settlement"];
+      document.getElementById("guideClue").textContent = guide.clue;
+      document.getElementById("guideLook").textContent = guide.look;
+      document.getElementById("guidePrompt").textContent = guide.prompt;
+      document.getElementById("reasoningBox").placeholder = guide.prompt;
+    }
+
+    document.querySelectorAll(".tool").forEach(button => {
+      button.addEventListener("click", (event) => {
+        event.stopPropagation();
+        document.querySelectorAll(".tool").forEach(btn => btn.classList.remove("active"));
+        button.classList.add("active");
+        selectedTool = button.dataset.tool;
+        selectedSymbol = button.dataset.symbol || selectedTool;
+        updateGuidance();
+      });
+    });
+
+    document.querySelector(".scene").addEventListener("click", (event) => {
+      if (event.target.closest(".tool-panel") || event.target.closest(".btn-row")) {
+        return;
+      }
+
+      const marker = document.createElement("div");
+      marker.className = "placed-marker";
+      marker.textContent = selectedSymbol;
+      marker.title = selectedTool;
+      marker.style.left = event.clientX + "px";
+      marker.style.top = event.clientY + "px";
+      document.querySelector(".scene").appendChild(marker);
+      placedMarkers.push(marker);
+
+      markerTotal += 1;
+      document.getElementById("markerCount").textContent = "Markers placed: " + markerTotal;
+    });
+
+
+
+    function undoLastMarker(event) {
+      if (event) event.stopPropagation();
+
+      const marker = placedMarkers.pop();
+      if (marker) {
+        marker.remove();
+        markerTotal = Math.max(0, markerTotal - 1);
+        document.getElementById("markerCount").textContent = "Markers placed: " + markerTotal;
+      }
+    }
+
+    function toggleLegend(event) {
+      if (event) event.stopPropagation();
+      document.getElementById("legend").classList.toggle("show");
+    }
+
+
+    function checkReadiness() {
+      const reasoning = document.getElementById("reasoningBox").value.trim();
+      const message = document.getElementById("readinessMessage");
+
+      if (markerTotal < 3 && reasoning.length < 12) {
+        message.textContent = "Before continuing: place at least 3 markers and explain one decision.";
+        message.style.color = "#f4d35e";
+        return;
+      }
+
+      if (markerTotal < 3) {
+        message.textContent = "Place at least 3 markers before continuing.";
+        message.style.color = "#f4d35e";
+        return;
+      }
+
+      if (reasoning.length < 12) {
+        message.textContent = "Explain at least one decision before continuing.";
+        message.style.color = "#f4d35e";
+        return;
+      }
+
+      message.textContent = "Region investigation complete. Continue to the next Academy design step.";
+      message.style.color = "#9be28f";
+
+      setTimeout(() => {
+        enterAcademy();
+      }, 450);
+    }
+
+
+
+    function playBridgeAudio(event) {
+      if (event) event.stopPropagation();
+
+      const audio = document.getElementById("bridgeAudio");
+      const button = document.getElementById("audioStart");
+
+      audio.currentTime = 0;
+      audio.volume = 0.88;
+
+      audio.play().then(() => {
+        button.classList.add("hidden");
+      }).catch(() => {
+        button.textContent = "Tap to Play Guide";
+      });
+    }
+
+    window.addEventListener("load", () => {
+      setTimeout(() => {
+        playBridgeAudio();
+      }, 600);
+    });
+
+    function enterAcademy() {
+      window.location.href = "/academy_individual?world=" + encodeURIComponent(world);
+    }
+  </script>
+</body>
+</html>

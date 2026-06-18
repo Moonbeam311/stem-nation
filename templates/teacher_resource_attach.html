@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Teacher Resource Attachment Workflow</title>
+
+  <style>
+    html, body {
+      margin: 0;
+      width: 100%;
+      min-height: 100%;
+      background:
+        radial-gradient(circle at center, rgba(212,175,55,0.10), transparent 46%),
+        linear-gradient(135deg, #050505 0%, #101827 55%, #050505 100%);
+      color: white;
+      font-family: Arial, sans-serif;
+      overflow-x: hidden;
+    }
+
+    .academy-line {
+      height: 3px;
+      background: linear-gradient(90deg, transparent, #d4af37, transparent);
+      opacity: 0.82;
+    }
+
+    .container {
+      max-width: 1240px;
+      margin: 0 auto;
+      padding: 42px 22px 70px;
+      box-sizing: border-box;
+    }
+
+    .label {
+      text-align: center;
+      font-size: 13px;
+      letter-spacing: 4px;
+      text-transform: uppercase;
+      color: #d4af37;
+      margin-bottom: 12px;
+    }
+
+    h1 {
+      text-align: center;
+      font-size: clamp(40px, 6vw, 74px);
+      color: #f0df9a;
+      margin: 0 0 18px;
+      line-height: 1.04;
+    }
+
+    .subtitle {
+      max-width: 960px;
+      margin: 0 auto 40px;
+      text-align: center;
+      font-size: 20px;
+      line-height: 1.7;
+      opacity: 0.94;
+    }
+
+    .section {
+      background: rgba(0,0,0,0.34);
+      border: 1px solid rgba(212,175,55,0.20);
+      border-radius: 22px;
+      padding: 28px;
+      margin-bottom: 26px;
+      box-shadow: 0 14px 50px rgba(0,0,0,0.45);
+    }
+
+    .section h2 {
+      margin-top: 0;
+      color: #d4af37;
+      font-size: 28px;
+      margin-bottom: 18px;
+    }
+
+    .section p,
+    .section li {
+      line-height: 1.75;
+      font-size: 16px;
+      opacity: 0.95;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 18px;
+    }
+
+    .card {
+      background: rgba(255,255,255,0.055);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 16px;
+      padding: 20px;
+    }
+
+    .card h3 {
+      margin-top: 0;
+      color: #f0df9a;
+      font-size: 20px;
+    }
+
+    .tag {
+      display: inline-block;
+      border-radius: 999px;
+      border: 1px solid rgba(212,175,55,0.28);
+      padding: 6px 12px;
+      margin: 5px;
+      font-size: 13px;
+      color: #f0df9a;
+      background: rgba(255,255,255,0.05);
+    }
+
+    .flow {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-top: 18px;
+    }
+
+    .flow-step {
+      background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(212,175,55,0.16);
+      border-radius: 999px;
+      padding: 10px 16px;
+      color: #f0df9a;
+      font-size: 14px;
+    }
+
+    .btn-row {
+      margin-top: 22px;
+      text-align: center;
+    }
+
+    .btn {
+      display: inline-block;
+      text-decoration: none;
+      border-radius: 999px;
+      border: 1px solid rgba(212,175,55,0.55);
+      color: #f0df9a;
+      padding: 12px 20px;
+      margin: 6px;
+      background: rgba(0,0,0,0.32);
+      letter-spacing: 0.5px;
+    }
+
+    .btn.primary {
+      background: #d4af37;
+      color: #111;
+      font-weight: bold;
+    }
+
+    .btn:hover {
+      background: rgba(212,175,55,0.14);
+    }
+
+    .btn.primary:hover {
+      background: #f0df9a;
+    }
+
+    .planned {
+      color: #d4af37;
+      font-size: 14px;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      opacity: 0.85;
+      margin-top: 14px;
+    }
+
+    .note {
+      margin-top: 16px;
+      font-size: 14px;
+      line-height: 1.6;
+      opacity: 0.76;
+    }
+
+  </style>
+</head>
+
+<body>
+
+<div class="academy-line"></div>
+
+<div class="container">
+
+  <div class="label">STEM Nation · Teacher Attachment Workflow</div>
+
+  <h1>Resource-to-Simulation Attachment</h1>
+
+  <div class="subtitle">
+    Teachers should eventually be able to attach evidence, primary sources, media, maps, and instructional material directly to simulation moments inside STEM Nation.
+  </div>
+
+  <!-- Core Concept -->
+
+  <div class="section">
+
+    <h2>Core Instructional Idea</h2>
+
+    <p>
+      Resources are not simply stored in a library. They are attached to specific learning moments where students encounter evidence, inquiry prompts, historical context, or discussion material during the simulation.
+    </p>
+
+    <div class="flow">
+      <div class="flow-step">Select Resource</div>
+      <div class="flow-step">Choose Tags</div>
+      <div class="flow-step">Attach to Simulation Stage</div>
+      <div class="flow-step">Add Teacher Notes</div>
+      <div class="flow-step">Preview Student Experience</div>
+      <div class="flow-step">Save to Lesson Packet</div>
+    </div>
+
+    <div class="planned">
+      Prototype Workflow · No Real Upload System Active Yet
+    </div>
+
+  </div>
+
+  <!-- Example Resources -->
+
+  <div class="section">
+
+    <h2>Example Teacher Resources</h2>
+
+    <div class="grid">
+
+      <div class="card">
+        <h3>National Archives Map</h3>
+
+        <p>
+          Historical map showing trade routes, waterways, and settlement corridors.
+        </p>
+
+        <div>
+          <span class="tag">Module 0</span>
+          <span class="tag">Cartography</span>
+          <span class="tag">Primary Source</span>
+          <span class="tag">Geography</span>
+        </div>
+      </div>
+
+      <div class="card">
+        <h3>First-Hand Survival Account</h3>
+
+        <p>
+          Historical narrative describing environmental pressures and survival conditions.
+        </p>
+
+        <div>
+          <span class="tag">Week 2</span>
+          <span class="tag">Survival</span>
+          <span class="tag">First-Hand Account</span>
+          <span class="tag">Discussion</span>
+        </div>
+      </div>
+
+      <div class="card">
+        <h3>Government Treaty Excerpt</h3>
+
+        <p>
+          Treaty language or public record related to territory, governance, or diplomacy.
+        </p>
+
+        <div>
+          <span class="tag">Government Records</span>
+          <span class="tag">Governance</span>
+          <span class="tag">Primary Source</span>
+          <span class="tag">Civics</span>
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+
+  <!-- Attachment Targets -->
+
+  <div class="section">
+
+    <h2>Simulation Attachment Targets</h2>
+
+    <div class="grid">
+
+      <div class="card">
+        <h3>Module 0 / Baseline Inquiry</h3>
+        <p>
+          Attach maps, images, migration data, or environmental evidence to student observation stages.
+        </p>
+      </div>
+
+      <div class="card">
+        <h3>Strategic Map Defense</h3>
+        <p>
+          Attach supporting evidence for settlement reasoning, geography, trade, and sustainability discussion.
+        </p>
+      </div>
+
+      <div class="card">
+        <h3>Week 2 Survival Workspace</h3>
+        <p>
+          Attach first-hand accounts, environmental records, or survival-based inquiry material.
+        </p>
+      </div>
+
+      <div class="card">
+        <h3>Future Governance Modules</h3>
+        <p>
+          Attach speeches, laws, treaties, debates, and public records to future civics/governance systems.
+        </p>
+      </div>
+
+    </div>
+
+  </div>
+
+  <!-- Student Experience -->
+
+  <div class="section">
+
+    <h2>Student-Facing Experience</h2>
+
+    <p>
+      When students reach a lesson stage, attached resources may appear as:
+    </p>
+
+    <ul>
+      <li>Evidence cards</li>
+      <li>Primary-source prompts</li>
+      <li>Teacher-added context notes</li>
+      <li>Media references</li>
+      <li>Discussion prompts</li>
+      <li>Archive support materials</li>
+    </ul>
+
+    <div class="note">
+      Goal: transform the simulation into an evidence-driven civilization inquiry system.
+    </div>
+
+  </div>
+
+  <!-- Navigation -->
+
+  <div class="btn-row">
+    <a class="btn primary" href="/teacher_resource_library">Return to Resource Library</a>
+    <a class="btn" href="/teacher">Teacher Command Center</a>
+    <a class="btn" href="/hub">Week 1 Founding Archive</a>
+    <a class="btn" href="/week2_survival_archive">Week 2 Survival Archive</a>
+  </div>
+
+</div>
+
+</body>
+</html>

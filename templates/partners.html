@@ -1,140 +1,1403 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Partnerships & Grants</title>
+  <title>Partnership & Grant Command Center</title>
 
   <style>
-    body {
+
+    html, body {
       margin: 0;
-      font-family: Arial, sans-serif;
-      background: #0f172a;
+      width: 100%;
+      min-height: 100%;
+      background:
+        radial-gradient(circle at center, rgba(212,175,55,0.10), transparent 46%),
+        linear-gradient(135deg, #040404 0%, #101827 55%, #040404 100%);
       color: white;
-      padding: 40px 20px;
-      box-sizing: border-box;
+      font-family: Arial, sans-serif;
+      overflow-x: hidden;
+    }
+
+    .academy-line {
+      height: 3px;
+      background: linear-gradient(90deg, transparent, #d4af37, transparent);
+      opacity: 0.85;
     }
 
     .container {
-      max-width: 980px;
+      max-width: 1320px;
       margin: 0 auto;
+      padding: 42px 22px 80px;
+      box-sizing: border-box;
+    }
+
+    .label {
+      text-align: center;
+      font-size: 13px;
+      letter-spacing: 4px;
+      text-transform: uppercase;
+      color: #d4af37;
+      margin-bottom: 12px;
     }
 
     h1 {
-      font-size: 42px;
-      margin-bottom: 10px;
-      color: #f4d35e;
       text-align: center;
+      font-size: clamp(44px, 6vw, 82px);
+      color: #f0df9a;
+      margin: 0 0 18px;
+      line-height: 1.03;
     }
 
     .subtitle {
+      max-width: 980px;
+      margin: 0 auto 40px;
       text-align: center;
+      font-size: 22px;
+      line-height: 1.8;
+      opacity: 0.94;
+    }
+
+    .identity {
+      text-align: center;
+      margin-bottom: 48px;
+    }
+
+    .identity .core {
+      font-size: 28px;
+      color: #f0df9a;
+      margin-bottom: 12px;
+      letter-spacing: 1px;
+    }
+
+    .identity .tagline {
       font-size: 18px;
-      line-height: 1.6;
-      margin-bottom: 36px;
-      opacity: 0.92;
+      opacity: 0.86;
+      letter-spacing: 1px;
+    }
+
+    .section {
+      background: rgba(0,0,0,0.34);
+      border: 1px solid rgba(212,175,55,0.20);
+      border-radius: 22px;
+      padding: 30px;
+      margin-bottom: 28px;
+      box-shadow: 0 14px 50px rgba(0,0,0,0.45);
+    }
+
+    .section h2 {
+      margin-top: 0;
+      color: #d4af37;
+      font-size: 30px;
+      margin-bottom: 18px;
+    }
+
+    .section p,
+    .section li {
+      line-height: 1.8;
+      font-size: 16px;
+      opacity: 0.95;
     }
 
     .grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
       gap: 18px;
     }
 
     .card {
-      background: rgba(255,255,255,0.06);
-      border-radius: 14px;
-      padding: 20px;
-      box-sizing: border-box;
+      background: rgba(255,255,255,0.055);
       border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 16px;
+      padding: 20px;
     }
 
-    .card h2 {
-      font-size: 22px;
-      color: #f4d35e;
-      margin: 0 0 10px 0;
+    .card h3 {
+      margin-top: 0;
+      color: #f0df9a;
+      font-size: 20px;
     }
 
-    .card p {
-      font-size: 15px;
-      line-height: 1.55;
-      margin: 0;
+    .pathway {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 14px;
+      margin-top: 24px;
     }
 
-    .footer-box {
-      margin-top: 30px;
-      text-align: center;
+    .step {
       background: rgba(255,255,255,0.05);
-      padding: 18px;
-      border-radius: 12px;
-      font-size: 16px;
-      line-height: 1.6;
+      border: 1px solid rgba(212,175,55,0.22);
+      border-radius: 14px;
+      padding: 14px 18px;
+      min-width: 150px;
+      text-align: center;
+      font-size: 15px;
+    }
+
+    .planned {
+      color: #d4af37;
+      font-size: 14px;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      opacity: 0.85;
+      margin-top: 16px;
     }
 
     .btn-row {
-      margin-top: 28px;
+      margin-top: 34px;
       text-align: center;
     }
 
     .btn {
-      border: none;
-      border-radius: 10px;
-      background: #d4af37;
-      color: black;
-      padding: 12px 22px;
-      font-size: 16px;
-      font-weight: bold;
-      cursor: pointer;
-      margin: 0 8px;
+      display: inline-block;
+      text-decoration: none;
+      border-radius: 999px;
+      border: 1px solid rgba(212,175,55,0.55);
+      color: #f0df9a;
+      padding: 13px 22px;
+      margin: 6px;
+      background: rgba(0,0,0,0.32);
+      letter-spacing: 0.5px;
     }
+
+    .btn.primary {
+      background: #d4af37;
+      color: #111;
+      font-weight: bold;
+    }
+
+    .btn:hover {
+      background: rgba(212,175,55,0.14);
+    }
+
+    .btn.primary:hover {
+      background: #f0df9a;
+    }
+
   </style>
 </head>
 
 <body>
-  <div class="container">
-    <h1>Partnerships & Grants</h1>
 
-    <div class="subtitle">
-      STEM Nation is designed for collaboration, implementation, and expansion.<br>
-      Explore the nation engine, structural model, blueprint framework, and funding pathway.
+<div class="academy-line"></div>
+
+<div class="container">
+
+  <div class="label">STEM Nation · Institutional Partnership Layer</div>
+
+  <h1>Partnership & Grant Command Center</h1>
+
+  <div class="subtitle">
+    STEM Nation is an AI-integrated civic simulation and instructional platform where students build civilizations, analyze systems, defend decisions with evidence, and create archives of learning while educators guide inquiry, consequence, reflection, and strategic thinking.
+  </div>
+
+  <div class="identity">
+    <div class="core">
+      Civilization Did Not Begin With Us
     </div>
 
-    <div class="grid">
-      <div class="card">
-        <h2>Nation Engine</h2>
-        <p>
-          A simulation-based learning system where students build, govern, and evaluate a growing nation through decisions, strategy, and consequence.
-        </p>
-      </div>
-
-      <div class="card">
-        <h2>Structures</h2>
-        <p>
-          Modular instructional and technical structures support classroom use, student progression, educator customization, and long-term expansion.
-        </p>
-      </div>
-
-      <div class="card">
-        <h2>Blueprints</h2>
-        <p>
-          Implementation blueprints outline how STEM Nation can be launched across schools, programs, pilots, and partner-supported learning environments.
-        </p>
-      </div>
-
-      <div class="card">
-        <h2>Grants & Support</h2>
-        <p>
-          Partnership and grant pathways support curriculum deployment, educational access, technical buildout, and future public launch.
-        </p>
-      </div>
-    </div>
-
-    <div class="footer-box">
-      STEM Nation is open to educational partners, pilot collaborators, grant-aligned supporters, and institutions seeking a deeper civic, systems, and nation-building experience.
-    </div>
-
-    <div class="btn-row">
-      <button class="btn" onclick="window.location.href='/'">Back to Landing</button>
-      <button class="btn" onclick="window.location.href='/hub'">Open Project Hub</button>
+    <div class="tagline">
+      Power • Policy • Code • Consequence
     </div>
   </div>
+
+
+
+  <!-- Executive Summary -->
+
+  <div class="section">
+
+    <h2 id="executive-summary">Executive Summary</h2>
+
+    <p>
+      STEM Nation is a civilization-based instructional platform designed to help students practice systems thinking, civic reasoning, evidence-based decision-making, collaboration, and long-term consequence analysis through simulation.
+    </p>
+
+    <p>
+      The ecosystem combines student civilization experiences, educator operating systems, archive-based evidence workflows, and institutional deployment architecture into one connected learning model.
+    </p>
+
+    <p>
+      The current build includes a functional student pilot core, expanding educator systems, archive-centered assessment workflows, and a phased institutional roadmap for pilots, partnerships, funding, and future district-aligned deployment.
+    </p>
+
+    <p>
+      Rather than treating history, civics, economics, geography, and technology as isolated subjects, STEM Nation is designed to help students experience how systems interact over time through strategic decision-making and evidence-based reflection.
+    </p>
+
+  </div>
+
+  <!-- Institutional Metrics Strip -->
+
+  <div class="section">
+
+    <h2>Institutional Metrics Strip</h2>
+
+    <div class="grid">
+
+      <div class="card">
+        <h3>Student Civilization Engine</h3>
+
+        <p>
+          Module 0 + Week 1 + Week 2 instructional core currently built and demonstrable.
+        </p>
+
+        <ul>
+          <li>Baseline Inquiry</li>
+          <li>Strategic Map Defense</li>
+          <li>Founding Archive</li>
+          <li>Survival Workspace</li>
+          <li>Survival Archive</li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <h3>Educator Operating System</h3>
+
+        <p>
+          7+ educator systems currently prototyped and expanding.
+        </p>
+
+        <ul>
+          <li>Teacher Command Center</li>
+          <li>Facilitation Engine</li>
+          <li>Lesson Builder</li>
+          <li>Packet Builder</li>
+          <li>Resource Library</li>
+          <li>Attachment Workflow</li>
+          <li>Dashboard Architecture</li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <h3>Archive-Based Evidence Model</h3>
+
+        <p>
+          Multiple archive and evidence systems implemented to preserve reasoning, reflection, and systems-thinking artifacts.
+        </p>
+
+        <ul>
+          <li>Strategic Map Defense</li>
+          <li>Founding Archive</li>
+          <li>Survival Archive</li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <h3>Pilot-Ready Core</h3>
+
+        <p>
+          Multiple educational deployment models supported.
+        </p>
+
+        <ul>
+          <li>Classroom pilots</li>
+          <li>Afterschool implementation</li>
+          <li>Enrichment systems</li>
+          <li>Daycamp/intensive models</li>
+          <li>Community-learning pathways</li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <h3>Institutional Expansion Roadmap</h3>
+
+        <p>
+          Long-term roadmap actively expanding into broader civilization and educator systems.
+        </p>
+
+        <ul>
+          <li>Governance systems</li>
+          <li>Diplomacy & trade</li>
+          <li>District alignment</li>
+          <li>AI-assisted educator support</li>
+          <li>Analytics & portfolio infrastructure</li>
+        </ul>
+      </div>
+
+    </div>
+
+  </div>
+
+
+
+  <!-- Executive Navigation -->
+
+  <div class="section">
+
+    <h2>Explore the Partnership Architecture</h2>
+
+    <div class="grid">
+
+      <div class="card">
+        <p><a href="#executive-summary">Executive Summary</a></p>
+      </div>
+
+      <div class="card">
+        <p><a href="#problem-statement">Educational Problem Statement</a></p>
+      </div>
+
+      <div class="card">
+        <p><a href="#solution-architecture">Full Solution Architecture</a></p>
+      </div>
+
+      <div class="card">
+        <p><a href="#student-transformation">Student Transformation Story</a></p>
+      </div>
+
+      <div class="card">
+        <p><a href="#teacher-transformation">Teacher Transformation Story</a></p>
+      </div>
+
+      <div class="card">
+        <p><a href="#artifact-architecture">Artifact & Evidence Architecture</a></p>
+      </div>
+
+      <div class="card">
+        <p><a href="#grant-alignment">Grant & Funder Alignment</a></p>
+      </div>
+
+      <div class="card">
+        <p><a href="#pilot-package">Pilot Package Details</a></p>
+      </div>
+
+      <div class="card">
+        <p><a href="#partner-role-map">Partner Role Map</a></p>
+      </div>
+
+      <div class="card">
+        <p><a href="#budget-support">Budget & Support Lanes</a></p>
+      </div>
+
+      <div class="card">
+        <p><a href="#roadmap">Current Readiness vs Future Roadmap</a></p>
+      </div>
+
+    </div>
+
+  </div>
+
+
+  <!-- Educational Problem Statement -->
+
+  <div class="section">
+
+    <h2 id="problem-statement">Educational Problem Statement & Founder Inspiration</h2>
+
+    <p>
+      STEM Nation addresses a persistent instructional gap: students are often taught history, civics, geography, economics, and technology as separate subjects, even though real-world problems require systems thinking across all of them.
+    </p>
+
+    <p>
+      Designed by a former educator with more than 25 years of classroom experience and inspired by the educational and community legacy of Dr. Luna I. Mishoe and Mrs. Hattie B. Dabney Mishoe, STEM Nation creates an evidence-driven civilization simulation where students make decisions, defend reasoning, analyze consequences, and produce archive-based artifacts of learning while teachers receive structured facilitation, pacing, and instructional support.
+    </p>
+
+    <p>
+      The platform grows out of a practical classroom reality: teachers are expected to engage students, build critical thinking, differentiate instruction, collect evidence of learning, and make instruction meaningful — often without enough structural support to carry that burden alone.
+    </p>
+
+    <p>
+      STEM Nation responds by transforming civilization-building into an instructional model where students observe, question, collaborate, defend evidence, manage consequence, and create archives of learning that make their thinking visible.
+    </p>
+
+    <div class="planned">
+      Education As Systems Thinking · Evidence · Stewardship · Civic Reasoning
+    </div>
+
+  </div>
+
+  <!-- Full Solution Architecture -->
+
+  <div class="section">
+
+    <h2 id="solution-architecture">Full Solution Architecture</h2>
+
+    <p>
+      STEM Nation is built as a connected educational ecosystem. Student experiences, educator systems, resource workflows, archive artifacts, and institutional deployment pathways are designed to work together rather than exist as isolated tools.
+    </p>
+
+    <div class="grid">
+
+      <div class="card">
+        <h3>1. Student Civilization Engine</h3>
+
+        <p>
+          Students analyze geography, make settlement and survival decisions, defend reasoning with evidence, collaborate in teams, and experience consequence-based learning through civilization simulation.
+        </p>
+
+        <p>
+          Current systems include Module 0 Baseline Inquiry, Strategic Map Defense, Founding Archive, Week 2 Survival Workspace, and the Survival Archive.
+        </p>
+      </div>
+
+      <div class="card">
+        <h3>2. Educator Operating System</h3>
+
+        <p>
+          Teachers are supported through the Teacher Command Center, Dashboard, Lesson Builder, Packet Builder, Facilitation Engine, Resource Library, and Resource Attachment systems.
+        </p>
+
+        <p>
+          The educator layer is designed to reduce planning burden while preserving teacher facilitation, professional judgment, and inquiry-based instruction.
+        </p>
+      </div>
+
+      <div class="card">
+        <h3>3. Resource & Archive Engine</h3>
+
+        <p>
+          Students create archive-based artifacts that make reasoning visible, while educators organize maps, primary sources, media, archival materials, discussion prompts, and lesson resources through connected workflows.
+        </p>
+
+        <p>
+          The archive system supports evidence collection, reflection, systems thinking, and portfolio-style learning artifacts.
+        </p>
+      </div>
+
+      <div class="card">
+        <h3>4. Institutional Deployment Layer</h3>
+
+        <p>
+          STEM Nation is structured for classroom, afterschool, enrichment, intensive/daycamp, community, and future district pilot models.
+        </p>
+
+        <p>
+          Institutional partners may support onboarding, curriculum expansion, deployment infrastructure, teacher training, evaluation, and pilot implementation.
+        </p>
+      </div>
+
+      <div class="card">
+        <h3>5. Future AI & District Alignment Layer</h3>
+
+        <p>
+          Future development phases may include AI-assisted lesson drafting, pacing support, standards alignment, archive review assistance, facilitation recommendations, and district-specific implementation systems.
+        </p>
+
+        <p>
+          AI is positioned as a teacher-support layer, not a replacement for human facilitation or instructional relationships.
+        </p>
+      </div>
+
+    </div>
+
+    <div class="planned">
+      Student simulation creates the decisions. Teacher systems deepen the reasoning. Archives make the learning visible. Institutional partners help scale the impact.
+    </div>
+
+  </div>
+
+
+  <!-- Student Transformation Story -->
+
+  <div class="section">
+
+    <h2 id="student-transformation">Student Transformation Story</h2>
+
+    <p>
+      STEM Nation is designed to change what students are asked to do with knowledge. Instead of only recalling information after events have happened, students enter a structured civilization simulation where they observe conditions, make decisions, defend reasoning, and reflect on consequences.
+    </p>
+
+    <div class="grid">
+
+      <div class="card">
+        <h3>From Passive Learner to Observer</h3>
+
+        <p>
+          Students begin by reading land, identifying resources, noticing risks, analyzing geography, comparing environments, and asking questions before major decisions are made.
+        </p>
+
+        <p>
+          The system intentionally develops observation, inquiry, and strategic attention before action.
+        </p>
+      </div>
+
+      <div class="card">
+        <h3>From Observer to Decision-Maker</h3>
+
+        <p>
+          Students must decide where to settle, how to survive, how to organize labor, and how to respond to scarcity, movement, cooperation, and environmental pressure.
+        </p>
+
+        <p>
+          Instead of only learning what civilizations did, students experience the pressure of making decisions themselves.
+        </p>
+      </div>
+
+      <div class="card">
+        <h3>From Decision-Maker to Evidence User</h3>
+
+        <p>
+          Students defend choices using maps, terrain reasoning, primary sources, attached instructional materials, and archive evidence.
+        </p>
+
+        <p>
+          Students are expected to explain reasoning, identify tradeoffs, and support conclusions with evidence.
+        </p>
+      </div>
+
+      <div class="card">
+        <h3>From Evidence User to Systems Thinker</h3>
+
+        <p>
+          Students begin connecting land, food, labor, defense, cooperation, scarcity, trade, movement, technology, and future consequence.
+        </p>
+
+        <p>
+          The goal is to help students understand civilizations as interconnected systems rather than isolated historical facts.
+        </p>
+      </div>
+
+      <div class="card">
+        <h3>From Systems Thinker to Civic Thinker</h3>
+
+        <p>
+          Students begin understanding how decisions affect people, institutions, leadership, responsibility, stability, resource distribution, and community survival.
+        </p>
+
+        <p>
+          The simulation encourages students to think beyond individual preference toward collective consequence and civic responsibility.
+        </p>
+      </div>
+
+      <div class="card">
+        <h3>From Activity Participant to Archive Creator</h3>
+
+        <p>
+          Students create visible artifacts of learning through Strategic Map Defense, Founding Archive, Survival Archive, reflections, and future portfolio systems.
+        </p>
+
+        <p>
+          The archive structure preserves reasoning, growth, revision, evidence, and consequence analysis over time.
+        </p>
+      </div>
+
+    </div>
+
+    <div class="planned">
+      Students do not simply study civilization from the outside; they practice the habits of thinking required to build, sustain, question, and improve one.
+    </div>
+
+  </div>
+
+
+
+  <!-- Teacher Transformation Story -->
+
+  <div class="section">
+
+    <h2 id="teacher-transformation">Teacher Transformation Story</h2>
+
+    <p>
+      STEM Nation was designed with the practical reality of teaching in mind. Teachers are expected to engage students, differentiate instruction, guide discussion, collect evidence of learning, and make instruction meaningful while managing limited time and increasing instructional demands.
+    </p>
+
+    <p>
+      The platform does not replace teachers. It provides a structured instructional operating system designed to help educators guide deeper learning without carrying the full organizational burden alone.
+    </p>
+
+    <div class="grid">
+
+      <div class="card">
+        <h3>From Isolated Planner to Guided Lesson Architect</h3>
+
+        <p>
+          STEM Nation supports teachers through pacing models, implementation sequencing, lesson-building systems, walkthroughs, and instructional scaffolding designed to strengthen planning support.
+        </p>
+      </div>
+
+      <div class="card">
+        <h3>From Content Deliverer to Inquiry Facilitator</h3>
+
+        <p>
+          Teachers guide evidence analysis, strategic discussion, systems thinking, collaboration, and reflection through the Facilitation Engine and structured classroom prompts.
+        </p>
+      </div>
+
+      <div class="card">
+        <h3>From Resource Collector to Resource Curator</h3>
+
+        <p>
+          Resource systems help educators organize primary sources, maps, archival materials, government records, media, and instructional attachments directly into simulation experiences.
+        </p>
+      </div>
+
+      <div class="card">
+        <h3>From Activity Manager to Evidence Reviewer</h3>
+
+        <p>
+          Archive systems help teachers review reasoning, collaboration, systems thinking, evidence use, and strategic growth rather than assignment completion alone.
+        </p>
+      </div>
+
+      <div class="card">
+        <h3>From Classroom Manager to Simulation Orchestrator</h3>
+
+        <p>
+          Dashboard systems, packet builders, archive workflows, pacing support, and future civilization-tracking systems help teachers orchestrate deeper inquiry environments.
+        </p>
+      </div>
+
+      <div class="card">
+        <h3>From Burdened Alignment Worker to Future AI-Supported Instructional Designer</h3>
+
+        <p>
+          Future phases may include AI-assisted lesson drafting, standards alignment, pacing support, archive review assistance, and facilitation recommendations designed to support teacher decision-making.
+        </p>
+      </div>
+
+    </div>
+
+    <div class="planned">
+      STEM Nation does not remove the teacher from instruction; it strengthens the teacher’s ability to guide inquiry, deepen reasoning, and make student thinking visible.
+    </div>
+
+  </div>
+
+
+
+  <!-- Artifact & Evidence Architecture -->
+
+  <div class="section">
+
+    <h2 id="artifact-architecture">Artifact & Evidence Architecture</h2>
+
+    <p>
+      STEM Nation is designed around visible evidence of thinking. The platform does not treat learning as a hidden process that disappears after a screen is completed.
+    </p>
+
+    <p>
+      Students produce archive-based artifacts that preserve decisions, reasoning, tradeoffs, evidence, reflection, collaboration, and consequence analysis over time.
+    </p>
+
+    <div class="grid">
+
+      <div class="card">
+        <h3>Strategic Map Defense</h3>
+
+        <p>
+          Students defend settlement decisions using geography, terrain reasoning, environmental analysis, risk evaluation, and evidence-supported argumentation.
+        </p>
+      </div>
+
+      <div class="card">
+        <h3>Founding Archive</h3>
+
+        <p>
+          The Founding Archive preserves the first official record of civilization reasoning, settlement logic, priorities, environmental analysis, and strategic choices.
+        </p>
+      </div>
+
+      <div class="card">
+        <h3>Survival Archive</h3>
+
+        <p>
+          Students document responses to scarcity, labor organization, food systems, shelter planning, environmental pressure, cooperation, and consequence.
+        </p>
+      </div>
+
+      <div class="card">
+        <h3>Reflection & Revision Systems</h3>
+
+        <p>
+          Students revisit assumptions, strategies, resource decisions, alliance logic, and systems outcomes as civilizations evolve over time.
+        </p>
+      </div>
+
+      <div class="card">
+        <h3>Portfolio & Evidence Systems</h3>
+
+        <p>
+          Archive workflows support printable artifacts, Save-as-PDF exports, future portfolio systems, classroom reflection, and long-term evidence preservation.
+        </p>
+      </div>
+
+      <div class="card">
+        <h3>Institutional Evidence Visibility</h3>
+
+        <p>
+          The archive-centered model helps teachers, schools, districts, and partners review reasoning, systems thinking, collaboration, evidence use, and strategic growth.
+        </p>
+      </div>
+
+    </div>
+
+    <div class="planned">
+      STEM Nation makes thinking visible by turning decisions, evidence, and reflection into archive-based artifacts of learning.
+    </div>
+
+  </div>
+
+
+  <!-- Grant & Funder Alignment -->
+
+  <div class="section">
+
+    <h2 id="grant-alignment">Grant & Funder Alignment</h2>
+
+    <p>
+      STEM Nation is designed to align with multiple educational, civic, technological, and community-based funding priorities. The platform combines systems thinking, evidence-based learning, teacher support architecture, archive-centered assessment, and interdisciplinary simulation into one connected instructional ecosystem.
+    </p>
+
+    <p>
+      Rather than functioning as a single-subject curriculum product, STEM Nation is structured as a scalable learning model that can support classroom instruction, pilot programs, enrichment systems, afterschool initiatives, intensive/daycamp environments, and future district-aligned deployment pathways.
+    </p>
+
+    <div class="grid">
+
+      <div class="card">
+        <h3>Civic Education & Democratic Practice</h3>
+
+        <p>
+          Students practice governance, cooperation, policy reasoning, leadership, consequence analysis, and civic decision-making through structured civilization simulation.
+        </p>
+      </div>
+
+      <div class="card">
+        <h3>STEAM & Interdisciplinary Learning</h3>
+
+        <p>
+          STEM Nation combines history, geography, economics, technology, systems thinking, design, communication, and collaboration into one connected learning experience.
+        </p>
+      </div>
+
+      <div class="card">
+        <h3>AI & Educational Innovation</h3>
+
+        <p>
+          Future development phases may include AI-assisted lesson drafting, pacing support, standards alignment, archive review assistance, and district-support systems designed to strengthen human-centered instruction.
+        </p>
+      </div>
+
+      <div class="card">
+        <h3>Teacher Support & Workload Reduction</h3>
+
+        <p>
+          The educator-side architecture supports pacing, facilitation, resource management, archive review, lesson design, and classroom orchestration through connected instructional systems.
+        </p>
+      </div>
+
+      <div class="card">
+        <h3>Underserved Access & Community Learning</h3>
+
+        <p>
+          The platform supports classroom, afterschool, enrichment, daycamp, and community-learning deployment models designed for flexible implementation and broader educational access.
+        </p>
+      </div>
+
+      <div class="card">
+        <h3>Project-Based & Portfolio Learning</h3>
+
+        <p>
+          Strategic Map Defense, Founding Archive, Survival Archive, reflections, and future portfolio systems help preserve reasoning, collaboration, systems thinking, and evidence-based learning artifacts.
+        </p>
+      </div>
+
+      <div class="card">
+        <h3>Research, Evaluation & Pilot Alignment</h3>
+
+        <p>
+          The archive-centered structure supports pilot evidence collection, reflection analysis, institutional reporting, future analytics systems, and long-term evaluation pathways.
+        </p>
+      </div>
+
+    </div>
+
+    <div class="planned">
+      STEM Nation gives funders something many educational initiatives struggle to produce: a visible record of how students think, decide, collaborate, defend evidence, and reflect on consequence.
+    </div>
+
+  </div>
+
+
+  <!-- Pilot Package Details -->
+
+  <div class="section">
+
+    <h2 id="pilot-package">Pilot Package Details</h2>
+
+    <p>
+      STEM Nation is designed to launch through phased pilot implementation. The ecosystem begins with a working instructional core while expanding gradually into a broader civilization-growth platform as implementation, funding, educator capacity, and institutional partnerships increase.
+    </p>
+
+    <div class="grid">
+
+      <div class="card">
+        <h3>Current Pilot Core — Built & Demonstrable</h3>
+
+        <p>
+          The current pilot foundation includes operational student experiences, educator systems, archive workflows, and instructional infrastructure designed for real classroom demonstration and phased deployment.
+        </p>
+
+        <ul>
+          <li>Module 0 — Baseline Inquiry</li>
+          <li>Week 1 — Founding & Settlement</li>
+          <li>Strategic Map Defense</li>
+          <li>Founding Archive</li>
+          <li>Week 2 — Survival & Consequence</li>
+          <li>Survival Workspace</li>
+          <li>Survival Archive</li>
+          <li>Printable / Save-as-PDF archive exports</li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <h3>Educator Pilot Systems</h3>
+
+        <p>
+          The educator-side architecture supports classroom facilitation, pacing, instructional structure, resource management, and archive-centered review systems.
+        </p>
+
+        <ul>
+          <li>Teacher Command Center</li>
+          <li>Teacher Dashboard Prototype</li>
+          <li>Lesson Builder</li>
+          <li>Packet Builder</li>
+          <li>Facilitation Engine</li>
+          <li>Resource Library</li>
+          <li>Resource-to-Simulation Attachment Workflow</li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <h3>Expansion Roadmap — Planned Future Modules</h3>
+
+        <p>
+          The broader roadmap expands the simulation beyond initial settlement and survival into long-term civilization systems and institutional development.
+        </p>
+
+        <ul>
+          <li>Week 3 — Food, Labor & Production</li>
+          <li>Trade & Resource Systems</li>
+          <li>Governance & Law</li>
+          <li>Diplomacy & Alliance Systems</li>
+          <li>Conflict Avoidance & Strategic Consequence</li>
+          <li>Technology & Innovation Systems</li>
+          <li>Archive Portfolio Expansion</li>
+          <li>Teacher Analytics & Dashboard Growth</li>
+          <li>District Alignment & AI-Support Layers</li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <h3>Deployment Models</h3>
+
+        <p>
+          STEM Nation is designed for flexible educational deployment across multiple learning environments and institutional contexts.
+        </p>
+
+        <ul>
+          <li>Traditional classroom pilots</li>
+          <li>Afterschool implementation</li>
+          <li>Enrichment models</li>
+          <li>Intensive/daycamp experiences</li>
+          <li>Community learning environments</li>
+          <li>Future district-aligned rollout pathways</li>
+        </ul>
+      </div>
+
+    </div>
+
+    <div class="planned">
+      The pilot begins with a working instructional core and expands into a broader civilization-growth roadmap as implementation, funding, and institutional capacity increase.
+    </div>
+
+  </div>
+
+
+  <!-- Partner Role Map -->
+
+  <div class="section">
+
+    <h2 id="partner-role-map">Partner Role Map</h2>
+
+    <p>
+      STEM Nation is designed as a collaborative educational ecosystem. The platform is not intended to function through isolated software deployment alone. Its long-term structure depends on coordinated participation between educators, schools, community organizations, institutional partners, researchers, and future technology collaborators.
+    </p>
+
+    <p>
+      Each partner contributes a different layer of support to the broader learning ecosystem.
+    </p>
+
+    <div class="grid">
+
+      <div class="card">
+        <h3>Schools & Districts</h3>
+
+        <p>
+          Schools and districts support classroom pilots, educator onboarding, instructional integration, archive review, evaluation, and long-term implementation planning.
+        </p>
+      </div>
+
+      <div class="card">
+        <h3>Teachers & Educators</h3>
+
+        <p>
+          Teachers facilitate simulation experiences, guide discussion, review artifacts, support reflection, adapt pacing, and help students connect evidence to consequence.
+        </p>
+      </div>
+
+      <div class="card">
+        <h3>Funders & Foundations</h3>
+
+        <p>
+          Funding partners help support pilot implementation, technology buildout, curriculum growth, archive infrastructure, educator systems, underserved access, and future scaling.
+        </p>
+      </div>
+
+      <div class="card">
+        <h3>Universities & Research Partners</h3>
+
+        <p>
+          Research institutions may support instructional evaluation, systems-thinking studies, teacher preparation, curriculum analysis, and future learning analytics.
+        </p>
+      </div>
+
+      <div class="card">
+        <h3>Nonprofits & Community Organizations</h3>
+
+        <p>
+          Community partners may help expand STEM Nation into afterschool systems, enrichment environments, youth leadership initiatives, and community-based learning experiences.
+        </p>
+      </div>
+
+      <div class="card">
+        <h3>Technology & Curriculum Partners</h3>
+
+        <p>
+          Technology collaborators may support dashboard systems, AI-support roadmap development, archive infrastructure, deployment systems, and instructional workflow growth.
+        </p>
+      </div>
+
+      <div class="card">
+        <h3>Families & Community Stakeholders</h3>
+
+        <p>
+          Families and community stakeholders support reflection, participation, showcase events, community memory, and long-term student learning engagement.
+        </p>
+      </div>
+
+    </div>
+
+    <div class="planned">
+      STEM Nation is designed as a partnership ecosystem: schools implement, teachers guide, students build, funders support, researchers evaluate, communities extend, and technology partners help scale.
+    </div>
+
+  </div>
+
+
+  <!-- Budget & Support Lanes -->
+
+  <div class="section">
+
+    <h2 id="budget-support">Budget & Support Lanes</h2>
+
+    <p>
+      STEM Nation is designed as a phased educational ecosystem that grows through strategic partnership, educator support, institutional collaboration, and long-term infrastructure development.
+    </p>
+
+    <p>
+      Funding and institutional support are intended to strengthen the systems that make deeper learning experiences sustainable, scalable, and accessible across different educational environments.
+    </p>
+
+    <div class="grid">
+
+      <div class="card">
+        <h3>Pilot Funding & Implementation</h3>
+
+        <p>
+          Support may help launch classroom pilots, afterschool systems, enrichment programs, intensive/daycamp models, and community-based learning implementation.
+        </p>
+      </div>
+
+      <div class="card">
+        <h3>Technology Buildout & Infrastructure</h3>
+
+        <p>
+          Support may strengthen simulation systems, educator dashboards, archive infrastructure, deployment systems, printable artifact workflows, portfolio systems, and future AI-support architecture.
+        </p>
+      </div>
+
+      <div class="card">
+        <h3>Educator Training & Onboarding</h3>
+
+        <p>
+          Support may provide facilitation walkthroughs, pacing guidance, onboarding systems, implementation coaching, instructional examples, and future district-alignment preparation.
+        </p>
+      </div>
+
+      <div class="card">
+        <h3>Curriculum & Resource Development</h3>
+
+        <p>
+          Support may expand lesson modules, maps, archive systems, primary source collections, archival records, instructional packets, and interdisciplinary learning resources.
+        </p>
+      </div>
+
+      <div class="card">
+        <h3>Artifact, Portfolio & Evaluation Systems</h3>
+
+        <p>
+          The archive-centered structure supports printable artifacts, student portfolios, archive review workflows, pilot evidence collection, and future evaluation systems.
+        </p>
+      </div>
+
+      <div class="card">
+        <h3>Community & Institutional Launch</h3>
+
+        <p>
+          Community support may strengthen showcase events, youth leadership initiatives, educator collaboration, pilot launches, and broader public engagement experiences.
+        </p>
+      </div>
+
+      <div class="card">
+        <h3>Research & Impact Measurement</h3>
+
+        <p>
+          Support may strengthen university partnerships, instructional evaluation, systems-thinking research, classroom impact studies, and future analytics infrastructure.
+        </p>
+      </div>
+
+    </div>
+
+    <div class="planned">
+      Support does not fund a single activity; it strengthens the infrastructure that allows students, teachers, schools, and partners to sustain deeper learning over time.
+    </div>
+
+  </div>
+
+
+  <!-- Current Readiness vs Future Roadmap -->
+
+  <div class="section">
+
+    <h2 id="roadmap">Current Readiness vs Future Roadmap</h2>
+
+    <p>
+      STEM Nation is being developed as a phased educational ecosystem. The platform already contains functional instructional experiences and educator systems while continuing to expand into a broader long-term civilization-learning architecture.
+    </p>
+
+    <p>
+      The ecosystem is intentionally being built in stages so that instructional quality, educator usability, archive integrity, and institutional scalability can evolve carefully over time.
+    </p>
+
+    <div class="grid">
+
+      <div class="card">
+        <h3>Currently Functional & Demonstrable</h3>
+
+        <ul>
+          <li>Module 0 — Baseline Inquiry</li>
+          <li>Week 1 — Founding & Settlement</li>
+          <li>Strategic Map Defense</li>
+          <li>Founding Archive</li>
+          <li>Week 2 — Survival & Consequence</li>
+          <li>Survival Workspace</li>
+          <li>Survival Archive</li>
+          <li>Printable / Save-as-PDF exports</li>
+          <li>Teacher Command Center</li>
+          <li>Teacher Facilitation Engine</li>
+          <li>Teacher Resource Library</li>
+          <li>Resource Attachment Workflow</li>
+          <li>Lesson Builder</li>
+          <li>Packet Builder</li>
+          <li>Teacher Dashboard prototypes</li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <h3>Prototype & Active Development</h3>
+
+        <ul>
+          <li>Expanded dashboard architecture</li>
+          <li>Resource-to-simulation systems</li>
+          <li>Archive review workflows</li>
+          <li>Institutional deployment architecture</li>
+          <li>Packet builder refinement</li>
+          <li>Lesson-builder expansion</li>
+          <li>Pilot implementation systems</li>
+          <li>Teacher orchestration systems</li>
+          <li>Institutional partner infrastructure</li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <h3>Future Roadmap Expansion</h3>
+
+        <ul>
+          <li>Week 3 — Food, Labor & Production</li>
+          <li>Trade & Resource Systems</li>
+          <li>Governance & Law Systems</li>
+          <li>Diplomacy & Alliance Systems</li>
+          <li>Conflict Avoidance & Strategic Consequence</li>
+          <li>Technology & Innovation Systems</li>
+          <li>Expanded Archive Portfolio Infrastructure</li>
+          <li>Teacher Analytics & Institutional Dashboards</li>
+          <li>District Alignment Systems</li>
+          <li>AI-Assisted Teacher Support</li>
+        </ul>
+      </div>
+
+    </div>
+
+    <div class="planned">
+      STEM Nation is already real enough to demonstrate, structured enough to pilot, and honest enough to show what is still being built.
+    </div>
+
+  </div>
+
+  <!-- Overview -->
+
+  <div class="section">
+
+    
+
+
+<h2>Partnership Overview</h2>
+
+<p>
+  The sections above describe STEM Nation’s institutional foundation: the educational problem it addresses, the architecture that powers it, the transformation it creates for students and teachers, and the evidence systems that make learning visible.
+</p>
+
+<p>
+  The sections below summarize how partners, pilots, funders, and institutions can engage with that ecosystem across implementation, support, evaluation, and long-term collaboration.
+</p>
+
+<p>
+  Partnership is not treated as an add-on. It is part of how STEM Nation is designed to grow: through schools, educators, funders, researchers, community organizations, and technology collaborators working together around evidence-driven civilization learning.
+</p>
+
+
+<h2>Who We Partner With</h2>
+
+<p>
+  STEM Nation is designed for collaboration across educational, civic, community, research, funding, and technology partners.
+</p>
+
+<p>
+  The detailed Partner Role Map above explains how each group contributes; this section provides a concise recap of the ecosystem’s core partner audiences.
+</p>
+
+<div class="grid">
+
+  <div class="card">
+    <h3>Schools & Districts</h3>
+
+    <p>
+      Classroom implementation, interdisciplinary learning, systems thinking, and long-term instructional integration.
+    </p>
+  </div>
+
+  <div class="card">
+    <h3>Afterschool & Enrichment Programs</h3>
+
+    <p>
+      Flexible implementation for extended learning, enrichment models, summer programming, and youth engagement initiatives.
+    </p>
+  </div>
+
+  <div class="card">
+    <h3>Universities & Research Programs</h3>
+
+    <p>
+      Instructional innovation, teacher preparation, simulation-learning research, and evaluation partnerships.
+    </p>
+  </div>
+
+  <div class="card">
+    <h3>Nonprofits & Community Organizations</h3>
+
+    <p>
+      Community-based learning, leadership development, civic inquiry, and educational access initiatives.
+    </p>
+  </div>
+
+  <div class="card">
+    <h3>Funders & Grant Makers</h3>
+
+    <p>
+      Educational innovation, civic literacy, teacher-support systems, and scalable implementation support.
+    </p>
+  </div>
+
+  <div class="card">
+    <h3>Technology & Curriculum Partners</h3>
+
+    <p>
+      AI-support roadmap development, deployment systems, curriculum growth, and instructional tooling collaboration.
+    </p>
+  </div>
+
+</div>
+
+
+<h2>Grant Readiness Model</h2>
+
+<p>
+  STEM Nation is structured around measurable instructional artifacts, evidence-driven inquiry, educator facilitation systems, and phased implementation pathways designed to support institutional pilots and long-term scalability.
+</p>
+
+<div class="grid">
+
+  <div class="card">
+    <h3>Student Outcomes</h3>
+
+    <ul>
+      <li>Systems thinking</li>
+      <li>Evidence-based reasoning</li>
+      <li>Civic decision-making</li>
+      <li>Collaboration & debate</li>
+      <li>Consequence analysis</li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <h3>Educator Support</h3>
+
+    <ul>
+      <li>Facilitation systems</li>
+      <li>Lesson orchestration support</li>
+      <li>Archive review workflows</li>
+      <li>Packet-building systems</li>
+      <li>Future district-alignment support</li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <h3>Evidence & Artifacts</h3>
+
+    <ul>
+      <li>Strategic Map Defense</li>
+      <li>Founding Archive</li>
+      <li>Survival Archive</li>
+      <li>Reflection systems</li>
+      <li>Printable portfolio artifacts</li>
+    </ul>
+  </div>
+
+</div>
+
+<h2>Pilot Implementation Pathway</h2>
+
+    <p>
+      STEM Nation is designed to scale through a clear pilot process that supports institutions, educators, and implementation partners from initial exploration through long-term expansion.
+    </p>
+
+    <div class="pathway pilot-rollout">
+
+      <div class="step">
+        <strong>01. Discovery</strong>
+        <span>Partners explore the platform vision, instructional goals, pilot fit, and implementation possibilities.</span>
+      </div>
+
+      <div class="step">
+        <strong>02. Pilot Planning</strong>
+        <span>Grade levels, classrooms, educator cohorts, timelines, curriculum connections, and support needs are defined.</span>
+      </div>
+
+      <div class="step">
+        <strong>03. Teacher Onboarding</strong>
+        <span>Educators prepare for simulation facilitation, inquiry routines, archive workflows, and classroom orchestration.</span>
+      </div>
+
+      <div class="step">
+        <strong>04. Classroom Launch</strong>
+        <span>Students begin civilization formation, geographic inquiry, strategic decision-making, and evidence-based collaboration.</span>
+      </div>
+
+      <div class="step">
+        <strong>05. Archive Collection</strong>
+        <span>Student artifacts, reflections, maps, decisions, and portfolio evidence are collected to make learning visible.</span>
+      </div>
+
+      <div class="step">
+        <strong>06. Impact Review</strong>
+        <span>Partners evaluate engagement, instructional effectiveness, systems-thinking growth, educator feedback, and pilot outcomes.</span>
+      </div>
+
+      <div class="step">
+        <strong>07. Expansion</strong>
+        <span>Successful pilots can grow into additional classrooms, schools, districts, research partnerships, and future AI-supported layers.</span>
+      </div>
+
+    </div>
+
+    <p>
+      STEM Nation begins with a manageable pilot pathway while supporting long-term institutional growth and scalable educational collaboration.
+    </p>
+
+  </div>
+
+  <!-- Impact -->
+
+  <div class="section">
+
+    <h2>Impact Model</h2>
+
+    <p>
+      STEM Nation measures impact through three connected layers: student reasoning, educator support, and institutional evidence.
+    </p>
+
+    <div class="grid">
+
+      <div class="card">
+        <h3>Students</h3>
+        <p>Evidence-based decisions, systems thinking, collaboration, and visible learning artifacts.</p>
+      </div>
+
+      <div class="card">
+        <h3>Educators</h3>
+        <p>Clear facilitation routines, reusable resources, archive workflows, and reduced planning burden.</p>
+      </div>
+
+      <div class="card">
+        <h3>Institutions</h3>
+        <p>Pilot evidence, scalable implementation models, portfolio outputs, and future analytics readiness.</p>
+      </div>
+
+    </div>
+
+  </div>
+
+  <!-- Future -->
+
+  <div class="section">
+
+    <h2>Future AI & District Alignment Roadmap</h2>
+
+    <p>
+      Future development phases may include AI-assisted lesson drafting, facilitation support, standards alignment, pacing suggestions, archive analytics, teacher dashboards, classroom orchestration systems, and scalable district deployment layers.
+    </p>
+
+    <div class="planned">
+      Human Instructional Architecture First · AI Support Integrated Carefully Later
+    </div>
+
+  </div>
+
+  <!-- CTA -->
+
+  <div class="section">
+
+    <h2>Institutional Collaboration & Next Steps</h2>
+
+    <p>
+      STEM Nation is actively evolving through student simulation architecture, educator-side instructional systems, and institutional deployment planning.
+    </p>
+
+    <p>
+      Schools, districts, pilot collaborators, researchers, nonprofits, and grant-aligned organizations interested in educational innovation, systems thinking, civic inquiry, and evidence-driven learning are encouraged to explore collaboration pathways.
+    </p>
+
+    <div class="btn-row">
+      <a class="btn primary" href="/">Return to Landing</a>
+      <a class="btn" href="/teacher">Explore Educator System</a>
+      <a class="btn" href="/hub">View Project Hub</a>
+      <a class="btn" href="/week2_survival_archive">View Student Archive</a>
+    </div>
+
+  </div>
+
+</div>
+
 </body>
 </html>

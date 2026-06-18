@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Simulation Mode</title>
+  <title>STEM Nation World Board | Strategic Map & Founding Archive</title>
 
   <style>
     body {
@@ -14,8 +14,17 @@
     }
 
     .container {
-      max-width: 980px;
+      max-width: 1080px;
       margin: 0 auto;
+    }
+
+    .week-label {
+      text-align: center;
+      font-size: 14px;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      opacity: 0.72;
+      margin-bottom: 12px;
     }
 
     h1 {
@@ -33,9 +42,115 @@
       opacity: 0.92;
     }
 
+    .map-panel {
+      background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(244,211,94,0.28);
+      border-radius: 18px;
+      padding: 24px;
+      margin-bottom: 24px;
+      text-align: center;
+    }
+
+    .map-title {
+      color: #f4d35e;
+      font-size: 24px;
+      margin-bottom: 12px;
+    }
+
+    .map-placeholder {
+      border: 1px dashed rgba(244,211,94,0.55);
+      border-radius: 16px;
+      padding: 28px;
+      line-height: 1.7;
+      background: rgba(0,0,0,0.18);
+    }
+
+
+    .mission-brief {
+      background: rgba(0,0,0,0.26);
+      border: 1px solid rgba(244,211,94,0.24);
+      border-radius: 18px;
+      padding: 24px;
+      margin-bottom: 24px;
+      line-height: 1.65;
+    }
+
+    .mission-brief h2,
+    .region-reference-board h2 {
+      color: #f4d35e;
+      margin: 0 0 10px 0;
+      text-align: center;
+      font-size: 26px;
+    }
+
+    .mission-brief p,
+    .region-reference-board .board-note {
+      margin: 8px auto;
+      max-width: 900px;
+      font-size: 16px;
+      line-height: 1.55;
+      opacity: 0.9;
+      text-align: center;
+    }
+
+    .decision-rules {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+      gap: 12px;
+      margin-top: 18px;
+    }
+
+    .rule-chip {
+      background: rgba(244,211,94,0.09);
+      border: 1px solid rgba(244,211,94,0.22);
+      border-radius: 999px;
+      padding: 10px 12px;
+      text-align: center;
+      color: #f0df9a;
+      font-size: 14px;
+    }
+
+    .region-reference-board {
+      margin: 26px 0;
+      background: rgba(255,255,255,0.045);
+      border: 1px solid rgba(244,211,94,0.22);
+      border-radius: 18px;
+      padding: 24px;
+    }
+
+    .region-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(245px, 1fr));
+      gap: 16px;
+    }
+
+    .region-card {
+      background: rgba(0,0,0,0.24);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 14px;
+      padding: 18px;
+      box-sizing: border-box;
+    }
+
+    .region-card h3 {
+      color: #f4d35e;
+      margin: 0 0 10px 0;
+      font-size: 20px;
+    }
+
+    .region-card p {
+      margin: 7px 0;
+      font-size: 14px;
+      line-height: 1.5;
+    }
+
+    .region-card strong {
+      color: #f0df9a;
+    }
+
     .grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
       gap: 18px;
     }
 
@@ -48,7 +163,7 @@
     }
 
     .card h2 {
-      font-size: 22px;
+      font-size: 21px;
       color: #f4d35e;
       margin: 0 0 10px 0;
     }
@@ -63,10 +178,102 @@
       margin-top: 30px;
       text-align: center;
       background: rgba(255,255,255,0.05);
-      padding: 18px;
+      padding: 20px;
       border-radius: 12px;
       font-size: 16px;
       line-height: 1.6;
+      border: 1px solid rgba(244,211,94,0.18);
+    }
+
+    .decision-form {
+      margin-top: 28px;
+      background: rgba(0,0,0,0.24);
+      border: 1px solid rgba(244,211,94,0.26);
+      border-radius: 18px;
+      padding: 24px;
+      box-sizing: border-box;
+    }
+
+    .decision-form h2 {
+      color: #f4d35e;
+      margin: 0 0 10px 0;
+      font-size: 24px;
+      text-align: center;
+    }
+
+    .decision-form .form-instruction {
+      text-align: center;
+      margin: 0 auto 22px;
+      max-width: 820px;
+      line-height: 1.55;
+      opacity: 0.9;
+    }
+
+    .field-group {
+      margin-bottom: 18px;
+    }
+
+    .field-group label {
+      display: block;
+      font-weight: bold;
+      color: #f4d35e;
+      margin-bottom: 8px;
+      letter-spacing: 0.4px;
+    }
+
+    .field-group input,
+    .field-group textarea {
+      width: 100%;
+      box-sizing: border-box;
+      border-radius: 10px;
+      border: 1px solid rgba(244,211,94,0.30);
+      background: rgba(255,255,255,0.08);
+      color: white;
+      padding: 12px 14px;
+      font-size: 15px;
+      font-family: Arial, sans-serif;
+      line-height: 1.45;
+      outline: none;
+    }
+
+    .field-group textarea {
+      min-height: 82px;
+      resize: vertical;
+    }
+
+    .field-group input:focus,
+    .field-group textarea:focus {
+      border-color: #d4af37;
+      box-shadow: 0 0 0 3px rgba(212,175,55,0.14);
+    }
+
+    .completion-status {
+      margin-top: 12px;
+      text-align: center;
+      color: #f0df9a;
+      font-size: 14px;
+      letter-spacing: 0.5px;
+      opacity: 0.9;
+    }
+
+    .archive-saved-status {
+      margin-top: 10px;
+      text-align: center;
+      font-size: 13px;
+      color: #9fe6a0;
+      opacity: 0;
+      transition: opacity 0.5s ease;
+      letter-spacing: 0.4px;
+    }
+
+    .archive-saved-status.show {
+      opacity: 0.95;
+    }
+
+    .btn.locked {
+      opacity: 0.45;
+      cursor: not-allowed;
+      filter: grayscale(0.35);
     }
 
     .btn-row {
@@ -83,58 +290,6138 @@
       font-size: 16px;
       font-weight: bold;
       cursor: pointer;
-      margin: 0 8px;
+      margin: 8px;
     }
-  </style>
+
+    .btn.secondary {
+      background: transparent;
+      color: #f4d35e;
+      border: 1px solid #d4af37;
+    }
+  
+.mission-header{
+    text-align:center;
+    margin-bottom:30px;
+}
+
+.mission-label{
+    color:#f4d35e;
+    letter-spacing:3px;
+    font-size:14px;
+    margin-bottom:10px;
+}
+
+.mission-title{
+    font-size:42px;
+    margin-bottom:12px;
+}
+
+.mission-subtitle{
+    max-width:700px;
+    margin:auto;
+    line-height:1.6;
+    opacity:0.9;
+}
+
+
+.civilization-panel{
+    margin:30px auto;
+    max-width:800px;
+}
+
+.meter{
+    margin-bottom:18px;
+}
+
+.meter span{
+    display:block;
+    margin-bottom:6px;
+}
+
+.meter-bar{
+    width:100%;
+    height:18px;
+    background:#222;
+    border-radius:10px;
+    overflow:hidden;
+}
+
+.meter-fill{
+    height:100%;
+}
+
+.food-fill{
+    width:70%;
+    background:#4caf50;
+}
+
+.defense-fill{
+    width:45%;
+    background:#d9534f;
+}
+
+.knowledge-fill{
+    width:30%;
+    background:#5bc0de;
+}
+
+
+.advisor-alert{
+    border:2px solid #f4d35e;
+    padding:20px;
+    border-radius:14px;
+    margin:30px 0;
+    background:rgba(0,0,0,0.4);
+}
+
+.advisor-alert h2{
+    margin-top:0;
+    color:#f4d35e;
+}
+
+
+.consequence-box{
+    margin-top:30px;
+    padding:20px;
+    border-radius:14px;
+    background:#1c1c1c;
+    border:2px solid #4caf50;
+}
+
+.civilization-update{
+    margin-top:25px;
+    padding:20px;
+    border-radius:14px;
+    border:2px solid #5bc0de;
+    background:rgba(0,0,0,0.35);
+}
+
+.hidden{
+    display:none;
+}
+
+
+.mission-complete-panel{
+    margin:35px auto;
+    max-width:900px;
+    padding:28px;
+    border-radius:18px;
+    border:2px solid #d4af37;
+    background:
+      radial-gradient(circle at top, rgba(244,211,94,0.18), transparent 45%),
+      rgba(0,0,0,0.55);
+    box-shadow:0 0 28px rgba(244,211,94,0.25);
+    text-align:center;
+}
+
+.mission-complete-label{
+    color:#f4d35e;
+    letter-spacing:4px;
+    font-size:13px;
+    margin-bottom:10px;
+}
+
+.mission-complete-title{
+    font-size:34px;
+    margin:0 0 22px;
+    color:#f0df9a;
+}
+
+.unlock-section{
+    display:grid;
+    grid-template-columns:repeat(auto-fit, minmax(190px, 1fr));
+    gap:16px;
+    margin:24px 0;
+}
+
+.unlock-card{
+    padding:18px;
+    border-radius:14px;
+    background:rgba(255,255,255,0.08);
+    border:1px solid rgba(244,211,94,0.35);
+}
+
+.unlock-icon{
+    font-size:34px;
+    margin-bottom:10px;
+}
+
+.unlock-title{
+    font-weight:bold;
+}
+
+.next-mission-preview{
+    margin-top:26px;
+    padding:20px;
+    border-radius:14px;
+    background:rgba(91,192,222,0.12);
+    border:1px solid rgba(91,192,222,0.45);
+}
+
+.next-mission-label{
+    color:#5bc0de;
+    letter-spacing:3px;
+    font-size:12px;
+    margin-bottom:8px;
+}
+
+.next-mission-title{
+    font-size:24px;
+    font-weight:bold;
+    margin-bottom:10px;
+}
+
+
+.survival-priority-challenge{
+    margin:35px auto;
+    padding:28px;
+    border-radius:18px;
+    border:2px solid rgba(91,192,222,0.45);
+    background:
+      radial-gradient(circle at top, rgba(91,192,222,0.12), transparent 40%),
+      rgba(0,0,0,0.45);
+}
+
+.challenge-label{
+    color:#5bc0de;
+    letter-spacing:4px;
+    font-size:12px;
+    margin-bottom:12px;
+}
+
+.priority-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit, minmax(150px, 1fr));
+    gap:14px;
+    margin-top:24px;
+}
+
+.priority-card{
+    padding:18px;
+    border-radius:14px;
+    border:1px solid rgba(255,255,255,0.18);
+    background:rgba(255,255,255,0.06);
+    color:white;
+    cursor:pointer;
+    transition:all 0.2s ease;
+    font-size:16px;
+}
+
+.priority-card:hover{
+    transform:translateY(-2px);
+    border-color:#5bc0de;
+}
+
+.priority-card.selected{
+    border:2px solid #5bc0de;
+    background:rgba(91,192,222,0.22);
+    box-shadow:0 0 18px rgba(91,192,222,0.22);
+}
+
+.priority-status{
+    margin-top:18px;
+    opacity:0.9;
+}
+
+.priority-bonus{
+    margin-top:18px;
+    padding:14px;
+    border-radius:12px;
+    background:rgba(76,175,80,0.18);
+    border:1px solid rgba(76,175,80,0.4);
+    color:#b8f5c0;
+    font-weight:bold;
+}
+
+
+.interactive-region-board{
+    display:grid;
+    grid-template-columns:repeat(auto-fit, minmax(190px, 1fr));
+    gap:18px;
+    margin:32px auto;
+}
+
+.region-card{
+    padding:20px;
+    border-radius:16px;
+    background:rgba(255,255,255,0.07);
+    border:1px solid rgba(255,255,255,0.16);
+    cursor:pointer;
+    transition:all 0.22s ease;
+    text-align:center;
+}
+
+.region-card:hover{
+    transform:translateY(-4px) scale(1.02);
+    border-color:#f4d35e;
+    box-shadow:0 0 22px rgba(244,211,94,0.22);
+}
+
+.region-card.selected{
+    border:2px solid #f4d35e;
+    background:rgba(244,211,94,0.16);
+    box-shadow:0 0 26px rgba(244,211,94,0.3);
+}
+
+.region-icon{
+    font-size:38px;
+    margin-bottom:10px;
+}
+
+.region-name{
+    font-size:18px;
+    font-weight:bold;
+    color:#f0df9a;
+    margin-bottom:10px;
+}
+
+.region-bonus{
+    color:#b8f5c0;
+    margin-bottom:6px;
+}
+
+.region-risk{
+    color:#ffd27f;
+    font-size:14px;
+}
+
+.region-selection-feedback{
+    margin:18px auto 28px;
+    padding:14px;
+    border-radius:12px;
+    border:1px solid rgba(244,211,94,0.45);
+    background:rgba(244,211,94,0.12);
+    color:#f0df9a;
+    font-weight:bold;
+    text-align:center;
+}
+
+
+.toggle-reference-board{
+    margin:24px auto;
+    padding:14px 22px;
+    border-radius:12px;
+    border:1px solid rgba(244,211,94,0.5);
+    background:rgba(244,211,94,0.12);
+    color:#f0df9a;
+    cursor:pointer;
+    font-weight:bold;
+}
+
+.reference-board-wrapper{
+    margin-top:20px;
+}
+
+
+.strategic-terrain-map{
+    margin:34px auto;
+    max-width:900px;
+    padding:26px;
+    border-radius:20px;
+    border:2px solid rgba(244,211,94,0.35);
+    background:
+      linear-gradient(135deg, rgba(27,65,43,0.55), rgba(20,35,68,0.55)),
+      rgba(0,0,0,0.45);
+    box-shadow:0 0 28px rgba(0,0,0,0.35);
+    text-align:center;
+}
+
+.map-title{
+    font-size:26px;
+    color:#f0df9a;
+    font-weight:bold;
+    margin-bottom:6px;
+}
+
+.map-subtitle{
+    opacity:0.85;
+    margin-bottom:22px;
+}
+
+.terrain-map-grid{
+    display:grid;
+    grid-template-columns:repeat(3, 1fr);
+    gap:14px;
+}
+
+.terrain-zone{
+    min-height:90px;
+    border-radius:16px;
+    border:1px solid rgba(255,255,255,0.18);
+    color:white;
+    font-size:17px;
+    cursor:pointer;
+    transition:all 0.2s ease;
+    background:rgba(255,255,255,0.08);
+}
+
+.terrain-zone:hover{
+    transform:scale(1.03);
+    border-color:#f4d35e;
+    box-shadow:0 0 20px rgba(244,211,94,0.25);
+}
+
+.terrain-zone.selected{
+    border:2px solid #f4d35e;
+    box-shadow:0 0 28px rgba(244,211,94,0.4);
+}
+
+.river-zone{ background:rgba(45,127,184,0.35); }
+.forest-zone{ background:rgba(34,116,61,0.35); }
+.highland-zone{ background:rgba(111,98,82,0.45); }
+.coastal-zone{ background:rgba(51,153,153,0.35); }
+.plain-zone{ background:rgba(151,132,45,0.35); }
+.crossroads-zone{ background:rgba(142,104,177,0.35); }
+
+.settlement-marker{
+    margin:22px auto 0;
+    padding:14px;
+    max-width:260px;
+    border-radius:14px;
+    border:1px solid rgba(244,211,94,0.55);
+    background:rgba(244,211,94,0.16);
+    color:#f0df9a;
+    font-weight:bold;
+}
+
+.terrain-map-feedback{
+    margin:18px auto 0;
+    color:#b8f5c0;
+    font-weight:bold;
+}
+
+
+.mission-command-panel{
+    margin:30px auto;
+    max-width:900px;
+    border-radius:18px;
+    border:2px solid rgba(91,192,222,0.35);
+    background:rgba(0,0,0,0.45);
+    overflow:hidden;
+    box-shadow:0 0 26px rgba(0,0,0,0.35);
+}
+
+.command-tabs{
+    display:flex;
+    flex-wrap:wrap;
+    background:rgba(255,255,255,0.06);
+}
+
+.command-tab{
+    flex:1;
+    min-width:120px;
+    padding:14px;
+    border:0;
+    background:transparent;
+    color:white;
+    cursor:pointer;
+    font-weight:bold;
+}
+
+.command-tab.active{
+    background:rgba(91,192,222,0.22);
+    color:#f0df9a;
+    border-bottom:2px solid #5bc0de;
+}
+
+.command-panel-body{
+    padding:24px;
+    text-align:left;
+}
+
+.command-panel h2{
+    margin-top:0;
+    color:#f0df9a;
+}
+
+
+@keyframes softPulse{
+    0%{ box-shadow:0 0 0 rgba(244,211,94,0.0); }
+    50%{ box-shadow:0 0 26px rgba(244,211,94,0.35); }
+    100%{ box-shadow:0 0 0 rgba(244,211,94,0.0); }
+}
+
+@keyframes markerDrop{
+    0%{ transform:translateY(-18px) scale(0.92); opacity:0; }
+    70%{ transform:translateY(4px) scale(1.04); opacity:1; }
+    100%{ transform:translateY(0) scale(1); opacity:1; }
+}
+
+@keyframes revealRise{
+    0%{ transform:translateY(18px); opacity:0; }
+    100%{ transform:translateY(0); opacity:1; }
+}
+
+@keyframes alertPulse{
+    0%{ border-color:rgba(244,211,94,0.35); }
+    50%{ border-color:rgba(244,211,94,0.95); }
+    100%{ border-color:rgba(244,211,94,0.35); }
+}
+
+@keyframes unlockGlow{
+    0%{ transform:scale(0.96); opacity:0; }
+    70%{ transform:scale(1.03); opacity:1; }
+    100%{ transform:scale(1); opacity:1; }
+}
+
+.meter-fill{
+    transition:width 0.7s ease;
+}
+
+.terrain-zone.selected{
+    animation:softPulse 1.5s ease-in-out infinite;
+}
+
+.settlement-marker{
+    animation:markerDrop 0.55s ease-out;
+}
+
+.mission-complete-panel{
+    animation:revealRise 0.65s ease-out;
+}
+
+.mission-complete-panel:not(.hidden) .unlock-card{
+    animation:unlockGlow 0.5s ease-out both;
+}
+
+.mission-complete-panel:not(.hidden) .unlock-card:nth-child(1){
+    animation-delay:0.1s;
+}
+
+.mission-complete-panel:not(.hidden) .unlock-card:nth-child(2){
+    animation-delay:0.25s;
+}
+
+.mission-complete-panel:not(.hidden) .unlock-card:nth-child(3){
+    animation-delay:0.4s;
+}
+
+.advisor-alert{
+    animation:alertPulse 2.2s ease-in-out infinite;
+}
+
+.consequence-box:not(.hidden),
+.civilization-update:not(.hidden),
+.priority-bonus:not(.hidden),
+.region-selection-feedback:not(.hidden),
+.terrain-map-feedback:not(.hidden){
+    animation:revealRise 0.45s ease-out;
+}
+
+
+.civilization-growth-panel{
+    margin:30px auto;
+    max-width:900px;
+    padding:26px;
+    border-radius:20px;
+    border:2px solid rgba(76,175,80,0.35);
+    background:
+      radial-gradient(circle at top, rgba(76,175,80,0.16), transparent 45%),
+      rgba(0,0,0,0.45);
+    text-align:center;
+    box-shadow:0 0 26px rgba(0,0,0,0.35);
+}
+
+.growth-label{
+    color:#b8f5c0;
+    letter-spacing:4px;
+    font-size:12px;
+    margin-bottom:12px;
+}
+
+.growth-stage-icon{
+    font-size:52px;
+    margin-bottom:10px;
+}
+
+.growth-stage-title{
+    font-size:26px;
+    font-weight:bold;
+    color:#f0df9a;
+    margin-bottom:8px;
+}
+
+.growth-stage-description{
+    opacity:0.88;
+    margin-bottom:20px;
+}
+
+.growth-track{
+    display:grid;
+    grid-template-columns:repeat(5, 1fr);
+    gap:10px;
+}
+
+.growth-step{
+    padding:10px;
+    border-radius:12px;
+    background:rgba(255,255,255,0.07);
+    border:1px solid rgba(255,255,255,0.14);
+    font-size:13px;
+}
+
+.growth-step.active{
+    background:rgba(76,175,80,0.22);
+    border-color:#4caf50;
+    color:#b8f5c0;
+    font-weight:bold;
+}
+
+
+.region-consequence-preview{
+    margin:22px auto;
+    padding:20px;
+    max-width:640px;
+    border-radius:16px;
+    border:1px solid rgba(244,211,94,0.5);
+    background:rgba(0,0,0,0.42);
+    text-align:left;
+    animation:revealRise 0.45s ease-out;
+}
+
+.preview-label{
+    color:#f4d35e;
+    letter-spacing:3px;
+    font-size:12px;
+    margin-bottom:8px;
+}
+
+.region-consequence-preview h3{
+    margin:0 0 12px;
+    color:#f0df9a;
+}
+
+.preview-bonus{
+    color:#b8f5c0;
+    margin-bottom:8px;
+}
+
+.preview-risk{
+    color:#ffd27f;
+    margin-bottom:8px;
+}
+
+.preview-impact{
+    color:#5bc0de;
+    font-weight:bold;
+}
+
+
+.zone-settlement-slot{
+    margin-top:10px;
+    min-height:26px;
+    font-size:24px;
+}
+
+.zone-settlement-slot.active{
+    animation:markerDrop 0.55s ease-out;
+}
+
+
+.zone-infrastructure-slot{
+    margin-top:8px;
+    min-height:24px;
+    font-size:20px;
+    opacity:0.95;
+}
+
+.zone-infrastructure-slot.active{
+    animation:revealRise 0.5s ease-out;
+}
+
+
+.living-gameboard{
+    display:grid;
+    grid-template-columns:260px 1fr 260px;
+    gap:18px;
+    max-width:1200px;
+    margin:30px auto;
+    padding:18px;
+    border-radius:24px;
+    border:2px solid rgba(244,211,94,0.35);
+    background:
+      radial-gradient(circle at center, rgba(91,192,222,0.12), transparent 45%),
+      rgba(0,0,0,0.48);
+    box-shadow:0 0 34px rgba(0,0,0,0.45);
+}
+
+.advisor-panel,
+.civilization-panel-right{
+    padding:18px;
+    border-radius:18px;
+    background:rgba(255,255,255,0.07);
+    border:1px solid rgba(255,255,255,0.14);
+}
+
+.panel-title{
+    color:#f0df9a;
+    font-weight:bold;
+    letter-spacing:2px;
+    margin-bottom:12px;
+}
+
+.advisor-message{
+    line-height:1.5;
+    opacity:0.9;
+    margin-bottom:18px;
+}
+
+.inquiry-box{
+    padding:14px;
+    border-radius:14px;
+    background:rgba(91,192,222,0.13);
+    border:1px solid rgba(91,192,222,0.45);
+}
+
+.inquiry-label{
+    color:#5bc0de;
+    font-size:11px;
+    letter-spacing:2px;
+    margin-bottom:8px;
+}
+
+.world-board{
+    min-height:360px;
+    border-radius:22px;
+    border:2px solid rgba(76,175,80,0.35);
+    background:
+      linear-gradient(135deg, rgba(34,116,61,0.28), rgba(45,127,184,0.24)),
+      rgba(0,0,0,0.35);
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    text-align:center;
+    position:relative;
+    overflow:hidden;
+}
+
+.world-board::before{
+    content:"";
+    position:absolute;
+    inset:-40%;
+    background:
+      radial-gradient(circle, rgba(244,211,94,0.08), transparent 40%);
+    animation:worldDrift 9s linear infinite;
+}
+
+@keyframes worldDrift{
+    0%{ transform:translateX(-5%) translateY(-3%) rotate(0deg); }
+    50%{ transform:translateX(5%) translateY(3%) rotate(8deg); }
+    100%{ transform:translateX(-5%) translateY(-3%) rotate(0deg); }
+}
+
+.world-board-header,
+.world-board-subtitle{
+    position:relative;
+    z-index:1;
+}
+
+.world-board-header{
+    color:#f0df9a;
+    font-size:30px;
+    font-weight:bold;
+    letter-spacing:2px;
+}
+
+.world-board-subtitle{
+    margin-top:10px;
+    opacity:0.88;
+}
+
+.status-item{
+    padding:10px;
+    margin-bottom:10px;
+    border-radius:12px;
+    background:rgba(0,0,0,0.25);
+}
+
+@media (max-width:900px){
+    .living-gameboard{
+        grid-template-columns:1fr;
+    }
+}
+
+
+.board-terrain-layer{
+    position:relative;
+    z-index:2;
+    display:grid;
+    grid-template-columns:repeat(3, minmax(120px, 1fr));
+    gap:12px;
+    width:92%;
+    margin-top:24px;
+}
+
+.board-terrain-tile{
+    min-height:92px;
+    border-radius:18px;
+    border:1px solid rgba(255,255,255,0.18);
+    color:white;
+    font-size:26px;
+    cursor:pointer;
+    transition:all 0.2s ease;
+    background:rgba(255,255,255,0.08);
+}
+
+.board-terrain-tile span{
+    display:block;
+    font-size:13px;
+    margin-top:6px;
+}
+
+.board-terrain-tile:hover{
+    transform:translateY(-3px) scale(1.02);
+    border-color:#f4d35e;
+    box-shadow:0 0 22px rgba(244,211,94,0.25);
+}
+
+.board-terrain-tile.selected{
+    border:2px solid #f4d35e;
+    box-shadow:0 0 26px rgba(244,211,94,0.35);
+    animation:softPulse 1.5s ease-in-out infinite;
+}
+
+.river-tile{ background:rgba(45,127,184,0.35); }
+.forest-tile{ background:rgba(34,116,61,0.35); }
+.highland-tile{ background:rgba(111,98,82,0.45); }
+.coastal-tile{ background:rgba(51,153,153,0.35); }
+.plain-tile{ background:rgba(151,132,45,0.35); }
+.crossroads-tile{ background:rgba(142,104,177,0.35); }
+
+.board-settlement-slot{
+    min-height:22px;
+    font-size:22px;
+    margin-top:6px;
+}
+
+.board-infrastructure-slot{
+    min-height:20px;
+    font-size:18px;
+    margin-top:4px;
+}
+
+.board-world-feedback{
+    position:relative;
+    z-index:2;
+    margin-top:18px;
+    padding:12px 16px;
+    border-radius:14px;
+    background:rgba(244,211,94,0.13);
+    border:1px solid rgba(244,211,94,0.45);
+    color:#f0df9a;
+    font-weight:bold;
+}
+
+
+.overlay-control-bar{
+    max-width:1200px;
+    margin:20px auto;
+    display:flex;
+    gap:12px;
+    flex-wrap:wrap;
+    justify-content:center;
+}
+
+.overlay-toggle-btn{
+    padding:12px 18px;
+    border-radius:12px;
+    border:1px solid rgba(244,211,94,0.45);
+    background:rgba(244,211,94,0.12);
+    color:#f0df9a;
+    font-weight:bold;
+    cursor:pointer;
+}
+
+.overlay-toggle-btn:hover{
+    background:rgba(244,211,94,0.22);
+}
+
+.board-overlay{
+    max-width:900px;
+    margin:14px auto;
+    padding:20px;
+    border-radius:16px;
+    border:1px solid rgba(91,192,222,0.45);
+    background:rgba(0,0,0,0.58);
+    animation:revealRise 0.35s ease-out;
+}
+
+.overlay-title{
+    color:#f0df9a;
+    font-weight:bold;
+    margin-bottom:10px;
+    letter-spacing:1px;
+}
+
+.overlay-content{
+    line-height:1.5;
+    opacity:0.92;
+}
+
+
+.compact-mission-panel{
+    max-width:1200px;
+    margin:20px auto;
+    padding:22px;
+    border-radius:20px;
+    border:2px solid rgba(244,211,94,0.35);
+    background:rgba(0,0,0,0.52);
+    box-shadow:0 0 24px rgba(0,0,0,0.32);
+}
+
+.compact-mission-label{
+    color:#f4d35e;
+    letter-spacing:4px;
+    font-size:12px;
+    margin-bottom:8px;
+}
+
+.compact-mission-panel h2{
+    margin:0 0 10px;
+    color:#f0df9a;
+}
+
+.compact-objectives{
+    display:grid;
+    grid-template-columns:repeat(auto-fit, minmax(160px, 1fr));
+    gap:12px;
+    margin-top:18px;
+}
+
+.compact-objectives div{
+    padding:12px;
+    border-radius:12px;
+    background:rgba(255,255,255,0.07);
+    border:1px solid rgba(255,255,255,0.12);
+}
+
+
+.dynamic-event-panel{
+    max-width:1200px;
+    margin:20px auto;
+    padding:22px;
+    border-radius:20px;
+    border:2px solid rgba(217,83,79,0.45);
+    background:
+      radial-gradient(circle at top, rgba(217,83,79,0.16), transparent 45%),
+      rgba(0,0,0,0.55);
+    box-shadow:0 0 24px rgba(217,83,79,0.22);
+    animation:revealRise 0.45s ease-out;
+}
+
+.event-label{
+    color:#ffb3ad;
+    letter-spacing:4px;
+    font-size:12px;
+    margin-bottom:8px;
+}
+
+.event-title{
+    color:#f0df9a;
+    font-size:24px;
+    font-weight:bold;
+    margin-bottom:8px;
+}
+
+.event-description{
+    opacity:0.92;
+    margin-bottom:18px;
+}
+
+.event-actions{
+    display:flex;
+    gap:12px;
+    flex-wrap:wrap;
+}
+
+.event-btn{
+    padding:12px 16px;
+    border-radius:12px;
+    border:1px solid rgba(255,255,255,0.18);
+    background:rgba(255,255,255,0.08);
+    color:white;
+    font-weight:bold;
+    cursor:pointer;
+}
+
+.event-btn:hover{
+    border-color:#f4d35e;
+    background:rgba(244,211,94,0.14);
+}
+
+
+.world-time-panel{
+    max-width:1200px;
+    margin:20px auto;
+    padding:18px;
+    border-radius:18px;
+    border:2px solid rgba(91,192,222,0.35);
+    background:rgba(0,0,0,0.52);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    gap:18px;
+    flex-wrap:wrap;
+}
+
+.time-block{
+    min-width:150px;
+    padding:14px;
+    border-radius:14px;
+    background:rgba(255,255,255,0.07);
+    text-align:center;
+}
+
+.time-label{
+    color:#5bc0de;
+    font-size:11px;
+    letter-spacing:3px;
+    margin-bottom:6px;
+}
+
+.time-value{
+    color:#f0df9a;
+    font-size:22px;
+    font-weight:bold;
+}
+
+.advance-turn-btn{
+    padding:14px 20px;
+    border-radius:14px;
+    border:1px solid rgba(244,211,94,0.45);
+    background:rgba(244,211,94,0.14);
+    color:#f0df9a;
+    font-weight:bold;
+    cursor:pointer;
+}
+
+.advance-turn-btn:hover{
+    background:rgba(244,211,94,0.24);
+}
+
+
+.legacy-content-shell{
+    max-width:1200px;
+    margin:20px auto;
+}
+
+.toggle-legacy-btn{
+    width:100%;
+    padding:16px 20px;
+    border-radius:16px;
+    border:1px solid rgba(244,211,94,0.45);
+    background:rgba(244,211,94,0.12);
+    color:#f0df9a;
+    font-weight:bold;
+    cursor:pointer;
+}
+
+.toggle-legacy-btn:hover{
+    background:rgba(244,211,94,0.22);
+}
+
+.legacy-content-wrapper{
+    margin-top:20px;
+    animation:revealRise 0.35s ease-out;
+}
+
+
+.world-atmosphere-layer{
+    position:absolute;
+    inset:0;
+    pointer-events:none;
+    z-index:1;
+    opacity:0;
+    transition:opacity 0.6s ease, background 0.6s ease;
+}
+
+.world-atmosphere-layer.rain{
+    opacity:0.45;
+    background:
+      repeating-linear-gradient(
+        115deg,
+        rgba(91,192,222,0.0) 0px,
+        rgba(91,192,222,0.0) 8px,
+        rgba(91,192,222,0.25) 10px
+      );
+}
+
+.world-atmosphere-layer.dry{
+    opacity:0.35;
+    background:rgba(204,153,51,0.22);
+}
+
+.world-atmosphere-layer.storm{
+    opacity:0.5;
+    background:
+      radial-gradient(circle at top, rgba(217,83,79,0.24), transparent 45%),
+      rgba(0,0,0,0.25);
+}
+
+.world-atmosphere-layer.harvest{
+    opacity:0.32;
+    background:rgba(244,211,94,0.18);
+}
+
+.world-atmosphere-layer.cold{
+    opacity:0.38;
+    background:rgba(180,220,255,0.18);
+}
+
+
+
+/* STEM_NATION_FIRST_CINEMATIC_ATMOSPHERE_STYLES_V1 */
+.world-atmosphere-layer {
+  opacity: 1;
+  overflow: hidden;
+}
+
+.atmosphere-zone {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.atmosphere-signal {
+  position: absolute;
+  font-size: 0;
+  opacity: 0.42;
+}
+
+/* River: moving water, mist, birds, flood danger */
+.water-signal {
+  left: 8%;
+  top: 26%;
+  width: 34%;
+  height: 12px;
+  border-radius: 999px;
+  background: linear-gradient(90deg, transparent, rgba(95,190,255,0.55), transparent);
+  animation: riverFlow 4s linear infinite;
+}
+
+.mist-signal {
+  left: 5%;
+  top: 18%;
+  width: 40%;
+  height: 42px;
+  border-radius: 999px;
+  background: radial-gradient(circle, rgba(255,255,255,0.28), transparent 65%);
+  animation: mistDrift 7s ease-in-out infinite;
+}
+
+.bird-signal::after {
+  content: "⌁";
+  position: absolute;
+  left: 25%;
+  top: 8%;
+  font-size: 22px;
+  color: rgba(255,255,255,0.5);
+  animation: birdGlide 9s linear infinite;
+}
+
+.flood-signal {
+  left: 9%;
+  top: 38%;
+  width: 28%;
+  height: 4px;
+  background: rgba(80,170,255,0.35);
+  animation: floodPulse 3s ease-in-out infinite;
+}
+
+/* Forest: fog, tree sway, wildlife, reduced visibility */
+.fog-signal {
+  left: 38%;
+  top: 20%;
+  width: 30%;
+  height: 56px;
+  border-radius: 999px;
+  background: radial-gradient(circle, rgba(220,255,230,0.18), transparent 70%);
+  animation: fogDrift 8s ease-in-out infinite;
+}
+
+.tree-signal::after {
+  content: "🌲";
+  position: absolute;
+  left: 46%;
+  top: 26%;
+  font-size: 24px;
+  animation: treeSway 3.5s ease-in-out infinite;
+}
+
+.wildlife-signal::after {
+  content: "• •";
+  position: absolute;
+  left: 54%;
+  top: 40%;
+  font-size: 18px;
+  color: rgba(255,255,255,0.45);
+  animation: wildlifeMove 6s ease-in-out infinite;
+}
+
+.visibility-signal {
+  left: 40%;
+  top: 16%;
+  width: 24%;
+  height: 70px;
+  background: rgba(0,0,0,0.16);
+  border-radius: 18px;
+  animation: visibilityVeil 5s ease-in-out infinite;
+}
+
+/* Coast: tide, seagulls, storm pressure, future ships */
+.tide-signal {
+  right: 8%;
+  top: 30%;
+  width: 34%;
+  height: 10px;
+  border-radius: 999px;
+  background: linear-gradient(90deg, transparent, rgba(120,235,235,0.5), transparent);
+  animation: tideMove 5s ease-in-out infinite;
+}
+
+.seagull-signal::after {
+  content: "⌁ ⌁";
+  position: absolute;
+  right: 18%;
+  top: 10%;
+  font-size: 20px;
+  color: rgba(255,255,255,0.55);
+  animation: seagullDrift 8s linear infinite;
+}
+
+.storm-signal {
+  right: 5%;
+  top: 4%;
+  width: 36%;
+  height: 65px;
+  border-radius: 999px;
+  background: radial-gradient(circle, rgba(80,90,120,0.28), transparent 70%);
+  animation: stormGather 5.5s ease-in-out infinite;
+}
+
+.ship-signal::after {
+  content: "◁";
+  position: absolute;
+  right: 16%;
+  top: 44%;
+  font-size: 22px;
+  color: rgba(255,231,160,0.55);
+  animation: shipDrift 11s linear infinite;
+}
+
+/* Highland: snow, wind, difficult movement, elevated defense */
+.snow-signal {
+  left: 18%;
+  bottom: 20%;
+  width: 36%;
+  height: 55px;
+  background: radial-gradient(circle, rgba(220,240,255,0.25), transparent 70%);
+  animation: snowWind 6s ease-in-out infinite;
+}
+
+.movement-signal::after {
+  content: "↗";
+  position: absolute;
+  left: 30%;
+  bottom: 28%;
+  font-size: 24px;
+  color: rgba(255,255,255,0.42);
+  animation: hardClimb 4.5s ease-in-out infinite;
+}
+
+.defense-signal::after {
+  content: "▲";
+  position: absolute;
+  left: 38%;
+  bottom: 34%;
+  font-size: 22px;
+  color: rgba(255,215,106,0.55);
+  animation: defenseGlow 3s ease-in-out infinite;
+}
+
+/* Plain: grass, migration, exposure */
+.grass-signal {
+  right: 34%;
+  bottom: 20%;
+  width: 28%;
+  height: 28px;
+  background: linear-gradient(90deg, rgba(220,190,80,0.12), rgba(220,190,80,0.42), rgba(220,190,80,0.12));
+  animation: grassSway 3.5s ease-in-out infinite;
+}
+
+.migration-signal::after {
+  content: "• • •";
+  position: absolute;
+  right: 38%;
+  bottom: 30%;
+  font-size: 18px;
+  color: rgba(255,245,180,0.52);
+  animation: migrationMove 8s linear infinite;
+}
+
+.exposure-signal {
+  right: 30%;
+  bottom: 16%;
+  width: 34%;
+  height: 48px;
+  border-radius: 999px;
+  background: radial-gradient(circle, rgba(255,210,90,0.14), transparent 70%);
+  animation: exposurePulse 4s ease-in-out infinite;
+}
+
+/* Crossroads: road, caravans, trade */
+.road-signal {
+  left: 36%;
+  top: 48%;
+  width: 35%;
+  height: 4px;
+  background: rgba(255,215,106,0.38);
+  transform: rotate(-8deg);
+  animation: roadGlow 4s ease-in-out infinite;
+}
+
+.caravan-signal::after {
+  content: "• ◦ •";
+  position: absolute;
+  left: 42%;
+  top: 50%;
+  font-size: 18px;
+  color: rgba(255,215,106,0.58);
+  animation: caravanMove 9s linear infinite;
+}
+
+.trade-signal::after {
+  content: "↔";
+  position: absolute;
+  left: 58%;
+  top: 46%;
+  font-size: 22px;
+  color: rgba(255,215,106,0.6);
+  animation: tradePulse 3s ease-in-out infinite;
+}
+
+@keyframes riverFlow {
+  from { transform: translateX(-14px); }
+  to { transform: translateX(34px); }
+}
+
+@keyframes mistDrift {
+  0%,100% { transform: translateX(0); opacity: .25; }
+  50% { transform: translateX(28px); opacity: .48; }
+}
+
+@keyframes birdGlide {
+  from { transform: translateX(-40px); }
+  to { transform: translateX(260px); }
+}
+
+@keyframes floodPulse {
+  0%,100% { opacity: .15; transform: scaleX(.8); }
+  50% { opacity: .55; transform: scaleX(1.15); }
+}
+
+@keyframes fogDrift {
+  0%,100% { transform: translateX(0); opacity: .18; }
+  50% { transform: translateX(-30px); opacity: .42; }
+}
+
+@keyframes treeSway {
+  0%,100% { transform: rotate(-2deg); }
+  50% { transform: rotate(3deg); }
+}
+
+@keyframes wildlifeMove {
+  0%,100% { transform: translateX(0); opacity: .25; }
+  50% { transform: translateX(22px); opacity: .55; }
+}
+
+@keyframes visibilityVeil {
+  0%,100% { opacity: .1; }
+  50% { opacity: .28; }
+}
+
+@keyframes tideMove {
+  0%,100% { transform: translateX(-15px); }
+  50% { transform: translateX(18px); }
+}
+
+@keyframes seagullDrift {
+  from { transform: translateX(120px); }
+  to { transform: translateX(-220px); }
+}
+
+@keyframes stormGather {
+  0%,100% { opacity: .14; transform: scale(.95); }
+  50% { opacity: .42; transform: scale(1.08); }
+}
+
+@keyframes shipDrift {
+  from { transform: translateX(120px); }
+  to { transform: translateX(-160px); }
+}
+
+@keyframes snowWind {
+  0%,100% { transform: translateX(0); opacity: .18; }
+  50% { transform: translateX(25px); opacity: .38; }
+}
+
+@keyframes hardClimb {
+  0%,100% { transform: translateY(0); opacity: .28; }
+  50% { transform: translateY(-12px); opacity: .58; }
+}
+
+@keyframes defenseGlow {
+  0%,100% { opacity: .3; }
+  50% { opacity: .75; }
+}
+
+@keyframes grassSway {
+  0%,100% { transform: skewX(-6deg); }
+  50% { transform: skewX(6deg); }
+}
+
+@keyframes migrationMove {
+  from { transform: translateX(-50px); }
+  to { transform: translateX(140px); }
+}
+
+@keyframes exposurePulse {
+  0%,100% { opacity: .12; }
+  50% { opacity: .34; }
+}
+
+@keyframes roadGlow {
+  0%,100% { opacity: .22; }
+  50% { opacity: .62; }
+}
+
+@keyframes caravanMove {
+  from { transform: translateX(-80px); }
+  to { transform: translateX(160px); }
+}
+
+@keyframes tradePulse {
+  0%,100% { opacity: .25; transform: scale(.9); }
+  50% { opacity: .75; transform: scale(1.15); }
+}
+
+
+
+/* STEM_NATION_THEATER_MODE_ENTRY_OVERLAY_V1 */
+.theater-entry-overlay{
+    position:fixed;
+    inset:0;
+    z-index:999999;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    flex-direction:column;
+    text-align:center;
+    background:
+      radial-gradient(circle at center, rgba(244,211,94,0.08), transparent 38%),
+      linear-gradient(to bottom, rgba(0,0,0,0.82), rgba(0,0,0,0.94));
+    backdrop-filter:blur(3px);
+    transition:opacity 1.2s ease, visibility 1.2s ease;
+}
+
+.theater-entry-overlay.hide{
+    opacity:0;
+    visibility:hidden;
+    pointer-events:none;
+}
+
+.theater-entry-content{
+    max-width:760px;
+    padding:40px;
+    animation:theaterRise 1.2s ease;
+}
+
+.theater-entry-label{
+    color:#f4d35e;
+    letter-spacing:6px;
+    font-size:12px;
+    margin-bottom:18px;
+    text-transform:uppercase;
+}
+
+.theater-entry-title{
+    font-size:clamp(32px, 5vw, 64px);
+    line-height:1.1;
+    font-weight:800;
+    color:white;
+    margin-bottom:24px;
+    text-shadow:0 0 24px rgba(244,211,94,0.18);
+}
+
+.theater-entry-text{
+    font-size:18px;
+    line-height:1.8;
+    color:#f3f3f3;
+    max-width:680px;
+    margin:0 auto 34px;
+    opacity:0.92;
+}
+
+.theater-entry-button{
+    padding:16px 34px;
+    border-radius:999px;
+    border:1px solid rgba(244,211,94,0.45);
+    background:rgba(244,211,94,0.12);
+    color:#f4d35e;
+    font-size:16px;
+    font-weight:bold;
+    cursor:pointer;
+    transition:all 0.25s ease;
+}
+
+.theater-entry-button:hover{
+    transform:translateY(-2px) scale(1.03);
+    background:rgba(244,211,94,0.2);
+    box-shadow:0 0 24px rgba(244,211,94,0.25);
+}
+
+@keyframes theaterRise{
+    from{
+        opacity:0;
+        transform:translateY(30px);
+    }
+    to{
+        opacity:1;
+        transform:translateY(0);
+    }
+}
+
+
+
+/* STEM_NATION_CINEMATIC_REGION_INTEL_CARDS_V1 */
+.cinematic-region-intel-card {
+  position: relative;
+  z-index: 4;
+  width: 92%;
+  margin: 16px auto 0;
+  padding: 16px 18px;
+  border-radius: 18px;
+  border: 1px solid rgba(244,211,94,0.38);
+  background:
+    radial-gradient(circle at top left, rgba(244,211,94,0.12), transparent 45%),
+    rgba(5,10,18,0.74);
+  box-shadow: 0 0 20px rgba(0,0,0,0.32);
+  color: #f6edc8;
+  animation: revealRise 0.45s ease-out;
+}
+
+.region-intel-label {
+  color: #f4d35e;
+  font-size: 11px;
+  letter-spacing: 4px;
+  text-transform: uppercase;
+  margin-bottom: 6px;
+}
+
+.region-intel-name {
+  font-size: 20px;
+  font-weight: 800;
+  color: #ffffff;
+  margin-bottom: 8px;
+}
+
+.region-intel-description {
+  line-height: 1.45;
+  opacity: 0.95;
+  margin-bottom: 12px;
+}
+
+.region-intel-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+}
+
+.region-intel-chip {
+  padding: 10px;
+  border-radius: 12px;
+  background: rgba(255,255,255,0.07);
+  border: 1px solid rgba(255,255,255,0.12);
+  font-size: 12px;
+  line-height: 1.35;
+}
+
+.region-intel-chip strong {
+  display: block;
+  color: #ffd76a;
+  margin-bottom: 4px;
+}
+
+@media (max-width: 900px) {
+  .region-intel-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+
+
+/* STEM_NATION_REGION_FOCUS_HIGHLIGHT_SYSTEM_V1 */
+.board-terrain-layer.region-focus-active .board-terrain-tile,
+.terrain-map-grid.region-focus-active .terrain-zone {
+  opacity: 0.42;
+  filter: saturate(0.75) brightness(0.82);
+  transition: opacity 0.28s ease, filter 0.28s ease, transform 0.28s ease, box-shadow 0.28s ease;
+}
+
+.board-terrain-layer.region-focus-active .board-terrain-tile.region-focused,
+.terrain-map-grid.region-focus-active .terrain-zone.region-focused {
+  opacity: 1;
+  filter: saturate(1.35) brightness(1.15);
+  transform: translateY(-4px) scale(1.045);
+  border-color: rgba(255,215,106,0.95);
+  box-shadow:
+    0 0 0 2px rgba(255,215,106,0.28),
+    0 0 26px rgba(255,215,106,0.42),
+    inset 0 0 18px rgba(255,215,106,0.12);
+}
+
+.region-card.region-focused {
+  border-color: rgba(255,215,106,0.85);
+  box-shadow: 0 0 22px rgba(255,215,106,0.25);
+}
+
+.cinematic-focus-banner {
+  position: relative;
+  z-index: 4;
+  width: 92%;
+  margin: 10px auto 0;
+  padding: 10px 14px;
+  border-radius: 14px;
+  border: 1px solid rgba(91,192,222,0.38);
+  background: rgba(5,12,20,0.72);
+  color: #dff6ff;
+  font-size: 13px;
+  line-height: 1.4;
+  animation: revealRise 0.35s ease-out;
+}
+
+.cinematic-focus-banner strong {
+  color: #ffd76a;
+}
+
+
+
+/* STEM_NATION_REGION_FOCUS_SYNC_AND_ATMOSPHERE_TEXT_FIX_V1 */
+.atmosphere-signal {
+  color: transparent;
+  text-indent: -9999px;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+.atmosphere-signal::after {
+  text-indent: 0;
+}
+
+
+
+/* STEM_NATION_TEACHER_FOCUS_INTEL_AND_ATMOSPHERE_VISIBILITY_FIX_V2 */
+.atmosphere-signal {
+  font-size: 0 !important;
+  line-height: 0 !important;
+  color: transparent !important;
+  text-indent: -9999px !important;
+  overflow: hidden !important;
+  white-space: nowrap !important;
+}
+
+.atmosphere-signal::before,
+.atmosphere-signal::after {
+  text-indent: 0 !important;
+}
+
+
+
+/* STEM_NATION_MAP_REGION_COMPARISON_DISPLAY_V1 */
+.region-comparison-banner {
+  position: relative;
+  z-index: 4;
+  width: 92%;
+  margin: 10px auto 0;
+  padding: 12px 14px;
+  border-radius: 14px;
+  border: 1px solid rgba(255,215,106,0.42);
+  background:
+    radial-gradient(circle at top left, rgba(255,215,106,0.12), transparent 44%),
+    rgba(5,10,18,0.76);
+  color: #f7e7b0;
+  animation: revealRise 0.35s ease-out;
+}
+
+.region-comparison-banner strong {
+  color: #ffd76a;
+}
+
+
+
+/* STEM_NATION_STUDENT_COMPARISON_RESPONSE_PROMPT_V1 */
+.student-comparison-response-panel {
+  position: relative;
+  z-index: 4;
+  width: 92%;
+  margin: 12px auto 0;
+  padding: 14px;
+  border-radius: 16px;
+  border: 1px solid rgba(91,192,222,0.42);
+  background:
+    radial-gradient(circle at top left, rgba(91,192,222,0.12), transparent 44%),
+    rgba(5,10,18,0.78);
+  color: #f7e7b0;
+  animation: revealRise 0.35s ease-out;
+}
+
+.student-comparison-response-panel h3 {
+  margin: 0 0 8px;
+  color: #bdefff;
+}
+
+.student-comparison-response-panel label {
+  display: block;
+  margin-top: 10px;
+  font-size: 12px;
+  color: #ffd76a;
+  font-weight: 700;
+}
+
+.student-comparison-response-panel textarea {
+  width: 100%;
+  min-height: 58px;
+  margin-top: 4px;
+  border-radius: 10px;
+  border: 1px solid rgba(255,255,255,0.16);
+  background: rgba(0,0,0,0.32);
+  color: #f7e7b0;
+  padding: 9px;
+  resize: vertical;
+}
+
+.student-comparison-response-panel button {
+  margin-top: 12px;
+  border: 1px solid rgba(91,192,222,0.6);
+  border-radius: 999px;
+  padding: 9px 14px;
+  background: rgba(91,192,222,0.16);
+  color: #dff6ff;
+  cursor: pointer;
+  font-weight: 700;
+}
+
+#studentComparisonSaveStatus {
+  margin-top: 8px;
+  color: #b8f5c0;
+  font-size: 12px;
+}
+
+
+.status-label{
+    margin-bottom:6px;
+    font-weight:bold;
+}
+
+.status-bar{
+    height:12px;
+    border-radius:10px;
+    background:rgba(255,255,255,0.12);
+    overflow:hidden;
+}
+
+.status-fill{
+    height:100%;
+    width:0%;
+    border-radius:10px;
+    background:#f4d35e;
+    transition:width 0.7s ease;
+}
+
+
+.season-feedback-panel{
+    max-width:1200px;
+    margin:20px auto;
+    padding:18px;
+    border-radius:18px;
+    border:2px solid rgba(76,175,80,0.35);
+    background:
+      radial-gradient(circle at top, rgba(76,175,80,0.14), transparent 45%),
+      rgba(0,0,0,0.52);
+    animation:revealRise 0.45s ease-out;
+}
+
+.season-feedback-label{
+    color:#b8f5c0;
+    letter-spacing:4px;
+    font-size:12px;
+    margin-bottom:8px;
+}
+
+.season-feedback-text{
+    color:#f0df9a;
+    line-height:1.5;
+    font-weight:bold;
+}
+
+
+.action-response-panel{
+    max-width:1200px;
+    margin:20px auto;
+    padding:18px;
+    border-radius:18px;
+    border:2px solid rgba(91,192,222,0.35);
+    background:
+      radial-gradient(circle at top, rgba(91,192,222,0.14), transparent 45%),
+      rgba(0,0,0,0.52);
+    animation:revealRise 0.45s ease-out;
+}
+
+.action-response-label{
+    color:#5bc0de;
+    letter-spacing:4px;
+    font-size:12px;
+    margin-bottom:8px;
+}
+
+.action-response-content{
+    color:#f0df9a;
+    line-height:1.5;
+    font-weight:bold;
+}
+
+
+.archive-log-panel{
+    max-width:1200px;
+    margin:20px auto;
+    padding:18px;
+    border-radius:18px;
+    border:2px solid rgba(244,211,94,0.35);
+    background:
+      radial-gradient(circle at top, rgba(244,211,94,0.12), transparent 45%),
+      rgba(0,0,0,0.52);
+    animation:revealRise 0.45s ease-out;
+}
+
+.archive-log-label{
+    color:#f4d35e;
+    letter-spacing:4px;
+    font-size:12px;
+    margin-bottom:10px;
+}
+
+.archive-log-content{
+    display:grid;
+    gap:12px;
+}
+
+.archive-entry{
+    padding:14px;
+    border-radius:14px;
+    border:1px solid rgba(255,255,255,0.14);
+    background:rgba(255,255,255,0.07);
+}
+
+.archive-entry-title{
+    color:#f0df9a;
+    font-weight:bold;
+    margin-bottom:6px;
+}
+
+.archive-entry-summary{
+    opacity:0.9;
+    line-height:1.4;
+}
+
+.archive-entry-date{
+    margin-top:8px;
+    opacity:0.65;
+    font-size:12px;
+}
+
+
+.archive-type-badge{
+    display:inline-block;
+    margin-bottom:8px;
+    padding:5px 9px;
+    border-radius:999px;
+    background:rgba(91,192,222,0.16);
+    border:1px solid rgba(91,192,222,0.42);
+    color:#bdefff;
+    font-size:12px;
+    font-weight:bold;
+}
+
+
+.archive-filter-controls{
+    display:flex;
+    flex-wrap:wrap;
+    gap:10px;
+    margin:12px 0 16px;
+}
+
+.archive-filter-btn{
+    padding:9px 12px;
+    border-radius:999px;
+    border:1px solid rgba(255,255,255,0.16);
+    background:rgba(255,255,255,0.07);
+    color:white;
+    cursor:pointer;
+    font-size:13px;
+    font-weight:bold;
+}
+
+.archive-filter-btn.active,
+.archive-filter-btn:hover{
+    border-color:#f4d35e;
+    background:rgba(244,211,94,0.18);
+    color:#f0df9a;
+}
+
+
+.archive-summary-panel{
+    margin:12px 0 18px;
+    padding:16px;
+    border-radius:16px;
+    border:1px solid rgba(244,211,94,0.35);
+    background:rgba(244,211,94,0.08);
+}
+
+.archive-summary-label{
+    color:#f4d35e;
+    letter-spacing:3px;
+    font-size:12px;
+    margin-bottom:12px;
+    font-weight:bold;
+}
+
+.archive-summary-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit, minmax(120px, 1fr));
+    gap:10px;
+    margin-bottom:14px;
+}
+
+.archive-summary-card{
+    padding:12px;
+    border-radius:12px;
+    background:rgba(255,255,255,0.07);
+    border:1px solid rgba(255,255,255,0.12);
+    text-align:center;
+}
+
+.archive-summary-number{
+    color:#f0df9a;
+    font-size:24px;
+    font-weight:bold;
+}
+
+.archive-summary-name{
+    font-size:12px;
+    opacity:0.82;
+}
+
+.archive-reflection-prompt{
+    padding:12px;
+    border-radius:12px;
+    background:rgba(91,192,222,0.12);
+    border:1px solid rgba(91,192,222,0.35);
+    color:#bdefff;
+    font-weight:bold;
+}
+
+
+.student-input-panel{
+    max-width:1200px;
+    margin:20px auto;
+    padding:18px;
+    border-radius:18px;
+    border:2px solid rgba(91,192,222,0.35);
+    background:
+      radial-gradient(circle at top, rgba(91,192,222,0.14), transparent 45%),
+      rgba(0,0,0,0.52);
+    animation:revealRise 0.45s ease-out;
+}
+
+.student-input-label{
+    color:#5bc0de;
+    letter-spacing:4px;
+    font-size:12px;
+    margin-bottom:10px;
+    font-weight:bold;
+}
+
+.student-input-textarea{
+    width:100%;
+    min-height:90px;
+    resize:vertical;
+    border-radius:14px;
+    border:1px solid rgba(255,255,255,0.16);
+    background:rgba(0,0,0,0.32);
+    color:white;
+    padding:14px;
+    font-size:15px;
+    box-sizing:border-box;
+}
+
+.student-input-btn{
+    margin-top:12px;
+    padding:12px 16px;
+    border-radius:12px;
+    border:1px solid rgba(244,211,94,0.45);
+    background:rgba(244,211,94,0.14);
+    color:#f0df9a;
+    font-weight:bold;
+    cursor:pointer;
+}
+
+.student-input-btn:hover{
+    background:rgba(244,211,94,0.24);
+}
+
+
+.student-input-dock{
+    max-width:1200px;
+    margin:20px auto;
+}
+
+
+.reflection-open-btn{
+    margin-top:12px;
+    width:100%;
+    display:block;
+}
+
+
+.mission-results-shell{
+    max-width:1200px;
+    margin:20px auto;
+}
+
+.toggle-results-btn{
+    width:100%;
+    padding:16px 20px;
+    border-radius:16px;
+    border:1px solid rgba(76,175,80,0.45);
+    background:rgba(76,175,80,0.12);
+    color:#b8f5c0;
+    font-weight:bold;
+    cursor:pointer;
+}
+
+.toggle-results-btn:hover{
+    background:rgba(76,175,80,0.22);
+}
+
+.mission-results-wrapper{
+    margin-top:18px;
+    animation:revealRise 0.35s ease-out;
+}
+
+
+.student-timeline-toggle {
+  width: 100%;
+  border: none;
+  border-radius: 10px;
+  padding: 8px 10px;
+  background: rgba(218, 165, 32, 0.22);
+  color: #ffd76a;
+  font-weight: 700;
+  cursor: pointer;
+}
+.student-timeline-display.collapsed .student-timeline-body {
+  display: none;
+}
+
+
+.student-progress-toggle {
+  width: 100%;
+  border: none;
+  border-radius: 10px;
+  padding: 8px 10px;
+  background: rgba(218, 165, 32, 0.22);
+  color: #ffd76a;
+  font-weight: 700;
+  cursor: pointer;
+}
+#studentProgressHud.collapsed .student-progress-body {
+  display: none;
+}
+
+
+/* STEM_NATION_ATMOSPHERE_SIGNAL_TEXT_SUPPRESSION_V3 */
+.atmosphere-signal {
+  display: block !important;
+  color: transparent !important;
+  font-size: 0 !important;
+  line-height: 0 !important;
+  overflow: hidden !important;
+}
+
+.atmosphere-signal::before,
+.atmosphere-signal::after {
+  color: inherit;
+  font-size: initial;
+  line-height: normal;
+}
+
+
+/* CI-4L_B_WORLD_DECISION_ENTRY_POLISH */
+.academy-world-entry-shell {
+  max-width: 1220px;
+  margin: 0 auto 28px;
+  padding: 0;
+}
+
+.academy-world-entry {
+  border: 1px solid rgba(244, 211, 94, .32);
+  border-radius: 30px;
+  background:
+    radial-gradient(circle at 18% 16%, rgba(244,211,94,.16), transparent 28%),
+    radial-gradient(circle at 84% 18%, rgba(125,211,252,.13), transparent 32%),
+    linear-gradient(135deg, rgba(5, 12, 24, .94), rgba(8, 24, 38, .88));
+  box-shadow: 0 28px 84px rgba(0,0,0,.38);
+  padding: 22px;
+  display: grid;
+  grid-template-columns: 104px 1fr;
+  gap: 20px;
+  align-items: center;
+  overflow: hidden;
+  position: relative;
+}
+
+.academy-world-entry::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background:
+    linear-gradient(90deg, rgba(255,255,255,.022) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(255,255,255,.014) 1px, transparent 1px);
+  background-size: 76px 76px;
+  opacity: .24;
+}
+
+.academy-world-entry-avatar {
+  position: relative;
+  z-index: 1;
+  width: 104px;
+  height: 122px;
+  border-radius: 26px;
+  border: 1px solid rgba(244,211,94,.38);
+  background:
+    radial-gradient(circle at 50% 26%, rgba(248,240,213,.20), transparent 24%),
+    linear-gradient(145deg, rgba(125,211,252,.12), rgba(244,211,94,.08));
+  overflow: hidden;
+  display: grid;
+  place-items: center;
+  color: #f4d35e;
+  font-weight: 900;
+  text-transform: uppercase;
+  letter-spacing: .08em;
+  font-size: .68rem;
+  text-align: center;
+  box-shadow: 0 16px 38px rgba(0,0,0,.30);
+}
+
+.academy-world-entry-avatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.academy-world-entry-content {
+  position: relative;
+  z-index: 1;
+}
+
+.academy-world-entry-kicker {
+  color: #f4d35e;
+  text-transform: uppercase;
+  letter-spacing: .14em;
+  font-size: .80rem;
+  font-weight: 900;
+  margin-bottom: 10px;
+}
+
+.academy-world-entry h1 {
+  margin: 0;
+  color: #fff6d2;
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: clamp(2.25rem, 5vw, 4.8rem);
+  line-height: .95;
+  text-align: left;
+  text-shadow: 0 14px 38px rgba(0,0,0,.36);
+}
+
+.academy-world-entry-sub {
+  margin: 14px 0 0;
+  max-width: 960px;
+  color: rgba(248,241,221,.76);
+  line-height: 1.62;
+  font-size: 1.02rem;
+}
+
+.academy-world-entry-track {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin-top: 18px;
+}
+
+.academy-world-pill {
+  border: 1px solid rgba(244,211,94,.22);
+  background: rgba(244,211,94,.075);
+  color: rgba(248,241,221,.84);
+  border-radius: 999px;
+  padding: 8px 12px;
+  font-size: .84rem;
+  font-weight: 900;
+}
+
+.academy-world-pill.ready {
+  border-color: rgba(76, 175, 80, .55);
+  background: rgba(76, 175, 80, .15);
+  color: #b8f5c0;
+}
+
+.academy-world-entry-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 18px;
+}
+
+.academy-world-entry-actions a {
+  border-radius: 999px;
+  padding: 12px 18px;
+  font-weight: 900;
+  text-decoration: none;
+}
+
+.academy-world-primary {
+  background: linear-gradient(135deg, #f4d35e, #d7a51e);
+  color: #171006;
+  box-shadow: 0 12px 36px rgba(244,211,94,.18);
+}
+
+.academy-world-secondary {
+  color: #f8f1dd;
+  border: 1px solid rgba(255,255,255,.18);
+  background: rgba(255,255,255,.08);
+}
+
+.academy-world-entry-brief {
+  margin-top: 18px;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 10px;
+}
+
+.academy-world-brief-card {
+  border: 1px solid rgba(255,255,255,.10);
+  background: rgba(255,255,255,.055);
+  border-radius: 18px;
+  padding: 13px;
+}
+
+.academy-world-brief-card strong {
+  display: block;
+  color: #f4d35e;
+  margin-bottom: 5px;
+  font-size: .88rem;
+}
+
+.academy-world-brief-card span {
+  color: rgba(248,241,221,.72);
+  line-height: 1.42;
+  font-size: .88rem;
+}
+
+@media (max-width: 860px) {
+  .academy-world-entry {
+    grid-template-columns: 1fr;
+  }
+
+  .academy-world-entry h1 {
+    font-size: 2.35rem;
+  }
+
+  .academy-world-entry-brief {
+    grid-template-columns: 1fr;
+  }
+}
+
+
+/* CI-STAGE-49B WORLD BOARD ENTRY LANGUAGE ALIGNMENT */
+
+/* CI-STAGE-50B WORLD BOARD FIRST-USE GUIDE */
+.world-first-use-guide{
+  max-width:1120px;
+  margin:18px auto 22px;
+  border-radius:26px;
+  border:1px solid rgba(245,215,122,.34);
+  background:
+    radial-gradient(circle at top left, rgba(245,215,122,.13), transparent 35%),
+    radial-gradient(circle at bottom right, rgba(143,216,255,.12), transparent 38%),
+    rgba(2,8,18,.74);
+  box-shadow:0 24px 70px rgba(0,0,0,.28);
+  padding:20px;
+}
+
+.world-first-use-guide .guide-kicker{
+  display:inline-flex;
+  border-radius:999px;
+  border:1px solid rgba(245,215,122,.34);
+  background:rgba(245,215,122,.10);
+  color:rgba(245,215,122,.96);
+  padding:7px 11px;
+  font-size:12px;
+  font-weight:900;
+  letter-spacing:.08em;
+  text-transform:uppercase;
+}
+
+.world-first-use-guide h2{
+  margin:12px 0 8px;
+  color:white;
+  font-size:clamp(24px,3vw,36px);
+}
+
+.world-first-use-guide p{
+  margin:0;
+  max-width:780px;
+  color:rgba(255,255,255,.76);
+  line-height:1.45;
+}
+
+.world-first-use-steps{
+  display:grid;
+  grid-template-columns:repeat(4, minmax(150px,1fr));
+  gap:10px;
+  margin-top:16px;
+}
+
+.world-first-use-step{
+  border-radius:18px;
+  border:1px solid rgba(143,216,255,.22);
+  background:rgba(255,255,255,.055);
+  padding:13px;
+}
+
+.world-first-use-step strong{
+  display:block;
+  color:rgba(245,215,122,.96);
+  margin-bottom:5px;
+}
+
+.world-first-use-step span{
+  display:block;
+  color:rgba(255,255,255,.70);
+  font-size:13px;
+  line-height:1.35;
+}
+
+@media(max-width:820px){
+  .world-first-use-steps{
+    grid-template-columns:1fr 1fr;
+  }
+}
+
+@media(max-width:520px){
+  .world-first-use-steps{
+    grid-template-columns:1fr;
+  }
+}
+
+
+/* CI-STAGE-51B CLARIFY REGION SELECTION VS SETTLEMENT DECISION */
+
+/* CI-STAGE-51C REGION INTEL SYNC ARCHIVE LABEL */
+</style>
+
+<style>
+.student-timeline-display {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  z-index: 9999;
+  max-width: 340px;
+  padding: 14px 16px;
+  border: 1px solid rgba(218, 165, 32, 0.55);
+  border-radius: 14px;
+  background: rgba(8, 12, 22, 0.88);
+  color: #f7e7b0;
+  box-shadow: 0 0 18px rgba(0,0,0,0.35);
+  font-family: system-ui, sans-serif;
+}
+.student-timeline-display strong {
+  display: block;
+  margin-bottom: 8px;
+  color: #ffd76a;
+}
+</style>
+
+<!-- STEM_NATION_STRATEGIC_MAP_TITLE_V1 -->
 </head>
 
+
 <body>
+
+<section class="academy-world-entry-shell" id="academyWorldEntryShell">
+  <div class="academy-world-entry">
+    <div class="academy-world-entry-avatar" id="academyWorldAvatar">
+      Avatar
+    </div>
+
+    <div class="academy-world-entry-content">
+      <div class="academy-world-entry-kicker">World Decision Entry</div>
+      <h1>First World Decision</h1>
+      <p class="academy-world-entry-sub" id="academyWorldIntro">
+        Academy Learner, your Academy inquiry path is complete. You are now entering the World Board, where your first nation decision begins with the land.
+      </p>
+
+      <div class="academy-world-entry-track">
+        <div class="academy-world-pill" id="academyWorldStudentPill">Academy Learner</div>
+        <div class="academy-world-pill ready" id="academyWorldReadinessPill">Checking Academy readiness</div>
+        <div class="academy-world-pill">Mission 1 · Claim the Land</div>
+        <div class="academy-world-pill">Observe · Choose · Defend</div>
+      </div>
+
+      <div class="academy-world-entry-brief">
+        <div class="academy-world-brief-card">
+          <strong>1 · Observe the regions</strong>
+          <span>Look for water, food, movement paths, defense, danger, and trade possibilities.</span>
+        </div>
+        <div class="academy-world-brief-card">
+          <strong>2 · Choose a possible settlement site</strong>
+          <span>Your people need a beginning, but selection is not the same as a final decision. Every region offers a strength and a risk.</span>
+        </div>
+        <div class="academy-world-brief-card">
+          <strong>3 · Defend the decision</strong>
+          <span>Use evidence from the World Board before your nation records its first official founding choice.</span>
+        </div>
+      </div>
+
+      <div class="academy-world-entry-actions">
+        <a class="academy-world-primary" href="#compactMissionPanel">View Active Mission</a>
+        <a class="academy-world-secondary" href="/student_hub">Return to Student Hub</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+
+<!-- STEM_NATION_THEATER_MODE_ENTRY_OVERLAY_V1 -->
+<div id="theaterEntryOverlay" class="theater-entry-overlay">
+
+  <div class="theater-entry-content">
+
+    <div class="theater-entry-label">
+      STEM Nation · Living World Board
+    </div>
+
+    <div class="theater-entry-title">
+      You Are Entering A Living World
+    </div>
+
+    <div class="theater-entry-text">
+      The land already remembers movement, struggle, trade, weather, survival, and consequence.
+      <br><br>
+      Observe carefully.
+      Every nation decision changes the future.
+    </div>
+
+    <button id="beginObservationBtn" class="theater-entry-button">
+      Begin Observation
+    </button>
+
+  </div>
+
+</div>
+
+
+
+<div class="living-gameboard">
+
+  <aside class="advisor-panel">
+    <div class="panel-title">Advisor Council</div>
+
+    <div class="advisor-message">
+      Observe the terrain carefully. Every nation decision changes the future.
+    </div>
+
+    <div class="inquiry-box">
+      <div class="inquiry-label">INQUIRY PROMPT</div>
+
+      <div id="dynamicInquiryPrompt">
+        Why might nations settle near dangerous environments?
+      </div>
+    </div>
+  </aside>
+
+  <main class="world-board">
+
+    <div class="world-board-header">
+      STEM NATION WORLD BOARD
+    </div>
+
+    <div class="world-board-subtitle">
+      Observe · Interact · Ask · Record · Respond · Evolve
+    </div>
+
+    
+<!-- STEM_NATION_LIVING_WORLD_ATMOSPHERE_MARKERS_V1 -->
+<!-- STEM_NATION_ATMOSPHERE_SIGNAL_ARIA_ONLY_FIX_V4 -->
+<div id="worldAtmosphereLayer" class="world-atmosphere-layer" aria-label="Living World Atmosphere Layer">
+
+  <div class="atmosphere-zone atmosphere-river" data-atmosphere-zone="River Corridor">
+    <span class="atmosphere-signal water-signal" aria-label="Moving Water"></span>
+    <span class="atmosphere-signal mist-signal" aria-label="Mist"></span>
+    <span class="atmosphere-signal bird-signal" aria-label="Birds"></span>
+    <span class="atmosphere-signal flood-signal" aria-label="Flood Risk"></span>
+  </div>
+
+  <div class="atmosphere-zone atmosphere-forest" data-atmosphere-zone="Forest Edge">
+    <span class="atmosphere-signal fog-signal" aria-label="Drifting Fog"></span>
+    <span class="atmosphere-signal tree-signal" aria-label="Tree Sway"></span>
+    <span class="atmosphere-signal wildlife-signal" aria-label="Wildlife"></span>
+    <span class="atmosphere-signal visibility-signal" aria-label="Reduced Visibility"></span>
+  </div>
+
+  <div class="atmosphere-zone atmosphere-coast" data-atmosphere-zone="Coastal Bay">
+    <span class="atmosphere-signal tide-signal" aria-label="Moving Tides"></span>
+    <span class="atmosphere-signal seagull-signal" aria-label="Seagulls"></span>
+    <span class="atmosphere-signal storm-signal" aria-label="Storm Pressure"></span>
+    <span class="atmosphere-signal ship-signal" aria-label="Future Trade Ships"></span>
+  </div>
+
+  <div class="atmosphere-zone atmosphere-highland" data-atmosphere-zone="Highland Ridge">
+    <span class="atmosphere-signal snow-signal" aria-label="Snow / Wind"></span>
+    <span class="atmosphere-signal movement-signal" aria-label="Difficult Movement"></span>
+    <span class="atmosphere-signal defense-signal" aria-label="Elevated Defense"></span>
+  </div>
+
+  <div class="atmosphere-zone atmosphere-plain" data-atmosphere-zone="Open Plain">
+    <span class="atmosphere-signal grass-signal" aria-label="Grass Sway"></span>
+    <span class="atmosphere-signal migration-signal" aria-label="Migration Movement"></span>
+    <span class="atmosphere-signal exposure-signal" aria-label="Exposure Danger"></span>
+  </div>
+
+  <div class="atmosphere-zone atmosphere-crossroads" data-atmosphere-zone="Balanced Crossroads">
+    <span class="atmosphere-signal road-signal" aria-label="Road Activity"></span>
+    <span class="atmosphere-signal caravan-signal" aria-label="Future Caravans"></span>
+    <span class="atmosphere-signal trade-signal" aria-label="Trade Movement"></span>
+  </div>
+
+</div>
+
+
+<div id="boardTerrainLayer" class="board-terrain-layer">
+
+      <button type="button" class="board-terrain-tile river-tile" data-region="River Corridor">
+        🌊<span>River</span><div class="board-settlement-slot"></div><div class="board-infrastructure-slot"></div>
+      </button>
+
+      <button type="button" class="board-terrain-tile forest-tile" data-region="Forest Edge">
+        🌲<span>Forest</span><div class="board-settlement-slot"></div><div class="board-infrastructure-slot"></div>
+      </button>
+
+      <button type="button" class="board-terrain-tile highland-tile" data-region="Highland Ridge">
+        ⛰️<span>Highland</span><div class="board-settlement-slot"></div><div class="board-infrastructure-slot"></div>
+      </button>
+
+      <button type="button" class="board-terrain-tile coastal-tile" data-region="Coastal Bay">
+        ⚓<span>Coast</span><div class="board-settlement-slot"></div><div class="board-infrastructure-slot"></div>
+      </button>
+
+      <button type="button" class="board-terrain-tile plain-tile" data-region="Open Plain">
+        🌾<span>Plain</span><div class="board-settlement-slot"></div><div class="board-infrastructure-slot"></div>
+      </button>
+
+      <button type="button" class="board-terrain-tile crossroads-tile" data-region="Balanced Crossroads">
+        🛤️<span>Crossroads</span><div class="board-settlement-slot"></div><div class="board-infrastructure-slot"></div>
+      </button>
+
+    </div>
+
+    
+<!-- STEM_NATION_CINEMATIC_REGION_INTEL_CARDS_V1 -->
+<div id="cinematicRegionIntelCard" class="cinematic-region-intel-card">
+  <div class="region-intel-label">Region Intel</div>
+  <div id="regionIntelName" class="region-intel-name">Select a Region</div>
+  <div id="regionIntelDescription" class="region-intel-description">
+    Choose a region on the Living World Board to reveal its survival advantage, risk, and observation clue.
+  </div>
+
+  <div class="region-intel-grid">
+    <div class="region-intel-chip">
+      <strong>Advantage</strong>
+      <span id="regionIntelAdvantage">—</span>
+    </div>
+    <div class="region-intel-chip">
+      <strong>Risk</strong>
+      <span id="regionIntelRisk">—</span>
+    </div>
+    <div class="region-intel-chip">
+      <strong>Observation Clue</strong>
+      <span id="regionIntelClue">Watch the land before making a decision.</span>
+    </div>
+  </div>
+</div>
+
+
+
+<!-- STEM_NATION_REGION_FOCUS_HIGHLIGHT_SYSTEM_V1 -->
+
+<!-- STEM_NATION_MAP_REGION_COMPARISON_DISPLAY_V1 -->
+<div id="regionComparisonBanner" class="region-comparison-banner hidden">
+  <strong>Region Comparison:</strong>
+  <span id="regionComparisonText">Choose two regions to compare.</span>
+</div>
+
+
+<div id="cinematicFocusBanner" class="cinematic-focus-banner hidden">
+  <strong>Region Focus:</strong>
+  <span id="cinematicFocusText">Select a region to focus the living board.</span>
+</div>
+
+
+
+<!-- STEM_NATION_STUDENT_COMPARISON_RESPONSE_PROMPT_V1 -->
+<div id="studentComparisonResponsePanel" class="student-comparison-response-panel hidden">
+  <h3>Student Comparison Response</h3>
+  <div id="studentComparisonPromptText">
+    Compare the two regions. Which gives the stronger beginning, and what is the cost?
+  </div>
+
+  <label for="comparisonStrongerRegion">Which region gives the stronger beginning?</label>
+  <textarea id="comparisonStrongerRegion" placeholder="Example: River Corridor gives the stronger beginning because..."></textarea>
+
+  <label for="comparisonAdvantageEvidence">What advantage supports your answer?</label>
+  <textarea id="comparisonAdvantageEvidence" placeholder="Example: I observed water, food access, movement routes, or defense..."></textarea>
+
+  <label for="comparisonRiskTradeoff">What risk or tradeoff could change your decision?</label>
+  <textarea id="comparisonRiskTradeoff" placeholder="Example: Flooding, exposure, storms, hidden danger, or conflict..."></textarea>
+
+  <button id="saveComparisonResponseBtn" type="button">
+    Save Comparison Response
+  </button>
+
+  <div id="studentComparisonSaveStatus">
+    Not saved yet.
+  </div>
+</div>
+
+
+<div id="boardWorldFeedback" class="board-world-feedback hidden">
+      Select terrain to begin settlement review.
+    </div>
+
+  </main>
+
+  <aside class="civilization-panel-right">
+
+    <div class="panel-title">Nation Status</div>
+
+    <div class="status-item">
+      <div class="status-label">🌾 Food</div>
+      <div class="status-bar"><div id="boardFoodMeter" class="status-fill"></div></div>
+    </div>
+
+    <div class="status-item">
+      <div class="status-label">🛡️ Stability</div>
+      <div class="status-bar"><div id="boardStabilityMeter" class="status-fill"></div></div>
+    </div>
+
+    <div class="status-item">
+      <div class="status-label">🧠 Knowledge</div>
+      <div class="status-bar"><div id="boardKnowledgeMeter" class="status-fill"></div></div>
+    </div>
+
+    <div class="status-item">
+      <div class="status-label">🤝 Wealth / Trade</div>
+      <div class="status-bar"><div id="boardWealthMeter" class="status-fill"></div></div>
+    </div>
+
+  </aside>
+
+</div>
+
+
+
+
+
+
+<div id="dynamicEventPanel" class="dynamic-event-panel">
+
+  <div class="event-label">
+    LIVE WORLD EVENT
+  </div>
+
+  <div id="dynamicEventTitle" class="event-title">
+    Heavy Rainfall Detected
+  </div>
+
+  <div id="dynamicEventDescription" class="event-description">
+    Scouts report rising river levels near nearby settlement zones.
+  </div>
+
+  <div class="event-actions">
+    <button type="button" id="eventAskBtn" class="event-btn">❓ Ask Question</button>
+    <button type="button" id="eventRespondBtn" class="event-btn">⚖️ Respond</button>
+    <button type="button" id="eventArchiveBtn" class="event-btn">📜 Record</button>
+    <button type="button" id="eventEvidenceBtn" class="event-btn">📝 Evidence Note</button>
+  </div>
+
+</div>
+
+
+
+
+
+
+
+
+
+<div id="studentReflectionPanel" class="student-input-panel hidden">
+
+  <div class="student-input-label">
+    STUDENT REFLECTION
+  </div>
+
+  <textarea id="studentReflectionInput" class="student-input-textarea"
+    placeholder="Type your reflection: Which record best explains how your nation adapted this turn?"></textarea>
+
+  <button type="button" id="saveStudentReflectionBtn" class="student-input-btn">
+    Save Reflection to Archive
+  </button>
+
+</div>
+
+
+<div id="studentEvidencePanel" class="student-input-panel hidden">
+
+  <div class="student-input-label">
+    STUDENT EVIDENCE NOTE
+  </div>
+
+  <textarea id="studentEvidenceInput" class="student-input-textarea"
+    placeholder="Type the evidence your council observed from the world event, map, terrain, or season..."></textarea>
+
+  <button type="button" id="saveStudentEvidenceBtn" class="student-input-btn">
+    Save Evidence to Archive
+  </button>
+
+</div>
+
+
+<div id="studentResponsePanel" class="student-input-panel hidden">
+
+  <div class="student-input-label">
+    COUNCIL RESPONSE STRATEGY
+  </div>
+
+  <textarea id="studentResponseInput" class="student-input-textarea"
+    placeholder="Type how your council will respond to this world event..."></textarea>
+
+  <button type="button" id="saveStudentResponseBtn" class="student-input-btn">
+    Save Response to Archive
+  </button>
+
+</div>
+
+
+<div id="studentQuestionPanel" class="student-input-panel hidden">
+
+  <div class="student-input-label">
+    STUDENT QUESTION
+  </div>
+
+  <textarea id="studentQuestionInput" class="student-input-textarea"
+    placeholder="Type the question your council should ask about this event..."></textarea>
+
+  <button type="button" id="saveStudentQuestionBtn" class="student-input-btn">
+    Save Question to Archive
+  </button>
+
+</div>
+
+
+<div id="archiveLogPanel" class="archive-log-panel hidden">
+
+  <div class="archive-log-label">
+    NATION ARCHIVE
+  </div>
+
+  
+
+<div id="archiveSummaryPanel" class="archive-summary-panel hidden">
+
+  <div class="archive-summary-label">
+    ARCHIVE SUMMARY
+  </div>
+
+  <div class="archive-summary-grid">
+
+    <div class="archive-summary-card">
+      <div class="archive-summary-number" id="archiveTotalCount">0</div>
+      <div class="archive-summary-name">Total Records</div>
+    </div>
+
+    <div class="archive-summary-card">
+      <div class="archive-summary-number" id="archiveQuestionCount">0</div>
+      <div class="archive-summary-name">Questions</div>
+    </div>
+
+    <div class="archive-summary-card">
+      <div class="archive-summary-number" id="archiveResponseCount">0</div>
+      <div class="archive-summary-name">Responses</div>
+    </div>
+
+    <div class="archive-summary-card">
+      <div class="archive-summary-number" id="archiveEvidenceCount">0</div>
+      <div class="archive-summary-name">Evidence</div>
+    </div>
+
+    <div class="archive-summary-card">
+      <div class="archive-summary-number" id="archiveEventCount">0</div>
+      <div class="archive-summary-name">Events</div>
+    </div>
+
+    <div class="archive-summary-card">
+      <div class="archive-summary-number" id="archiveReflectionCount">0</div>
+      <div class="archive-summary-name">Reflections</div>
+    </div>
+
+  </div>
+
+  <div id="archiveReflectionPrompt" class="archive-reflection-prompt">
+    Which record best explains how your nation adapted this turn?
+  </div>
+
+  <button type="button" id="openStudentReflectionBtn" class="student-input-btn reflection-open-btn">
+    ✍️ Write Reflection
+  </button>
+
+</div>
+
+
+<div id="archiveFilterControls" class="archive-filter-controls">
+
+  <button type="button" class="archive-filter-btn active" data-filter="all">All</button>
+  <button type="button" class="archive-filter-btn" data-filter="question">❓ Questions</button>
+  <button type="button" class="archive-filter-btn" data-filter="response">⚖️ Responses</button>
+  <button type="button" class="archive-filter-btn" data-filter="evidence">📝 Evidence</button>
+  <button type="button" class="archive-filter-btn" data-filter="event">📜 Events</button>
+  <button type="button" class="archive-filter-btn" data-filter="reflection">✍️ Reflections</button>
+  <button type="button" class="archive-filter-btn" data-filter="founding">🏛️ Founding</button>
+
+</div>
+
+
+<div id="archiveLogContent" class="archive-log-content">
+    No archive records yet.
+  </div>
+
+  <button type="button" id="showMoreArchiveBtn" class="student-input-btn archive-show-more-btn hidden">
+    Show More Records
+  </button>
+
+</div>
+
+
+<div id="actionResponsePanel" class="action-response-panel hidden">
+
+  <div class="action-response-label">
+    STUDENT RESPONSE
+  </div>
+
+  <div id="actionResponseContent" class="action-response-content">
+    Choose Ask, Respond, or Record to interact with the world event.
+  </div>
+
+</div>
+
+
+<div id="seasonFeedbackPanel" class="season-feedback-panel hidden">
+
+  <div class="season-feedback-label">
+    SEASON EFFECT
+  </div>
+
+  <div id="seasonFeedbackText" class="season-feedback-text">
+    Seasonal effects will appear here after advancing time.
+  </div>
+
+</div>
+
+
+<div id="worldTimePanel" class="world-time-panel">
+
+  <div class="time-block">
+    <div class="time-label">TURN</div>
+    <div id="worldTurnDisplay" class="time-value">1</div>
+  </div>
+
+  <div class="time-block">
+    <div class="time-label">SEASON</div>
+    <div id="worldSeasonDisplay" class="time-value">Early Rainfall</div>
+  </div>
+
+  <button type="button" id="advanceTurnBtn" class="advance-turn-btn">
+    ⏭ Advance Turn
+  </button>
+
+</div>
+
+
+<div id="compactMissionPanel" class="compact-mission-panel">
+
+  <div class="compact-mission-label">ACTIVE MISSION</div>
+
+  <h2>Mission 1 · Claim the Land</h2>
+
+  <p>
+    Observe the World Board. Select a possible settlement region. Record why your people could survive there before making it official.
+  </p>
+
+  <div class="compact-objectives">
+    <div>👁️ Observe terrain</div>
+    <div>📍 Plan settlement</div>
+    <div>❓ Ask a question</div>
+    <div>📜 Record evidence</div>
+    <div>⚖️ Defend the decision</div>
+  </div>
+
+</div>
+
+<div class="overlay-control-bar">
+
+  <button type="button" class="overlay-toggle-btn" data-overlay="regionIntelOverlay">
+    🌍 Region Intel
+  </button>
+
+  <button type="button" class="overlay-toggle-btn" data-overlay="advisorOverlay">
+    🧠 Advisor
+  </button>
+
+  <button type="button" class="overlay-toggle-btn" data-overlay="archiveOverlay">
+    📜 Archive
+  </button>
+
+  <!-- STEM_NATION_STUDENT_MAP_RESET_VIEW_BUTTON_V1 -->
+  <button type="button" id="resetStudentMapViewBtn" class="overlay-toggle-btn">
+    🧹 Reset View
+  </button>
+
+</div>
+
+<div id="regionIntelOverlay" class="board-overlay hidden">
+  <div class="overlay-title">Strategic Region Intelligence</div>
+
+  <div class="overlay-content">
+    Terrain, survival, defense, trade, and environmental risks influence nation growth.
+  </div>
+</div>
+
+<div id="advisorOverlay" class="board-overlay hidden">
+  <div class="overlay-title">Advisor Council</div>
+
+  <div class="overlay-content">
+    Strong nations ask questions before making irreversible decisions.
+  </div>
+</div>
+
+<div id="archiveOverlay" class="board-overlay hidden">
+  <div class="overlay-title">Founding Archive</div>
+
+  <div class="overlay-content">
+    Your nation archive records every major decision and consequence.
+  </div>
+</div>
+
+
+
+<div class="legacy-content-shell">
+
+  <button type="button" id="toggleLegacyContentBtn" class="toggle-legacy-btn">
+    📚 Show Legacy Mission Details
+  </button>
+
+  <div id="legacyContentWrapper" class="legacy-content-wrapper hidden">
+<div class="mission-header">
+
+  <div class="mission-label">
+    MISSION 1
+  </div>
+
+  <h1 class="mission-title">
+    CLAIM THE LAND
+  </h1>
+
+  <div class="mission-subtitle">
+    Your people have arrived in an unfamiliar region.
+    Food, water, safety, and survival depend on where you settle.
+  </div>
+
+</div>
+
+<div class="civilization-panel">
+
+  <div class="meter">
+    <span>Food</span>
+    <div class="meter-bar">
+      <div id="foodMeter" class="meter-fill food-fill"></div>
+    </div>
+  </div>
+
+  <div class="meter">
+    <span>Defense</span>
+    <div class="meter-bar">
+      <div id="defenseMeter" class="meter-fill defense-fill"></div>
+    </div>
+  </div>
+
+  <div class="meter">
+    <span>Knowledge</span>
+    <div class="meter-bar">
+      <div id="knowledgeMeter" class="meter-fill knowledge-fill"></div>
+    </div>
+  </div>
+
+</div>
+
+
   <div class="container">
-    <h1>Simulation Mode</h1>
+    <div class="week-label">Week 1 · Module 0 · Cartography & Orientation</div>
+
+    <h1>Strategic Map & Founding Archive</h1>
 
     <div class="subtitle">
-      Simulation Mode is the strategic systems layer of STEM Nation.<br>
-      Explore how decisions, structures, and outcomes interact across the nation engine.
+      Your first nation decision begins with the land.<br>
+      Use observation, evidence, and terrain reasoning to defend where your people should settle.
+    </div>
+
+
+    <div class="mission-brief">
+      <h2>Mission Brief: Choose the First Settlement Site</h2>
+      <p>
+        Your objective is to choose the first starting location for your nation. You are not choosing the “perfect” land.
+        You are choosing the strongest beginning based on survival, resources, movement, defense, risk, and long-term growth.
+      </p>
+      <p>
+        Study the reference regions below. Each region offers advantages and risks. Your job is to make a reasoned choice and defend it with evidence.
+      </p>
+
+      <div class="decision-rules">
+        <div class="rule-chip">Survival</div>
+        <div class="rule-chip">Resources</div>
+        <div class="rule-chip">Movement</div>
+        <div class="rule-chip">Defense</div>
+        <div class="rule-chip">Growth</div>
+        <div class="rule-chip">Risk</div>
+      </div>
+    </div>
+
+    <div class="region-reference-board">
+      <h2>
+
+
+
+<div id="civilizationGrowthPanel" class="civilization-growth-panel">
+
+  <div class="growth-label">CIVILIZATION GROWTH</div>
+
+  <div id="growthStageIcon" class="growth-stage-icon">⛺</div>
+
+  <div id="growthStageTitle" class="growth-stage-title">
+    Survivor Camp
+  </div>
+
+  <div id="growthStageDescription" class="growth-stage-description">
+    Your people have not yet formed a permanent settlement.
+  </div>
+
+  <div class="growth-track">
+    <div class="growth-step active">Camp</div>
+    <div class="growth-step">Village</div>
+    <div class="growth-step">Town</div>
+    <div class="growth-step">City</div>
+    <div class="growth-step">Nation</div>
+  </div>
+
+</div>
+
+<div id="missionCommandPanel" class="mission-command-panel">
+
+  <div class="command-tabs">
+    <button type="button" class="command-tab active" data-panel="missionPanel">Mission</button>
+    <button type="button" class="command-tab" data-panel="terrainPanel">Terrain</button>
+    <button type="button" class="command-tab" data-panel="councilPanel">Council</button>
+    <button type="button" class="command-tab" data-panel="archivePanel">Archive</button>
+    <button type="button" class="command-tab" data-panel="unlocksPanel">Unlocks</button>
+  </div>
+
+  <div class="command-panel-body">
+
+    <div id="missionPanel" class="command-panel active">
+      <h2>Mission Objective</h2>
+      <p>
+        Claim the strongest starting land for your people.
+        Balance food, defense, resources, movement, risk, and long-term growth.
+      </p>
+    </div>
+
+    <div id="terrainPanel" class="command-panel hidden">
+      <h2>Terrain Intel</h2>
+      <p>
+        Terrain affects survival. Rivers support food and movement.
+        Highlands improve defense. Forests support shelter.
+        Plains support farming. Coasts support trade.
+      </p>
+    </div>
+
+    <div id="councilPanel" class="command-panel hidden">
+      <h2>Council Task</h2>
+      <p>
+        Choose three survival priorities and defend your settlement choice with evidence.
+      </p>
+    </div>
+
+    <div id="archivePanel" class="command-panel hidden">
+      <h2>Founding Archive</h2>
+      <p>
+        Your settlement defense becomes the first official record of your nation.
+      </p>
+    </div>
+
+    <div id="unlocksPanel" class="command-panel hidden">
+      <h2>Unlock Path</h2>
+      <ul>
+        <li>Founding Archive</li>
+        <li>Nation Command Center</li>
+        <li>Survival Planning</li>
+        <li>Next Mission: Survive the First Season</li>
+      </ul>
+    </div>
+
+  </div>
+
+</div>
+
+<div id="strategicTerrainMap" class="strategic-terrain-map">
+
+  <div class="map-title">Strategic Terrain Map</div>
+  <div class="map-subtitle">Select where your first settlement will stand.</div>
+
+  <div class="terrain-map-grid">
+
+    <button type="button" class="terrain-zone river-zone" data-region="River Corridor">🌊 River<div class="zone-settlement-slot"></div><div class="zone-infrastructure-slot"></div></button>
+    <button type="button" class="terrain-zone forest-zone" data-region="Forest Edge">🌲 Forest<div class="zone-settlement-slot"></div><div class="zone-infrastructure-slot"></div></button>
+    <button type="button" class="terrain-zone highland-zone" data-region="Highland Ridge">⛰️ Highland<div class="zone-settlement-slot"></div><div class="zone-infrastructure-slot"></div></button>
+    <button type="button" class="terrain-zone coastal-zone" data-region="Coastal Bay">⚓ Coast<div class="zone-settlement-slot"></div><div class="zone-infrastructure-slot"></div></button>
+    <button type="button" class="terrain-zone plain-zone" data-region="Open Plain">🌾 Plain<div class="zone-settlement-slot"></div><div class="zone-infrastructure-slot"></div></button>
+    <button type="button" class="terrain-zone crossroads-zone" data-region="Balanced Crossroads">🛤️ Crossroads<div class="zone-settlement-slot"></div><div class="zone-infrastructure-slot"></div></button>
+
+  </div>
+
+  
+<div id="regionConsequencePreview" class="region-consequence-preview hidden">
+
+  <div class="preview-label">REGION CONSEQUENCE PREVIEW</div>
+
+  <h3 id="previewRegionName">Region Selected</h3>
+
+  <div id="previewRegionBonus" class="preview-bonus">
+    Bonus will appear here.
+  </div>
+
+  <div id="previewRegionRisk" class="preview-risk">
+    Risk will appear here.
+  </div>
+
+  <div id="previewMetricImpact" class="preview-impact">
+    Metric impact will appear here.
+  </div>
+
+</div>
+
+<div id="settlementMarker" class="settlement-marker hidden">
+    📍 Settlement Placed
+  </div>
+
+  <div id="terrainMapFeedback" class="terrain-map-feedback hidden">
+    Terrain selected.
+  </div>
+
+</div>
+
+<div id="interactiveRegionBoard" class="interactive-region-board">
+
+  <div class="region-card" data-region="River Corridor">
+    <div class="region-icon">🌊</div>
+    <div class="region-name">River Corridor</div>
+    <div class="region-bonus">+ Food Production</div>
+    <div class="region-risk">⚠ Flood Risk</div>
+  </div>
+
+  <div class="region-card" data-region="Forest Edge">
+    <div class="region-icon">🌲</div>
+    <div class="region-name">Forest Edge</div>
+    <div class="region-bonus">+ Shelter & Wood</div>
+    <div class="region-risk">⚠ Hidden Threats</div>
+  </div>
+
+  <div class="region-card" data-region="Highland Ridge">
+    <div class="region-icon">⛰️</div>
+    <div class="region-name">Highland Ridge</div>
+    <div class="region-bonus">+ Defense & Visibility</div>
+    <div class="region-risk">⚠ Limited Farming</div>
+  </div>
+
+  <div class="region-card" data-region="Coastal Bay">
+    <div class="region-icon">⚓</div>
+    <div class="region-name">Coastal Bay</div>
+    <div class="region-bonus">+ Trade & Fishing</div>
+    <div class="region-risk">⚠ Storm Exposure</div>
+  </div>
+
+  <div class="region-card" data-region="Open Plain">
+    <div class="region-icon">🌾</div>
+    <div class="region-name">Open Plain</div>
+    <div class="region-bonus">+ Agriculture & Growth</div>
+    <div class="region-risk">⚠ Weak Defense</div>
+  </div>
+
+  <div class="region-card" data-region="Balanced Crossroads">
+    <div class="region-icon">🛤️</div>
+    <div class="region-name">Balanced Crossroads</div>
+    <div class="region-bonus">+ Flexibility & Trade</div>
+    <div class="region-risk">⚠ Competition Pressure</div>
+  </div>
+
+</div>
+
+<div id="regionSelectionFeedback" class="region-selection-feedback hidden">
+  Region selected for strategic review.
+</div>
+
+
+
+<button id="toggleReferenceBoard" class="toggle-reference-board">
+  Show Strategic Region Reference Board
+</button>
+
+<div id="referenceBoardWrapper" class="reference-board-wrapper hidden" style="display:none;">
+
+Settlement Region Reference Board
+</h2>
+      <p class="board-note">
+        Use these possible starting zones as your reference. Your final answer should explain which region gives your people the strongest beginning and what problem they must overcome.
+      </p>
+
+      <div class="region-grid">
+        <div class="region-card">
+          <h3>River Corridor</h3>
+          <p><strong>Possible Advantage:</strong> fresh water, farming, fishing, travel, trade routes.</p>
+          <p><strong>Possible Risk:</strong> flooding, disease, competition from other groups.</p>
+          <p><strong>Best For:</strong> food production and early population growth.</p>
+        </div>
+
+        <div class="region-card">
+          <h3>Forest Edge</h3>
+          <p><strong>Possible Advantage:</strong> wood, shelter, animals, tools, concealment.</p>
+          <p><strong>Possible Risk:</strong> limited visibility, harder movement, hidden danger.</p>
+          <p><strong>Best For:</strong> building materials and protected early survival.</p>
+        </div>
+
+        <div class="region-card">
+          <h3>Highland Ridge</h3>
+          <p><strong>Possible Advantage:</strong> defense, visibility, protection from flooding.</p>
+          <p><strong>Possible Risk:</strong> less farming land, harder travel, exposure to weather.</p>
+          <p><strong>Best For:</strong> security and watching movement across the land.</p>
+        </div>
+
+        <div class="region-card">
+          <h3>Coastal Bay</h3>
+          <p><strong>Possible Advantage:</strong> fishing, travel, trade, contact with other groups.</p>
+          <p><strong>Possible Risk:</strong> storms, exposure, invasion routes, saltwater limits.</p>
+          <p><strong>Best For:</strong> exchange, movement, and maritime growth.</p>
+        </div>
+
+        <div class="region-card">
+          <h3>Open Plain</h3>
+          <p><strong>Possible Advantage:</strong> farming space, expansion, visibility, herd movement.</p>
+          <p><strong>Possible Risk:</strong> weak natural defense, drought, exposure.</p>
+          <p><strong>Best For:</strong> agriculture, population spread, and future city growth.</p>
+        </div>
+
+        <div class="region-card">
+          <h3>Balanced Crossroads</h3>
+          <p><strong>Possible Advantage:</strong> access to several resources and movement routes.</p>
+          <p><strong>Possible Risk:</strong> more competition, harder to defend, divided priorities.</p>
+          <p><strong>Best For:</strong> trade, diplomacy, and flexible development.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="map-panel">
+      <div class="map-title"></div>
+
+Settlement Recommendation Portfolio</div>
+      <div class="map-placeholder">
+        <strong>Student Task:</strong><br>
+        Identify your chosen region, explain its strongest advantage, name its greatest risk,
+        and describe how your people will survive the first stage of nation-building.
+
+      </div>
     </div>
 
     <div class="grid">
       <div class="card">
-        <h2>Strategic View</h2>
+        <h2>1. Observe the Land</h2>
         <p>
-          Enter the systems-facing layer where decisions affect growth, stability, movement, and long-term national development.
+          What did the map reveal? Look for water, food sources, movement paths, barriers, and dangerous terrain.
         </p>
       </div>
 
       <div class="card">
-        <h2>Decision Flow</h2>
+        <h2>2. Identify Resources</h2>
         <p>
-          Simulation Mode connects leadership choices to consequences, reinforcing how actions shape national outcomes over time.
+          Decide which resources matter first: food, shelter, defense, trade access, or room to grow.
         </p>
       </div>
 
       <div class="card">
-        <h2>Systems Thinking</h2>
+        <h2>3. Name the Risk</h2>
         <p>
-          Students and facilitators can examine relationships among food, economy, defense, movement, and national organization.
+          Every region has weakness. Explain the challenge your people must overcome to survive.
         </p>
       </div>
 
       <div class="card">
-        <h2>Expansion Layer</h2>
+        <h2>4. Defend the Decision</h2>
         <p>
-          This mode prepares the pathway for deeper simulation, map-state logic, scoring, and future nation engine extensions.
+          Use evidence from the map to justify your settlement choice. Strong leaders explain their reasoning.
         </p>
       </div>
     </div>
 
     <div class="footer-box">
-      Simulation Mode is the bridge between individual decisions and larger national systems. It supports strategic thinking, consequence, and structured expansion.
+      <strong>Founding Nation Archive:</strong><br>
+      Combine your First Observation Notes, terrain observations, and Settlement Decision Defense.
+      This becomes the first official record of your nation.
     </div>
 
+    
+
+<div id="survivalPriorityChallenge" class="survival-priority-challenge">
+
+  <div class="challenge-label">COUNCIL CHALLENGE</div>
+
+  <h2>Choose Your First 3 Survival Priorities</h2>
+
+  <p>
+    Your people cannot solve every problem at once.
+    Select the three priorities your nation should protect first.
+  </p>
+
+  <div class="priority-grid">
+    <button type="button" class="priority-card" data-priority="Water">💧 Water</button>
+    <button type="button" class="priority-card" data-priority="Food">🌾 Food</button>
+    <button type="button" class="priority-card" data-priority="Shelter">🏕️ Shelter</button>
+    <button type="button" class="priority-card" data-priority="Defense">🛡️ Defense</button>
+    <button type="button" class="priority-card" data-priority="Movement">🧭 Movement</button>
+    <button type="button" class="priority-card" data-priority="Trade">🤝 Trade</button>
+  </div>
+
+  <div id="priorityStatus" class="priority-status">
+    Select 3 priorities to strengthen council reasoning.
+  </div>
+
+  <div id="priorityBonus" class="priority-bonus hidden">
+    Council Reasoning Improved: +1 Knowledge
+  </div>
+
+</div>
+
+<div class="advisor-alert">
+
+  <h2>Advisor Warning</h2>
+
+  <p>
+    Scouts report nearby water access,
+    but the region may flood during heavy storms.
+    Your council must determine whether
+    the advantages outweigh the risks.
+  </p>
+
+</div>
+
+<form id="settlementForm" class="decision-form">
+      <h2>Settlement Decision Defense</h2>
+      <p class="form-instruction">
+        Complete each field before opening the Project Hub. Your nation cannot advance until the founding choice is supported by evidence.
+      </p>
+
+      <div class="field-group">
+        <label for="chosenRegion">Chosen Region</label>
+        <input id="chosenRegion" name="chosenRegion" type="text" required placeholder="Example: River Corridor — close to water, farming land, and travel routes.">
+      </div>
+
+      <div class="field-group">
+        <label for="strongestAdvantage">Strongest Advantage</label>
+        <textarea id="strongestAdvantage" name="strongestAdvantage" required placeholder="Example: The river gives fresh water, fish, farming soil, and a route for travel or trade."></textarea>
+      </div>
+
+      <div class="field-group">
+        <label for="greatestRisk">Greatest Risk</label>
+        <textarea id="greatestRisk" name="greatestRisk" required placeholder="Example: The river may flood, attract other groups, or spread sickness if we settle too close."></textarea>
+      </div>
+
+      <div class="field-group">
+        <label for="landEvidence">Evidence From the Land</label>
+        <textarea id="landEvidence" name="landEvidence" required placeholder="Example: I noticed water nearby, open land for crops, and paths that could connect to other regions."></textarea>
+      </div>
+
+      <div class="field-group">
+        <label for="survivalPlan">Survival Plan</label>
+        <textarea id="survivalPlan" name="survivalPlan" required placeholder="Example: We will build slightly above the riverbank, farm near the water, store food, and watch for floods."></textarea>
+      </div>
+
+      <div id="completionStatus" class="completion-status">
+        Complete the Founding Defense to unlock the Command Center.
+      </div>
+
+      <div id="archiveSavedStatus" class="archive-saved-status">
+        Archive saved locally.
+      </div>
+    </form>
+
+
     <div class="btn-row">
-      <button class="btn" onclick="window.location.href='/'">Back to Landing</button>
-      <button class="btn" onclick="window.location.href='/hub'">Open Project Hub</button>
+      <button class="btn secondary" onclick="window.location.href='/world_select.html'">Return to World Select</button>
+      
+
+<div id="automanStateCheck" class="automan-state-check hidden">
+  <h2>AUT0MAN State Check</h2>
+  <pre id="automanStateOutput"></pre>
+</div>
+
+
+
+  </div>
+
+</div>
+
+<div class="mission-results-shell">
+
+  <button type="button" id="toggleMissionResultsBtn" class="toggle-results-btn">
+    🏁 Show Mission Results
+  </button>
+
+  <div id="missionResultsWrapper" class="mission-results-wrapper hidden">
+<div id="missionCompletePanel" class="mission-complete-panel hidden">
+
+  <div class="mission-complete-label">
+    MISSION COMPLETE
+  </div>
+
+  <h2 class="mission-complete-title">
+    CLAIM THE LAND
+  </h2>
+
+  <div class="unlock-section">
+
+    <div class="unlock-card">
+      <div class="unlock-icon">📜</div>
+      <div class="unlock-title">Founding Archive Unlocked</div>
+    </div>
+
+    <div class="unlock-card">
+      <div class="unlock-icon">🏛️</div>
+      <div class="unlock-title">Nation Command Center Unlocked</div>
+    </div>
+
+    <div class="unlock-card">
+      <div class="unlock-icon">🌾</div>
+      <div class="unlock-title">Survival Planning Unlocked</div>
+    </div>
+
+  </div>
+
+  <div class="next-mission-preview">
+
+    <div class="next-mission-label">
+      NEXT AVAILABLE MISSION
+    </div>
+
+    <div class="next-mission-title">
+      SURVIVE THE FIRST SEASON
+    </div>
+
+    <div class="next-mission-description">
+      Food shortages, environmental pressure, and population stability
+      will now begin affecting your nation.
+    </div>
+
+  </div>
+
+</div>
+
+<div id="consequenceBox" class="consequence-box hidden">
+
+  <h2>Settlement Consequence</h2>
+
+  <p>
+    Your founding council has recorded the first settlement decision.
+    Your nation gains early survival knowledge, but the land also reveals new risks.
+  </p>
+
+</div>
+
+<div id="civilizationUpdate" class="civilization-update hidden">
+
+  <h2>Nation Updated</h2>
+
+  <ul>
+    <li>+1 Founding Archive</li>
+    <li>+1 Survival Planning</li>
+    <li>Risk Identified: Environmental Challenge</li>
+  </ul>
+
+</div>
+
+
+  </div>
+
+</div>
+
+<button id="openHubBtn" class="btn locked" type="button">Complete Founding Defense</button>
+      <button class="btn secondary" onclick="window.location.href='/'">Back to Landing</button>
     </div>
   </div>
+<script>
+const requiredFields = [
+  "chosenRegion",
+  "strongestAdvantage",
+  "greatestRisk",
+  "landEvidence",
+  "survivalPlan"
+];
+
+
+const CIV_STATE_KEY = "STEM_NATION_CIVILIZATION_STATE_V34";
+
+const defaultCivilizationState = {
+  version: "V34",
+  civilizationName: "Unnamed Civilization",
+  foundingRegion: "",
+  currentTurn: 1,
+  era: "Founding Era",
+  metrics: {
+    food: 50,
+    stability: 50,
+    knowledge: 50,
+    unity: 50,
+    territory: 50,
+    wealth: 50
+  },
+  alerts: [],
+  decisionLog: [],
+  archives: [],
+  activeEvents: [],
+  governanceActionUsedThisTurn: false,
+  createdAt: null,
+  updatedAt: null
+};
+
+function loadCivilizationState() {
+  const saved = localStorage.getItem(CIV_STATE_KEY);
+
+  if (!saved) {
+    return {
+      ...defaultCivilizationState,
+      metrics: { ...defaultCivilizationState.metrics },
+      alerts: [],
+      decisionLog: [],
+      archives: [],
+      activeEvents: []
+    };
+  }
+
+  try {
+    const parsed = JSON.parse(saved);
+
+    const merged = {
+      ...defaultCivilizationState,
+      ...parsed,
+      metrics: {
+        ...defaultCivilizationState.metrics,
+        ...(parsed.metrics || {})
+      },
+      alerts: parsed.alerts || [],
+      decisionLog: parsed.decisionLog || [],
+      archives: parsed.archives || [],
+      activeEvents: parsed.activeEvents || []
+    };
+
+    if (
+      merged.mission1ClaimLandComplete &&
+      (!merged.civilizationStage || merged.civilizationStage === "camp")
+    ) {
+      merged.civilizationStage = "village";
+    }
+
+    return merged;
+  } catch (error) {
+    return {
+      ...defaultCivilizationState,
+      metrics: { ...defaultCivilizationState.metrics },
+      alerts: [],
+      decisionLog: [],
+      archives: [],
+      activeEvents: []
+    };
+  }
+}
+
+function saveCivilizationState(state) {
+  state.updatedAt = new Date().toISOString();
+
+  if (!state.createdAt) {
+    state.createdAt = state.updatedAt;
+  }
+
+  localStorage.setItem(CIV_STATE_KEY, JSON.stringify(state));
+}
+
+
+
+
+function getInfrastructureForRegion(regionName) {
+  const infrastructure = {
+    "River Corridor": "🌾 🚣 ⚠️",
+    "Forest Edge": "🪵 🛖 👁️",
+    "Highland Ridge": "🗼 🛡️ 🔥",
+    "Coastal Bay": "⚓ 🐟 🌊",
+    "Open Plain": "🌾 🛤️ 🐂",
+    "Balanced Crossroads": "🛤️ 🤝 🏪"
+  };
+
+  return infrastructure[regionName] || "🛖";
+}
+
+
+function applyRegionConsequences(state, regionName) {
+  if (!state.metrics) return;
+
+  switch(regionName) {
+
+    case "River Corridor":
+      state.metrics.food = Math.min(100, state.metrics.food + 10);
+      state.activeEvents.push("Flood Risk Identified");
+      break;
+
+    case "Forest Edge":
+      state.metrics.stability = Math.min(100, state.metrics.stability + 8);
+      state.activeEvents.push("Hidden Threat Detected");
+      break;
+
+    case "Highland Ridge":
+      state.metrics.stability = Math.min(100, state.metrics.stability + 12);
+      state.metrics.food = Math.max(0, state.metrics.food - 4);
+      state.activeEvents.push("Mountain Isolation");
+      break;
+
+    case "Coastal Bay":
+      state.metrics.trade = (state.metrics.trade || 0) + 10;
+      state.activeEvents.push("Storm Exposure Warning");
+      break;
+
+    case "Open Plain":
+      state.metrics.food = Math.min(100, state.metrics.food + 14);
+      state.metrics.stability = Math.max(0, state.metrics.stability - 5);
+      state.activeEvents.push("Open Defense Weakness");
+      break;
+
+    case "Balanced Crossroads":
+      state.metrics.trade = (state.metrics.trade || 0) + 6;
+      state.metrics.knowledge = Math.min(100, state.metrics.knowledge + 5);
+      state.activeEvents.push("Regional Competition Pressure");
+      break;
+  }
+}
+
+
+function updateCivilizationGrowthDisplay(state) {
+  const icon = document.getElementById("growthStageIcon");
+  const title = document.getElementById("growthStageTitle");
+  const description = document.getElementById("growthStageDescription");
+  const steps = document.querySelectorAll(".growth-step");
+
+  if (!icon || !title || !description) return;
+
+  const stage = state?.civilizationStage || "camp";
+
+  if (stage === "village") {
+    icon.textContent = "🛖";
+    title.textContent = "Founding Settlement";
+    description.textContent = "Your people have claimed land and begun forming the first permanent settlement.";
+
+    steps.forEach((step, index) => {
+      step.classList.toggle("active", index <= 1);
+    });
+  } else {
+    icon.textContent = "⛺";
+    title.textContent = "Survivor Camp";
+    description.textContent = "Your people have not yet formed a permanent settlement.";
+
+    steps.forEach((step, index) => {
+      step.classList.toggle("active", index === 0);
+    });
+  }
+}
+
+function updateCivilizationMeters(state) {
+  const foodMeter = document.getElementById("foodMeter");
+  const defenseMeter = document.getElementById("defenseMeter");
+  const knowledgeMeter = document.getElementById("knowledgeMeter");
+
+  const metrics = state.metrics || {};
+
+  if (foodMeter) foodMeter.style.width = `${metrics.food || 0}%`;
+  if (defenseMeter) foodMeter.title = `Food: ${metrics.food || 0}`;
+  if (defenseMeter) defenseMeter.style.width = `${metrics.stability || 0}%`;
+  if (knowledgeMeter) knowledgeMeter.style.width = `${metrics.knowledge || 0}%`;
+
+  const boardFoodMeter = document.getElementById("boardFoodMeter");
+  const boardStabilityMeter = document.getElementById("boardStabilityMeter");
+  const boardKnowledgeMeter = document.getElementById("boardKnowledgeMeter");
+  const boardWealthMeter = document.getElementById("boardWealthMeter");
+
+  if (boardFoodMeter) boardFoodMeter.style.width = `${metrics.food || 0}%`;
+  if (boardStabilityMeter) boardStabilityMeter.style.width = `${metrics.stability || 0}%`;
+  if (boardKnowledgeMeter) boardKnowledgeMeter.style.width = `${metrics.knowledge || 0}%`;
+  if (boardWealthMeter) boardWealthMeter.style.width = `${metrics.wealth || metrics.trade || 0}%`;
+}
+
+const STORAGE_KEY = "STEM_NATION_SETTLEMENT_DEFENSE_V1";
+
+const openHubBtn = document.getElementById("openHubBtn");
+const completionStatus = document.getElementById("completionStatus");
+const archiveSavedStatus = document.getElementById("archiveSavedStatus");
+let archiveSavedTimer = null;
+
+function showArchiveSavedStatus() {
+  if (!archiveSavedStatus) return;
+
+  archiveSavedStatus.classList.add("show");
+  archiveSavedStatus.textContent = "Archive saved locally.";
+
+  if (archiveSavedTimer) {
+    clearTimeout(archiveSavedTimer);
+  }
+
+  archiveSavedTimer = setTimeout(() => {
+    archiveSavedStatus.classList.remove("show");
+  }, 1600);
+}
+
+
+
+
+const toggleReferenceBoard = document.getElementById("toggleReferenceBoard");
+const referenceBoardWrapper = document.getElementById("referenceBoardWrapper");
+
+if (toggleReferenceBoard && referenceBoardWrapper) {
+  toggleReferenceBoard.addEventListener("click", () => {
+    referenceBoardWrapper.classList.toggle("hidden");
+
+    const isHidden = referenceBoardWrapper.classList.contains("hidden");
+
+    referenceBoardWrapper.style.display = isHidden ? "none" : "block";
+    toggleReferenceBoard.textContent = isHidden
+      ? "Show Strategic Region Reference Board"
+      : "Hide Strategic Region Reference Board";
+  });
+}
+
+
+
+
+
+
+function showActionResponse(message) {
+  const panel = document.getElementById("actionResponsePanel");
+  const content = document.getElementById("actionResponseContent");
+
+  if (!panel || !content) return;
+
+  panel.classList.remove("hidden");
+  content.innerHTML = message;
+}
+
+
+
+
+let archiveVisibleLimit = 6;
+let archiveCurrentFilter = "all";
+
+
+function getArchiveTypeBadge(entry) {
+  const type = entry.type || "";
+
+  if (type === "question") return "❓ Question";
+  if (type === "response") return "⚖️ Response";
+  if (type === "evidence") return "📝 Evidence";
+  if (type === "event") return "📜 Event";
+  if (type === "reflection") return "✍️ Reflection";
+
+  if ((entry.title || "").toLowerCase().includes("founding")) {
+    return "🏛️ Founding Archive";
+  }
+
+  return "📜 Archive";
+}
+
+
+
+function updateArchiveSummary(archives) {
+  const panel = document.getElementById("archiveSummaryPanel");
+  const total = document.getElementById("archiveTotalCount");
+  const questions = document.getElementById("archiveQuestionCount");
+  const responses = document.getElementById("archiveResponseCount");
+  const evidence = document.getElementById("archiveEvidenceCount");
+  const events = document.getElementById("archiveEventCount");
+  const reflections = document.getElementById("archiveReflectionCount");
+  const prompt = document.getElementById("archiveReflectionPrompt");
+
+  if (!panel || !total || !questions || !responses || !evidence || !events) return;
+
+  const list = archives || [];
+
+  const questionCount = list.filter((entry) => entry.type === "question").length;
+  const responseCount = list.filter((entry) => entry.type === "response").length;
+  const evidenceCount = list.filter((entry) => entry.type === "evidence").length;
+  const eventCount = list.filter((entry) => entry.type === "event" || !entry.type).length;
+  const reflectionCount = list.filter((entry) => entry.type === "reflection").length;
+
+  panel.classList.remove("hidden");
+
+  total.textContent = list.length;
+  questions.textContent = questionCount;
+  responses.textContent = responseCount;
+  evidence.textContent = evidenceCount;
+  events.textContent = eventCount;
+  if (reflections) reflections.textContent = reflectionCount;
+
+  if (prompt) {
+    if (questionCount === 0) {
+      prompt.textContent = "What question should your council ask before the next turn?";
+    } else if (evidenceCount === 0) {
+      prompt.textContent = "What evidence should your nation record before responding?";
+    } else if (responseCount === 0) {
+      prompt.textContent = "How should your council respond to the strongest evidence?";
+    } else {
+      prompt.textContent = "Which record best explains how your nation adapted this turn?";
+    }
+  }
+
+  let reflectionButton = document.getElementById("openStudentReflectionBtn");
+
+  if (!reflectionButton && prompt) {
+    reflectionButton = document.createElement("button");
+    reflectionButton.type = "button";
+    reflectionButton.id = "openStudentReflectionBtn";
+    reflectionButton.className = "student-input-btn reflection-open-btn";
+    reflectionButton.textContent = "✍️ Write Reflection";
+    prompt.insertAdjacentElement("afterend", reflectionButton);
+
+    reflectionButton.addEventListener("click", () => {
+      showStudentReflectionPanel();
+
+      showActionResponse(`
+        <div>✍️ <strong>Reflection Opened</strong></div>
+        <div>Write your own reflection, then save it to the archive.</div>
+      `);
+    });
+  }
+}
+
+
+
+
+
+function hideArchivePanel() {
+  const archivePanel = document.getElementById("archiveLogPanel");
+  if (archivePanel) {
+    archivePanel.classList.add("hidden");
+    archivePanel.style.display = "none";
+  }
+}
+
+
+function showOnlyStudentPanel(activePanelId) {
+  hideArchivePanel();
+
+  const panelIds = [
+    "studentQuestionPanel",
+    "studentResponsePanel",
+    "studentEvidencePanel",
+    "studentReflectionPanel"
+  ];
+
+  panelIds.forEach((id) => {
+    const panel = document.getElementById(id);
+
+    if (!panel) return;
+
+    if (id === activePanelId) {
+      panel.classList.remove("hidden");
+      panel.style.display = "block";
+      panel.scrollIntoView({ behavior: "smooth", block: "center" });
+    } else {
+      panel.classList.add("hidden");
+      panel.style.display = "none";
+    }
+  });
+}
+
+
+function hideStudentInputPanels() {
+  const panels = [
+    "studentQuestionPanel",
+    "studentResponsePanel",
+    "studentEvidencePanel",
+    "studentReflectionPanel"
+  ];
+
+  panels.forEach((id) => {
+    const panel = document.getElementById(id);
+    if (panel) {
+      panel.classList.add("hidden");
+      panel.style.display = "none";
+    }
+  });
+}
+
+
+function renderArchiveLog(filter = archiveCurrentFilter) {
+  hideStudentInputPanels();
+
+  archiveCurrentFilter = filter;
+
+  const panel = document.getElementById("archiveLogPanel");
+  const content = document.getElementById("archiveLogContent");
+  const showMoreBtn = document.getElementById("showMoreArchiveBtn");
+
+  if (!panel || !content) return;
+
+  const state = loadCivilizationState();
+  const archives = state.archives || [];
+
+  updateArchiveSummary(archives);
+
+  panel.classList.remove("hidden");
+  panel.style.display = "block";
+
+  const filteredArchives = archives.filter((entry) => {
+    const type = entry.type || "";
+
+    if (filter === "all") return true;
+    if (filter === "founding") return (entry.title || "").toLowerCase().includes("founding");
+
+    return type === filter;
+  });
+
+  if (!filteredArchives.length) {
+    content.innerHTML = "No archive records for this filter.";
+    if (showMoreBtn) showMoreBtn.classList.add("hidden");
+    return;
+  }
+
+  const visibleRecords = filteredArchives.slice().reverse().slice(0, archiveVisibleLimit);
+
+  content.innerHTML = visibleRecords.map((entry) => `
+    <div class="archive-entry">
+      <div class="archive-type-badge">${getArchiveTypeBadge(entry)}</div>
+      <div class="archive-entry-title">${entry.title || "Archive Record"}</div>
+      <div class="archive-entry-summary">${entry.summary || "No summary recorded."}</div>
+      <div class="archive-entry-date">${entry.savedAt || ""}</div>
+    </div>
+  `).join("");
+
+  if (showMoreBtn) {
+    if (filteredArchives.length > archiveVisibleLimit) {
+      showMoreBtn.classList.remove("hidden");
+      showMoreBtn.textContent = `Show More Records (${filteredArchives.length - archiveVisibleLimit} remaining)`;
+    } else {
+      showMoreBtn.classList.add("hidden");
+    }
+  }
+}
+
+
+
+
+const showMoreArchiveBtn = document.getElementById("showMoreArchiveBtn");
+
+if (showMoreArchiveBtn) {
+  showMoreArchiveBtn.addEventListener("click", () => {
+    archiveVisibleLimit += 6;
+    renderArchiveLog(archiveCurrentFilter);
+  });
+}
+
+
+function wireArchiveFilters() {
+  const buttons = document.querySelectorAll(".archive-filter-btn");
+
+  buttons.forEach((button) => {
+    button.addEventListener("click", () => {
+      const filter = button.dataset.filter || "all";
+
+      buttons.forEach((item) => item.classList.remove("active"));
+      button.classList.add("active");
+
+      renderArchiveLog(filter);
+    });
+  });
+}
+
+wireArchiveFilters();
+
+
+
+
+
+
+function showStudentReflectionPanel() {
+  const dock = document.getElementById("studentInputDock");
+  const panel = document.getElementById("studentReflectionPanel");
+  const questionPanel = document.getElementById("studentQuestionPanel");
+  const responsePanel = document.getElementById("studentResponsePanel");
+  const evidencePanel = document.getElementById("studentEvidencePanel");
+  const input = document.getElementById("studentReflectionInput");
+
+  if (!panel || !input) return;
+
+  if (dock && panel.parentElement !== dock) {
+    dock.appendChild(panel);
+  }
+
+  showOnlyStudentPanel("studentReflectionPanel");
+  input.focus();
+}
+
+const openStudentReflectionBtn = document.getElementById("openStudentReflectionBtn");
+const saveStudentReflectionBtn = document.getElementById("saveStudentReflectionBtn");
+
+if (openStudentReflectionBtn) {
+  openStudentReflectionBtn.addEventListener("click", () => {
+    showStudentReflectionPanel();
+
+    showActionResponse(`
+      <div>✍️ <strong>Reflection Opened</strong></div>
+      <div>Write your own reflection, then save it to the archive.</div>
+    `);
+  });
+}
+
+if (saveStudentReflectionBtn) {
+  saveStudentReflectionBtn.addEventListener("click", () => {
+    const input = document.getElementById("studentReflectionInput");
+    const reflection = input ? input.value.trim() : "";
+
+    if (!reflection) {
+      showActionResponse(`
+        <div>✍️ <strong>Reflection Needed</strong></div>
+        <div>Type your reflection before saving.</div>
+      `);
+      return;
+    }
+
+    const state = loadCivilizationState();
+    const prompt = document.getElementById("archiveReflectionPrompt")?.textContent || "Reflection Prompt";
+
+    state.archives = state.archives || [];
+    state.archives.push({
+      id: `STUDENT_REFLECTION_CUSTOM_${Date.now()}`,
+      title: "Student Reflection",
+      summary: `${prompt}: ${reflection}`,
+      type: "reflection",
+      turn: state.worldTurn || state.currentTurn || 1,
+      savedAt: new Date().toISOString()
+    });
+
+    saveCivilizationState(state);
+
+    if (input) input.value = "";
+
+    showActionResponse(`
+      <div>✍️ <strong>Student Reflection Saved</strong></div>
+      <div>${reflection}</div>
+    `);
+
+    renderArchiveLog();
+  });
+}
+
+
+function showStudentEvidencePanel() {
+  const dock = document.getElementById("studentInputDock");
+  const panel = document.getElementById("studentEvidencePanel");
+  const questionPanel = document.getElementById("studentQuestionPanel");
+  const responsePanel = document.getElementById("studentResponsePanel");
+  const input = document.getElementById("studentEvidenceInput");
+
+  if (!panel || !input) return;
+
+  if (dock && panel.parentElement !== dock) {
+    dock.appendChild(panel);
+  }
+
+  showOnlyStudentPanel("studentEvidencePanel");
+  input.focus();
+}
+
+const saveStudentEvidenceBtn = document.getElementById("saveStudentEvidenceBtn");
+
+if (saveStudentEvidenceBtn) {
+  saveStudentEvidenceBtn.addEventListener("click", () => {
+    const input = document.getElementById("studentEvidenceInput");
+    const evidence = input ? input.value.trim() : "";
+
+    if (!evidence) {
+      showActionResponse(`
+        <div>📝 <strong>Evidence Needed</strong></div>
+        <div>Type your evidence note before saving.</div>
+      `);
+      return;
+    }
+
+    const state = loadCivilizationState();
+    const eventTitle = document.getElementById("dynamicEventTitle")?.textContent || "World Event";
+
+    state.archives = state.archives || [];
+    state.archives.push({
+      id: `STUDENT_EVIDENCE_CUSTOM_${Date.now()}`,
+      title: "Evidence Note",
+      summary: `${eventTitle}: ${evidence}`,
+      type: "evidence",
+      turn: state.worldTurn || state.currentTurn || 1,
+      savedAt: new Date().toISOString()
+    });
+
+    saveCivilizationState(state);
+
+    if (input) input.value = "";
+
+    showActionResponse(`
+      <div>📝 <strong>Student Evidence Saved</strong></div>
+      <div>${evidence}</div>
+    `);
+
+    renderArchiveLog();
+  });
+}
+
+
+function showStudentResponsePanel() {
+  const dock = document.getElementById("studentInputDock");
+  const panel = document.getElementById("studentResponsePanel");
+  const questionPanel = document.getElementById("studentQuestionPanel");
+  const input = document.getElementById("studentResponseInput");
+
+  if (!panel || !input) return;
+
+  if (dock && panel.parentElement !== dock) {
+    dock.appendChild(panel);
+  }
+
+  showOnlyStudentPanel("studentResponsePanel");
+  input.focus();
+}
+
+const saveStudentResponseBtn = document.getElementById("saveStudentResponseBtn");
+
+if (saveStudentResponseBtn) {
+  saveStudentResponseBtn.addEventListener("click", () => {
+    const input = document.getElementById("studentResponseInput");
+    const response = input ? input.value.trim() : "";
+
+    if (!response) {
+      showActionResponse(`
+        <div>⚖️ <strong>Response Needed</strong></div>
+        <div>Type your council response strategy before saving.</div>
+      `);
+      return;
+    }
+
+    const state = loadCivilizationState();
+    const eventTitle = document.getElementById("dynamicEventTitle")?.textContent || "World Event";
+
+    state.archives = state.archives || [];
+    state.archives.push({
+      id: `STUDENT_RESPONSE_CUSTOM_${Date.now()}`,
+      title: "Council Response",
+      summary: `${eventTitle}: ${response}`,
+      type: "response",
+      turn: state.worldTurn || state.currentTurn || 1,
+      savedAt: new Date().toISOString()
+    });
+
+    saveCivilizationState(state);
+
+    if (input) input.value = "";
+
+    showActionResponse(`
+      <div>⚖️ <strong>Student Response Saved</strong></div>
+      <div>${response}</div>
+    `);
+
+    renderArchiveLog();
+  });
+}
+
+
+function showStudentQuestionPanel() {
+  const dock = document.getElementById("studentInputDock");
+  const panel = document.getElementById("studentQuestionPanel");
+  const responsePanel = document.getElementById("studentResponsePanel");
+  const input = document.getElementById("studentQuestionInput");
+
+  if (!panel || !input) return;
+
+  if (dock && panel.parentElement !== dock) {
+    dock.appendChild(panel);
+  }
+
+  showOnlyStudentPanel("studentQuestionPanel");
+  input.focus();
+}
+
+const saveStudentQuestionBtn = document.getElementById("saveStudentQuestionBtn");
+
+if (saveStudentQuestionBtn) {
+  saveStudentQuestionBtn.addEventListener("click", () => {
+    const input = document.getElementById("studentQuestionInput");
+    const question = input ? input.value.trim() : "";
+
+    if (!question) {
+      showActionResponse(`
+        <div>❓ <strong>Question Needed</strong></div>
+        <div>Type your council question before saving.</div>
+      `);
+      return;
+    }
+
+    const state = loadCivilizationState();
+    state.archives = state.archives || [];
+    state.archives.push({
+      id: `STUDENT_QUESTION_CUSTOM_${Date.now()}`,
+      title: "Student Question",
+      summary: question,
+      type: "question",
+      turn: state.worldTurn || state.currentTurn || 1,
+      savedAt: new Date().toISOString()
+    });
+
+    saveCivilizationState(state);
+
+    if (input) input.value = "";
+
+    showActionResponse(`
+      <div>❓ <strong>Student Question Saved</strong></div>
+      <div>${question}</div>
+    `);
+
+    renderArchiveLog();
+  });
+}
+
+
+
+function moveStudentInputPanelsToDock() {
+  const dock = document.getElementById("studentInputDock");
+  const questionPanel = document.getElementById("studentQuestionPanel");
+  const responsePanel = document.getElementById("studentResponsePanel");
+
+  if (!dock) return;
+
+  if (questionPanel && questionPanel.parentElement !== dock) {
+    dock.appendChild(questionPanel);
+  }
+
+  if (responsePanel && responsePanel.parentElement !== dock) {
+    dock.appendChild(responsePanel);
+  }
+}
+
+moveStudentInputPanelsToDock();
+
+
+function wireEventActionButtons() {
+  const askBtn = document.getElementById("eventAskBtn");
+  const respondBtn = document.getElementById("eventRespondBtn");
+  const recordBtn = document.getElementById("eventArchiveBtn");
+  const evidenceBtn = document.getElementById("eventEvidenceBtn");
+  const inquiryPrompt = document.getElementById("dynamicInquiryPrompt");
+
+  if (askBtn) {
+    askBtn.addEventListener("click", () => {
+      const suggestedQuestion = "What evidence should your council gather before responding to this event?";
+
+      if (inquiryPrompt) {
+        inquiryPrompt.textContent = suggestedQuestion;
+      }
+
+      showStudentQuestionPanel();
+
+      showActionResponse(`
+        <div>❓ <strong>Question Prompt Opened</strong></div>
+        <div>Type your own council question, then save it to the archive.</div>
+      `);
+    });
+  }
+
+  if (respondBtn) {
+    respondBtn.addEventListener("click", () => {
+      let panel = document.getElementById("studentResponsePanel");
+      let input = document.getElementById("studentResponseInput");
+      const eventPanel = document.getElementById("dynamicEventPanel");
+
+      if (!panel && eventPanel) {
+        panel = document.createElement("div");
+        panel.id = "studentResponsePanel";
+        panel.className = "student-input-panel";
+        panel.innerHTML = `
+          <div class="student-input-label">COUNCIL RESPONSE STRATEGY</div>
+          <textarea id="studentResponseInput" class="student-input-textarea"
+            placeholder="Type how your council will respond to this world event..."></textarea>
+          <button type="button" id="saveStudentResponseBtn" class="student-input-btn">
+            Save Response to Archive
+          </button>
+        `;
+        eventPanel.insertAdjacentElement("afterend", panel);
+        input = document.getElementById("studentResponseInput");
+      }
+
+      if (panel && eventPanel && panel.parentElement !== eventPanel.parentElement) {
+        eventPanel.insertAdjacentElement("afterend", panel);
+      }
+
+      if (panel) {
+        panel.classList.remove("hidden");
+        panel.style.display = "block";
+        panel.scrollIntoView({ behavior: "smooth", block: "center" });
+      }
+
+      if (input) input.focus();
+
+      showActionResponse(`
+        <div>⚖️ <strong>Response Strategy Opened</strong></div>
+        <div>Type your council response strategy, then save it to the archive.</div>
+      `);
+    });
+  }
+
+  if (evidenceBtn) {
+    evidenceBtn.addEventListener("click", () => {
+      showStudentEvidencePanel();
+
+      showActionResponse(`
+        <div>📝 <strong>Evidence Note Opened</strong></div>
+        <div>Type your own evidence note, then save it to the archive.</div>
+      `);
+    });
+  }
+
+  if (recordBtn) {
+    recordBtn.addEventListener("click", () => {
+      const state = loadCivilizationState();
+      const title = document.getElementById("dynamicEventTitle")?.textContent || "World Event";
+      const summary = document.getElementById("dynamicEventDescription")?.textContent || "A world event was recorded.";
+
+      state.archives = state.archives || [];
+      state.archives.push({
+        id: `WORLD_EVENT_ARCHIVE_${Date.now()}`,
+        title,
+        summary,
+        savedAt: new Date().toISOString()
+      });
+
+      saveCivilizationState(state);
+
+      showActionResponse(`
+        <div>📜 <strong>Archive Record Added</strong></div>
+        <div>This world event has been recorded in the nation archive.</div>
+      `);
+
+      renderArchiveLog();
+    });
+  }
+}
+
+wireEventActionButtons();
+
+const overlayButtons = document.querySelectorAll(".overlay-toggle-btn");
+
+overlayButtons.forEach((button) => {
+  button.addEventListener("click", () => {
+    const overlayId = button.dataset.overlay;
+    const overlay = document.getElementById(overlayId);
+
+    if (!overlay) return;
+
+    overlay.classList.toggle("hidden");
+
+    if (overlayId === "archiveOverlay") {
+      hideStudentInputPanels();
+      renderArchiveLog();
+
+      const archivePanel = document.getElementById("archiveLogPanel");
+      if (archivePanel) {
+        archivePanel.scrollIntoView({ behavior: "smooth", block: "start" });
+      }
+    }
+  });
+});
+
+const commandTabs = document.querySelectorAll(".command-tab");
+const commandPanels = document.querySelectorAll(".command-panel");
+
+commandTabs.forEach((tab) => {
+  tab.addEventListener("click", () => {
+    const targetPanelId = tab.dataset.panel;
+
+    commandTabs.forEach((item) => item.classList.remove("active"));
+    commandPanels.forEach((panel) => {
+      panel.classList.add("hidden");
+      panel.classList.remove("active");
+    });
+
+    tab.classList.add("active");
+
+    const targetPanel = document.getElementById(targetPanelId);
+    if (targetPanel) {
+      targetPanel.classList.remove("hidden");
+      targetPanel.classList.add("active");
+    }
+  });
+});
+
+
+const regionPreviewData = {
+  "River Corridor": {
+    bonus: "+ Food Production",
+    risk: "Flood Risk",
+    impact: "+10 Food · Event: Flood Risk Identified"
+  },
+  "Forest Edge": {
+    bonus: "+ Shelter & Wood",
+    risk: "Hidden Threats",
+    impact: "+8 Stability · Event: Hidden Threat Detected"
+  },
+  "Highland Ridge": {
+    bonus: "+ Defense & Visibility",
+    risk: "Limited Farming",
+    impact: "+12 Stability · -4 Food · Event: Mountain Isolation"
+  },
+  "Coastal Bay": {
+    bonus: "+ Trade & Fishing",
+    risk: "Storm Exposure",
+    impact: "+10 Trade · Event: Storm Exposure Warning"
+  },
+  "Open Plain": {
+    bonus: "+ Agriculture & Growth",
+    risk: "Weak Defense",
+    impact: "+14 Food · -5 Stability · Event: Open Defense Weakness"
+  },
+  "Balanced Crossroads": {
+    bonus: "+ Flexibility & Trade",
+    risk: "Competition Pressure",
+    impact: "+6 Trade · +5 Knowledge · Event: Regional Competition Pressure"
+  }
+};
+
+function showRegionConsequencePreview(regionName) {
+  const preview = document.getElementById("regionConsequencePreview");
+  const name = document.getElementById("previewRegionName");
+  const bonus = document.getElementById("previewRegionBonus");
+  const risk = document.getElementById("previewRegionRisk");
+  const impact = document.getElementById("previewMetricImpact");
+
+  const data = regionPreviewData[regionName];
+
+  if (!preview || !name || !bonus || !risk || !impact || !data) return;
+
+  preview.classList.remove("hidden");
+  name.textContent = regionName;
+  bonus.textContent = `Bonus: ${data.bonus}`;
+  risk.textContent = `Risk: ${data.risk}`;
+  impact.textContent = `Metric Impact: ${data.impact}`;
+}
+
+
+const boardTerrainTiles = document.querySelectorAll(".board-terrain-tile");
+const boardWorldFeedback = document.getElementById("boardWorldFeedback");
+
+boardTerrainTiles.forEach((tile) => {
+  tile.addEventListener("click", (event) => {
+    tile = event.currentTarget;
+
+    boardTerrainTiles.forEach((item) => {
+      item.classList.remove("selected");
+
+      const settlementSlot = item.querySelector(".board-settlement-slot");
+      const infrastructureSlot = item.querySelector(".board-infrastructure-slot");
+
+      if (settlementSlot) settlementSlot.textContent = "";
+      if (infrastructureSlot) infrastructureSlot.textContent = "";
+    });
+
+    tile.classList.add("selected");
+
+    const selectedRegion = tile.dataset.region;
+
+    const settlementSlot = tile.querySelector(".board-settlement-slot");
+    const infrastructureSlot = tile.querySelector(".board-infrastructure-slot");
+
+    if (settlementSlot) settlementSlot.textContent = "🛖";
+    if (infrastructureSlot) infrastructureSlot.textContent = getInfrastructureForRegion(selectedRegion);
+
+    const chosenRegionField = document.getElementById("chosenRegion");
+    if (chosenRegionField) chosenRegionField.value = selectedRegion;
+
+    if (boardWorldFeedback) {
+      boardWorldFeedback.classList.remove("hidden");
+      boardWorldFeedback.textContent = `${selectedRegion} selected on the World Board. Review the intel, record evidence, then defend whether this should become your first settlement.`;
+    }
+
+    showRegionConsequencePreview(selectedRegion);
+    saveSettlementDefense();
+    updateCompletionStatus();
+  });
+});
+
+const terrainZones = document.querySelectorAll(".terrain-zone");
+const settlementMarker = document.getElementById("settlementMarker");
+const terrainMapFeedback = document.getElementById("terrainMapFeedback");
+
+terrainZones.forEach((zone) => {
+  zone.addEventListener("click", () => {
+    terrainZones.forEach((item) => {
+      item.classList.remove("selected");
+      const slot = item.querySelector(".zone-settlement-slot");
+      if (slot) {
+        slot.textContent = "";
+        slot.classList.remove("active");
+      }
+
+      const infrastructureSlot = item.querySelector(".zone-infrastructure-slot");
+      if (infrastructureSlot) {
+        infrastructureSlot.textContent = "";
+        infrastructureSlot.classList.remove("active");
+      }
+    });
+
+    zone.classList.add("selected");
+
+    const activeSlot = zone.querySelector(".zone-settlement-slot");
+    if (activeSlot) {
+      activeSlot.textContent = "🛖";
+      activeSlot.classList.add("active");
+    }
+
+    const activeInfrastructureSlot = zone.querySelector(".zone-infrastructure-slot");
+    if (activeInfrastructureSlot) {
+      activeInfrastructureSlot.textContent = getInfrastructureForRegion(zone.dataset.region);
+      activeInfrastructureSlot.classList.add("active");
+    }
+
+    const selectedRegion = zone.dataset.region;
+    const chosenRegionField = document.getElementById("chosenRegion");
+
+    if (chosenRegionField) {
+      chosenRegionField.value = selectedRegion;
+    }
+
+    if (settlementMarker) {
+      settlementMarker.classList.remove("hidden");
+      settlementMarker.textContent = `📍 Settlement placed: ${selectedRegion}`;
+    }
+
+    if (terrainMapFeedback) {
+      terrainMapFeedback.classList.remove("hidden");
+      terrainMapFeedback.textContent = `${selectedRegion} terrain selected. Council review updated.`;
+    }
+
+    showRegionConsequencePreview(selectedRegion);
+
+    saveSettlementDefense();
+    updateCompletionStatus();
+  });
+});
+
+const regionCards = document.querySelectorAll(".region-card");
+const regionSelectionFeedback = document.getElementById("regionSelectionFeedback");
+
+regionCards.forEach((card) => {
+  card.addEventListener("click", () => {
+    regionCards.forEach((item) => item.classList.remove("selected"));
+    card.classList.add("selected");
+
+    const selectedRegion = card.dataset.region;
+    const chosenRegionField = document.getElementById("chosenRegion");
+
+    if (chosenRegionField) {
+      chosenRegionField.value = selectedRegion;
+    }
+
+    if (regionSelectionFeedback) {
+      regionSelectionFeedback.classList.remove("hidden");
+      regionSelectionFeedback.textContent = `${selectedRegion} selected for strategic review.`;
+    }
+
+    saveSettlementDefense();
+    updateCompletionStatus();
+  });
+});
+
+const selectedPriorities = new Set();
+const priorityCards = document.querySelectorAll(".priority-card");
+const priorityStatus = document.getElementById("priorityStatus");
+const priorityBonus = document.getElementById("priorityBonus");
+
+priorityCards.forEach((card) => {
+  card.addEventListener("click", () => {
+    const value = card.dataset.priority;
+
+    if (selectedPriorities.has(value)) {
+      selectedPriorities.delete(value);
+      card.classList.remove("selected");
+    } else {
+      if (selectedPriorities.size >= 3) {
+        return;
+      }
+
+      selectedPriorities.add(value);
+      card.classList.add("selected");
+    }
+
+    if (priorityStatus) {
+      priorityStatus.textContent = `Selected ${selectedPriorities.size} of 3 priorities.`;
+    }
+
+    if (priorityBonus) {
+      priorityBonus.classList.toggle("hidden", selectedPriorities.size !== 3);
+    }
+
+    const state = loadCivilizationState();
+
+    if (selectedPriorities.size === 3 && !state.survivalPriorityChallengeComplete) {
+      state.metrics.knowledge = Math.min(100, state.metrics.knowledge + 1);
+      state.survivalPriorityChallengeComplete = true;
+      state.survivalPriorities = Array.from(selectedPriorities);
+      saveCivilizationState(state);
+      updateCivilizationMeters(state);
+    }
+  });
+});
+
+function saveSettlementDefense() {
+  const record = {};
+  requiredFields.forEach((id) => {
+    const field = document.getElementById(id);
+    record[id] = field ? field.value : "";
+  });
+
+  record.savedAt = new Date().toISOString();
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(record));
+  showArchiveSavedStatus();
+}
+
+function loadSettlementDefense() {
+  const raw = localStorage.getItem(STORAGE_KEY);
+  if (!raw) return;
+
+  try {
+    const record = JSON.parse(raw);
+    requiredFields.forEach((id) => {
+      const field = document.getElementById(id);
+      if (field && record[id]) {
+        field.value = record[id];
+      }
+    });
+  } catch (error) {
+    console.log("Could not load saved settlement defense record.", error);
+  }
+}
+
+function updateCompletionStatus() {
+  const completed = requiredFields.filter((id) => {
+    const field = document.getElementById(id);
+    return field && field.value.trim().length > 0;
+  }).length;
+
+  if (completionStatus) {
+    completionStatus.textContent = `Completed ${completed} of ${requiredFields.length} required fields.`;
+  }
+
+  if (openHubBtn) {
+    const isComplete = completed === requiredFields.length;
+    openHubBtn.disabled = !isComplete;
+    openHubBtn.classList.toggle("locked", !isComplete);
+
+  const consequenceBox = document.getElementById("consequenceBox");
+  const civilizationUpdate = document.getElementById("civilizationUpdate");
+
+  if (consequenceBox && civilizationUpdate) {
+    consequenceBox.classList.toggle("hidden", !isComplete);
+    civilizationUpdate.classList.toggle("hidden", !isComplete);
+  }
+
+  const missionCompletePanel = document.getElementById("missionCompletePanel");
+
+  if (missionCompletePanel) {
+    missionCompletePanel.classList.toggle("hidden", !isComplete);
+  }
+
+  if (isComplete) {
+    const state = loadCivilizationState();
+
+    if (!state.mission1ClaimLandComplete) {
+      state.metrics.food = Math.min(100, state.metrics.food + 5);
+      state.metrics.knowledge = Math.min(100, state.metrics.knowledge + 10);
+      state.metrics.stability = Math.min(100, state.metrics.stability + 3);
+
+      const chosenRegionField = document.getElementById("chosenRegion");
+      const chosenRegion = chosenRegionField ? chosenRegionField.value : "";
+      applyRegionConsequences(state, chosenRegion);
+
+      state.foundingArchive = 1;
+      state.survivalPlanning = 1;
+      state.environmentalRisk = 1;
+
+      state.mission1ClaimLandComplete = true;
+      state.civilizationStage = "village";
+    }
+
+    saveCivilizationState(state);
+    updateCivilizationMeters(state);
+    updateCivilizationGrowthDisplay(state);
+  }
+
+  }
+}
+
+requiredFields.forEach((id) => {
+  const field = document.getElementById(id);
+  if (field) {
+    field.addEventListener("input", () => {
+      saveSettlementDefense();
+      loadSettlementDefense();
+
+const currentCivilizationState = loadCivilizationState();
+updateCivilizationMeters(currentCivilizationState);
+updateCivilizationGrowthDisplay(currentCivilizationState);
+updateWorldTimeDisplay(currentCivilizationState);
+updateWorldAtmosphere(currentCivilizationState);
+updateDynamicWorldEvent(currentCivilizationState);
+
+const automanStateCheck = document.getElementById("automanStateCheck");
+const automanStateOutput = document.getElementById("automanStateOutput");
+
+if (automanStateCheck && automanStateOutput) {
+  automanStateCheck.classList.remove("hidden");
+  automanStateOutput.textContent = JSON.stringify(currentCivilizationState, null, 2);
+}
+
+updateCompletionStatus();
+    });
+  }
+});
+
+if (openHubBtn) {
+  openHubBtn.addEventListener("click", () => {
+    const requiredComplete = requiredFields.every((id) => {
+      const field = document.getElementById(id);
+      return field && field.value && field.value.trim().length > 0;
+    });
+
+    if (requiredComplete) {
+      window.location.href = "/hub";
+      return;
+    }
+
+    const form = document.getElementById("settlementForm");
+    const legacyWrapper = document.getElementById("legacyContentWrapper");
+    const toggleLegacyBtn = document.getElementById("toggleLegacyContentBtn");
+
+    if (legacyWrapper && legacyWrapper.classList.contains("hidden")) {
+      legacyWrapper.classList.remove("hidden");
+      if (toggleLegacyBtn) toggleLegacyBtn.textContent = "Hide Legacy Mission Details";
+    }
+
+    if (form) {
+      form.scrollIntoView({ behavior: "smooth", block: "center" });
+    }
+
+    if (completionStatus) {
+      completionStatus.textContent =
+        "Command Center locked: complete all Founding Defense fields first.";
+    }
+  });
+}
+
+loadSettlementDefense();
+updateCompletionStatus();
+
+const toggleMissionResultsBtn = document.getElementById("toggleMissionResultsBtn");
+const missionResultsWrapper = document.getElementById("missionResultsWrapper");
+
+if (toggleMissionResultsBtn && missionResultsWrapper) {
+  toggleMissionResultsBtn.addEventListener("click", () => {
+    missionResultsWrapper.classList.toggle("hidden");
+
+    const isHidden = missionResultsWrapper.classList.contains("hidden");
+    toggleMissionResultsBtn.textContent = isHidden
+      ? "🏁 Show Mission Results"
+      : "🏁 Hide Mission Results";
+  });
+}
+
+</script>
+
+
+
+<!-- =========================================================
+PHASE 6 STEP 6 — STEM NATION AUTOSAVE ENGINE V1
+========================================================= -->
+
+<script>
+/* STEM_NATION_AUTOSAVE_ENGINE_V1 */
+
+const AUTOSAVE_META_KEY = "STEM_NATION_AUTOSAVE_META_V1";
+
+function updateAutosaveMeta() {
+
+  const meta = {
+    lastSavedAt: new Date().toISOString(),
+    currentPage: window.location.pathname,
+    civilizationStateKey: CIV_STATE_KEY,
+    settlementKey: STORAGE_KEY
+  };
+
+  localStorage.setItem(
+    AUTOSAVE_META_KEY,
+    JSON.stringify(meta)
+  );
+
+  showAutosaveBanner(meta.lastSavedAt);
+}
+
+function showAutosaveBanner(timestamp) {
+
+  let banner = document.getElementById("autosaveBanner");
+
+  if (!banner) {
+    banner = document.createElement("div");
+    banner.id = "autosaveBanner";
+
+    banner.style.position = "fixed";
+    banner.style.top = "82px";
+    banner.style.right = "12px";
+    banner.style.padding = "10px 14px";
+    banner.style.background = "rgba(0,0,0,0.85)";
+    banner.style.border = "1px solid rgba(255,215,0,0.35)";
+    banner.style.borderRadius = "10px";
+    banner.style.color = "#f5f1dc";
+    banner.style.fontSize = "10px";
+    banner.style.zIndex = "99999";
+    banner.style.transition = "opacity 0.4s ease";
+
+    document.body.appendChild(banner);
+  }
+
+  banner.innerHTML =
+    "Autosaved: " +
+    new Date(timestamp).toLocaleTimeString();
+
+  banner.style.opacity = "1";
+
+  setTimeout(() => {
+    banner.style.opacity = "0.35";
+  }, 2500);
+}
+
+function validateStoredJSON(key) {
+
+  const raw = localStorage.getItem(key);
+
+  if (!raw) return true;
+
+  try {
+    JSON.parse(raw);
+    return true;
+  } catch (err) {
+
+    console.warn(
+      "STEM Nation save issue detected:",
+      key
+    );
+
+    localStorage.removeItem(key);
+
+    return false;
+  }
+}
+
+function runSaveRecoveryAudit() {
+
+  validateStoredJSON(STORAGE_KEY);
+  validateStoredJSON(CIV_STATE_KEY);
+  validateStoredJSON(AUTOSAVE_META_KEY);
+}
+
+function runAutosaveHeartbeat() {
+
+  updateAutosaveMeta();
+
+  if (typeof saveSettlementDefense === "function") {
+    try {
+      saveSettlementDefense();
+    } catch (err) {
+      console.warn("Settlement autosave skipped:", err);
+    }
+  }
+
+  if (typeof saveCivilizationState === "function") {
+    try {
+
+      const latestState =
+        loadCivilizationState();
+
+      saveCivilizationState(latestState);
+
+    } catch (err) {
+      console.warn("Nation autosave skipped:", err);
+    }
+  }
+}
+
+runSaveRecoveryAudit();
+
+setInterval(() => {
+  runAutosaveHeartbeat();
+}, 30000);
+
+window.addEventListener("beforeunload", () => {
+  runAutosaveHeartbeat();
+});
+
+document.addEventListener("visibilitychange", () => {
+  if (document.visibilityState === "hidden") {
+    runAutosaveHeartbeat();
+  }
+});
+
+console.log(
+  "STEM_NATION_AUTOSAVE_ENGINE_V1 ACTIVE"
+);
+</script>
+
+
+
+
+<!-- =========================================================
+PHASE 6 STEP 8 — STEM NATION PROGRESS HUD V1
+Displays student save status and progress indicators.
+========================================================= -->
+
+<script>
+/* STEM_NATION_PROGRESS_HUD_V1 */
+
+(function () {
+  const HUD_AUTOSAVE_META_KEY = "STEM_NATION_AUTOSAVE_META_V1";
+  const HUD_SETTLEMENT_KEY = "STEM_NATION_SETTLEMENT_DEFENSE_V1";
+  const HUD_CIV_STATE_KEY = "STEM_NATION_CIVILIZATION_STATE_V34";
+
+  function safeReadJSON(key) {
+    const raw = localStorage.getItem(key);
+    if (!raw) return null;
+
+    try {
+      return JSON.parse(raw);
+    } catch (err) {
+      return null;
+    }
+  }
+
+  function buildStudentProgressHud() {
+    let hud = document.getElementById("studentProgressHud");
+
+    if (!hud) {
+      hud = document.createElement("div");
+      hud.id = "studentProgressHud";
+      hud.innerHTML = `
+        <button id="studentProgressToggle" class="student-progress-toggle" type="button">Student Progress</button>
+        <div id="studentProgressBody" class="student-progress-body">
+          <div class="student-progress-title">Student Progress</div>
+          <div id="studentHudSaveStatus">Save: Checking...</div>
+          <div id="studentHudLastSaved">Last Saved: —</div>
+          <div id="studentHudSettlement">Settlement: —</div>
+          <div id="studentHudCivilization">Nation: —</div>
+          <div id="studentHudPage">Page: —</div>
+        </div>
+      `;
+      document.body.appendChild(hud);
+    hud.classList.add("collapsed");
+    const progressToggle = document.getElementById("studentProgressToggle");
+    if (progressToggle) {
+      progressToggle.addEventListener("click", function () {
+        hud.classList.toggle("collapsed");
+      });
+    }
+    }
+
+    hud.style.position = "fixed";
+    hud.style.top = "12px";
+    hud.style.right = "12px";
+    hud.style.width = "230px";
+    hud.style.padding = "12px 14px";
+    hud.style.background = "rgba(0, 0, 0, 0.82)";
+    hud.style.border = "1px solid rgba(255, 215, 0, 0.35)";
+    hud.style.borderRadius = "12px";
+    hud.style.color = "#f5f1dc";
+    hud.style.fontSize = "12px";
+    hud.style.lineHeight = "1.55";
+    hud.style.zIndex = "99998";
+    hud.style.boxShadow = "0 8px 24px rgba(0,0,0,0.35)";
+
+    const title = hud.querySelector(".student-progress-title");
+    if (title) {
+      title.style.fontWeight = "700";
+      title.style.color = "#ffd76a";
+      title.style.marginBottom = "6px";
+      title.style.letterSpacing = "0.04em";
+      title.style.textTransform = "uppercase";
+    }
+
+    return hud;
+  }
+
+  function formatSavedTime(meta) {
+    if (!meta || !meta.lastSavedAt) return "—";
+
+    try {
+      return new Date(meta.lastSavedAt).toLocaleTimeString();
+    } catch (err) {
+      return "—";
+    }
+  }
+
+  function updateStudentProgressHud() {
+    buildStudentProgressHud();
+
+    const meta = safeReadJSON(HUD_AUTOSAVE_META_KEY);
+    const settlement = safeReadJSON(HUD_SETTLEMENT_KEY);
+    const civ = safeReadJSON(HUD_CIV_STATE_KEY);
+
+    const saveStatus = document.getElementById("studentHudSaveStatus");
+    const lastSaved = document.getElementById("studentHudLastSaved");
+    const settlementStatus = document.getElementById("studentHudSettlement");
+    const civilizationStatus = document.getElementById("studentHudCivilization");
+    const pageStatus = document.getElementById("studentHudPage");
+
+    if (saveStatus) {
+      saveStatus.textContent = "Save: Active";
+    }
+
+    if (lastSaved) {
+      lastSaved.textContent = "Last Saved: " + formatSavedTime(meta);
+    }
+
+    if (settlementStatus) {
+      settlementStatus.textContent =
+        "Settlement: " + (settlement ? "Saved" : "Not Started");
+    }
+
+    if (civilizationStatus) {
+      civilizationStatus.textContent =
+        "Nation: " + (civ ? "Saved" : "Not Started");
+    }
+
+    if (pageStatus) {
+      pageStatus.textContent = "Page: " + window.location.pathname;
+    }
+  }
+
+  buildStudentProgressHud();
+  updateStudentProgressHud();
+
+  setInterval(updateStudentProgressHud, 5000);
+
+  window.addEventListener("storage", updateStudentProgressHud);
+  window.addEventListener("focus", updateStudentProgressHud);
+
+  console.log("STEM_NATION_PROGRESS_HUD_V1 ACTIVE");
+})();
+</script>
+
+
+
+
+<!-- =========================================================
+PHASE 8 STEP 4 — STEM NATION STUDENT SESSION DISPLAY V1
+Displays active teacher-guided class session on the student map.
+========================================================= -->
+
+<script>
+/* STEM_NATION_STUDENT_SESSION_DISPLAY_V1 */
+/* STEM_NATION_CLASS_SESSION_BUTTON_TOP_LEFT_OPPOSITE_PROGRESS_V1 */
+/* STEM_NATION_STUDENT_SESSION_BANNER_COLLAPSED_FIX_V1 */
+/* STEM_NATION_STUDENT_SESSION_BANNER_TOP_LEFT_FIX_V1 */
+/* STEM_NATION_STUDENT_SESSION_BANNER_COMPACT_FIX_V1 */
+(function () {
+  const STUDENT_SESSION_KEY = "STEM_NATION_CLASS_SESSION_V1";
+
+  function safeReadSession() {
+    const raw = localStorage.getItem(STUDENT_SESSION_KEY);
+    if (!raw) return null;
+
+    try {
+      return JSON.parse(raw);
+    } catch (err) {
+      console.warn("Invalid teacher class session ignored.", err);
+      return null;
+    }
+  }
+
+  function buildSessionBanner() {
+    let banner = document.getElementById("studentClassSessionBanner");
+
+    if (!banner) {
+      banner = document.createElement("div");
+      banner.id = "studentClassSessionBanner";
+      banner.classList.add("collapsed");
+      banner.innerHTML = `
+        <button id="studentSessionToggleBtn" type="button">Class Session</button>
+        <div id="studentSessionBody">
+          <div id="studentSessionTitle" class="student-session-title">Class Session</div>
+          <div id="studentSessionStatus">Status: —</div>
+          <div id="studentSessionMission">Mission: —</div>
+          <div id="studentSessionPrompt">Prompt: —</div>
+        </div>
+      `;
+      document.body.appendChild(banner);
+    }
+
+    banner.style.position = "fixed";
+    banner.style.left = "12px";
+    banner.style.top = "12px";
+    banner.style.width = "230px";
+    banner.style.maxWidth = "150px";
+    banner.style.padding = "6px 8px";
+    banner.style.background = "rgba(0, 0, 0, 0.84)";
+    banner.style.border = "1px solid rgba(212, 175, 55, 0.42)";
+    banner.style.borderRadius = "12px";
+    banner.style.color = "#f5f1dc";
+    banner.style.fontSize = "11px";
+    banner.style.lineHeight = "1.55";
+    banner.style.zIndex = "9998";
+    banner.style.boxShadow = "0 8px 24px rgba(0,0,0,0.38)";
+    banner.style.maxHeight = "160px";
+    banner.style.overflow = "auto";
+
+    const toggleBtn = document.getElementById("studentSessionToggleBtn");
+    const body = document.getElementById("studentSessionBody");
+
+    if (toggleBtn && body && !toggleBtn.dataset.bound) {
+      toggleBtn.dataset.bound = "true";
+      toggleBtn.style.width = "100%";
+      toggleBtn.style.border = "none";
+      toggleBtn.style.borderRadius = "10px";
+      toggleBtn.style.padding = "7px 9px";
+      toggleBtn.style.background = "rgba(212, 175, 55, 0.2)";
+      toggleBtn.style.color = "#ffd76a";
+      toggleBtn.style.fontWeight = "700";
+      toggleBtn.style.cursor = "pointer";
+
+      body.style.display = "none";
+      body.style.marginTop = "6px";
+      body.style.maxHeight = "90px";
+      body.style.overflow = "auto";
+
+      toggleBtn.addEventListener("click", function () {
+        const hidden = body.style.display === "none";
+        body.style.display = hidden ? "block" : "none";
+      });
+    }
+    banner.style.maxHeight = "130px";
+    banner.style.overflow = "auto";
+    banner.style.maxHeight = "150px";
+    banner.style.overflow = "auto";
+
+    const title = banner.querySelector(".student-session-title");
+    if (title) {
+      title.style.fontWeight = "700";
+      title.style.color = "#ffd76a";
+      title.style.marginBottom = "6px";
+      title.style.letterSpacing = "0.04em";
+      title.style.textTransform = "uppercase";
+    }
+
+    return banner;
+  }
+
+  function updateSessionBanner() {
+    const session = safeReadSession();
+    const banner = buildSessionBanner();
+
+    const title = document.getElementById("studentSessionTitle");
+    const status = document.getElementById("studentSessionStatus");
+    const mission = document.getElementById("studentSessionMission");
+    const prompt = document.getElementById("studentSessionPrompt");
+
+    if (!session) {
+      banner.style.display = "none";
+      return;
+    }
+
+    banner.style.display = "block";
+
+    if (title) {
+      title.textContent = session.sessionName || "Class Session";
+    }
+
+    if (status) {
+      status.textContent = "Status: " + String(session.status || "unknown").toUpperCase();
+    }
+
+    if (mission) {
+      mission.textContent = "Mission: " + (session.missionFocus || "Not Set");
+    }
+
+    if (prompt) {
+      prompt.textContent = "Prompt: " + (session.teacherPrompt || "Observe. Ask. Decide. Record.");
+    }
+  }
+
+  buildSessionBanner();
+  updateSessionBanner();
+
+  setInterval(updateSessionBanner, 5000);
+
+  window.addEventListener("storage", updateSessionBanner);
+  window.addEventListener("focus", updateSessionBanner);
+
+  console.log("STEM_NATION_STUDENT_SESSION_DISPLAY_V1 ACTIVE");
+})();
+</script>
+
+
+
+<!-- STEM_NATION_STUDENT_TIMELINE_DISPLAY_V1 -->
+<div id="studentTimelineDisplay" class="student-timeline-display collapsed">
+  <button id="studentTimelineToggle" class="student-timeline-toggle" type="button">
+    Live Lesson Step
+  </button>
+  <div id="studentTimelineBody" class="student-timeline-body">
+    <strong id="studentTimelineTitle">Live Lesson Step: Not started</strong>
+    <div id="studentTimelineMove">Teacher Move: Waiting for teacher timeline command.</div>
+  </div>
+</div>
+
+
+<script>
+// STEM_NATION_STUDENT_TIMELINE_DISPLAY_V1
+(function syncStudentTimelineDisplay() {
+  const title = document.getElementById("studentTimelineTitle");
+  const move = document.getElementById("studentTimelineMove");
+  const panel = document.getElementById("studentTimelineDisplay");
+  const toggle = document.getElementById("studentTimelineToggle");
+
+  if (!title || !move || !panel || !toggle) return;
+
+  toggle.addEventListener("click", function () {
+    panel.classList.toggle("collapsed");
+  });
+
+  function renderTimelineStep() {
+    const raw = localStorage.getItem("STEM_NATION_CLASS_TIMELINE_V1");
+
+    if (!raw) {
+      title.textContent = "Live Lesson Step: Not started";
+      move.textContent = "Teacher Move: Waiting for teacher timeline command.";
+      return;
+    }
+
+    try {
+      const state = JSON.parse(raw);
+      const step = state.activeStep || state.currentStep || state.step || {};
+      const stepNumber = step.number || step.step || state.activeStepNumber || state.currentStepIndex || "";
+      const stepTitle = step.title || step.name || state.activeStepTitle || "Active Step";
+      const teacherMove = step.teacherMove || step.teacher_move || state.teacherMove || state.move || "Follow the teacher's current direction.";
+
+      title.textContent = `Live Lesson Step: ${stepNumber ? stepNumber + " · " : ""}${stepTitle}`;
+      move.textContent = `Teacher Move: ${teacherMove}`;
+    } catch (err) {
+      title.textContent = "Live Lesson Step: Timeline data unavailable";
+      move.textContent = "Teacher Move: Ask teacher to refresh the class timeline.";
+    }
+  }
+
+  renderTimelineStep();
+  window.addEventListener("storage", renderTimelineStep);
+  setInterval(renderTimelineStep, 1000);
+})();
+</script>
+
+
+<script>
+/* STEM_NATION_THEATER_MODE_ENTRY_OVERLAY_V1 */
+(function(){
+
+  const overlay = document.getElementById("theaterEntryOverlay");
+  const button = document.getElementById("beginObservationBtn");
+
+  if(!overlay || !button) return;
+
+  function enterWorld(){
+      overlay.classList.add("hide");
+
+      try{
+          localStorage.setItem(
+              "STEM_NATION_THEATER_MODE_LAST_ENTRY",
+              new Date().toISOString()
+          );
+      }catch(err){
+          console.warn("Unable to store theater entry timestamp.", err);
+      }
+  }
+
+  button.addEventListener("click", enterWorld);
+
+})();
+</script>
+
+
+<script>
+// STEM_NATION_CINEMATIC_REGION_INTEL_CARDS_V1
+(function installCinematicRegionIntelCards() {
+  const intel = {
+    "River Corridor": {
+      name: "🌊 River Corridor",
+      description: "Fresh water, fertile soil, fish, and travel routes make the river powerful, but rising water can flood early settlements.",
+      advantage: "Water, food, farming, fishing, and travel.",
+      risk: "Flooding, exposed banks, and settlement loss.",
+      clue: "Watch how water shapes movement, farming, and danger."
+    },
+    "Forest Edge": {
+      name: "🌲 Forest Edge",
+      description: "Trees provide shelter, tools, fuel, and protection, but thick cover can hide danger and limit visibility.",
+      advantage: "Shelter, wood, fuel, tools, and cover.",
+      risk: "Reduced visibility, hidden threats, and slower movement.",
+      clue: "Look for what the forest gives and what it hides."
+    },
+    "Highland Ridge": {
+      name: "⛰️ Highland Ridge",
+      description: "High ground improves defense and long-distance observation, but steep terrain makes farming, travel, and supplies harder.",
+      advantage: "Defense, lookout points, and protection.",
+      risk: "Difficult movement, limited farming, and supply strain.",
+      clue: "Notice how elevation protects people but slows survival."
+    },
+    "Coastal Bay": {
+      name: "⚓ Coastal Bay",
+      description: "The coast supports fishing, navigation, and future trade, but storms, exposure, and invasion routes create constant risk.",
+      advantage: "Fishing, travel, navigation, and future trade.",
+      risk: "Storms, exposure, and outside threats.",
+      clue: "Watch how the sea connects people and brings danger."
+    },
+    "Open Plain": {
+      name: "🌾 Open Plain",
+      description: "Open land supports farming, movement, and animal herds, but exposure makes defense and shelter more difficult.",
+      advantage: "Farming, movement, grazing, and expansion.",
+      risk: "Exposure, weak defense, and limited shelter.",
+      clue: "Look for how open space helps growth but increases vulnerability."
+    },
+    "Balanced Crossroads": {
+      name: "🛤️ Balanced Crossroads",
+      description: "Roads connect people, goods, and ideas, but trade routes also bring conflict, competition, and outside pressure.",
+      advantage: "Trade, communication, alliances, and movement.",
+      risk: "Conflict, competition, and pressure from outsiders.",
+      clue: "Watch how connection creates wealth and tension."
+    }
+  };
+
+  const nameEl = document.getElementById("regionIntelName");
+  const descEl = document.getElementById("regionIntelDescription");
+  const advEl = document.getElementById("regionIntelAdvantage");
+  const riskEl = document.getElementById("regionIntelRisk");
+  const clueEl = document.getElementById("regionIntelClue");
+
+  if (!nameEl || !descEl || !advEl || !riskEl || !clueEl) return;
+
+  function updateIntel(region) {
+    const data = intel[region];
+    if (!data) return;
+
+    nameEl.textContent = data.name;
+    descEl.textContent = data.description;
+    advEl.textContent = data.advantage;
+    riskEl.textContent = data.risk;
+    clueEl.textContent = data.clue;
+  }
+
+
+  window.STEM_NATION_APPLY_REGION_FOCUS = applyFocus;
+
+  document.querySelectorAll(".board-terrain-tile, .terrain-zone, .region-card").forEach((el) => {
+    el.addEventListener("click", function () {
+      updateIntel(el.dataset.region);
+    });
+
+    el.addEventListener("mouseenter", function () {
+      updateIntel(el.dataset.region);
+    });
+  });
+
+})();
+</script>
+
+
+<script>
+// STEM_NATION_STUDENT_MAP_RESET_VIEW_BUTTON_V1
+(function installStudentMapResetViewButton() {
+  const resetBtn = document.getElementById("resetStudentMapViewBtn");
+  if (!resetBtn) return;
+
+  function hideById(id) {
+    const el = document.getElementById(id);
+    if (el && !el.classList.contains("hidden")) {
+      el.classList.add("hidden");
+    }
+  }
+
+  function collapseById(id) {
+    const el = document.getElementById(id);
+    if (el && !el.classList.contains("collapsed")) {
+      el.classList.add("collapsed");
+    }
+  }
+
+  resetBtn.addEventListener("click", function () {
+    // Collapse floating status panels.
+    collapseById("studentTimelineDisplay");
+    collapseById("studentProgressHud");
+
+    // Collapse class session body if present.
+    const sessionBody = document.getElementById("studentSessionBody");
+    if (sessionBody) {
+      sessionBody.style.display = "none";
+    }
+
+    // Hide board overlays and student input panels.
+    [
+      "regionIntelOverlay",
+      "advisorOverlay",
+      "archiveOverlay",
+      "studentReflectionPanel",
+      "studentEvidencePanel",
+      "studentResponsePanel",
+      "studentQuestionPanel",
+      "actionResponsePanel",
+      "seasonFeedbackPanel"
+    ].forEach(hideById);
+
+    // Clear visual focus only. Do not erase saved work.
+    document.querySelectorAll(".board-terrain-tile, .terrain-zone, .region-card").forEach((el) => {
+      el.classList.remove("selected", "focused", "dimmed");
+    });
+
+    const feedback = document.getElementById("boardWorldFeedback");
+    if (feedback) {
+      feedback.classList.add("hidden");
+      feedback.textContent = "Select terrain to begin settlement review.";
+    }
+
+    console.log("STEM_NATION_STUDENT_MAP_RESET_VIEW_BUTTON_V1 reset complete");
+  });
+})();
+</script>
+
+
+<script>
+// STEM_NATION_REGION_FOCUS_HIGHLIGHT_SYSTEM_V1
+(function installRegionFocusHighlightSystem() {
+  const worldLayer = document.getElementById("boardTerrainLayer");
+  const strategicLayer = document.querySelector(".terrain-map-grid");
+  const focusBanner = document.getElementById("cinematicFocusBanner");
+  const focusText = document.getElementById("cinematicFocusText");
+  const inquiryPrompt = document.getElementById("dynamicInquiryPrompt");
+
+  const focusMessages = {
+    "River Corridor": "The river offers life and movement, but flood danger must shape the settlement plan.",
+    "Forest Edge": "The forest gives shelter and resources, but hidden danger limits what people can see.",
+    "Highland Ridge": "The highland protects from above, but steep land challenges farming and supply movement.",
+    "Coastal Bay": "The coast connects fishing, travel, and trade, but storms and invasion routes create risk.",
+    "Open Plain": "The plain supports farming and expansion, but exposure makes defense harder.",
+    "Balanced Crossroads": "The crossroads brings trade and ideas, but connection also brings pressure and conflict."
+  };
+
+  function clearFocus() {
+    document.querySelectorAll(".board-terrain-tile, .terrain-zone, .region-card").forEach((el) => {
+      el.classList.remove("region-focused");
+    });
+
+    if (worldLayer) worldLayer.classList.remove("region-focus-active");
+    if (strategicLayer) strategicLayer.classList.remove("region-focus-active");
+
+    if (focusBanner) focusBanner.classList.add("hidden");
+  }
+
+  function applyFocus(region) {
+    if (!region) return;
+
+    clearFocus();
+
+    if (worldLayer) worldLayer.classList.add("region-focus-active");
+    if (strategicLayer) strategicLayer.classList.add("region-focus-active");
+
+    document.querySelectorAll(`[data-region="${region}"]`).forEach((el) => {
+      el.classList.add("region-focused");
+    });
+
+    const message = focusMessages[region] || "Observe this region carefully before deciding.";
+
+    if (focusText) focusText.textContent = message;
+    if (focusBanner) focusBanner.classList.remove("hidden");
+
+    if (inquiryPrompt) {
+      inquiryPrompt.textContent = `What does ${region} offer, and what danger must your nation plan for?`;
+    }
+  }
+
+  document.querySelectorAll(".board-terrain-tile, .terrain-zone, .region-card").forEach((el) => {
+    el.addEventListener("click", function () {
+      applyFocus(el.dataset.region);
+    });
+
+    el.addEventListener("mouseenter", function () {
+      applyFocus(el.dataset.region);
+    });
+  });
+
+  const resetBtn = document.getElementById("resetStudentMapViewBtn");
+  if (resetBtn) {
+    resetBtn.addEventListener("click", clearFocus);
+  }
+})();
+</script>
+
+
+
+<script>
+// STEM_NATION_TEACHER_FOCUS_INTEL_AND_ATMOSPHERE_VISIBILITY_FIX_V2
+(function installGlobalRegionIntelUpdater() {
+  const intel = {
+    "River Corridor": {
+      name: "🌊 River Corridor",
+      description: "Fresh water, fertile soil, fish, and travel routes make the river powerful, but rising water can flood early settlements.",
+      advantage: "Water, food, farming, fishing, and travel.",
+      risk: "Flooding, exposed banks, and settlement loss.",
+      clue: "Watch how water shapes movement, farming, and danger."
+    },
+    "Forest Edge": {
+      name: "🌲 Forest Edge",
+      description: "Trees provide shelter, tools, fuel, and protection, but thick cover can hide danger and limit visibility.",
+      advantage: "Shelter, wood, fuel, tools, and cover.",
+      risk: "Reduced visibility, hidden threats, and slower movement.",
+      clue: "Look for what the forest gives and what it hides."
+    },
+    "Highland Ridge": {
+      name: "⛰️ Highland Ridge",
+      description: "High ground improves defense and long-distance observation, but steep terrain makes farming, travel, and supplies harder.",
+      advantage: "Defense, lookout points, and protection.",
+      risk: "Difficult movement, limited farming, and supply strain.",
+      clue: "Notice how elevation protects people but slows survival."
+    },
+    "Coastal Bay": {
+      name: "⚓ Coastal Bay",
+      description: "The coast supports fishing, navigation, and future trade, but storms, exposure, and invasion routes create constant risk.",
+      advantage: "Fishing, travel, navigation, and future trade.",
+      risk: "Storms, exposure, and outside threats.",
+      clue: "Watch how the sea connects people and brings danger."
+    },
+    "Open Plain": {
+      name: "🌾 Open Plain",
+      description: "Open land supports farming, movement, and animal herds, but exposure makes defense and shelter more difficult.",
+      advantage: "Farming, movement, grazing, and expansion.",
+      risk: "Exposure, weak defense, and limited shelter.",
+      clue: "Look for how open space helps growth but increases vulnerability."
+    },
+    "Balanced Crossroads": {
+      name: "🛤️ Balanced Crossroads",
+      description: "Roads connect people, goods, and ideas, but trade routes also bring conflict, competition, and outside pressure.",
+      advantage: "Trade, communication, alliances, and movement.",
+      risk: "Conflict, competition, and pressure from outsiders.",
+      clue: "Watch how connection creates wealth and tension."
+    }
+  };
+
+  window.STEM_NATION_UPDATE_REGION_INTEL = function(region) {
+    const data = intel[region];
+    if (!data) return;
+
+    const nameEl = document.getElementById("regionIntelName");
+    const descEl = document.getElementById("regionIntelDescription");
+    const advEl = document.getElementById("regionIntelAdvantage");
+    const riskEl = document.getElementById("regionIntelRisk");
+    const clueEl = document.getElementById("regionIntelClue");
+
+    if (nameEl) nameEl.textContent = data.name;
+    if (descEl) descEl.textContent = data.description;
+    if (advEl) advEl.textContent = data.advantage;
+    if (riskEl) riskEl.textContent = data.risk;
+    if (clueEl) clueEl.textContent = data.clue;
+  };
+})();
+</script>
+
+<script>
+// STEM_NATION_MAP_TIMELINE_REGION_FOCUS_SYNC_V1
+(function syncTimelineRegionFocusToMap() {
+  const KEY = "STEM_NATION_CLASS_TIMELINE_V1";
+  let lastRegion = "";
+
+  function focusRegionFromTimeline() {
+    const raw = localStorage.getItem(KEY);
+    if (!raw) return;
+
+    try {
+      const state = JSON.parse(raw);
+      const region = state.focusRegion || "";
+
+      if (!region || region === lastRegion) return;
+      lastRegion = region;
+
+      if (window.STEM_NATION_APPLY_REGION_FOCUS) {
+        window.STEM_NATION_APPLY_REGION_FOCUS(region);
+      }
+
+      if (window.STEM_NATION_UPDATE_REGION_INTEL) {
+        window.STEM_NATION_UPDATE_REGION_INTEL(region);
+      }
+
+      const target = document.querySelector(`[data-region="${region}"]`);
+      if (target) {
+        target.classList.add("region-focused");
+      }
+
+      const feedback = document.getElementById("boardWorldFeedback");
+      if (feedback) {
+        feedback.classList.remove("hidden");
+        feedback.textContent = `Teacher Focus: ${region}`;
+      }
+
+    } catch (err) {
+      console.warn("Timeline region focus sync skipped.", err);
+    }
+  }
+
+  focusRegionFromTimeline();
+  window.addEventListener("storage", focusRegionFromTimeline);
+  window.addEventListener("focus", focusRegionFromTimeline);
+  setInterval(focusRegionFromTimeline, 1000);
+})();
+</script>
+
+
+<script>
+// STEM_NATION_MAP_REGION_COMPARISON_DISPLAY_V1
+(function syncRegionComparisonDisplay() {
+  const KEY = "STEM_NATION_CLASS_TIMELINE_V1";
+  let lastSignature = "";
+  const banner = document.getElementById("regionComparisonBanner");
+  const text = document.getElementById("regionComparisonText");
+
+  if (!banner || !text) return;
+
+  function renderComparison() {
+    const raw = localStorage.getItem(KEY);
+    if (!raw) return;
+
+    try {
+      const state = JSON.parse(raw);
+      const regions = Array.isArray(state.compareRegions) ? state.compareRegions : [];
+
+      if (!state.comparisonMode || regions.length !== 2) {
+        banner.classList.add("hidden");
+        return;
+      }
+
+      const signature = regions.join("|") + "|" + state.updatedAt;
+      if (signature === lastSignature) return;
+      lastSignature = signature;
+
+      banner.classList.remove("hidden");
+      text.textContent = `${regions[0]} vs ${regions[1]} — Which is stronger for survival, trade, defense, or growth?`;
+
+      document.querySelectorAll(".board-terrain-tile, .terrain-zone, .region-card").forEach((el) => {
+        const match = regions.includes(el.dataset.region);
+        el.classList.toggle("region-focused", match);
+      });
+
+      const inquiryPrompt = document.getElementById("dynamicInquiryPrompt");
+      if (inquiryPrompt) {
+        inquiryPrompt.textContent = `Compare ${regions[0]} and ${regions[1]}: which region gives the stronger beginning, and what is the cost?`;
+      }
+
+    } catch (err) {
+      console.warn("Region comparison display skipped.", err);
+    }
+  }
+
+  renderComparison();
+  window.addEventListener("storage", renderComparison);
+  window.addEventListener("focus", renderComparison);
+  setInterval(renderComparison, 1000);
+})();
+</script>
+
+
+<script>
+// STEM_NATION_STUDENT_COMPARISON_RESPONSE_PROMPT_V1
+(function installStudentComparisonResponsePrompt() {
+  const TIMELINE_KEY = "STEM_NATION_CLASS_TIMELINE_V1";
+  const SAVE_KEY = "STEM_NATION_STUDENT_COMPARISON_RESPONSE_V1";
+
+  const panel = document.getElementById("studentComparisonResponsePanel");
+  const promptText = document.getElementById("studentComparisonPromptText");
+  const stronger = document.getElementById("comparisonStrongerRegion");
+  const advantage = document.getElementById("comparisonAdvantageEvidence");
+  const risk = document.getElementById("comparisonRiskTradeoff");
+  const saveBtn = document.getElementById("saveComparisonResponseBtn");
+  const status = document.getElementById("studentComparisonSaveStatus");
+
+  if (!panel || !promptText || !stronger || !advantage || !risk || !saveBtn || !status) return;
+
+  let activeRegions = [];
+
+  function readJSON(key) {
+    const raw = localStorage.getItem(key);
+    if (!raw) return null;
+
+    try {
+      return JSON.parse(raw);
+    } catch (err) {
+      console.warn("Invalid JSON ignored:", key, err);
+      return null;
+    }
+  }
+
+  function renderPrompt() {
+    const state = readJSON(TIMELINE_KEY);
+    const regions = state && Array.isArray(state.compareRegions) ? state.compareRegions : [];
+
+    if (!state || !state.comparisonMode || regions.length !== 2) {
+      panel.classList.add("hidden");
+      return;
+    }
+
+    activeRegions = regions;
+    panel.classList.remove("hidden");
+
+    promptText.textContent =
+      `Compare ${regions[0]} and ${regions[1]}. Which region gives the stronger beginning, and what cost must your nation manage?`;
+
+    const saved = readJSON(SAVE_KEY);
+    if (saved && saved.regions && saved.regions.join("|") === regions.join("|")) {
+      stronger.value = saved.strongerRegion || "";
+      advantage.value = saved.advantageEvidence || "";
+      risk.value = saved.riskTradeoff || "";
+      status.textContent = saved.savedAt
+        ? "Last saved: " + new Date(saved.savedAt).toLocaleTimeString()
+        : "Saved response loaded.";
+    }
+  }
+
+  function saveResponse() {
+    const payload = {
+      regions: activeRegions,
+      strongerRegion: stronger.value.trim(),
+      advantageEvidence: advantage.value.trim(),
+      riskTradeoff: risk.value.trim(),
+      savedAt: new Date().toISOString()
+    };
+
+    localStorage.setItem(SAVE_KEY, JSON.stringify(payload));
+    status.textContent = "Saved: " + new Date(payload.savedAt).toLocaleTimeString();
+
+    console.log("STEM_NATION_STUDENT_COMPARISON_RESPONSE_V1 saved", payload);
+  }
+
+  saveBtn.addEventListener("click", saveResponse);
+
+  renderPrompt();
+  window.addEventListener("storage", renderPrompt);
+  window.addEventListener("focus", renderPrompt);
+  setInterval(renderPrompt, 1000);
+})();
+</script>
+
+
+<script>
+/* CI-4L_B_WORLD_DECISION_ENTRY_POLISH */
+(function installAcademyWorldDecisionEntry() {
+  const IDENTITY_KEY = "stemNationStudentIdentity";
+  const OBSERVATION_KEY = "stemNationAcademyObservationV1";
+  const RANKING_KEY = "stemNationQuestionPriorityRankingV1";
+  const JUSTIFICATION_KEY = "stemNationQuestionJustificationV1";
+  const REACTION_KEY = "stemNationAdvisorReactionV1";
+  const DEBRIEF_KEY = "stemNationMissionDebriefV1";
+  const WORLD_ENTRY_KEY = "stemNationWorldDecisionEntryV1";
+
+  function readJson(key) {
+    try {
+      return JSON.parse(localStorage.getItem(key) || "null");
+    } catch (error) {
+      console.warn("Could not read localStorage key:", key, error);
+      return null;
+    }
+  }
+
+  function looksLikeImageSource(value) {
+    return typeof value === "string" && (
+      value.startsWith("data:image/") ||
+      value.startsWith("/static/") ||
+      value.startsWith("http://") ||
+      value.startsWith("https://")
+    );
+  }
+
+  const identity = readJson(IDENTITY_KEY) || {};
+  const observation = readJson(OBSERVATION_KEY);
+  const ranking = readJson(RANKING_KEY);
+  const justification = readJson(JUSTIFICATION_KEY);
+  const reaction = readJson(REACTION_KEY);
+  const debrief = readJson(DEBRIEF_KEY);
+
+  let displayName = identity.teacherApprovedName || identity.approvedName || identity.name || "Academy Learner";
+  displayName = String(displayName)
+    .replace(/^New Arrival\s*/i, "")
+    .replace(/^Academy Learner\s*/i, "")
+    .trim() || "Academy Learner";
+
+  const avatarChoice = identity.avatarChoice || identity.avatarTitle || "Academy Avatar";
+  const avatarSource = identity.portrait || identity.fallback || "";
+
+  const intro = document.getElementById("academyWorldIntro");
+  const studentPill = document.getElementById("academyWorldStudentPill");
+  const readinessPill = document.getElementById("academyWorldReadinessPill");
+  const avatarBox = document.getElementById("academyWorldAvatar");
+
+  if (intro) {
+    intro.textContent = `${displayName}, your Academy inquiry path is complete. You are now entering the World Board, where your first nation decision begins with the land.`;
+  }
+
+  if (studentPill) {
+    studentPill.textContent = `${avatarChoice} · ${displayName}`;
+  }
+
+  if (avatarBox) {
+    avatarBox.innerHTML = "";
+
+    if (looksLikeImageSource(avatarSource)) {
+      const img = document.createElement("img");
+      img.src = avatarSource;
+      img.alt = "Student Academy avatar";
+      avatarBox.appendChild(img);
+    } else {
+      avatarBox.textContent = "Avatar";
+    }
+  }
+
+  const ready =
+    observation &&
+    ranking && Array.isArray(ranking.ranking) && ranking.ranking.length === 3 &&
+    justification && Array.isArray(justification.justifications) &&
+    reaction && Array.isArray(reaction.reactions) &&
+    debrief && debrief.reflection;
+
+  if (readinessPill) {
+    if (ready) {
+      readinessPill.textContent = "Academy Trial Complete";
+      readinessPill.classList.add("ready");
+    } else {
+      readinessPill.textContent = "Academy Record In Progress";
+      readinessPill.classList.remove("ready");
+    }
+  }
+
+  localStorage.setItem(WORLD_ENTRY_KEY, JSON.stringify({
+    displayName,
+    avatarChoice,
+    academyTrialComplete: !!ready,
+    enteredAt: new Date().toISOString(),
+    nextMission: "Mission 1 · Claim the Land",
+    route: "/map"
+  }));
+})();
+</script>
+
+
+<script>
+/* CI-STAGE-50B WORLD BOARD FIRST-USE GUIDE */
+function ciStage50bBuildWorldFirstUseGuide(){
+  if(document.getElementById("ciStage50bWorldFirstUseGuide")){ return; }
+
+  const guide = document.createElement("section");
+  guide.className = "world-first-use-guide";
+  guide.id = "ciStage50bWorldFirstUseGuide";
+  guide.innerHTML = `
+    <div class="guide-kicker">World Board First Steps</div>
+    <h2>Your first job is to observe the land.</h2>
+    <p>
+      The World Board is bigger than the Council Hall. Do not try to solve everything at once.
+      Begin with one region, one piece of evidence, and one founding decision.
+    </p>
+
+    <div class="world-first-use-steps">
+      <div class="world-first-use-step">
+        <strong>1 · Select a region</strong>
+        <span>Choose River, Forest, Highland, Coast, Plain, or Crossroads.</span>
+      </div>
+
+      <div class="world-first-use-step">
+        <strong>2 · Read the intel</strong>
+        <span>Look for advantage, risk, and the clue before deciding.</span>
+      </div>
+
+      <div class="world-first-use-step">
+        <strong>3 · Record thinking</strong>
+        <span>Ask, respond, or record evidence from the world event.</span>
+      </div>
+
+      <div class="world-first-use-step">
+        <strong>4 · Plan settlement</strong>
+        <span>Plan the settlement only after the evidence makes sense.</span>
+      </div>
+    </div>
+  `;
+
+  const entry = document.querySelector(".academy-world-entry") ||
+                document.querySelector(".academy-world-panel") ||
+                document.querySelector("main") ||
+                document.body;
+
+  if(entry && entry.parentNode && entry !== document.body){
+    entry.parentNode.insertBefore(guide, entry.nextSibling);
+  }else{
+    const first = document.body.firstElementChild;
+    if(first){
+      document.body.insertBefore(guide, first.nextSibling);
+    }else{
+      document.body.appendChild(guide);
+    }
+  }
+
+  console.log("CI-STAGE-50B WORLD BOARD FIRST-USE GUIDE ACTIVE");
+}
+
+document.addEventListener("DOMContentLoaded", ciStage50bBuildWorldFirstUseGuide);
+</script>
+
+
+<script>
+/* CI-STAGE-51B CLARIFY REGION SELECTION VS SETTLEMENT DECISION */
+function ciStage51bAddSelectionDecisionNote(){
+  if(document.getElementById("ciStage51bSelectionDecisionNote")){ return; }
+
+  const guide = document.getElementById("ciStage50bWorldFirstUseGuide");
+  if(!guide){ return; }
+
+  const note = document.createElement("div");
+  note.id = "ciStage51bSelectionDecisionNote";
+  note.style.marginTop = "14px";
+  note.style.borderRadius = "16px";
+  note.style.border = "1px solid rgba(143,216,255,.28)";
+  note.style.background = "rgba(143,216,255,.08)";
+  note.style.padding = "12px 14px";
+  note.style.color = "rgba(255,255,255,.78)";
+  note.style.lineHeight = "1.45";
+  note.innerHTML = "<strong style='color:rgba(245,215,122,.96)'>Investigator Rule:</strong> Selecting a region reveals evidence. It does not finish the founding decision. A settlement becomes official only after you defend it with evidence.";
+
+  guide.appendChild(note);
+}
+
+document.addEventListener("DOMContentLoaded", ciStage51bAddSelectionDecisionNote);
+console.log("CI-STAGE-51B CLARIFY REGION SELECTION VS SETTLEMENT DECISION ACTIVE");
+</script>
+
+
+<script>
+/* CI-STAGE-51C REGION INTEL SYNC ARCHIVE LABEL */
+function ciStage51cSyncWorldRegion(region){
+  if(!region){ return; }
+
+  const intel = {
+    "River Corridor": {
+      name: "🌊 River Corridor",
+      description: "Fresh water, fertile soil, fish, and travel routes make the river powerful, but rising water can flood early settlements.",
+      advantage: "Water, food, farming, fishing, and travel.",
+      risk: "Flooding, exposed banks, and settlement loss.",
+      clue: "Watch how water shapes movement, farming, and danger.",
+      focus: "The river offers life and movement, but flood danger must shape the settlement plan.",
+      compare: "River Corridor vs Highland Ridge — Which is stronger for survival, trade, defense, or growth?"
+    },
+    "Forest Edge": {
+      name: "🌲 Forest Edge",
+      description: "Wood, shelter, medicine, and hidden food sources can support a people, but limited visibility can hide danger.",
+      advantage: "Wood, shelter, medicine, and hidden food sources.",
+      risk: "Hidden threats, limited visibility, and slower travel.",
+      clue: "Watch what the forest protects and what it conceals.",
+      focus: "The forest gives shelter and resources, but hidden danger limits what people can see.",
+      compare: "Forest Edge vs Open Plain — Which gives safer survival, and what risk must be managed?"
+    },
+    "Highland Ridge": {
+      name: "⛰️ Highland Ridge",
+      description: "High ground improves visibility and defense, but steep land can make farming, water access, and supply movement harder.",
+      advantage: "Defense, visibility, signal points, and protection from some floods.",
+      risk: "Limited farming, difficult movement, and supply challenges.",
+      clue: "Watch how elevation changes safety, food, and travel.",
+      focus: "The highland protects from above, but steep land challenges farming and supply movement.",
+      compare: "Highland Ridge vs River Corridor — Which gives the stronger beginning, and what cost comes with it?"
+    },
+    "Coastal Bay": {
+      name: "⚓ Coastal Bay",
+      description: "Fishing, travel, trade, and exchange make the coast valuable, but storms and outside routes can create danger.",
+      advantage: "Fishing, travel, trade, boats, and exchange routes.",
+      risk: "Storm exposure, flooding, invasion routes, and unstable shoreline.",
+      clue: "Watch how the coast connects opportunity with danger.",
+      focus: "The coast connects fishing, travel, and trade, but storms and invasion routes create risk.",
+      compare: "Coastal Bay vs River Corridor — Which gives stronger trade and survival, and what danger must be planned for?"
+    },
+    "Open Plain": {
+      name: "🌾 Open Plain",
+      description: "Open land supports farming, growth, and movement, but exposure can make defense more difficult.",
+      advantage: "Agriculture, expansion, livestock, and movement.",
+      risk: "Weak defense, exposure, drought, and few natural barriers.",
+      clue: "Watch how open space helps growth but creates vulnerability.",
+      focus: "The plain supports farming and expansion, but exposure makes defense harder.",
+      compare: "Open Plain vs Forest Edge — Which gives better growth, and what danger comes with visibility?"
+    },
+    "Balanced Crossroads": {
+      name: "🛤️ Balanced Crossroads",
+      description: "Crossroads connect people, goods, and ideas, but contact can also bring conflict, pressure, and competition.",
+      advantage: "Trade, communication, flexibility, and movement.",
+      risk: "Conflict, competition, pressure, and exposure to outside problems.",
+      clue: "Watch how connection brings both opportunity and responsibility.",
+      focus: "The crossroads brings trade and ideas, but connection also brings pressure and conflict.",
+      compare: "Balanced Crossroads vs Coastal Bay — Which gives stronger connection, and what risk follows?"
+    }
+  };
+
+  const data = intel[region];
+  if(!data){ return; }
+
+  const setText = (id, value) => {
+    const el = document.getElementById(id);
+    if(el){ el.textContent = value; }
+  };
+
+  setText("regionIntelName", data.name);
+  setText("regionIntelDescription", data.description);
+  setText("regionIntelAdvantage", data.advantage);
+  setText("regionIntelRisk", data.risk);
+  setText("regionIntelClue", data.clue);
+  setText("cinematicFocusText", data.focus);
+  setText("dynamicInquiryPrompt", `What does ${region} offer, and what danger must your nation plan for?`);
+
+  const comparisonBanner = document.getElementById("regionComparisonBanner");
+  const comparisonText = document.getElementById("regionComparisonText");
+  if(comparisonBanner && comparisonText){
+    comparisonBanner.classList.remove("hidden");
+    comparisonText.textContent = "Region Comparison: " + data.compare;
+  }
+
+  const comparisonPanel = document.getElementById("studentComparisonResponsePanel");
+  if(comparisonPanel){
+    comparisonPanel.classList.remove("hidden");
+  }
+
+  const comparisonPrompt = comparisonPanel ? comparisonPanel.querySelector("p") : null;
+  if(comparisonPrompt){
+    comparisonPrompt.textContent = data.compare.replace(" — ", ". ");
+  }
+
+  document.querySelectorAll(".board-terrain-tile, .terrain-zone, .region-card").forEach(el => {
+    const match = el.getAttribute("data-region") === region;
+    el.classList.toggle("selected", match);
+    el.classList.toggle("region-focused", match);
+    el.classList.toggle("active", match);
+  });
+
+  document.querySelectorAll("[data-atmosphere-zone]").forEach(el => {
+    el.classList.toggle("region-focused", el.getAttribute("data-atmosphere-zone") === region);
+  });
+
+  document.querySelectorAll("*").forEach(el => {
+    if(el.children.length === 0 && el.textContent && el.textContent.trim().startsWith("Teacher Focus:")){
+      el.textContent = "Region Focus: " + region;
+    }
+  });
+
+  const feedback = document.getElementById("regionSelectionFeedback");
+  if(feedback){
+    feedback.classList.remove("hidden");
+    feedback.textContent = `${region} selected for review. Region intel is synced. Record evidence before making the founding decision official.`;
+  }
+
+  try{
+    localStorage.setItem("stemNationWorldSelectedRegionV1", JSON.stringify({
+      region,
+      syncedAt: new Date().toISOString()
+    }));
+  }catch(error){}
+
+  console.log("CI-STAGE-51C synced region intel:", region);
+}
+
+function ciStage51cBindRegionSync(){
+  document.querySelectorAll(".board-terrain-tile, .terrain-zone, .region-card").forEach(el => {
+    if(el.dataset.ciStage51cBound === "true"){ return; }
+    el.dataset.ciStage51cBound = "true";
+
+    el.addEventListener("click", () => {
+      const region = el.getAttribute("data-region");
+      setTimeout(() => ciStage51cSyncWorldRegion(region), 80);
+    });
+  });
+
+  const selected =
+    document.querySelector(".board-terrain-tile.selected") ||
+    document.querySelector(".terrain-zone.selected") ||
+    document.querySelector(".region-card.selected") ||
+    document.querySelector(".board-terrain-tile.active") ||
+    document.querySelector(".terrain-zone.active") ||
+    document.querySelector(".region-card.active");
+
+  if(selected && selected.getAttribute("data-region")){
+    setTimeout(() => ciStage51cSyncWorldRegion(selected.getAttribute("data-region")), 120);
+  }
+}
+
+document.addEventListener("DOMContentLoaded", ciStage51cBindRegionSync);
+console.log("CI-STAGE-51C REGION INTEL SYNC ARCHIVE LABEL ACTIVE");
+</script>
+
 </body>
 </html>

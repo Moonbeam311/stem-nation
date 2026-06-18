@@ -1,0 +1,555 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>STEM Nation | Ask Before You Pack</title>
+  <style>
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      background:
+        radial-gradient(circle at 20% 10%, rgba(70,130,180,.24), transparent 34%),
+        radial-gradient(circle at 80% 0%, rgba(212,175,55,.18), transparent 30%),
+        linear-gradient(135deg, #07111f, #101b2f 46%, #05080f);
+      color: #f7f1df;
+      font-family: Georgia, "Times New Roman", serif;
+    }
+
+    .page {
+      width: min(1180px, 94vw);
+      margin: 0 auto;
+      padding: 28px 0 34px;
+    }
+
+    .topbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 14px;
+      margin-bottom: 18px;
+    }
+
+    .brand {
+      color: #f4d35e;
+      letter-spacing: .16em;
+      text-transform: uppercase;
+      font-size: .78rem;
+      font-weight: 700;
+    }
+
+    a {
+      color: inherit;
+    }
+
+    .home-link,
+    .advanced-link {
+      text-decoration: none;
+      border: 1px solid rgba(244,211,94,.36);
+      color: #f4d35e;
+      padding: 9px 12px;
+      border-radius: 999px;
+      background: rgba(0,0,0,.22);
+      font-size: .9rem;
+    }
+
+    .hero {
+      border: 1px solid rgba(244,211,94,.28);
+      background: rgba(7, 15, 28, .78);
+      border-radius: 26px;
+      padding: 22px;
+      box-shadow: 0 20px 70px rgba(0,0,0,.35);
+      margin-bottom: 18px;
+    }
+
+    .hero h1 {
+      margin: 0 0 10px;
+      color: #f4d35e;
+      font-size: clamp(2rem, 5vw, 4rem);
+      line-height: .95;
+    }
+
+    .hero p {
+      margin: 0;
+      max-width: 860px;
+      color: rgba(247,241,223,.86);
+      line-height: 1.6;
+      font-size: 1.05rem;
+    }
+
+    .layout {
+      display: grid;
+      grid-template-columns: 1.02fr .98fr;
+      gap: 18px;
+      align-items: start;
+    }
+
+    .card {
+      border: 1px solid rgba(255,255,255,.13);
+      background: rgba(255,255,255,.065);
+      border-radius: 22px;
+      padding: 18px;
+      box-shadow: 0 16px 40px rgba(0,0,0,.25);
+    }
+
+    .card h2 {
+      margin: 0 0 10px;
+      color: #f4d35e;
+      font-size: 1.35rem;
+    }
+
+    .round-label {
+      display: inline-flex;
+      gap: 8px;
+      align-items: center;
+      padding: 7px 10px;
+      border-radius: 999px;
+      background: rgba(68,163,255,.13);
+      border: 1px solid rgba(134,190,255,.34);
+      color: #dceeff;
+      font-size: .85rem;
+      font-weight: 700;
+      margin-bottom: 12px;
+    }
+
+    .question-box {
+      padding: 14px;
+      border-radius: 18px;
+      background: rgba(68, 163, 255, 0.12);
+      border: 1px solid rgba(134, 190, 255, 0.36);
+      margin: 12px 0;
+    }
+
+    .question-box strong {
+      display: block;
+      color: #91c8ff;
+      margin-bottom: 5px;
+    }
+
+    .choices {
+      display: grid;
+      gap: 10px;
+      margin-top: 14px;
+    }
+
+    button,
+    .button {
+      border: 0;
+      border-radius: 14px;
+      padding: 12px 14px;
+      font-weight: 800;
+      cursor: pointer;
+      font-family: inherit;
+      font-size: .96rem;
+      text-decoration: none;
+      display: inline-block;
+      text-align: center;
+    }
+
+    .choice {
+      background: rgba(255,255,255,.09);
+      color: #fff7df;
+      border: 1px solid rgba(255,255,255,.16);
+      text-align: left;
+    }
+
+    .choice:hover {
+      background: rgba(244,211,94,.12);
+      border-color: rgba(244,211,94,.36);
+    }
+
+    .primary {
+      background: linear-gradient(135deg, #f4d35e, #d7a51e);
+      color: #161006;
+    }
+
+    .secondary {
+      background: rgba(255,255,255,.1);
+      color: #f7f1df;
+      border: 1px solid rgba(255,255,255,.16);
+    }
+
+    .feedback {
+      min-height: 96px;
+      margin-top: 14px;
+      padding: 14px;
+      border-radius: 18px;
+      background: rgba(0,0,0,.24);
+      border: 1px solid rgba(255,255,255,.12);
+      color: rgba(247,241,223,.9);
+      line-height: 1.45;
+      white-space: pre-line;
+    }
+
+    .scorebar {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 8px;
+      margin: 14px 0 0;
+    }
+
+    .score-pill {
+      padding: 10px;
+      border-radius: 14px;
+      text-align: center;
+      background: rgba(255,255,255,.08);
+      border: 1px solid rgba(255,255,255,.12);
+      color: rgba(247,241,223,.78);
+      font-size: .82rem;
+    }
+
+    .score-pill.active {
+      background: rgba(244,211,94,.16);
+      border-color: rgba(244,211,94,.42);
+      color: #f4d35e;
+    }
+
+    .scene {
+      position: relative;
+      height: 470px;
+      overflow: hidden;
+      border-radius: 22px;
+      background:
+        linear-gradient(180deg, rgba(95,145,190,.22), transparent 38%),
+        linear-gradient(180deg, #2f241b 0 60%, #1d1712 60% 100%);
+      border: 1px solid rgba(255,255,255,.14);
+    }
+
+    .table {
+      position: absolute;
+      left: 5%;
+      right: 5%;
+      bottom: 18px;
+      height: 155px;
+      border-radius: 28px;
+      background: linear-gradient(180deg, #7b4f2f, #4b2d19);
+      box-shadow: inset 0 10px 24px rgba(255,255,255,.08);
+    }
+
+    .bag {
+      position: absolute;
+      left: 50%;
+      bottom: 94px;
+      width: 180px;
+      height: 210px;
+      transform: translateX(-50%);
+      border-radius: 40px 40px 28px 28px;
+      background: linear-gradient(145deg, #304d7a, #172c4f);
+      border: 4px solid rgba(255,255,255,.18);
+      box-shadow: 0 20px 38px rgba(0,0,0,.38);
+    }
+
+    .bag::before {
+      content: "";
+      position: absolute;
+      left: 30px;
+      right: 30px;
+      top: -42px;
+      height: 70px;
+      border: 10px solid rgba(200,220,245,.35);
+      border-bottom: 0;
+      border-radius: 60px 60px 0 0;
+    }
+
+    .bag::after {
+      content: "ZIP";
+      position: absolute;
+      top: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      font-size: .7rem;
+      letter-spacing: .18em;
+      color: rgba(255,255,255,.5);
+    }
+
+    .bag.open {
+      box-shadow: 0 0 0 5px rgba(106,210,255,.24), 0 0 30px rgba(106,210,255,.36);
+    }
+
+    .bag.open::after {
+      content: "OPEN";
+      color: #9bdcff;
+    }
+
+    .packed {
+      position: absolute;
+      opacity: 0;
+      transform: translate(-50%, 18px) scale(.86);
+      transition: .35s ease;
+      font-size: 2rem;
+      z-index: 3;
+    }
+
+    .packed.active {
+      opacity: 1;
+      transform: translate(-50%, 0) scale(1);
+    }
+
+    #papers { left: 45%; bottom: 184px; }
+    #pencil { left: 58%; bottom: 134px; }
+    #tablet { left: 50%; bottom: 166px; }
+    #water { left: 38%; bottom: 118px; }
+    #lunch { left: 62%; bottom: 112px; }
+
+    .tray {
+      position: absolute;
+      left: 18px;
+      top: 18px;
+      display: grid;
+      gap: 8px;
+      color: #fff;
+    }
+
+    .tray span {
+      display: inline-flex;
+      gap: 6px;
+      align-items: center;
+      padding: 7px 9px;
+      border-radius: 999px;
+      background: rgba(0,0,0,.28);
+      border: 1px solid rgba(255,255,255,.12);
+      font-size: .88rem;
+    }
+
+    .complete {
+      display: none;
+      margin-top: 14px;
+      padding: 16px;
+      border-radius: 20px;
+      background: rgba(76, 175, 80, .15);
+      border: 1px solid rgba(112, 230, 130, .35);
+    }
+
+    .complete.show {
+      display: block;
+    }
+
+    .actions {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-top: 14px;
+    }
+
+    @media (max-width: 880px) {
+      .layout { grid-template-columns: 1fr; }
+      .scene { height: 410px; }
+    }
+  </style>
+</head>
+
+<body>
+  <main class="page">
+    <div class="topbar">
+      <div class="brand">Inquiry Warm-Up Lab</div>
+      <a class="home-link" href="/">Return Home</a>
+    </div>
+
+    <section class="hero">
+      <h1>Ask Before You Pack</h1>
+      <p>
+        Your job is not to pack fast. Your job is to ask what the listener needs to know
+        before giving an instruction. Strong questions create clear actions.
+      </p>
+    </section>
+
+    <section class="layout">
+      <div class="card">
+        <div id="roundLabel" class="round-label">Round 1 of 3</div>
+        <h2 id="roundTitle">Prepare the Bag</h2>
+        <p id="roundMission">
+          Goal: get the bag ready before putting anything inside.
+        </p>
+
+        <div class="question-box">
+          <strong>Ask Before You Act</strong>
+          <span id="roundQuestion">What must the listener know before this step can work?</span>
+        </div>
+
+        <div id="choices" class="choices"></div>
+
+        <div id="feedback" class="feedback">
+          Choose the clearest instruction. Watch what the Literal Listener does.
+        </div>
+
+        <div class="scorebar">
+          <div id="scoreQuestion" class="score-pill">Question</div>
+          <div id="scoreAction" class="score-pill">Action</div>
+          <div id="scoreLocation" class="score-pill">Location</div>
+          <div id="scoreCondition" class="score-pill">Condition</div>
+        </div>
+
+        <div id="completeBox" class="complete">
+          <h2>Warm-Up Complete</h2>
+          <p>
+            You asked before acting. You named what mattered: item, action, location,
+            order, condition, and risk. Now you are ready for the Academy Questioning Session.
+          </p>
+          <div class="actions">
+            <a class="button primary" href="/academy_transition">Continue to Academy Questioning Session</a>
+            <a class="button secondary" href="/backpack-lab-advanced">Try Advanced Builder</a>
+          </div>
+        </div>
+
+        <div class="actions">
+          <button id="nextBtn" class="primary" type="button" onclick="nextRound()" style="display:none;">Next Round</button>
+          <button class="secondary" type="button" onclick="restart()">Restart Warm-Up</button>
+          <a class="button secondary" href="/backpack-lab-advanced">Advanced Builder</a>
+        </div>
+      </div>
+
+      <div class="card">
+        <h2>Literal Listener Result</h2>
+        <div class="scene" aria-label="Ask Before You Pack backpack scene">
+          <div class="tray">
+            <span>📓 Folder + Notebook</span>
+            <span>✏️ Pencil</span>
+            <span>💻 Closed Tablet</span>
+            <span>💧 Water Bottle</span>
+            <span>🍱 Lunchbox</span>
+          </div>
+
+          <div id="bag" class="bag"></div>
+          <div class="table"></div>
+
+          <div id="papers" class="packed">📓📄</div>
+          <div id="pencil" class="packed">✏️</div>
+          <div id="tablet" class="packed">▣</div>
+          <div id="water" class="packed">💧</div>
+          <div id="lunch" class="packed">🍱</div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <script>
+    const rounds = [
+      {
+        title: "Prepare the Bag",
+        mission: "Goal: get the bag ready before putting anything inside.",
+        question: "What must happen before any item can go inside?",
+        choices: [
+          { text: "Put the pencil in the bag.", ok: false, feedback: "The pencil can go in later, but the bag should be opened first." },
+          { text: "Open the bag.", ok: true, feedback: "Good. The bag opened. Nothing was packed yet.", state: { bagOpen: true }, score: ["Question", "Action", "Location"] },
+          { text: "Pack everything.", ok: false, feedback: "Too much at once. Ask what item goes first, where it goes, and what condition matters." }
+        ]
+      },
+      {
+        title: "Protect the Papers",
+        mission: "Goal: add the folder and notebook without bending them.",
+        question: "What condition protects the papers?",
+        choices: [
+          { text: "Put the folder in the bag.", ok: false, feedback: "The folder went in, but it bent because the instruction did not say how to place it.", state: { papers: true } },
+          { text: "Put the folder and notebook flat against the back of the bag.", ok: true, feedback: "Good. You named the items, action, location, and condition.", state: { papers: true }, score: ["Question", "Action", "Location", "Condition"] },
+          { text: "Put stuff in the bag.", ok: false, feedback: "The listener needs exact items and placement, not 'stuff'." }
+        ]
+      },
+      {
+        title: "Protect the Supplies",
+        mission: "Goal: pack the closed tablet, water bottle, pencil, and lunchbox safely.",
+        question: "What risks should you think about before packing the final supplies?",
+        choices: [
+          { text: "Put the closed tablet in the bag away from the water bottle.", ok: true, feedback: "Good. You thought about risk before acting. The closed tablet is protected.", state: { tablet: true }, score: ["Question", "Action", "Location", "Condition"] },
+          { text: "Put the water bottle in the bag without checking it.", ok: false, feedback: "The bottle may spill. Ask whether it is closed first.", state: { water: true } },
+          { text: "Put the pencil, closed water bottle, upright lunchbox, and closed tablet in the bag.", ok: true, feedback: "Strong instruction. You named items and conditions clearly.", state: { pencil: true, water: true, lunch: true, tablet: true }, score: ["Question", "Action", "Location", "Condition"] }
+        ]
+      }
+    ];
+
+    let roundIndex = 0;
+    const state = {
+      bagOpen: false,
+      papers: false,
+      pencil: false,
+      tablet: false,
+      water: false,
+      lunch: false
+    };
+
+    function byId(id) {
+      return document.getElementById(id);
+    }
+
+    function renderRound() {
+      const round = rounds[roundIndex];
+      byId("roundLabel").textContent = "Round " + (roundIndex + 1) + " of " + rounds.length;
+      byId("roundTitle").textContent = round.title;
+      byId("roundMission").textContent = round.mission;
+      byId("roundQuestion").textContent = round.question;
+      byId("feedback").textContent = "Choose the clearest instruction. Watch what the Literal Listener does.";
+      byId("nextBtn").style.display = "none";
+
+      const choices = byId("choices");
+      choices.innerHTML = "";
+      round.choices.forEach((choice, index) => {
+        const btn = document.createElement("button");
+        btn.className = "choice";
+        btn.type = "button";
+        btn.textContent = choice.text;
+        btn.onclick = () => choose(index);
+        choices.appendChild(btn);
+      });
+
+      updateScores([]);
+      renderState();
+    }
+
+    function choose(index) {
+      const round = rounds[roundIndex];
+      const choice = round.choices[index];
+
+      if (choice.state) {
+        Object.assign(state, choice.state);
+      }
+
+      byId("feedback").textContent = choice.feedback;
+      updateScores(choice.score || []);
+
+      if (choice.ok) {
+        if (roundIndex === rounds.length - 1) {
+          finish();
+        } else {
+          byId("nextBtn").style.display = "inline-block";
+        }
+      }
+
+      renderState();
+    }
+
+    function updateScores(active) {
+      ["Question", "Action", "Location", "Condition"].forEach(label => {
+        byId("score" + label).classList.toggle("active", active.includes(label));
+      });
+    }
+
+    function renderState() {
+      byId("bag").classList.toggle("open", state.bagOpen);
+      byId("papers").classList.toggle("active", state.papers);
+      byId("pencil").classList.toggle("active", state.pencil);
+      byId("tablet").classList.toggle("active", state.tablet);
+      byId("water").classList.toggle("active", state.water);
+      byId("lunch").classList.toggle("active", state.lunch);
+    }
+
+    function nextRound() {
+      roundIndex += 1;
+      renderRound();
+    }
+
+    function finish() {
+      byId("completeBox").classList.add("show");
+      byId("nextBtn").style.display = "none";
+    }
+
+    function restart() {
+      roundIndex = 0;
+      Object.keys(state).forEach(key => state[key] = false);
+      byId("completeBox").classList.remove("show");
+      renderRound();
+    }
+
+    renderRound();
+  </script>
+</body>
+</html>

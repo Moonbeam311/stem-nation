@@ -1,0 +1,716 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Mystery Deepens | STEM Nation Academy</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <style>
+    /* CI-4G_B_MYSTERY_DEEPENS_CHAMBER_POLISH */
+    :root {
+      --gold: #f4d35e;
+      --gold2: #d7a51e;
+      --blue: #7dd3fc;
+      --text: #f8f1dd;
+      --muted: rgba(248,241,221,.72);
+      --panel: rgba(5, 12, 24, .82);
+      --soft: rgba(255,255,255,.055);
+      --border: rgba(244,211,94,.26);
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      color: var(--text);
+      font-family: Georgia, "Times New Roman", serif;
+      background:
+        radial-gradient(circle at 18% 10%, rgba(244,211,94,.16), transparent 30%),
+        radial-gradient(circle at 84% 14%, rgba(125,211,252,.14), transparent 34%),
+        linear-gradient(135deg, #061826 0%, #07131d 58%, #03070d 100%);
+      overflow-x: hidden;
+    }
+
+    .atmosphere {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      background:
+        linear-gradient(90deg, rgba(255,255,255,.024) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(255,255,255,.016) 1px, transparent 1px);
+      background-size: 78px 78px;
+      opacity: .22;
+    }
+
+    .page {
+      position: relative;
+      z-index: 1;
+      max-width: 1380px;
+      margin: 0 auto;
+      padding: 28px 20px 38px;
+    }
+
+    .hero {
+      border: 1px solid var(--border);
+      border-radius: 32px;
+      background:
+        radial-gradient(circle at 18% 18%, rgba(244,211,94,.13), transparent 28%),
+        radial-gradient(circle at 86% 20%, rgba(125,211,252,.10), transparent 30%),
+        var(--panel);
+      box-shadow: 0 28px 84px rgba(0,0,0,.36);
+      padding: 22px;
+      margin-bottom: 22px;
+      display: grid;
+      grid-template-columns: 92px 1fr;
+      gap: 18px;
+      align-items: center;
+    }
+
+    .student-avatar {
+      width: 92px;
+      height: 108px;
+      border-radius: 24px;
+      border: 1px solid rgba(244,211,94,.36);
+      background:
+        radial-gradient(circle at 50% 26%, rgba(248,240,213,.22), transparent 24%),
+        linear-gradient(145deg, rgba(125,211,252,.12), rgba(244,211,94,.08));
+      overflow: hidden;
+      display: grid;
+      place-items: center;
+      box-shadow: 0 16px 38px rgba(0,0,0,.30);
+    }
+
+    .student-avatar img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .avatar-fallback {
+      color: var(--gold);
+      text-transform: uppercase;
+      letter-spacing: .08em;
+      font-size: .68rem;
+      font-weight: 900;
+      text-align: center;
+      padding: 8px;
+    }
+
+    .kicker {
+      color: var(--gold);
+      text-transform: uppercase;
+      letter-spacing: .14em;
+      font-size: .80rem;
+      font-weight: 900;
+      margin-bottom: 10px;
+    }
+
+    h1 {
+      margin: 0;
+      color: #fff6d2;
+      font-size: clamp(2.3rem, 5vw, 4.9rem);
+      line-height: .95;
+      text-shadow: 0 14px 38px rgba(0,0,0,.36);
+    }
+
+    h2 {
+      margin: 0 0 10px;
+      color: #fff4cf;
+      font-size: clamp(1.45rem, 3vw, 2.15rem);
+    }
+
+    .sub,
+    .prompt,
+    .note {
+      color: var(--muted);
+      line-height: 1.62;
+      font-size: 1.02rem;
+    }
+
+    .sub {
+      margin: 14px 0 0;
+      max-width: 940px;
+    }
+
+    .mission-track {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-top: 18px;
+    }
+
+    .mission-pill {
+      border: 1px solid rgba(244,211,94,.20);
+      background: rgba(244,211,94,.07);
+      color: rgba(248,241,221,.82);
+      border-radius: 999px;
+      padding: 8px 12px;
+      font-size: .84rem;
+      font-weight: 900;
+    }
+
+    .layout {
+      display: grid;
+      grid-template-columns: 1.08fr .92fr;
+      gap: 22px;
+      align-items: start;
+    }
+
+    .panel {
+      border: 1px solid var(--border);
+      border-radius: 30px;
+      background: var(--panel);
+      box-shadow: 0 24px 72px rgba(0,0,0,.30);
+      padding: 22px;
+      overflow: hidden;
+    }
+
+    .reveal-wall {
+      display: grid;
+      gap: 12px;
+      margin: 16px 0 22px;
+    }
+
+    .reveal-card {
+      border: 1px solid rgba(255,255,255,.08);
+      background:
+        linear-gradient(135deg, rgba(125,211,252,.075), rgba(244,211,94,.045));
+      border-radius: 20px;
+      padding: 15px;
+      opacity: 0;
+      transform: translateY(10px);
+      transition: opacity .55s ease, transform .55s ease;
+      display: grid;
+      grid-template-columns: 42px 1fr;
+      gap: 12px;
+      align-items: start;
+    }
+
+    .reveal-card.show {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .reveal-number {
+      width: 36px;
+      height: 36px;
+      border-radius: 999px;
+      background: rgba(0,0,0,.34);
+      color: var(--gold);
+      display: grid;
+      place-items: center;
+      font-weight: 900;
+      border: 1px solid rgba(244,211,94,.24);
+    }
+
+    .reveal-card strong {
+      color: var(--gold);
+      display: block;
+      margin-bottom: 5px;
+      font-size: .92rem;
+    }
+
+    .reveal-card span {
+      color: rgba(248,241,221,.76);
+      line-height: 1.45;
+      font-size: .94rem;
+    }
+
+    .mission-panel {
+      border: 1px solid rgba(244,211,94,.18);
+      border-radius: 24px;
+      background: rgba(244,211,94,.065);
+      padding: 16px;
+      margin-bottom: 16px;
+    }
+
+    .mission-panel strong {
+      display: block;
+      color: var(--gold);
+      margin-bottom: 5px;
+      font-size: .95rem;
+    }
+
+    .mission-panel span {
+      color: var(--muted);
+      line-height: 1.45;
+      font-size: .92rem;
+    }
+
+    .priority-list {
+      display: grid;
+      gap: 10px;
+      margin-top: 16px;
+    }
+
+    .priority-option {
+      border: 1px solid rgba(255,255,255,.12);
+      background: var(--soft);
+      border-radius: 18px;
+      padding: 14px;
+      cursor: pointer;
+      display: grid;
+      grid-template-columns: 42px 1fr;
+      gap: 12px;
+      align-items: center;
+      transition: .2s ease;
+    }
+
+    .priority-option:hover {
+      border-color: rgba(244,211,94,.44);
+      background: rgba(244,211,94,.08);
+      transform: translateY(-1px);
+    }
+
+    .priority-option.selected {
+      border-color: rgba(244,211,94,.72);
+      background: rgba(244,211,94,.14);
+      box-shadow: 0 14px 34px rgba(244,211,94,.08);
+    }
+
+    .rank {
+      width: 36px;
+      height: 36px;
+      display: grid;
+      place-items: center;
+      border-radius: 999px;
+      background: rgba(0,0,0,.34);
+      color: var(--gold);
+      font-weight: 900;
+      border: 1px solid rgba(244,211,94,.18);
+    }
+
+    .question-title {
+      color: #fff4d0;
+      font-weight: 900;
+      margin-bottom: 4px;
+    }
+
+    .question-desc {
+      color: var(--muted);
+      line-height: 1.45;
+      font-size: .94rem;
+    }
+
+    .actions {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+      margin-top: 18px;
+    }
+
+    button,
+    .button {
+      border: 0;
+      border-radius: 999px;
+      padding: 13px 20px;
+      font-family: inherit;
+      font-weight: 900;
+      cursor: pointer;
+      text-decoration: none;
+    }
+
+    .primary {
+      background: linear-gradient(135deg, var(--gold), var(--gold2));
+      color: #171006;
+      box-shadow: 0 12px 36px rgba(244,211,94,.20);
+    }
+
+    .secondary {
+      background: rgba(255,255,255,.10);
+      color: var(--text);
+      border: 1px solid rgba(255,255,255,.16);
+    }
+
+    .hud {
+      border-left: 4px solid var(--gold);
+      padding: 12px 14px;
+      background: rgba(244,211,94,.08);
+      border-radius: 14px;
+      color: #f8f1dd;
+      margin-top: 14px;
+      min-height: 48px;
+    }
+
+    .summary {
+      display: none;
+      margin-top: 18px;
+      border: 1px solid rgba(244,211,94,.30);
+      background: rgba(244,211,94,.09);
+      border-radius: 18px;
+      padding: 14px;
+      color: #f8f1dd;
+      line-height: 1.5;
+    }
+
+    .summary.show { display: block; }
+
+    .side-box {
+      border: 1px solid rgba(255,255,255,.10);
+      background: rgba(255,255,255,.045);
+      border-radius: 18px;
+      padding: 14px;
+      margin-top: 14px;
+    }
+
+    .side-box strong {
+      color: var(--gold);
+      display: block;
+      margin-bottom: 6px;
+    }
+
+    .observation-preview {
+      white-space: pre-wrap;
+      color: rgba(248,241,221,.72);
+      line-height: 1.48;
+      font-size: .92rem;
+      max-height: 180px;
+      overflow: auto;
+    }
+
+    @media (max-width: 1080px) {
+      .layout { grid-template-columns: 1fr; }
+    }
+
+    @media (max-width: 760px) {
+      .hero { grid-template-columns: 1fr; }
+      h1 { font-size: 2.35rem; }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="atmosphere"></div>
+
+  <main class="page">
+    <section class="hero">
+      <div class="student-avatar" id="studentAvatar">
+        <div class="avatar-fallback">Avatar</div>
+      </div>
+
+      <div>
+        <div class="kicker">Mystery Deepens Chamber</div>
+        <h1>Which Questions Matter Most?</h1>
+        <p class="sub" id="heroSub">
+          Academy Learner, your observation has opened the next chamber. The Guardian reveals more, but not enough to solve the mystery.
+          Now you must choose which questions should guide the Council first.
+        </p>
+
+        <div class="mission-track">
+          <div class="mission-pill" id="studentPill">Academy Learner</div>
+          <div class="mission-pill">Step 1 · Review the reveal</div>
+          <div class="mission-pill">Step 2 · Select exactly three</div>
+          <div class="mission-pill">Step 3 · Rank importance</div>
+          <div class="mission-pill">Step 4 · Explain next</div>
+        </div>
+      </div>
+    </section>
+
+    <section class="layout">
+      <article class="panel">
+        <div class="kicker">Guardian Reveal</div>
+        <h2>The mystery has not been solved.</h2>
+
+        <div class="reveal-wall">
+          <div class="reveal-card" id="reveal1">
+            <div class="reveal-number">1</div>
+            <div>
+              <strong>Six days apart</strong>
+              <span>Those images were taken six days apart. The change happened quickly enough to alarm the room.</span>
+            </div>
+          </div>
+
+          <div class="reveal-card" id="reveal2">
+            <div class="reveal-number">2</div>
+            <div>
+              <strong>The room is divided</strong>
+              <span>The Council has debated the images all morning, but the evidence has not settled the disagreement.</span>
+            </div>
+          </div>
+
+          <div class="reveal-card" id="reveal3">
+            <div class="reveal-number">3</div>
+            <div>
+              <strong>Answers are not enough</strong>
+              <span>Everyone wants answers, but choosing the wrong first question could send the investigation in the wrong direction.</span>
+            </div>
+          </div>
+
+          <div class="reveal-card" id="reveal4">
+            <div class="reveal-number">4</div>
+            <div>
+              <strong>The real challenge</strong>
+              <span>No one knows which questions matter most. That decision now moves to you.</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="mission-panel">
+          <strong>Mission: Choose the Questions That Matter</strong>
+          <span>
+            Select exactly three questions. Your first selection becomes rank 1, your second becomes rank 2, and your third becomes rank 3.
+            You are not choosing an answer. You are choosing where the investigation should begin.
+          </span>
+        </div>
+
+        <div class="priority-list" id="priorityList">
+          <div class="priority-option" data-value="What changed?">
+            <div class="rank">+</div>
+            <div>
+              <div class="question-title">What changed?</div>
+              <div class="question-desc">Identify the visible difference before guessing the cause.</div>
+            </div>
+          </div>
+
+          <div class="priority-option" data-value="What caused it?">
+            <div class="rank">+</div>
+            <div>
+              <div class="question-title">What caused it?</div>
+              <div class="question-desc">Investigate whether the change came from water, weather, damage, movement, or something else.</div>
+            </div>
+          </div>
+
+          <div class="priority-option" data-value="Has this happened before?">
+            <div class="rank">+</div>
+            <div>
+              <div class="question-title">Has this happened before?</div>
+              <div class="question-desc">Compare the change against older records and patterns.</div>
+            </div>
+          </div>
+
+          <div class="priority-option" data-value="Could people survive there?">
+            <div class="rank">+</div>
+            <div>
+              <div class="question-title">Could people survive there?</div>
+              <div class="question-desc">Consider whether the changed place could support people safely.</div>
+            </div>
+          </div>
+
+          <div class="priority-option" data-value="What should be protected?">
+            <div class="rank">+</div>
+            <div>
+              <div class="question-title">What should be protected?</div>
+              <div class="question-desc">Identify what may be at risk before decisions are made.</div>
+            </div>
+          </div>
+
+          <div class="priority-option" data-value="Can something be built there?">
+            <div class="rank">+</div>
+            <div>
+              <div class="question-title">Can something be built there?</div>
+              <div class="question-desc">Think about whether the changed area could support future structures or systems.</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="actions">
+          <button class="primary" type="button" onclick="saveRanking()">Save Question Ranking</button>
+          <button class="secondary" type="button" onclick="clearRanking()">Clear Ranking</button>
+        </div>
+
+        <div class="summary" id="summaryBox"></div>
+        <div class="actions">
+          <a class="button primary" id="nextBtn" href="/question_justification" style="display:none;">Continue to Justification</a>
+        </div>
+        <div class="hud" id="hud">The Guardian is revealing new information. Then rank exactly three questions.</div>
+      </article>
+
+      <aside class="panel">
+        <div class="kicker">Observation Carryover</div>
+        <h2>Your earlier notes still matter.</h2>
+        <p class="note" id="observationNote">
+          If you completed the observation step, your notes have been saved. Use them now to decide which questions matter most.
+        </p>
+
+        <div class="side-box">
+          <strong>Saved observation notes</strong>
+          <div class="observation-preview" id="observationPreview">No saved observation notes found yet.</div>
+        </div>
+
+        <div class="side-box">
+          <strong>Not a worksheet</strong>
+          The goal is not to be right first. The goal is to decide which question deserves attention first.
+        </div>
+
+        <div class="side-box">
+          <strong>Next locked step</strong>
+          After ranking, you will explain why these three questions deserve the Council’s attention.
+        </div>
+      </aside>
+    </section>
+  </main>
+
+  <script>
+    const IDENTITY_KEY = "stemNationStudentIdentity";
+    const OBSERVATION_KEY = "stemNationAcademyObservationV1";
+    const RANKING_KEY = "stemNationQuestionPriorityRankingV1";
+
+    const selected = [];
+    const hud = document.getElementById("hud");
+    const summaryBox = document.getElementById("summaryBox");
+    const heroSub = document.getElementById("heroSub");
+    const observationNote = document.getElementById("observationNote");
+    const observationPreview = document.getElementById("observationPreview");
+    const studentAvatar = document.getElementById("studentAvatar");
+    const studentPill = document.getElementById("studentPill");
+
+    let identity = {
+      name: "Academy Learner",
+      portrait: "",
+      fallback: "",
+      avatarChoice: "Academy Avatar"
+    };
+
+    let displayName = "Academy Learner";
+
+    try {
+      const saved = JSON.parse(localStorage.getItem(IDENTITY_KEY) || "null");
+      if (saved) identity = { ...identity, ...saved };
+    } catch (error) {
+      console.warn("Could not load identity.", error);
+    }
+
+    function looksLikeImageSource(value) {
+      return typeof value === "string" && (
+        value.startsWith("data:image/") ||
+        value.startsWith("/static/") ||
+        value.startsWith("http://") ||
+        value.startsWith("https://")
+      );
+    }
+
+    function renderStudentIdentity() {
+      displayName = identity.teacherApprovedName || identity.approvedName || identity.name || "Academy Learner";
+      displayName = String(displayName)
+        .replace(/^New Arrival\s*/i, "")
+        .replace(/^Academy Learner\s*/i, "")
+        .trim() || "Academy Learner";
+
+      const avatarSource = identity.portrait || identity.fallback || "";
+      const avatarChoice = identity.avatarChoice || identity.avatarTitle || "Academy Avatar";
+
+      studentPill.textContent = `${avatarChoice} · ${displayName}`;
+      heroSub.textContent = `${displayName}, your observation has opened the next chamber. The Guardian reveals more, but not enough to solve the mystery. Now choose which questions should guide the Council first.`;
+
+      studentAvatar.innerHTML = "";
+
+      if (looksLikeImageSource(avatarSource)) {
+        const img = document.createElement("img");
+        img.src = avatarSource;
+        img.alt = "Student Academy avatar";
+        studentAvatar.appendChild(img);
+      } else {
+        const fallback = document.createElement("div");
+        fallback.className = "avatar-fallback";
+        fallback.textContent = "Avatar";
+        studentAvatar.appendChild(fallback);
+      }
+    }
+
+    try {
+      const observation = JSON.parse(localStorage.getItem(OBSERVATION_KEY) || "null");
+      if (observation && observation.observations) {
+        observationNote.textContent = "Your observation notes were saved. Use them now to decide which questions matter most.";
+        observationPreview.textContent = observation.observations + (observation.uncertainties ? "\\n\\nStill uncertain: " + observation.uncertainties : "");
+      }
+    } catch (error) {
+      console.warn("Could not load observation.", error);
+    }
+
+    function revealCards() {
+      [1,2,3,4].forEach((number, index) => {
+        setTimeout(() => {
+          const card = document.getElementById(`reveal${number}`);
+          if (card) card.classList.add("show");
+          if (number === 4) {
+            hud.textContent = "Now select exactly three questions in order of importance.";
+          }
+        }, 650 + index * 950);
+      });
+    }
+
+    document.querySelectorAll(".priority-option").forEach(option => {
+      option.addEventListener("click", () => {
+        const value = option.dataset.value;
+
+        if (option.classList.contains("selected")) {
+          option.classList.remove("selected");
+          const idx = selected.indexOf(value);
+          if (idx >= 0) selected.splice(idx, 1);
+        } else {
+          if (selected.length >= 3) {
+            hud.textContent = "You already selected three questions. Deselect one if you want to change the order.";
+            return;
+          }
+          option.classList.add("selected");
+          selected.push(value);
+        }
+
+        updateRanks();
+      });
+    });
+
+    function updateRanks() {
+      document.querySelectorAll(".priority-option").forEach(option => {
+        const value = option.dataset.value;
+        const rank = option.querySelector(".rank");
+        const index = selected.indexOf(value);
+        rank.textContent = index >= 0 ? index + 1 : "+";
+      });
+
+      hud.textContent = selected.length === 3
+        ? "Three questions selected. Save the ranking when ready."
+        : `Select ${3 - selected.length} more question${3 - selected.length === 1 ? "" : "s"}.`;
+    }
+
+    function saveRanking() {
+      if (selected.length !== 3) {
+        hud.textContent = "Rank exactly three questions before moving on.";
+        return;
+      }
+
+      localStorage.setItem(RANKING_KEY, JSON.stringify({
+        displayName,
+        ranking: selected,
+        completedAt: new Date().toISOString()
+      }));
+
+      summaryBox.innerHTML = `
+        <strong>Question Priority Ranking Saved</strong><br>
+        1. ${escapeHtml(selected[0])}<br>
+        2. ${escapeHtml(selected[1])}<br>
+        3. ${escapeHtml(selected[2])}<br><br>
+        The next step is the Justification Chamber, where you explain why these questions matter.
+      `;
+      summaryBox.classList.add("show");
+      hud.textContent = "Ranking saved. Now explain why those questions matter.";
+      const nextBtn = document.getElementById("nextBtn");
+      if (nextBtn) nextBtn.style.display = "inline-block";
+    }
+
+    function clearRanking() {
+      selected.splice(0, selected.length);
+      document.querySelectorAll(".priority-option").forEach(option => option.classList.remove("selected"));
+      updateRanks();
+      summaryBox.classList.remove("show");
+      summaryBox.innerHTML = "";
+      const nextBtn = document.getElementById("nextBtn");
+      if (nextBtn) nextBtn.style.display = "none";
+    }
+
+    function escapeHtml(str) {
+      return String(str)
+        .replaceAll("&", "&amp;")
+        .replaceAll("<", "&lt;")
+        .replaceAll(">", "&gt;")
+        .replaceAll('"', "&quot;")
+        .replaceAll("'", "&#039;");
+    }
+
+    renderStudentIdentity();
+    revealCards();
+  </script>
+</body>
+</html>

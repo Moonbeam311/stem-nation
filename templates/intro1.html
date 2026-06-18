@@ -1,81 +1,178 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>STEM Nation — Intro 1</title>
+  <title>Nation Builder Cinematic</title>
+  <style>
+    html, body {
+      margin: 0;
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      font-family: Arial, sans-serif;
+      background: black;
+    }
+
+    .scene {
+      position: relative;
+      width: 100vw;
+      height: 100vh;
+      overflow: hidden;
+      color: white;
+    }
+
+    .camera {
+      position: absolute;
+      inset: -4%;
+      background: url('/static/intro_scene1.png') center center / cover no-repeat;
+      animation: slowCamera 5100ms ease-in-out forwards;
+      transform-origin: center;
+      z-index: 0;
+    }
+
+    .shade {
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(circle at center, rgba(0,0,0,0.04), rgba(0,0,0,0.42)),
+        linear-gradient(to top, rgba(0,0,0,0.86), rgba(0,0,0,0.16), rgba(0,0,0,0.35));
+      z-index: 1;
+    }
+
+    .text {
+      position: absolute;
+      left: 50%;
+      bottom: 118px;
+      transform: translateX(-50%);
+      z-index: 2;
+      width: min(920px, 88vw);
+      font-size: clamp(30px, 4.8vw, 52px);
+      line-height: 1.18;
+      text-align: center;
+      white-space: pre-line;
+      opacity: 0;
+      transition: opacity 0.45s ease;
+      text-shadow: 0 4px 22px rgba(0,0,0,0.95);
+    }
+
+    .skip, .start {
+      position: absolute;
+      z-index: 3;
+      padding: 8px 14px;
+      border: 1px solid rgba(255,255,255,0.28);
+      border-radius: 999px;
+      background: rgba(0,0,0,0.32);
+      color: rgba(255,255,255,0.78);
+      font-size: 11px;
+      letter-spacing: 1.3px;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: opacity 0.5s ease, background 0.2s ease;
+    }
+
+    .skip {
+      right: 24px;
+      bottom: 22px;
+      opacity: 0.35;
+    }
+
+    .start {
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%, -50%);
+      opacity: 0;
+      display: none;
+      font-size: 14px;
+      padding: 12px 22px;
+      background: rgba(212,175,55,0.82);
+      color: black;
+      border-color: rgba(212,175,55,0.95);
+    }
+
+    .skip:hover, .start:hover {
+      background: rgba(212,175,55,0.9);
+      color: black;
+    }
+
+    @keyframes slowCamera {
+      0% {
+        transform: scale(1.03) translate3d(-0.8%, 0.3%, 0);
+      }
+      50% {
+        transform: scale(1.065) translate3d(0.8%, -0.4%, 0);
+      }
+      100% {
+        transform: scale(1.09) translate3d(0.2%, -0.8%, 0);
+      }
+    }
+  </style>
 </head>
-<body style="margin:0;overflow:hidden;font-family:Arial;background:black;">
 
-<div style="
-width:100vw;
-height:100vh;
-background:url('/static/intro_scene1.png') center center / cover no-repeat;
-display:flex;
-align-items:flex-end;
-justify-content:center;
-color:white;
-font-size:34px;
-text-align:center;
-padding-bottom:100px;
-position:relative;
-box-sizing:border-box;
-">
+<body>
+  <div class="scene">
+    <div class="camera"></div>
+    <div class="shade"></div>
 
-  <div id="tapPrompt" style="
-    position:absolute;
-    top:38px;
-    left:50%;
-    transform:translateX(-50%);
-    background:rgba(0,0,0,0.42);
-    color:white;
-    padding:10px 16px;
-    border-radius:10px;
-    font-size:18px;
-    letter-spacing:1px;
-    opacity:0.95;
-    transition:opacity 0.6s ease;
-  ">
-    Tap here to begin
+    <div id="text" class="text">Every nation begins with a decision.</div>
+
+    <button id="start" class="start" onclick="manualStart()">Start Audio</button>
+    <button id="skip" class="skip" onclick="goNext()">Skip</button>
+
+    <audio id="voice" preload="auto">
+      <source src="/static/intro1_demo.mp3" type="audio/mpeg">
+    </audio>
   </div>
 
-  <div id="text" style="
-    opacity:0;
-    transition:1.5s;
-    white-space:pre-line;
-    text-shadow:0 2px 10px rgba(0,0,0,0.75);
-  ">
-    Every civilization begins with a decision.
-  </div>
+  <script>
+    const textEl = document.getElementById("text");
+    const startEl = document.getElementById("start");
+    const voiceEl = document.getElementById("voice");
 
-</div>
+    let started = false;
+    let finished = false;
 
-<script>
-let started = false;
+    function showText() {
+      textEl.style.opacity = 1;
+    }
 
-function startExperience() {
-  if (started) return;
-  started = true;
+    function finishScene() {
+      if (finished) return;
+      finished = true;
+      textEl.style.opacity = 0;
+      setTimeout(goNext, 500);
+    }
 
-  const text = document.getElementById("text");
-  const tapPrompt = document.getElementById("tapPrompt");
+    function goNext() {
+      window.location.href = "/intro2";
+    }
 
-  if (tapPrompt) tapPrompt.style.opacity = 0;
+    function beginScene() {
+      if (started) return;
+      started = true;
+      startEl.style.display = "none";
+      voiceEl.currentTime = 0;
+      voiceEl.volume = 0.9;
 
-  setTimeout(() => {
-    if (text) text.style.opacity = 1;
-  }, 420);
+      voiceEl.play().then(() => {
+        setTimeout(showText, 120);
+        setTimeout(finishScene, 4300);
+      }).catch(() => {
+        started = false;
+        startEl.style.display = "block";
+        startEl.style.opacity = 1;
+      });
+    }
 
-  const audio = new Audio("/static/intro1.mp3");
-  audio.volume = 0.28;
+    function manualStart() {
+      beginScene();
+    }
 
-  audio.play().catch(() => {});
+    window.addEventListener("load", () => {
+      setTimeout(beginScene, 120);
+    });
 
-  audio.onended = function() {
-    window.location.href = "/intro2";
-  };
-}
-
-document.body.addEventListener("click", startExperience, { once: true });
-</script>
-
+    voiceEl.addEventListener("ended", () => {
+      setTimeout(finishScene, 350);
+    });
+  </script>
 </body>
 </html>

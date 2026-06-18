@@ -1,0 +1,820 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Create Academy Identity | STEM Nation</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <style>
+    /* CI-4B_SAFE_APPROVED_IDENTITY_ROSTER */
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      font-family: Georgia, "Times New Roman", serif;
+      color: #f8f0d5;
+      background:
+        radial-gradient(circle at 18% 12%, rgba(244, 211, 94, 0.18), transparent 30%),
+        radial-gradient(circle at 82% 16%, rgba(125, 211, 252, 0.14), transparent 28%),
+        linear-gradient(135deg, #061826 0%, #07131d 58%, #03070d 100%);
+      overflow-x: hidden;
+    }
+
+    .atmosphere {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      background:
+        linear-gradient(115deg, rgba(255,255,255,0.05), transparent 20%),
+        radial-gradient(circle at 28% 72%, rgba(244,211,94,0.08), transparent 28%),
+        radial-gradient(circle at 75% 72%, rgba(76,201,240,0.09), transparent 24%);
+      opacity: 0.82;
+    }
+
+    .page {
+      position: relative;
+      z-index: 1;
+      max-width: 1220px;
+      margin: 0 auto;
+      padding: 42px 22px 52px;
+    }
+
+    .academy-shell {
+      border: 1px solid rgba(244,211,94,0.24);
+      border-radius: 34px;
+      background: rgba(5,18,29,0.82);
+      box-shadow: 0 28px 90px rgba(0,0,0,0.44);
+      padding: 30px;
+      backdrop-filter: blur(12px);
+    }
+
+    .topbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 14px;
+      flex-wrap: wrap;
+      margin-bottom: 24px;
+    }
+
+    .brand {
+      color: #f4d35e;
+      text-transform: uppercase;
+      letter-spacing: .16em;
+      font-size: .78rem;
+      font-weight: 900;
+    }
+
+    .rank-pill {
+      border: 1px solid rgba(125,211,252,.28);
+      background: rgba(125,211,252,.08);
+      color: #dff7ff;
+      border-radius: 999px;
+      padding: 9px 13px;
+      font-size: .86rem;
+      font-weight: 800;
+    }
+
+    .hero {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) 350px;
+      gap: 24px;
+      align-items: stretch;
+    }
+
+    .panel {
+      border: 1px solid rgba(255,255,255,.1);
+      border-radius: 28px;
+      background:
+        radial-gradient(circle at top left, rgba(244,211,94,.11), transparent 34%),
+        rgba(255,255,255,.045);
+      padding: 24px;
+    }
+
+    .kicker {
+      color: #7dd3fc;
+      text-transform: uppercase;
+      letter-spacing: .14em;
+      font-size: .75rem;
+      font-weight: 900;
+      margin-bottom: 8px;
+    }
+
+    h1 {
+      margin: 0;
+      color: #f4d35e;
+      font-size: clamp(2.3rem, 6vw, 5rem);
+      line-height: .93;
+      letter-spacing: -.055em;
+    }
+
+    .lead {
+      max-width: 760px;
+      color: rgba(248,240,213,.78);
+      font-size: 1.06rem;
+      line-height: 1.65;
+      margin: 16px 0 0;
+    }
+
+    label {
+      display: block;
+      color: rgba(248,240,213,.9);
+      font-size: .92rem;
+      font-weight: 900;
+      letter-spacing: .03em;
+      margin: 22px 0 8px;
+    }
+
+    input {
+      width: 100%;
+      border: 1px solid rgba(244,211,94,.24);
+      border-radius: 18px;
+      background: rgba(0,0,0,.25);
+      color: #f8f0d5;
+      padding: 14px 15px;
+      font-family: inherit;
+      font-size: 1rem;
+      outline: none;
+    }
+
+    input:focus {
+      border-color: rgba(244,211,94,.62);
+      box-shadow: 0 0 0 3px rgba(244,211,94,.12);
+    }
+
+    .avatar-grid {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 13px;
+      margin-top: 8px;
+    }
+
+    .avatar-card {
+      border: 1px solid rgba(255,255,255,.12);
+      border-radius: 22px;
+      background: rgba(255,255,255,.055);
+      color: #f8f0d5;
+      padding: 14px;
+      cursor: pointer;
+      min-height: 188px;
+      transition: transform .18s ease, border-color .18s ease, background .18s ease, box-shadow .18s ease;
+      text-align: left;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .avatar-card::after {
+      content: "";
+      position: absolute;
+      right: -34px;
+      bottom: -76px;
+      width: 140px;
+      height: 140px;
+      border-radius: 999px;
+      background: rgba(244,211,94,.08);
+    }
+
+    .avatar-card:hover,
+    .avatar-card.selected {
+      transform: translateY(-4px);
+      border-color: rgba(244,211,94,.62);
+      background: rgba(244,211,94,.08);
+      box-shadow: 0 18px 45px rgba(0,0,0,.26);
+    }
+
+    .avatar-symbol {
+      width: 74px;
+      height: 88px;
+      border-radius: 20px;
+      border: 1px solid rgba(244,211,94,.3);
+      background: rgba(0,0,0,.22);
+      display: grid;
+      place-items: center;
+      margin-bottom: 10px;
+      position: relative;
+      z-index: 1;
+      font-size: 2.25rem;
+    }
+
+    .avatar-role {
+      color: #f4d35e;
+      font-size: 1.08rem;
+      font-weight: 900;
+      position: relative;
+      z-index: 1;
+    }
+
+    .avatar-title {
+      color: rgba(248,240,213,.72);
+      font-size: .86rem;
+      margin-top: 3px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .avatar-motto {
+      color: rgba(248,240,213,.78);
+      font-size: .82rem;
+      line-height: 1.38;
+      margin-top: 9px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .preview-card {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .preview-symbol {
+      width: 150px;
+      height: 180px;
+      border-radius: 34px;
+      border: 1px solid rgba(244,211,94,.42);
+      background: rgba(244,211,94,.08);
+      display: grid;
+      place-items: center;
+      margin: 8px auto 18px;
+      font-size: 4.4rem;
+      box-shadow: 0 18px 52px rgba(0,0,0,.28);
+    }
+
+    .preview-name {
+      text-align: center;
+      color: #f4d35e;
+      font-size: 1.55rem;
+      font-weight: 900;
+      margin-bottom: 6px;
+    }
+
+    .preview-rank {
+      text-align: center;
+      color: #7dd3fc;
+      text-transform: uppercase;
+      letter-spacing: .12em;
+      font-size: .76rem;
+      font-weight: 900;
+      margin-bottom: 14px;
+    }
+
+    .preview-role {
+      border: 1px solid rgba(255,255,255,.11);
+      border-radius: 18px;
+      background: rgba(0,0,0,.18);
+      padding: 14px;
+      color: rgba(248,240,213,.82);
+      line-height: 1.45;
+      min-height: 112px;
+    }
+
+    .preview-role strong {
+      color: #f4d35e;
+      display: block;
+      margin-bottom: 5px;
+    }
+
+    .identity-storage-notice {
+      display: none;
+      margin-top: 14px;
+      border: 1px solid rgba(125,211,252,.26);
+      background: rgba(125,211,252,.08);
+      color: rgba(248,240,213,.8);
+      border-radius: 16px;
+      padding: 12px 14px;
+      font-size: .9rem;
+      line-height: 1.45;
+    }
+
+    .identity-storage-notice.show {
+      display: block;
+    }
+
+    .actions {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+      margin-top: 22px;
+    }
+
+    button,
+    .button {
+      border: 1px solid rgba(244,211,94,.35);
+      border-radius: 999px;
+      padding: 13px 18px;
+      font-family: inherit;
+      font-weight: 900;
+      cursor: pointer;
+      text-decoration: none;
+    }
+
+    .primary {
+      background: linear-gradient(135deg, #f4d35e, #f7b955);
+      color: #07131d;
+      box-shadow: 0 14px 35px rgba(244,211,94,.16);
+    }
+
+    .secondary {
+      background: rgba(255,255,255,.06);
+      color: #f8f0d5;
+    }
+
+    .status {
+      margin-top: 14px;
+      color: rgba(248,240,213,.78);
+      min-height: 24px;
+    }
+
+    .note {
+      color: rgba(248,240,213,.66);
+      font-size: .9rem;
+      line-height: 1.45;
+      margin-top: 16px;
+    }
+
+    @media (max-width: 1050px) {
+      .hero { grid-template-columns: 1fr; }
+      .avatar-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    }
+
+    @media (max-width: 620px) {
+      .academy-shell { padding: 20px; }
+      .avatar-grid { grid-template-columns: 1fr; }
+      .preview-symbol { width: 126px; height: 150px; }
+    }
+  
+    /* CI-4B_F3_REALISTIC_AVATAR_SLOTS */
+    .avatar-image-frame {
+      width: 92px;
+      height: 112px;
+      border-radius: 24px;
+      border: 1px solid rgba(244,211,94,.36);
+      background:
+        radial-gradient(circle at 50% 28%, rgba(248,240,213,.24), transparent 22%),
+        linear-gradient(145deg, rgba(125,211,252,.12), rgba(244,211,94,.08));
+      display: grid;
+      place-items: center;
+      margin-bottom: 10px;
+      overflow: hidden;
+      position: relative;
+      z-index: 1;
+    }
+
+    .avatar-image-frame img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .avatar-placeholder {
+      width: 54px;
+      height: 72px;
+      border-radius: 999px 999px 26px 26px;
+      background:
+        radial-gradient(circle at 50% 22%, rgba(248,240,213,.88), rgba(248,240,213,.5) 28%, transparent 30%),
+        linear-gradient(to bottom, transparent 36%, rgba(248,240,213,.54) 37%, rgba(248,240,213,.3));
+      opacity: .82;
+    }
+
+    .preview-image-frame {
+      width: 160px;
+      height: 190px;
+      border-radius: 34px;
+      border: 1px solid rgba(244,211,94,.42);
+      background:
+        radial-gradient(circle at 50% 26%, rgba(248,240,213,.24), transparent 22%),
+        linear-gradient(145deg, rgba(125,211,252,.12), rgba(244,211,94,.08));
+      display: grid;
+      place-items: center;
+      margin: 8px auto 18px;
+      overflow: hidden;
+      box-shadow: 0 18px 52px rgba(0,0,0,.28);
+    }
+
+    .preview-image-frame img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+  
+    /* CI-4B_F3B_CLEAN_PLACEHOLDER_EXPERIENCE */
+    .avatar-image-frame.empty,
+    .preview-image-frame.empty {
+      background:
+        radial-gradient(circle at 50% 22%, rgba(248,240,213,.18), transparent 24%),
+        linear-gradient(145deg, rgba(125,211,252,.13), rgba(244,211,94,.09));
+    }
+
+    .avatar-placeholder {
+      position: relative;
+      width: 62px;
+      height: 82px;
+      border-radius: 999px 999px 26px 26px;
+      background:
+        radial-gradient(circle at 50% 22%, rgba(248,240,213,.88), rgba(248,240,213,.62) 23%, transparent 24%),
+        linear-gradient(to bottom, transparent 34%, rgba(248,240,213,.54) 35%, rgba(248,240,213,.22) 100%);
+      opacity: .86;
+    }
+
+    .avatar-placeholder::after {
+      content: "";
+      position: absolute;
+      left: 50%;
+      top: 56px;
+      width: 70px;
+      height: 1px;
+      transform: translateX(-50%);
+      background: rgba(244,211,94,.35);
+      box-shadow: 0 0 22px rgba(244,211,94,.2);
+    }
+
+  
+    /* CI-4B_Q_CUSTOM_AVATAR_UPLOAD */
+    .upload-panel {
+      margin-top: 18px;
+      border: 1px solid rgba(125,211,252,.24);
+      border-radius: 22px;
+      background: rgba(125,211,252,.065);
+      padding: 16px;
+    }
+
+    .upload-panel h3 {
+      margin: 0 0 6px;
+      color: #7dd3fc;
+      font-size: 1rem;
+      letter-spacing: .02em;
+    }
+
+    .upload-panel p {
+      margin: 0 0 12px;
+      color: rgba(248,240,213,.72);
+      font-size: .9rem;
+      line-height: 1.45;
+    }
+
+    .upload-row {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .upload-row input[type="file"] {
+      display: none;
+    }
+
+    .upload-file-label {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      border: 1px solid rgba(244,211,94,.36);
+      border-radius: 999px;
+      padding: 12px 16px;
+      color: #07131d;
+      background: linear-gradient(135deg, #f4d35e, #f7b955);
+      font-weight: 900;
+      cursor: pointer;
+    }
+
+    .upload-hint {
+      color: rgba(248,240,213,.64);
+      font-size: .84rem;
+    }
+
+    .custom-avatar-badge {
+      display: none;
+      margin-top: 10px;
+      border-radius: 999px;
+      padding: 8px 11px;
+      background: rgba(244,211,94,.12);
+      color: #f4d35e;
+      font-size: .82rem;
+      font-weight: 900;
+      width: fit-content;
+    }
+
+    .custom-avatar-badge.show {
+      display: inline-flex;
+    }
+
+  </style>
+</head>
+
+<body>
+  <div class="atmosphere"></div>
+
+  <main class="page">
+    <section class="academy-shell">
+      <div class="topbar">
+        <div class="brand">STEM Nation Academy</div>
+        <div class="rank-pill">New Arrival · Chief Investigator in Training</div>
+      </div>
+
+      <section class="hero">
+        <article class="panel">
+          <div class="kicker">Identity Chamber</div>
+          <h1>Create Your Academy Identity</h1>
+          <p class="lead">
+            Before the Academy opens the first inquiry, choose the avatar that feels most like you. You will meet the Academy figures later.
+          </p>
+
+          <label for="studentName">Academy Name</label>
+          <input id="studentName" autocomplete="off" placeholder="Enter your first name or Academy name">
+
+          <label>Choose your Academy avatar</label>
+          <div class="avatar-grid" id="avatarGrid"></div>
+
+          <div class="upload-panel">
+            <h3>Or upload your own avatar</h3>
+            <p>
+              Students may choose one of the Academy avatars or upload a personal avatar image from this device.
+              The image stays in this browser for the student experience.
+            </p>
+            <div class="upload-row">
+              <label class="upload-file-label" for="customAvatarInput">Upload Avatar Image</label>
+              <input id="customAvatarInput" type="file" accept="image/*">
+              <span class="upload-hint">PNG, JPG, or WEBP recommended.</span>
+            </div>
+            <div class="custom-avatar-badge" id="customAvatarBadge">Custom avatar selected</div>
+          </div>
+
+        </article>
+
+        <aside class="panel preview-card">
+          <div>
+            <div class="kicker">Academy Profile Preview</div>
+            <div class="preview-image-frame" id="previewAvatarFrame"><div class="avatar-placeholder"></div></div>
+            <div class="preview-name" id="previewName">New Arrival</div>
+            <div class="preview-rank">Chief Investigator in Training</div>
+            <div class="preview-role" id="previewRole">
+              <strong>Academy Avatar</strong>
+              Choose the avatar that feels most like you.
+            </div>
+
+            <div class="identity-storage-notice" id="identityStorageNotice">
+              <strong>Saved identity detected.</strong><br>
+              Your Academy profile was loaded from this browser. You can keep it or clear it.
+            </div>
+
+            <div class="actions">
+              <button class="primary" id="saveIdentityBtn" type="button">Lock Identity & Begin Journey</button>
+              <button class="secondary" id="clearIdentityBtn" type="button">Clear Current Identity</button>
+            </div>
+            <div class="status" id="status"></div>
+          </div>
+        </aside>
+      </section>
+    </section>
+  </main>
+
+  <script>
+    // CI-4B_SAFE_APPROVED_IDENTITY_ROSTER
+    const STORAGE_KEY = "stemNationStudentIdentity";
+    const AVATAR_KEY = "stemNationAvatar";
+
+    // CI-4B_F3_REALISTIC_AVATAR_SLOTS
+    // CI-4B_F3C_REPAIR_FORCE_EIGHT_AVATAR_SLOTS
+    // CI-4B_P3_ACTIVATE_INSTALLED_AVATARS
+    const avatars = [
+      {
+        label: "Avatar 1",
+        image: "/static/avatars/student_choices/avatar_01.png",
+        futureImage: "/static/avatars/student_choices/avatar_01.png",
+        motto: "Choose the avatar that feels most like you."
+      },
+      {
+        label: "Avatar 2",
+        image: "/static/avatars/student_choices/avatar_02.png",
+        futureImage: "/static/avatars/student_choices/avatar_02.png",
+        motto: "Choose the avatar that feels most like you."
+      },
+      {
+        label: "Avatar 3",
+        image: "/static/avatars/student_choices/avatar_03.png",
+        futureImage: "/static/avatars/student_choices/avatar_03.png",
+        motto: "Choose the avatar that feels most like you."
+      },
+      {
+        label: "Avatar 4",
+        image: "/static/avatars/student_choices/avatar_04.png",
+        futureImage: "/static/avatars/student_choices/avatar_04.png",
+        motto: "Choose the avatar that feels most like you."
+      },
+      {
+        label: "Avatar 5",
+        image: "/static/avatars/student_choices/avatar_05.png",
+        futureImage: "/static/avatars/student_choices/avatar_05.png",
+        motto: "Choose the avatar that feels most like you."
+      },
+      {
+        label: "Avatar 6",
+        image: "/static/avatars/student_choices/avatar_06.png",
+        futureImage: "/static/avatars/student_choices/avatar_06.png",
+        motto: "Choose the avatar that feels most like you."
+      },
+      {
+        label: "Avatar 7",
+        image: "/static/avatars/student_choices/avatar_07.png",
+        futureImage: "/static/avatars/student_choices/avatar_07.png",
+        motto: "Choose the avatar that feels most like you."
+      },
+      {
+        label: "Avatar 8",
+        image: "/static/avatars/student_choices/avatar_08.png",
+        futureImage: "/static/avatars/student_choices/avatar_08.png",
+        motto: "Choose the avatar that feels most like you."
+      }
+    ];
+
+    let selectedAvatar = avatars[0];
+    let customAvatarDataUrl = "";
+
+    const avatarGrid = document.getElementById("avatarGrid");
+    const studentName = document.getElementById("studentName");
+    const previewName = document.getElementById("previewName");
+    const previewSymbol = document.getElementById("previewSymbol");
+    const previewRole = document.getElementById("previewRole");
+    const statusBox = document.getElementById("status");
+    const identityStorageNotice = document.getElementById("identityStorageNotice");
+    const customAvatarInput = document.getElementById("customAvatarInput");
+    const customAvatarBadge = document.getElementById("customAvatarBadge");
+
+    function safeName() {
+      return studentName.value.trim() || "New Arrival";
+    }
+
+    function renderAvatarGrid() {
+      avatarGrid.innerHTML = avatars.map((avatar, index) => {
+        const visual = avatar.image
+          ? `<img src="${avatar.image}" alt="${avatar.label}">`
+          : `<div class="avatar-placeholder"></div>`;
+
+        return `
+          <button
+            type="button"
+            class="avatar-card ${avatar.label === selectedAvatar.label ? "selected" : ""}"
+            data-avatar-index="${index}"
+            aria-label="Choose ${avatar.label}"
+          >
+            <div class="avatar-image-frame ${avatar.image ? "" : "empty"}">
+              ${visual}
+            </div>
+            <div class="avatar-role">${avatar.label}</div>
+            <div class="avatar-title">Choose this Academy avatar</div>
+            <div class="avatar-motto">“${avatar.motto}”</div>
+          </button>
+        `;
+      }).join("");
+
+      document.querySelectorAll(".avatar-card").forEach(card => {
+        card.addEventListener("click", () => {
+          const index = Number(card.dataset.avatarIndex);
+          selectedAvatar = avatars[index] || avatars[0];
+          customAvatarDataUrl = "";
+          if (customAvatarInput) customAvatarInput.value = "";
+          renderAvatarGrid();
+          updatePreview();
+        });
+      });
+    }
+
+    function updatePreview() {
+      previewName.textContent = safeName();
+
+      const frame = document.getElementById("previewAvatarFrame");
+      const activeImage = customAvatarDataUrl || selectedAvatar.image;
+
+      if (frame) {
+        frame.classList.toggle("empty", !activeImage);
+        frame.innerHTML = activeImage
+          ? `<img src="${activeImage}" alt="${customAvatarDataUrl ? "Custom Avatar" : selectedAvatar.label}">`
+          : `<div class="avatar-placeholder"></div>`;
+      }
+
+      if (customAvatarBadge) {
+        customAvatarBadge.classList.toggle("show", !!customAvatarDataUrl);
+      }
+
+      previewRole.innerHTML = `
+        <strong>${customAvatarDataUrl ? "Custom Avatar" : selectedAvatar.label}</strong>
+        Choose the avatar that feels most like you.
+      `;
+    }
+
+    function saveIdentity() {
+      const savedAt = new Date().toISOString();
+      const academyName = safeName();
+
+      const identity = {
+        name: academyName,
+        approvedName: academyName,
+        teacherApprovedName: academyName,
+        status: "Chief Investigator in Training",
+        leadershipStage: "New Arrival",
+        portraitType: "realistic-avatar-slot",
+        portrait: customAvatarDataUrl || selectedAvatar.image || "",
+        fallback: customAvatarDataUrl || selectedAvatar.image || "",
+        futureImage: selectedAvatar.futureImage || "",
+        avatarChoice: customAvatarDataUrl ? "Custom Avatar" : selectedAvatar.label,
+        customAvatar: !!customAvatarDataUrl,
+        avatarTitle: "Academy Avatar",
+        avatarMotto: selectedAvatar.motto,
+        savedAt
+      };
+
+      const avatarRecord = {
+        avatarChoice: selectedAvatar.label,
+        title: "Academy Avatar",
+        portrait: customAvatarDataUrl || selectedAvatar.image || "",
+        fallback: customAvatarDataUrl || selectedAvatar.image || "",
+        futureImage: selectedAvatar.futureImage || "",
+        customAvatar: !!customAvatarDataUrl,
+        motto: selectedAvatar.motto,
+        savedAt
+      };
+
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(identity));
+      localStorage.setItem(AVATAR_KEY, JSON.stringify(avatarRecord));
+      window.STEMNationMissionRecord?.update?.();
+
+      statusBox.textContent = "Identity locked. The Academy doors are opening...";
+      setTimeout(() => {
+        window.location.href = "/academy_threshold";
+      }, 650);
+    }
+
+    function clearIdentity() {
+      localStorage.removeItem(STORAGE_KEY);
+      localStorage.removeItem(AVATAR_KEY);
+      studentName.value = "";
+      selectedAvatar = avatars[0];
+      customAvatarDataUrl = "";
+      if (customAvatarInput) customAvatarInput.value = "";
+      if (customAvatarBadge) customAvatarBadge.classList.remove("show");
+      identityStorageNotice.classList.remove("show");
+      statusBox.textContent = "Identity cleared. Choose your Academy profile.";
+      renderAvatarGrid();
+      updatePreview();
+    }
+
+    function loadSavedIdentity() {
+      try {
+        const saved = JSON.parse(localStorage.getItem(STORAGE_KEY) || "null");
+        const savedAvatar = JSON.parse(localStorage.getItem(AVATAR_KEY) || "null");
+
+        if (!saved && !savedAvatar) return;
+
+        if (saved?.name) studentName.value = saved.name;
+
+        const role = saved?.role || savedAvatar?.role;
+        if (role) {
+          selectedAvatar = avatars.find(item => item.role === role) || avatars[0];
+        }
+
+        identityStorageNotice.classList.add("show");
+      } catch (err) {
+        console.warn("Saved Academy identity ignored.", err);
+      }
+    }
+
+
+    // CI-4B_Q_CUSTOM_AVATAR_UPLOAD
+    if (customAvatarInput) {
+      customAvatarInput.addEventListener("change", event => {
+        const file = event.target.files && event.target.files[0];
+        if (!file) return;
+
+        if (!file.type.startsWith("image/")) {
+          statusBox.textContent = "Please upload an image file.";
+          customAvatarInput.value = "";
+          return;
+        }
+
+        const reader = new FileReader();
+        reader.onload = () => {
+          customAvatarDataUrl = reader.result || "";
+          statusBox.textContent = "Custom avatar loaded. Lock identity when ready.";
+          updatePreview();
+        };
+        reader.onerror = () => {
+          statusBox.textContent = "Could not load that image. Try another file.";
+        };
+        reader.readAsDataURL(file);
+      });
+    }
+
+    studentName.addEventListener("input", updatePreview);
+    document.getElementById("saveIdentityBtn").addEventListener("click", saveIdentity);
+    document.getElementById("clearIdentityBtn").addEventListener("click", clearIdentity);
+
+    loadSavedIdentity();
+    renderAvatarGrid();
+    updatePreview();
+  </script>
+  <script src="{{ url_for('static', filename='js/academy_mission_record.js') }}?v=step2c1"></script>
+</body>
+</html>

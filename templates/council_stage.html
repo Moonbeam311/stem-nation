@@ -1,80 +1,3808 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>STEM Nation | Council Hall</title>
-<style>
-:root{--gold:#f5d77a;--ice:#dff6ff;--panel:rgba(8,15,32,.78);--strong:rgba(9,18,39,.92);--line:rgba(245,215,122,.34);--soft:rgba(255,255,255,.72);--good:#91f5b3;--warn:#ffd36a;--bad:#ff9d9d;--blue:#8fd8ff}*{box-sizing:border-box}body{margin:0;min-height:100vh;font-family:Arial,Helvetica,sans-serif;color:#fff;background:radial-gradient(circle at 50% 12%,rgba(92,179,255,.22),transparent 28%),radial-gradient(circle at 25% 76%,rgba(245,215,122,.11),transparent 24%),linear-gradient(135deg,#02030a,#071326 48%,#02040b);overflow-x:hidden}.shell{min-height:100vh;padding:22px;position:relative}.shell:before{content:"";position:fixed;inset:0;pointer-events:none;background:linear-gradient(90deg,rgba(255,255,255,.03) 1px,transparent 1px),linear-gradient(rgba(255,255,255,.03) 1px,transparent 1px);background-size:54px 54px;mask-image:radial-gradient(circle at center,#000,transparent 78%);z-index:-2}.top{display:flex;justify-content:space-between;align-items:center;gap:16px;margin-bottom:18px}.kicker{letter-spacing:.22em;text-transform:uppercase;font-size:12px;color:var(--gold)}h1{margin:5px 0 0;font-size:clamp(32px,5vw,58px);line-height:.95;text-shadow:0 0 28px rgba(143,216,255,.22)}.tag{border:1px solid var(--line);border-radius:999px;padding:10px 14px;color:var(--ice);background:rgba(255,255,255,.06);font-size:13px}.grid{display:grid;grid-template-columns:minmax(180px,260px) 1fr minmax(230px,320px);gap:18px}.panel{border:1px solid var(--line);background:var(--panel);border-radius:22px;box-shadow:0 20px 60px rgba(0,0,0,.34);backdrop-filter:blur(10px)}.avatars{padding:14px;display:grid;gap:12px;align-content:start}.avatar{display:grid;grid-template-columns:48px 1fr;gap:10px;align-items:center;padding:11px;border-radius:16px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);transition:.25s}.avatar.active{border-color:rgba(245,215,122,.88);background:rgba(245,215,122,.12);transform:translateX(3px);box-shadow:0 0 18px rgba(245,215,122,.16)}.face{width:48px;height:48px;display:grid;place-items:center;border-radius:50%;background:radial-gradient(circle,rgba(255,255,255,.22),rgba(143,216,255,.1));border:1px solid rgba(255,255,255,.28);font-size:25px}.name{font-weight:700}.role{color:var(--soft);font-size:12px;line-height:1.35}.stage{min-height:720px;padding:18px;position:relative;overflow:hidden}.stage:before{content:"";position:absolute;inset:0;pointer-events:none;background:radial-gradient(circle at 20% 0,rgba(245,215,122,.16),transparent 25%),radial-gradient(circle at 80% 0,rgba(143,216,255,.16),transparent 25%)}.status{position:relative;z-index:5;display:flex;justify-content:space-between;gap:10px;margin-bottom:12px}.pill{border:1px solid rgba(255,255,255,.14);background:rgba(0,0,0,.24);border-radius:999px;padding:8px 11px;font-size:12px;color:var(--soft);letter-spacing:.08em;text-transform:uppercase}.pill strong{color:var(--gold)}.screen{position:relative;z-index:2;min-height:330px;display:grid;place-items:center;padding:22px;border-radius:24px;border:1px solid rgba(143,216,255,.34);background:linear-gradient(135deg,rgba(10,27,56,.88),rgba(7,12,25,.82)),radial-gradient(circle at center,rgba(143,216,255,.16),transparent 44%);box-shadow:inset 0 0 60px rgba(143,216,255,.09),0 18px 50px rgba(0,0,0,.35)}.screen.obs{border-color:rgba(145,245,179,.55)}.screen.q{border-color:rgba(245,215,122,.75)}.screen.p{border-color:rgba(143,216,255,.85)}.screen.r{border-color:rgba(255,255,255,.8);box-shadow:inset 0 0 80px rgba(245,215,122,.12),0 0 35px rgba(245,215,122,.2)}.screen.final,.screen.complete{border-color:rgba(145,245,179,.95);box-shadow:inset 0 0 90px rgba(145,245,179,.14),0 0 42px rgba(145,245,179,.24)}.sat{width:min(650px,100%);min-height:260px;border:1px solid rgba(255,255,255,.2);border-radius:22px;background:linear-gradient(145deg,rgba(215,246,255,.2),rgba(9,20,42,.76)),repeating-linear-gradient(45deg,rgba(255,255,255,.08) 0 4px,transparent 4px 18px);position:relative;overflow:hidden;padding:18px}.sat:before,.sat:after{content:"";position:absolute;border-radius:45% 55% 60% 40%;background:rgba(230,252,255,.72);filter:blur(1px);opacity:.78}.sat:before{width:48%;height:52%;left:8%;top:26%;transform:rotate(-14deg)}.sat:after{width:30%;height:36%;right:14%;top:17%;transform:rotate(22deg);opacity:.48}.sat.q{background:radial-gradient(circle at 64% 46%,rgba(44,77,84,.84) 0 12%,transparent 13%),radial-gradient(circle at 36% 52%,rgba(226,252,255,.88) 0 18%,transparent 19%),radial-gradient(circle at 55% 58%,rgba(245,215,122,.28) 0 8%,transparent 9%),linear-gradient(145deg,rgba(215,246,255,.28),rgba(9,20,42,.82))}.sat.p,.sat.r,.sat.final,.sat.complete{background:radial-gradient(circle at 64% 46%,rgba(44,77,84,.9) 0 12%,transparent 13%),radial-gradient(circle at 36% 52%,rgba(226,252,255,.92) 0 18%,transparent 19%),radial-gradient(circle at 55% 58%,rgba(245,215,122,.35) 0 8%,transparent 9%),radial-gradient(circle at 42% 42%,rgba(145,245,179,.22) 0 7%,transparent 8%),linear-gradient(145deg,rgba(215,246,255,.3),rgba(9,20,42,.86))}.scan{position:absolute;left:0;right:0;height:3px;top:0;background:rgba(143,216,255,.8);box-shadow:0 0 18px rgba(143,216,255,.9);animation:scan 4s linear infinite}@keyframes scan{0%{transform:translateY(0);opacity:0}8%{opacity:1}100%{transform:translateY(310px);opacity:0}}.elabel{position:relative;z-index:3;display:inline-flex;padding:9px 12px;border-radius:999px;background:rgba(0,0,0,.45);border:1px solid rgba(245,215,122,.45);color:var(--gold);font-size:12px;text-transform:uppercase;letter-spacing:.16em}.etitle{position:relative;z-index:3;max-width:500px;margin-top:62px;font-size:clamp(23px,4vw,40px);line-height:1.02;text-shadow:0 0 18px rgba(0,0,0,.85)}.dialog{position:relative;z-index:3;margin-top:16px;padding:18px;border-radius:20px;background:var(--strong);border:1px solid rgba(245,215,122,.28);min-height:122px}.speaker{color:var(--gold);font-weight:800;text-transform:uppercase;letter-spacing:.15em;font-size:12px;margin-bottom:8px}.line{font-size:clamp(18px,2.3vw,25px);line-height:1.35}.student{display:none;position:relative;z-index:4;margin-top:16px;padding:16px;border-radius:20px;background:rgba(2,8,18,.76);border:1px solid rgba(143,216,255,.28)}.student.active{display:block;animation:rise .35s ease}@keyframes rise{from{transform:translateY(8px);opacity:0}to{transform:translateY(0);opacity:1}}.tk{color:var(--gold);text-transform:uppercase;letter-spacing:.16em;font-size:12px;margin-bottom:6px}.tt{font-size:22px;font-weight:800;margin-bottom:6px}.help{color:var(--soft);line-height:1.45;font-size:14px;margin-bottom:12px}.inputs{display:grid;gap:10px}.inputs textarea{width:100%;min-height:62px;resize:vertical;border-radius:14px;border:1px solid rgba(255,255,255,.17);background:rgba(255,255,255,.08);color:#fff;padding:12px;font-size:14px;outline:0}.inputs textarea:focus{border-color:rgba(245,215,122,.72);box-shadow:0 0 0 3px rgba(245,215,122,.1)}.actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:12px}.actions button,.controls button,.side button{border:1px solid rgba(255,255,255,.22);background:rgba(255,255,255,.08);color:#fff;border-radius:14px;padding:12px 14px;cursor:pointer;font-weight:700;transition:.25s}.actions .primary{background:rgba(245,215,122,.16);border-color:rgba(245,215,122,.64)}.actions .continue{background:rgba(145,245,179,.16);border-color:rgba(145,245,179,.64)}button:hover{background:rgba(245,215,122,.16);border-color:rgba(245,215,122,.72);transform:translateY(-1px)}button:disabled{opacity:.45;cursor:not-allowed;transform:none}.fb{margin-top:10px;padding:11px 12px;border-radius:14px;display:none;line-height:1.45;font-size:14px}.fb.warn{display:block;background:rgba(255,211,106,.13);border:1px solid rgba(255,211,106,.35);color:#ffe2a0}.fb.good{display:block;background:rgba(145,245,179,.12);border:1px solid rgba(145,245,179,.35);color:#d9ffe5}.fb.bad{display:block;background:rgba(255,157,157,.12);border:1px solid rgba(255,157,157,.35);color:#ffd0d0}.chip{display:none;margin-top:10px;color:var(--good);font-size:13px;letter-spacing:.08em;text-transform:uppercase}.chip.active{display:block}.strength{margin-top:12px;padding:12px;border-radius:14px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1)}.slabel{display:flex;justify-content:space-between;color:var(--soft);font-size:13px;margin-bottom:8px}.bar{height:12px;border-radius:999px;overflow:hidden;background:rgba(255,255,255,.12)}.fill{height:100%;width:0;background:linear-gradient(90deg,var(--bad),var(--warn),var(--good));transition:.3s}.priority{display:grid;gap:10px}.po{display:grid;grid-template-columns:auto 1fr 78px;gap:10px;align-items:center;padding:11px;border-radius:14px;border:1px solid rgba(255,255,255,.14);background:rgba(255,255,255,.06)}.po.selected{border-color:rgba(245,215,122,.72);background:rgba(245,215,122,.1)}.po input{width:18px;height:18px}.po select{width:100%;padding:9px;border-radius:10px;border:1px solid rgba(255,255,255,.18);background:rgba(0,0,0,.34);color:#fff}.reports{display:grid;gap:10px;margin-top:12px}.report{padding:12px;border-radius:14px;background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.12);line-height:1.45}.report strong{color:var(--gold)}.summary{display:grid;gap:8px;margin-top:12px}.summary div,.completion-list div{padding:10px;border-radius:12px;background:rgba(145,245,179,.09);border:1px solid rgba(145,245,179,.2);font-size:14px}.badge{display:none;margin-top:12px;padding:14px;border-radius:18px;background:linear-gradient(135deg,rgba(245,215,122,.18),rgba(145,245,179,.12));border:1px solid rgba(245,215,122,.45);font-weight:800;text-align:center;font-size:18px}.badge.active{display:block}.completion-list{display:grid;gap:8px;margin-top:12px}.controls{position:relative;z-index:4;display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-top:16px}.side{padding:16px;display:flex;flex-direction:column;gap:14px}.guardian{min-height:210px;border-radius:20px;display:grid;place-items:center;text-align:center;background:radial-gradient(circle at 50% 35%,rgba(245,215,122,.22),transparent 30%),linear-gradient(145deg,rgba(255,255,255,.08),rgba(143,216,255,.08));border:1px solid rgba(255,255,255,.16);padding:18px}.gicon{font-size:64px;margin-bottom:8px}.gtitle{font-size:21px;font-weight:800}.gcopy{color:var(--soft);line-height:1.5;font-size:14px}.progress{padding:13px;border-radius:18px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1)}.pt{color:var(--gold);font-size:12px;text-transform:uppercase;letter-spacing:.16em;margin-bottom:10px}.steps{display:grid;gap:8px}.step{display:flex;align-items:center;gap:8px;color:var(--soft);font-size:13px}.dot{width:11px;height:11px;border-radius:50%;border:1px solid rgba(255,255,255,.35);background:rgba(255,255,255,.08)}.step.active{color:#fff}.step.active .dot{background:var(--gold);box-shadow:0 0 12px rgba(245,215,122,.75);border-color:var(--gold)}.step.complete .dot{background:rgba(143,216,255,.72);border-color:rgba(143,216,255,.9)}.step.unlocked .dot{background:var(--good);border-color:var(--good);box-shadow:0 0 12px rgba(145,245,179,.72)}.foot{margin-top:14px;color:rgba(255,255,255,.58);font-size:12px;text-align:center}@media(max-width:980px){.grid{grid-template-columns:1fr}.avatars{grid-template-columns:repeat(2,1fr)}.controls{grid-template-columns:1fr 1fr}.tag{white-space:normal}}@media(max-width:560px){.top{align-items:flex-start;flex-direction:column}.avatars{grid-template-columns:1fr}.controls{grid-template-columns:1fr}.po{grid-template-columns:auto 1fr}.po select{grid-column:1/-1}.shell{padding:14px}}
+  <meta charset="utf-8">
+  <title>STEM Nation · Clean Council Stage</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <style>
+    :root{
+      --gold:#f5d77a;
+      --ice:#dff6ff;
+      --blue:#143a63;
+      --dark:#020713;
+    }
+
+    *{box-sizing:border-box}
+
+    body{
+      margin:0;
+      min-height:100vh;
+      font-family:system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+      background:#01030a;
+      color:white;
+      overflow-x:hidden;
+    }
+
+    .hud{
+      position:fixed;
+      top:12px;
+      left:50%;
+      transform:translateX(-50%);
+      z-index:100;
+      width:min(1100px,94vw);
+      display:grid;
+      grid-template-columns:1.1fr .9fr .9fr .9fr;
+      gap:8px;
+      pointer-events:none;
+    }
+
+    .hud div{
+      padding:9px 12px;
+      border-radius:999px;
+      border:1px solid rgba(245,215,122,.28);
+      background:rgba(2,8,18,.76);
+      color:rgba(255,255,255,.84);
+      font-size:12px;
+      box-shadow:0 14px 42px rgba(0,0,0,.30);
+      backdrop-filter:blur(8px);
+    }
+
+    .hud strong{
+      color:var(--gold);
+      text-transform:uppercase;
+      letter-spacing:.08em;
+      font-size:10px;
+      margin-right:5px;
+    }
+
+    .screen{
+      min-height:100vh;
+      display:none;
+      place-items:center;
+      padding:70px 22px 34px;
+    }
+
+    .screen.active{display:grid}
+
+    .card{
+      width:min(1120px,96vw);
+      border-radius:34px;
+      border:1px solid rgba(245,215,122,.34);
+      background:
+        radial-gradient(circle at top left, rgba(143,216,255,.10), transparent 38%),
+        rgba(6,14,30,.91);
+      box-shadow:0 34px 110px rgba(0,0,0,.58);
+      overflow:hidden;
+    }
+
+    .card-header{
+      padding:24px 28px 18px;
+      border-bottom:1px solid rgba(255,255,255,.10);
+      background:rgba(2,8,18,.60);
+    }
+
+    .kicker{
+      color:var(--gold);
+      text-transform:uppercase;
+      letter-spacing:.16em;
+      font-size:12px;
+      font-weight:900;
+      margin-bottom:8px;
+    }
+
+    h1{
+      margin:0;
+      font-size:clamp(40px,7vw,86px);
+      line-height:.98;
+    }
+
+    p{
+      color:rgba(255,255,255,.78);
+      line-height:1.5;
+      font-size:16px;
+    }
+
+    button{
+      color:white;
+      border:1px solid rgba(245,215,122,.60);
+      background:rgba(245,215,122,.16);
+      border-radius:16px;
+      padding:13px 17px;
+      font-weight:900;
+      cursor:pointer;
+      font-size:15px;
+    }
+
+    button:disabled{
+      opacity:.45;
+      cursor:not-allowed;
+    }
+
+    .actions{
+      display:flex;
+      justify-content:flex-end;
+      gap:12px;
+      padding:20px 28px 26px;
+      border-top:1px solid rgba(255,255,255,.10);
+    }
+
+    #alertScreen{
+      background:
+        radial-gradient(circle at 50% 22%, rgba(255,107,107,.22), transparent 28%),
+        linear-gradient(135deg,#01030a,#071326 52%,#01030a);
+    }
+
+    .impact-grid{
+      display:grid;
+      grid-template-columns:repeat(2,minmax(0,1fr));
+      gap:12px;
+      padding:24px 28px;
+    }
+
+    .impact{
+      border-radius:18px;
+      border:1px solid rgba(255,107,107,.24);
+      background:rgba(255,107,107,.08);
+      padding:14px;
+      color:rgba(255,255,255,.86);
+      font-weight:800;
+    }
+
+    #guardianScreen{
+      background:
+        linear-gradient(90deg, rgba(0,0,0,.76), rgba(0,0,0,.34), rgba(0,0,0,.82)),
+        url("/static/storyboards/council_hall_guardian_concept.png") center/cover no-repeat;
+    }
+
+    .guardian-grid{
+      display:grid;
+      grid-template-columns:minmax(240px,340px) 1fr;
+      gap:24px;
+      align-items:center;
+      padding:26px;
+    }
+
+    .guardian-grid img{
+      width:100%;
+      max-height:430px;
+      object-fit:cover;
+      object-position:center top;
+      border-radius:28px;
+      border:1px solid rgba(245,215,122,.50);
+      box-shadow:0 30px 90px rgba(0,0,0,.58);
+    }
+
+    #briefingScreen{
+      background:
+        radial-gradient(circle at 50% 12%, rgba(74,165,255,.17), transparent 34%),
+        linear-gradient(135deg,#01030a,#071326 52%,#02040b);
+    }
+
+    .briefing-grid{
+      display:grid;
+      grid-template-columns:minmax(220px,310px) 1fr;
+      gap:22px;
+      padding:26px;
+    }
+
+    .speaker{
+      border-radius:26px;
+      border:1px solid rgba(245,215,122,.24);
+      background:rgba(255,255,255,.055);
+      padding:18px;
+      text-align:center;
+    }
+
+    .speaker img{
+      width:100%;
+      max-height:330px;
+      object-fit:cover;
+      object-position:center top;
+      border-radius:24px;
+      border:1px solid rgba(245,215,122,.34);
+    }
+
+    .speaker-name{
+      margin-top:12px;
+      color:var(--gold);
+      font-size:24px;
+      font-weight:900;
+    }
+
+    .speaker-role{
+      margin-top:6px;
+      color:rgba(255,255,255,.68);
+      line-height:1.35;
+      font-size:14px;
+    }
+
+    .dialogue{
+      border-radius:26px;
+      border:1px solid rgba(143,216,255,.22);
+      background:rgba(2,8,18,.66);
+      padding:20px;
+    }
+
+    .dialogue-label{
+      color:var(--gold);
+      letter-spacing:.14em;
+      text-transform:uppercase;
+      font-size:12px;
+      font-weight:900;
+      margin-bottom:10px;
+    }
+
+    .dialogue-line{
+      font-size:clamp(24px,4vw,44px);
+      line-height:1.08;
+      font-weight:900;
+    }
+
+    .dialogue-note{
+      margin-top:14px;
+      color:rgba(255,255,255,.72);
+      line-height:1.5;
+    }
+
+    .visual-clue{
+      display:none;
+      margin-top:16px;
+      padding:14px;
+      border-radius:18px;
+      border:1px solid rgba(245,215,122,.28);
+      background:rgba(245,215,122,.08);
+      color:rgba(255,255,255,.84);
+      line-height:1.45;
+    }
+
+    .visual-clue strong{color:var(--gold)}
+
+    .step-track{
+      display:grid;
+      grid-template-columns:repeat(6,1fr);
+      gap:8px;
+      padding:0 26px 20px;
+    }
+
+    .dot{
+      border-radius:14px;
+      border:1px solid rgba(255,255,255,.12);
+      background:rgba(255,255,255,.05);
+      padding:9px;
+      text-align:center;
+      color:rgba(255,255,255,.55);
+      font-size:11px;
+      font-weight:800;
+    }
+
+    .dot.active{
+      border-color:rgba(245,215,122,.60);
+      background:rgba(245,215,122,.12);
+      color:white;
+    }
+
+    .status{
+      color:rgba(255,255,255,.70);
+      margin-right:auto;
+      align-self:center;
+    }
+
+    .status strong{color:var(--gold)}
+
+    .clue-grid{
+      display:grid;
+      grid-template-columns:repeat(2,minmax(0,1fr));
+      gap:14px;
+      padding:24px 28px;
+    }
+
+    .clue{
+      border-radius:22px;
+      border:1px solid rgba(255,255,255,.13);
+      background:rgba(255,255,255,.055);
+      padding:17px;
+    }
+
+    .clue strong{
+      display:block;
+      color:var(--gold);
+      font-size:18px;
+      margin-bottom:8px;
+    }
+
+    .scan-img{
+      width:min(1000px,96%);
+      display:block;
+      margin:24px auto;
+      border-radius:28px;
+      border:1px solid rgba(245,215,122,.30);
+      box-shadow:0 30px 90px rgba(0,0,0,.45);
+    }
+
+    @media(max-width:850px){
+      .hud{grid-template-columns:1fr 1fr}
+      .guardian-grid,.briefing-grid,.clue-grid{grid-template-columns:1fr}
+      .step-track{grid-template-columns:1fr 1fr}
+    }
+  
+/* CI-STAGE-43-RESET STATIC EVIDENCE BOARD ONLY
+   Clean flow remains unchanged.
+   No pulse circles. No moving markers. No overlay cards.
+*/
+#briefingScreen .card{
+  width:min(1380px,98vw);
+}
+
+.briefing-grid{
+  display:grid;
+  grid-template-columns:minmax(260px,340px) minmax(620px,1fr);
+  grid-template-areas:
+    "speaker evidence"
+    "message evidence";
+  gap:18px;
+  align-items:start;
+  padding:24px 26px 14px;
+}
+
+.speaker{
+  grid-area:speaker;
+}
+
+.dialogue{
+  grid-area:message;
+  padding:16px;
+}
+
+.dialogue-line{
+  font-size:clamp(19px,2.25vw,32px);
+  line-height:1.12;
+}
+
+.dialogue-note{
+  font-size:14px;
+}
+
+.visual-clue{
+  margin-top:14px;
+  font-size:13px;
+}
+
+.static-evidence-board{
+  grid-area:evidence;
+  min-height:560px;
+  border-radius:28px;
+  border:1px solid rgba(245,215,122,.30);
+  background:
+    linear-gradient(90deg, rgba(2,8,18,.22), rgba(2,8,18,.04), rgba(2,8,18,.28)),
+    url("/static/storyboards/council_hall_evidence_briefing.png") center/contain no-repeat,
+    radial-gradient(circle at 50% 40%, rgba(143,216,255,.10), transparent 35%),
+    rgba(2,8,18,.94);
+  box-shadow:
+    inset 0 0 44px rgba(143,216,255,.06),
+    0 28px 90px rgba(0,0,0,.44);
+  position:relative;
+  overflow:hidden;
+}
+
+.static-evidence-board::before{
+  content:"Mission Evidence · Previous Scan vs Current Scan";
+  position:absolute;
+  left:16px;
+  top:14px;
+  padding:8px 10px;
+  border-radius:999px;
+  border:1px solid rgba(245,215,122,.38);
+  background:rgba(2,8,18,.78);
+  color:var(--gold);
+  font-size:11px;
+  font-weight:900;
+  letter-spacing:.12em;
+  text-transform:uppercase;
+}
+
+.static-evidence-board::after{
+  content:"Observe the evidence. Listen to the Council. Compare before you claim.";
+  position:absolute;
+  right:16px;
+  bottom:14px;
+  max-width:330px;
+  padding:10px 12px;
+  border-radius:14px;
+  border:1px solid rgba(143,216,255,.24);
+  background:rgba(2,8,18,.76);
+  color:rgba(255,255,255,.80);
+  font-size:12px;
+  line-height:1.35;
+}
+
+/* Explicitly remove any old visual experiment elements if browser cache still sees them. */
+.passive-map-panel,
+.passive-map-pulse,
+.evidence-marker-board,
+.evidence-marker{
+  display:none!important;
+}
+
+#briefingScreen .actions{
+  position:relative;
+  z-index:5;
+  padding:18px 28px 24px;
+  background:rgba(2,8,18,.92);
+  border-top:1px solid rgba(245,215,122,.22);
+}
+
+@media(max-width:1050px){
+  .briefing-grid{
+    grid-template-columns:1fr;
+    grid-template-areas:
+      "speaker"
+      "message"
+      "evidence";
+  }
+
+  .static-evidence-board{
+    min-height:430px;
+  }
+}
+
+@media(max-width:700px){
+  .static-evidence-board{
+    min-height:340px;
+  }
+}
+
+
+/* CI-STAGE-44 EVIDENCE UNLOCK TO FIRST LOOK CLEANUP */
+#evidenceScreen .card,
+#firstLookScreen .card{
+  width:min(1180px,96vw);
+}
+
+#evidenceScreen .card-header p,
+#firstLookScreen .card-header p{
+  max-width:920px;
+  font-size:17px;
+}
+
+.clue-grid{
+  grid-template-columns:repeat(4,minmax(0,1fr));
+}
+
+.clue{
+  min-height:150px;
+  display:flex;
+  flex-direction:column;
+  justify-content:flex-start;
+}
+
+.clue strong{
+  color:var(--gold);
+  line-height:1.18;
+}
+
+.clue p{
+  font-size:14px;
+  line-height:1.42;
+  margin-bottom:0;
+}
+
+.first-look-directions{
+  display:grid;
+  grid-template-columns:1fr 1fr 1fr;
+  gap:12px;
+  padding:0 28px 22px;
+}
+
+.look-step{
+  border-radius:18px;
+  border:1px solid rgba(143,216,255,.22);
+  background:rgba(143,216,255,.07);
+  padding:14px;
+  color:rgba(255,255,255,.82);
+  font-size:14px;
+  line-height:1.42;
+}
+
+.look-step strong{
+  display:block;
+  color:var(--gold);
+  margin-bottom:6px;
+  text-transform:uppercase;
+  letter-spacing:.08em;
+  font-size:12px;
+}
+
+.scan-img{
+  width:min(1080px,96%);
+  max-height:58vh;
+  object-fit:contain;
+  background:rgba(2,8,18,.72);
+}
+
+.first-look-reminder{
+  margin:0 28px 22px;
+  border-radius:18px;
+  border:1px solid rgba(245,215,122,.30);
+  background:rgba(245,215,122,.08);
+  padding:14px 16px;
+  color:rgba(255,255,255,.84);
+  line-height:1.45;
+}
+
+.first-look-reminder strong{
+  color:var(--gold);
+}
+
+@media(max-width:980px){
+  .clue-grid{
+    grid-template-columns:1fr 1fr;
+  }
+
+  .first-look-directions{
+    grid-template-columns:1fr;
+  }
+}
+
+@media(max-width:620px){
+  .clue-grid{
+    grid-template-columns:1fr;
+  }
+}
+
+
+/* CI-STAGE-45 FIRST LOOK RESPONSE TOOLS */
+.first-look-response{
+  margin:0 28px 24px;
+  display:grid;
+  grid-template-columns:1.15fr .85fr;
+  gap:16px;
+}
+
+.response-panel{
+  border-radius:22px;
+  border:1px solid rgba(245,215,122,.26);
+  background:rgba(255,255,255,.055);
+  padding:18px;
+}
+
+.response-panel h2{
+  margin:0 0 8px;
+  color:var(--gold);
+  font-size:22px;
+}
+
+.response-panel p{
+  margin:0 0 14px;
+  font-size:14px;
+  color:rgba(255,255,255,.76);
+}
+
+.observation-options{
+  display:grid;
+  gap:10px;
+}
+
+.obs-choice{
+  display:flex;
+  gap:10px;
+  align-items:flex-start;
+  border-radius:16px;
+  border:1px solid rgba(143,216,255,.18);
+  background:rgba(2,8,18,.44);
+  padding:12px;
+  cursor:pointer;
+  color:rgba(255,255,255,.84);
+  line-height:1.35;
+  font-size:14px;
+}
+
+.obs-choice input{
+  margin-top:3px;
+  transform:scale(1.15);
+}
+
+.obs-choice.selected{
+  border-color:rgba(245,215,122,.62);
+  background:rgba(245,215,122,.10);
+}
+
+.obs-choice.locked{
+  opacity:.45;
+  cursor:not-allowed;
+}
+
+.first-look-counter{
+  margin-top:12px;
+  color:rgba(255,255,255,.75);
+  font-size:13px;
+}
+
+.first-look-counter strong{
+  color:var(--gold);
+}
+
+.question-box{
+  width:100%;
+  min-height:118px;
+  resize:vertical;
+  border-radius:16px;
+  border:1px solid rgba(143,216,255,.28);
+  background:rgba(2,8,18,.72);
+  color:white;
+  padding:13px 14px;
+  font:inherit;
+  line-height:1.45;
+}
+
+.question-box::placeholder{
+  color:rgba(255,255,255,.42);
+}
+
+.first-look-feedback{
+  margin-top:12px;
+  border-radius:16px;
+  border:1px solid rgba(145,245,179,.30);
+  background:rgba(145,245,179,.08);
+  color:rgba(255,255,255,.84);
+  padding:12px;
+  display:none;
+  line-height:1.4;
+  font-size:14px;
+}
+
+.first-look-feedback strong{
+  color:var(--good, #91f5b3);
+}
+
+#saveFirstLookBtn{
+  margin-top:14px;
+  width:100%;
+}
+
+@media(max-width:920px){
+  .first-look-response{
+    grid-template-columns:1fr;
+  }
+}
+
+
+/* CI-STAGE-46R RECOVER QUESTION RANKING FLOW */
+.question-ranking-panel{
+  margin:0 28px 24px;
+  border-radius:24px;
+  border:1px solid rgba(245,215,122,.30);
+  background:rgba(255,255,255,.055);
+  padding:20px;
+  display:none;
+}
+
+.question-ranking-panel h2{
+  margin:0 0 8px;
+  color:var(--gold);
+  font-size:24px;
+}
+
+.question-ranking-panel p{
+  margin:0 0 14px;
+  color:rgba(255,255,255,.76);
+  line-height:1.45;
+}
+
+.question-ranking-count{
+  margin:0 0 14px;
+  border-radius:16px;
+  border:1px solid rgba(143,216,255,.22);
+  background:rgba(143,216,255,.07);
+  padding:12px;
+  color:rgba(255,255,255,.84);
+  font-size:14px;
+}
+
+.question-ranking-count strong{
+  color:var(--gold);
+}
+
+.question-rank-list{
+  display:grid;
+  gap:10px;
+}
+
+.question-rank-option{
+  display:grid;
+  grid-template-columns:52px 1fr;
+  gap:12px;
+  align-items:center;
+  border-radius:18px;
+  border:1px solid rgba(143,216,255,.20);
+  background:rgba(2,8,18,.48);
+  padding:14px;
+  cursor:pointer;
+}
+
+.question-rank-option:hover{
+  border-color:rgba(245,215,122,.50);
+  background:rgba(245,215,122,.07);
+}
+
+.question-rank-option.selected{
+  border-color:rgba(245,215,122,.72);
+  background:rgba(245,215,122,.12);
+}
+
+.question-rank-badge{
+  width:42px;
+  height:42px;
+  border-radius:14px;
+  display:grid;
+  place-items:center;
+  border:1px solid rgba(255,255,255,.18);
+  background:rgba(255,255,255,.06);
+  color:rgba(255,255,255,.72);
+  font-weight:900;
+}
+
+.question-rank-option.selected .question-rank-badge{
+  color:#0b1220;
+  background:var(--gold);
+  border-color:rgba(245,215,122,.90);
+}
+
+.question-rank-text{
+  color:rgba(255,255,255,.88);
+  line-height:1.42;
+  font-size:14px;
+}
+
+.question-rank-reason{
+  margin-top:14px;
+}
+
+.question-rank-reason label{
+  display:block;
+  color:var(--gold);
+  font-weight:900;
+  margin-bottom:8px;
+}
+
+.question-rank-reason textarea{
+  width:100%;
+  min-height:105px;
+  resize:vertical;
+  border-radius:16px;
+  border:1px solid rgba(143,216,255,.28);
+  background:rgba(2,8,18,.72);
+  color:white;
+  padding:13px 14px;
+  font:inherit;
+  line-height:1.45;
+}
+
+.question-rank-feedback{
+  display:none;
+  margin-top:14px;
+  border-radius:16px;
+  border:1px solid rgba(145,245,179,.30);
+  background:rgba(145,245,179,.08);
+  padding:12px;
+  color:rgba(255,255,255,.86);
+  line-height:1.4;
+}
+
+.question-rank-feedback strong{
+  color:var(--good, #91f5b3);
+}
+
+#saveQuestionRankingBtn{
+  margin-top:14px;
+  width:100%;
+}
+
+.resume-first-look-panel{
+  margin-top:16px;
+  border-radius:20px;
+  border:1px solid rgba(143,216,255,.28);
+  background:rgba(143,216,255,.07);
+  padding:14px;
+}
+
+.resume-first-look-panel p{
+  margin:0 0 10px;
+  color:rgba(255,255,255,.78);
+  font-size:14px;
+  line-height:1.4;
+}
+
+.resume-first-look-panel button{
+  width:100%;
+}
+
+
+/* CI-STAGE-46R-1 CONTINUE AFTER QUESTION RANKING */
+.question-ranking-next{
+  display:none;
+  margin-top:14px;
+  gap:10px;
+  flex-wrap:wrap;
+}
+
+.question-ranking-next.active{
+  display:flex;
+}
+
+.question-ranking-next button,
+.question-ranking-next a{
+  border:1px solid rgba(245,215,122,.55);
+  background:rgba(245,215,122,.14);
+  color:white;
+  border-radius:14px;
+  padding:12px 14px;
+  cursor:pointer;
+  font-weight:800;
+  text-decoration:none;
+}
+
+.question-ranking-next a.secondary{
+  border-color:rgba(143,216,255,.34);
+  background:rgba(143,216,255,.09);
+}
+
+
+/* CI-STAGE-46R-2 REWIRE FIRST LOOK SAVE CONTROLLER */
+.first-look-debug-note{
+  display:none;
+  margin-top:10px;
+  border-radius:14px;
+  border:1px solid rgba(143,216,255,.22);
+  background:rgba(143,216,255,.07);
+  padding:10px 12px;
+  color:rgba(255,255,255,.74);
+  font-size:13px;
+}
+
+
+
+/* CI-WELCOME-VIS-1 — COUNCIL ARRIVAL CHAMBER ENHANCEMENT */
+
+.council-welcome-screen {
+  overflow-x: hidden;
+}
+
+.council-welcome-card {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  padding: clamp(20px, 3vw, 38px);
+  border-color: rgba(143, 216, 255, 0.3);
+  background:
+    radial-gradient(
+      circle at 18% 28%,
+      rgba(64, 183, 224, 0.16),
+      transparent 28%
+    ),
+    radial-gradient(
+      circle at 80% 12%,
+      rgba(245, 215, 122, 0.11),
+      transparent 25%
+    ),
+    linear-gradient(
+      145deg,
+      rgba(5, 18, 37, 0.97),
+      rgba(2, 7, 17, 0.98) 62%,
+      rgba(20, 16, 10, 0.96)
+    );
+  box-shadow:
+    0 28px 100px rgba(0, 0, 0, 0.6),
+    inset 0 0 70px rgba(143, 216, 255, 0.05);
+}
+
+.council-welcome-card::before {
+  content: "";
+  position: absolute;
+  inset: 8px;
+  z-index: -1;
+  border: 1px solid rgba(143, 216, 255, 0.09);
+  border-radius: 22px;
+  pointer-events: none;
+}
+
+.council-arrival-atmosphere {
+  position: absolute;
+  inset: 0;
+  z-index: -2;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.council-light-column {
+  position: absolute;
+  top: -18%;
+  width: 15%;
+  height: 118%;
+  opacity: 0.14;
+  transform: rotate(8deg);
+  background:
+    linear-gradient(
+      180deg,
+      transparent,
+      rgba(143, 216, 255, 0.6),
+      transparent
+    );
+  filter: blur(18px);
+}
+
+.council-light-column-one {
+  left: 12%;
+}
+
+.council-light-column-two {
+  left: 47%;
+  opacity: 0.09;
+}
+
+.council-light-column-three {
+  right: 9%;
+  opacity: 0.1;
+}
+
+.council-floor-ring {
+  position: absolute;
+  left: 50%;
+  bottom: -25%;
+  border: 1px solid rgba(143, 216, 255, 0.14);
+  border-radius: 50%;
+  transform: translateX(-50%) rotateX(72deg);
+}
+
+.council-floor-ring-one {
+  width: 76%;
+  height: 45%;
+  box-shadow:
+    0 0 45px rgba(143, 216, 255, 0.08),
+    inset 0 0 30px rgba(143, 216, 255, 0.06);
+}
+
+.council-floor-ring-two {
+  width: 52%;
+  height: 31%;
+  bottom: -16%;
+  border-color: rgba(245, 215, 122, 0.14);
+}
+
+.council-arrival-status {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  width: max-content;
+  margin-bottom: 22px;
+  padding: 8px 12px;
+  border: 1px solid rgba(143, 216, 255, 0.25);
+  border-radius: 999px;
+  color: rgba(214, 245, 255, 0.9);
+  background: rgba(7, 31, 49, 0.54);
+  font-size: 11px;
+  font-weight: 900;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  backdrop-filter: blur(10px);
+}
+
+.arrival-status-light {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #8fd8ff;
+  box-shadow:
+    0 0 0 4px rgba(143, 216, 255, 0.08),
+    0 0 16px rgba(143, 216, 255, 0.9);
+}
+
+.council-welcome-grid {
+  position: relative;
+  display: grid;
+  grid-template-columns:
+    minmax(230px, 330px)
+    minmax(0, 1fr);
+  gap: clamp(24px, 4vw, 52px);
+  align-items: center;
+}
+
+.guardian-welcome-portrait {
+  position: relative;
+  display: grid;
+  justify-items: center;
+  min-height: 390px;
+  padding: 26px 18px 18px;
+}
+
+.guardian-portrait-frame {
+  position: relative;
+  z-index: 3;
+  width: min(270px, 100%);
+  aspect-ratio: 4 / 5;
+  overflow: hidden;
+  border: 1px solid rgba(211, 246, 255, 0.74);
+  border-radius: 45% 45% 24px 24px;
+  background:
+    linear-gradient(
+      180deg,
+      rgba(28, 84, 110, 0.45),
+      rgba(2, 10, 20, 0.94)
+    );
+  box-shadow:
+    0 0 0 8px rgba(143, 216, 255, 0.035),
+    0 0 42px rgba(91, 196, 235, 0.25),
+    0 30px 60px rgba(0, 0, 0, 0.44),
+    inset 0 0 36px rgba(143, 216, 255, 0.09);
+}
+
+.guardian-portrait-frame::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background:
+    linear-gradient(
+      180deg,
+      rgba(255, 255, 255, 0.05),
+      transparent 35%,
+      rgba(5, 28, 42, 0.2)
+    );
+}
+
+.guardian-portrait-frame img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center top;
+}
+
+.guardian-portrait-orbit {
+  position: absolute;
+  z-index: 1;
+  border-radius: 50%;
+  pointer-events: none;
+}
+
+.guardian-portrait-orbit-one {
+  top: 32px;
+  width: 92%;
+  height: 46%;
+  border: 1px solid rgba(143, 216, 255, 0.28);
+  transform: rotateX(68deg) rotateZ(-8deg);
+  box-shadow:
+    0 0 25px rgba(143, 216, 255, 0.13),
+    inset 0 0 22px rgba(143, 216, 255, 0.08);
+}
+
+.guardian-portrait-orbit-two {
+  top: 0;
+  width: 62%;
+  height: 88%;
+  border: 1px solid rgba(245, 215, 122, 0.2);
+  transform: rotateY(68deg) rotateZ(8deg);
+  box-shadow: 0 0 20px rgba(245, 215, 122, 0.08);
+}
+
+.guardian-nameplate {
+  position: relative;
+  z-index: 5;
+  width: min(250px, 90%);
+  margin-top: -21px;
+  padding: 11px 14px;
+  border: 1px solid rgba(245, 215, 122, 0.36);
+  border-radius: 14px;
+  text-align: center;
+  background:
+    linear-gradient(
+      180deg,
+      rgba(29, 27, 20, 0.96),
+      rgba(5, 12, 20, 0.96)
+    );
+  box-shadow:
+    0 16px 28px rgba(0, 0, 0, 0.35),
+    0 0 22px rgba(245, 215, 122, 0.08);
+}
+
+.guardian-nameplate strong,
+.guardian-nameplate span {
+  display: block;
+}
+
+.guardian-nameplate strong {
+  color: var(--gold);
+  font-size: 17px;
+  letter-spacing: 0.05em;
+}
+
+.guardian-nameplate span {
+  margin-top: 3px;
+  color: rgba(255, 255, 255, 0.64);
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.council-welcome-copy {
+  position: relative;
+  z-index: 3;
+}
+
+.council-welcome-copy h1 {
+  margin: 8px 0 14px;
+  color: #fff;
+  font-size: clamp(42px, 7vw, 78px);
+  line-height: 0.96;
+  letter-spacing: -0.045em;
+  text-shadow:
+    0 0 32px rgba(143, 216, 255, 0.16),
+    0 5px 20px rgba(0, 0, 0, 0.55);
+}
+
+.council-welcome-lead {
+  max-width: 680px;
+  color: rgba(241, 247, 251, 0.8);
+  font-size: clamp(16px, 1.7vw, 20px);
+  line-height: 1.55;
+}
+
+.investigator-role-card {
+  position: relative;
+  max-width: 720px;
+  margin-top: 22px;
+  padding: 18px 20px;
+  border: 1px solid rgba(245, 215, 122, 0.29);
+  border-radius: 20px;
+  background:
+    linear-gradient(
+      110deg,
+      rgba(80, 62, 22, 0.26),
+      rgba(9, 25, 38, 0.68)
+    );
+  box-shadow:
+    inset 4px 0 0 rgba(245, 215, 122, 0.66),
+    0 18px 38px rgba(0, 0, 0, 0.22);
+}
+
+.investigator-role-label {
+  display: block;
+  margin-bottom: 7px;
+  color: rgba(245, 215, 122, 0.74);
+  font-size: 10px;
+  font-weight: 900;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.investigator-role-card strong {
+  display: block;
+  color: #fff0bd;
+  font-size: clamp(19px, 2.2vw, 28px);
+}
+
+.investigator-role-card p {
+  margin: 8px 0 0;
+  color: rgba(255, 255, 255, 0.7);
+  line-height: 1.5;
+}
+
+.council-presence {
+  margin-top: 24px;
+}
+
+.council-presence-heading {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 12px;
+  color: rgba(255, 255, 255, 0.82);
+  font-size: 12px;
+  font-weight: 900;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.council-presence-heading small {
+  color: rgba(143, 216, 255, 0.59);
+  font-size: 9px;
+  letter-spacing: 0.07em;
+}
+
+.council-presence-roster {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(82px, 1fr));
+  gap: 10px;
+}
+
+.council-presence-member {
+  min-width: 0;
+  padding: 9px 8px 10px;
+  border: 1px solid rgba(143, 216, 255, 0.13);
+  border-radius: 15px;
+  text-align: center;
+  background: rgba(4, 15, 27, 0.63);
+  box-shadow: inset 0 0 18px rgba(143, 216, 255, 0.025);
+  transition:
+    transform 220ms ease,
+    border-color 220ms ease,
+    background 220ms ease;
+}
+
+.council-presence-member:hover {
+  transform: translateY(-3px);
+  border-color: rgba(143, 216, 255, 0.34);
+  background: rgba(10, 34, 51, 0.78);
+}
+
+.council-presence-member.active-member {
+  border-color: rgba(245, 215, 122, 0.42);
+  background:
+    linear-gradient(
+      180deg,
+      rgba(94, 68, 21, 0.25),
+      rgba(5, 18, 29, 0.74)
+    );
+}
+
+.council-presence-image {
+  width: 58px;
+  height: 58px;
+  margin: 0 auto 7px;
+  overflow: hidden;
+  border: 1px solid rgba(143, 216, 255, 0.27);
+  border-radius: 50%;
+  background: rgba(7, 25, 39, 0.82);
+  box-shadow: 0 0 16px rgba(143, 216, 255, 0.08);
+}
+
+.active-member .council-presence-image {
+  border-color: rgba(245, 215, 122, 0.52);
+  box-shadow: 0 0 18px rgba(245, 215, 122, 0.13);
+}
+
+.council-presence-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center top;
+}
+
+.council-presence-member strong,
+.council-presence-member span {
+  display: block;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.council-presence-member strong {
+  color: rgba(255, 255, 255, 0.88);
+  font-size: 11px;
+}
+
+.council-presence-member span {
+  margin-top: 2px;
+  color: rgba(143, 216, 255, 0.58);
+  font-size: 9px;
+  font-weight: 800;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.council-welcome-actions {
+  position: relative;
+  z-index: 4;
+  justify-content: center;
+  gap: 14px;
+  margin-top: 30px;
+  padding-top: 22px;
+  border-top: 1px solid rgba(143, 216, 255, 0.11);
+}
+
+.council-welcome-actions button {
+  min-width: min(260px, 100%);
+  padding: 15px 20px;
+}
+
+.council-welcome-actions #guardianBtn {
+  border-color: rgba(143, 216, 255, 0.37);
+  background:
+    linear-gradient(
+      180deg,
+      rgba(19, 77, 103, 0.84),
+      rgba(6, 30, 47, 0.9)
+    );
+  box-shadow:
+    0 0 22px rgba(143, 216, 255, 0.09),
+    inset 0 0 18px rgba(143, 216, 255, 0.05);
+}
+
+.council-welcome-actions #briefingBtn {
+  border-color: rgba(245, 215, 122, 0.48);
+  color: #201805;
+  background:
+    linear-gradient(
+      180deg,
+      #f8df91,
+      #d8ad4e
+    );
+  box-shadow:
+    0 0 28px rgba(245, 215, 122, 0.15);
+}
+
+.council-welcome-instruction {
+  position: relative;
+  z-index: 4;
+  margin-top: 13px;
+  color: rgba(255, 255, 255, 0.5);
+  text-align: center;
+  font-size: 11px;
+  letter-spacing: 0.04em;
+}
+
+.screen.active.council-welcome-screen
+.council-arrival-status {
+  animation: councilWelcomeFadeUp 520ms ease both;
+}
+
+.screen.active.council-welcome-screen
+.guardian-welcome-portrait {
+  animation:
+    councilGuardianArrival
+    760ms
+    cubic-bezier(.2, .8, .2, 1)
+    100ms
+    both;
+}
+
+.screen.active.council-welcome-screen
+.council-welcome-copy {
+  animation:
+    councilWelcomeFadeUp
+    700ms
+    ease
+    210ms
+    both;
+}
+
+.screen.active.council-welcome-screen
+.council-presence-member {
+  animation:
+    councilMemberArrive
+    470ms
+    ease
+    both;
+}
+
+.screen.active.council-welcome-screen
+.council-presence-member:nth-child(1) {
+  animation-delay: 430ms;
+}
+
+.screen.active.council-welcome-screen
+.council-presence-member:nth-child(2) {
+  animation-delay: 500ms;
+}
+
+.screen.active.council-welcome-screen
+.council-presence-member:nth-child(3) {
+  animation-delay: 570ms;
+}
+
+.screen.active.council-welcome-screen
+.council-presence-member:nth-child(4) {
+  animation-delay: 640ms;
+}
+
+.screen.active.council-welcome-screen
+.council-presence-member:nth-child(5) {
+  animation-delay: 710ms;
+}
+
+@keyframes councilWelcomeFadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@keyframes councilGuardianArrival {
+  from {
+    opacity: 0;
+    transform:
+      translateX(-28px)
+      scale(0.94);
+  }
+
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@keyframes councilMemberArrive {
+  from {
+    opacity: 0;
+    transform:
+      translateY(11px)
+      scale(0.94);
+  }
+
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@media (max-width: 900px) {
+  .council-welcome-grid {
+    grid-template-columns: 220px minmax(0, 1fr);
+    gap: 22px;
+  }
+
+  .guardian-welcome-portrait {
+    min-height: 320px;
+  }
+
+  .council-presence-roster {
+    grid-template-columns: repeat(5, minmax(70px, 1fr));
+  }
+
+  .council-presence-image {
+    width: 50px;
+    height: 50px;
+  }
+
+  .council-presence-heading {
+    display: block;
+  }
+
+  .council-presence-heading small {
+    display: block;
+    margin-top: 4px;
+  }
+}
+
+@media (max-width: 700px) {
+  .council-welcome-card {
+    padding: 18px 14px 22px;
+  }
+
+  .council-welcome-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .guardian-welcome-portrait {
+    min-height: auto;
+    padding: 10px 20px 8px;
+  }
+
+  .guardian-portrait-frame {
+    width: min(230px, 78vw);
+  }
+
+  .council-welcome-copy {
+    text-align: center;
+  }
+
+  .council-welcome-copy h1 {
+    font-size: clamp(42px, 15vw, 66px);
+  }
+
+  .council-welcome-lead {
+    margin-right: auto;
+    margin-left: auto;
+  }
+
+  .investigator-role-card {
+    text-align: left;
+  }
+
+  .council-presence-heading {
+    text-align: left;
+  }
+
+  .council-presence-roster {
+    grid-template-columns: repeat(5, 78px);
+    overflow-x: auto;
+    justify-content: start;
+    padding-bottom: 8px;
+    scrollbar-width: thin;
+  }
+
+  .council-welcome-actions {
+    display: grid;
+    grid-template-columns: 1fr;
+  }
+
+  .council-welcome-actions button {
+    width: 100%;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .screen.active.council-welcome-screen
+  .council-arrival-status,
+
+  .screen.active.council-welcome-screen
+  .guardian-welcome-portrait,
+
+  .screen.active.council-welcome-screen
+  .council-welcome-copy,
+
+  .screen.active.council-welcome-screen
+  .council-presence-member {
+    animation: none !important;
+  }
+}
+
+
+
+/* CI-WELCOME-VIS-2 — COUNCIL CHAMBER + ICE BREAK ALERT TRANSITION */
+
+/* =========================================================
+   ICE BREAK ALERT TRANSITION
+   ========================================================= */
+
+.ice-alert-transition {
+  overflow-x: hidden;
+}
+
+.ice-alert-card {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  width: min(1240px, calc(100vw - 34px));
+  padding: clamp(22px, 3.5vw, 46px);
+  border-color: rgba(134, 220, 255, 0.29);
+  background:
+    radial-gradient(
+      circle at 74% 30%,
+      rgba(58, 186, 229, 0.13),
+      transparent 31%
+    ),
+    radial-gradient(
+      circle at 14% 74%,
+      rgba(34, 111, 160, 0.15),
+      transparent 31%
+    ),
+    linear-gradient(
+      145deg,
+      rgba(3, 17, 34, 0.98),
+      rgba(2, 8, 18, 0.99) 58%,
+      rgba(6, 22, 35, 0.98)
+    );
+  box-shadow:
+    0 34px 110px rgba(0, 0, 0, 0.62),
+    inset 0 0 90px rgba(115, 213, 255, 0.045);
+}
+
+.ice-alert-card::before {
+  content: "";
+  position: absolute;
+  inset: 8px;
+  z-index: -1;
+  border: 1px solid rgba(134, 220, 255, 0.08);
+  border-radius: 22px;
+  pointer-events: none;
+}
+
+.ice-alert-atmosphere {
+  position: absolute;
+  inset: 0;
+  z-index: -2;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.ice-alert-grid {
+  position: absolute;
+  inset: 0;
+  opacity: 0.14;
+  background-image:
+    linear-gradient(
+      rgba(126, 213, 255, 0.08) 1px,
+      transparent 1px
+    ),
+    linear-gradient(
+      90deg,
+      rgba(126, 213, 255, 0.08) 1px,
+      transparent 1px
+    );
+  background-size: 42px 42px;
+  mask-image:
+    linear-gradient(
+      180deg,
+      transparent,
+      black 18%,
+      black 76%,
+      transparent
+    );
+}
+
+.ice-alert-beam {
+  position: absolute;
+  top: -30%;
+  width: 18%;
+  height: 150%;
+  opacity: 0.12;
+  transform: rotate(11deg);
+  background:
+    linear-gradient(
+      180deg,
+      transparent,
+      rgba(124, 218, 255, 0.78),
+      transparent
+    );
+  filter: blur(20px);
+}
+
+.ice-alert-beam-one {
+  left: 16%;
+}
+
+.ice-alert-beam-two {
+  right: 13%;
+  opacity: 0.08;
+}
+
+.ice-alert-pulse {
+  position: absolute;
+  border: 1px solid rgba(135, 224, 255, 0.18);
+  border-radius: 50%;
+  animation:
+    iceAlertPulse
+    4.4s
+    ease-out
+    infinite;
+}
+
+.ice-alert-pulse-one {
+  top: 22%;
+  right: 16%;
+  width: 190px;
+  height: 190px;
+}
+
+.ice-alert-pulse-two {
+  top: 26%;
+  right: 19%;
+  width: 125px;
+  height: 125px;
+  animation-delay: 1.25s;
+}
+
+.ice-alert-topline {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 18px;
+  margin-bottom: clamp(26px, 4vw, 44px);
+}
+
+.ice-alert-signal {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  width: max-content;
+  padding: 9px 13px;
+  border: 1px solid rgba(125, 220, 255, 0.32);
+  border-radius: 999px;
+  color: rgba(218, 247, 255, 0.92);
+  background: rgba(7, 37, 56, 0.64);
+  font-size: 11px;
+  font-weight: 900;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  backdrop-filter: blur(10px);
+}
+
+.ice-alert-signal-light {
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background: #8fe5ff;
+  box-shadow:
+    0 0 0 5px rgba(143, 229, 255, 0.07),
+    0 0 18px rgba(143, 229, 255, 0.9);
+  animation:
+    iceSignalBlink
+    1.4s
+    ease-in-out
+    infinite;
+}
+
+.ice-alert-code {
+  color: rgba(255, 255, 255, 0.46);
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.ice-alert-layout {
+  display: grid;
+  grid-template-columns:
+    minmax(0, 0.92fr)
+    minmax(390px, 1.08fr);
+  gap: clamp(28px, 5vw, 70px);
+  align-items: center;
+}
+
+.ice-alert-primary h1 {
+  margin: 9px 0 18px;
+  color: #fff;
+  font-size: clamp(56px, 8.5vw, 112px);
+  line-height: 0.82;
+  letter-spacing: -0.065em;
+  text-shadow:
+    0 0 34px rgba(112, 213, 255, 0.14),
+    0 8px 30px rgba(0, 0, 0, 0.55);
+}
+
+.ice-alert-primary h1 span {
+  display: block;
+  margin-top: 10px;
+  color: #9ee9ff;
+  font-size: 0.57em;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+}
+
+.ice-alert-lead {
+  max-width: 590px;
+  color: rgba(237, 247, 252, 0.78);
+  font-size: clamp(17px, 1.7vw, 21px);
+  line-height: 1.56;
+}
+
+.ice-alert-known {
+  margin-top: 27px;
+  padding: 17px;
+  border: 1px solid rgba(138, 220, 255, 0.17);
+  border-radius: 20px;
+  background: rgba(4, 24, 39, 0.58);
+}
+
+.ice-alert-known-label {
+  margin-bottom: 12px;
+  color: rgba(143, 225, 255, 0.68);
+  font-size: 10px;
+  font-weight: 900;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.ice-alert-known-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 9px;
+}
+
+.ice-alert-known-grid > div {
+  padding: 11px 12px;
+  border: 1px solid rgba(255, 255, 255, 0.07);
+  border-radius: 14px;
+  background: rgba(255, 255, 255, 0.025);
+}
+
+.ice-alert-known-grid strong,
+.ice-alert-known-grid span {
+  display: block;
+}
+
+.ice-alert-known-grid strong {
+  color: rgba(255, 255, 255, 0.48);
+  font-size: 9px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.ice-alert-known-grid span {
+  margin-top: 4px;
+  color: rgba(245, 250, 253, 0.88);
+  font-size: 13px;
+  font-weight: 800;
+}
+
+.ice-alert-visual {
+  position: relative;
+  padding: 18px;
+  border: 1px solid rgba(139, 224, 255, 0.24);
+  border-radius: 25px;
+  background:
+    linear-gradient(
+      180deg,
+      rgba(7, 36, 54, 0.71),
+      rgba(2, 12, 22, 0.87)
+    );
+  box-shadow:
+    0 24px 55px rgba(0, 0, 0, 0.35),
+    inset 0 0 36px rgba(123, 216, 255, 0.045);
+}
+
+.ice-alert-visual::before {
+  content: "";
+  position: absolute;
+  inset: 7px;
+  border: 1px solid rgba(139, 224, 255, 0.08);
+  border-radius: 18px;
+  pointer-events: none;
+}
+
+.ice-alert-visual-header {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  justify-content: space-between;
+  gap: 14px;
+  margin-bottom: 14px;
+  padding: 0 4px;
+}
+
+.ice-alert-visual-header span {
+  color: rgba(255, 255, 255, 0.56);
+  font-size: 10px;
+  font-weight: 900;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.ice-alert-visual-header strong {
+  color: #a4ecff;
+  font-size: 11px;
+  letter-spacing: 0.06em;
+}
+
+.ice-scan-display {
+  position: relative;
+  z-index: 2;
+  display: grid;
+  grid-template-columns:
+    minmax(0, 1fr)
+    42px
+    minmax(0, 1fr);
+  align-items: center;
+  min-height: 310px;
+}
+
+.ice-scan-panel {
+  position: relative;
+  height: 280px;
+  overflow: hidden;
+  border: 1px solid rgba(140, 221, 255, 0.2);
+  border-radius: 18px;
+  background:
+    radial-gradient(
+      circle at 50% 20%,
+      rgba(131, 221, 255, 0.14),
+      transparent 36%
+    ),
+    linear-gradient(
+      180deg,
+      rgba(11, 52, 75, 0.88),
+      rgba(4, 19, 32, 0.94)
+    );
+}
+
+.ice-scan-panel::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  opacity: 0.26;
+  background:
+    repeating-linear-gradient(
+      180deg,
+      transparent 0,
+      transparent 7px,
+      rgba(170, 235, 255, 0.08) 8px
+    );
+  pointer-events: none;
+}
+
+.ice-scan-label {
+  position: absolute;
+  top: 12px;
+  left: 12px;
+  z-index: 5;
+  padding: 6px 8px;
+  border: 1px solid rgba(152, 230, 255, 0.24);
+  border-radius: 999px;
+  color: rgba(224, 247, 255, 0.72);
+  background: rgba(2, 16, 27, 0.76);
+  font-size: 9px;
+  font-weight: 900;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.ice-sheet {
+  position: absolute;
+  left: 8%;
+  right: 8%;
+  top: 27%;
+  bottom: 10%;
+  border-radius: 46% 44% 25% 28%;
+  background:
+    linear-gradient(
+      155deg,
+      rgba(229, 250, 255, 0.96),
+      rgba(130, 207, 232, 0.84) 48%,
+      rgba(62, 136, 177, 0.87)
+    );
+  box-shadow:
+    0 0 35px rgba(150, 228, 255, 0.19),
+    inset 0 0 28px rgba(255, 255, 255, 0.16);
+}
+
+.ice-sheet-before {
+  clip-path:
+    polygon(
+      0 10%,
+      94% 0,
+      100% 73%,
+      80% 100%,
+      13% 92%
+    );
+}
+
+.ice-sheet-after {
+  clip-path:
+    polygon(
+      0 10%,
+      44% 4%,
+      49% 28%,
+      57% 17%,
+      64% 46%,
+      74% 32%,
+      100% 51%,
+      87% 100%,
+      11% 92%
+    );
+}
+
+.ice-fracture {
+  position: absolute;
+  top: 2%;
+  left: 49%;
+  width: 4px;
+  height: 88%;
+  transform: rotate(-8deg);
+  background:
+    linear-gradient(
+      180deg,
+      rgba(4, 30, 49, 0),
+      rgba(2, 20, 35, 0.95) 16%,
+      rgba(8, 47, 68, 0.96) 78%,
+      transparent
+    );
+  box-shadow:
+    0 0 12px rgba(6, 45, 69, 0.86);
+}
+
+.ice-fracture::before,
+.ice-fracture::after {
+  content: "";
+  position: absolute;
+  width: 3px;
+  height: 54px;
+  background: rgba(4, 28, 44, 0.9);
+  transform-origin: top;
+}
+
+.ice-fracture::before {
+  top: 31%;
+  left: 1px;
+  transform: rotate(39deg);
+}
+
+.ice-fracture::after {
+  top: 57%;
+  right: 0;
+  transform: rotate(-43deg);
+}
+
+.ice-scan-divider {
+  display: grid;
+  place-items: center;
+  color: rgba(147, 227, 255, 0.66);
+  font-size: 26px;
+}
+
+.ice-scan-warning {
+  position: relative;
+  z-index: 2;
+  margin-top: 13px;
+  padding: 12px 14px;
+  border-left: 3px solid rgba(245, 215, 122, 0.68);
+  color: rgba(255, 246, 215, 0.72);
+  background: rgba(82, 64, 20, 0.13);
+  font-size: 12px;
+  line-height: 1.45;
+}
+
+.ice-alert-consequence-chain {
+  margin-top: clamp(28px, 4vw, 42px);
+  padding-top: 22px;
+  border-top: 1px solid rgba(136, 219, 255, 0.12);
+}
+
+.consequence-chain-title {
+  margin-bottom: 14px;
+  color: rgba(255, 255, 255, 0.54);
+  font-size: 10px;
+  font-weight: 900;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.consequence-chain-track {
+  display: grid;
+  grid-template-columns:
+    minmax(110px, 1fr)
+    auto
+    minmax(110px, 1fr)
+    auto
+    minmax(110px, 1fr)
+    auto
+    minmax(140px, 1.15fr)
+    auto
+    minmax(110px, 1fr);
+  gap: 9px;
+  align-items: center;
+}
+
+.consequence-node {
+  min-height: 86px;
+  padding: 12px;
+  border: 1px solid rgba(139, 219, 255, 0.12);
+  border-radius: 15px;
+  background: rgba(5, 24, 38, 0.58);
+}
+
+.consequence-node span,
+.consequence-node strong,
+.consequence-node small {
+  display: block;
+}
+
+.consequence-node span {
+  color: rgba(142, 226, 255, 0.46);
+  font-size: 9px;
+  font-weight: 900;
+}
+
+.consequence-node strong {
+  margin-top: 5px;
+  color: rgba(255, 255, 255, 0.89);
+  font-size: 14px;
+}
+
+.consequence-node small {
+  margin-top: 3px;
+  color: rgba(255, 255, 255, 0.52);
+  font-size: 10px;
+  line-height: 1.3;
+}
+
+.consequence-arrow {
+  color: rgba(142, 225, 255, 0.36);
+  font-size: 17px;
+}
+
+.ice-alert-directive {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 22px;
+  margin-top: 24px;
+  padding: 18px 20px;
+  border: 1px solid rgba(245, 215, 122, 0.25);
+  border-radius: 19px;
+  background:
+    linear-gradient(
+      105deg,
+      rgba(80, 62, 20, 0.22),
+      rgba(7, 27, 41, 0.71)
+    );
+}
+
+.ice-alert-directive span,
+.ice-alert-directive strong {
+  display: block;
+}
+
+.ice-alert-directive > div > span {
+  color: rgba(245, 215, 122, 0.66);
+  font-size: 9px;
+  font-weight: 900;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.ice-alert-directive > div > strong {
+  margin-top: 5px;
+  color: rgba(255, 248, 222, 0.91);
+  font-size: clamp(15px, 1.7vw, 20px);
+}
+
+.ice-alert-directive button {
+  flex: 0 0 auto;
+  min-width: 240px;
+  border-color: rgba(245, 215, 122, 0.5);
+  color: #201805;
+  background:
+    linear-gradient(
+      180deg,
+      #fae29a,
+      #d6aa47
+    );
+  box-shadow:
+    0 0 28px rgba(245, 215, 122, 0.14);
+}
+
+/* =========================================================
+   REAL COUNCIL DAIS
+   ========================================================= */
+
+.council-presence {
+  position: relative;
+  margin-top: 31px;
+  padding: 30px 24px 18px;
+  border: 1px solid rgba(141, 220, 255, 0.12);
+  border-radius: 50% 50% 22px 22px / 24% 24% 22px 22px;
+  background:
+    radial-gradient(
+      ellipse at 50% 100%,
+      rgba(245, 215, 122, 0.09),
+      transparent 45%
+    ),
+    linear-gradient(
+      180deg,
+      rgba(8, 32, 47, 0.45),
+      rgba(3, 14, 24, 0.64)
+    );
+  box-shadow:
+    inset 0 -18px 35px rgba(245, 215, 122, 0.03),
+    inset 0 0 36px rgba(139, 220, 255, 0.025);
+}
+
+.council-presence::before {
+  content: "";
+  position: absolute;
+  left: 7%;
+  right: 7%;
+  bottom: 14px;
+  height: 42px;
+  border: 1px solid rgba(245, 215, 122, 0.16);
+  border-radius: 50%;
+  transform: rotateX(69deg);
+  box-shadow:
+    0 0 25px rgba(245, 215, 122, 0.05),
+    inset 0 0 18px rgba(245, 215, 122, 0.04);
+  pointer-events: none;
+}
+
+.council-presence-heading {
+  position: relative;
+  z-index: 3;
+  justify-content: center;
+  text-align: center;
+}
+
+.council-presence-heading span {
+  color: rgba(255, 245, 208, 0.89);
+}
+
+.council-presence-heading small {
+  display: block;
+  margin-top: 5px;
+}
+
+.council-presence-roster {
+  position: relative;
+  z-index: 3;
+  display: grid;
+  grid-template-columns:
+    repeat(5, minmax(90px, 1fr));
+  grid-template-areas:
+    "scout mapkeeper guardian builder healer";
+  gap: clamp(9px, 1.5vw, 18px);
+  align-items: end;
+  max-width: 760px;
+  margin: 21px auto 0;
+}
+
+.council-presence-member:nth-child(1) {
+  grid-area: scout;
+  transform: translateY(24px) rotate(-2deg);
+}
+
+.council-presence-member:nth-child(2) {
+  grid-area: mapkeeper;
+  transform: translateY(8px) rotate(-1deg);
+}
+
+.council-presence-member:nth-child(3) {
+  grid-area: builder;
+  transform: translateY(8px) rotate(1deg);
+}
+
+.council-presence-member:nth-child(4) {
+  grid-area: healer;
+  transform: translateY(24px) rotate(2deg);
+}
+
+.council-presence-member:nth-child(5) {
+  grid-area: guardian;
+  transform: translateY(-11px) scale(1.12);
+  z-index: 4;
+}
+
+.council-presence-member {
+  position: relative;
+  min-height: 132px;
+  padding: 11px 8px 13px;
+  border-radius: 50% 50% 16px 16px / 28% 28% 16px 16px;
+  background:
+    linear-gradient(
+      180deg,
+      rgba(13, 48, 65, 0.78),
+      rgba(4, 17, 28, 0.91)
+    );
+  box-shadow:
+    0 17px 25px rgba(0, 0, 0, 0.24),
+    inset 0 -4px 0 rgba(245, 215, 122, 0.04);
+}
+
+.council-presence-member::after {
+  content: "";
+  position: absolute;
+  left: 12%;
+  right: 12%;
+  bottom: -8px;
+  height: 17px;
+  border: 1px solid rgba(245, 215, 122, 0.13);
+  border-radius: 50%;
+  background: rgba(3, 13, 22, 0.88);
+}
+
+.council-presence-member.active-member {
+  border-color: rgba(245, 215, 122, 0.68);
+  background:
+    radial-gradient(
+      circle at 50% 15%,
+      rgba(245, 215, 122, 0.15),
+      transparent 42%
+    ),
+    linear-gradient(
+      180deg,
+      rgba(87, 68, 25, 0.44),
+      rgba(7, 23, 34, 0.95)
+    );
+  box-shadow:
+    0 0 32px rgba(245, 215, 122, 0.11),
+    0 21px 30px rgba(0, 0, 0, 0.33);
+}
+
+.council-presence-image {
+  width: clamp(58px, 6vw, 76px);
+  height: clamp(58px, 6vw, 76px);
+  border-width: 2px;
+}
+
+.active-member .council-presence-image {
+  width: clamp(68px, 7vw, 88px);
+  height: clamp(68px, 7vw, 88px);
+}
+
+.council-welcome-card::after {
+  content: "YOU STAND BEFORE THE INQUIRY COUNCIL";
+  position: absolute;
+  left: 50%;
+  bottom: 9px;
+  transform: translateX(-50%);
+  color: rgba(245, 215, 122, 0.22);
+  font-size: 8px;
+  font-weight: 900;
+  letter-spacing: 0.22em;
+  white-space: nowrap;
+  pointer-events: none;
+}
+
+@keyframes iceAlertPulse {
+  0% {
+    opacity: 0;
+    transform: scale(0.74);
+  }
+
+  28% {
+    opacity: 0.6;
+  }
+
+  100% {
+    opacity: 0;
+    transform: scale(1.42);
+  }
+}
+
+@keyframes iceSignalBlink {
+  0%,
+  100% {
+    opacity: 0.55;
+  }
+
+  50% {
+    opacity: 1;
+  }
+}
+
+.screen.active.ice-alert-transition
+.ice-alert-signal {
+  animation:
+    councilWelcomeFadeUp
+    440ms
+    ease
+    both;
+}
+
+.screen.active.ice-alert-transition
+.ice-alert-primary {
+  animation:
+    councilWelcomeFadeUp
+    660ms
+    ease
+    100ms
+    both;
+}
+
+.screen.active.ice-alert-transition
+.ice-alert-visual {
+  animation:
+    councilGuardianArrival
+    720ms
+    cubic-bezier(.2, .8, .2, 1)
+    180ms
+    both;
+}
+
+.screen.active.ice-alert-transition
+.ice-alert-consequence-chain {
+  animation:
+    councilWelcomeFadeUp
+    620ms
+    ease
+    340ms
+    both;
+}
+
+.screen.active.ice-alert-transition
+.ice-alert-directive {
+  animation:
+    councilWelcomeFadeUp
+    620ms
+    ease
+    470ms
+    both;
+}
+
+@media (max-width: 980px) {
+  .ice-alert-layout {
+    grid-template-columns: 1fr;
+  }
+
+  .ice-alert-primary h1 {
+    font-size: clamp(58px, 12vw, 92px);
+  }
+
+  .consequence-chain-track {
+    grid-template-columns: repeat(5, minmax(135px, 1fr));
+    overflow-x: auto;
+    padding-bottom: 9px;
+  }
+
+  .consequence-arrow {
+    display: none;
+  }
+
+  .council-presence-roster {
+    grid-template-columns: repeat(5, minmax(80px, 1fr));
+  }
+}
+
+@media (max-width: 700px) {
+  .ice-alert-card {
+    width: calc(100vw - 20px);
+    padding: 20px 14px 24px;
+  }
+
+  .ice-alert-topline {
+    display: block;
+  }
+
+  .ice-alert-code {
+    margin-top: 10px;
+  }
+
+  .ice-alert-primary h1 {
+    font-size: clamp(52px, 19vw, 78px);
+  }
+
+  .ice-alert-known-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .ice-scan-display {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+
+  .ice-scan-divider {
+    transform: rotate(90deg);
+  }
+
+  .ice-scan-panel {
+    height: 220px;
+  }
+
+  .ice-alert-directive {
+    display: grid;
+  }
+
+  .ice-alert-directive button {
+    width: 100%;
+    min-width: 0;
+  }
+
+  .council-presence {
+    overflow-x: auto;
+    padding-right: 14px;
+    padding-left: 14px;
+    border-radius: 24px;
+  }
+
+  .council-presence-roster {
+    grid-template-columns: repeat(5, 96px);
+    grid-template-areas:
+      "scout mapkeeper guardian builder healer";
+    min-width: 540px;
+    padding: 8px 8px 30px;
+  }
+
+  .council-presence-member:nth-child(1),
+  .council-presence-member:nth-child(2),
+  .council-presence-member:nth-child(3),
+  .council-presence-member:nth-child(4),
+  .council-presence-member:nth-child(5) {
+    transform: none;
+  }
+
+  .council-presence-member:nth-child(5) {
+    transform: scale(1.08);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ice-alert-pulse,
+  .ice-alert-signal-light,
+
+  .screen.active.ice-alert-transition
+  .ice-alert-signal,
+
+  .screen.active.ice-alert-transition
+  .ice-alert-primary,
+
+  .screen.active.ice-alert-transition
+  .ice-alert-visual,
+
+  .screen.active.ice-alert-transition
+  .ice-alert-consequence-chain,
+
+  .screen.active.ice-alert-transition
+  .ice-alert-directive {
+    animation: none !important;
+  }
+}
+
 </style>
+  <!-- CI-WELCOME-VIS-2R7 — CONSOLIDATED COUNCIL OPENING -->
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/council_stage_opening.css') }}">
 </head>
+
 <body>
-<main class="shell">
-<section class="top"><div><div class="kicker">STEM Nation Academy Readiness Evaluation</div><h1>Council Hall</h1></div><div class="tag">Prototype Mission: The Ice Break Mystery</div></section>
-<section class="grid">
-<aside class="panel avatars" id="avatars"></aside>
-<section class="panel stage">
-<div class="status"><div class="pill">Current Stage: <strong id="stageName">Overheard Disagreement</strong></div><div class="pill" id="lineCount">Line 1 / 16</div></div>
-<div class="screen" id="screen"><div class="sat" id="sat"><div class="scan"></div><div class="elabel" id="evidenceLabel">Unlabeled Evidence · Satellite Feed Locked</div><div class="etitle" id="evidenceTitle">The Council table glows. A satellite feed waits behind a locked evidence layer.</div></div></div>
-<div class="dialog"><div class="speaker" id="speaker">Scout</div><div class="line" id="dialogueLine">The coastline changed overnight. That was not visible in the last scan.</div></div>
-<div class="student" id="observationConsole"><div class="tk">Student Console · First Trial Task</div><div class="tt">Record 3 observations before making a claim.</div><div class="help">Write only what you notice. Do not explain it yet. Do not solve it yet.</div><div class="inputs"><textarea id="obs1" placeholder="Observation 1: I notice..."></textarea><textarea id="obs2" placeholder="Observation 2: I notice..."></textarea><textarea id="obs3" placeholder="Observation 3: I notice..."></textarea></div><div class="actions"><button class="primary" onclick="checkObservations()">Submit Observations</button><button onclick="clearObservations()">Clear</button></div><div class="fb" id="observationFeedback"></div><div class="chip" id="observationUnlockChip">Evidence Layer 2 Unlocked · Question Console Open</div></div>
-<div class="student" id="questionConsole"><div class="tk">Student Console · Second Trial Task</div><div class="tt">Ask 2 investigation questions.</div><div class="help">Strong questions help the Council decide what evidence is missing, what needs testing, or what risk must be checked.</div><div class="inputs"><textarea id="q1" placeholder="Question 1: What should the Council investigate?"></textarea><textarea id="q2" placeholder="Question 2: What evidence is still missing?"></textarea></div><div class="strength"><div class="slabel"><span>Strong Question Meter</span><strong id="strengthText">0%</strong></div><div class="bar"><div class="fill" id="strengthFill"></div></div></div><div class="actions"><button class="primary" onclick="checkQuestions()">Submit Questions</button><button onclick="clearQuestions()">Clear</button></div><div class="fb" id="questionFeedback"></div><div class="chip" id="questionUnlockChip">Question Layer Unlocked · Priority Challenge Open</div></div>
-<div class="student" id="priorityConsole"><div class="tk">Student Console · Third Trial Task</div><div class="tt">Choose only 3 priorities and rank them in order.</div><div class="help">Select exactly three priorities. Assign each selected priority a different rank: 1, 2, and 3. Then explain why that order matters.</div><div class="priority" id="priorityGrid"></div><div class="inputs" style="margin-top:12px"><textarea id="priorityWhy" placeholder="Explain why you chose this order..."></textarea></div><div class="actions"><button class="primary" onclick="checkPriorities()">Submit Priority Ranking</button><button onclick="clearPriorities()">Clear</button></div><div class="fb" id="priorityFeedback"></div><div class="chip" id="priorityUnlockChip">Priority Ranking Accepted · Avatar Reports Open</div></div>
-<div class="student" id="reportConsole"><div class="tk">Council Reports · Mission Checkpoint</div><div class="tt">Avatar reports are ready.</div><div class="help">The Council responds to your completed observation, question, and priority sequence.</div><div class="reports" id="reports"></div><div class="summary" id="summary"></div><div class="actions"><button class="primary" onclick="showCheckpoint()">Refresh Checkpoint Summary</button><button onclick="openReflection()">Open Reflection Chamber</button></div><div class="fb good" style="display:block" id="reportFeedback">The Guardian records this as your first Academy Readiness checkpoint.</div></div>
-<div class="student" id="reflectionConsole"><div class="tk">Reflection Chamber · Final Claim</div><div class="tt">Make your final claim and name what remains unknown.</div><div class="help">This is not about being perfectly correct. It is about showing evidence-based reasoning, uncertainty, and next-step thinking.</div><div class="inputs"><textarea id="finalClaim" placeholder="My claim: I think..."></textarea><textarea id="finalEvidence" placeholder="My strongest evidence is..."></textarea><textarea id="finalUncertain" placeholder="I am still unsure about..."></textarea><textarea id="finalNext" placeholder="Next, I would investigate..."></textarea></div><div class="actions"><button class="primary" onclick="submitReflection()">Submit Final Reflection</button><button onclick="clearReflection()">Clear</button></div><div class="fb" id="reflectionFeedback"></div><div class="badge" id="readinessBadge">Academy Investigator · Nation Builder Candidate</div></div>
-<div class="student" id="completionConsole"><div class="tk">Trial Complete · Continue Your Journey</div><div class="tt">Academy Readiness Checkpoint Complete</div><div class="help">You completed the Council Hall stage show. Your next step is not another random jump; you may review the student hub or preview the larger STEM Nation World Board.</div><div class="completion-list" id="completionList"></div><div class="actions"><button class="continue" onclick="window.location.href='/hub'">Continue to Student Hub</button><button class="primary" onclick="window.location.href='/map'">Preview World Board</button><button onclick="showCheckpoint()">Review Checkpoint</button></div><div class="fb good" style="display:block">The Guardian has cleared you for the next stage.</div></div>
-<div class="controls"><button id="backBtn" onclick="previousLine()">Back</button><button id="nextBtn" onclick="nextLine()">Continue Scene</button><button onclick="restartScene()">Restart</button><button onclick="skipToStudentReady()">Student Ready</button></div>
-</section>
-<aside class="panel side"><div class="guardian"><div><div class="gicon">🛡️</div><div class="gtitle">Guardian</div><p class="gcopy" id="guardianCopy">Listen first. The Council is already in disagreement.</p></div></div><button onclick="nextLine()">Advance Dialogue</button><div class="progress"><div class="pt">Trial Progress</div><div class="steps" id="steps"></div></div><p class="gcopy" id="missionDirective">Directive: do not solve yet. Watch the stage and listen for what each advisor believes.</p></aside>
-</section><div class="foot">December Public Prototype Build · CI-STAGE-8</div>
-</main>
+  <div class="hud">
+    <div><strong>Mission</strong>01 · Ice Break Mystery</div>
+    <div><strong>Role</strong>Chief Investigator</div>
+    <div><strong>Mode</strong><span id="hudMode">Council Hall</span></div>
+    <div><strong>Status</strong><span id="hudStatus">Discussion underway</span></div>
+  </div>
+  <!-- CI-WELCOME-VIS-3R — GUARDIAN CONCEPT ARRIVAL -->
+  <section
+    class="screen active guardian-concept-arrival"
+    id="alertScreen"
+    aria-labelledby="guardianConceptTitle"
+  >
+    <div class="guardian-concept-shell">
+
+      <header class="visually-hidden">
+        <p>First Council Gathering</p>
+        <h1 id="guardianConceptTitle">
+          Guardian welcomes you to Council Hall.
+        </h1>
+        <p>
+          The Inquiry Council is already assembled.
+        </p>
+      </header>
+
+      <div class="guardian-concept-frame">
+
+        <img
+          class="guardian-concept-art"
+          src="/static/storyboards/council_hall_guardian_concept.png"
+          alt="Guardian welcomes the learner at the entrance to Council Hall while the Inquiry Council is assembled around the illuminated table."
+        >
+
+        <div
+          class="guardian-concept-overlay"
+          aria-hidden="true"
+        ></div>
+
+        <aside
+          class="guardian-concept-identity"
+          id="councilStudentPosition"
+          aria-label="Your Academy identity"
+        >
+          <div class="guardian-concept-avatar">
+            <img
+              id="councilStudentAvatar"
+              src="/static/avatars/student_choices/avatar_01.png"
+              alt=""
+            >
+          </div>
+
+          <div class="guardian-concept-identity-copy">
+            <span>Your Academy identity</span>
+
+            <strong id="councilStudentName">
+              Academy Learner
+            </strong>
+
+            <small>
+              Chief Investigator in Training
+            </small>
+          </div>
+        </aside>
+
+        <!-- CI-WELCOME-VIS-3B — COLLAPSED GUARDIAN WELCOME -->
+        <div class="guardian-concept-action guardian-concept-action-group">
+
+          <!-- CI-WELCOME-VIS-3C — STABLE GUARDIAN AUDIO CONTROL -->
+          <button
+            class="guardian-arrival-audio-btn"
+            id="guardianArrivalAudioBtn"
+            type="button"
+            aria-label="Hear Guardian welcome"
+          >
+            Hear Guardian
+          </button>
+
+          <button
+            class="guardian-arrival-briefing-btn"
+            id="alertBtn"
+            type="button"
+          >
+            Enter Council Briefing
+          </button>
+
+        </div>
+
+      </div>
+
+      <p class="guardian-concept-caption">
+        The Council was already discussing the incident when you arrived.
+      </p>
+
+    </div>
+  </section>
+
+
+<!-- CI-WELCOME-VIS-1 — COUNCIL ARRIVAL CHAMBER ENHANCEMENT -->
+  <!-- CI-WELCOME-VIS-1A — UPDATED PHOTOSHOP COUNCIL PORTRAITS -->
+  <section
+    class="screen council-welcome-screen"
+    id="guardianScreen"
+   hidden aria-hidden="true" data-retired-screen="duplicate-guardian-welcome">
+    <div class="card council-welcome-card">
+
+      <div class="council-arrival-atmosphere" aria-hidden="true">
+        <span class="council-light-column council-light-column-one"></span>
+        <span class="council-light-column council-light-column-two"></span>
+        <span class="council-light-column council-light-column-three"></span>
+        <span class="council-floor-ring council-floor-ring-one"></span>
+        <span class="council-floor-ring council-floor-ring-two"></span>
+      </div>
+
+      <div class="council-arrival-status">
+        <span class="arrival-status-light" aria-hidden="true"></span>
+        Academy arrival recognized
+      </div>
+
+      <div class="guardian-grid council-welcome-grid">
+
+        <div class="guardian-welcome-portrait">
+          <span
+            class="guardian-portrait-orbit guardian-portrait-orbit-one"
+            aria-hidden="true"
+          ></span>
+
+          <span
+            class="guardian-portrait-orbit guardian-portrait-orbit-two"
+            aria-hidden="true"
+          ></span>
+
+          <div class="guardian-portrait-frame">
+            <img
+              src="/static/animations/guardian_face_centered_crop_only.png"
+              alt="Guardian, keeper of the Council threshold"
+            >
+          </div>
+
+          <div class="guardian-nameplate">
+            <strong>Guardian</strong>
+            <span>Keeper of the Council Threshold</span>
+          </div>
+        </div>
+
+        <div class="council-welcome-copy">
+          <div class="kicker">
+            STEM Nation Academy · Council Hall
+          </div>
+
+          <h1>You made it.</h1>
+
+          <p class="council-welcome-lead">
+            The Council has found a sudden break in the Northern Ice
+            Shelf. If the break spreads, every nation could be affected.
+          </p>
+
+          <div class="investigator-role-card">
+            <span class="investigator-role-label">
+              Your Academy role
+            </span>
+
+            <strong>
+              Chief Investigator in Training
+            </strong>
+
+            <p>
+              Observe first. Compare carefully. Help the Council ask
+              better questions before nations react.
+            </p>
+          </div>
+
+          <div
+            class="council-presence"
+            aria-label="The Inquiry Council"
+          >
+            <div class="council-presence-heading">
+              <span>The Inquiry Council is assembled</span>
+              <small>
+                Discover · Remember · Create · Restore · Protect
+              </small>
+            </div>
+
+            <div class="council-presence-roster">
+
+              <div class="council-presence-member">
+                <div class="council-presence-image">
+                  <img
+                    src="/static/animations/scout.png"
+                    alt="Scout"
+                  >
+                </div>
+                <strong>Scout</strong>
+                <span>Discover</span>
+              </div>
+
+              <div class="council-presence-member">
+                <div class="council-presence-image">
+                  <img
+                    src="/static/animations/mapkeeper_face_centered_crop_only.png"
+                    alt="Mapkeeper"
+                  >
+                </div>
+                <strong>Mapkeeper</strong>
+                <span>Remember</span>
+              </div>
+
+              <div class="council-presence-member">
+                <div class="council-presence-image">
+                  <img
+                    src="/static/animations/builder_face_centered_crop_only.png"
+                    alt="Builder"
+                  >
+                </div>
+                <strong>Builder</strong>
+                <span>Create</span>
+              </div>
+
+              <div class="council-presence-member">
+                <div class="council-presence-image">
+                  <img
+                    src="/static/animations/healer_top_text_removed_crop_only.png"
+                    alt="Healer"
+                  >
+                </div>
+                <strong>Healer</strong>
+                <span>Restore</span>
+              </div>
+
+              <div class="council-presence-member active-member">
+                <div class="council-presence-image">
+                  <img
+                    src="/static/animations/guardian_face_centered_crop_only.png"
+                    alt="Guardian"
+                  >
+                </div>
+                <strong>Guardian</strong>
+                <span>Protect</span>
+              </div>
+
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="actions council-welcome-actions">
+        <button id="guardianBtn">
+          <span aria-hidden="true">▶</span>
+          Play Guardian Welcome
+        </button>
+
+        <button id="briefingBtn">
+          Enter Council Briefing
+          <span aria-hidden="true">→</span>
+        </button>
+      </div>
+
+      <div class="council-welcome-instruction">
+        Listen to the Guardian, then enter when you are ready.
+      </div>
+    </div>
+  </section>
+
+  <section class="screen" id="briefingScreen">
+    <div class="card">
+      <div class="card-header">
+        <div class="kicker">Council Briefing · Sector 7A</div>
+        <h1>The Council Opens the Evidence</h1>
+        <p>Listen first. A visual clue appears after each advisor speaks. Continue only when you are ready.</p>
+      </div>
+
+      <div class="briefing-grid">
+        <aside class="speaker">
+          <img id="speakerAvatar" src="/static/animations/guardian_face_centered_crop_only.png" alt="Approved Council avatar">
+          <div class="speaker-name" id="speakerName">Guardian</div>
+          <div class="speaker-role" id="speakerRole">Mission guide and keeper of the Council threshold.</div>
+        </aside>
+
+        <section class="dialogue">
+          <div class="dialogue-label" id="speakerLabel">Guardian</div>
+          <div class="dialogue-line" id="speakerLine">Council, the Chief Investigator in Training has arrived.</div>
+          <div class="dialogue-note" id="speakerNote">If the ice break spreads, every nation could be affected. That is why the Council cannot guess.</div>
+          <div class="visual-clue" id="visualClue"></div>
+        </section>
+
+        <section class="static-evidence-board" aria-label="Static mission evidence board"></section>
+      </div>
+
+      <div class="step-track" id="stepTrack"></div>
+
+      <div class="actions">
+        <div class="status" id="briefingStatus"><strong>Briefing 1 of 6:</strong> Guardian</div>
+        <button id="councilContinueBtn" disabled>Listen First</button>
+      </div>
+    </div>
+  </section>
+
+  <section class="screen" id="evidenceScreen">
+    <div class="card">
+      <div class="card-header">
+        <div class="kicker">Evidence Briefing Unlocked</div>
+        <h1>Prepare Your First Look</h1>
+        <p>The Council has opened the evidence. You are not solving the mystery yet. First, review what each clue means so your first observation is careful, not rushed.</p>
+      </div>
+
+      <div class="clue-grid">
+        <div class="clue"><strong>1 · Location</strong><p>Sector 7A is the first warning zone on the Northern Ice Shelf.</p></div>
+        <div class="clue"><strong>2 · Previous Scan</strong><p>The earlier scan gives you the “before” picture.</p></div>
+        <div class="clue"><strong>3 · Current Scan</strong><p>The current scan shows what changed after the break appeared.</p></div>
+        <div class="clue"><strong>4 · Limits + Risk</strong><p>Shadows, distortion, and unstable ice mean you must observe before making a claim.</p></div>
+      </div>
+
+      <div class="actions">
+        <button id="firstLookBtn">Begin First Look</button>
+      </div>
+    </div>
+  </section>
+
+  <section class="screen" id="firstLookScreen">
+    <div class="card">
+      <div class="card-header">
+        <div class="kicker">Observation Trial 1 · First Look</div>
+        <h1>Compare Only What You Can See</h1>
+        <p>Your first task is simple: compare the previous scan and the current scan. Notice visible changes only. Do not explain the cause yet.</p>
+      </div>
+
+      <div class="first-look-directions">
+        <div class="look-step"><strong>Step 1</strong>Find the previous scan. What was visible before?</div>
+        <div class="look-step"><strong>Step 2</strong>Find the current scan. What changed?</div>
+        <div class="look-step"><strong>Step 3</strong>Name only what you can see. Save explanations for later.</div>
+      </div>
+
+      <img class="scan-img" src="/static/storyboards/council_hall_evidence_briefing.png" alt="Two-panel ice scan comparison evidence board">
+
+      <div class="first-look-reminder">
+        <strong>Investigator Rule:</strong> A good first look does not solve the whole mystery. It separates observation from explanation.
+      </div>
+
+      <section class="first-look-response" aria-label="First Look response tools">
+        <div class="response-panel">
+          <h2>Select exactly 3 visible observations</h2>
+          <p>Choose only what the scan shows. Do not explain the cause yet.</p>
+
+          <div class="observation-options" id="firstLookOptions">
+            <label class="obs-choice">
+              <input type="checkbox" value="The current scan shows a broken edge.">
+              <span>The current scan shows a broken edge.</span>
+            </label>
+
+            <label class="obs-choice">
+              <input type="checkbox" value="The current scan shows a darker exposed area.">
+              <span>The current scan shows a darker exposed area.</span>
+            </label>
+
+            <label class="obs-choice">
+              <input type="checkbox" value="The previous scan looks more continuous.">
+              <span>The previous scan looks more continuous.</span>
+            </label>
+
+            <label class="obs-choice">
+              <input type="checkbox" value="The two scans do not match.">
+              <span>The two scans do not match.</span>
+            </label>
+
+            <label class="obs-choice">
+              <input type="checkbox" value="The exact cause is not visible yet.">
+              <span>The exact cause is not visible yet.</span>
+            </label>
+
+            <label class="obs-choice">
+              <input type="checkbox" value="The scan may have limits such as shadow, grain, or distortion.">
+              <span>The scan may have limits such as shadow, grain, or distortion.</span>
+            </label>
+          </div>
+
+          <div class="first-look-counter" id="firstLookCounter">
+            <strong>0 of 3</strong> observations selected.
+          </div>
+        </div>
+
+        <div class="response-panel">
+          <h2>Ask the next investigation question</h2>
+          <p>Write one question the Council should investigate next. It should help the team gather evidence, not guess an answer.</p>
+
+          <textarea class="question-box" id="firstLookQuestion" placeholder="Example: What evidence would help us know whether the dark area is rock, water, shadow, or something else?"></textarea>
+
+          <button id="saveFirstLookBtn" disabled>Save First Look</button>
+
+          <div class="first-look-feedback" id="firstLookFeedback">
+            <strong>First Look Saved.</strong><br>
+            You observed before explaining. Next: rank the Council questions.
+          </div>
+        </div>
+      </section>
+
+      <div class="actions">
+        <button id="questionBuilderPreviewBtn" disabled>Open Question Ranking</button>
+      </div>
+
+      <section class="question-ranking-panel" id="questionRankingPanel">
+        <h2>Rank Council Questions</h2>
+        <p>
+          A strong investigator does not ask every question at once. Choose the first, second,
+          and third priority questions for the Council to investigate next.
+        </p>
+
+        <div class="question-ranking-count" id="questionRankingCount">
+          <strong>0 / 3</strong> questions ranked.
+        </div>
+
+        <div class="question-rank-list" id="questionRankList">
+          <div class="question-rank-option" data-question="What exactly changed between the previous scan and the current scan?">
+            <div class="question-rank-badge">—</div>
+            <div class="question-rank-text">What exactly changed between the previous scan and the current scan?</div>
+          </div>
+
+          <div class="question-rank-option" data-question="What is the unknown exposed area?">
+            <div class="question-rank-badge">—</div>
+            <div class="question-rank-text">What is the unknown exposed area?</div>
+          </div>
+
+          <div class="question-rank-option" data-question="Is the ice stable enough for anyone to approach?">
+            <div class="question-rank-badge">—</div>
+            <div class="question-rank-text">Is the ice stable enough for anyone to approach?</div>
+          </div>
+
+          <div class="question-rank-option" data-question="Could cloud, shadow, grain, or distortion be misleading us?">
+            <div class="question-rank-badge">—</div>
+            <div class="question-rank-text">Could cloud, shadow, grain, or distortion be misleading us?</div>
+          </div>
+
+          <div class="question-rank-option" data-question="Do old records show this area before the ice covered it?">
+            <div class="question-rank-badge">—</div>
+            <div class="question-rank-text">Do old records show this area before the ice covered it?</div>
+          </div>
+
+          <div class="question-rank-option" data-question="What tools or specialists are needed before sending anyone?">
+            <div class="question-rank-badge">—</div>
+            <div class="question-rank-text">What tools or specialists are needed before sending anyone?</div>
+          </div>
+        </div>
+
+        <div class="question-rank-reason">
+          <label for="questionRankingReason">Explain why your #1 question should be investigated first.</label>
+          <textarea id="questionRankingReason" placeholder="Example: I ranked this first because the Council needs this evidence before deciding what happened or what to do next."></textarea>
+        </div>
+
+        <button id="saveQuestionRankingBtn" disabled>Save Question Ranking</button>
+
+        <div class="question-rank-feedback" id="questionRankingFeedback">
+          <strong>Question ranking saved.</strong><br>
+          You selected the Council’s first three investigation questions and defended why the first one matters.
+        </div>
+
+        <div class="question-ranking-next" id="questionRankingNext">
+          <button id="continueAdvisorReactionsBtn" type="button">Continue to Advisor Reactions</button>
+          <a class="secondary" href="/student_hub">Return to Student Hub</a>
+        </div>
+      </section>
+    </div>
+  </section>
+
+  <script>
+    const steps = [
+      {
+        name:"Guardian",
+        role:"Mission guide and keeper of the Council threshold.",
+        avatar:"/static/animations/guardian_face_centered_crop_only.png",
+        audio:"/static/audio/council_temp/briefing_0_guardian.wav",
+        label:"Guardian",
+        line:"Council, the Chief Investigator in Training has arrived.",
+        note:"If the ice break spreads, every nation could be affected. That is why the Council cannot guess.",
+        visual:"<strong>Role Assigned:</strong> You are here because the Council cannot guess."
+      },
+      {
+        name:"Scout",
+        role:"Advisor of visible change, terrain clues, and first observations.",
+        avatar:"/static/animations/scout.png",
+        audio:"/static/audio/council_temp/briefing_1_scout.wav",
+        label:"Scout Evidence Handoff",
+        line:"Sector 7A is the first warning zone on the Northern Ice Shelf. Two scans came from that same location.",
+        note:"Scout is showing where the event was first detected.",
+        visual:"<strong>Scout:</strong> Sector 7A is where the first sudden break was detected."
+      },
+      {
+        name:"Healer",
+        role:"Advisor of safety, harm, and unstable conditions.",
+        avatar:"/static/animations/healer_top_text_removed_crop_only.png",
+        audio:"/static/audio/council_temp/briefing_2_healer.wav",
+        label:"Healer Risk Warning",
+        line:"The broken edge may be unstable. No team should approach until we understand the evidence.",
+        note:"The first investigation must protect people from rushing into danger.",
+        visual:"<strong>Healer:</strong> The broken edge may be unstable. No approach yet."
+      },
+      {
+        name:"Builder",
+        role:"Advisor of tools, access, structure, and safe testing.",
+        avatar:"/static/animations/builder_face_centered_crop_only.png",
+        audio:"/static/audio/council_temp/briefing_3_builder.wav",
+        label:"Builder Test Limit",
+        line:"Before anyone builds, crosses, drills, or sends equipment, we must know what can be tested safely.",
+        note:"Builder is asking what tools or specialists might be needed before action.",
+        visual:"<strong>Builder:</strong> No crossing, drilling, or equipment until evidence is understood."
+      },
+      {
+        name:"Mapkeeper",
+        role:"Advisor of records, boundaries, maps, and before-after comparison.",
+        avatar:"/static/animations/mapkeeper_face_centered_crop_only.png",
+        audio:"/static/audio/council_temp/briefing_4_mapkeeper_david_slow.wav",
+        label:"Mapkeeper Record Check",
+        line:"The old boundary and the new scan do not match. That difference is where your investigation begins.",
+        note:"Mapkeeper points you back to the comparison: previous scan versus current scan.",
+        visual:"<strong>Mapkeeper:</strong> The old boundary and new scan do not match."
+      },
+      {
+        name:"Guardian",
+        role:"Mission guide and keeper of the Council threshold.",
+        avatar:"/static/animations/guardian_face_centered_crop_only.png",
+        audio:"/static/audio/council_temp/briefing_5_guardian.wav",
+        label:"Guardian Directive",
+        line:"Do not solve the mystery yet. Compare the scans first.",
+        note:"Your duty is to observe first, compare carefully, and help the Council ask the right questions before any nation reacts.",
+        visual:"<strong>Guardian:</strong> Observation Mode activated. Compare before claim."
+      }
+    ];
+
+    // PHASE_2A_SIGNAL_DRIVEN_COUNCIL_ORDER
+    const assignedAdvisor =
+      localStorage.getItem("stemNationFirstAdvisor") || "";
+
+    const advisorNames = [
+      "Scout",
+      "Healer",
+      "Builder",
+      "Mapkeeper"
+    ];
+
+    if (advisorNames.includes(assignedAdvisor)) {
+      const openingGuardian = steps[0];
+      const closingGuardian = steps[steps.length - 1];
+      const middleAdvisors = steps.slice(1, -1);
+
+      const assignedStep = middleAdvisors.find(
+        step => step.name === assignedAdvisor
+      );
+
+      const remainingSteps = middleAdvisors.filter(
+        step => step.name !== assignedAdvisor
+      );
+
+      steps.splice(
+        0,
+        steps.length,
+        openingGuardian,
+        assignedStep,
+        ...remainingSteps,
+        closingGuardian
+      );
+    }
+
+    let current = 0;
+    let ready = false;
+    let activeAudio = null;
+    let guardianAudioPlayed = false;
+
+    const screens = {
+      alert: document.getElementById("alertScreen"),
+      guardian: document.getElementById("guardianScreen"),
+      briefing: document.getElementById("briefingScreen"),
+      evidence: document.getElementById("evidenceScreen"),
+      firstLook: document.getElementById("firstLookScreen")
+    };
+
+    function hud(mode,status){
+      document.getElementById("hudMode").textContent = mode;
+      document.getElementById("hudStatus").textContent = status;
+    }
+
+    function show(screen){
+      Object.values(screens).forEach(s => s.classList.remove("active"));
+      screen.classList.add("active");
+      window.scrollTo({top:0, behavior:"smooth"});
+    }
+
+    function stopAudio(){
+      if(activeAudio){
+        activeAudio.pause();
+        activeAudio.currentTime = 0;
+        activeAudio.onended = null;
+        activeAudio.onerror = null;
+      }
+    }
+
+    function renderDots(){
+      const track = document.getElementById("stepTrack");
+      track.innerHTML = steps.map((s,i) => `<div class="dot ${i === current ? "active" : ""}">${s.name}</div>`).join("");
+    }
+
+    function renderStep(){
+      const s = steps[current];
+      document.getElementById("speakerAvatar").src = s.avatar;
+      document.getElementById("speakerName").textContent = s.name;
+      document.getElementById("speakerRole").textContent = s.role;
+      document.getElementById("speakerLabel").textContent = s.label;
+      document.getElementById("speakerLine").textContent = s.line;
+      document.getElementById("speakerNote").textContent = s.note;
+      document.getElementById("briefingStatus").innerHTML = `<strong>Briefing ${current+1} of ${steps.length}:</strong> ${s.name}`;
+      document.getElementById("visualClue").style.display = "none";
+      document.getElementById("visualClue").innerHTML = "";
+      renderDots();
+    }
+
+    function setBtnListening(){
+      const btn = document.getElementById("councilContinueBtn");
+      btn.disabled = true;
+      btn.textContent = "Listen First";
+    }
+
+    function setBtnReady(){
+      const btn = document.getElementById("councilContinueBtn");
+      btn.disabled = false;
+      btn.textContent = current >= steps.length - 1 ? "Open Evidence Unlock" : "Continue Briefing";
+    }
+
+    function playStep(){
+      stopAudio();
+      ready = false;
+      setBtnListening();
+      renderStep();
+
+      const s = steps[current];
+      activeAudio = new Audio(s.audio);
+      activeAudio.volume = 0.95;
+      activeAudio.onended = () => {
+        document.getElementById("visualClue").innerHTML = s.visual;
+        document.getElementById("visualClue").style.display = "block";
+        ready = true;
+        setBtnReady();
+      };
+      activeAudio.onerror = activeAudio.onended;
+      activeAudio.play().catch(() => setTimeout(activeAudio.onended, 700));
+    }
+
+    document.getElementById("alertBtn").onclick = () => {
+      hud("Council Entry","Guardian waiting");
+      show(screens.guardian);
+    };
+
+    document.getElementById("guardianBtn").onclick = () => {
+      if(guardianAudioPlayed) return;
+      guardianAudioPlayed = true;
+      stopAudio();
+      activeAudio = new Audio("/static/audio/guardian_welcome.wav");
+      activeAudio.volume = 0.95;
+      activeAudio.play().catch(() => {});
+      hud("Guardian Welcome","Listen");
+    };
+
+    document.getElementById("briefingBtn").onclick = () => {
+      stopAudio();
+      current = 0;
+      hud("Council Briefing","Listen · see · continue");
+      show(screens.briefing);
+      playStep();
+    };
+
+    document.getElementById("councilContinueBtn").onclick = () => {
+      if(!ready) return;
+
+      if(current >= steps.length - 1){
+        stopAudio();
+        hud("Evidence Unlock","Clues before claims");
+        show(screens.evidence);
+        return;
+      }
+
+      current++;
+      playStep();
+    };
+
+    document.getElementById("firstLookBtn").onclick = () => {
+      hud("First Look Challenge","Compare before claim");
+      show(screens.firstLook);
+    };
+  </script>
+
 <script>
-const avatarData=[['Guardian','🛡️','Guide · threshold · trial keeper'],['Scout','🧭','Observation · terrain · details'],['Healer','🩺','Safety · people · risk'],['Engineer','🛠️','Systems · testing · tools'],['Archivist','📜','Records · memory · maps'],['Strategist','♟️','Priorities · decisions · order']];
-const stepData=[['overheard','Overheard Disagreement'],['guardian','Guardian Approaches'],['evidence','Unlabeled Evidence'],['prompt','Observe Task'],['unlock','Evidence Unlock'],['questions','Question Task'],['questionUnlock','Priority Challenge Open'],['priorities','Priority Ranking'],['priorityUnlock','Avatar Reports Open'],['reports','Mission Checkpoint'],['reflection','Reflection Chamber'],['final','Readiness Badge'],['complete','Continue Journey']];
-const priorityData=[['confirm_scan','Confirm the satellite scan','Check whether the image is accurate or distorted.'],['identify_exposed','Identify what is exposed','Determine if it is land, rock, water, shadow, or another formation.'],['check_risk','Check human and field-team risk','Consider cold exposure, communication, and emergency safety.'],['compare_records','Compare older maps and records','Look for evidence hidden by older ice or missing records.'],['weather_window','Check weather and access window','Decide whether conditions allow safe investigation.'],['send_drone','Send a scout drone','Collect a closer view before sending people.']];
-const script=[
-{stage:'overheard',stageName:'Overheard Disagreement',avatar:'Scout',line:'The coastline changed overnight. That was not visible in the last scan.',guardian:'Listen first. The Council is already in disagreement.',directive:'Directive: do not solve yet. Watch the stage and listen for what each advisor believes.',label:'Council Table · Evidence Layer Locked',title:'The Council table glows. A satellite feed waits behind a locked evidence layer.'},
-{stage:'overheard',stageName:'Overheard Disagreement',avatar:'Engineer',line:'Or the image is distorted. Ice shadows can fool the eye. We need a second angle before anyone makes a claim.',guardian:'Notice the conflict: one advisor sees change; another demands proof.',directive:'Listen for evidence, uncertainty, and assumptions.',label:'Council Table · Signal Stabilizing',title:'A blurred polar scan flickers across the table. The image is not yet labeled.'},
-{stage:'overheard',stageName:'Overheard Disagreement',avatar:'Healer',line:'If anyone is sent near that region, cold exposure and communication failure become immediate dangers.',guardian:'The Healer is not asking what is interesting. The Healer is asking what could harm people.',directive:'Track the human risk, not only the mystery.',label:'Risk Note · Human Impact Flagged',title:'The scan remains unclear, but the Council recognizes that evidence can create danger.'},
-{stage:'overheard',stageName:'Overheard Disagreement',avatar:'Archivist',line:'Older records mark this region unclearly. Some maps leave the area blank beneath the ice shelf.',guardian:'The Archivist is connecting new evidence to old records.',directive:'Remember: new evidence becomes stronger when compared to previous records.',label:'Archive Reference · Older Maps Mentioned',title:'The table overlays a faint historical grid over the satellite feed.'},
-{stage:'guardian',stageName:'Guardian Approaches',avatar:'Guardian',line:'Quiet. Someone has arrived.',guardian:'The room turns. The trial has noticed you.',directive:'Prepare to enter the investigation.',label:'Council Hall · Attention Shift',title:'The satellite table dims. The Council looks toward the entrance.'},
-{stage:'guardian',stageName:'Guardian Approaches',avatar:'Guardian',line:'Ah. You made it.',guardian:'You are now inside the Council Hall sequence.',directive:'The Academy is not asking for a guess. It is testing how you notice, question, and reason.',label:'Academy Trial · Student Detected',title:'A new marker appears on the Council table: STUDENT OBSERVER ARRIVED.'},
-{stage:'guardian',stageName:'Guardian Approaches',avatar:'Guardian',line:'Good. We need another set of eyes.',guardian:'This is the hook: the student is needed, not lectured at.',directive:'Your role is observer first, decision-maker later.',label:'Guardian Directive · Observer Needed',title:'The evidence layer begins to unlock. The satellite image sharpens slightly.'},
-{stage:'guardian',stageName:'Guardian Approaches',avatar:'Guardian',line:'Come take a look.',guardian:'The Guardian has opened the first evidence layer.',directive:'Next: study what changed before anyone tells you what it means.',label:'Unlabeled Evidence · Satellite Feed Opening',title:'The first image resolves: ice has broken away, and something underneath is now visible.'},
-{stage:'evidence',stageName:'Unlabeled Evidence',avatar:'Scout',line:'Do not name it yet. First, tell us what changed between the old scan and this one.',guardian:'The Scout is forcing observation before interpretation.',directive:'Student Task soon: record three observations from the evidence.',label:'Unlabeled Evidence · Before / After Scan',title:'A section of ice has broken away. The exposed shape does not match the previous scan.'},
-{stage:'evidence',stageName:'Unlabeled Evidence',avatar:'Engineer',line:'A strong claim needs a test. Is it land, shadow, rock, water, or an image error?',guardian:'The Engineer is turning the mystery into testable possibilities.',directive:'Student Task soon: ask questions that can be investigated.',label:'Evidence Challenge · Possible Explanations',title:'The scan highlights several possible interpretations, but none are confirmed.'},
-{stage:'evidence',stageName:'Unlabeled Evidence',avatar:'Strategist',line:'The Council cannot chase every possibility. We need priorities, and order matters.',guardian:'The Strategist will later require only three priorities, ranked in order.',directive:'Do not add everything. Choose what matters first.',label:'Council Constraint · Priority Limit Pending',title:'The Council table displays limited time, limited data, and limited access.'},
-{stage:'prompt',stageName:'Observe Task',avatar:'Guardian',line:'Your first task is simple: observe before you answer. Three observations. No claims yet.',guardian:'Your console is active. Record three observations before the Council unlocks the next evidence layer.',directive:'Task: write three observations. Avoid guesses. Avoid conclusions. Start with what you can see.',label:'Student Console · Observation Task Active',title:'The evidence remains unlabeled. The Council waits for your first observations.',obs:true},
-{stage:'questions',stageName:'Question Task',avatar:'Engineer',line:'Now turn your observations into questions the Council can investigate.',guardian:'Question Console is waiting. Strong questions unlock the priority challenge.',directive:'Task: ask two investigation questions.',label:'Question Console · Waiting For Student Questions',title:'The sharper scan raises new unknowns. The Council needs questions before it chooses priorities.',obs:true,q:true},
-{stage:'priorities',stageName:'Priority Ranking',avatar:'Strategist',line:'Now choose only three priorities. If everything is first, nothing is first.',guardian:'Priority Console is open. Choose exactly three and rank them 1, 2, and 3.',directive:'Task: select exactly three priorities, rank them in order, and explain why that order matters.',label:'Priority Challenge · Council Waiting',title:'The Council has limited time, limited data, and limited access. Your order will shape the investigation.',obs:true,q:true,p:true},
-{stage:'reports',stageName:'Mission Checkpoint',avatar:'Guardian',line:'The Council has enough to respond. Listen to the reports, then prepare your final reflection.',guardian:'Avatar Reports are open. This checkpoint shows what the student has completed.',directive:'Next: open the Reflection Chamber and make a final claim.',label:'Mission Checkpoint · Avatar Reports Active',title:'The Council responds to your investigation path. The first Academy checkpoint is recorded.',obs:true,q:true,p:true,r:true},
-{stage:'reflection',stageName:'Reflection Chamber',avatar:'Guardian',line:'Now speak clearly. What do you think happened, what evidence supports it, and what are you still unsure about?',guardian:'Reflection Chamber is open. Complete the final claim to earn the readiness badge.',directive:'Final task: claim, evidence, uncertainty, and next investigation.',label:'Reflection Chamber · Final Claim Active',title:'The Council waits for your final reasoning. Your answer may be uncertain, but it must be supported.',obs:true,q:true,p:true,r:true,ref:true}
-];
-let current=0,obsUnlocked=false,qUnlocked=false,pUnlocked=false,rUnlocked=false,finalUnlocked=false,completeUnlocked=false;
-function init(){avatars.innerHTML=avatarData.map(a=>`<div class="avatar" data-avatar="${a[0]}"><div class="face">${a[1]}</div><div><div class="name">${a[0]}</div><div class="role">${a[2]}</div></div></div>`).join('');steps.innerHTML=stepData.map(s=>`<div class="step" data-stage="${s[0]}"><span class="dot"></span>${s[1]}</div>`).join('');priorityGrid.innerHTML=priorityData.map(p=>`<div class="po" data-priority="${p[0]}"><input type="checkbox" id="p_${p[0]}"><label for="p_${p[0]}"><strong>${p[1]}</strong><br><span class="role">${p[2]}</span></label><select id="rank_${p[0]}"><option value="">Rank</option><option value="1">1st</option><option value="2">2nd</option><option value="3">3rd</option></select></div>`).join('');priorityData.forEach(p=>document.addEventListener('change',e=>{if(e.target&&["p_"+p[0],"rank_"+p[0]].includes(e.target.id))updatePrioritySelections()}));['q1','q2'].forEach(id=>document.addEventListener('input',e=>{if(e.target&&e.target.id===id)updateQuestionStrength()}));render(0)}
-function render(i){current=Math.max(0,Math.min(i,script.length-1));const b=script[current];stageName.textContent=b.stageName;lineCount.textContent=`Line ${current+1} / ${script.length}`;speaker.textContent=b.avatar;dialogueLine.textContent=b.line;guardianCopy.textContent=b.guardian;missionDirective.textContent=b.directive;if(!obsUnlocked&&!qUnlocked&&!pUnlocked&&!rUnlocked&&!finalUnlocked&&!completeUnlocked){evidenceLabel.textContent=b.label;evidenceTitle.textContent=b.title}observationConsole.classList.toggle('active',!!b.obs||obsUnlocked||qUnlocked||pUnlocked||rUnlocked||finalUnlocked||completeUnlocked);questionConsole.classList.toggle('active',!!b.q||obsUnlocked||qUnlocked||pUnlocked||rUnlocked||finalUnlocked||completeUnlocked);priorityConsole.classList.toggle('active',!!b.p||qUnlocked||pUnlocked||rUnlocked||finalUnlocked||completeUnlocked);reportConsole.classList.toggle('active',!!b.r||rUnlocked||finalUnlocked||completeUnlocked);reflectionConsole.classList.toggle('active',!!b.ref||rUnlocked||finalUnlocked||completeUnlocked);completionConsole.classList.toggle('active',completeUnlocked);highlight(b.avatar);progress(b.stage);backBtn.disabled=current===0;nextBtn.disabled=current===script.length-1}
-function progress(active){const order=stepData.map(s=>s[0]);let shown=active;if(completeUnlocked)shown='complete';else if(finalUnlocked)shown='final';else if(rUnlocked&&active!=='reflection')shown='reports';else if(pUnlocked)shown='priorityUnlock';else if(qUnlocked&&active!=='priorities')shown='questionUnlock';else if(obsUnlocked&&active==='prompt')shown='unlock';const idx=order.indexOf(shown);document.querySelectorAll('.step').forEach((s,i)=>{s.classList.toggle('active',s.dataset.stage===shown);s.classList.toggle('complete',i<idx);s.classList.toggle('unlocked',(obsUnlocked&&s.dataset.stage==='unlock')||(qUnlocked&&s.dataset.stage==='questionUnlock')||(pUnlocked&&s.dataset.stage==='priorityUnlock')||(rUnlocked&&s.dataset.stage==='reports')||(finalUnlocked&&s.dataset.stage==='final')||(completeUnlocked&&s.dataset.stage==='complete'))})}
-function nextLine(){render(current+1)}function previousLine(){render(current-1)}function skipToStudentReady(){render(script.findIndex(b=>b.stage==='prompt'))}
-function clearClass(){screen.className='screen';sat.className='sat'}function setEvidence(cls,label,title){clearClass();if(cls){screen.classList.add(cls);sat.classList.add(cls)}evidenceLabel.textContent=label;evidenceTitle.textContent=title}
-function checkObservations(){const v=['obs1','obs2','obs3'].map(id=>document.getElementById(id).value.trim()),f=observationFeedback;f.className='fb';if(v.filter(Boolean).length<3){f.textContent='The Guardian pauses. The Council needs three observations.';f.classList.add('warn');return}if(v.some(x=>x.length<10)){f.textContent='The Scout leans closer. Add more specific detail to each observation.';f.classList.add('warn');return}obsUnlocked=true;f.textContent='The Guardian nods. You observed before claiming. Evidence Layer 2 is unlocked.';f.classList.add('good');observationUnlockChip.classList.add('active');questionConsole.classList.add('active');setEvidence('obs','Evidence Layer 2 · Observation Accepted','Your observations unlocked a sharper scan. Next, ask what the Council must investigate.');speaker.textContent='Engineer';dialogueLine.textContent='Now turn your observations into questions.';guardianCopy.textContent='Observation task complete. The Question Console is open.';missionDirective.textContent='Unlocked: write two investigation questions that can guide the Council.';highlight('Engineer');progress('questions')}
-function clearObservations(){['obs1','obs2','obs3'].forEach(id=>document.getElementById(id).value='');observationFeedback.className='fb';observationFeedback.textContent=''}
-function scoreQuestion(x){const q=x.trim().toLowerCase();let s=0;if(q.length>=12)s+=15;if(q.length>=35)s+=15;if(q.includes('?'))s+=15;if(/^(what|how|why|where|when|which|could|is|are|does|do|can)\b/.test(q))s+=20;if(/(evidence|scan|image|ice|land|shadow|risk|test|compare|change|missing|confirm|weather|map|record)/.test(q))s+=25;if(/(investigate|prove|verify|confirm|compare|measure|test)/.test(q))s+=10;return Math.min(s,100)}
-function updateQuestionStrength(){const avg=Math.round((scoreQuestion(q1.value)+scoreQuestion(q2.value))/2);strengthFill.style.width=avg+'%';strengthText.textContent=avg+'%';return avg}
-function checkQuestions(){const v=[q1.value.trim(),q2.value.trim()],f=questionFeedback;f.className='fb';const strength=updateQuestionStrength();if(v.filter(Boolean).length<2){f.textContent='The Engineer shakes his head. The Council needs two investigation questions.';f.classList.add('warn');return}if(v.some(x=>!x.includes('?'))){f.textContent='The Archivist points to the record: each entry must be written as a question.';f.classList.add('warn');return}if(strength<55){f.textContent='The questions are still weak. Ask what evidence is missing, what should be compared, or what risk must be tested.';f.classList.add('bad');return}qUnlocked=true;f.textContent='The Council leans in. Your questions can guide an investigation. Priority Challenge is open.';f.classList.add('good');questionUnlockChip.classList.add('active');priorityConsole.classList.add('active');setEvidence('q','Question Layer Accepted · Priority Challenge Open','Your questions revealed the next problem: the Council has limited time and must choose only three priorities.');speaker.textContent='Strategist';dialogueLine.textContent='Good questions narrow the field. Now the Council needs priorities, and order matters.';guardianCopy.textContent='Question task complete. Rank exactly three priorities.';missionDirective.textContent='Unlocked: Priority Challenge. Choose only three actions in order of importance.';highlight('Strategist');progress('priorities')}
-function clearQuestions(){q1.value='';q2.value='';questionFeedback.className='fb';questionFeedback.textContent='';updateQuestionStrength()}
-function selectedPriorities(){return priorityData.filter(p=>document.getElementById('p_'+p[0]).checked).map(p=>({id:p[0],name:p[1],rank:document.getElementById('rank_'+p[0]).value}))}
-function updatePrioritySelections(){priorityData.forEach(p=>document.querySelector(`[data-priority="${p[0]}"]`).classList.toggle('selected',document.getElementById('p_'+p[0]).checked))}
-function checkPriorities(){const sel=selectedPriorities(),f=priorityFeedback;f.className='fb';const why=priorityWhy.value.trim();if(sel.length!==3){f.textContent=`The Strategist stops the table. You selected ${sel.length}. The Council requires exactly three priorities.`;f.classList.add('warn');return}const ranks=sel.map(x=>x.rank),u=new Set(ranks);if(ranks.some(x=>!x)){f.textContent='Each selected priority must be ranked 1st, 2nd, or 3rd.';f.classList.add('warn');return}if(u.size!==3||!['1','2','3'].every(x=>u.has(x))){f.textContent='The Council cannot accept tied priorities. Use each rank exactly once: 1st, 2nd, and 3rd.';f.classList.add('warn');return}if(why.length<35){f.textContent='The Guardian waits. Explain why your order matters. A ranking without reasoning is not leadership yet.';f.classList.add('bad');return}pUnlocked=true;f.textContent='The Strategist nods. You limited the field, ordered priorities, and defended your reasoning. Avatar Reports are open.';f.classList.add('good');priorityUnlockChip.classList.add('active');reportConsole.classList.add('active');setEvidence('p','Priority Ranking Accepted · Avatar Reports Open','Your ranked priorities are locked. Each Council avatar will respond with a specialist report.');speaker.textContent='Strategist';dialogueLine.textContent='Now the Council can move. Your order gives the investigation a path.';guardianCopy.textContent='Priority task complete. Read the avatar reports and checkpoint summary.';missionDirective.textContent='Unlocked: Avatar Reports. Scout, Engineer, Healer, Archivist, and Strategist respond to the plan.';highlight('Strategist');buildReports();showCheckpoint();progress('reports')}
-function clearPriorities(){priorityData.forEach(p=>{document.getElementById('p_'+p[0]).checked=false;document.getElementById('rank_'+p[0]).value=''});priorityWhy.value='';priorityFeedback.className='fb';priorityFeedback.textContent='';updatePrioritySelections()}
-function buildReports(){rUnlocked=true;const sel=selectedPriorities().sort((a,b)=>Number(a.rank)-Number(b.rank));const top=sel[0]?.name||'your first priority';reports.innerHTML=`<div class="report"><strong>Scout Report:</strong> Your first move is ${top}. The Scout will compare visible changes in the scan before naming the mystery.</div><div class="report"><strong>Engineer Report:</strong> The image still needs testing. A second angle, scan confirmation, or drone check can reduce guesswork.</div><div class="report"><strong>Healer Report:</strong> Any field action must account for cold exposure, communication gaps, and emergency return planning.</div><div class="report"><strong>Archivist Report:</strong> Older maps and records may explain whether the exposed shape is new, hidden, or previously misread.</div><div class="report"><strong>Strategist Report:</strong> Your ranking gives the Council an investigation sequence instead of a pile of ideas.</div>`;setEvidence('r','Avatar Reports Active · Mission Checkpoint Recorded','The Council has responded. Your first Academy Readiness checkpoint is ready for reflection.');speaker.textContent='Guardian';dialogueLine.textContent='You observed, questioned, prioritized, and defended your order. Now reflect on your reasoning.';guardianCopy.textContent='Mission checkpoint recorded. Open the Reflection Chamber to complete the trial.';missionDirective.textContent='Next: final claim, evidence support, uncertainty, and next investigation.';highlight('Guardian');progress('reports')}
-function showCheckpoint(){const obs=['obs1','obs2','obs3'].filter(id=>document.getElementById(id).value.trim()).length;const qs=[q1.value.trim(),q2.value.trim()].filter(Boolean).length;const sel=selectedPriorities().sort((a,b)=>Number(a.rank)-Number(b.rank));summary.innerHTML=`<div>Observation Check: ${obs}/3 observations recorded.</div><div>Question Check: ${qs}/2 investigation questions submitted. Strong Question Meter: ${strengthText.textContent}.</div><div>Priority Check: ${sel.length}/3 priorities ranked. Order: ${sel.map(x=>x.rank+'. '+x.name).join(' → ')||'not locked'}.</div><div>Reasoning Check: ${priorityWhy.value.trim().length>=35?'Explanation accepted.':'Explanation needs more detail.'}</div>`}
-function openReflection(){buildReports();reflectionConsole.classList.add('active');setEvidence('r','Reflection Chamber · Final Claim Open','The Council waits for your final reasoning. Name your claim, evidence, uncertainty, and next investigation.');speaker.textContent='Guardian';dialogueLine.textContent='Now speak clearly. What do you think happened, what evidence supports it, and what are you still unsure about?';guardianCopy.textContent='Reflection Chamber is open. Complete the final claim to earn the readiness badge.';missionDirective.textContent='Final task: claim, evidence, uncertainty, and next investigation.';progress('reflection')}
-function submitReflection(){const fields=[finalClaim.value.trim(),finalEvidence.value.trim(),finalUncertain.value.trim(),finalNext.value.trim()],f=reflectionFeedback;f.className='fb';if(fields.filter(Boolean).length<4){f.textContent='The Guardian waits. Complete all four parts: claim, evidence, uncertainty, and next investigation.';f.classList.add('warn');return}if(fields.some(x=>x.length<25)){f.textContent='The Council needs more detail. Each reflection response should show your thinking, not just a short answer.';f.classList.add('bad');return}finalUnlocked=true;f.textContent='The Guardian records your reflection. You observed, questioned, prioritized, listened to reports, and defended a final claim.';f.classList.add('good');readinessBadge.classList.add('active');setEvidence('final','Academy Readiness Checkpoint Complete','You earned the Academy Investigator badge. Continue to the Student Hub or preview the World Board.');speaker.textContent='Guardian';dialogueLine.textContent='You did not rush. You observed. You questioned. You weighed risk. You named uncertainty. That is how a Nation Builder begins.';guardianCopy.textContent='Trial complete: Academy Investigator · Nation Builder Candidate.';missionDirective.textContent='Final transition unlocked: continue to Student Hub or preview the World Board.';highlight('Guardian');openCompletion()}
-function openCompletion(){completeUnlocked=true;completionConsole.classList.add('active');const sel=selectedPriorities().sort((a,b)=>Number(a.rank)-Number(b.rank));completionList.innerHTML=`<div>Badge Earned: Academy Investigator · Nation Builder Candidate.</div><div>Completed Skills: Observation, Questioning, Priority Ranking, Evidence Listening, Final Reflection.</div><div>Priority Path: ${sel.map(x=>x.rank+'. '+x.name).join(' → ')||'not locked'}.</div><div>Next Step: Student Hub for mission review or World Board Preview for the larger STEM Nation world.</div>`;setEvidence('complete','Trial Complete · Continue Journey','The Council Hall trial is complete. Choose the next destination without losing the story flow.');speaker.textContent='Guardian';dialogueLine.textContent='The Council has seen enough. You may enter the Student Hub or preview the world you will help shape.';guardianCopy.textContent='The student is no longer dumped into the next page. The journey now has a clean transition.';missionDirective.textContent='Prototype completion route active: /hub or /map.';progress('complete')}
-function clearReflection(){['finalClaim','finalEvidence','finalUncertain','finalNext'].forEach(id=>document.getElementById(id).value='');reflectionFeedback.className='fb';reflectionFeedback.textContent='';readinessBadge.classList.remove('active')}
-function highlight(name){document.querySelectorAll('.avatar').forEach(a=>a.classList.toggle('active',a.dataset.avatar===name))}
-function restartScene(){obsUnlocked=qUnlocked=pUnlocked=rUnlocked=finalUnlocked=completeUnlocked=false;clearClass();['observationUnlockChip','questionUnlockChip','priorityUnlockChip'].forEach(id=>document.getElementById(id).classList.remove('active'));clearObservations();clearQuestions();clearPriorities();clearReflection();reports.innerHTML='';summary.innerHTML='';completionList.innerHTML='';completionConsole.classList.remove('active');render(0)}
-init();
+/* CI-STAGE-45 FIRST LOOK RESPONSE TOOLS */
+function initFirstLookResponseTools(){
+  const options = Array.from(document.querySelectorAll("#firstLookOptions input[type='checkbox']"));
+  const counter = document.getElementById("firstLookCounter");
+  const question = document.getElementById("firstLookQuestion");
+  const saveBtn = document.getElementById("saveFirstLookBtn");
+  const feedback = document.getElementById("firstLookFeedback");
+  const nextBtn = document.getElementById("questionBuilderPreviewBtn");
+
+  if(!options.length || !counter || !question || !saveBtn){ return; }
+
+  function selectedOptions(){
+    return options.filter(opt => opt.checked);
+  }
+
+  function updateFirstLookState(){
+    const selected = selectedOptions();
+    const selectedCount = selected.length;
+    const questionReady = question.value.trim().length >= 12;
+
+    options.forEach(opt => {
+      const label = opt.closest(".obs-choice");
+      if(label){
+        label.classList.toggle("selected", opt.checked);
+        label.classList.toggle("locked", !opt.checked && selectedCount >= 3);
+      }
+      opt.disabled = !opt.checked && selectedCount >= 3;
+    });
+
+    counter.innerHTML = "<strong>" + selectedCount + " of 3</strong> observations selected.";
+
+    if(selectedCount === 3){
+      counter.innerHTML += " Ready for your investigation question.";
+    } else {
+      counter.innerHTML += " Select exactly 3.";
+    }
+
+    saveBtn.disabled = !(selectedCount === 3 && questionReady);
+  }
+
+  options.forEach(opt => {
+    opt.addEventListener("change", updateFirstLookState);
+  });
+
+  question.addEventListener("input", updateFirstLookState);
+
+  saveBtn.addEventListener("click", () => {
+    const selected = selectedOptions().map(opt => opt.value);
+    const response = {
+      observations: selected,
+      question: question.value.trim(),
+      savedAt: new Date().toISOString()
+    };
+
+    try{
+      localStorage.setItem("stemNationFirstLookResponse", JSON.stringify(response));
+    }catch(err){}
+
+    feedback.style.display = "block";
+    saveBtn.disabled = true;
+    saveBtn.textContent = "First Look Saved";
+    if(nextBtn){
+      nextBtn.disabled = false;
+      nextBtn.textContent = "Open Question Ranking";
+    }
+  });
+
+  updateFirstLookState();
+}
+
+document.addEventListener("DOMContentLoaded", initFirstLookResponseTools);
+console.log("CI-STAGE-45 FIRST LOOK RESPONSE TOOLS ACTIVE");
 </script>
+
+
+<script>
+/* CI-STAGE-46R RECOVER QUESTION RANKING FLOW */
+function ciStage46rShowFirstLook(){
+  const screen = document.getElementById("firstLookScreen");
+  if(!screen){ return; }
+
+  document.querySelectorAll(".screen").forEach(section => {
+    section.classList.remove("active");
+  });
+
+  screen.classList.add("active");
+
+  if(typeof hud === "function"){
+    hud("First Look","Resume observation");
+  }
+
+  window.scrollTo({top:0, behavior:"smooth"});
+}
+
+function ciStage46rHasSavedFirstLook(){
+  try{
+    const saved = JSON.parse(localStorage.getItem("stemNationFirstLookResponse") || "null");
+    return !!(saved && Array.isArray(saved.observations) && saved.observations.length === 3 && saved.question && saved.question.trim().length >= 12);
+  }catch(err){
+    return false;
+  }
+}
+
+function ciStage46rInitResumeShortcut(){
+  const params = new URLSearchParams(window.location.search);
+
+  if(params.get("skip") === "firstlook"){
+    setTimeout(ciStage46rShowFirstLook, 120);
+  }
+
+  if(!ciStage46rHasSavedFirstLook()){ return; }
+
+  const guardianCard = document.querySelector("#guardianScreen .card");
+  if(!guardianCard || document.getElementById("resumeFirstLookBtn")){ return; }
+
+  const panel = document.createElement("div");
+  panel.className = "resume-first-look-panel";
+  panel.innerHTML = '<p><strong>Resume available:</strong> First Look progress was found on this device.</p><button id="resumeFirstLookBtn">Resume at First Look</button>';
+  guardianCard.appendChild(panel);
+
+  const resumeBtn = document.getElementById("resumeFirstLookBtn");
+  if(resumeBtn){
+    resumeBtn.onclick = ciStage46rShowFirstLook;
+  }
+}
+
+function ciStage46rInitQuestionRanking(){
+  const panel = document.getElementById("questionRankingPanel");
+  const openBtn = document.getElementById("questionBuilderPreviewBtn");
+  const saveFirstLookBtn = document.getElementById("saveFirstLookBtn");
+  const count = document.getElementById("questionRankingCount");
+  const reason = document.getElementById("questionRankingReason");
+  const saveBtn = document.getElementById("saveQuestionRankingBtn");
+  const feedback = document.getElementById("questionRankingFeedback");
+  const options = Array.from(document.querySelectorAll(".question-rank-option"));
+
+  if(!panel || !openBtn || !options.length){ return; }
+
+  let ranking = [];
+
+  function updateRankingUI(){
+    options.forEach(option => {
+      const q = option.dataset.question;
+      const index = ranking.indexOf(q);
+      const badge = option.querySelector(".question-rank-badge");
+
+      option.classList.toggle("selected", index >= 0);
+
+      if(badge){
+        badge.textContent = index >= 0 ? "#" + (index + 1) : "—";
+      }
+    });
+
+    if(count){
+      count.innerHTML = "<strong>" + ranking.length + " / 3</strong> questions ranked.";
+      if(ranking.length === 3){
+        count.innerHTML += " Explain why #1 matters.";
+      }
+    }
+
+    const reasonReady = reason && reason.value.trim().length >= 20;
+    if(saveBtn){
+      saveBtn.disabled = !(ranking.length === 3 && reasonReady);
+    }
+  }
+
+  function openRankingPanel(){
+    panel.style.display = "block";
+    panel.scrollIntoView({behavior:"smooth", block:"start"});
+    updateRankingUI();
+  }
+
+  openBtn.onclick = openRankingPanel;
+
+  if(ciStage46rHasSavedFirstLook()){
+    openBtn.disabled = false;
+    openBtn.textContent = "Open Question Ranking";
+  }
+
+  if(saveFirstLookBtn){
+    saveFirstLookBtn.addEventListener("click", () => {
+      setTimeout(() => {
+        openBtn.disabled = false;
+        openBtn.textContent = "Open Question Ranking";
+      }, 0);
+    });
+  }
+
+  options.forEach(option => {
+    option.addEventListener("click", () => {
+      const q = option.dataset.question;
+      if(!q){ return; }
+
+      const existing = ranking.indexOf(q);
+
+      if(existing >= 0){
+        ranking.splice(existing, 1);
+      }else{
+        if(ranking.length >= 3){
+          return;
+        }
+        ranking.push(q);
+      }
+
+      updateRankingUI();
+    });
+  });
+
+  if(reason){
+    reason.addEventListener("input", updateRankingUI);
+  }
+
+  if(saveBtn){
+    saveBtn.addEventListener("click", () => {
+      const payload = {
+        ranking: ranking.slice(0, 3),
+        topReason: reason ? reason.value.trim() : "",
+        savedAt: new Date().toISOString()
+      };
+
+      try{
+        localStorage.setItem("stemNationQuestionRanking", JSON.stringify(payload));
+        localStorage.setItem("STEM_NATION_QUESTION_RANKING", JSON.stringify(payload));
+        localStorage.setItem("stemNationQuestionPriorities", JSON.stringify(payload));
+        localStorage.setItem("STEM_NATION_QUESTION_PRIORITIES", JSON.stringify(payload));
+      }catch(err){}
+
+      if(feedback){
+        feedback.style.display = "block";
+      }
+
+      const nextPanel = document.getElementById("questionRankingNext");
+      if(nextPanel){
+        nextPanel.classList.add("active");
+      }
+
+      const continueBtn = document.getElementById("continueAdvisorReactionsBtn");
+      if(continueBtn){
+        continueBtn.onclick = () => {
+          window.location.href = "/advisor_reactions";
+        };
+      }
+
+      saveBtn.disabled = true;
+      saveBtn.textContent = "Question Ranking Saved";
+    });
+  }
+
+  updateRankingUI();
+}
+
+document.addEventListener("DOMContentLoaded", () => {
+  ciStage46rInitResumeShortcut();
+  ciStage46rInitQuestionRanking();
+});
+
+console.log("CI-STAGE-46R RECOVER QUESTION RANKING FLOW ACTIVE");
+</script>
+
+
+<script>
+/* CI-STAGE-46R-1 CONTINUE AFTER QUESTION RANKING */
+document.addEventListener("DOMContentLoaded", () => {
+  const continueBtn = document.getElementById("continueAdvisorReactionsBtn");
+  if(continueBtn){
+    continueBtn.onclick = () => {
+      window.location.href = "/advisor_reactions";
+    };
+  }
+});
+console.log("CI-STAGE-46R-1 CONTINUE AFTER QUESTION RANKING ACTIVE");
+</script>
+
+
+<script>
+/* CI-STAGE-46R-2 REWIRE FIRST LOOK SAVE CONTROLLER */
+function ciStage46r2InitFirstLookSaveController(){
+  const options = Array.from(document.querySelectorAll("#firstLookOptions input[type='checkbox']"));
+  const count = document.getElementById("firstLookCount");
+  const question = document.getElementById("firstLookQuestion");
+  const saveBtn = document.getElementById("saveFirstLookBtn");
+  const feedback = document.getElementById("firstLookFeedback");
+  const rankingBtn = document.getElementById("questionBuilderPreviewBtn");
+  const rankingPanel = document.getElementById("questionRankingPanel");
+
+  if(!options.length || !question || !saveBtn){
+    console.warn("CI-STAGE-46R-2: First Look controls not found.");
+    return;
+  }
+
+  function selectedObservations(){
+    return options.filter(input => input.checked).map(input => input.value);
+  }
+
+  function updateFirstLookState(){
+    const selected = selectedObservations();
+    const questionText = question.value.trim();
+
+    options.forEach(input => {
+      const label = input.closest("label");
+      if(label){
+        label.classList.toggle("selected", input.checked);
+      }
+    });
+
+    if(count){
+      if(selected.length === 3){
+        count.textContent = "3 of 3 observations selected. Ready for your investigation question.";
+      }else{
+        count.textContent = selected.length + " of 3 observations selected. Select exactly 3.";
+      }
+    }
+
+    // Lock extra choices after 3 are selected, but allow unchecking selected choices.
+    options.forEach(input => {
+      input.disabled = selected.length >= 3 && !input.checked;
+    });
+
+    saveBtn.disabled = !(selected.length === 3 && questionText.length >= 12);
+  }
+
+  options.forEach(input => {
+    input.addEventListener("change", updateFirstLookState);
+  });
+
+  question.addEventListener("input", updateFirstLookState);
+
+  saveBtn.onclick = function(event){
+    event.preventDefault();
+
+    const selected = selectedObservations();
+    const questionText = question.value.trim();
+
+    if(selected.length !== 3){
+      if(count){
+        count.textContent = selected.length + " of 3 observations selected. Select exactly 3 before saving.";
+      }
+      return;
+    }
+
+    if(questionText.length < 12){
+      question.focus();
+      return;
+    }
+
+    const response = {
+      observations: selected,
+      question: questionText,
+      savedAt: new Date().toISOString()
+    };
+
+    try{
+      localStorage.setItem("stemNationFirstLookResponse", JSON.stringify(response));
+      localStorage.setItem("STEM_NATION_FIRST_LOOK_RESPONSE", JSON.stringify(response));
+    }catch(err){}
+
+    if(feedback){
+      feedback.style.display = "block";
+    }
+
+    saveBtn.textContent = "First Look Saved";
+    saveBtn.disabled = true;
+
+    if(rankingBtn){
+      rankingBtn.disabled = false;
+      rankingBtn.textContent = "Open Question Ranking";
+      rankingBtn.onclick = function(){
+        if(rankingPanel){
+          rankingPanel.style.display = "block";
+          rankingPanel.scrollIntoView({behavior:"smooth", block:"start"});
+        }
+      };
+    }
+
+    console.log("CI-STAGE-46R-2: First Look saved and ranking unlocked.", response);
+  };
+
+  // Restore unlock if First Look was already saved on this device.
+  try{
+    const saved = JSON.parse(localStorage.getItem("stemNationFirstLookResponse") || localStorage.getItem("STEM_NATION_FIRST_LOOK_RESPONSE") || "null");
+    if(saved && Array.isArray(saved.observations) && saved.observations.length === 3 && saved.question){
+      if(rankingBtn){
+        rankingBtn.disabled = false;
+        rankingBtn.textContent = "Open Question Ranking";
+        rankingBtn.onclick = function(){
+          if(rankingPanel){
+            rankingPanel.style.display = "block";
+            rankingPanel.scrollIntoView({behavior:"smooth", block:"start"});
+          }
+        };
+      }
+    }
+  }catch(err){}
+
+  updateFirstLookState();
+}
+
+document.addEventListener("DOMContentLoaded", ciStage46r2InitFirstLookSaveController);
+console.log("CI-STAGE-46R-2 REWIRE FIRST LOOK SAVE CONTROLLER ACTIVE");
+</script>
+
+
+
+<script>
+/* CI-WELCOME-VIS-2R4 — STUDENT BEFORE THE COUNCIL */
+(() => {
+  "use strict";
+
+  const DEFAULT_NAME = "Academy Learner";
+  const DEFAULT_AVATAR =
+    "/static/avatars/student_choices/avatar_01.png";
+
+  const nameTarget =
+    document.getElementById("councilStudentName");
+
+  const avatarTarget =
+    document.getElementById("councilStudentAvatar");
+
+  if (!nameTarget || !avatarTarget) {
+    return;
+  }
+
+  function readJson(storage, key) {
+    try {
+      const raw = storage.getItem(key);
+
+      if (!raw) {
+        return null;
+      }
+
+      return JSON.parse(raw);
+    } catch (error) {
+      return null;
+    }
+  }
+
+  function validText(value) {
+    return (
+      typeof value === "string" &&
+      value.trim().length > 0
+    );
+  }
+
+  function findName(...records) {
+    const fields = [
+      "name",
+      "studentName",
+      "displayName",
+      "academyName",
+      "learnerName",
+      "username"
+    ];
+
+    for (const record of records) {
+      if (!record || typeof record !== "object") {
+        continue;
+      }
+
+      for (const field of fields) {
+        if (validText(record[field])) {
+          return record[field].trim();
+        }
+      }
+    }
+
+    return DEFAULT_NAME;
+  }
+
+  function findAvatar(...records) {
+    const fields = [
+      "portrait",
+      "avatar",
+      "avatarUrl",
+      "avatarURL",
+      "image",
+      "imageUrl",
+      "imageURL",
+      "fallback",
+      "futureImage",
+      "customAvatarDataUrl"
+    ];
+
+    for (const record of records) {
+      if (!record || typeof record !== "object") {
+        continue;
+      }
+
+      for (const field of fields) {
+        if (validText(record[field])) {
+          return record[field].trim();
+        }
+      }
+    }
+
+    return DEFAULT_AVATAR;
+  }
+
+  const identity =
+    readJson(
+      window.localStorage,
+      "stemNationStudentIdentity"
+    );
+
+  const avatar =
+    readJson(
+      window.localStorage,
+      "stemNationAvatar"
+    );
+
+  const sessionIdentity =
+    readJson(
+      window.sessionStorage,
+      "stemNationStudentIdentity"
+    );
+
+  const sessionAvatar =
+    readJson(
+      window.sessionStorage,
+      "stemNationAvatar"
+    );
+
+  const resolvedName = findName(
+    identity,
+    avatar,
+    sessionIdentity,
+    sessionAvatar
+  );
+
+  const resolvedAvatar = findAvatar(
+    identity,
+    avatar,
+    sessionIdentity,
+    sessionAvatar
+  );
+
+  nameTarget.textContent = resolvedName;
+  avatarTarget.src = resolvedAvatar;
+  avatarTarget.alt =
+    `${resolvedName}'s Academy avatar`;
+
+  avatarTarget.addEventListener(
+    "error",
+    () => {
+      if (
+        avatarTarget.getAttribute("src") !==
+        DEFAULT_AVATAR
+      ) {
+        avatarTarget.src = DEFAULT_AVATAR;
+      }
+    },
+    { once: true }
+  );
+})();
+</script>
+
+
+<script>
+/* CI-WELCOME-VIS-3B — COLLAPSED GUARDIAN WELCOME BRIDGE */
+(() => {
+  "use strict";
+
+  const arrivalAudioBtn =
+    document.getElementById("guardianArrivalAudioBtn");
+
+  const arrivalBriefingBtn =
+    document.getElementById("alertBtn");
+
+  const preservedGuardianAudioBtn =
+    document.getElementById("guardianBtn");
+
+  const preservedBriefingBtn =
+    document.getElementById("briefingBtn");
+
+  const retiredGuardianScreen =
+    document.getElementById("guardianScreen");
+
+  if (retiredGuardianScreen) {
+    retiredGuardianScreen.hidden = true;
+    retiredGuardianScreen.setAttribute("aria-hidden", "true");
+  }
+
+  if (arrivalAudioBtn && preservedGuardianAudioBtn) {
+    arrivalAudioBtn.addEventListener("click", () => {
+      preservedGuardianAudioBtn.click();
+    });
+  }
+
+  if (arrivalBriefingBtn && preservedBriefingBtn) {
+    arrivalBriefingBtn.addEventListener(
+      "click",
+      (event) => {
+        event.preventDefault();
+        event.stopPropagation();
+        event.stopImmediatePropagation();
+
+        preservedBriefingBtn.click();
+      },
+      true
+    );
+  }
+})();
+</script>
+
+  <script src="{{ url_for('static', filename='js/academy_mission_record.js') }}?v=step2c1"></script>
 </body>
 </html>

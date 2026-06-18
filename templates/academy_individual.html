@@ -1,467 +1,348 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Phase 2 — Shape the Nation</title>
+  <title>STEM Nation Academy | Settlement Design</title>
 
   <style>
-    body {
+    html, body {
       margin: 0;
-      overflow: hidden;
-      font-family: Arial, sans-serif;
-      background: black;
+      width: 100%;
+      min-height: 100%;
+      background:
+        radial-gradient(circle at center, rgba(212,175,55,0.16), transparent 44%),
+        radial-gradient(circle at center, rgba(255,255,255,0.045), transparent 58%),
+        linear-gradient(135deg, #050505 0%, #11182b 52%, #050505 100%);
       color: white;
+      font-family: Arial, sans-serif;
+      text-align: center;
+      overflow: hidden;
     }
 
-    #map {
+    body {
+      opacity: 1;
+      transition: opacity 1.2s ease;
+    }
+
+    .container {
+      opacity: 0;
+      transition: opacity 1.2s ease;
+    }
+
+    body.academy-started .container {
+      opacity: 1;
+    }
+
+    .academy-line {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 3px;
+      background: linear-gradient(90deg, transparent, #d4af37, transparent);
+      opacity: 0.75;
+    }
+
+    .container {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 42px;
+      box-sizing: border-box;
+      position: relative;
+    }
+
+    .academy-seal {
+      position: absolute;
+      width: min(560px, 78vw);
+      height: min(560px, 78vw);
+      opacity: 0.26;
+      z-index: 0;
+      animation: sealBreath 14s ease-in-out infinite;
+      pointer-events: none;
+    }
+
+    .academy-haze {
+      position: absolute;
+      inset: -20%;
+      z-index: 0;
+      pointer-events: none;
+      background:
+        radial-gradient(circle at 30% 35%, rgba(212,175,55,0.07), transparent 32%),
+        radial-gradient(circle at 70% 60%, rgba(95,130,170,0.06), transparent 34%);
+      filter: blur(18px);
+      opacity: 0.45;
+      animation: hazeDrift 22s ease-in-out infinite alternate;
+    }
+
+    .academy-particles {
+      position: absolute;
+      inset: 0;
+      z-index: 1;
+      pointer-events: none;
+      overflow: hidden;
+    }
+
+    .academy-particles span {
+      position: absolute;
+      width: 3px;
+      height: 3px;
+      border-radius: 50%;
+      background: rgba(212,175,55,0.42);
+      box-shadow: 0 0 12px rgba(212,175,55,0.28);
+      animation: particleFloat 18s linear infinite;
+      opacity: 0;
+    }
+
+    .academy-particles span:nth-child(1) { left: 12%; top: 72%; animation-delay: 0s; }
+    .academy-particles span:nth-child(2) { left: 22%; top: 80%; animation-delay: 3s; }
+    .academy-particles span:nth-child(3) { left: 41%; top: 76%; animation-delay: 6s; }
+    .academy-particles span:nth-child(4) { left: 63%; top: 82%; animation-delay: 2s; }
+    .academy-particles span:nth-child(5) { left: 78%; top: 73%; animation-delay: 8s; }
+    .academy-particles span:nth-child(6) { left: 88%; top: 84%; animation-delay: 5s; }
+
+    .reflection-card {
+      position: relative;
+      z-index: 2;
+    }
+
+    @keyframes sealBreath {
+      0%, 100% {
+        transform: scale(0.985);
+        opacity: 0.30;
+      }
+      50% {
+        transform: scale(1.015);
+        opacity: 0.20;
+      }
+    }
+
+    @keyframes hazeDrift {
+      0% {
+        transform: translate(-1.5%, -1%) scale(1);
+      }
+      100% {
+        transform: translate(1.5%, 1%) scale(1.04);
+      }
+    }
+
+    @keyframes particleFloat {
+      0% {
+        transform: translateY(0) translateX(0);
+        opacity: 0;
+      }
+      18% {
+        opacity: 0.28;
+      }
+      78% {
+        opacity: 0.18;
+      }
+      100% {
+        transform: translateY(-78vh) translateX(22px);
+        opacity: 0;
+      }
+    }
+
+    .reflection-card {
+      width: min(920px, 92vw);
+      padding: clamp(26px, 5vw, 48px);
+      border-radius: 20px;
+      background: rgba(0,0,0,0.28);
+      border: 1px solid rgba(212,175,55,0.18);
+      box-shadow: 0 18px 60px rgba(0,0,0,0.45);
+    }
+
+    .academy-label {
+      font-size: 12px;
+      letter-spacing: 4px;
+      text-transform: uppercase;
+      color: #d4af37;
+      opacity: 0.86;
+      margin-bottom: 10px;
+    }
+
+    .week-label {
+      font-size: 13px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      opacity: 0.62;
+      margin-bottom: 28px;
+    }
+
+    .line {
+      font-size: clamp(24px, 3.2vw, 36px);
+      margin: 11px auto;
+      opacity: 0;
+      transition: opacity 1.1s ease, transform 1.1s ease;
+      transform: translateY(8px);
+      max-width: 850px;
+      line-height: 1.28;
+      text-shadow: 0 4px 20px rgba(0,0,0,0.85);
+    }
+
+    .line.show {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .artifact-note {
+      margin: 34px auto 0;
+      font-size: clamp(15px, 1.7vw, 18px);
+      opacity: 0;
+      transition: opacity 1.1s ease, transform 1.1s ease;
+      transform: translateY(8px);
+      max-width: 760px;
+      line-height: 1.45;
+      color: #d9c27a;
+      border-top: 1px solid rgba(212,175,55,0.18);
+      padding-top: 22px;
+    }
+
+    .artifact-note.show {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .begin-overlay {
       position: fixed;
       inset: 0;
-      background-size: cover;
-      background-position: center;
-      background-repeat: no-repeat;
-      cursor: crosshair;
-    }
-
-    .title-chip {
-      position: absolute;
-      top: 8px;
-      left: 50%;
-      transform: translateX(-50%);
-      z-index: 30;
-      background: rgba(0,0,0,0.48);
-      border-radius: 8px;
-      padding: 5px 10px;
-      font-size: 16px;
-      font-weight: bold;
-      text-align: center;
-      max-width: calc(100% - 16px);
-      box-sizing: border-box;
-    }
-
-    .toolbar {
-      position: absolute;
-      top: 40px;
-      left: 50%;
-      transform: translateX(-50%);
-      z-index: 30;
-      background: rgba(0,0,0,0.45);
-      padding: 4px 5px;
-      border-radius: 8px;
+      z-index: 10;
       display: flex;
-      gap: 4px;
-      flex-wrap: wrap;
+      align-items: center;
       justify-content: center;
-      max-width: calc(100% - 16px);
-      box-sizing: border-box;
+      background:
+        radial-gradient(circle at center, rgba(212,175,55,0.10), transparent 42%),
+        rgba(0,0,0,0.82);
+      transition: opacity 1s ease;
     }
 
-    .tool-btn {
-      border: none;
-      border-radius: 6px;
-      background: #d4af37;
-      color: black;
-      padding: 5px 7px;
-      font-size: 11px;
-      font-weight: bold;
-      cursor: pointer;
-    }
-
-    .tool-btn.active {
-      outline: 2px solid white;
-    }
-
-    .info-toggle {
-      position: absolute;
-      top: 8px;
-      left: 8px;
-      z-index: 31;
-      border: none;
-      border-radius: 7px;
-      background: rgba(0,0,0,0.55);
-      color: white;
-      padding: 5px 8px;
-      font-size: 11px;
-      cursor: pointer;
-    }
-
-    .info-panel {
-      position: absolute;
-      top: 34px;
-      left: 8px;
-      width: 200px;
-      z-index: 30;
-      background: rgba(0,0,0,0.82);
-      border-radius: 9px;
-      padding: 8px;
-      box-sizing: border-box;
-      display: none;
-    }
-
-    .info-panel h3 {
-      margin: 0 0 6px 0;
-      color: #f4d35e;
-      font-size: 14px;
-    }
-
-    .info-panel p {
-      margin: 0 0 6px 0;
-      line-height: 1.35;
-      font-size: 11px;
-    }
-
-    .ai-guide {
-      position: absolute;
-      top: 140px;
-      left: 8px;
-      width: 220px;
-      z-index: 30;
-      background: rgba(0,0,0,0.82);
-      border-radius: 9px;
-      padding: 8px;
-      box-sizing: border-box;
-    }
-
-    .ai-guide h3 {
-      margin: 0 0 6px 0;
-      color: #f4d35e;
-      font-size: 14px;
-    }
-
-    .ai-guide-text {
-      margin: 0;
-      line-height: 1.4;
-      font-size: 11px;
-      color: white;
-    }
-
-    .saved-question {
-      margin-top: 6px;
-      background: rgba(255,255,255,0.08);
-      padding: 6px;
-      border-radius: 7px;
-      font-size: 11px;
-      line-height: 1.35;
-    }
-
-    .badge {
-      margin-top: 6px;
-      padding: 6px;
-      background: rgba(244, 211, 94, 0.14);
-      border: 1px solid rgba(244, 211, 94, 0.45);
-      border-radius: 7px;
-      color: #f4d35e;
-      font-weight: bold;
-      text-align: center;
-      font-size: 11px;
-    }
-
-    .decision-box {
-      position: absolute;
-      bottom: 6px;
-      left: 50%;
-      transform: translateX(-50%);
-      width: min(330px, calc(100% - 12px));
-      z-index: 30;
-      background: rgba(0,0,0,0.62);
-      border-radius: 8px;
-      padding: 8px;
-      box-sizing: border-box;
-      text-align: center;
-    }
-
-    .decision-question {
-      font-size: 13px;
-      line-height: 1.25;
-      margin-bottom: 4px;
-    }
-
-    .decision-note {
-      font-size: 10px;
-      opacity: 0.88;
-      line-height: 1.25;
-      margin-bottom: 6px;
-    }
-
-    textarea {
-      width: 100%;
-      min-height: 34px;
-      max-height: 58px;
-      border: none;
-      border-radius: 6px;
-      box-sizing: border-box;
-      resize: vertical;
-      padding: 5px;
-      font-size: 11px;
-      font-family: Arial, sans-serif;
-    }
-
-    .button-row {
-      margin-top: 6px;
-      display: flex;
-      justify-content: center;
-      gap: 5px;
-      flex-wrap: wrap;
-    }
-
-    .nav-btn {
-      border: none;
-      border-radius: 6px;
-      background: #d4af37;
-      color: black;
-      padding: 6px 8px;
-      font-size: 11px;
-      font-weight: bold;
-      cursor: pointer;
-    }
-
-    .marker {
-      position: absolute;
-      transform: translate(-50%, -50%);
-      font-size: 20px;
+    .begin-overlay.hide {
+      opacity: 0;
       pointer-events: none;
-      z-index: 15;
-      text-shadow: 0 1px 6px rgba(0,0,0,0.8);
+    }
+
+    .begin-button {
+      border: 1px solid rgba(212,175,55,0.55);
+      background: rgba(0,0,0,0.38);
+      color: #f0df9a;
+      padding: 16px 28px;
+      border-radius: 999px;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      font-size: 13px;
+      cursor: pointer;
+      box-shadow: 0 12px 40px rgba(0,0,0,0.48);
+    }
+
+    .begin-button:hover {
+      background: rgba(212,175,55,0.12);
     }
   </style>
+<!-- STEM_NATION_SETTLEMENT_DESIGN_LANGUAGE_V1 -->
+<!-- STEM_NATION_BYPASS_ROLE_TO_DECISION_V1 -->
 </head>
 
 <body>
+<audio id="academyAudio" preload="auto">
+  <source src="{{ url_for('static', filename='academy_individual_demo.mp3') }}" type="audio/mpeg">
+</audio>
 
-  <div id="map"></div>
+<div id="beginOverlay" class="begin-overlay">
+  <button id="beginAcademyBtn" class="begin-button">Begin Settlement Design</button>
+</div>
 
-  <button class="info-toggle" onclick="toggleInfo()">Info</button>
+<div class="academy-line"></div>
 
-  <div id="infoPanel" class="info-panel">
-    <h3>Your Mission</h3>
-    <p>
-      Establish a nation that can survive, grow, and remain stable.<br>
-      Every decision you make will shape its future.
-    </p>
-
-    <div id="savedQuestion" class="saved-question" style="display:none;"></div>
-
-    <div class="badge">
-      Badge Unlocked<br><br>
-      Nation Designer
-    </div>
+<div class="container">
+  <div class="academy-haze" aria-hidden="true"></div>
+  <div class="academy-particles" aria-hidden="true">
+    <span></span><span></span><span></span><span></span><span></span><span></span>
   </div>
 
-  <div class="ai-guide">
-    <h3>AI Guide</h3>
-    <p id="aiGuideText" class="ai-guide-text">
-      Begin where survival can stabilize. Think about water, access, and protection.
-    </p>
+  <svg class="academy-seal" viewBox="0 0 500 500" aria-hidden="true">
+    <circle cx="250" cy="250" r="210" fill="none" stroke="#d4af37" stroke-width="2"/>
+    <circle cx="250" cy="250" r="145" fill="none" stroke="#d4af37" stroke-width="1" opacity="0.75"/>
+    <circle cx="250" cy="250" r="8" fill="#d4af37"/>
+    <line x1="250" y1="40" x2="250" y2="110" stroke="#d4af37" stroke-width="2"/>
+    <line x1="250" y1="390" x2="250" y2="460" stroke="#d4af37" stroke-width="2"/>
+    <line x1="40" y1="250" x2="110" y2="250" stroke="#d4af37" stroke-width="2"/>
+    <line x1="390" y1="250" x2="460" y2="250" stroke="#d4af37" stroke-width="2"/>
+    <line x1="104" y1="104" x2="154" y2="154" stroke="#d4af37" stroke-width="1"/>
+    <line x1="396" y1="104" x2="346" y2="154" stroke="#d4af37" stroke-width="1"/>
+    <line x1="104" y1="396" x2="154" y2="346" stroke="#d4af37" stroke-width="1"/>
+    <line x1="396" y1="396" x2="346" y2="346" stroke="#d4af37" stroke-width="1"/>
+    <path d="M250 80 C330 160 330 340 250 420 C170 340 170 160 250 80Z" fill="none" stroke="#d4af37" stroke-width="1" opacity="0.55"/>
+    <path d="M80 250 C160 170 340 170 420 250 C340 330 160 330 80 250Z" fill="none" stroke="#d4af37" stroke-width="1" opacity="0.55"/>
+  </svg>
+
+  <div class="reflection-card">
+  <div class="academy-label">Academy Design Lab</div>
+
+  <div class="week-label">Week 1 · Module 0 · Cartography & Orientation</div>
+
+  <div id="l1" class="line">Every civilization begins with observation.</div>
+  <div id="l2" class="line">Before there is a government…</div>
+  <div id="l3" class="line">before there is a city…</div>
+  <div id="l4" class="line">before there is a nation…</div>
+  <div id="l5" class="line">there is a person studying the land.</div>
+  <div id="l6" class="line">The quality of what follows depends on how that person thinks.</div>
+
+  <div id="artifact" class="artifact-note">
+    Begin your First Observation Notes: What did the land reveal before you made a decision?
   </div>
 
-  <div id="worldTitle" class="title-chip">Phase 2 — Shape the Nation</div>
-
-  <div class="toolbar">
-    <button class="tool-btn active" onclick="setTool('settlement', this)">🏠</button>
-    <button class="tool-btn" onclick="setTool('market', this)">💰</button>
-    <button class="tool-btn" onclick="setTool('defense', this)">🛡</button>
-    <button class="tool-btn" onclick="setTool('farm', this)">🌾</button>
-    <button class="tool-btn" onclick="setTool('road', this)">🛣</button>
   </div>
+</div>
 
-  <div class="decision-box">
-    <div id="decisionQuestion" class="decision-question"></div>
-    <div id="decisionNote" class="decision-note">
-      Select a tool, place markers, then answer.
-    </div>
+<script>
+window.onload = () => {
+  const academyAudio = document.getElementById("academyAudio");
+  const beginOverlay = document.getElementById("beginOverlay");
+  const beginAcademyBtn = document.getElementById("beginAcademyBtn");
+  const lines = ["l1","l2","l3","l4","l5","l6","artifact"];
 
-    <textarea id="decisionAnswer" placeholder="Type your answer..."></textarea>
+  const startAcademy = () => {
+    if (beginOverlay) {
+      beginOverlay.classList.add("hide");
+    }
 
-    <div class="button-row">
-      <button class="nav-btn" onclick="submitDecision()">Submit</button>
-      <button class="nav-btn" onclick="skipDecision()">Skip</button>
-    </div>
-  </div>
+    document.body.classList.add("academy-started");
 
-  <script>
-    const regionImages = {
-      river: "/static/map_balanced_blank.png",
-      forest: "/static/map_forest_blank.png",
-      desert: "/static/map_desert_blank.png",
-      coastal: "/static/map_coastal_blank.png",
-      mountain: "/static/map_mountain_blank.png",
-      savanna: "/static/map_savanna_blank.png",
-      balanced: "/static/map_balanced_blank.png"
-    };
-
-    const worldContent = {
-      river: { title: "River Nexus — Shape the Nation" },
-      coastal: { title: "Coastal Exchange — Shape the Nation" },
-      forest: { title: "Forest Intelligence — Shape the Nation" },
-      desert: { title: "Desert Adaptation — Shape the Nation" },
-      mountain: { title: "Mountain Stronghold — Shape the Nation" },
-      balanced: { title: "Balanced Core — Shape the Nation" }
-    };
-
-    const decisionSteps = [
-      {
-        key: "settlement",
-        tool: "settlement",
-        question: "Where will you establish your first settlement?",
-        note: "Place settlement, then explain why.",
-        ai: "Begin where survival can stabilize. Think about water, access, and protection."
-      },
-      {
-        key: "market",
-        tool: "market",
-        question: "Where would trade naturally occur?",
-        note: "Place market, then explain growth value.",
-        ai: "Trade grows where movement and exchange naturally converge. Look for connection points."
-      },
-      {
-        key: "defense",
-        tool: "defense",
-        question: "What location offers the strongest protection?",
-        note: "Place defense, then explain security.",
-        ai: "Protection depends on terrain, visibility, and vulnerability. What must be secured first?"
-      },
-      {
-        key: "farm",
-        tool: "farm",
-        question: "Where should farming begin?",
-        note: "Place farming, then explain survival value.",
-        ai: "Food creates continuity. Choose land that can sustain life over time, not just once."
-      },
-      {
-        key: "road",
-        tool: "road",
-        question: "How would you connect key places?",
-        note: "Place road markers, then explain movement.",
-        ai: "Roads connect people, resources, defense, and power. Think about what must stay linked."
+    if (academyAudio) {
+      academyAudio.volume = 0.42;
+      academyAudio.currentTime = 0;
+      const playAttempt = academyAudio.play();
+      if (playAttempt !== undefined) {
+        playAttempt.catch(() => {
+          console.log("Academy audio could not start.");
+        });
       }
-    ];
-
-    const toolIcons = {
-      settlement: "🏠",
-      market: "💰",
-      defense: "🛡",
-      farm: "🌾",
-      road: "🛣"
-    };
-
-    let currentTool = "settlement";
-    let currentStep = 0;
-
-    const placedMarkers = {
-      settlement: [],
-      market: [],
-      defense: [],
-      farm: [],
-      road: []
-    };
-
-    const params = new URLSearchParams(window.location.search);
-    const selectedWorld = params.get("world") || sessionStorage.getItem("selectedRegion") || "balanced";
-    const savedQuestion = sessionStorage.getItem("studentQuestion");
-
-    const mapElement = document.getElementById("map");
-    mapElement.style.backgroundImage =
-      "url('" + (regionImages[selectedWorld] || regionImages["balanced"]) + "')";
-
-    document.getElementById("worldTitle").innerText =
-      (worldContent[selectedWorld] || worldContent["balanced"]).title;
-
-    if (savedQuestion) {
-      const box = document.getElementById("savedQuestion");
-      box.style.display = "block";
-      box.innerHTML =
-        'Guiding question: <span style="color:#ffffff;">"' +
-        savedQuestion.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;") +
-        '"</span>';
     }
 
-    function toggleInfo() {
-      const panel = document.getElementById("infoPanel");
-      panel.style.display = panel.style.display === "block" ? "none" : "block";
-    }
+    lines.forEach((id, i) => {
+      setTimeout(() => {
+        document.getElementById(id).classList.add("show");
+      }, i * 1800);
+    });
 
-    function setTool(tool, el) {
-      currentTool = tool;
-      document.querySelectorAll(".tool-btn").forEach(btn => btn.classList.remove("active"));
-      el.classList.add("active");
-    }
-
-    function syncToolToStep() {
-      const stepTool = decisionSteps[currentStep].tool;
-      currentTool = stepTool;
-
-      document.querySelectorAll(".tool-btn").forEach(btn => {
-        btn.classList.remove("active");
-        if (btn.textContent.includes(toolIcons[stepTool])) {
-          btn.classList.add("active");
-        }
-      });
-    }
-
-    function placeMarker(event) {
-      const rect = mapElement.getBoundingClientRect();
-      const x = event.clientX - rect.left;
-      const y = event.clientY - rect.top;
-
-      const marker = document.createElement("div");
-      marker.className = "marker";
-      marker.innerText = toolIcons[currentTool];
-      marker.style.left = x + "px";
-      marker.style.top = y + "px";
-
-      mapElement.appendChild(marker);
-
-      placedMarkers[currentTool].push({ x, y });
-      sessionStorage.setItem("phase2Markers", JSON.stringify(placedMarkers));
-    }
-
-    function loadStep() {
-      const step = decisionSteps[currentStep];
-      document.getElementById("decisionQuestion").innerText = step.question;
-      document.getElementById("decisionNote").innerText = step.note;
-      document.getElementById("decisionAnswer").value = "";
-
-      const aiGuideText = document.getElementById("aiGuideText");
-      if (aiGuideText && step.ai) {
-        aiGuideText.innerText = step.ai;
+    setTimeout(() => {
+      if (academyAudio) {
+        academyAudio.pause();
+        academyAudio.currentTime = 0;
       }
 
-      syncToolToStep();
-    }
+      document.body.style.opacity = 0;
+      setTimeout(() => {
+        window.location.href = "/academy_decision";
+      }, 1800);
+    }, 13000);
+  };
 
-    function submitDecision() {
-      const step = decisionSteps[currentStep];
-      const answer = document.getElementById("decisionAnswer").value.trim();
-
-      if (!answer) {
-        alert("Type your answer before continuing.");
-        return;
-      }
-
-      sessionStorage.setItem(step.key + "Note", answer);
-      nextStep();
-    }
-
-    function skipDecision() {
-      const step = decisionSteps[currentStep];
-      sessionStorage.setItem(step.key + "Note", "SKIPPED");
-      nextStep();
-    }
-
-    function nextStep() {
-      currentStep++;
-
-      if (currentStep >= decisionSteps.length) {
-        sessionStorage.setItem("selectedRegion", selectedWorld);
-        window.location.href = "/academy_role";
-        return;
-      }
-
-      loadStep();
-    }
-
-    mapElement.addEventListener("click", placeMarker);
-
-    loadStep();
-  </script>
+  if (beginAcademyBtn) {
+    beginAcademyBtn.addEventListener("click", startAcademy);
+  }
+};
+</script>
 
 </body>
 </html>

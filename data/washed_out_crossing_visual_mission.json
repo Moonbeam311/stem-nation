@@ -1,0 +1,101 @@
+{
+  "version": "VIS-2",
+  "mission_id": "washed_out_crossing_visual",
+  "title": "The Washed-Out Crossing",
+  "subtitle": "Academy Readiness Evaluation",
+  "purpose": "Prototype the illustrated STEM Nation mission experience before wiring it into the full student flow.",
+  "student_goal": "Choose only three survival priorities, explain why they matter, and test the plan.",
+  "selection_limit": 3,
+  "advisor": {
+    "name": "Guardian",
+    "verb": "Protect",
+    "question": "What should we protect first?",
+    "state": "alert"
+  },
+  "materials": [
+    {
+      "id": "rope",
+      "label": "Rope",
+      "icon": "\ud83e\udea2",
+      "category": "crossing",
+      "student_prompt": "Why might rope matter after a crossing washes out?"
+    },
+    {
+      "id": "planks",
+      "label": "Wood Planks",
+      "icon": "\ud83e\udeb5",
+      "category": "repair",
+      "student_prompt": "Why might planks matter for crossing or shelter?"
+    },
+    {
+      "id": "medicine",
+      "label": "Medicine",
+      "icon": "\ud83e\uddf0",
+      "category": "care",
+      "student_prompt": "Why might medicine become urgent after flooding?"
+    },
+    {
+      "id": "food",
+      "label": "Food",
+      "icon": "\ud83e\udd63",
+      "category": "survival",
+      "student_prompt": "Why might food matter if travel is delayed?"
+    },
+    {
+      "id": "map",
+      "label": "Map",
+      "icon": "\ud83d\uddfa\ufe0f",
+      "category": "navigation",
+      "student_prompt": "Why might a map matter before moving people?"
+    },
+    {
+      "id": "lantern",
+      "label": "Lantern",
+      "icon": "\ud83c\udfee",
+      "category": "safety",
+      "student_prompt": "Why might light matter near damaged water routes?"
+    }
+  ],
+  "checkpoint_language": {
+    "start": "Observe the scene before choosing materials.",
+    "selecting": "Choose only three priorities. The order matters.",
+    "explaining": "Now explain why each choice matters.",
+    "ready_to_test": "Your plan is ready to test.",
+    "complete": "Mission checkpoint complete. You defended your survival priorities."
+  },
+  "advisor_dialogue": {
+    "intro": "The crossing is unstable. Before we move anyone, we need to decide what matters first.",
+    "selecting": "Choose carefully. Only three priorities can guide this first survival plan.",
+    "limit_warning": "Only three priorities. A leader must decide what matters most when everything feels urgent.",
+    "explain": "Now defend your choices. Why do these priorities belong in your top three?",
+    "missing_reason": "A choice without a reason is not ready for the Council. Explain each priority.",
+    "complete": "Checkpoint complete. You selected, explained, and defended your survival priorities."
+  },
+  "advisor_motion": {
+    "idle": "gentle breathing movement",
+    "speaking": "speech bubble with typewriter text",
+    "warning": "alert shake and red-gold pulse",
+    "success": "approval glow"
+  },
+  "asset_hooks": {
+    "background": "world_river.jpg",
+    "bridge": "images/missions/washed_out_crossing/bridge_damaged.png",
+    "river": "images/missions/washed_out_crossing/river_current.png",
+    "guardian_neutral": "images/advisors/guardian/states/guardian_face_neutral.png",
+    "guardian_alert": "images/advisors/guardian/states/guardian_face_neutral.png",
+    "guardian_speaking": "images/advisors/guardian/states/guardian_face_neutral.png",
+    "guardian_success": "images/advisors/guardian/states/guardian_face_neutral.png"
+  },
+  "start_mode": {
+    "requires_begin_button": true,
+    "button_label": "Begin Mission",
+    "opening_instruction": "Review the incident, then begin when you are ready."
+  },
+  "advisor_asset_registry": "data/stem_nation_council_avatar_registry.json",
+  "advisor_asset_note": "VIS-2G maps all existing council avatars into a registry and hardens the Guardian display for the Washed-Out Crossing prototype. Separate expression/state images may be added later.",
+  "scene_asset_note": "VIS-2H-1 corrected the background hook so the route resolves it as static/world_river.jpg, not static/static/world_river.jpg.",
+  "asset_checklist": "docs/washed_out_crossing_asset_checklist.md",
+  "visual_status_note": "VIS-2I confirms Guardian and Background are mapped. Bridge and River remain custom art slots and are supported by CSS placeholders until final assets are added.",
+  "advisor_asset_source": "VIS-3G locked Guardian face asset",
+  "advisor_asset_rule": "Washed-Out Crossing uses the locked Guardian face crop for neutral, alert, speaking, and success states until separate animated Guardian states are created."
+}

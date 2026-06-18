@@ -1,0 +1,99 @@
+<h1 style="color:red;">WORLD_SELECT_PAGE</h1>
+<!DOCTYPE html>
+<html>
+<head>
+<title>Select Your Civilization</title>
+
+<style>
+body {
+  margin:0;
+  font-family:Arial;
+  background:black;
+  color:white;
+  text-align:center;
+}
+
+h1 {
+  margin-top:30px;
+  font-size:42px;
+}
+
+.grid {
+  display:grid;
+  grid-template-columns:repeat(3, 1fr);
+  gap:20px;
+  padding:40px;
+}
+
+.card {
+  width: 250px;
+  height: 180px;
+  display: inline-block;
+  margin: 10px;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+  display:flex;
+  align-items:flex-end;
+  justify-content:center;
+  border:1px solid white;
+  cursor:pointer;
+  background-size:cover;
+  background-position:center;
+  transition:0.3s;
+}
+
+.card:hover {
+  transform:scale(1.05);
+}
+
+.label {
+  width:100%;
+  background:rgba(0,0,0,0.7);
+  padding:10px;
+}
+</style>
+</head>
+
+<body>
+
+<h1>Select Your Civilization</h1>
+
+<div class="grid">
+
+<img src="/static/world_coastal.jpg" style="width:250px;height:180px;">
+<div class="card" style="background:url('/static/world_river.jpg?v=3')" onclick="go('river')">
+<div class="label">River Nexus</div>
+</div>
+
+<div class="card" style="background:url('/static/world_coastal_v2.jpg?v=3')" onclick="go('coastal')">
+<div class="label">Coastal Exchange</div>
+</div>
+
+<div class="card" style="background:url('/static/world_forest_v2.jpg?v=3')" onclick="go('forest')">
+<div class="label">Forest Intelligence</div>
+</div>
+
+<div class="card" style="background:url('/static/world_desert_v2.jpg?v=3')" onclick="go('desert')">
+<div class="label">Desert Adaptation</div>
+</div>
+
+<div class="card" style="background:url('/static/world_mountain.jpg?v=3')" onclick="go('mountain')">
+<div class="label">Mountain Stronghold</div>
+</div>
+
+<div class="card" style="background:url('/static/world_balanced.jpg?v=3')" onclick="go('balanced')">
+<div class="label">Balanced Core</div>
+</div>
+
+</div>
+
+<script>
+function go(world){
+  window.location.href = "/academy_individual?world=" + world;
+}
+</script>
+
+</body>
+</html>

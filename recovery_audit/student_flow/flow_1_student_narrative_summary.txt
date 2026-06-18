@@ -1,0 +1,80 @@
+FLOW-1 — FULL STUDENT NARRATIVE CONTINUITY AUDIT
+
+PRIMARY DESIGN DECISIONS
+1. Keep the Inquiry Council separate from the later Mishoe/Legacy Council.
+2. Keep Module 1 centered on one continuous Sector 7A incident.
+3. Rebuild the crossing activity as a Sector 7A field-response challenge.
+4. Remove region selection from the first inquiry module.
+5. End Module 1 with a debrief and Academy progress return.
+
+FILES REVIEWED
+- templates\academy_arrival.html
+- templates\academy_cinematic.html
+- templates\academy_identity.html
+- templates\academy_opening.html
+- templates\academy_transition.html
+- templates\baseline_inquiry.html
+- templates\baseline_inquiry_original_archive.html
+- templates\class_session.html
+- templates\council_stage.html
+- templates\council_stage_clean.html
+- templates\dev_reset.html
+- templates\first_gathering.html
+- templates\map_mode.html
+- templates\project_hub.html
+- templates\region_river.html
+- templates\river_crossing_lab.html
+- templates\student_hub.html
+- templates\student_landing.html
+- templates\visual_layer_preview.html
+- templates\washed_out_crossing_intro.html
+- templates\washed_out_crossing_visual.html
+- templates\world_board.html
+
+CONTINUITY ISSUES
+- [HIGH] templates\baseline_inquiry.html
+  Issue: Crossing activity does not visibly continue the Sector 7A incident.
+  Action: Rewrite scenario, evidence, role, and completion language around Sector 7A.
+- [MEDIUM] templates\baseline_inquiry.html
+  Issue: Region-selection language appears before the dedicated world-orientation stage.
+  Action: Relocate region choice to a later module.
+- [HIGH] templates\baseline_inquiry_original_archive.html
+  Issue: Crossing activity does not visibly continue the Sector 7A incident.
+  Action: Rewrite scenario, evidence, role, and completion language around Sector 7A.
+- [MEDIUM] templates\class_session.html
+  Issue: Region-selection language appears before the dedicated world-orientation stage.
+  Action: Relocate region choice to a later module.
+- [MEDIUM] templates\first_gathering.html
+  Issue: First Gathering may duplicate the full Inquiry Council reveal.
+  Action: Reduce to arrival/handoff unless this is intentionally the first Council reveal.
+- [HIGH] templates\region_river.html
+  Issue: Crossing activity does not visibly continue the Sector 7A incident.
+  Action: Rewrite scenario, evidence, role, and completion language around Sector 7A.
+- [HIGH] templates\river_crossing_lab.html
+  Issue: Crossing activity does not visibly continue the Sector 7A incident.
+  Action: Rewrite scenario, evidence, role, and completion language around Sector 7A.
+- [HIGH] templates\washed_out_crossing_intro.html
+  Issue: Crossing activity does not visibly continue the Sector 7A incident.
+  Action: Rewrite scenario, evidence, role, and completion language around Sector 7A.
+- [HIGH] templates\washed_out_crossing_visual.html
+  Issue: Crossing activity does not visibly continue the Sector 7A incident.
+  Action: Rewrite scenario, evidence, role, and completion language around Sector 7A.
+
+PROPOSED FLOW
+01. Student Landing — Enter STEM Nation
+02. Academy Opening — Establish mission and inquiry identity
+03. Create Academy Identity — Create learner identity
+04. Opening Cinematic — Enter the Academy world
+05. Academy Arrival — Physical and narrative arrival
+06. First Gathering — Brief handoff into the investigation
+07. Inquiry Council — Introduce Scout, Mapkeeper, Builder, Healer, and Guardian
+08. Sector 7A Alert — Establish one continuous incident
+09. Earlier / Current Evidence — Observe and compare before interpretation
+10. Question Ranking — Choose and defend the three most important questions
+11. Sector 7A Field Response — Replace unrelated crossing narrative with Sector 7A access challenge
+12. Test and Revise — Use evidence, materials, and specialist reports
+13. Sector 7A Debrief — Defend decision and record readiness progress
+14. Academy Progress Hub — Return learner to a clear completion point
+15. Later Legacy Council Module — Introduce Dr. and Mrs. Mishoe in a separate institutional/legacy context
+16. Later World Orientation — Teach regions, terrain, resources, and responsibilities
+17. Later Region Selection — Choose a region after orientation and readiness

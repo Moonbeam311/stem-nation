@@ -1,0 +1,317 @@
+{
+  "route_map": {
+    "/council_stage": {
+      "app": "web_app.py",
+      "route": "/council_stage",
+      "function": "council_stage",
+      "template": "council_stage.html",
+      "redirects": [],
+      "line": 14
+    },
+    "/world_select.html": {
+      "app": "web_app.py",
+      "route": "/world_select.html",
+      "function": "world_select",
+      "template": "world_select.html",
+      "redirects": [],
+      "line": 54
+    },
+    "/academy_individual": {
+      "app": "web_app.py",
+      "route": "/academy_individual",
+      "function": "academy_individual",
+      "template": "academy_individual.html",
+      "redirects": [],
+      "line": 69
+    },
+    "/academy_memory_preview": {
+      "app": "web_app.py",
+      "route": "/academy_memory_preview",
+      "function": "academy_memory_preview",
+      "template": "academy_memory_preview.html",
+      "redirects": [],
+      "line": 74
+    },
+    "/academy_role": {
+      "app": "web_app.py",
+      "route": "/academy_role",
+      "function": "academy_role",
+      "template": "academy_role.html",
+      "redirects": [],
+      "line": 78
+    },
+    "/academy_thinking": {
+      "app": "web_app.py",
+      "route": "/academy_thinking",
+      "function": "academy_thinking",
+      "template": "academy_thinking.html",
+      "redirects": [],
+      "line": 82
+    },
+    "/academy_decision": {
+      "app": "web_app.py",
+      "route": "/academy_decision",
+      "function": "academy_decision",
+      "template": "academy_decision.html",
+      "redirects": [],
+      "line": 86
+    },
+    "/map": {
+      "app": "web_app.py",
+      "route": "/map",
+      "function": "map_mode",
+      "template": "map_mode.html",
+      "redirects": [],
+      "line": 156
+    },
+    "/world-board": {
+      "app": "web_app.py",
+      "route": "/world-board",
+      "function": "world_board",
+      "template": "world_board.html",
+      "redirects": [],
+      "line": 221
+    },
+    "/academy_observation": {
+      "app": "web_app.py",
+      "route": "/academy_observation",
+      "function": "academy_observation",
+      "template": "academy_observation.html",
+      "redirects": [],
+      "line": 233
+    },
+    "/advisor_reactions": {
+      "app": "web_app.py",
+      "route": "/advisor_reactions",
+      "function": "advisor_reactions",
+      "template": "advisor_reactions.html",
+      "redirects": [],
+      "line": 245
+    },
+    "/mission_debrief": {
+      "app": "web_app.py",
+      "route": "/mission_debrief",
+      "function": "mission_debrief",
+      "template": "mission_debrief.html",
+      "redirects": [],
+      "line": 249
+    },
+    "/baseline_inquiry": {
+      "app": "web_app.py",
+      "route": "/baseline_inquiry",
+      "function": "baseline_inquiry",
+      "template": "baseline_inquiry.html",
+      "redirects": [],
+      "line": 253
+    },
+    "/academy_transition": {
+      "app": "web_app.py",
+      "route": "/academy_transition",
+      "function": "academy_transition",
+      "template": "academy_transition.html",
+      "redirects": [],
+      "line": 259
+    },
+    "/washed_out_crossing_intro": {
+      "app": "web_app.py",
+      "route": "/washed_out_crossing_intro",
+      "function": "washed_out_crossing_intro",
+      "template": "washed_out_crossing_intro.html",
+      "redirects": [],
+      "line": 282
+    },
+    "/student": {
+      "app": "web_app.py",
+      "route": "/student",
+      "function": "student_landing",
+      "template": "student_landing.html",
+      "redirects": [],
+      "line": 294
+    },
+    "/baseline_inquiry_original": {
+      "app": "web_app.py",
+      "route": "/baseline_inquiry_original",
+      "function": "baseline_inquiry_original",
+      "template": "baseline_inquiry_original_archive.html",
+      "redirects": [],
+      "line": 300
+    },
+    "/river-crossing-lab": {
+      "app": "web_app.py",
+      "route": "/river-crossing-lab",
+      "function": "river_crossing_lab",
+      "template": "river_crossing_lab.html",
+      "redirects": [],
+      "line": 329
+    },
+    "/academy_opening": {
+      "app": "web_app.py",
+      "route": "/academy_opening",
+      "function": "academy_opening",
+      "template": "academy_opening.html",
+      "redirects": [],
+      "line": 332
+    },
+    "/academy_identity": {
+      "app": "web_app.py",
+      "route": "/academy_identity",
+      "function": "academy_identity",
+      "template": "academy_identity.html",
+      "redirects": [],
+      "line": 336
+    },
+    "/academy_cinematic": {
+      "app": "web_app.py",
+      "route": "/academy_cinematic",
+      "function": "academy_cinematic",
+      "template": "academy_cinematic.html",
+      "redirects": [],
+      "line": 341
+    },
+    "/academy_arrival": {
+      "app": "web_app.py",
+      "route": "/academy_arrival",
+      "function": "academy_arrival",
+      "template": "academy_arrival.html",
+      "redirects": [],
+      "line": 345
+    },
+    "/first_gathering": {
+      "app": "web_app.py",
+      "route": "/first_gathering",
+      "function": "first_gathering",
+      "template": "first_gathering.html",
+      "redirects": [],
+      "line": 349
+    },
+    "/student_hub": {
+      "app": "web_app.py",
+      "route": "/student_hub",
+      "function": "student_hub",
+      "template": "student_hub.html",
+      "redirects": [],
+      "line": 362
+    },
+    "/council_stage_clean": {
+      "app": "web_app.py",
+      "route": "/council_stage_clean",
+      "function": "council_stage_clean",
+      "template": "council_stage_clean.html",
+      "redirects": [],
+      "line": 368
+    },
+    "/washed_out_crossing_visual": {
+      "app": "web_app.py",
+      "route": "/washed_out_crossing_visual",
+      "function": "washed_out_crossing_visual",
+      "template": "",
+      "redirects": [],
+      "line": 378
+    },
+    "/advisor_animation_preview": {
+      "app": "web_app.py",
+      "route": "/advisor_animation_preview",
+      "function": "advisor_animation_preview",
+      "template": "advisor_animation_pipeline_preview.html",
+      "redirects": [],
+      "line": 416
+    }
+  },
+  "handoffs": {
+    "/council_stage": [
+      "/student_hub",
+      "/advisor_reactions"
+    ],
+    "/world_select.html": [
+      "/environment_entry?world="
+    ],
+    "/academy_individual": [
+      "/academy_decision"
+    ],
+    "/academy_memory_preview": [],
+    "/academy_role": [
+      "/academy_decision"
+    ],
+    "/academy_thinking": [
+      "academy_individual.html"
+    ],
+    "/academy_decision": [
+      "/map"
+    ],
+    "/map": [
+      "/student_hub",
+      "/world_select.html"
+    ],
+    "/world-board": [],
+    "/academy_observation": [],
+    "/advisor_reactions": [
+      "/mission_debrief"
+    ],
+    "/mission_debrief": [
+      "/student_hub"
+    ],
+    "/baseline_inquiry": [
+      "/world_select.html"
+    ],
+    "/academy_transition": [
+      "/baseline_inquiry"
+    ],
+    "/washed_out_crossing_intro": [
+      "/world_select.html",
+      "/baseline_inquiry"
+    ],
+    "/student": [
+      "/academy_opening"
+    ],
+    "/baseline_inquiry_original": [],
+    "/river-crossing-lab": [],
+    "/academy_opening": [
+      "/academy_identity"
+    ],
+    "/academy_identity": [
+      "/academy_cinematic"
+    ],
+    "/academy_cinematic": [
+      "/academy_arrival"
+    ],
+    "/academy_arrival": [
+      "/first_gathering",
+      "/academy_identity"
+    ],
+    "/first_gathering": [
+      "/academy_observation"
+    ],
+    "/student_hub": [
+      "/council_stage",
+      "/map",
+      "/council_stage?skip=firstlook",
+      "/advisor_reactions",
+      "/mission_debrief"
+    ],
+    "/council_stage_clean": [
+      "/student_hub",
+      "/advisor_reactions"
+    ],
+    "/advisor_animation_preview": []
+  },
+  "proposed_module_1_route_lock": [
+    "/student",
+    "/academy_opening",
+    "/academy_identity",
+    "/academy_cinematic",
+    "/academy_arrival",
+    "/first_gathering",
+    "/council_stage",
+    "/advisor_reactions",
+    "/sector_7a_response",
+    "/mission_debrief",
+    "/student_hub"
+  ],
+  "deferred_routes": [
+    "/map",
+    "/world_select.html",
+    "/world-board",
+    "/region_river",
+    "/river-crossing-lab"
+  ]
+}

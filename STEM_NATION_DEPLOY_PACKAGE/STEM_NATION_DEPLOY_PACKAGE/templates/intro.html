@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Intro</title>
+<style>
+body {
+  margin:0;
+  background:black;
+  color:white;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  height:100vh;
+  font-family:Arial;
+  text-align:center;
+}
+#text {
+  font-size:32px;
+  max-width:800px;
+  line-height:1.5;
+}
+</style>
+</head>
+<body>
+
+<div id="text"></div>
+
+<script>
+
+let lines = [
+"Every civilization begins with a decision.",
+"Not with answers… but with questions.",
+"The quality of those questions shapes everything that follows.",
+"You are not choosing a setting.",
+"You are choosing where your civilization will begin."
+];
+
+let i = 0;
+
+function showNext(){
+  if(i >= lines.length){
+    window.location.href = "/world_select";
+    return;
+  }
+
+  document.getElementById("text").innerText = lines[i];
+  i++;
+
+  setTimeout(showNext, 2500);
+}
+
+showNext();
+
+</script>
+
+</body>
+</html>
+
+
+<script>
+document.body.onclick = function() {
+    window.location.href = getNextPage();
+};
+
+function getNextPage() {
+    const page = window.location.pathname.replace("/", "");
+    const num = parseInt(page.replace("intro", ""));
+    return "/intro" + (num + 1);
+}
+</script>

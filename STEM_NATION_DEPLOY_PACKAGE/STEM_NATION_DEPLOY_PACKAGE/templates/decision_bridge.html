@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+<body style="margin:0;overflow:hidden;background:black;font-family:Arial;">
+
+<div style="
+width:100vw;height:100vh;
+background:url('/static/intro_scene5.jpg') center/cover no-repeat;
+display:flex;
+align-items:center;
+justify-content:center;
+color:white;
+text-align:center;
+">
+
+<div>
+
+  <div id="text" style="
+    opacity:0;
+    transition:opacity 0.3s;
+    white-space:pre-line;
+    font-size:34px;
+    text-shadow:0 0 16px rgba(255,255,255,0.35), 0 0 28px rgba(255,255,255,0.25);
+  ">
+Before you choose…
+
+observe your environment.
+
+Every region holds potential.
+Every region holds risk.
+
+Your decision will shape what comes next.
+  </div>
+
+  <button id="startBtn" onclick="startJourney()" style="
+    margin-top:40px;
+    padding:14px 28px;
+    font-size:18px;
+    background:rgba(255,255,255,0.1);
+    color:white;
+    border:1px solid rgba(255,255,255,0.4);
+    border-radius:8px;
+    opacity:0;
+    transition:opacity 0.8s ease, transform 0.3s;
+    cursor:pointer;
+  ">
+    BEGIN YOUR JOURNEY
+  </button>
+
+</div>
+
+</div>
+
+<script>
+window.onload = function() {
+
+  const text = document.getElementById("text");
+  const btn = document.getElementById("startBtn");
+
+  // fade in text
+  setTimeout(() => {
+    if (text) text.style.opacity = 1;
+  }, 420);
+
+  // fade in button AFTER text settles
+  setTimeout(() => {
+    if (btn) btn.style.opacity = 1;
+  }, 1800);
+};
+
+function startJourney() {
+  window.location.href = "/world_select.html";
+}
+</script>
+
+</body>
+</html>

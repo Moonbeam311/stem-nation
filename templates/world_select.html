@@ -1,143 +1,162 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Which world will you inherit—and shape?</title>
+  <title>STEM Nation Academy | Region Investigation</title>
 
   <style>
     body {
-      text-align: center;
       margin: 0;
       font-family: Arial, sans-serif;
-      background-color: #0f172a;
+      background: radial-gradient(circle at top, #1f2937, #050505 70%);
       color: white;
+      text-align: center;
+      min-height: 100vh;
+    }
+
+    .wrap {
+      max-width: 1120px;
+      margin: 0 auto;
+      padding: 34px 24px 44px;
     }
 
     h1 {
-      margin-top: 40px;
-      margin-bottom: 10px;
+      margin: 18px 0 8px;
+      font-size: clamp(34px, 5vw, 54px);
+      color: #f4d35e;
+      letter-spacing: 1px;
+    }
+
+    .subtitle {
+      opacity: 0.86;
+      font-size: 17px;
+      line-height: 1.55;
+      margin-bottom: 30px;
     }
 
     .grid {
       display: grid;
-      grid-template-columns: repeat(3, 260px);
-      justify-content: center;
-      gap: 25px;
-      margin-top: 30px;
+      grid-template-columns: repeat(auto-fit, minmax(285px, 1fr));
+      gap: 22px;
     }
 
     .card {
-      width: 260px;
-      margin: 15px;
+      position: relative;
+      min-height: 230px;
+      border-radius: 18px;
+      overflow: hidden;
       cursor: pointer;
-      text-align: center;
-      transition: transform 0.25s ease, box-shadow 0.25s ease;
-    }
-
-    .card img {
-      width: 100%;
-      height: 180px;
-      object-fit: cover;
-      border-radius: 8px;
-      transition: transform 0.3s ease;
+      background-size: cover;
+      background-position: center;
+      border: 1px solid rgba(244,211,94,0.35);
+      box-shadow: 0 14px 36px rgba(0,0,0,0.38);
+      transition: transform 0.25s ease, border-color 0.25s ease;
     }
 
     .card:hover {
-      transform: translateY(-6px);
-      box-shadow: 0 8px 20px rgba(0,0,0,0.5);
+      transform: translateY(-5px) scale(1.015);
+      border-color: rgba(244,211,94,0.9);
     }
 
-    .card:hover img {
-      transform: scale(1.05);
+    .card::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to top, rgba(0,0,0,0.88), rgba(0,0,0,0.22), rgba(0,0,0,0.08));
     }
 
-    .title {
-      font-weight: bold;
-      margin-top: 10px;
+    .label {
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      padding: 18px;
+      text-align: left;
     }
 
-    .desc {
-      font-size: 13px;
-      opacity: 0.85;
-      margin-top: 5px;
-      line-height: 1.4;
+    .label h2 {
+      margin: 0 0 7px;
+      font-size: 23px;
+      color: #f4d35e;
     }
 
-    .nav-button {
-      position: fixed;
-      bottom: 20px;
-      left: 20px;
-      padding: 10px 16px;
-      background-color: #B98B2F;
-      color: black;
-      border: none;
-      border-radius: 6px;
-      font-weight: bold;
-      cursor: pointer;
-      z-index: 9999;
+    .label p {
+      margin: 0;
+      font-size: 14px;
+      line-height: 1.45;
+      opacity: 0.92;
+    }
+
+    .footer-note {
+      margin-top: 28px;
+      opacity: 0.72;
+      font-size: 14px;
+      line-height: 1.45;
     }
   </style>
-
-  <script>
-    function go(world) {
-      window.location.href = "/region_experience?region=" + world;
-    }
-  </script>
 </head>
 
 <body>
+  <div class="wrap">
+    <h1>Which region will you investigate first?</h1>
 
-<h1>Which world will you inherit—and shape?</h1>
-<div style="margin-top:10px; font-size:14px; opacity:0.7;">
-  
-</div>
+    <div class="subtitle">
+      You are not choosing your civilization yet.<br>
+      You are studying the land that may shape survival, movement, trade, defense, and power.
+    </div>
 
+    <div class="grid">
+      <div class="card" style="background-image:url('/static/world_river.jpg')" onclick="go('river')">
+        <div class="label">
+          <h2>River Corridor</h2>
+          <p>Strong food access and trade potential, but floods and crowded settlement zones may create future risk.</p>
+        </div>
+      </div>
 
-<p style="opacity:0.6; font-size:14px; margin-top:10px;">
-You are not choosing a setting.<br>
-You are choosing where your civilization will begin.
-</p>
+      <div class="card" style="background-image:url('/static/world_coastal.jpg')" onclick="go('coastal')">
+        <div class="label">
+          <h2>Coastal Exchange</h2>
+          <p>Excellent for fishing, travel, and outside contact, but exposed to storms, invasion, and dependency on routes.</p>
+        </div>
+      </div>
 
-<div class="grid">
+      <div class="card" style="background-image:url('/static/world_forest.jpg')" onclick="go('forest')">
+        <div class="label">
+          <h2>Forest Belt</h2>
+          <p>Rich in timber, shelter, and hidden resources, but movement and expansion require careful planning.</p>
+        </div>
+      </div>
 
-  <div class="card" onclick="go('river')">
-    <img src="/static/world_river.jpg" alt="River Nexus">
-    <div class="title">River Nexus</div>
-    <div class="desc">Where water flows, civilizations rise… and fall. Control the current—or be carried by it.</div>
+      <div class="card" style="background-image:url('/static/world_desert.jpg')" onclick="go('desert')">
+        <div class="label">
+          <h2>Desert Route</h2>
+          <p>Difficult survival conditions, but powerful trade corridors may reward discipline, planning, and adaptation.</p>
+        </div>
+      </div>
+
+      <div class="card" style="background-image:url('/static/world_mountain.jpg')" onclick="go('mountain')">
+        <div class="label">
+          <h2>Highland Ridge</h2>
+          <p>Natural defense and mineral strength, but food production and travel may be limited by terrain.</p>
+        </div>
+      </div>
+
+      <div class="card" style="background-image:url('/static/world_balanced.jpg')" onclick="go('balanced')">
+        <div class="label">
+          <h2>Valley Basin</h2>
+          <p>A balanced starting region with room to grow, but balance can become weakness without a clear strategy.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="footer-note">
+      Academy Readiness Evaluation: observe first. A final settlement decision comes later.
+    </div>
   </div>
 
-  <div class="card" onclick="go('coastal')">
-    <img src="/static/world_coastal.jpg" alt="Coastal Exchange">
-    <div class="title">Coastal Exchange</div>
-    <div class="desc">The coast connects worlds. Trade brings power—but also danger.</div>
-  </div>
-
-  <div class="card" onclick="go('forest')">
-    <img src="/static/world_forest.jpg" alt="Forest Intelligence">
-    <div class="title">Forest Intelligence</div>
-    <div class="desc">The forest does not reveal its secrets easily. Only those who listen survive.</div>
-  </div>
-
-  <div class="card" onclick="go('desert')">
-    <img src="/static/world_desert.jpg" alt="Desert Adaptation">
-    <div class="title">Desert Adaptation</div>
-    <div class="desc">In the desert, survival is earned—not given. Every decision carries weight.</div>
-  </div>
-
-  <div class="card" onclick="go('mountain')">
-    <img src="/static/world_mountain.jpg" alt="Mountain Stronghold">
-    <div class="title">Mountain Stronghold</div>
-    <div class="desc">Above the world, power comes with isolation. Strength is tested by the climb.</div>
-  </div>
-
-  <div class="card" onclick="go('balanced')">
-    <img src="/static/world_balanced.jpg" alt="Balanced Core">
-    <div class="title">Balanced Core</div>
-    <div class="desc">No advantage. No safety. Only strategy will define your future.</div>
-  </div>
-
-</div>
-
-<button class="nav-button" onclick="window.location.href='/intro5'">Back</button>
-
+  <script>
+    function go(world){
+      window.location.href = "/environment_entry?world=" + encodeURIComponent(world);
+    }
+  </script>
 </body>
 </html>

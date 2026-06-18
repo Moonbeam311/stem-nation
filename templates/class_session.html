@@ -1,0 +1,1253 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Class Session Controls · STEM Nation</title>
+  <style>
+    html, body {
+      margin: 0;
+      min-height: 100%;
+      background:
+        radial-gradient(circle at center, rgba(212,175,55,0.10), transparent 46%),
+        linear-gradient(135deg, #050505 0%, #101827 55%, #050505 100%);
+      color: white;
+      font-family: Arial, sans-serif;
+    }
+
+    .academy-line {
+      height: 3px;
+      background: linear-gradient(90deg, transparent, #d4af37, transparent);
+      opacity: 0.82;
+    }
+
+    .container {
+      max-width: 1120px;
+      margin: 0 auto;
+      padding: 46px 22px 70px;
+    }
+
+    .label {
+      text-align: center;
+      font-size: 13px;
+      letter-spacing: 4px;
+      text-transform: uppercase;
+      color: #d4af37;
+      margin-bottom: 12px;
+    }
+
+    h1 {
+      text-align: center;
+      font-size: clamp(38px, 6vw, 68px);
+      color: #f0df9a;
+      margin: 0 0 18px;
+    }
+
+    .subtitle {
+      max-width: 900px;
+      margin: 0 auto 34px;
+      text-align: center;
+      font-size: 19px;
+      line-height: 1.65;
+      opacity: 0.94;
+    }
+
+    .panel {
+      background: rgba(0,0,0,0.42);
+      border: 1px solid rgba(212,175,55,0.24);
+      border-radius: 22px;
+      padding: 28px;
+      margin-bottom: 24px;
+      box-shadow: 0 14px 50px rgba(0,0,0,0.45);
+    }
+
+    .panel h2 {
+      color: #d4af37;
+      margin-top: 0;
+    }
+
+    label {
+      display: block;
+      margin-top: 14px;
+      margin-bottom: 6px;
+      color: #f0df9a;
+      font-weight: bold;
+    }
+
+    input, textarea, select {
+      width: 100%;
+      box-sizing: border-box;
+      border-radius: 10px;
+      border: 1px solid rgba(212,175,55,0.32);
+      background: rgba(255,255,255,0.08);
+      color: white;
+      padding: 12px;
+      font-size: 15px;
+    }
+
+    textarea {
+      min-height: 90px;
+      resize: vertical;
+    }
+
+    .btn-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-top: 22px;
+    }
+
+    button, .btn {
+      display: inline-block;
+      text-decoration: none;
+      color: #111;
+      background: #d4af37;
+      border: none;
+      padding: 12px 16px;
+      border-radius: 10px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    button.secondary, .btn.secondary {
+      color: #f0df9a;
+      background: transparent;
+      border: 1px solid rgba(212,175,55,0.45);
+    }
+
+    button.warning {
+      color: white;
+      background: #7a2f2f;
+    }
+
+    .status-box {
+      margin-top: 82px;
+      padding: 16px;
+      border-radius: 14px;
+      background: rgba(255,255,255,0.055);
+      border: 1px solid rgba(255,255,255,0.10);
+      line-height: 1.7;
+    }
+
+    .status-active {
+      color: #9ff0b8;
+      font-weight: bold;
+    }
+
+    .status-paused {
+      color: #ffd76a;
+      font-weight: bold;
+    }
+
+    .status-ended {
+      color: #ffaaa0;
+      font-weight: bold;
+    }
+  
+    /* =========================================================
+       PHASE 9 STEP 1 — STEM NATION SESSION PRESETS V1
+       ========================================================= */
+    .preset-panel {
+      border: 1px solid rgba(212,175,55,0.28);
+      background:
+        radial-gradient(circle at top left, rgba(212,175,55,0.12), transparent 35%),
+        rgba(255,255,255,0.045);
+    }
+
+    
+    .preset-button-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 10px;
+      margin-top: 16px;
+    }
+
+    .preset-choice-btn {
+      text-align: left;
+      color: #f0df9a;
+      background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(212,175,55,0.34);
+      padding: 12px;
+      border-radius: 12px;
+      line-height: 1.35;
+    }
+
+    .preset-choice-btn strong {
+      display: block;
+      color: #d4af37;
+      margin-bottom: 4px;
+    }
+
+.preset-help {
+      font-size: 14px;
+      line-height: 1.6;
+      opacity: 0.86;
+      margin-top: 8px;
+    }
+
+  
+    /* =========================================================
+       PHASE 10 STEP 1 — STEM NATION TEACHER TIMELINE V1
+       ========================================================= */
+    .timeline-panel {
+      border: 1px solid rgba(120, 255, 180, 0.28);
+      background:
+        radial-gradient(circle at top right, rgba(120,255,180,0.10), transparent 34%),
+        rgba(0,0,0,0.42);
+    }
+
+    .timeline-step-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+      gap: 10px;
+      margin-top: 16px;
+    }
+
+    .timeline-step-btn {
+      text-align: left;
+      color: #f5f1dc;
+      background: rgba(255,255,255,0.055);
+      border: 1px solid rgba(120,255,180,0.26);
+      padding: 12px;
+      border-radius: 12px;
+      line-height: 1.35;
+    }
+
+    .timeline-step-btn.active {
+      border-color: rgba(212,175,55,0.78);
+      background: rgba(212,175,55,0.16);
+      color: #f0df9a;
+    }
+
+    .timeline-step-btn strong {
+      display: block;
+      color: #d4af37;
+      margin-bottom: 4px;
+    }
+
+    .timeline-control-bar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 16px;
+    }
+
+    .timeline-status-box {
+      margin-top: 18px;
+      border: 1px solid rgba(120,255,180,0.28);
+      border-radius: 12px;
+      padding: 14px;
+      background: rgba(0,0,0,0.30);
+      line-height: 1.6;
+    }
+
+  </style>
+
+<style>
+.session-health-indicator {
+  position: fixed;
+  top: 18px;
+  right: 18px;
+  z-index: 9999;
+  padding: 7px 10px;
+  border-radius: 999px;
+  border: 1px solid rgba(218,165,32,0.45);
+  background: rgba(8,12,22,0.92);
+  color: #f7e7b0;
+  font-weight: 700;
+  max-width: 210px;
+  font-size: 0.78rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  box-shadow: 0 0 14px rgba(0,0,0,0.3);
+}
+.session-health-indicator.active {
+  color: #b7ffcf;
+}
+.session-health-indicator.idle {
+  color: #ffd76a;
+}
+.session-health-indicator.missing {
+  color: #ffb3b3;
+}
+</style>
+
+
+<style>
+.teacher-region-focus-selector {
+  margin-top: 18px;
+  padding: 16px;
+  border-radius: 16px;
+  border: 1px solid rgba(244,211,94,0.38);
+  background:
+    radial-gradient(circle at top left, rgba(244,211,94,0.11), transparent 42%),
+    rgba(5,10,18,0.68);
+}
+
+.teacher-region-focus-selector h3 {
+  margin-top: 0;
+  color: #ffd76a;
+}
+
+.teacher-region-focus-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.teacher-region-focus-btn {
+  border: 1px solid rgba(255,255,255,0.14);
+  border-radius: 999px;
+  padding: 8px 12px;
+  background: rgba(255,255,255,0.08);
+  color: #f7e7b0;
+  cursor: pointer;
+  font-weight: 700;
+}
+
+.teacher-region-focus-btn.active {
+  border-color: rgba(255,215,106,0.95);
+  background: rgba(255,215,106,0.18);
+  color: #ffd76a;
+  box-shadow: 0 0 18px rgba(255,215,106,0.2);
+}
+
+#teacherRegionFocusStatus {
+  margin-top: 10px;
+  color: #dff6ff;
+  font-size: 13px;
+}
+</style>
+
+
+<style>
+.timeline-region-focus-presets {
+  margin-top: 16px;
+  padding: 14px;
+  border-radius: 16px;
+  border: 1px solid rgba(91,192,222,0.36);
+  background:
+    radial-gradient(circle at top left, rgba(91,192,222,0.10), transparent 44%),
+    rgba(5,12,20,0.62);
+}
+
+.timeline-region-focus-presets h3 {
+  margin-top: 0;
+  color: #bdefff;
+}
+
+.timeline-region-preset-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.timeline-region-preset-btn {
+  border: 1px solid rgba(255,255,255,0.14);
+  border-radius: 999px;
+  padding: 8px 12px;
+  background: rgba(255,255,255,0.08);
+  color: #f7e7b0;
+  cursor: pointer;
+  font-weight: 700;
+}
+
+.timeline-region-preset-btn:hover {
+  border-color: rgba(91,192,222,0.85);
+  background: rgba(91,192,222,0.16);
+}
+</style>
+
+
+<style>
+.region-comparison-mode-panel {
+  margin-top: 16px;
+  padding: 14px;
+  border-radius: 16px;
+  border: 1px solid rgba(255,215,106,0.34);
+  background:
+    radial-gradient(circle at top left, rgba(255,215,106,0.10), transparent 42%),
+    rgba(12,8,18,0.62);
+}
+
+.region-comparison-mode-panel h3 {
+  margin-top: 0;
+  color: #ffd76a;
+}
+
+.region-comparison-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr auto;
+  gap: 10px;
+  align-items: end;
+}
+
+.region-comparison-row label {
+  font-size: 12px;
+  color: #f7e7b0;
+}
+
+.region-comparison-row select {
+  width: 100%;
+}
+
+#regionComparisonStatus {
+  margin-top: 10px;
+  color: #dff6ff;
+  font-size: 13px;
+}
+</style>
+
+</head>
+
+<body>
+  <div class="academy-line"></div>
+
+  <div class="container">
+    <div class="label">STEM Nation · Teacher-Guided Session State</div>
+
+    <h1>Class Session Controls</h1>
+
+    <div class="subtitle">
+      Set the classroom session focus, guide student activity, and preserve the instructional frame locally for the demo.
+    </div>
+
+    
+    <!-- =========================================================
+    PHASE 9 STEP 1 — STEM NATION SESSION PRESETS V1
+    Guided lesson mode presets for teacher-led classroom launch.
+    ========================================================= -->
+    <div class="panel preset-panel">
+      <h2>Guided Lesson Presets</h2>
+
+      <label for="sessionPresetSelect">Choose Session Preset</label>
+      <select id="sessionPresetSelect">
+        <option value="week1_settlement">Week 1 · Settlement Decision Lab</option>
+        <option value="week1_evidence">Week 1 · Evidence & Reflection</option>
+        <option value="teacher_demo">Teacher Live Demo</option>
+        <option value="investor_walkthrough">Investor Walkthrough</option>
+        <option value="independent_work">Independent Student Work</option>
+        <option value="discussion_debrief">Discussion / Debrief</option>
+      </select>
+
+      <div class="btn-row">
+        <button id="applyPresetBtn" type="button">Apply Preset</button>
+      </div>
+
+      <!-- STEM_NATION_VISIBLE_PRESET_BUTTONS_V1 -->
+      <div id="presetButtonGrid" class="preset-button-grid">
+        <button class="preset-choice-btn" type="button" data-preset="week1_settlement">
+          <strong>Week 1 · Settlement</strong>
+          Guided map decision lab
+        </button>
+
+        <button class="preset-choice-btn" type="button" data-preset="week1_evidence">
+          <strong>Evidence & Reflection</strong>
+          Review settlement reasoning
+        </button>
+
+        <button class="preset-choice-btn" type="button" data-preset="teacher_demo">
+          <strong>Teacher Live Demo</strong>
+          Walk the class through the system
+        </button>
+
+        <button class="preset-choice-btn" type="button" data-preset="investor_walkthrough">
+          <strong>Investor Walkthrough</strong>
+          Show the student journey
+        </button>
+
+        <button class="preset-choice-btn" type="button" data-preset="independent_work">
+          <strong>Independent Work</strong>
+          Student self-guided reasoning
+        </button>
+
+        <button class="preset-choice-btn" type="button" data-preset="discussion_debrief">
+          <strong>Discussion / Debrief</strong>
+          Consequence and reflection talk
+        </button>
+      </div>
+
+      <div id="activePresetNotice" class="status-box">
+        No preset applied yet.
+      </div>
+
+      <div class="preset-help">
+        Presets fill the session name, mode, mission focus, and teacher prompt.
+        You can still edit the fields before starting the session.
+      </div>
+    </div>
+
+    <div class="panel">
+      <h2>Session Setup</h2>
+
+      <label for="sessionName">Session Name</label>
+      <input id="sessionName" type="text" value="Week 1 · Settlement Decision Lab">
+
+      <label for="sessionMode">Session Mode</label>
+      <select id="sessionMode">
+        <option value="guided">Guided Classroom Mode</option>
+        <option value="demo">Investor / Demo Mode</option>
+        <option value="independent">Independent Student Mode</option>
+        <option value="discussion">Discussion / Reflection Mode</option>
+      </select>
+
+      <label for="missionFocus">Active Mission Focus</label>
+      <input id="missionFocus" type="text" value="Mission 1 · Claim the Land">
+
+      <label for="teacherPrompt">Teacher Prompt</label>
+      <textarea id="teacherPrompt">Observe the terrain carefully. Every civilization decision changes the future.</textarea>
+
+      <div class="btn-row">
+        <button id="startSessionBtn" type="button">Start Session</button>
+        <button id="pauseSessionBtn" class="secondary" type="button">Pause Session</button>
+        <button id="endSessionBtn" class="warning" type="button">End Session</button>
+        <a class="btn secondary" href="/map">Open Student Map</a>
+        <a class="btn secondary" href="/hub">Open Command Center</a>
+        <a class="btn secondary" href="/teacher_dashboard">Teacher Dashboard</a>
+      </div>
+
+      <div id="sessionStatusBox" class="status-box">
+        No active class session loaded yet.
+      </div>
+    </div>
+
+
+    <!-- =========================================================
+    PHASE 10 STEP 1 — STEM NATION TEACHER TIMELINE V1
+    Live instructional flow for teacher-guided classroom pacing.
+    ========================================================= -->
+    <div id="teacherTimelinePanel" class="panel timeline-panel">
+      <h2>Live Instruction Timeline</h2>
+
+      <div class="preset-help">
+        Move the class through the live lesson flow. This timeline is saved locally
+        and can guide the teacher while students work on the map and command center.
+      </div>
+
+      <div id="timelineStepGrid" class="timeline-step-grid">
+        <button class="timeline-step-btn" type="button" data-step="launch">
+          <strong>1 · Launch Session</strong>
+          Set purpose and activate the room.
+        </button>
+
+        <button class="timeline-step-btn" type="button" data-step="observe">
+          <strong>2 · Observe Terrain</strong>
+          Students study regions, risks, and resources.
+        </button>
+
+        <button class="timeline-step-btn" type="button" data-step="decide">
+          <strong>3 · Student Decision</strong>
+          Students choose a settlement strategy.
+        </button>
+
+        <button class="timeline-step-btn" type="button" data-step="defend">
+          <strong>4 · Evidence Defense</strong>
+          Students explain and defend their reasoning.
+        </button>
+
+        <button class="timeline-step-btn" type="button" data-step="reflect">
+          <strong>5 · Reflection / Debrief</strong>
+          Class reviews consequence and next moves.
+        </button>
+      </div>
+
+      <div id="timelineControlBar" class="timeline-control-bar">
+        <button id="prevTimelineStepBtn" class="secondary" type="button">Previous Step</button>
+        <button id="nextTimelineStepBtn" type="button">Next Step</button>
+        <button id="resetTimelineBtn" class="warning" type="button">Reset Timeline</button>
+      </div>
+
+      
+<!-- STEM_NATION_TEACHER_REGION_FOCUS_SELECTOR_V1 -->
+
+<!-- STEM_NATION_TIMELINE_REGION_FOCUS_PRESETS_V1 -->
+<div id="timelineRegionFocusPresets" class="timeline-region-focus-presets">
+  <h3>Timeline Focus Presets</h3>
+  <p>
+    Use these quick teacher moves to focus the Living World Board during discussion.
+  </p>
+
+  <div class="timeline-region-preset-grid">
+    <button type="button" class="timeline-region-preset-btn" data-preset-region="" data-preset-title="Observe All Regions">
+      🌍 Observe All
+    </button>
+    <button type="button" class="timeline-region-preset-btn" data-preset-region="River Corridor" data-preset-title="Water & Flood Risk">
+      🌊 Water / Flood
+    </button>
+    <button type="button" class="timeline-region-preset-btn" data-preset-region="Forest Edge" data-preset-title="Shelter & Visibility">
+      🌲 Shelter / Visibility
+    </button>
+    <button type="button" class="timeline-region-preset-btn" data-preset-region="Highland Ridge" data-preset-title="Defense & Movement">
+      ⛰️ Defense / Movement
+    </button>
+    <button type="button" class="timeline-region-preset-btn" data-preset-region="Coastal Bay" data-preset-title="Trade & Storm Risk">
+      ⚓ Trade / Storm
+    </button>
+    <button type="button" class="timeline-region-preset-btn" data-preset-region="Open Plain" data-preset-title="Food & Exposure">
+      🌾 Food / Exposure
+    </button>
+    <button type="button" class="timeline-region-preset-btn" data-preset-region="Balanced Crossroads" data-preset-title="Trade & Outside Pressure">
+      🛤️ Trade Pressure
+    </button>
+  </div>
+</div>
+
+
+
+<!-- STEM_NATION_REGION_COMPARISON_MODE_V1 -->
+<div id="regionComparisonModePanel" class="region-comparison-mode-panel">
+  <h3>Region Comparison Mode</h3>
+  <p>
+    Compare two regions so students can explain which land is stronger for a specific purpose and at what cost.
+  </p>
+
+  <div class="region-comparison-row">
+    <label>
+      Region A
+      <select id="compareRegionA">
+        <option value="River Corridor">🌊 River Corridor</option>
+        <option value="Forest Edge">🌲 Forest Edge</option>
+        <option value="Highland Ridge">⛰️ Highland Ridge</option>
+        <option value="Coastal Bay">⚓ Coastal Bay</option>
+        <option value="Open Plain">🌾 Open Plain</option>
+        <option value="Balanced Crossroads">🛤️ Balanced Crossroads</option>
+      </select>
+    </label>
+
+    <label>
+      Region B
+      <select id="compareRegionB">
+        <option value="Highland Ridge">⛰️ Highland Ridge</option>
+        <option value="River Corridor">🌊 River Corridor</option>
+        <option value="Forest Edge">🌲 Forest Edge</option>
+        <option value="Coastal Bay">⚓ Coastal Bay</option>
+        <option value="Open Plain">🌾 Open Plain</option>
+        <option value="Balanced Crossroads">🛤️ Balanced Crossroads</option>
+      </select>
+    </label>
+
+    <button id="activateRegionComparisonBtn" type="button">
+      Compare Regions
+    </button>
+  </div>
+
+  <div id="regionComparisonStatus">
+    Comparison Mode: Not active
+  </div>
+</div>
+
+
+<div id="teacherRegionFocusSelector" class="teacher-region-focus-selector">
+  <h3>Teacher Region Focus</h3>
+  <p>
+    Direct student attention to one region on the Living World Board without changing the current timeline step.
+  </p>
+
+  <div class="teacher-region-focus-grid">
+    <button type="button" class="teacher-region-focus-btn" data-focus-region="River Corridor">🌊 River</button>
+    <button type="button" class="teacher-region-focus-btn" data-focus-region="Forest Edge">🌲 Forest</button>
+    <button type="button" class="teacher-region-focus-btn" data-focus-region="Highland Ridge">⛰️ Highland</button>
+    <button type="button" class="teacher-region-focus-btn" data-focus-region="Coastal Bay">⚓ Coast</button>
+    <button type="button" class="teacher-region-focus-btn" data-focus-region="Open Plain">🌾 Plain</button>
+    <button type="button" class="teacher-region-focus-btn" data-focus-region="Balanced Crossroads">🛤️ Crossroads</button>
+    <button type="button" class="teacher-region-focus-btn" data-focus-region="">Clear Focus</button>
+  </div>
+
+  <div id="teacherRegionFocusStatus">
+    Current Teacher Focus: Timeline controlled
+  </div>
+</div>
+
+
+<div id="timelineStatusBox" class="timeline-status-box">
+        No live instruction step selected yet.
+      </div>
+    </div>
+
+  </div>
+
+<script>
+/* STEM_NATION_SESSION_PRESETS_V1 */
+/* STEM_NATION_TEACHER_SESSION_STATE_V1 */
+/* STEM_NATION_DIRECT_PRESET_BUTTONS_V3 */
+(function () {
+  const CLASS_SESSION_KEY = "STEM_NATION_CLASS_SESSION_V1";
+
+  const sessionName = document.getElementById("sessionName");
+  const sessionMode = document.getElementById("sessionMode");
+  const missionFocus = document.getElementById("missionFocus");
+  const teacherPrompt = document.getElementById("teacherPrompt");
+  const statusBox = document.getElementById("sessionStatusBox");
+  const sessionPresetSelect = document.getElementById("sessionPresetSelect");
+  const applyPresetBtn = document.getElementById("applyPresetBtn");
+  const activePresetNotice = document.getElementById("activePresetNotice");
+
+  const SESSION_PRESETS = {
+    week1_settlement: {
+      sessionName: "Week 1 · Settlement Decision Lab",
+      sessionMode: "guided",
+      missionFocus: "Mission 1 · Claim the Land",
+      teacherPrompt: "Observe the terrain carefully. Every civilization decision changes the future."
+    },
+    week1_evidence: {
+      sessionName: "Week 1 · Evidence & Reflection",
+      sessionMode: "discussion",
+      missionFocus: "Evidence Review · Settlement Defense",
+      teacherPrompt: "Use evidence from the land to explain why your civilization can survive there."
+    },
+    teacher_demo: {
+      sessionName: "Teacher Live Demo",
+      sessionMode: "demo",
+      missionFocus: "Live Demonstration · Observe, Decide, Defend",
+      teacherPrompt: "Watch how one decision changes food, stability, knowledge, unity, territory, and wealth."
+    },
+    investor_walkthrough: {
+      sessionName: "Investor Walkthrough",
+      sessionMode: "demo",
+      missionFocus: "Platform Walkthrough · Student Decision System",
+      teacherPrompt: "Follow the student journey from map observation to saved evidence and command center review."
+    },
+    independent_work: {
+      sessionName: "Independent Student Work",
+      sessionMode: "independent",
+      missionFocus: "Independent Map Reasoning",
+      teacherPrompt: "Work independently. Choose carefully, record evidence, and defend your decision."
+    },
+    discussion_debrief: {
+      sessionName: "Discussion / Debrief",
+      sessionMode: "discussion",
+      missionFocus: "Classroom Debrief · Consequence and Reflection",
+      teacherPrompt: "Discuss how settlement choices created benefits, risks, and long-term consequences."
+    }
+  };
+
+  function readSession() {
+    const raw = localStorage.getItem(CLASS_SESSION_KEY);
+    if (!raw) return null;
+
+    try {
+      return JSON.parse(raw);
+    } catch (err) {
+      console.warn("Invalid class session data ignored.", err);
+      localStorage.removeItem(CLASS_SESSION_KEY);
+      return null;
+    }
+  }
+
+  function renderSession(session) {
+    if (!statusBox) return;
+
+    if (!session) {
+      statusBox.innerHTML = "No active class session loaded yet.";
+      return;
+    }
+
+    const statusValue = String(session.status || "unknown").toLowerCase();
+
+    const statusClass =
+      statusValue === "active"
+        ? "status-active"
+        : statusValue === "paused"
+          ? "status-paused"
+          : "status-ended";
+
+    statusBox.innerHTML = `
+      <strong>${session.sessionName}</strong><br>
+      Status: <span class="${statusClass}">${String(session.status || "unknown").toUpperCase()}</span><br>
+      Mode: ${session.sessionMode}<br>
+      Mission: ${session.missionFocus}<br>
+      Teacher Prompt: ${session.teacherPrompt}<br>
+      Updated: ${session.updatedAt ? new Date(session.updatedAt).toLocaleString() : new Date().toLocaleString()}
+    `;
+  }
+
+  function hydrateForm(session) {
+    if (!session) return;
+
+    sessionName.value = session.sessionName || sessionName.value;
+    sessionMode.value = session.sessionMode || sessionMode.value;
+    missionFocus.value = session.missionFocus || missionFocus.value;
+    teacherPrompt.value = session.teacherPrompt || teacherPrompt.value;
+  }
+
+  function applySessionPreset(presetKey) {
+    const key = presetKey || (sessionPresetSelect ? sessionPresetSelect.value : "week1_settlement");
+    const preset = SESSION_PRESETS[key];
+
+    if (!preset) {
+      console.warn("Preset not found:", key);
+      return;
+    }
+
+    sessionName.value = preset.sessionName;
+    sessionMode.value = preset.sessionMode;
+    missionFocus.value = preset.missionFocus;
+    teacherPrompt.value = preset.teacherPrompt;
+
+    const previewPayload = {
+      sessionName: preset.sessionName,
+      sessionMode: preset.sessionMode,
+      missionFocus: preset.missionFocus,
+      teacherPrompt: preset.teacherPrompt,
+      status: "preset ready",
+      updatedAt: new Date().toISOString()
+    };
+
+    if (activePresetNotice) {
+      activePresetNotice.innerHTML = `
+        <strong>Preset Ready:</strong> ${preset.sessionName}<br>
+        Mode: ${preset.sessionMode}<br>
+        Mission: ${preset.missionFocus}
+      `;
+    }
+
+    renderSession(previewPayload);
+  }
+
+  function writeSession(status) {
+    const now = new Date().toISOString();
+    const existing = readSession();
+
+    const payload = {
+      sessionName: sessionName.value.trim() || "Untitled STEM Nation Session",
+      sessionMode: sessionMode.value,
+      missionFocus: missionFocus.value.trim() || "Mission Focus Not Set",
+      teacherPrompt: teacherPrompt.value.trim() || "Observe. Ask. Decide. Record.",
+      status: status,
+      createdAt: existing && existing.createdAt ? existing.createdAt : now,
+      updatedAt: now
+    };
+
+    localStorage.setItem(CLASS_SESSION_KEY, JSON.stringify(payload));
+    renderSession(payload);
+  }
+
+  const existing = readSession();
+  hydrateForm(existing);
+  renderSession(existing);
+
+  if (applyPresetBtn) {
+    applyPresetBtn.addEventListener("click", function () {
+      applySessionPreset();
+    });
+  }
+
+  document.querySelectorAll(".preset-choice-btn").forEach(function (btn) {
+    btn.addEventListener("click", function () {
+      const presetKey = btn.getAttribute("data-preset");
+
+      if (sessionPresetSelect && presetKey) {
+        sessionPresetSelect.value = presetKey;
+      }
+
+      applySessionPreset(presetKey);
+    });
+  });
+
+  const startBtn = document.getElementById("startSessionBtn");
+  const pauseBtn = document.getElementById("pauseSessionBtn");
+  const endBtn = document.getElementById("endSessionBtn");
+
+  if (startBtn) {
+    startBtn.addEventListener("click", function () {
+      writeSession("active");
+    });
+  }
+
+  if (pauseBtn) {
+    pauseBtn.addEventListener("click", function () {
+      writeSession("paused");
+    });
+  }
+
+  if (endBtn) {
+    endBtn.addEventListener("click", function () {
+      writeSession("ended");
+    });
+  }
+
+  console.log("STEM_NATION_DIRECT_PRESET_BUTTONS_V3 ACTIVE");
+})();
+</script>
+
+
+<script>
+/* STEM_NATION_TEACHER_TIMELINE_V1 */
+(function () {
+  const TIMELINE_KEY = "STEM_NATION_CLASS_TIMELINE_V1";
+
+  // STEM_NATION_TEACHER_TIMELINE_REGION_FOCUS_V1
+  const timelineSteps = [
+    {
+      key: "launch",
+      title: "Launch Session",
+      focusRegion: "",
+      teacherMove: "Frame the purpose, name the mission, and activate the session.",
+      studentMove: "Listen for the mission goal and prepare to observe the world."
+    },
+    {
+      key: "observe",
+      title: "Observe Terrain",
+      focusRegion: "River Corridor",
+      teacherMove: "Prompt students to identify risks, resources, movement paths, and settlement pressures.",
+      studentMove: "Study the map, compare regions, and ask questions about survival."
+    },
+    {
+      key: "decide",
+      title: "Student Decision",
+      focusRegion: "Balanced Crossroads",
+      teacherMove: "Direct students to select a region and commit to a settlement decision.",
+      studentMove: "Choose a settlement region and explain the first reason for survival."
+    },
+    {
+      key: "defend",
+      title: "Evidence Defense",
+      focusRegion: "",
+      teacherMove: "Ask students to support decisions with evidence from terrain, water, food, defense, or trade.",
+      studentMove: "Record evidence and defend the settlement strategy."
+    },
+    {
+      key: "reflect",
+      title: "Reflection / Debrief",
+      focusRegion: "",
+      teacherMove: "Lead a discussion on consequences, tradeoffs, and what the civilization should do next.",
+      studentMove: "Reflect on risk, benefit, and how the decision shaped the future."
+    }
+  ];
+
+  const statusBox = document.getElementById("timelineStatusBox");
+  const stepButtons = Array.from(document.querySelectorAll(".timeline-step-btn"));
+  const prevBtn = document.getElementById("prevTimelineStepBtn");
+  const nextBtn = document.getElementById("nextTimelineStepBtn");
+  const resetBtn = document.getElementById("resetTimelineBtn");
+
+  function readTimeline() {
+    const raw = localStorage.getItem(TIMELINE_KEY);
+    if (!raw) return null;
+
+    try {
+      return JSON.parse(raw);
+    } catch (err) {
+      console.warn("Invalid timeline data ignored.", err);
+      localStorage.removeItem(TIMELINE_KEY);
+      return null;
+    }
+  }
+
+  function writeTimeline(stepKey) {
+    const index = timelineSteps.findIndex(function (step) {
+      return step.key === stepKey;
+    });
+
+    if (index < 0) return;
+
+    const step = timelineSteps[index];
+
+    const payload = {
+      activeStep: step.key,
+      activeIndex: index,
+      title: step.title,
+      focusRegion: step.focusRegion || "",
+      teacherMove: step.teacherMove,
+      studentMove: step.studentMove,
+      updatedAt: new Date().toISOString()
+    };
+
+    localStorage.setItem(TIMELINE_KEY, JSON.stringify(payload));
+    renderTimeline(payload);
+  }
+
+  function renderTimeline(payload) {
+    stepButtons.forEach(function (btn) {
+      btn.classList.remove("active");
+      if (payload && btn.getAttribute("data-step") === payload.activeStep) {
+        btn.classList.add("active");
+      }
+    });
+
+    if (!statusBox) return;
+
+    if (!payload) {
+      statusBox.innerHTML = "No live instruction step selected yet.";
+      return;
+    }
+
+    statusBox.innerHTML = `
+      <strong>Current Step:</strong> ${payload.activeIndex + 1} · ${payload.title}<br>
+      <strong>Teacher Move:</strong> ${payload.teacherMove}<br>
+      <strong>Student Move:</strong> ${payload.studentMove}<br>
+      <strong>Updated:</strong> ${new Date(payload.updatedAt).toLocaleString()}
+    `;
+  }
+
+  stepButtons.forEach(function (btn) {
+    btn.addEventListener("click", function () {
+      writeTimeline(btn.getAttribute("data-step"));
+    });
+  });
+
+  if (prevBtn) {
+    prevBtn.addEventListener("click", function () {
+      const current = readTimeline();
+      const currentIndex = current && Number.isInteger(current.activeIndex) ? current.activeIndex : 0;
+      const nextIndex = Math.max(0, currentIndex - 1);
+      writeTimeline(timelineSteps[nextIndex].key);
+    });
+  }
+
+  if (nextBtn) {
+    nextBtn.addEventListener("click", function () {
+      const current = readTimeline();
+      const currentIndex = current && Number.isInteger(current.activeIndex) ? current.activeIndex : -1;
+      const nextIndex = Math.min(timelineSteps.length - 1, currentIndex + 1);
+      writeTimeline(timelineSteps[nextIndex].key);
+    });
+  }
+
+  if (resetBtn) {
+    resetBtn.addEventListener("click", function () {
+      localStorage.removeItem(TIMELINE_KEY);
+      renderTimeline(null);
+    });
+  }
+
+  renderTimeline(readTimeline());
+
+  console.log("STEM_NATION_TEACHER_TIMELINE_V1 ACTIVE");
+})();
+</script>
+
+
+<!-- STEM_NATION_SESSION_HEALTH_INDICATOR_V1 -->
+<div id="sessionHealthIndicator" class="session-health-indicator missing">
+  Session Health: Checking...
+</div>
+
+
+<script>
+// STEM_NATION_SESSION_HEALTH_INDICATOR_V1
+(function installSessionHealthIndicator() {
+  const KEY = "STEM_NATION_CLASS_TIMELINE_V1";
+  const el = document.getElementById("sessionHealthIndicator");
+  if (!el) return;
+
+  function renderHealth() {
+    const raw = localStorage.getItem(KEY);
+
+    el.classList.remove("active", "idle", "missing");
+
+    if (!raw) {
+      el.classList.add("missing");
+      el.textContent = "Session Health: No Timeline";
+      return;
+    }
+
+    try {
+      const state = JSON.parse(raw);
+      const title = state.title || state.activeStepTitle || "Timeline Active";
+      const updated = state.updatedAt || state.updated || state.lastUpdated;
+
+      el.classList.add("active");
+      el.textContent = `Session Health: Active · ${title}`;
+
+      if (updated) {
+        const age = Date.now() - new Date(updated).getTime();
+        if (!Number.isNaN(age) && age > 1000 * 60 * 30) {
+          el.classList.remove("active");
+          el.classList.add("idle");
+          el.textContent = `Session Health: Idle · ${title}`;
+        }
+      }
+
+    } catch (err) {
+      el.classList.add("missing");
+      el.textContent = "Session Health: Timeline Error";
+    }
+  }
+
+  renderHealth();
+  window.addEventListener("storage", renderHealth);
+  setInterval(renderHealth, 1500);
+})();
+</script>
+
+
+<script>
+// STEM_NATION_TEACHER_REGION_FOCUS_SELECTOR_V1
+(function installTeacherRegionFocusSelector() {
+  const KEY = "STEM_NATION_CLASS_TIMELINE_V1";
+  const buttons = Array.from(document.querySelectorAll(".teacher-region-focus-btn"));
+  const status = document.getElementById("teacherRegionFocusStatus");
+
+  if (!buttons.length || !status) return;
+
+  function readTimeline() {
+    const raw = localStorage.getItem(KEY);
+    if (!raw) return null;
+
+    try {
+      return JSON.parse(raw);
+    } catch (err) {
+      console.warn("Invalid timeline data ignored for region focus selector.", err);
+      return null;
+    }
+  }
+
+  function writeFocus(region) {
+    const current = readTimeline() || {
+      activeStep: "manual",
+      activeIndex: -1,
+      title: "Manual Region Focus",
+      teacherMove: "Teacher is directing attention to a selected region.",
+      studentMove: "Observe the highlighted region and explain its advantage and risk."
+    };
+
+    current.focusRegion = region || "";
+    current.updatedAt = new Date().toISOString();
+
+    localStorage.setItem(KEY, JSON.stringify(current));
+    renderFocus(current.focusRegion);
+  }
+
+  function renderFocus(region) {
+    buttons.forEach((btn) => {
+      btn.classList.toggle("active", btn.dataset.focusRegion === region);
+    });
+
+    status.textContent = region
+      ? `Current Teacher Focus: ${region}`
+      : "Current Teacher Focus: None";
+  }
+
+  buttons.forEach((btn) => {
+    btn.addEventListener("click", function () {
+      writeFocus(btn.dataset.focusRegion || "");
+    });
+  });
+
+  const current = readTimeline();
+  renderFocus(current ? (current.focusRegion || "") : "");
+})();
+</script>
+
+
+<script>
+// STEM_NATION_TIMELINE_REGION_FOCUS_PRESETS_V1
+(function installTimelineRegionFocusPresets() {
+  const KEY = "STEM_NATION_CLASS_TIMELINE_V1";
+  const buttons = Array.from(document.querySelectorAll(".timeline-region-preset-btn"));
+
+  if (!buttons.length) return;
+
+  function readTimeline() {
+    const raw = localStorage.getItem(KEY);
+    if (!raw) return null;
+
+    try {
+      return JSON.parse(raw);
+    } catch (err) {
+      console.warn("Invalid timeline data ignored for region focus preset.", err);
+      return null;
+    }
+  }
+
+  function writePreset(region, presetTitle) {
+    const current = readTimeline() || {
+      activeStep: "manual-focus",
+      activeIndex: -1,
+      title: presetTitle || "Manual Focus",
+      teacherMove: "Teacher is focusing student observation on a region or comparison task.",
+      studentMove: "Observe the focused region and explain advantage, risk, and evidence."
+    };
+
+    current.focusRegion = region || "";
+    current.focusPresetTitle = presetTitle || "";
+    current.updatedAt = new Date().toISOString();
+
+    if (region) {
+      current.teacherMove = `Focus the class on ${region}: ${presetTitle}.`;
+      current.studentMove = "Observe the focused region and identify advantage, risk, and evidence.";
+    } else {
+      current.teacherMove = "Focus the class on comparing all regions before choosing a settlement.";
+      current.studentMove = "Compare all regions and prepare to explain the strongest settlement choice.";
+    }
+
+    localStorage.setItem(KEY, JSON.stringify(current));
+
+    const manualStatus = document.getElementById("teacherRegionFocusStatus");
+    if (manualStatus) {
+      manualStatus.textContent = region
+        ? `Current Teacher Focus: ${region}`
+        : "Current Teacher Focus: All Regions";
+    }
+
+    document.querySelectorAll(".teacher-region-focus-btn").forEach((btn) => {
+      btn.classList.toggle("active", btn.dataset.focusRegion === region);
+    });
+  }
+
+  buttons.forEach((btn) => {
+    btn.addEventListener("click", function () {
+      writePreset(btn.dataset.presetRegion || "", btn.dataset.presetTitle || "");
+    });
+  });
+})();
+</script>
+
+
+<script>
+// STEM_NATION_REGION_COMPARISON_MODE_V1
+(function installRegionComparisonMode() {
+  const KEY = "STEM_NATION_CLASS_TIMELINE_V1";
+  const regionA = document.getElementById("compareRegionA");
+  const regionB = document.getElementById("compareRegionB");
+  const activateBtn = document.getElementById("activateRegionComparisonBtn");
+  const status = document.getElementById("regionComparisonStatus");
+
+  if (!regionA || !regionB || !activateBtn || !status) return;
+
+  function readTimeline() {
+    const raw = localStorage.getItem(KEY);
+    if (!raw) return null;
+
+    try {
+      return JSON.parse(raw);
+    } catch (err) {
+      console.warn("Invalid timeline data ignored for comparison mode.", err);
+      return null;
+    }
+  }
+
+  function activateComparison() {
+    const a = regionA.value;
+    const b = regionB.value;
+
+    if (!a || !b || a === b) {
+      status.textContent = "Comparison Mode: Choose two different regions.";
+      return;
+    }
+
+    const current = readTimeline() || {
+      activeStep: "compare",
+      activeIndex: -1,
+      title: "Region Comparison Mode"
+    };
+
+    current.comparisonMode = true;
+    current.compareRegions = [a, b];
+    current.focusRegion = a;
+    current.title = "Region Comparison Mode";
+    current.teacherMove = `Compare ${a} and ${b}. Ask students: Which region is stronger for survival, trade, defense, or growth?`;
+    current.studentMove = "Compare both regions using advantage, risk, evidence, and long-term consequence.";
+    current.updatedAt = new Date().toISOString();
+
+    localStorage.setItem(KEY, JSON.stringify(current));
+
+    status.textContent = `Comparison Mode: ${a} vs ${b}`;
+  }
+
+  activateBtn.addEventListener("click", activateComparison);
+})();
+</script>
+
+</body>
+</html>

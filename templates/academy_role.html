@@ -1,379 +1,405 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Phase 3 — Assign Responsibility</title>
+  <title>STEM Nation Academy | Responsibility Design</title>
 
   <style>
-    body {
+    html, body {
       margin: 0;
-      overflow: hidden;
-      font-family: Arial, sans-serif;
-      background: black;
+      width: 100%;
+      min-height: 100%;
+      background: #050505;
       color: white;
+      font-family: Arial, sans-serif;
+      text-align: center;
+      overflow: hidden;
     }
 
-    #map {
+    body {
+      opacity: 0;
+      transition: opacity 1.2s ease;
+    }
+
+    .memory-bg {
       position: fixed;
       inset: 0;
+      background:
+        radial-gradient(circle at center, rgba(0,0,0,0.34), transparent 42%),
+        linear-gradient(rgba(0,0,0,0.18), rgba(0,0,0,0.36)),
+        url("{{ url_for('static', filename='inspiration/academy_memory_chamber.png') }}");
       background-size: cover;
       background-position: center;
-      background-repeat: no-repeat;
+      filter: saturate(0.92) brightness(0.90);
+      transform: scale(1.02);
+      z-index: 0;
     }
 
-    .title-chip {
+    .academy-line {
       position: absolute;
-      top: 8px;
-      left: 50%;
-      transform: translateX(-50%);
-      z-index: 30;
-      background: rgba(0,0,0,0.48);
-      border-radius: 8px;
-      padding: 6px 12px;
-      font-size: 16px;
-      font-weight: bold;
-      text-align: center;
-      max-width: calc(100% - 16px);
-      box-sizing: border-box;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 3px;
+      background: linear-gradient(90deg, transparent, #d4af37, transparent);
+      opacity: 0.78;
     }
 
-    .info-toggle {
-      position: absolute;
-      top: 8px;
-      left: 8px;
-      z-index: 31;
-      border: none;
-      border-radius: 7px;
-      background: rgba(0,0,0,0.55);
-      color: white;
-      padding: 5px 8px;
-      font-size: 11px;
-      cursor: pointer;
-    }
-
-    .info-panel {
-      position: absolute;
-      top: 34px;
-      left: 8px;
-      width: 220px;
-      z-index: 30;
-      background: rgba(0,0,0,0.82);
-      border-radius: 9px;
-      padding: 8px;
-      box-sizing: border-box;
-      display: none;
-    }
-
-    .info-panel h3,
-    .ai-guide h3 {
-      margin: 0 0 6px 0;
-      color: #f4d35e;
-      font-size: 14px;
-    }
-
-    .info-panel p,
-    .ai-guide-text {
-      margin: 0 0 6px 0;
-      line-height: 1.4;
-      font-size: 11px;
-      color: white;
-    }
-
-    .saved-question {
-      margin-top: 6px;
-      background: rgba(255,255,255,0.08);
-      padding: 6px;
-      border-radius: 7px;
-      font-size: 11px;
-      line-height: 1.35;
-    }
-
-    .badge {
-      margin-top: 6px;
-      padding: 6px;
-      background: rgba(244, 211, 94, 0.14);
-      border: 1px solid rgba(244, 211, 94, 0.45);
-      border-radius: 7px;
-      color: #f4d35e;
-      font-weight: bold;
-      text-align: center;
-      font-size: 11px;
-    }
-
-    .ai-guide {
-      position: absolute;
-      top: 170px;
-      left: 8px;
-      width: 220px;
-      z-index: 30;
-      background: rgba(0,0,0,0.82);
-      border-radius: 9px;
-      padding: 8px;
-      box-sizing: border-box;
-    }
-
-    .decision-box {
-      position: absolute;
-      bottom: 8px;
-      left: 50%;
-      transform: translateX(-50%);
-      width: min(360px, calc(100% - 16px));
-      z-index: 30;
-      background: rgba(0,0,0,0.68);
-      border-radius: 8px;
-      padding: 10px;
-      box-sizing: border-box;
-      text-align: center;
-    }
-
-    .decision-question {
-      font-size: 13px;
-      line-height: 1.3;
-      margin-bottom: 5px;
-    }
-
-    .decision-note {
-      font-size: 10px;
-      opacity: 0.88;
-      line-height: 1.25;
-      margin-bottom: 6px;
-    }
-
-    textarea {
-      width: 100%;
-      min-height: 42px;
-      max-height: 72px;
-      border: none;
-      border-radius: 6px;
-      box-sizing: border-box;
-      resize: vertical;
-      padding: 6px;
-      font-size: 11px;
-      font-family: Arial, sans-serif;
-    }
-
-    .button-row {
-      margin-top: 6px;
+    .container {
+      min-height: 100vh;
       display: flex;
+      align-items: center;
       justify-content: center;
-      gap: 5px;
-      flex-wrap: wrap;
+      padding: 42px;
+      box-sizing: border-box;
+      position: relative;
     }
 
-    .nav-btn {
-      border: none;
-      border-radius: 6px;
-      background: #d4af37;
-      color: black;
-      padding: 6px 8px;
-      font-size: 11px;
-      font-weight: bold;
-      cursor: pointer;
+
+
+
+    .academy-haze {
+      position: absolute;
+      inset: -20%;
+      z-index: 0;
+      pointer-events: none;
+      background:
+        radial-gradient(circle at 35% 30%, rgba(212,175,55,0.09), transparent 32%),
+        radial-gradient(circle at 68% 64%, rgba(95,130,170,0.06), transparent 34%);
+      filter: blur(18px);
+      opacity: 0.50;
+      animation: hazeDrift 22s ease-in-out infinite alternate;
     }
 
-    .completion-overlay {
+    .academy-particles {
       position: absolute;
       inset: 0;
-      background: rgba(0,0,0,0.86);
-      display: none;
-      z-index: 40;
-      color: white;
-      text-align: center;
-      font-family: Arial, sans-serif;
+      z-index: 1;
+      pointer-events: none;
+      overflow: hidden;
     }
 
-    .completion-inner {
-      max-width: 720px;
-      margin: 120px auto 0;
-      padding: 0 24px;
-      box-sizing: border-box;
+    .academy-particles span {
+      position: absolute;
+      width: 3px;
+      height: 3px;
+      border-radius: 50%;
+      background: rgba(212,175,55,0.40);
+      box-shadow: 0 0 12px rgba(212,175,55,0.24);
+      animation: particleFloat 18s linear infinite;
+      opacity: 0;
     }
-  </style>
+
+    .academy-particles span:nth-child(1) { left: 14%; top: 74%; animation-delay: 0s; }
+    .academy-particles span:nth-child(2) { left: 26%; top: 84%; animation-delay: 3s; }
+    .academy-particles span:nth-child(3) { left: 44%; top: 78%; animation-delay: 6s; }
+    .academy-particles span:nth-child(4) { left: 61%; top: 82%; animation-delay: 2s; }
+    .academy-particles span:nth-child(5) { left: 76%; top: 75%; animation-delay: 8s; }
+    .academy-particles span:nth-child(6) { left: 88%; top: 86%; animation-delay: 5s; }
+
+    .academy-seal {
+      position: absolute;
+      width: min(560px, 78vw);
+      height: min(560px, 78vw);
+      opacity: 0.22;
+      z-index: 0;
+      animation: sealBreath 14s ease-in-out infinite;
+      pointer-events: none;
+    }
+
+    .responsibility-card {
+      position: relative;
+      z-index: 2;
+      opacity: 0;
+      transform: translateY(10px) scale(0.985);
+      transition: opacity 1.2s ease, transform 1.2s ease;
+      width: min(940px, 92vw);
+      padding: clamp(26px, 5vw, 50px);
+      border-radius: 20px;
+      background: rgba(0,0,0,0.44);
+      border: 1px solid rgba(212,175,55,0.30);
+      box-shadow: 0 18px 70px rgba(0,0,0,0.60);
+      backdrop-filter: blur(3px);
+    }
+
+    body.role-started .responsibility-card {
+      opacity: 1;
+      transform: translateY(0) scale(1);
+    }
+
+    .academy-label {
+      font-size: 12px;
+      letter-spacing: 4px;
+      text-transform: uppercase;
+      color: #d4af37;
+      opacity: 0.90;
+      margin-bottom: 10px;
+    }
+
+    .week-label {
+      font-size: 13px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      opacity: 0.66;
+      margin-bottom: 28px;
+    }
+
+    .line {
+      font-size: clamp(24px, 3.2vw, 36px);
+      margin: 11px auto;
+      opacity: 0;
+      transition: opacity 1.1s ease, transform 1.1s ease;
+      transform: translateY(8px);
+      max-width: 880px;
+      line-height: 1.28;
+      text-shadow: 0 4px 20px rgba(0,0,0,0.90);
+    }
+
+    .line.show {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .artifact-note {
+      margin: 34px auto 0;
+      font-size: clamp(15px, 1.7vw, 18px);
+      opacity: 0;
+      transition: opacity 1.1s ease, transform 1.1s ease;
+      transform: translateY(8px);
+      max-width: 790px;
+      line-height: 1.45;
+      color: #d9c27a;
+      border-top: 1px solid rgba(212,175,55,0.20);
+      padding-top: 22px;
+    }
+
+    .artifact-note.show {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .continue-button {
+      margin-top: 28px;
+      opacity: 0;
+      transform: translateY(8px);
+      transition: opacity 1.1s ease, transform 1.1s ease, background 0.3s ease;
+      border: 1px solid rgba(212,175,55,0.55);
+      background: rgba(0,0,0,0.40);
+      color: #f0df9a;
+      padding: 14px 24px;
+      border-radius: 999px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      font-size: 12px;
+      cursor: pointer;
+      box-shadow: 0 12px 38px rgba(0,0,0,0.48);
+      pointer-events: none;
+    }
+
+    .continue-button.show {
+      opacity: 1;
+      transform: translateY(0);
+      pointer-events: auto;
+    }
+
+    .continue-button:hover {
+      background: rgba(212,175,55,0.13);
+    }
+
+    .play-audio-button {
+      position: fixed;
+      left: 22px;
+      bottom: 22px;
+      z-index: 8;
+      border: 1px solid rgba(212,175,55,0.42);
+      background: rgba(0,0,0,0.42);
+      color: #f0df9a;
+      padding: 10px 16px;
+      border-radius: 999px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      font-size: 11px;
+      cursor: pointer;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.45);
+    }
+
+    .play-audio-button:hover {
+      background: rgba(212,175,55,0.13);
+    }
+
+
+
+    @keyframes sealBreath {
+      0%, 100% {
+        transform: scale(0.985);
+        opacity: 0.18;
+      }
+      50% {
+        transform: scale(1.015);
+        opacity: 0.28;
+      }
+    }
+
+    @keyframes hazeDrift {
+      0% {
+        transform: translate(-1.5%, -1%) scale(1);
+      }
+      100% {
+        transform: translate(1.5%, 1%) scale(1.04);
+      }
+    }
+
+    @keyframes particleFloat {
+      0% {
+        transform: translateY(0) translateX(0);
+        opacity: 0;
+      }
+      18% {
+        opacity: 0.26;
+      }
+      78% {
+        opacity: 0.16;
+      }
+      100% {
+        transform: translateY(-78vh) translateX(22px);
+        opacity: 0;
+      }
+    }
+  
+/* STEM_NATION_ROLE_PURPOSE_LINE_V1 */
+.stage-purpose {
+  margin: -16px auto 22px;
+  max-width: 780px;
+  color: rgba(240,223,154,0.88);
+  font-size: clamp(13px, 1.35vw, 16px);
+  line-height: 1.45;
+  letter-spacing: 0.04em;
+}
+
+</style>
+<!-- STEM_NATION_RESPONSIBILITY_DESIGN_LANGUAGE_V1 -->
 </head>
 
 <body>
+<audio id="academyRoleAudio" preload="auto">
+  <source src="{{ url_for('static', filename='academy_role_demo.mp3') }}" type="audio/mpeg">
+</audio>
 
-  <div id="map"></div>
+<button id="playRoleAudioBtn" class="play-audio-button">Begin Responsibility</button>
 
-  <button class="info-toggle" onclick="toggleInfo()">Info</button>
+<div class="memory-bg" aria-hidden="true"></div>
+<div class="academy-line"></div>
 
-  <div id="infoPanel" class="info-panel">
-    <h3>Your Mission</h3>
-    <p>
-      A nation cannot function through place alone.<br>
-      It must also define responsibility, trust, and leadership.
-    </p>
+<div class="container">
+  <div class="academy-haze" aria-hidden="true"></div>
 
-    <div id="savedQuestion" class="saved-question" style="display:none;"></div>
 
-    <div class="badge">
-      Badge Unlocked<br><br>
-      Responsibility Architect
-    </div>
+  <div class="academy-particles" aria-hidden="true">
+    <span></span><span></span><span></span><span></span><span></span><span></span>
   </div>
 
-  <div class="ai-guide">
-    <h3>AI Guide</h3>
-    <p id="aiGuideText" class="ai-guide-text">
-      A nation survives before it thrives. Who ensures daily life can continue?
-    </p>
-  </div>
+  <svg class="academy-seal" viewBox="0 0 500 500" aria-hidden="true">
+    <circle cx="250" cy="250" r="210" fill="none" stroke="#d4af37" stroke-width="2"/>
+    <circle cx="250" cy="250" r="145" fill="none" stroke="#d4af37" stroke-width="1" opacity="0.75"/>
+    <circle cx="250" cy="250" r="8" fill="#d4af37"/>
+    <line x1="250" y1="40" x2="250" y2="110" stroke="#d4af37" stroke-width="2"/>
+    <line x1="250" y1="390" x2="250" y2="460" stroke="#d4af37" stroke-width="2"/>
+    <line x1="40" y1="250" x2="110" y2="250" stroke="#d4af37" stroke-width="2"/>
+    <line x1="390" y1="250" x2="460" y2="250" stroke="#d4af37" stroke-width="2"/>
+    <line x1="104" y1="104" x2="154" y2="154" stroke="#d4af37" stroke-width="1"/>
+    <line x1="396" y1="104" x2="346" y2="154" stroke="#d4af37" stroke-width="1"/>
+    <line x1="104" y1="396" x2="154" y2="346" stroke="#d4af37" stroke-width="1"/>
+    <line x1="396" y1="396" x2="346" y2="346" stroke="#d4af37" stroke-width="1"/>
+    <path d="M250 80 C330 160 330 340 250 420 C170 340 170 160 250 80Z" fill="none" stroke="#d4af37" stroke-width="1" opacity="0.55"/>
+    <path d="M80 250 C160 170 340 170 420 250 C340 330 160 330 80 250Z" fill="none" stroke="#d4af37" stroke-width="1" opacity="0.55"/>
+  </svg>
 
-  <div id="worldTitle" class="title-chip">Phase 3 — Assign Responsibility</div>
+  <div class="responsibility-card">
+    <div class="academy-label">Academy Responsibility Lab</div>
 
-  <div class="decision-box">
-    <div id="decisionQuestion" class="decision-question"></div>
-    <div id="decisionNote" class="decision-note">
-      Define the role clearly, then explain why it matters.
+    <div class="week-label">Settlement Design → Responsibility</div>
+
+    <div class="stage-purpose">Purpose: Form the responsibility mindset before your first civilization decision.</div>
+
+    <div id="l1" class="line">An individual does not observe in isolation.</div>
+    <div id="l2" class="line">Every decision reaches beyond the person who makes it.</div>
+    <div id="l3" class="line">A river can feed a people.</div>
+    <div id="l4" class="line">A mountain can protect them.</div>
+    <div id="l5" class="line">A poor choice of land can weaken everything that follows.</div>
+    <div id="l6" class="line">This is the beginning of responsibility.</div>
+
+    <div id="artifact" class="artifact-note">
+      Carry this forward: what you observe will shape what you choose.
     </div>
 
-    <textarea id="decisionAnswer" placeholder="Type your answer..."></textarea>
-
-    <div class="button-row">
-      <button class="nav-btn" onclick="submitDecision()">Submit</button>
-      <button class="nav-btn" onclick="skipDecision()">Skip</button>
-    </div>
+    <button id="continueDecisionBtn" class="continue-button">Continue to First Decision</button>
   </div>
+</div>
 
-  <div id="completionOverlay" class="completion-overlay">
-    <div class="completion-inner">
-      <div style="font-size:32px; margin-bottom:20px;">Phase 3 complete.</div>
-      <div style="font-size:18px; line-height:1.7; opacity:0.92;">
-        You have begun defining who carries responsibility<br>
-        within the emerging nation.
-      </div>
-      <div style="margin-top:28px;">
-        <button class="nav-btn" onclick="window.location.href='/academy_decision'">
-          Continue
-        </button>
-      </div>
-    </div>
-  </div>
+<script>
+window.onload = () => {
+  document.body.style.opacity = 1;
 
-  <script>
-    const regionImages = {
-      river: "/static/map_balanced_blank.png",
-      forest: "/static/map_forest_blank.png",
-      desert: "/static/map_desert_blank.png",
-      coastal: "/static/map_coastal_blank.png",
-      mountain: "/static/map_mountain_blank.png",
-      savanna: "/static/map_savanna_blank.png",
-      balanced: "/static/map_balanced_blank.png"
-    };
+  const academyRoleAudio = document.getElementById("academyRoleAudio");
+  const playRoleAudioBtn = document.getElementById("playRoleAudioBtn");
+  const lines = ["l1","l2","l3","l4","l5","l6","artifact"];
 
-    const worldContent = {
-      river: { title: "River Nexus — Assign Responsibility" },
-      coastal: { title: "Coastal Exchange — Assign Responsibility" },
-      forest: { title: "Forest Intelligence — Assign Responsibility" },
-      desert: { title: "Desert Adaptation — Assign Responsibility" },
-      mountain: { title: "Mountain Stronghold — Assign Responsibility" },
-      balanced: { title: "Balanced Core — Assign Responsibility" }
-    };
+  const startRoleChamber = () => {
+    document.body.classList.add("role-started");
 
-    const decisionSteps = [
-      {
-        key: "foodLeader",
-        question: "Who should make sure the people are fed first?",
-        note: "Name the role and explain why it matters.",
-        ai: "A nation survives before it thrives. Who ensures daily life can continue?"
-      },
-      {
-        key: "defenseLeader",
-        question: "Who should organize protection?",
-        note: "Describe the role and its responsibilities.",
-        ai: "Protection is not only strength. It is foresight, coordination, and trust."
-      },
-      {
-        key: "movementLeader",
-        question: "Who should oversee movement and roads?",
-        note: "Explain how this role keeps the nation connected.",
-        ai: "Movement connects people, places, and decisions. Who keeps the nation connected?"
-      },
-      {
-        key: "tradeLeader",
-        question: "Who should guide trade and exchange?",
-        note: "Explain how value and fairness are maintained.",
-        ai: "Exchange depends on order and fairness. Who can manage value between groups?"
-      },
-      {
-        key: "sharedDuty",
-        question: "What responsibility belongs to everyone?",
-        note: "Name the shared duty and explain why all must carry it.",
-        ai: "Some responsibilities belong to everyone. What must the whole society protect together?"
-      }
-    ];
-
-    let currentStep = 0;
-
-    const params = new URLSearchParams(window.location.search);
-    const selectedWorld = params.get("world") || sessionStorage.getItem("selectedRegion") || "balanced";
-    const savedQuestion = sessionStorage.getItem("studentQuestion");
-
-    const mapElement = document.getElementById("map");
-    mapElement.style.backgroundImage =
-      "url('" + (regionImages[selectedWorld] || regionImages["balanced"]) + "')";
-
-    document.getElementById("worldTitle").innerText =
-      (worldContent[selectedWorld] || worldContent["balanced"]).title;
-
-    if (savedQuestion) {
-      const box = document.getElementById("savedQuestion");
-      box.style.display = "block";
-      box.innerHTML =
-        'Guiding question: <span style="color:#ffffff;">"' +
-        savedQuestion.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;") +
-        '"</span>';
+    if (playRoleAudioBtn) {
+      playRoleAudioBtn.style.display = "none";
     }
 
-    function toggleInfo() {
-      const panel = document.getElementById("infoPanel");
-      panel.style.display = panel.style.display === "block" ? "none" : "block";
-    }
-
-    function loadStep() {
-      const step = decisionSteps[currentStep];
-      document.getElementById("decisionQuestion").innerText = step.question;
-      document.getElementById("decisionNote").innerText = step.note;
-      document.getElementById("decisionAnswer").value = "";
-
-      const aiGuideText = document.getElementById("aiGuideText");
-      if (aiGuideText && step.ai) {
-        aiGuideText.innerText = step.ai;
+    if (academyRoleAudio) {
+      academyRoleAudio.volume = 0.38;
+      academyRoleAudio.currentTime = 0;
+      const playAttempt = academyRoleAudio.play();
+      if (playAttempt !== undefined) {
+        playAttempt.catch(() => {
+          console.log("Academy role audio could not start.");
+        });
       }
     }
 
-    function submitDecision() {
-      const step = decisionSteps[currentStep];
-      const answer = document.getElementById("decisionAnswer").value.trim();
+    lines.forEach((id, i) => {
+      setTimeout(() => {
+        document.getElementById(id).classList.add("show");
+      }, i * 2600);
+    });
 
-      if (!answer) {
-        alert("Type your answer before continuing.");
-        return;
+    setTimeout(() => {
+      if (academyRoleAudio) {
+        let fadeSteps = 20;
+        let fadeInterval = setInterval(() => {
+          if (fadeSteps <= 0) {
+            clearInterval(fadeInterval);
+            academyRoleAudio.pause();
+            academyRoleAudio.currentTime = 0;
+          } else {
+            academyRoleAudio.volume = Math.max(0, academyRoleAudio.volume - 0.015);
+            fadeSteps--;
+          }
+        }, 180);
       }
 
-      sessionStorage.setItem(step.key, answer);
-      nextStep();
-    }
-
-    function skipDecision() {
-      const step = decisionSteps[currentStep];
-      sessionStorage.setItem(step.key, "SKIPPED");
-      nextStep();
-    }
-
-    function nextStep() {
-      currentStep++;
-
-      if (currentStep >= decisionSteps.length) {
-        document.querySelector(".decision-box").style.display = "none";
-        document.getElementById("completionOverlay").style.display = "block";
-        return;
+      const continueDecisionBtn = document.getElementById("continueDecisionBtn");
+      if (continueDecisionBtn) {
+        continueDecisionBtn.classList.add("show");
+        continueDecisionBtn.addEventListener("click", () => {
+          document.body.style.opacity = 0;
+          setTimeout(() => {
+            window.location.href = "/academy_decision";
+          }, 1800);
+        });
       }
+    }, 23000);
+  };
 
-      loadStep();
-    }
-
-    loadStep();
-  </script>
+  if (playRoleAudioBtn) {
+    playRoleAudioBtn.addEventListener("click", startRoleChamber);
+  }
+};
+</script>
 
 </body>
 </html>

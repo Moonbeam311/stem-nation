@@ -1,0 +1,671 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Academy Arrival | STEM Nation</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <style>
+    /* CI-4D_B_ACADEMY_ARRIVAL_POLISH */
+    /* CI-4D_C_ARRIVAL_WORDING_SOFT_POLISH */
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      font-family: Georgia, "Times New Roman", serif;
+      color: #f8f0d5;
+      background:
+        radial-gradient(circle at 18% 14%, rgba(244, 211, 94, 0.20), transparent 28%),
+        radial-gradient(circle at 82% 18%, rgba(125, 211, 252, 0.14), transparent 30%),
+        linear-gradient(135deg, #061826 0%, #07131d 58%, #03070d 100%);
+      overflow-x: hidden;
+    }
+
+    .atmosphere {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      background:
+        linear-gradient(115deg, rgba(255,255,255,0.04), transparent 24%),
+        radial-gradient(circle at 50% 78%, rgba(244,211,94,0.11), transparent 30%);
+      opacity: .9;
+    }
+
+    .page {
+      position: relative;
+      z-index: 1;
+      min-height: 100vh;
+      display: grid;
+      place-items: center;
+      padding: 42px 22px;
+    }
+
+    .arrival-card {
+      width: min(1080px, 100%);
+      border: 1px solid rgba(244,211,94,.28);
+      border-radius: 34px;
+      background: rgba(3, 7, 13, .76);
+      box-shadow: 0 30px 90px rgba(0,0,0,.46);
+      overflow: hidden;
+      display: grid;
+      grid-template-columns: .9fr 1.35fr;
+    }
+
+    .identity-panel {
+      padding: 34px;
+      border-right: 1px solid rgba(244,211,94,.16);
+      background:
+        radial-gradient(circle at 50% 18%, rgba(244,211,94,.16), transparent 30%),
+        linear-gradient(180deg, rgba(125,211,252,.08), rgba(244,211,94,.05));
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+    }
+
+    .avatar-frame {
+      width: 220px;
+      height: 260px;
+      border-radius: 36px;
+      border: 1px solid rgba(244,211,94,.38);
+      background:
+        radial-gradient(circle at 50% 26%, rgba(248,240,213,.22), transparent 22%),
+        linear-gradient(145deg, rgba(125,211,252,.12), rgba(244,211,94,.08));
+      display: grid;
+      place-items: center;
+      overflow: hidden;
+      box-shadow: 0 22px 64px rgba(0,0,0,.34);
+      margin-bottom: 18px;
+    }
+
+    .avatar-frame img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .avatar-fallback {
+      color: #f4d35e;
+      text-transform: uppercase;
+      letter-spacing: .09em;
+      font-weight: 900;
+      font-size: .85rem;
+      padding: 18px;
+    }
+
+    .learner-nameplate {
+      margin: 0 0 4px;
+      color: #fff5cf;
+      font-size: 1.35rem;
+      font-weight: 900;
+      line-height: 1.15;
+      overflow-wrap: anywhere;
+      text-shadow: 0 10px 28px rgba(0,0,0,.34);
+    }
+
+    .learner-role {
+      margin: 0 0 12px;
+      color: #7dd3fc;
+      font-size: .86rem;
+      font-weight: 900;
+      letter-spacing: .08em;
+      line-height: 1.25;
+      text-transform: uppercase;
+    }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 999px;
+      border: 1px solid rgba(125,211,252,.34);
+      background: rgba(125,211,252,.09);
+      color: #7dd3fc;
+      padding: 8px 12px;
+      font-size: .78rem;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      font-weight: 900;
+    }
+
+    .content-panel {
+      padding: 46px;
+    }
+
+    .kicker {
+      color: #f4d35e;
+      text-transform: uppercase;
+      letter-spacing: .12em;
+      font-size: .82rem;
+      font-weight: 900;
+      margin-bottom: 14px;
+    }
+
+    h1 {
+      margin: 0;
+      font-size: clamp(2.4rem, 5vw, 4.8rem);
+      line-height: .96;
+      color: #fff5cf;
+      text-shadow: 0 14px 40px rgba(0,0,0,.42);
+    }
+
+    .lead {
+      margin: 22px 0 0;
+      max-width: 680px;
+      color: rgba(248,240,213,.82);
+      font-size: 1.1rem;
+      line-height: 1.7;
+    }
+
+    .mission-strip {
+      margin-top: 28px;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+    }
+
+    .mission-card {
+      border: 1px solid rgba(244,211,94,.16);
+      border-radius: 18px;
+      background: rgba(255,255,255,.045);
+      padding: 15px;
+      min-height: 98px;
+    }
+
+    .mission-card strong {
+      display: block;
+      color: #f4d35e;
+      margin-bottom: 7px;
+      font-size: .9rem;
+    }
+
+    .mission-card span {
+      color: rgba(248,240,213,.72);
+      font-size: .88rem;
+      line-height: 1.45;
+    }
+
+    .actions {
+      margin-top: 34px;
+      display: flex;
+      gap: 14px;
+      flex-wrap: wrap;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 48px;
+      padding: 13px 20px;
+      border-radius: 999px;
+      text-decoration: none;
+      font-weight: 900;
+      border: 1px solid rgba(244,211,94,.34);
+    }
+
+    .btn.primary {
+      color: #07131d;
+      background: linear-gradient(135deg, #f4d35e, #f7b955);
+      box-shadow: 0 14px 32px rgba(244,211,94,.18);
+    }
+
+    .btn.secondary {
+      color: #f8f0d5;
+      background: rgba(255,255,255,.06);
+    }
+
+    .note {
+      margin-top: 20px;
+      color: rgba(248,240,213,.56);
+      font-size: .88rem;
+      line-height: 1.5;
+    }
+
+    @media (max-width: 860px) {
+      .arrival-card {
+        grid-template-columns: 1fr;
+      }
+
+      .identity-panel {
+        border-right: none;
+        border-bottom: 1px solid rgba(244,211,94,.16);
+      }
+
+      .mission-strip {
+        grid-template-columns: 1fr;
+      }
+
+      .content-panel {
+        padding: 32px 24px;
+      }
+    }
+
+    /* PHASE_1A_FIRST_SIGNAL_CHOICE */
+    .signal-section {
+      margin-top: 30px;
+    }
+
+    .signal-heading h2 {
+      margin: 8px 0 8px;
+      color: #fff5cf;
+      font-size: clamp(1.55rem, 3vw, 2.3rem);
+    }
+
+    .signal-heading p {
+      margin: 0;
+      color: rgba(248,240,213,.7);
+      line-height: 1.55;
+    }
+
+    .signal-status,
+    .confirmation-label {
+      color: #7dd3fc;
+      text-transform: uppercase;
+      letter-spacing: .11em;
+      font-size: .74rem;
+      font-weight: 900;
+    }
+
+    .signal-grid {
+      margin-top: 20px;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 13px;
+    }
+
+    .signal-card {
+      appearance: none;
+      width: 100%;
+      min-height: 230px;
+      border: 1px solid rgba(125,211,252,.22);
+      border-radius: 22px;
+      padding: 18px;
+      text-align: left;
+      font: inherit;
+      color: #f8f0d5;
+      background:
+        linear-gradient(150deg, rgba(125,211,252,.08), rgba(244,211,94,.04)),
+        rgba(255,255,255,.035);
+      cursor: pointer;
+      transition:
+        transform 180ms ease,
+        border-color 180ms ease,
+        background 180ms ease,
+        box-shadow 180ms ease;
+    }
+
+    .signal-card:hover,
+    .signal-card:focus-visible {
+      transform: translateY(-4px);
+      border-color: rgba(244,211,94,.55);
+      outline: none;
+      box-shadow: 0 18px 40px rgba(0,0,0,.3);
+    }
+
+    .signal-card.selected {
+      border-color: #f4d35e;
+      background:
+        linear-gradient(150deg, rgba(125,211,252,.16), rgba(244,211,94,.15)),
+        rgba(255,255,255,.06);
+      box-shadow:
+        0 0 0 2px rgba(244,211,94,.12),
+        0 20px 44px rgba(0,0,0,.34);
+    }
+
+    .signal-icon {
+      display: block;
+      font-size: 2rem;
+      margin-bottom: 12px;
+    }
+
+    .signal-label {
+      display: block;
+      color: #7dd3fc;
+      font-size: .72rem;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      font-weight: 900;
+      margin-bottom: 7px;
+    }
+
+    .signal-card strong {
+      display: block;
+      color: #fff5cf;
+      font-size: 1.08rem;
+      margin-bottom: 9px;
+    }
+
+    .signal-card > span:not(.signal-icon):not(.signal-label) {
+      display: block;
+      color: rgba(248,240,213,.7);
+      font-size: .88rem;
+      line-height: 1.45;
+    }
+
+    .signal-card em {
+      display: block;
+      margin-top: 14px;
+      color: #f4d35e;
+      font-size: .78rem;
+      font-style: normal;
+      font-weight: 900;
+    }
+
+    .signal-confirmation {
+      margin-top: 18px;
+      border: 1px solid rgba(244,211,94,.28);
+      border-radius: 20px;
+      padding: 18px;
+      background: rgba(244,211,94,.07);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 18px;
+    }
+
+    .signal-confirmation[hidden] {
+      display: none;
+    }
+
+    .signal-confirmation strong {
+      display: block;
+      margin-top: 5px;
+      color: #fff5cf;
+      font-size: 1.2rem;
+    }
+
+    .signal-confirmation p {
+      margin: 6px 0;
+      color: rgba(248,240,213,.7);
+      line-height: 1.45;
+    }
+
+    .signal-confirmation small {
+      color: #7dd3fc;
+      font-weight: 900;
+    }
+
+    .change-signal {
+      flex: 0 0 auto;
+      border: 1px solid rgba(125,211,252,.3);
+      border-radius: 999px;
+      padding: 10px 14px;
+      color: #f8f0d5;
+      background: rgba(255,255,255,.05);
+      font: inherit;
+      font-weight: 900;
+      cursor: pointer;
+    }
+
+    .btn.disabled {
+      opacity: .48;
+      pointer-events: none;
+      filter: grayscale(.35);
+    }
+
+    @media (max-width: 900px) {
+      .signal-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .signal-card {
+        min-height: 0;
+      }
+    }
+
+    @media (max-width: 620px) {
+      .signal-confirmation {
+        align-items: stretch;
+        flex-direction: column;
+      }
+    }
+
+  </style>
+</head>
+
+<body>
+  <div class="atmosphere"></div>
+
+  <main class="page">
+    <section class="arrival-card">
+      <aside class="identity-panel">
+        <div class="avatar-frame" id="avatarFrame">
+          <div class="avatar-fallback">Academy Avatar</div>
+        </div>
+        <div class="learner-nameplate" id="avatarLearnerName">Academy Learner</div>
+        <div class="learner-role" id="avatarLearnerRole">Chief Investigator in Training</div>
+        <div class="badge" id="avatarBadge">Arrival Recorded</div>
+      </aside>
+
+      <section class="content-panel">
+        <div class="kicker">Academy Arrival</div>
+        <h1 id="arrivalTitle">Welcome to the Academy.</h1>
+
+        <p class="lead" id="arrivalLead">
+          You have crossed the Academy threshold. Your avatar is ready, and the first gathering is about to begin.
+        </p>
+
+        <!-- PHASE_1A_FIRST_SIGNAL_CHOICE -->
+        <section class="signal-section" aria-labelledby="signalHeading">
+          <div class="signal-heading">
+            <span class="signal-status">Incoming Academy Signals</span>
+            <h2 id="signalHeading">Choose what you will investigate first.</h2>
+            <p>
+              The Academy has detected three developing situations. Your choice
+              will be recorded and will shape how the Council receives you.
+            </p>
+          </div>
+
+          <div class="signal-grid" role="radiogroup" aria-label="First Academy signal">
+            <button class="signal-card" type="button"
+                    data-signal="crossing"
+                    data-title="Damaged Crossing"
+                    data-advisor="Builder"
+                    data-summary="A route has failed after severe weather. People and supplies may be cut off.">
+              <span class="signal-icon" aria-hidden="true">🌉</span>
+              <span class="signal-label">Structural Signal</span>
+              <strong>Damaged Crossing</strong>
+              <span>A route has failed after severe weather. People and supplies may be cut off.</span>
+              <em>Builder will respond first.</em>
+            </button>
+
+            <button class="signal-card" type="button"
+                    data-signal="water"
+                    data-title="Water Shortage"
+                    data-advisor="Healer"
+                    data-summary="A settlement reports that its water supply is falling faster than expected.">
+              <span class="signal-icon" aria-hidden="true">💧</span>
+              <span class="signal-label">Community Signal</span>
+              <strong>Water Shortage</strong>
+              <span>A settlement reports that its water supply is falling faster than expected.</span>
+              <em>Healer will respond first.</em>
+            </button>
+
+            <button class="signal-card" type="button"
+                    data-signal="settlement"
+                    data-title="Unknown Settlement Signal"
+                    data-advisor="Scout"
+                    data-summary="A distant signal appears beyond the mapped region. Its source is unknown.">
+              <span class="signal-icon" aria-hidden="true">📡</span>
+              <span class="signal-label">Exploration Signal</span>
+              <strong>Unknown Settlement Signal</strong>
+              <span>A distant signal appears beyond the mapped region. Its source is unknown.</span>
+              <em>Scout will respond first.</em>
+            </button>
+          </div>
+
+          <div class="signal-confirmation" id="signalConfirmation" hidden>
+            <div>
+              <span class="confirmation-label">First Assignment Selected</span>
+              <strong id="selectedSignalTitle"></strong>
+              <p id="selectedSignalSummary"></p>
+              <small id="selectedAdvisor"></small>
+            </div>
+            <button class="change-signal" id="changeSignalBtn" type="button">
+              Change Signal
+            </button>
+          </div>
+        </section>
+
+        <div class="actions">
+          <a class="btn primary disabled" id="enterGatheringBtn"
+             href="/first_gathering" aria-disabled="true">
+            Select a Signal to Continue
+          </a>
+          <a class="btn secondary" href="/academy_identity">Review Identity</a>
+        </div>
+
+        <p class="note">
+          Student progress is saved on this device. Teacher tools remain separate from the student arrival experience.
+        </p>
+      </section>
+    </section>
+  </main>
+
+  <script>
+    const IDENTITY_KEY = "stemNationStudentIdentity";
+
+    const avatarFrame = document.getElementById("avatarFrame");
+    const avatarLearnerName = document.getElementById("avatarLearnerName");
+    const avatarLearnerRole = document.getElementById("avatarLearnerRole");
+    const avatarBadge = document.getElementById("avatarBadge");
+    const arrivalTitle = document.getElementById("arrivalTitle");
+    const arrivalLead = document.getElementById("arrivalLead");
+
+    const SIGNAL_KEY = "stemNationFirstSignal";
+    const signalCards = Array.from(document.querySelectorAll(".signal-card"));
+    const signalConfirmation = document.getElementById("signalConfirmation");
+    const selectedSignalTitle = document.getElementById("selectedSignalTitle");
+    const selectedSignalSummary = document.getElementById("selectedSignalSummary");
+    const selectedAdvisor = document.getElementById("selectedAdvisor");
+    const changeSignalBtn = document.getElementById("changeSignalBtn");
+    const enterGatheringBtn = document.getElementById("enterGatheringBtn");
+
+    let identity = {
+      name: "Academy Learner",
+      status: "Chief Investigator in Training",
+      portrait: "",
+      fallback: "",
+      avatarChoice: "Academy Avatar"
+    };
+
+    try {
+      const saved = JSON.parse(localStorage.getItem(IDENTITY_KEY) || "null");
+      if (saved) identity = { ...identity, ...saved };
+    } catch (err) {}
+
+    function looksLikeImageSource(value) {
+      return typeof value === "string" && (
+        value.startsWith("data:image/") ||
+        value.startsWith("/static/") ||
+        value.startsWith("http://") ||
+        value.startsWith("https://")
+      );
+    }
+
+    function resolveDisplayName(record) {
+      return String(
+        record.teacherApprovedName ||
+        record.approvedName ||
+        record.name ||
+        "Academy Learner"
+      )
+        .replace(/^New Arrival\s*/i, "")
+        .replace(/^Academy Learner\s*/i, "")
+        .trim() || "Academy Learner";
+    }
+
+    const displayName = resolveDisplayName(identity);
+    const learnerRole = identity.status === "Academy Learner"
+      ? "Chief Investigator in Training"
+      : identity.status || "Chief Investigator in Training";
+    const avatarSource = identity.portrait || identity.fallback || "";
+    const avatarChoice = identity.avatarChoice || identity.avatarTitle || "Academy Avatar";
+
+    avatarFrame.innerHTML = "";
+
+    if (looksLikeImageSource(avatarSource)) {
+      const img = document.createElement("img");
+      img.src = avatarSource;
+      img.alt = "Student Academy avatar";
+      avatarFrame.appendChild(img);
+    } else {
+      const fallback = document.createElement("div");
+      fallback.className = "avatar-fallback";
+      fallback.textContent = "Academy Avatar";
+      avatarFrame.appendChild(fallback);
+    }
+
+    avatarLearnerName.textContent = displayName;
+    avatarLearnerRole.textContent = learnerRole;
+    avatarBadge.textContent = `${avatarChoice} locked`;
+    arrivalTitle.textContent = `Welcome, ${displayName}.`;
+    arrivalLead.textContent = "You have crossed the Academy threshold. Your avatar is ready, and the first gathering is about to begin.";
+
+    function saveSignal(card) {
+      const signal = {
+        id: card.dataset.signal,
+        title: card.dataset.title,
+        advisor: card.dataset.advisor,
+        summary: card.dataset.summary,
+        selectedAt: new Date().toISOString()
+      };
+
+      localStorage.setItem(SIGNAL_KEY, JSON.stringify(signal));
+      renderSignal(signal);
+    }
+
+    function renderSignal(signal) {
+      signalCards.forEach(card => {
+        const selected = card.dataset.signal === signal.id;
+        card.classList.toggle("selected", selected);
+        card.setAttribute("aria-checked", String(selected));
+      });
+
+      selectedSignalTitle.textContent = signal.title;
+      selectedSignalSummary.textContent = signal.summary;
+      selectedAdvisor.textContent = `${signal.advisor} will respond first in the Council sequence.`;
+
+      signalConfirmation.hidden = false;
+      enterGatheringBtn.classList.remove("disabled");
+      enterGatheringBtn.removeAttribute("aria-disabled");
+      enterGatheringBtn.textContent = "Confirm Assignment and Enter";
+    }
+
+    signalCards.forEach(card => {
+      card.setAttribute("role", "radio");
+      card.setAttribute("aria-checked", "false");
+
+      card.addEventListener("click", () => {
+        saveSignal(card);
+      });
+    });
+
+    changeSignalBtn.addEventListener("click", () => {
+      localStorage.removeItem(SIGNAL_KEY);
+
+      signalCards.forEach(card => {
+        card.classList.remove("selected");
+        card.setAttribute("aria-checked", "false");
+      });
+
+      signalConfirmation.hidden = true;
+      enterGatheringBtn.classList.add("disabled");
+      enterGatheringBtn.setAttribute("aria-disabled", "true");
+      enterGatheringBtn.textContent = "Select a Signal to Continue";
+    });
+
+    try {
+      const savedSignal = JSON.parse(localStorage.getItem(SIGNAL_KEY) || "null");
+      if (savedSignal && savedSignal.id) {
+        renderSignal(savedSignal);
+      }
+    } catch (err) {}
+  </script>
+  <script src="{{ url_for('static', filename='js/academy_mission_record.js') }}?v=step2c1"></script>
+</body>
+</html>

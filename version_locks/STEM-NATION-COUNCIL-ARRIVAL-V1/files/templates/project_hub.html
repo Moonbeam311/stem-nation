@@ -1,0 +1,3896 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>STEM Nation — Civilization Command Center</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background:
+        radial-gradient(circle at center, rgba(212,175,55,0.12), transparent 42%),
+        linear-gradient(135deg, #050505 0%, #11182b 55%, #050505 100%);
+      color: white;
+      min-height: 100vh;
+      padding: 42px 20px;
+      box-sizing: border-box;
+    }
+
+    .container {
+      max-width: 980px;
+      margin: 0 auto;
+      text-align: center;
+    }
+
+    .label {
+      font-size: 13px;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: #d4af37;
+      opacity: 0.85;
+      margin-bottom: 14px;
+    }
+
+    h1 {
+      font-size: clamp(36px, 5vw, 58px);
+      margin: 0 0 14px;
+      color: #f0df9a;
+    }
+
+    .subtitle {
+      font-size: 18px;
+      line-height: 1.6;
+      opacity: 0.9;
+      max-width: 760px;
+      margin: 0 auto 34px;
+    }
+
+    .panel {
+      background: rgba(0,0,0,0.36);
+      border: 1px solid rgba(212,175,55,0.28);
+      border-radius: 20px;
+      padding: 28px;
+      box-shadow: 0 18px 62px rgba(0,0,0,0.42);
+      text-align: left;
+    }
+
+    .panel h2 {
+      color: #d4af37;
+      margin-top: 0;
+      text-align: center;
+    }
+
+    .panel p {
+      line-height: 1.6;
+      font-size: 16px;
+    }
+
+    .artifact-list {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 14px;
+      margin-top: 22px;
+    }
+
+    .artifact {
+      border: 1px solid rgba(212,175,55,0.18);
+      border-radius: 14px;
+      padding: 16px;
+      background: rgba(255,255,255,0.05);
+    }
+
+    .artifact strong {
+      color: #f0df9a;
+    }
+
+    .saved-defense {
+      margin-top: 28px;
+      background: rgba(0,0,0,0.34);
+      border: 1px solid rgba(212,175,55,0.28);
+      border-radius: 18px;
+      padding: 24px;
+    }
+
+    .saved-defense h2 {
+      color: #d4af37;
+      margin-top: 0;
+      text-align: center;
+    }
+
+    .saved-defense-empty {
+      text-align: center;
+      opacity: 0.82;
+      line-height: 1.6;
+    }
+
+    .defense-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 14px;
+      margin-top: 18px;
+    }
+
+    .defense-item {
+      border: 1px solid rgba(212,175,55,0.16);
+      border-radius: 14px;
+      padding: 16px;
+      background: rgba(255,255,255,0.05);
+    }
+
+    .defense-item .label {
+      color: #f0df9a;
+      font-size: 12px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      margin-bottom: 8px;
+    }
+
+    .defense-item .answer {
+      line-height: 1.55;
+      white-space: pre-wrap;
+      opacity: 0.95;
+    }
+
+    .saved-time {
+      margin-top: 14px;
+      text-align: center;
+      font-size: 13px;
+      opacity: 0.68;
+    }
+
+    .civilization-status-panel {
+      margin-top: 28px;
+    }
+
+    .civilization-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 14px;
+      margin-top: 18px;
+    }
+
+    .civilization-metric {
+      border: 1px solid rgba(212,175,55,0.16);
+      border-radius: 14px;
+      padding: 16px;
+      background: rgba(255,255,255,0.05);
+      text-align: center;
+    }
+
+    .civilization-metric .metric-label {
+      color: #d4af37;
+      font-size: 12px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      margin-bottom: 10px;
+    }
+
+    .civilization-metric .metric-value {
+      font-size: 28px;
+      color: #f0df9a;
+      font-weight: bold;
+    }
+
+    .civilization-summary {
+      text-align: center;
+      line-height: 1.7;
+      margin-bottom: 20px;
+    }
+
+    .civilization-decision-log {
+      margin-top: 24px;
+      border-top: 1px solid rgba(212,175,55,0.18);
+      padding-top: 18px;
+    }
+
+    .civilization-decision-log h3 {
+      color: #d4af37;
+      text-align: center;
+      margin: 0 0 14px;
+    }
+
+    .decision-log-entry {
+      border: 1px solid rgba(212,175,55,0.14);
+      border-radius: 14px;
+      padding: 14px;
+      background: rgba(255,255,255,0.04);
+      margin-bottom: 12px;
+      line-height: 1.55;
+    }
+
+    .decision-log-entry strong {
+      color: #f0df9a;
+    }
+
+    .decision-log-entry .meta {
+      font-size: 12px;
+      opacity: 0.68;
+      margin-top: 6px;
+    }
+
+    .civilization-archive-summary {
+      margin-top: 24px;
+      border-top: 1px solid rgba(212,175,55,0.18);
+      padding-top: 18px;
+    }
+
+    .civilization-archive-summary h3 {
+      color: #d4af37;
+      text-align: center;
+      margin: 0 0 14px;
+    }
+
+    .archive-entry {
+      border: 1px solid rgba(212,175,55,0.14);
+      border-radius: 14px;
+      padding: 14px;
+      background: rgba(255,255,255,0.04);
+      margin-bottom: 12px;
+      line-height: 1.55;
+    }
+
+    .archive-entry strong {
+      color: #f0df9a;
+    }
+
+    .archive-entry .meta {
+      font-size: 12px;
+      opacity: 0.68;
+      margin-top: 6px;
+    }
+
+    .civilization-alerts-panel {
+      margin-top: 24px;
+      border-top: 1px solid rgba(212,175,55,0.18);
+      padding-top: 18px;
+    }
+
+    .civilization-alerts-panel h3 {
+      color: #d4af37;
+      text-align: center;
+      margin: 0 0 14px;
+    }
+
+    .civilization-events-panel {
+      margin-top: 24px;
+      border-top: 1px solid rgba(212,175,55,0.18);
+      padding-top: 18px;
+    }
+
+    .civilization-events-panel h3 {
+      color: #d4af37;
+      text-align: center;
+      margin: 0 0 14px;
+    }
+
+    .event-entry {
+      border: 1px solid rgba(120,180,255,0.18);
+      border-radius: 12px;
+      padding: 12px;
+      margin-bottom: 12px;
+      background: rgba(120,180,255,0.06);
+      line-height: 1.5;
+    }
+
+    .event-entry .meta {
+      margin-top: 6px;
+      font-size: 0.84rem;
+      opacity: 0.7;
+    }
+
+    .alert-entry {
+      border: 1px solid rgba(255,180,80,0.22);
+      border-radius: 14px;
+      padding: 14px;
+      background: rgba(255,180,80,0.06);
+      margin-bottom: 12px;
+      line-height: 1.55;
+    }
+
+    .alert-entry strong {
+      color: #ffd27a;
+    }
+
+    .btn-row {
+      margin-top: 30px;
+      text-align: center;
+    }
+
+    .btn {
+      display: inline-block;
+      text-decoration: none;
+      border-radius: 999px;
+      border: 1px solid rgba(212,175,55,0.55);
+      color: #f0df9a;
+      padding: 13px 22px;
+      margin: 8px;
+      background: rgba(0,0,0,0.30);
+      letter-spacing: 1px;
+    }
+
+    .btn:hover {
+      background: rgba(212,175,55,0.12);
+    }
+
+    .btn.disabled {
+      opacity: 0.45;
+      cursor: not-allowed;
+      pointer-events: none;
+    }
+
+    .governance-action-panel {
+      margin-top: 28px;
+    }
+
+    .governance-intro {
+      text-align: center;
+      opacity: 0.85;
+    }
+
+    .governance-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+      gap: 14px;
+      margin-top: 18px;
+    }
+
+    .governance-btn {
+      border: 1px solid rgba(212,175,55,0.28);
+      border-radius: 14px;
+      background: rgba(255,255,255,0.05);
+      color: #f0df9a;
+      padding: 16px;
+      cursor: pointer;
+      text-align: left;
+      font-size: 16px;
+      line-height: 1.35;
+    }
+
+    .governance-btn span {
+      display: block;
+      color: white;
+      opacity: 0.78;
+      font-size: 13px;
+      margin-top: 8px;
+    }
+
+    .governance-btn:hover {
+      background: rgba(212,175,55,0.12);
+    }
+
+    .governance-btn.disabled {
+      opacity: 0.45;
+      cursor: not-allowed;
+      pointer-events: none;
+    }
+  
+/* =========================================================
+PHASE 8 STEP 7 — STEM NATION COMMAND SESSION DISPLAY V1
+========================================================= */
+.command-session-panel {
+  border: 1px solid rgba(120, 255, 180, 0.34);
+  background:
+    radial-gradient(circle at top right, rgba(120,255,180,0.10), transparent 34%),
+    rgba(0,0,0,0.42);
+}
+
+.command-session-content {
+  line-height: 1.7;
+  font-size: 15px;
+}
+
+.command-session-status {
+  display: inline-block;
+  padding: 4px 9px;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: bold;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.command-session-status.active {
+  color: #9ff0b8;
+  border: 1px solid rgba(120, 255, 180, 0.45);
+  background: rgba(0, 80, 40, 0.30);
+}
+
+.command-session-status.paused {
+  color: #ffd76a;
+  border: 1px solid rgba(255, 215, 106, 0.45);
+  background: rgba(120, 90, 0, 0.26);
+}
+
+.command-session-status.ended {
+  color: #ffaaa0;
+  border: 1px solid rgba(255, 170, 160, 0.45);
+  background: rgba(120, 30, 30, 0.28);
+}
+
+
+/* CI-3F_STUDENT_HUB_FRONT_LAYER */
+.student-command-front-layer {
+  margin: 22px auto 28px;
+  max-width: 1180px;
+  border: 1px solid rgba(244, 211, 94, 0.28);
+  border-radius: 28px;
+  background:
+    radial-gradient(circle at top left, rgba(244, 211, 94, 0.16), transparent 34%),
+    linear-gradient(135deg, rgba(6, 24, 38, 0.94), rgba(7, 15, 25, 0.96));
+  box-shadow: 0 24px 70px rgba(0,0,0,0.34);
+  padding: 26px;
+  color: #f8f0d5;
+}
+
+.student-command-topline {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  flex-wrap: wrap;
+  margin-bottom: 18px;
+}
+
+.student-command-portrait {
+  width: 84px;
+  height: 84px;
+  border-radius: 26px;
+  border: 1px solid rgba(244, 211, 94, 0.45);
+  background: rgba(244, 211, 94, 0.08);
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+  flex: 0 0 auto;
+  font-size: 2.3rem;
+}
+
+.student-command-portrait img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.student-command-kicker {
+  color: #7dd3fc;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  font-size: 0.76rem;
+  font-weight: 800;
+  margin-bottom: 6px;
+}
+
+.student-command-front-layer h1 {
+  margin: 0;
+  color: #f4d35e;
+  font-size: clamp(2rem, 4vw, 3.5rem);
+  letter-spacing: -0.035em;
+  line-height: 1;
+}
+
+.student-command-front-layer p {
+  color: rgba(248, 240, 213, 0.8);
+  line-height: 1.55;
+  margin: 8px 0 0;
+}
+
+.student-command-status-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(150px, 1fr));
+  gap: 12px;
+  margin-top: 20px;
+}
+
+.student-command-status-card {
+  border: 1px solid rgba(255,255,255,0.11);
+  background: rgba(255,255,255,0.055);
+  border-radius: 18px;
+  padding: 14px;
+}
+
+.student-command-status-card strong {
+  display: block;
+  color: #7dd3fc;
+  font-size: 0.74rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  margin-bottom: 6px;
+}
+
+.student-command-status-card span {
+  color: rgba(248, 240, 213, 0.88);
+  line-height: 1.42;
+}
+
+.student-command-actions {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin-top: 20px;
+}
+
+.student-command-actions a,
+.student-command-actions button {
+  border-radius: 999px;
+  padding: 12px 17px;
+  border: 1px solid rgba(244, 211, 94, 0.34);
+  text-decoration: none;
+  font-weight: 800;
+  cursor: pointer;
+}
+
+.student-command-actions .primary {
+  background: linear-gradient(135deg, #f4d35e, #f7b955);
+  color: #07131d;
+}
+
+.student-command-actions .secondary {
+  background: rgba(255,255,255,0.065);
+  color: #f8f0d5;
+}
+
+.student-command-note {
+  margin-top: 14px;
+  color: rgba(248, 240, 213, 0.64);
+  font-size: 0.9rem;
+}
+
+@media (max-width: 880px) {
+  .student-command-status-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+</style>
+
+<style>
+.command-center-timeline {
+  position: fixed;
+  bottom: 24px;
+  left: 24px;
+  z-index: 9999;
+  width: 320px;
+  background: rgba(8,12,22,0.92);
+  border: 1px solid rgba(218,165,32,0.45);
+  border-radius: 14px;
+  padding: 12px;
+  box-shadow: 0 0 18px rgba(0,0,0,0.35);
+  color: #f7e7b0;
+}
+
+.command-center-timeline-toggle {
+  width: 100%;
+  border: none;
+  border-radius: 10px;
+  padding: 8px 10px;
+  cursor: pointer;
+  font-weight: 700;
+  background: rgba(218,165,32,0.22);
+  color: #ffd76a;
+}
+
+.command-center-timeline.collapsed .command-center-timeline-body {
+  display: none;
+}
+</style>
+
+
+<style>
+.comparison-response-review {
+  margin-top: 28px;
+  background: rgba(0,0,0,0.34);
+  border: 1px solid rgba(91,192,222,0.32);
+  border-radius: 18px;
+  padding: 24px;
+}
+
+.comparison-response-review h2 {
+  color: #bdefff;
+  margin-top: 0;
+  text-align: center;
+}
+
+.comparison-response-empty {
+  text-align: center;
+  opacity: 0.82;
+  line-height: 1.6;
+}
+
+.comparison-response-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 14px;
+  margin-top: 18px;
+}
+
+.comparison-response-item {
+  border: 1px solid rgba(91,192,222,0.22);
+  border-radius: 14px;
+  padding: 16px;
+  background: rgba(255,255,255,0.05);
+}
+
+.comparison-response-item .label {
+  color: #bdefff;
+  font-size: 12px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  margin-bottom: 8px;
+}
+
+.comparison-response-item .answer {
+  line-height: 1.55;
+  white-space: pre-wrap;
+  opacity: 0.95;
+}
+
+.comparison-response-time {
+  margin-top: 14px;
+  text-align: center;
+  font-size: 13px;
+  opacity: 0.68;
+}
+</style>
+
+
+<style>
+/* STEM_NATION_HUB_COMPARISON_EMPTY_VISIBILITY_FIX_V1 */
+#comparisonResponseEmpty.hidden,
+#comparisonResponseContent.hidden {
+  display: none !important;
+}
+</style>
+
+
+<style>
+.student-identity-archive-panel {
+  margin-top: 24px;
+  padding: 22px;
+  border-radius: 18px;
+  border: 1px solid rgba(255,215,106,0.28);
+  background:
+    radial-gradient(circle at top left, rgba(255,215,106,0.08), transparent 40%),
+    rgba(255,255,255,0.04);
+}
+
+.student-identity-archive-panel h2 {
+  margin-top: 0;
+  color: #ffd76a;
+  text-align: center;
+}
+
+.student-identity-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 14px;
+  margin-top: 18px;
+}
+
+.student-identity-grid label {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: #bdefff;
+}
+
+.student-identity-grid input {
+  border-radius: 10px;
+  border: 1px solid rgba(255,255,255,0.14);
+  background: rgba(0,0,0,0.28);
+  color: #f7e7b0;
+  padding: 10px;
+}
+
+#studentIdentitySaveStatus {
+  margin-top: 14px;
+  text-align: center;
+  color: #b8f5c0;
+  font-size: 13px;
+}
+</style>
+
+
+<style>
+.teacher-evaluation-panel {
+  margin-top: 28px;
+  background: rgba(0,0,0,0.34);
+  border: 1px solid rgba(255,215,106,0.32);
+  border-radius: 18px;
+  padding: 24px;
+}
+
+.teacher-evaluation-panel h2 {
+  color: #ffd76a;
+  margin-top: 0;
+  text-align: center;
+}
+
+.teacher-evaluation-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+  gap: 14px;
+  margin-top: 18px;
+}
+
+.teacher-evaluation-grid label {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  font-size: 12px;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: #bdefff;
+}
+
+.teacher-evaluation-grid select,
+.teacher-evaluation-panel textarea {
+  border-radius: 10px;
+  border: 1px solid rgba(255,255,255,0.14);
+  background: rgba(0,0,0,0.28);
+  color: #f7e7b0;
+  padding: 10px;
+}
+
+.teacher-evaluation-panel textarea {
+  width: 100%;
+  min-height: 76px;
+  margin-top: 8px;
+  resize: vertical;
+  box-sizing: border-box;
+}
+
+.teacher-evaluation-notes {
+  margin-top: 16px;
+}
+
+#teacherEvaluationSaveStatus {
+  margin-top: 14px;
+  text-align: center;
+  color: #b8f5c0;
+  font-size: 13px;
+}
+</style>
+
+
+<style>
+.civilization-score-panel {
+  margin-top: 24px;
+  border-radius: 18px;
+  border: 1px solid rgba(91,192,222,0.28);
+  padding: 24px;
+  background:
+    radial-gradient(circle at top right, rgba(91,192,222,0.10), transparent 38%),
+    rgba(255,255,255,0.04);
+}
+
+.civilization-score-panel h2 {
+  margin-top: 0;
+  color: #bdefff;
+  text-align: center;
+}
+
+.civilization-score-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 14px;
+  margin-top: 18px;
+}
+
+.civilization-score-card {
+  border-radius: 14px;
+  border: 1px solid rgba(255,255,255,0.10);
+  padding: 14px;
+  background: rgba(0,0,0,0.20);
+  text-align: center;
+}
+
+.civilization-score-label {
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  opacity: 0.72;
+}
+
+.civilization-score-value {
+  margin-top: 8px;
+  font-size: 22px;
+  font-weight: bold;
+  color: #ffd76a;
+}
+
+.civilization-badge-list {
+  margin-top: 22px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  justify-content: center;
+}
+
+.civilization-badge {
+  border-radius: 999px;
+  padding: 10px 16px;
+  background: rgba(255,215,106,0.10);
+  border: 1px solid rgba(255,215,106,0.28);
+  color: #ffe7a3;
+  font-size: 13px;
+}
+
+#civilizationReadinessSummary {
+  margin-top: 18px;
+  text-align: center;
+  font-size: 18px;
+  color: #b8f5c0;
+}
+</style>
+
+
+<style>
+.rubric-guidelines-panel {
+  margin-top: 24px;
+  border-radius: 18px;
+  border: 1px solid rgba(255,255,255,0.12);
+  background: rgba(255,255,255,0.04);
+  padding: 20px;
+}
+
+.rubric-guidelines-panel summary {
+  cursor: pointer;
+  font-size: 20px;
+  font-weight: bold;
+  color: #ffe082;
+  margin-bottom: 14px;
+}
+
+.rubric-guideline {
+  margin-top: 24px;
+  padding-top: 18px;
+  border-top: 1px solid rgba(255,255,255,0.08);
+}
+
+.rubric-guideline h3 {
+  margin-bottom: 8px;
+  color: #bdefff;
+}
+
+.rubric-level {
+  margin-top: 8px;
+  padding-left: 12px;
+}
+
+.rubric-example {
+  margin-top: 10px;
+  padding: 12px;
+  border-radius: 10px;
+  background: rgba(255,255,255,0.05);
+  border-left: 4px solid #ffd76a;
+  font-style: italic;
+}
+</style>
+
+
+<style>
+.civilization-competency-profile {
+  margin-top: 24px;
+  border-radius: 18px;
+  border: 1px solid rgba(184,245,192,0.28);
+  padding: 24px;
+  background:
+    radial-gradient(circle at top left, rgba(184,245,192,0.10), transparent 38%),
+    rgba(255,255,255,0.04);
+}
+
+.civilization-competency-profile h2 {
+  margin-top: 0;
+  text-align: center;
+  color: #b8f5c0;
+}
+
+.competency-profile-intro {
+  text-align: center;
+  opacity: 0.86;
+  line-height: 1.55;
+}
+
+.competency-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+  gap: 14px;
+  margin-top: 20px;
+}
+
+.competency-card {
+  border-radius: 14px;
+  border: 1px solid rgba(255,255,255,0.10);
+  background: rgba(0,0,0,0.20);
+  padding: 16px;
+}
+
+.competency-card h3 {
+  margin: 0 0 8px;
+  color: #ffd76a;
+}
+
+.competency-level {
+  font-weight: bold;
+  color: #bdefff;
+  margin-bottom: 8px;
+}
+
+.competency-description {
+  line-height: 1.45;
+  opacity: 0.92;
+}
+</style>
+
+
+<style>
+.student-reflection-panel {
+  margin-top: 24px;
+  border-radius: 18px;
+  border: 1px solid rgba(255,255,255,0.12);
+  background:
+    radial-gradient(circle at top left, rgba(255,255,255,0.06), transparent 36%),
+    rgba(255,255,255,0.04);
+  padding: 24px;
+}
+
+.student-reflection-panel h2 {
+  margin-top: 0;
+  text-align: center;
+  color: #ffe082;
+}
+
+.student-reflection-panel p {
+  text-align: center;
+  opacity: 0.88;
+  line-height: 1.5;
+}
+
+.reflection-grid {
+  display: grid;
+  gap: 16px;
+  margin-top: 20px;
+}
+
+.reflection-grid label {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  font-weight: bold;
+}
+
+.reflection-grid textarea,
+.reflection-grid select {
+  width: 100%;
+  min-height: 90px;
+  border-radius: 12px;
+  border: 1px solid rgba(255,255,255,0.14);
+  background: rgba(0,0,0,0.24);
+  color: white;
+  padding: 12px;
+  font-size: 14px;
+  resize: vertical;
+}
+
+.reflection-grid select {
+  min-height: auto;
+}
+
+.reflection-actions {
+  margin-top: 20px;
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.reflection-save-status {
+  margin-top: 14px;
+  opacity: 0.84;
+}
+</style>
+
+<!-- STEM_NATION_COMMAND_CENTER_BRIDGE_LANGUAGE_V1 -->
+</head>
+
+<body>
+
+<!-- CI-3F_STUDENT_HUB_FRONT_LAYER -->
+<section class="student-command-front-layer" id="studentCommandFrontLayer">
+  <div class="student-command-topline">
+    <div class="student-command-portrait" id="hubStudentPortrait">🧭</div>
+    <div>
+      <div class="student-command-kicker">Student Command Layer</div>
+      <h1>Current Mission Status</h1>
+      <p id="hubStudentWelcome">
+        Your Academy inquiry has entered the Civilization Command Center.
+      </p>
+    </div>
+  </div>
+
+  <div class="student-command-status-grid">
+    <div class="student-command-status-card">
+      <strong>Identity</strong>
+      <span id="hubStudentIdentity">Academy Learner</span>
+    </div>
+    <div class="student-command-status-card">
+      <strong>Academy Trial</strong>
+      <span id="hubTrialStatus">Mission Debrief pending.</span>
+    </div>
+    <div class="student-command-status-card">
+      <strong>First Inquiry Record</strong>
+      <span id="hubInquiryStatus">Observation and question record pending.</span>
+    </div>
+    <div class="student-command-status-card">
+      <strong>Next Available Action</strong>
+      <span id="hubNextAction">Review command center records.</span>
+    </div>
+  </div>
+
+  <div class="student-command-actions">
+    <a class="primary" href="/map">Begin First World Decision</a>
+    <a class="secondary" href="/mission_debrief">Review Mission Debrief</a>
+    <button class="secondary" type="button" onclick="document.getElementById('foundingArchiveSection')?.scrollIntoView({behavior:'smooth', block:'start'});">
+      Open Civilization Records
+    </button>
+  </div>
+
+  <div class="student-command-note">
+    Teacher tools, archive exports, and deeper command systems remain below. This top layer keeps the student journey oriented.
+  </div>
+</section>
+
+  <div class="container">
+    <div class="label">STEM Nation · Civilization Command Center</div>
+
+    <h1>Civilization Command Center</h1>
+
+    <div class="subtitle">
+      Your civilization has crossed from observation into decision. This hub will hold the first official artifacts of your founding archive.
+    </div>
+
+    <div class="panel">
+      <h2>Week 1 Founding Record</h2>
+
+      <p>
+        This hub now connects your founding decision, civilization state, archive records, alerts, and future simulation outputs into one command center.
+      </p>
+
+      <div class="artifact-list">
+        <div class="artifact">
+          <strong>First Observation Notes</strong><br>
+          What the land revealed before a decision was made.
+        </div>
+
+        <div class="artifact">
+          <strong>Settlement Decision Defense</strong><br>
+          Region, advantage, risk, evidence, and survival plan.
+        </div>
+
+        <div class="artifact">
+          <strong>Founding Archive</strong><br>
+          The first record of your civilization’s reasoning.
+        </div>
+      </div>
+    </div>
+
+    
+
+    <!-- =========================================================
+    PHASE 8 STEP 7 — STEM NATION COMMAND SESSION DISPLAY V1
+    Displays active teacher-guided class session on the Command Center.
+    ========================================================= -->
+    <div id="commandClassSessionPanel" class="panel command-session-panel" style="display:none;">
+      <h2>Active Class Session</h2>
+
+      <div id="commandClassSessionContent" class="command-session-content">
+        No active class session loaded.
+      </div>
+    </div>
+
+    <div id="civilizationStatusPanel" class="panel civilization-status-panel">
+
+      <h2>Civilization Command Center</h2>
+
+      <div id="civilizationStatusContent" class="saved-defense-empty">
+        Civilization state not initialized yet.
+      </div>
+
+    </div>
+
+    
+<!-- STEM_NATION_CIVILIZATION_SCORE_BADGE_SUMMARY_V1 -->
+<section id="civilizationScorePanel" class="civilization-score-panel">
+  <h2>Civilization Score / Badge Summary</h2>
+
+  <div class="civilization-score-grid">
+    <div class="civilization-score-card">
+      <div class="civilization-score-label">Observation Score</div>
+      <div id="scoreObservation" class="civilization-score-value">--</div>
+    </div>
+
+    <div class="civilization-score-card">
+      <div class="civilization-score-label">Evidence Score</div>
+      <div id="scoreEvidence" class="civilization-score-value">--</div>
+    </div>
+
+    <div class="civilization-score-card">
+      <div class="civilization-score-label">Risk Analysis</div>
+      <div id="scoreRisk" class="civilization-score-value">--</div>
+    </div>
+
+    <div class="civilization-score-card">
+      <div class="civilization-score-label">Settlement Planning</div>
+      <div id="scoreSettlement" class="civilization-score-value">--</div>
+    </div>
+
+    <div class="civilization-score-card">
+      <div class="civilization-score-label">Systems Thinking</div>
+      <div id="scoreSystems" class="civilization-score-value">--</div>
+    </div>
+
+    <div class="civilization-score-card">
+      <div class="civilization-score-label">Teacher Evaluation</div>
+      <div id="scoreTeacherEval" class="civilization-score-value">--</div>
+    </div>
+  </div>
+
+  <div id="civilizationReadinessSummary">
+    Civilization Readiness: --
+  </div>
+
+  <div id="civilizationBadgeList" class="civilization-badge-list"></div>
+</section>
+
+
+
+<!-- STEM_NATION_CIVILIZATION_COMPETENCY_PROFILE_V1 -->
+<section id="civilizationCompetencyProfile" class="civilization-competency-profile">
+  <h2>Civilization Competency Profile</h2>
+
+  <p class="competency-profile-intro">
+    This profile translates the founding archive into civilization leadership traits. It shows how the student is developing as a decision-maker, planner, analyst, and builder.
+  </p>
+
+  <div id="competencyProfileGrid" class="competency-grid"></div>
+</section>
+
+
+<div id="governanceActionPanel" class="panel governance-action-panel">
+
+      <h2>Governance Actions</h2>
+
+      <p class="governance-intro">
+        Choose one strategic action to shape your civilization before advancing the next turn.
+      </p>
+
+      <div class="governance-grid">
+        <button class="governance-btn" type="button" data-action="expand_farms">
+          Expand Farms
+          <span>Increase food production, but use more territory.</span>
+        </button>
+
+        <button class="governance-btn" type="button" data-action="build_granaries">
+          Build Granaries
+          <span>Protect food reserves and improve stability.</span>
+        </button>
+
+        <button class="governance-btn" type="button" data-action="open_trade">
+          Open Trade Routes
+          <span>Increase wealth, but expose the civilization to outside pressure.</span>
+        </button>
+
+        <button class="governance-btn" type="button" data-action="invest_knowledge">
+          Invest in Knowledge
+          <span>Improve knowledge systems while consuming wealth.</span>
+        </button>
+
+        <button class="governance-btn" type="button" data-action="stabilize_population">
+          Stabilize Population
+          <span>Improve unity and stability, but slow expansion.</span>
+        </button>
+
+        <button class="governance-btn" type="button" data-action="strengthen_defense">
+          Strengthen Defense
+          <span>Improve stability and territory control, but reduce wealth.</span>
+        </button>
+      </div>
+
+    </div>
+
+    <div id="savedDefense" class="saved-defense">
+      <h2>Saved Settlement Decision Defense</h2>
+      <div id="savedDefenseContent" class="saved-defense-empty">
+        No saved settlement defense found yet. Return to the Strategic Map and complete the five required fields.
+      </div>
+    </div>
+
+    <div class="btn-row">
+      <button id="downloadArchiveBtn" class="btn disabled" type="button">Download Text Archive</button>
+      <a class="btn" href="/founding_archive_print">Printable / Save as PDF</a>
+      <button id="clearArchiveBtn" class="btn secondary" type="button">Clear / Reset Archive</button>
+      <button id="advanceTurnBtn" class="btn primary" type="button">Advance Turn</button>
+      <a class="btn primary" href="/founding_complete">Complete Week 1</a>
+      <a class="btn secondary" href="/academy_individual">Restart Academy Readiness Flow</a>
+      <a class="btn" href="/map">Return to Strategic Map</a>
+      <a class="btn" href="/">Back to Landing</a>
+    </div>
+  </div>
+<script>
+const STORAGE_KEY = "STEM_NATION_SETTLEMENT_DEFENSE_V1";
+const CIV_STATE_KEY = "STEM_NATION_CIVILIZATION_STATE_V34";
+
+const defaultCivilizationState = {
+  version: "V34",
+  civilizationName: "Unnamed Civilization",
+  foundingRegion: "",
+  currentTurn: 1,
+  era: "Founding Era",
+  metrics: {
+    food: 50,
+    stability: 50,
+    knowledge: 50,
+    unity: 50,
+    territory: 50,
+    wealth: 50
+  },
+  alerts: [],
+  decisionLog: [],
+  archives: [],
+  activeEvents: [],
+  governanceActionUsedThisTurn: false,
+  createdAt: null,
+  updatedAt: null
+};
+
+function loadCivilizationState() {
+  const raw = localStorage.getItem(CIV_STATE_KEY);
+
+  if (!raw) {
+    return {
+      ...defaultCivilizationState,
+      metrics: { ...defaultCivilizationState.metrics },
+      alerts: [...defaultCivilizationState.alerts],
+      decisionLog: [...defaultCivilizationState.decisionLog],
+      archives: [...defaultCivilizationState.archives],
+      activeEvents: [...defaultCivilizationState.activeEvents]
+    };
+  }
+
+  try {
+    const saved = JSON.parse(raw);
+
+    return {
+      ...defaultCivilizationState,
+      ...saved,
+      metrics: {
+        ...defaultCivilizationState.metrics,
+        ...(saved.metrics || {})
+      },
+      alerts: saved.alerts || [],
+      decisionLog: saved.decisionLog || [],
+      archives: saved.archives || [],
+      activeEvents: saved.activeEvents || []
+    };
+  } catch (error) {
+    console.log("Could not load V34 civilization state.", error);
+    return {
+      ...defaultCivilizationState,
+      metrics: { ...defaultCivilizationState.metrics },
+      alerts: [],
+      decisionLog: [],
+      archives: [],
+      activeEvents: []
+    };
+  }
+}
+
+function saveCivilizationState(state) {
+  const now = new Date().toISOString();
+  const nextState = {
+    ...state,
+    version: "V34",
+    createdAt: state.createdAt || now,
+    updatedAt: now
+  };
+
+  localStorage.setItem(CIV_STATE_KEY, JSON.stringify(nextState));
+  return nextState;
+}
+
+function getEraForTurn(turn) {
+  if (turn >= 7) return "Expansion Era";
+  if (turn >= 4) return "Survival Era";
+  return "Founding Era";
+}
+
+function clampMetric(value) {
+  return Math.max(0, Math.min(100, value));
+}
+
+function applyTurnDrift(state) {
+  const metrics = state.metrics || {};
+  const driftNotes = [];
+
+  metrics.food = clampMetric((metrics.food || 0) - 1);
+  driftNotes.push("Passive food consumption occurred (-1).");
+
+  if (metrics.food <= 40) {
+    metrics.stability = clampMetric((metrics.stability || 0) - 1);
+    driftNotes.push("Food scarcity created stability pressure (-1).");
+  }
+
+  if (metrics.unity >= 53) {
+    metrics.stability = clampMetric((metrics.stability || 0) + 1);
+    driftNotes.push("Strong unity supported stability recovery (+1).");
+  }
+
+  if (metrics.knowledge >= 53) {
+    metrics.wealth = clampMetric((metrics.wealth || 0) + 1);
+    driftNotes.push("Knowledge systems improved wealth (+1).");
+  }
+
+  if (metrics.food >= 55) {
+    metrics.unity = clampMetric((metrics.unity || 0) + 1);
+    driftNotes.push("Food surplus strengthened unity (+1).");
+  }
+
+  if (metrics.food <= 45) {
+    metrics.stability = clampMetric((metrics.stability || 0) - 1);
+    driftNotes.push("Food pressure weakened stability (-1).");
+  }
+
+  if (metrics.stability <= 45) {
+    metrics.unity = clampMetric((metrics.unity || 0) - 1);
+    driftNotes.push("Low stability weakened unity (-1).");
+  }
+
+  if (metrics.unity >= 55) {
+    metrics.stability = clampMetric((metrics.stability || 0) + 1);
+    driftNotes.push("High unity strengthened stability (+1).");
+  }
+
+  if (metrics.knowledge >= 55) {
+    metrics.wealth = clampMetric((metrics.wealth || 0) + 1);
+    driftNotes.push("Knowledge growth improved wealth (+1).");
+  }
+
+  state.metrics = metrics;
+  state.lastDriftSummary = driftNotes;
+  return state;
+}
+
+function applyCrisisDetection(state) {
+  const metrics = state.metrics || {};
+  const turn = state.currentTurn || 1;
+  const era = state.era || "Founding Era";
+
+  const crisisRules = [
+    {
+      id: "FOOD_CRISIS",
+      metric: "food",
+      threshold: 35,
+      title: "Food Crisis Emerging",
+      summary: "Food reserves have fallen into dangerous territory. The civilization faces hunger, migration pressure, and instability."
+    },
+    {
+      id: "STABILITY_CRISIS",
+      metric: "stability",
+      threshold: 35,
+      title: "Political Unrest Emerging",
+      summary: "Stability has fallen into dangerous territory. Leadership, order, and public trust are under pressure."
+    },
+    {
+      id: "UNITY_CRISIS",
+      metric: "unity",
+      threshold: 35,
+      title: "Social Fragmentation Emerging",
+      summary: "Unity has fallen into dangerous territory. Internal division may weaken cooperation and collective survival."
+    },
+    {
+      id: "WEALTH_CRISIS",
+      metric: "wealth",
+      threshold: 35,
+      title: "Economic Strain Emerging",
+      summary: "Wealth has fallen into dangerous territory. Trade, production, and long-term development are at risk."
+    }
+  ];
+
+  crisisRules.forEach((rule) => {
+    const alreadyActive = state.activeEvents.some((entry) => entry.id === rule.id);
+
+    if ((metrics[rule.metric] || 0) <= rule.threshold && !alreadyActive) {
+      state.activeEvents.push({
+        id: rule.id,
+        turn,
+        era,
+        title: rule.title,
+        summary: rule.summary,
+        savedAt: new Date().toISOString()
+      });
+
+      state.alerts.push({
+        id: `${rule.id}_ALERT`,
+        turn,
+        era,
+        title: "Civilization Crisis Detected",
+        summary: rule.summary
+      });
+    }
+  });
+
+  return state;
+}
+
+const governanceActions = {
+  expand_farms: {
+    title: "Expanded Farms",
+    summary: "The civilization expanded food production while placing greater pressure on available territory.",
+    effects: { food: 6, territory: -2, stability: -1 }
+  },
+  build_granaries: {
+    title: "Built Granaries",
+    summary: "The civilization protected food reserves and improved public confidence.",
+    effects: { food: 3, stability: 3, wealth: -2 }
+  },
+  open_trade: {
+    title: "Opened Trade Routes",
+    summary: "The civilization expanded exchange networks, gaining wealth while increasing outside exposure.",
+    effects: { wealth: 6, knowledge: 2, stability: -2 }
+  },
+  invest_knowledge: {
+    title: "Invested in Knowledge",
+    summary: "The civilization strengthened learning systems and technical capacity while consuming wealth.",
+    effects: { knowledge: 6, wealth: -3, unity: 1 }
+  },
+  stabilize_population: {
+    title: "Stabilized Population",
+    summary: "The civilization focused on social order, cooperation, and internal stability.",
+    effects: { unity: 4, stability: 4, territory: -2 }
+  },
+  strengthen_defense: {
+    title: "Strengthened Defense",
+    summary: "The civilization improved defensive readiness and territorial control while consuming wealth.",
+    effects: { stability: 4, territory: 3, wealth: -3 }
+  }
+};
+
+function setGovernanceButtonsDisabled(disabled) {
+  document.querySelectorAll(".governance-btn").forEach((button) => {
+    button.disabled = disabled;
+
+    if (disabled) {
+      button.classList.add("disabled");
+    } else {
+      button.classList.remove("disabled");
+    }
+  });
+}
+
+function applyDynamicConsequences(state, action) {
+  const turn = state.currentTurn || 1;
+  const era = state.era || "Founding Era";
+
+  const addEvent = (id, title, summary) => {
+    const alreadyExists = state.activeEvents.some((entry) => entry.id === id);
+
+    if (!alreadyExists) {
+      state.activeEvents.push({
+        id,
+        turn,
+        era,
+        title,
+        summary,
+        savedAt: new Date().toISOString()
+      });
+    }
+  };
+
+  if (action === "expand_farms" && state.metrics.food >= 60) {
+    addEvent(
+      "AGRICULTURAL_EXPANSION_EVENT",
+      "Agricultural Expansion",
+      "Rapid farming growth is increasing food production but may strain surrounding land and waterways."
+    );
+  }
+
+  if (action === "open_trade" && state.metrics.wealth >= 60) {
+    addEvent(
+      "TRADE_NETWORK_EVENT",
+      "Trade Network Expansion",
+      "Trade activity is accelerating wealth growth while increasing foreign influence and dependency."
+    );
+  }
+
+  if (action === "invest_knowledge" && state.metrics.knowledge >= 60) {
+    addEvent(
+      "KNOWLEDGE_RENAISSANCE_EVENT",
+      "Knowledge Renaissance",
+      "Learning systems and innovation centers are accelerating civilization advancement."
+    );
+  }
+
+  if (action === "strengthen_defense" && state.metrics.stability >= 60) {
+    addEvent(
+      "MILITARIZATION_EVENT",
+      "Militarization Pressure",
+      "Defensive expansion is improving security while increasing political pressure and militarization."
+    );
+  }
+
+  if (action === "stabilize_population" && state.metrics.unity >= 60) {
+    addEvent(
+      "SOCIAL_COHESION_EVENT",
+      "Social Cohesion Strengthened",
+      "Strong civic unity is stabilizing internal cooperation and long-term resilience."
+    );
+  }
+
+  return state;
+}
+
+function applyGovernanceAction(action) {
+  const actionConfig = governanceActions[action];
+  if (!actionConfig) return;
+
+  setGovernanceButtonsDisabled(true);
+
+  let state = loadCivilizationState();
+
+  if (state.governanceActionUsedThisTurn) {
+    state.alerts.push({
+      id: `GOVERNANCE_LOCK_${Date.now()}`,
+      turn: state.currentTurn || 1,
+      era: state.era || "Founding Era",
+      title: "Governance Locked",
+      summary: "Only one governance action may be used per turn."
+    });
+
+    saveCivilizationState(state);
+    renderCivilizationStatus();
+    return;
+  }
+
+  const metrics = state.metrics || {};
+
+  Object.entries(actionConfig.effects).forEach(([metric, delta]) => {
+    metrics[metric] = clampMetric((metrics[metric] || 0) + delta);
+  });
+
+  state.metrics = metrics;
+
+  state.decisionLog.push({
+    id: `GOVERNANCE_${action.toUpperCase()}_${Date.now()}`,
+    turn: state.currentTurn || 1,
+    era: state.era || "Founding Era",
+    title: actionConfig.title,
+    summary: actionConfig.summary,
+    savedAt: new Date().toISOString()
+  });
+
+  state.alerts.push({
+    id: `GOVERNANCE_${action.toUpperCase()}_ALERT_${Date.now()}`,
+    turn: state.currentTurn || 1,
+    era: state.era || "Founding Era",
+    title: "Governance Action Applied",
+    summary: actionConfig.summary
+  });
+
+  state.governanceActionUsedThisTurn = true;
+
+  state = applyDynamicConsequences(state, action);
+  state = applyCrisisDetection(state);
+  saveCivilizationState(state);
+  renderCivilizationStatus();
+}
+
+function advanceTurn() {
+  let state = loadCivilizationState();
+
+  const nextTurn = (state.currentTurn || 1) + 1;
+  const nextEra = getEraForTurn(nextTurn);
+
+  state.currentTurn = nextTurn;
+  state.era = nextEra;
+  state.governanceActionUsedThisTurn = false;
+
+  state = applyTurnDrift(state);
+  state = applyCrisisDetection(state);
+
+  state.decisionLog.push({
+    id: `TURN_ADVANCED_${nextTurn}`,
+    turn: nextTurn,
+    era: nextEra,
+    title: `Turn ${nextTurn} advanced`,
+    summary: `The civilization has moved into Turn ${nextTurn} of the ${nextEra}.`,
+    savedAt: new Date().toISOString()
+  });
+
+  state.alerts.push({
+    id: `TURN_${nextTurn}_STATUS_ALERT`,
+    turn: nextTurn,
+    era: nextEra,
+    title: "New Turn Started",
+    summary: `Review food, stability, unity, territory, knowledge, and wealth before making the next major decision.`
+  });
+
+  if (state.lastDriftSummary && state.lastDriftSummary.length) {
+    state.alerts.push({
+      id: `TURN_${nextTurn}_DRIFT_ALERT`,
+      turn: nextTurn,
+      era: nextEra,
+      title: "Metric Drift Applied",
+      summary: state.lastDriftSummary.join(" ")
+    });
+  }
+
+  saveCivilizationState(state);
+  renderCivilizationStatus();
+
+  setGovernanceButtonsDisabled(false);
+}
+
+function initializeCivilizationStateFromDefense(record) {
+  let state = loadCivilizationState();
+
+  if (record && record.chosenRegion && !state.foundingRegion) {
+    state.foundingRegion = record.chosenRegion.trim();
+  }
+
+  const hasFoundingDecision = state.decisionLog.some((entry) => entry.id === "FOUNDING_SETTLEMENT_DEFENSE");
+
+  if (record && !hasFoundingDecision) {
+    state.decisionLog.push({
+      id: "FOUNDING_SETTLEMENT_DEFENSE",
+      turn: 1,
+      era: "Founding Era",
+      title: "Settlement Decision Defense completed",
+      summary: `Civilization selected ${record.chosenRegion || "an unknown region"} and defended its founding settlement strategy.`,
+      savedAt: record.savedAt || new Date().toISOString()
+    });
+  }
+
+  const hasFoundingAlert = state.alerts.some((entry) => entry.id === "FOUNDING_SETTLEMENT_ALERT");
+
+  if (record && !hasFoundingAlert) {
+    state.alerts.push({
+      id: "FOUNDING_SETTLEMENT_ALERT",
+      turn: 1,
+      era: "Founding Era",
+      title: "Founding Conditions Activated",
+      summary: `Your civilization has entered the Founding Era in ${record.chosenRegion || "an unknown region"}. Future decisions will begin shaping food, stability, unity, territory, knowledge, and wealth.`,
+      savedAt: record.savedAt || new Date().toISOString()
+    });
+  }
+
+  const hasRiverFloodEvent = state.activeEvents.some(
+    (entry) => entry.id === "RIVER_FLOOD_RISK_EVENT"
+  );
+
+  if (
+    record &&
+    record.chosenRegion &&
+    record.chosenRegion.toLowerCase().includes("river") &&
+    !hasRiverFloodEvent
+  ) {
+    state.activeEvents.push({
+      id: "RIVER_FLOOD_RISK_EVENT",
+      turn: 1,
+      era: "Founding Era",
+      title: "River Flood Risk",
+      summary: "Seasonal river flooding threatens stability while improving agricultural potential.",
+      savedAt: new Date().toISOString()
+    });
+
+    state.alerts.push({
+      id: "RIVER_FLOOD_ALERT",
+      turn: 1,
+      era: "Founding Era",
+      title: "Environmental Pressure Detected",
+      summary: "River flooding conditions may destabilize nearby settlements if expansion is not carefully managed."
+    });
+
+    state.metrics.food += 5;
+    state.metrics.stability -= 5;
+  }
+
+  const hasForestEvent = state.activeEvents.some(
+    (entry) => entry.id === "FOREST_RESOURCE_EVENT"
+  );
+
+  if (
+    record &&
+    record.chosenRegion &&
+    record.chosenRegion.toLowerCase().includes("forest") &&
+    !hasForestEvent
+  ) {
+    state.activeEvents.push({
+      id: "FOREST_RESOURCE_EVENT",
+      turn: 1,
+      era: "Founding Era",
+      title: "Forest Resource Abundance",
+      summary: "Dense forests provide timber, wildlife, medicinal resources, and knowledge opportunities for early expansion.",
+      savedAt: new Date().toISOString()
+    });
+
+    state.alerts.push({
+      id: "FOREST_WILDFIRE_ALERT",
+      turn: 1,
+      era: "Founding Era",
+      title: "Wildfire Risk Detected",
+      summary: "Dry environmental conditions may threaten stability if forest growth is unmanaged."
+    });
+
+    state.metrics.wealth += 5;
+    state.metrics.knowledge += 5;
+    state.metrics.stability -= 5;
+  }
+
+  const hasMountainEvent = state.activeEvents.some(
+    (entry) => entry.id === "MOUNTAIN_DEFENSE_EVENT"
+  );
+
+  if (
+    record &&
+    record.chosenRegion &&
+    record.chosenRegion.toLowerCase().includes("mountain") &&
+    !hasMountainEvent
+  ) {
+    state.activeEvents.push({
+      id: "MOUNTAIN_DEFENSE_EVENT",
+      turn: 1,
+      era: "Founding Era",
+      title: "Mountain Defensive Advantage",
+      summary: "High terrain strengthens protection and territorial awareness, but harsh conditions limit early food production.",
+      savedAt: new Date().toISOString()
+    });
+
+    state.alerts.push({
+      id: "MOUNTAIN_WINTER_ALERT",
+      turn: 1,
+      era: "Founding Era",
+      title: "Harsh Terrain Pressure",
+      summary: "Mountain settlements must prepare for difficult winters, limited farming, and slower expansion."
+    });
+
+    state.metrics.territory += 5;
+    state.metrics.stability += 5;
+    state.metrics.food -= 5;
+  }
+
+  const hasDesertEvent = state.activeEvents.some(
+    (entry) => entry.id === "DESERT_SCARCITY_EVENT"
+  );
+
+  if (
+    record &&
+    record.chosenRegion &&
+    record.chosenRegion.toLowerCase().includes("desert") &&
+    !hasDesertEvent
+  ) {
+    state.activeEvents.push({
+      id: "DESERT_SCARCITY_EVENT",
+      turn: 1,
+      era: "Founding Era",
+      title: "Water Scarcity Pressure",
+      summary: "Limited water access creates food instability, but survival trade networks begin emerging across the region.",
+      savedAt: new Date().toISOString()
+    });
+
+    state.alerts.push({
+      id: "DESERT_SURVIVAL_ALERT",
+      turn: 1,
+      era: "Founding Era",
+      title: "Harsh Climate Survival Conditions",
+      summary: "Desert civilizations must carefully manage food, water, and expansion routes."
+    });
+
+    state.metrics.food -= 5;
+    state.metrics.stability -= 5;
+    state.metrics.wealth += 5;
+  }
+
+  const hasCoastalEvent = state.activeEvents.some(
+    (entry) => entry.id === "COASTAL_TRADE_EVENT"
+  );
+
+  if (
+    record &&
+    record.chosenRegion &&
+    record.chosenRegion.toLowerCase().includes("coastal") &&
+    !hasCoastalEvent
+  ) {
+    state.activeEvents.push({
+      id: "COASTAL_TRADE_EVENT",
+      turn: 1,
+      era: "Founding Era",
+      title: "Coastal Trade Expansion",
+      summary: "Access to waterways opens early trade, mobility, and wealth opportunities while increasing storm exposure.",
+      savedAt: new Date().toISOString()
+    });
+
+    state.alerts.push({
+      id: "COASTAL_STORM_ALERT",
+      turn: 1,
+      era: "Founding Era",
+      title: "Storm Exposure Detected",
+      summary: "Coastal settlements must balance trade growth with flood defenses, storms, and maritime risk."
+    });
+
+    state.metrics.wealth += 5;
+    state.metrics.territory += 5;
+    state.metrics.stability -= 5;
+  }
+
+  const hasBalancedEvent = state.activeEvents.some(
+    (entry) => entry.id === "BALANCED_GROWTH_EVENT"
+  );
+
+  if (
+    record &&
+    record.chosenRegion &&
+    (
+      record.chosenRegion.toLowerCase().includes("balanced") ||
+      record.chosenRegion.toLowerCase().includes("valley")
+    ) &&
+    !hasBalancedEvent
+  ) {
+    state.activeEvents.push({
+      id: "BALANCED_GROWTH_EVENT",
+      turn: 1,
+      era: "Founding Era",
+      title: "Balanced Regional Growth",
+      summary: "Balanced terrain supports stable food systems, social cohesion, and manageable early expansion.",
+      savedAt: new Date().toISOString()
+    });
+
+    state.alerts.push({
+      id: "BALANCED_FOUNDATION_ALERT",
+      turn: 1,
+      era: "Founding Era",
+      title: "Stable Foundation Established",
+      summary: "Your civilization begins with balanced regional conditions and reduced environmental pressure."
+    });
+
+    state.metrics.food += 3;
+    state.metrics.stability += 3;
+    state.metrics.unity += 3;
+  }
+
+  const hasFoundingArchive = state.archives.some((entry) => entry.id === "FOUNDING_ARCHIVE_WEEK_1");
+
+  if (record && !hasFoundingArchive) {
+    state.archives.push({
+      id: "FOUNDING_ARCHIVE_WEEK_1",
+      title: "Week 1 Founding Archive",
+      type: "Settlement Defense",
+      savedAt: record.savedAt || new Date().toISOString()
+    });
+  }
+
+  return saveCivilizationState(state);
+}
+
+const labels = {
+  chosenRegion: "Chosen Region",
+  strongestAdvantage: "Strongest Advantage",
+  greatestRisk: "Greatest Risk",
+  landEvidence: "Evidence From the Land",
+  survivalPlan: "Survival Plan"
+};
+
+function generatePressureIndicators(metrics) {
+  const indicators = [];
+
+  const addIndicator = (level, title, summary) => {
+    indicators.push({
+      level,
+      title,
+      summary
+    });
+  };
+
+  if ((metrics.food || 0) <= 45) {
+    addIndicator(
+      "HIGH RISK",
+      "Food Pressure Rising",
+      "Food reserves are declining and may destabilize the civilization if recovery does not occur."
+    );
+  }
+
+  if ((metrics.wealth || 0) <= 45) {
+    addIndicator(
+      "MODERATE RISK",
+      "Economic Strain Building",
+      "Wealth reserves are weakening and may slow expansion, trade, or recovery."
+    );
+  }
+
+  if ((metrics.stability || 0) <= 45) {
+    addIndicator(
+      "HIGH RISK",
+      "Political Instability Detected",
+      "Government stability is weakening and may lead to unrest or fragmentation."
+    );
+  }
+
+  if ((metrics.unity || 0) <= 45) {
+    addIndicator(
+      "CRITICAL PRESSURE",
+      "Social Fragmentation Risk",
+      "Low unity is threatening cooperation and long-term civilization cohesion."
+    );
+  }
+
+  if ((metrics.knowledge || 0) >= 60) {
+    addIndicator(
+      "LOW RISK",
+      "Innovation Momentum",
+      "Strong knowledge systems are improving adaptation and long-term resilience."
+    );
+  }
+
+  if ((metrics.stability || 0) >= 65 && (metrics.unity || 0) >= 55) {
+    addIndicator(
+      "LOW RISK",
+      "Stable Governance Conditions",
+      "The civilization currently maintains strong internal order and social cohesion."
+    );
+  }
+
+  return indicators;
+}
+
+function renderCivilizationStatus() {
+  const container = document.getElementById("civilizationStatusContent");
+  if (!container) return;
+
+  const state = loadCivilizationState();
+
+  const metrics = state.metrics || {};
+  const decisionLog = state.decisionLog || [];
+  const archives = state.archives || [];
+  const alerts = state.alerts || [];
+  const activeEvents = state.activeEvents || [];
+
+  const pressureIndicators = generatePressureIndicators(metrics);
+
+  const pressureHtml = pressureIndicators.length
+    ? pressureIndicators.map((entry) => `
+      <div class="event-entry">
+        <strong>${entry.level} · ${entry.title}</strong><br>
+        ${entry.summary}
+      </div>
+    `).join("")
+    : `
+      <div class="saved-defense-empty">
+        No major civilization pressures detected.
+      </div>
+    `;
+
+  const activeEventsHtml = activeEvents.length
+    ? activeEvents.slice().reverse().map((entry) => `
+      <div class="event-entry">
+        <strong>${entry.title || "Civilization Event"}</strong><br>
+        ${entry.summary || ""}
+        <div class="meta">${entry.era || state.era} · Turn ${entry.turn || state.currentTurn}</div>
+      </div>
+    `).join("")
+    : `
+      <div class="saved-defense-empty">
+        No active world events.
+      </div>
+    `;
+
+  const alertHtml = alerts.length
+    ? alerts.slice().reverse().map((entry) => `
+      <div class="alert-entry">
+        <strong>${entry.title || "Civilization Alert"}</strong><br>
+        ${entry.summary || ""}
+      </div>
+    `).join("")
+    : `
+      <div class="saved-defense-empty">
+        No active civilization alerts.
+      </div>
+    `;
+
+  const archiveHtml = archives.length
+    ? archives.slice().reverse().map((entry) => `
+      <div class="archive-entry">
+        <strong>${entry.title || "Civilization Archive"}</strong><br>
+        ${entry.type || "Archive Record"}
+        <div class="meta">${entry.savedAt ? new Date(entry.savedAt).toLocaleString() : "Saved locally"}</div>
+      </div>
+    `).join("")
+    : `<div class="saved-defense-empty">No civilization archive records available yet.</div>`;
+
+  const decisionLogHtml = decisionLog.length
+    ? decisionLog.slice().reverse().map((entry) => `
+      <div class="decision-log-entry">
+        <strong>${entry.title || "Civilization Decision"}</strong><br>
+        ${entry.summary || ""}
+        <div class="meta">${entry.era || state.era} · Turn ${entry.turn || state.currentTurn}</div>
+      </div>
+    `).join("")
+    : `<div class="saved-defense-empty">No civilization decisions recorded yet.</div>`;
+
+  container.className = "";
+
+  container.innerHTML = `
+    <div class="civilization-summary">
+      <strong>${state.civilizationName}</strong><br>
+      ${state.era} · Turn ${state.currentTurn}<br>
+      Founding Region: ${state.foundingRegion || "Unknown"}
+    </div>
+
+    <div class="civilization-grid">
+      <div class="civilization-metric">
+        <div class="metric-label">Food</div>
+        <div class="metric-value">${metrics.food ?? 0}</div>
+      </div>
+
+      <div class="civilization-metric">
+        <div class="metric-label">Stability</div>
+        <div class="metric-value">${metrics.stability ?? 0}</div>
+      </div>
+
+      <div class="civilization-metric">
+        <div class="metric-label">Knowledge</div>
+        <div class="metric-value">${metrics.knowledge ?? 0}</div>
+      </div>
+
+      <div class="civilization-metric">
+        <div class="metric-label">Unity</div>
+        <div class="metric-value">${metrics.unity ?? 0}</div>
+      </div>
+
+      <div class="civilization-metric">
+        <div class="metric-label">Territory</div>
+        <div class="metric-value">${metrics.territory ?? 0}</div>
+      </div>
+
+      <div class="civilization-metric">
+        <div class="metric-label">Wealth</div>
+        <div class="metric-value">${metrics.wealth ?? 0}</div>
+      </div>
+    </div>
+
+    <div class="civilization-decision-log">
+      <h3>Decision Log</h3>
+      ${decisionLogHtml}
+    </div>
+
+    <div class="civilization-archive-summary">
+      <h3>Archive Summary</h3>
+      ${archiveHtml}
+    </div>
+
+    <div class="civilization-events-panel">
+      <h3>Active World Events</h3>
+      ${activeEventsHtml}
+    </div>
+
+    <div class="civilization-events-panel">
+      <h3>Civilization Pressure Analysis</h3>
+      ${pressureHtml}
+    </div>
+
+    <div class="civilization-alerts-panel">
+      <h3>Active Alerts</h3>
+      ${alertHtml}
+    </div>
+  `;
+}
+
+function renderSavedDefense() {
+  const container = document.getElementById("savedDefenseContent");
+  const downloadArchiveBtn = document.getElementById("downloadArchiveBtn");
+  if (!container) return;
+
+  const raw = localStorage.getItem(STORAGE_KEY);
+  if (!raw) return;
+
+  try {
+    const record = JSON.parse(raw);
+    const civilizationState = initializeCivilizationStateFromDefense(record);
+    console.log("V34 civilization state synchronized.", civilizationState);
+    const fields = Object.keys(labels);
+
+    const hasAnyAnswer = fields.some((id) => record[id] && record[id].trim().length > 0);
+    if (!hasAnyAnswer) return;
+
+    const items = fields.map((id) => {
+      const answer = record[id] || "";
+      return `
+        <div class="defense-item">
+          <div class="label">${labels[id]}</div>
+          <div class="answer">${answer.replace(/</g, "&lt;").replace(/>/g, "&gt;")}</div>
+        </div>
+      `;
+    }).join("");
+
+    const savedTime = record.savedAt
+      ? `<div class="saved-time">Saved locally: ${new Date(record.savedAt).toLocaleString()}</div>`
+      : "";
+
+    container.className = "defense-grid";
+    container.innerHTML = items + savedTime;
+
+    if (downloadArchiveBtn) {
+      downloadArchiveBtn.classList.remove("disabled");
+    }
+  } catch (error) {
+    console.log("Could not render saved settlement defense.", error);
+  }
+}
+
+function downloadFoundingArchive() {
+  const raw = localStorage.getItem(STORAGE_KEY);
+  if (!raw) return;
+
+  try {
+    const record = JSON.parse(raw);
+
+    // STEM_NATION_DOWNLOAD_ARCHIVE_TEACHER_EVALUATION_V1
+    function readOptionalJSON(key) {
+      try {
+        return JSON.parse(localStorage.getItem(key) || "null");
+      } catch (err) {
+        return null;
+      }
+    }
+
+    const identity = readOptionalJSON("STEM_NATION_STUDENT_IDENTITY_ARCHIVE_V1");
+    const comparison = readOptionalJSON("STEM_NATION_STUDENT_COMPARISON_RESPONSE_V1");
+    const evaluation = readOptionalJSON("STEM_NATION_TEACHER_EVALUATION_FEEDBACK_V1");
+
+    const identitySection = [
+      "STUDENT INFORMATION",
+      "===================",
+      "",
+      "Student Name:",
+      identity ? (identity.studentName || "") : "",
+      "",
+      "Class / Period:",
+      identity ? (identity.studentClass || "") : "",
+      "",
+      "Teacher:",
+      identity ? (identity.teacherName || "") : "",
+      "",
+      "Archive Date:",
+      identity ? (identity.archiveDate || "") : ""
+    ];
+
+    const settlementSection = [
+      "SETTLEMENT DECISION DEFENSE",
+      "===========================",
+      "",
+      `Saved Locally: ${record.savedAt ? new Date(record.savedAt).toLocaleString() : "Not recorded"}`,
+      "",
+      "Chosen Region:",
+      record.chosenRegion || "",
+      "",
+      "Strongest Advantage:",
+      record.strongestAdvantage || "",
+      "",
+      "Greatest Risk:",
+      record.greatestRisk || "",
+      "",
+      "Evidence From the Land:",
+      record.landEvidence || "",
+      "",
+      "Survival Plan:",
+      record.survivalPlan || ""
+    ];
+
+    const comparisonSection = comparison ? [
+      "REGION COMPARISON RESPONSE",
+      "==========================",
+      "",
+      "Compared Regions:",
+      Array.isArray(comparison.regions) ? comparison.regions.join(" vs ") : "",
+      "",
+      "Stronger Beginning:",
+      comparison.strongerRegion || "",
+      "",
+      "Advantage / Evidence:",
+      comparison.advantageEvidence || "",
+      "",
+      "Risk / Tradeoff:",
+      comparison.riskTradeoff || "",
+      "",
+      "Comparison Saved At:",
+      comparison.savedAt ? new Date(comparison.savedAt).toLocaleString() : ""
+    ] : [
+      "REGION COMPARISON RESPONSE",
+      "==========================",
+      "",
+      "No comparison response saved yet."
+    ];
+
+    const evaluationSection = evaluation ? [
+      "TEACHER EVALUATION / FEEDBACK",
+      "=============================",
+      "",
+      "Observation Quality:",
+      evaluation.observationQuality || "",
+      "",
+      "Evidence Use:",
+      evaluation.evidenceUse || "",
+      "",
+      "Risk Awareness:",
+      evaluation.riskAwareness || "",
+      "",
+      "Settlement Logic:",
+      evaluation.settlementLogic || "",
+      "",
+      "Systems Thinking:",
+      evaluation.systemsThinking || "",
+      "",
+      "Collaboration / Discussion:",
+      evaluation.collaboration || "",
+      "",
+      "Strengths / Positive Feedback:",
+      evaluation.strengths || "",
+      "",
+      "Next Steps / Growth Guidance:",
+      evaluation.nextSteps || "",
+      "",
+      "Additional Teacher Notes:",
+      evaluation.notes || "",
+      "",
+      "Evaluation Saved At:",
+      evaluation.savedAt ? new Date(evaluation.savedAt).toLocaleString() : ""
+    ] : [
+      "TEACHER EVALUATION / FEEDBACK",
+      "=============================",
+      "",
+      "No teacher evaluation saved yet."
+    ];
+
+    const content = [
+      "STEM Nation — Founding Archive",
+      "Printable / Downloadable Classroom Artifact",
+      "",
+      ...identitySection,
+      "",
+      "---",
+      "",
+      ...settlementSection,
+      "",
+      "---",
+      "",
+      ...comparisonSection,
+      "",
+      "---",
+      "",
+      ...evaluationSection,
+      "",
+      "---",
+      "Generated from STEM Nation Civilization Command Center"
+    ].join("\n");
+
+    const blob = new Blob([content], { type: "text/plain" });
+    const url = URL.createObjectURL(blob);
+
+    const link = document.createElement("a");
+    link.href = url;
+    link.download = "STEM_Nation_Founding_Archive.txt";
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+
+    URL.revokeObjectURL(url);
+  } catch (error) {
+    console.log("Could not export Founding Archive.", error);
+  }
+}
+
+renderSavedDefense();
+renderCivilizationStatus();
+
+const downloadArchiveBtn = document.getElementById("downloadArchiveBtn");
+if (downloadArchiveBtn) {
+  downloadArchiveBtn.addEventListener("click", downloadFoundingArchive);
+}
+
+document.querySelectorAll(".governance-btn").forEach((button) => {
+  button.addEventListener("click", () => {
+    applyGovernanceAction(button.dataset.action);
+  });
+});
+
+const advanceTurnBtn = document.getElementById("advanceTurnBtn");
+if (advanceTurnBtn) {
+  advanceTurnBtn.addEventListener("click", advanceTurn);
+}
+
+const clearArchiveBtn = document.getElementById("clearArchiveBtn");
+if (clearArchiveBtn) {
+  clearArchiveBtn.addEventListener("click", () => {
+    const confirmed = window.confirm(
+      "Clear the saved Founding Archive from this browser? This cannot be undone."
+    );
+
+    if (!confirmed) return;
+
+    localStorage.removeItem(STORAGE_KEY);
+    localStorage.removeItem(CIV_STATE_KEY);
+    window.location.reload();
+  });
+}
+</script>
+
+
+
+<!-- =========================================================
+PHASE 6 STEP 5 — STEM NATION FULL STUDENT RESET
+Student-side local test data reset only.
+Does NOT touch teacher/admin/database systems.
+========================================================= -->
+
+
+<!-- =========================================================
+PHASE 6 STEP 7 — STEM NATION RESUME STUDENT PROGRESS V1
+Detects saved student progress and routes learner back to active map mode.
+========================================================= -->
+<section id="studentResumePanel" class="student-resume-panel" style="display:none;">
+  <h3>Continue Student Progress</h3>
+
+  <p id="studentResumeStatus">
+    Saved student progress detected on this device.
+  </p>
+
+  <button id="continueStudentProgressBtn" class="continue-progress-btn" type="button">
+    CONTINUE STUDENT PROGRESS
+  </button>
+</section>
+
+<style>
+.student-resume-panel {
+  margin: 32px auto;
+  padding: 18px;
+  max-width: 720px;
+  border: 1px solid rgba(80, 200, 120, 0.45);
+  border-radius: 14px;
+  background: rgba(0, 40, 20, 0.45);
+  color: #f5f1dc;
+}
+
+.student-resume-panel h3 {
+  margin-top: 0;
+  color: #9ff0b8;
+  letter-spacing: 0.04em;
+}
+
+.continue-progress-btn {
+  background: #176b3a;
+  color: white;
+  border: none;
+  padding: 12px 18px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.continue-progress-btn:hover {
+  opacity: 0.88;
+}
+</style>
+
+<script>
+/* STEM_NATION_RESUME_STUDENT_PROGRESS_V1 */
+(function () {
+  const SETTLEMENT_KEY = "STEM_NATION_SETTLEMENT_DEFENSE_V1";
+  const CIV_STATE_KEY_RESUME = "STEM_NATION_CIVILIZATION_STATE_V34";
+  const AUTOSAVE_META_KEY_RESUME = "STEM_NATION_AUTOSAVE_META_V1";
+
+  const panel = document.getElementById("studentResumePanel");
+  const status = document.getElementById("studentResumeStatus");
+  const continueBtn = document.getElementById("continueStudentProgressBtn");
+
+  function safeParse(key) {
+    const raw = localStorage.getItem(key);
+    if (!raw) return null;
+
+    try {
+      return JSON.parse(raw);
+    } catch (err) {
+      console.warn("Invalid saved progress ignored:", key);
+      return null;
+    }
+  }
+
+  function hasStudentProgress() {
+    const settlement = safeParse(SETTLEMENT_KEY);
+    const civState = safeParse(CIV_STATE_KEY_RESUME);
+    const autosaveMeta = safeParse(AUTOSAVE_META_KEY_RESUME);
+
+    return Boolean(settlement || civState || autosaveMeta);
+  }
+
+  function getResumeMessage() {
+    const autosaveMeta = safeParse(AUTOSAVE_META_KEY_RESUME);
+
+    if (autosaveMeta && autosaveMeta.lastSavedAt) {
+      try {
+        return "Saved student progress detected. Last autosave: " +
+          new Date(autosaveMeta.lastSavedAt).toLocaleString() + ".";
+      } catch (err) {
+        return "Saved student progress detected on this device.";
+      }
+    }
+
+    return "Saved student progress detected on this device.";
+  }
+
+  if (panel && status && continueBtn && hasStudentProgress()) {
+    status.textContent = getResumeMessage();
+    panel.style.display = "block";
+
+    continueBtn.addEventListener("click", function () {
+      window.location.href = "/map";
+    });
+  }
+})();
+</script>
+
+
+
+<!-- =========================================================
+PHASE 6 STEP 10 — STEM NATION DEMO CLEANUP V1
+Selective demo reset controls for local student test data.
+========================================================= -->
+<section id="demoCleanupPanel" class="demo-cleanup-panel">
+  <h3>Demo Cleanup Options</h3>
+
+  <p>
+    Clean selected test records while preserving the broader student save system.
+  </p>
+
+  <div class="demo-cleanup-grid">
+    <button id="clearArchivesOnlyBtn" class="cleanup-btn" type="button">
+      Clear Archive Only
+    </button>
+
+    <button id="clearAlertsOnlyBtn" class="cleanup-btn" type="button">
+      Clear Alerts Only
+    </button>
+
+    <button id="clearTurnHistoryOnlyBtn" class="cleanup-btn" type="button">
+      Clear Turn History Only
+    </button>
+
+    <button id="clearActiveEventsOnlyBtn" class="cleanup-btn" type="button">
+      Clear Active Events Only
+    </button>
+
+    <button id="demoSoftResetBtn" class="cleanup-btn warning" type="button">
+      Demo Soft Reset
+    </button>
+  </div>
+
+  <p id="demoCleanupStatus" class="demo-cleanup-status">
+    No cleanup action taken yet.
+  </p>
+</section>
+
+<style>
+.demo-cleanup-panel {
+  margin: 32px auto;
+  padding: 18px;
+  max-width: 720px;
+  border: 1px solid rgba(120, 180, 255, 0.38);
+  border-radius: 14px;
+  background: rgba(0, 20, 50, 0.45);
+  color: #f5f1dc;
+}
+
+.demo-cleanup-panel h3 {
+  margin-top: 0;
+  color: #9fc8ff;
+  letter-spacing: 0.04em;
+}
+
+.demo-cleanup-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 10px;
+  margin-top: 14px;
+}
+
+.cleanup-btn {
+  background: #1f4f7a;
+  color: white;
+  border: 1px solid rgba(255,255,255,0.18);
+  padding: 11px 12px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.cleanup-btn:hover {
+  opacity: 0.88;
+}
+
+.cleanup-btn.warning {
+  background: #7a4a1f;
+}
+
+.demo-cleanup-status {
+  margin-top: 12px;
+  font-size: 13px;
+  opacity: 0.86;
+}
+</style>
+
+<script>
+/* STEM_NATION_DEMO_CLEANUP_V1 */
+(function () {
+  const CLEANUP_CIV_STATE_KEY = "STEM_NATION_CIVILIZATION_STATE_V34";
+  const CLEANUP_AUTOSAVE_META_KEY = "STEM_NATION_AUTOSAVE_META_V1";
+
+  const status = document.getElementById("demoCleanupStatus");
+
+  function readState() {
+    const raw = localStorage.getItem(CLEANUP_CIV_STATE_KEY);
+    if (!raw) return null;
+
+    try {
+      return JSON.parse(raw);
+    } catch (err) {
+      console.warn("Could not parse civilization state for cleanup.", err);
+      return null;
+    }
+  }
+
+  function writeState(state, message) {
+    const now = new Date().toISOString();
+
+    state.updatedAt = now;
+
+    localStorage.setItem(
+      CLEANUP_CIV_STATE_KEY,
+      JSON.stringify(state)
+    );
+
+    localStorage.setItem(
+      CLEANUP_AUTOSAVE_META_KEY,
+      JSON.stringify({
+        lastSavedAt: now,
+        currentPage: window.location.pathname,
+        cleanupAction: message
+      })
+    );
+
+    if (status) {
+      status.textContent = message + " Refreshing command center...";
+    }
+
+    setTimeout(function () {
+      window.location.reload();
+    }, 450);
+  }
+
+  function cleanupState(mutator, message) {
+    const state = readState();
+
+    if (!state) {
+      if (status) {
+        status.textContent = "No saved civilization state found.";
+      }
+      return;
+    }
+
+    mutator(state);
+    writeState(state, message);
+  }
+
+  function confirmCleanup(message) {
+    return window.confirm(message + " This cannot be undone for the current browser test data.");
+  }
+
+  const clearArchivesOnlyBtn = document.getElementById("clearArchivesOnlyBtn");
+  const clearAlertsOnlyBtn = document.getElementById("clearAlertsOnlyBtn");
+  const clearTurnHistoryOnlyBtn = document.getElementById("clearTurnHistoryOnlyBtn");
+  const clearActiveEventsOnlyBtn = document.getElementById("clearActiveEventsOnlyBtn");
+  const demoSoftResetBtn = document.getElementById("demoSoftResetBtn");
+
+  if (clearArchivesOnlyBtn) {
+    clearArchivesOnlyBtn.addEventListener("click", function () {
+      if (!confirmCleanup("Clear archive records only?")) return;
+
+      cleanupState(function (state) {
+        state.archives = [];
+      }, "Archive records cleared.");
+    });
+  }
+
+  if (clearAlertsOnlyBtn) {
+    clearAlertsOnlyBtn.addEventListener("click", function () {
+      if (!confirmCleanup("Clear active alerts only?")) return;
+
+      cleanupState(function (state) {
+        state.alerts = [];
+      }, "Alerts cleared.");
+    });
+  }
+
+  if (clearTurnHistoryOnlyBtn) {
+    clearTurnHistoryOnlyBtn.addEventListener("click", function () {
+      if (!confirmCleanup("Clear turn and governance history only?")) return;
+
+      cleanupState(function (state) {
+        state.decisionLog = (state.decisionLog || []).filter(function (entry) {
+          return entry.id === "FOUNDING_SETTLEMENT_DEFENSE";
+        });
+
+        state.currentTurn = 1;
+        state.era = "Founding Era";
+        state.governanceActionUsedThisTurn = false;
+      }, "Turn history cleared and civilization returned to Founding Era.");
+    });
+  }
+
+  if (clearActiveEventsOnlyBtn) {
+    clearActiveEventsOnlyBtn.addEventListener("click", function () {
+      if (!confirmCleanup("Clear active world events only?")) return;
+
+      cleanupState(function (state) {
+        state.activeEvents = [];
+      }, "Active world events cleared.");
+    });
+  }
+
+  if (demoSoftResetBtn) {
+    demoSoftResetBtn.addEventListener("click", function () {
+      if (!confirmCleanup("Run demo soft reset?")) return;
+
+      cleanupState(function (state) {
+        state.currentTurn = 1;
+        state.era = "Founding Era";
+        state.alerts = [];
+        state.archives = [];
+        state.activeEvents = [];
+        state.decisionLog = (state.decisionLog || []).filter(function (entry) {
+          return entry.id === "FOUNDING_SETTLEMENT_DEFENSE";
+        });
+        state.governanceActionUsedThisTurn = false;
+      }, "Demo soft reset complete.");
+    });
+  }
+})();
+</script>
+
+<section id="studentResetPanel" class="student-reset-panel">
+  <h3>Student Mode Reset</h3>
+  <p>
+    Clear test data on this device and restart the student experience.
+    Teacher/admin systems are not affected.
+  </p>
+
+  <button id="resetStudentModeBtn" class="danger-btn" type="button">
+    RESET STUDENT MODE
+  </button>
+
+  <div id="resetWarning" class="reset-warning" style="display:none;">
+    <p>
+      WARNING: This will erase saved student simulation progress on this device.
+    </p>
+
+    <button id="confirmResetBtn" class="confirm-reset-btn" type="button">
+      CONFIRM RESET
+    </button>
+
+    <button id="cancelResetBtn" class="cancel-reset-btn" type="button">
+      CANCEL
+    </button>
+  </div>
+</section>
+
+<style>
+.student-reset-panel {
+  margin: 32px auto;
+  padding: 18px;
+  max-width: 720px;
+  border: 1px solid rgba(255, 215, 0, 0.35);
+  border-radius: 14px;
+  background: rgba(0, 0, 0, 0.45);
+  color: #f5f1dc;
+}
+
+.student-reset-panel h3 {
+  margin-top: 0;
+  color: #ffd76a;
+  letter-spacing: 0.04em;
+}
+
+.danger-btn {
+  background: #8b0000;
+  color: white;
+  border: none;
+  padding: 12px 18px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.danger-btn:hover {
+  opacity: 0.85;
+}
+
+.reset-warning {
+  margin-top: 16px;
+  padding: 14px;
+  border: 1px solid rgba(255, 80, 80, 0.65);
+  border-radius: 10px;
+  background: rgba(80, 0, 0, 0.35);
+}
+
+.confirm-reset-btn {
+  background: #b00000;
+  color: white;
+  border: none;
+  padding: 10px 14px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: bold;
+  margin-right: 8px;
+}
+
+.cancel-reset-btn {
+  background: #333;
+  color: white;
+  border: 1px solid #777;
+  padding: 10px 14px;
+  border-radius: 8px;
+  cursor: pointer;
+}
+</style>
+
+<script>
+/* STEM_NATION_FULL_STUDENT_RESET */
+(function () {
+  const resetBtn = document.getElementById("resetStudentModeBtn");
+  const warningBox = document.getElementById("resetWarning");
+  const confirmResetBtn = document.getElementById("confirmResetBtn");
+  const cancelResetBtn = document.getElementById("cancelResetBtn");
+
+  function resetStudentMode() {
+    localStorage.clear();
+    sessionStorage.clear();
+
+    document.cookie.split(";").forEach(function(cookie) {
+      document.cookie = cookie
+        .replace(/^ +/, "")
+        .replace(/=.*/, "=;expires=" + new Date().toUTCString() + ";path=/");
+    });
+
+    window.location.href = "/";
+  }
+
+  if (resetBtn && warningBox && confirmResetBtn && cancelResetBtn) {
+    resetBtn.addEventListener("click", function () {
+      warningBox.style.display = "block";
+    });
+
+    cancelResetBtn.addEventListener("click", function () {
+      warningBox.style.display = "none";
+    });
+
+    confirmResetBtn.addEventListener("click", resetStudentMode);
+  }
+})();
+</script>
+
+
+
+<script>
+/* STEM_NATION_COMMAND_SESSION_DISPLAY_V1 */
+(function () {
+  const COMMAND_SESSION_KEY = "STEM_NATION_CLASS_SESSION_V1";
+
+  const panel = document.getElementById("commandClassSessionPanel");
+  const content = document.getElementById("commandClassSessionContent");
+
+  function safeReadSession() {
+    const raw = localStorage.getItem(COMMAND_SESSION_KEY);
+    if (!raw) return null;
+
+    try {
+      return JSON.parse(raw);
+    } catch (err) {
+      console.warn("Invalid command center class session ignored.", err);
+      return null;
+    }
+  }
+
+  function escapeText(value) {
+    return String(value || "")
+      .replace(/&/g, "&amp;")
+      .replace(/</g, "&lt;")
+      .replace(/>/g, "&gt;");
+  }
+
+  function renderCommandSession() {
+    if (!panel || !content) return;
+
+    const session = safeReadSession();
+
+    if (!session) {
+      panel.style.display = "none";
+      content.innerHTML = "No active class session loaded.";
+      return;
+    }
+
+    const status = String(session.status || "unknown").toLowerCase();
+    const safeStatusClass = ["active", "paused", "ended"].includes(status) ? status : "paused";
+
+    panel.style.display = "block";
+
+    content.innerHTML = `
+      <strong>${escapeText(session.sessionName || "Class Session")}</strong><br>
+      Status: <span class="command-session-status ${safeStatusClass}">${escapeText(status.toUpperCase())}</span><br>
+      Mode: ${escapeText(session.sessionMode || "Not Set")}<br>
+      Mission Focus: ${escapeText(session.missionFocus || "Not Set")}<br>
+      Teacher Prompt: ${escapeText(session.teacherPrompt || "Observe. Ask. Decide. Record.")}<br>
+      Updated: ${session.updatedAt ? new Date(session.updatedAt).toLocaleString() : "Not Saved"}
+    `;
+  }
+
+  renderCommandSession();
+
+  setInterval(renderCommandSession, 5000);
+
+  window.addEventListener("storage", renderCommandSession);
+  window.addEventListener("focus", renderCommandSession);
+
+  console.log("STEM_NATION_COMMAND_SESSION_DISPLAY_V1 ACTIVE");
+})();
+</script>
+
+
+
+<!-- STEM_NATION_HUB_COMPARISON_RESPONSE_REVIEW_V1 -->
+
+<!-- STEM_NATION_STUDENT_IDENTITY_ARCHIVE_FIELDS_V1 -->
+<section id="studentIdentityArchivePanel" class="student-identity-archive-panel">
+  <h2>Student Identity Archive</h2>
+
+  <div class="student-identity-grid">
+    <label>
+      Student Name
+      <input id="archiveStudentName" type="text" placeholder="Enter student name">
+    </label>
+
+    <label>
+      Class / Period
+      <input id="archiveStudentClass" type="text" placeholder="Example: Period 2">
+    </label>
+
+    <label>
+      Teacher
+      <input id="archiveTeacherName" type="text" placeholder="Enter teacher name">
+    </label>
+
+    <label>
+      Archive Date
+      <input id="archiveDateField" type="date">
+    </label>
+  </div>
+
+  <div id="studentIdentitySaveStatus">
+    Identity archive fields not saved yet.
+  </div>
+</section>
+
+
+
+<!-- STEM_NATION_TEACHER_EVALUATION_FEEDBACK_LAYER_V1 -->
+
+<!-- STEM_NATION_RUBRIC_GUIDELINES_REFERENCE_V1 -->
+<section class="rubric-guidelines-panel">
+  <details>
+    <summary>Rubric Guidelines for Teachers and Students</summary>
+
+    <p>
+      These rubric guidelines explain what strong civilization reasoning looks like during Week 1 settlement analysis and discussion.
+    </p>
+
+    <div class="rubric-guideline">
+      <h3>Observation Quality</h3>
+
+      <div class="rubric-level"><strong>4 · Strong</strong> — Explains multiple terrain relationships and predicts consequences clearly.</div>
+      <div class="rubric-level"><strong>3 · Proficient</strong> — Identifies major terrain features with reasonable explanation.</div>
+      <div class="rubric-level"><strong>2 · Developing</strong> — Identifies terrain but explanation is limited.</div>
+      <div class="rubric-level"><strong>1 · Beginning</strong> — Gives unclear or minimal observations.</div>
+
+      <div class="rubric-example">
+        Example Response:
+        "The river supports farming and transportation, but flooding could destroy early settlements if defenses are weak."
+      </div>
+    </div>
+
+    <div class="rubric-guideline">
+      <h3>Evidence Use</h3>
+
+      <div class="rubric-level"><strong>4 · Strong</strong> — Uses map evidence directly to support reasoning.</div>
+      <div class="rubric-level"><strong>3 · Proficient</strong> — Gives evidence connected to the decision.</div>
+      <div class="rubric-level"><strong>2 · Developing</strong> — Gives limited or incomplete evidence.</div>
+      <div class="rubric-level"><strong>1 · Beginning</strong> — Gives little or no supporting evidence.</div>
+
+      <div class="rubric-example">
+        Example Response:
+        "I chose the coast because the water routes can increase trade and movement between civilizations."
+      </div>
+    </div>
+
+    <div class="rubric-guideline">
+      <h3>Risk Awareness</h3>
+
+      <div class="rubric-level"><strong>4 · Strong</strong> — Identifies long-term risks and tradeoffs clearly.</div>
+      <div class="rubric-level"><strong>3 · Proficient</strong> — Identifies major dangers connected to the region.</div>
+      <div class="rubric-level"><strong>2 · Developing</strong> — Identifies a danger but explanation is incomplete.</div>
+      <div class="rubric-level"><strong>1 · Beginning</strong> — Shows little awareness of consequences or risk.</div>
+
+      <div class="rubric-example">
+        Example Response:
+        "The plains support farming, but open land makes invasion and defense more difficult."
+      </div>
+    </div>
+
+    <div class="rubric-guideline">
+      <h3>Settlement Logic</h3>
+
+      <div class="rubric-level"><strong>4 · Strong</strong> — Gives a clear survival strategy connected to geography and growth.</div>
+      <div class="rubric-level"><strong>3 · Proficient</strong> — Explains a reasonable settlement choice.</div>
+      <div class="rubric-level"><strong>2 · Developing</strong> — Gives a basic strategy with limited reasoning.</div>
+      <div class="rubric-level"><strong>1 · Beginning</strong> — Gives unclear settlement reasoning.</div>
+
+      <div class="rubric-example">
+        Example Response:
+        "The highlands provide natural defense, so our civilization can protect resources while expanding slowly."
+      </div>
+    </div>
+
+    <div class="rubric-guideline">
+      <h3>Systems Thinking</h3>
+
+      <div class="rubric-level"><strong>4 · Strong</strong> — Connects food, trade, defense, movement, and growth together.</div>
+      <div class="rubric-level"><strong>3 · Proficient</strong> — Connects multiple systems with reasonable explanation.</div>
+      <div class="rubric-level"><strong>2 · Developing</strong> — Shows limited connections between systems.</div>
+      <div class="rubric-level"><strong>1 · Beginning</strong> — Sees decisions in isolation with little systems awareness.</div>
+
+      <div class="rubric-example">
+        Example Response:
+        "Trade routes increase wealth and communication, but they also expose the civilization to conflict and invasion."
+      </div>
+    </div>
+
+    <div class="rubric-guideline">
+      <h3>Collaboration / Discussion</h3>
+
+      <div class="rubric-level"><strong>4 · Strong</strong> — Builds on ideas, asks questions, and contributes thoughtfully.</div>
+      <div class="rubric-level"><strong>3 · Proficient</strong> — Participates consistently in discussion.</div>
+      <div class="rubric-level"><strong>2 · Developing</strong> — Participates inconsistently or with limited explanation.</div>
+      <div class="rubric-level"><strong>1 · Beginning</strong> — Rarely contributes or responds to discussion.</div>
+
+      <div class="rubric-example">
+        Example Response:
+        "I agree with the river choice, but I think flooding could eventually force the civilization to move inland."
+      </div>
+    </div>
+
+  </details>
+</section>
+
+
+<section id="teacherEvaluationPanel" class="teacher-evaluation-panel">
+  <h2>Teacher Evaluation / Feedback</h2>
+  <p>
+    Review the student’s founding archive, settlement defense, and region comparison response.
+  </p>
+
+  <div class="teacher-evaluation-grid">
+    <label>
+      Observation Quality
+      <select id="evalObservationQuality">
+        <option value="">Select score</option>
+        <option value="4 · Strong">4 · Strong</option>
+        <option value="3 · Proficient">3 · Proficient</option>
+        <option value="2 · Developing">2 · Developing</option>
+        <option value="1 · Beginning">1 · Beginning</option>
+      </select>
+    </label>
+
+    <label>
+      Evidence Use
+      <select id="evalEvidenceUse">
+        <option value="">Select score</option>
+        <option value="4 · Strong">4 · Strong</option>
+        <option value="3 · Proficient">3 · Proficient</option>
+        <option value="2 · Developing">2 · Developing</option>
+        <option value="1 · Beginning">1 · Beginning</option>
+      </select>
+    </label>
+
+    <label>
+      Risk Awareness
+      <select id="evalRiskAwareness">
+        <option value="">Select score</option>
+        <option value="4 · Strong">4 · Strong</option>
+        <option value="3 · Proficient">3 · Proficient</option>
+        <option value="2 · Developing">2 · Developing</option>
+        <option value="1 · Beginning">1 · Beginning</option>
+      </select>
+    </label>
+
+    <label>
+      Settlement Logic
+      <select id="evalSettlementLogic">
+        <option value="">Select score</option>
+        <option value="4 · Strong">4 · Strong</option>
+        <option value="3 · Proficient">3 · Proficient</option>
+        <option value="2 · Developing">2 · Developing</option>
+        <option value="1 · Beginning">1 · Beginning</option>
+      </select>
+    </label>
+
+    <label>
+      Systems Thinking
+      <select id="evalSystemsThinking">
+        <option value="">Select score</option>
+        <option value="4 · Strong">4 · Strong</option>
+        <option value="3 · Proficient">3 · Proficient</option>
+        <option value="2 · Developing">2 · Developing</option>
+        <option value="1 · Beginning">1 · Beginning</option>
+      </select>
+    </label>
+
+    <label>
+      Collaboration / Discussion
+      <select id="evalCollaboration">
+        <option value="">Select score</option>
+        <option value="4 · Strong">4 · Strong</option>
+        <option value="3 · Proficient">3 · Proficient</option>
+        <option value="2 · Developing">2 · Developing</option>
+        <option value="1 · Beginning">1 · Beginning</option>
+      </select>
+    </label>
+  </div>
+
+  <div class="teacher-evaluation-notes">
+    <label for="evalTeacherStrengths">Teacher Strengths / Positive Feedback</label>
+    <textarea id="evalTeacherStrengths" placeholder="What did the student do well?"></textarea>
+
+    <label for="evalTeacherNextSteps">Teacher Next Steps / Growth Guidance</label>
+    <textarea id="evalTeacherNextSteps" placeholder="What should the student improve or revise next?"></textarea>
+
+    <label for="evalTeacherNotes">Additional Teacher Notes</label>
+    <textarea id="evalTeacherNotes" placeholder="Optional teacher comments."></textarea>
+  </div>
+
+  <div id="teacherEvaluationSaveStatus">
+    Teacher evaluation not saved yet.
+  </div>
+</section>
+
+
+
+<!-- STEM_NATION_STUDENT_REFLECTION_GROWTH_V1 -->
+<section id="studentReflectionPanel" class="student-reflection-panel">
+  <h2>Student Reflection / Growth Statement</h2>
+
+  <p>
+    Reflect on how your civilization thinking changed during the mission and identify what leadership competencies you want to strengthen next.
+  </p>
+
+  <div class="reflection-grid">
+
+    <label>
+      What changed in your thinking during this mission?
+      <textarea id="reflectionThinkingChange"></textarea>
+    </label>
+
+    <label>
+      What was the strongest civilization decision you made?
+      <textarea id="reflectionStrongestDecision"></textarea>
+    </label>
+
+    <label>
+      What risk or weakness would you improve next time?
+      <textarea id="reflectionImprovement"></textarea>
+    </label>
+
+    <label>
+      Which civilization competency do you want to strengthen?
+      <select id="reflectionCompetencyGoal">
+        <option value="">Select competency</option>
+        <option>Risk Awareness</option>
+        <option>Systems Thinking</option>
+        <option>Settlement Strategy</option>
+        <option>Evidence Reasoning</option>
+        <option>Trade & Movement Logic</option>
+        <option>Defense Logic</option>
+        <option>Environmental Adaptation</option>
+        <option>Collaboration & Discussion</option>
+      </select>
+    </label>
+
+    <label>
+      What did this mission teach you about survival, leadership, or society?
+      <textarea id="reflectionLesson"></textarea>
+    </label>
+
+  </div>
+
+  <div class="reflection-actions">
+    <button id="saveReflectionBtn" class="btn" type="button">
+      Save Reflection
+    </button>
+
+    <button id="clearReflectionBtn" class="btn" type="button">
+      Clear Reflection
+    </button>
+  </div>
+
+  <div id="reflectionSaveStatus" class="reflection-save-status">
+    No reflection saved yet.
+  </div>
+</section>
+
+
+<section id="comparisonResponseReview" class="comparison-response-review">
+  <h2>Region Comparison Response</h2>
+
+  <div id="comparisonResponseEmpty" class="comparison-response-empty">
+    No comparison response saved yet. Activate Region Comparison Mode on the Teacher Session page, then have students save their response on the map.
+  </div>
+
+  <div id="comparisonResponseContent" class="comparison-response-grid hidden">
+    <div class="comparison-response-item">
+      <div class="label">Compared Regions</div>
+      <div id="hubComparedRegions" class="answer">—</div>
+    </div>
+
+    <div class="comparison-response-item">
+      <div class="label">Stronger Beginning</div>
+      <div id="hubStrongerRegion" class="answer">—</div>
+    </div>
+
+    <div class="comparison-response-item">
+      <div class="label">Advantage / Evidence</div>
+      <div id="hubComparisonAdvantage" class="answer">—</div>
+    </div>
+
+    <div class="comparison-response-item">
+      <div class="label">Risk / Tradeoff</div>
+      <div id="hubComparisonRisk" class="answer">—</div>
+    </div>
+
+    <div id="hubComparisonSavedTime" class="comparison-response-time">
+      Saved: —
+    </div>
+  </div>
+</section>
+
+
+<!-- STEM_NATION_COMMAND_CENTER_TIMELINE_V1 -->
+<div id="commandCenterTimeline" class="command-center-timeline collapsed">
+  <button id="commandCenterTimelineToggle"
+          class="command-center-timeline-toggle"
+          type="button">
+    Live Class Session
+  </button>
+
+  <div class="command-center-timeline-body">
+    <strong id="commandCenterTimelineTitle">
+      Live Lesson Step: Not started
+    </strong>
+
+    <div id="commandCenterTimelineMove">
+      Teacher Move: Waiting for teacher timeline command.
+    </div>
+  </div>
+</div>
+
+
+<script>
+// STEM_NATION_COMMAND_CENTER_TIMELINE_V1
+(function syncCommandCenterTimeline() {
+
+  const panel = document.getElementById("commandCenterTimeline");
+  const toggle = document.getElementById("commandCenterTimelineToggle");
+  const title = document.getElementById("commandCenterTimelineTitle");
+  const move = document.getElementById("commandCenterTimelineMove");
+
+  if (!panel || !toggle || !title || !move) return;
+
+  toggle.addEventListener("click", function () {
+    panel.classList.toggle("collapsed");
+  });
+
+  function renderTimeline() {
+
+    const raw = localStorage.getItem("STEM_NATION_CLASS_TIMELINE_V1");
+
+    if (!raw) {
+      title.textContent = "Live Lesson Step: Not started";
+      move.textContent = "Teacher Move: Waiting for teacher timeline command.";
+      return;
+    }
+
+    try {
+
+      const state = JSON.parse(raw);
+
+      const step =
+        state.activeStep ||
+        state.currentStep ||
+        state.step ||
+        {};
+
+      const number =
+        step.number ||
+        step.step ||
+        state.activeStepNumber ||
+        "";
+
+      const stepTitle =
+        step.title ||
+        step.name ||
+        state.activeStepTitle ||
+        "Active Step";
+
+      const teacherMove =
+        step.teacherMove ||
+        step.teacher_move ||
+        state.teacherMove ||
+        state.move ||
+        "Follow teacher direction.";
+
+      title.textContent =
+        `Live Lesson Step: ${number ? number + " · " : ""}${stepTitle}`;
+
+      move.textContent =
+        `Teacher Move: ${teacherMove}`;
+
+    } catch (err) {
+
+      title.textContent =
+        "Live Lesson Step: Timeline unavailable";
+
+      move.textContent =
+        "Teacher Move: Refresh class session.";
+
+    }
+  }
+
+  renderTimeline();
+
+  window.addEventListener("storage", renderTimeline);
+
+  setInterval(renderTimeline, 1000);
+
+})();
+</script>
+
+
+<script>
+// STEM_NATION_HUB_COMPARISON_RESPONSE_REVIEW_V1
+(function installHubComparisonResponseReview() {
+  const KEY = "STEM_NATION_STUDENT_COMPARISON_RESPONSE_V1";
+
+  const empty = document.getElementById("comparisonResponseEmpty");
+  const content = document.getElementById("comparisonResponseContent");
+  const regions = document.getElementById("hubComparedRegions");
+  const stronger = document.getElementById("hubStrongerRegion");
+  const advantage = document.getElementById("hubComparisonAdvantage");
+  const risk = document.getElementById("hubComparisonRisk");
+  const savedTime = document.getElementById("hubComparisonSavedTime");
+
+  if (!empty || !content || !regions || !stronger || !advantage || !risk || !savedTime) return;
+
+  function readResponse() {
+    const raw = localStorage.getItem(KEY);
+    if (!raw) return null;
+
+    try {
+      return JSON.parse(raw);
+    } catch (err) {
+      console.warn("Invalid comparison response ignored.", err);
+      return null;
+    }
+  }
+
+  function renderResponse() {
+    const data = readResponse();
+
+    if (!data) {
+      empty.classList.remove("hidden");
+      content.classList.add("hidden");
+      return;
+    }
+
+    empty.classList.add("hidden");
+    content.classList.remove("hidden");
+
+    regions.textContent = Array.isArray(data.regions) ? data.regions.join(" vs ") : "—";
+    stronger.textContent = data.strongerRegion || "—";
+    advantage.textContent = data.advantageEvidence || "—";
+    risk.textContent = data.riskTradeoff || "—";
+
+    savedTime.textContent = data.savedAt
+      ? "Saved: " + new Date(data.savedAt).toLocaleString()
+      : "Saved: —";
+  }
+
+  renderResponse();
+  window.addEventListener("storage", renderResponse);
+  window.addEventListener("focus", renderResponse);
+})();
+</script>
+
+
+<script>
+// STEM_NATION_STUDENT_IDENTITY_ARCHIVE_FIELDS_V1
+(function installStudentIdentityArchiveFields() {
+  const KEY = "STEM_NATION_STUDENT_IDENTITY_ARCHIVE_V1";
+
+  const studentName = document.getElementById("archiveStudentName");
+  const studentClass = document.getElementById("archiveStudentClass");
+  const teacherName = document.getElementById("archiveTeacherName");
+  const archiveDate = document.getElementById("archiveDateField");
+  const status = document.getElementById("studentIdentitySaveStatus");
+
+  if (!studentName || !studentClass || !teacherName || !archiveDate || !status) return;
+
+  function saveIdentity() {
+    const payload = {
+      studentName: studentName.value.trim(),
+      studentClass: studentClass.value.trim(),
+      teacherName: teacherName.value.trim(),
+      archiveDate: archiveDate.value,
+      savedAt: new Date().toISOString()
+    };
+
+    localStorage.setItem(KEY, JSON.stringify(payload));
+
+    status.textContent =
+      "Identity archive saved: " +
+      new Date(payload.savedAt).toLocaleTimeString();
+  }
+
+  function loadIdentity() {
+    const raw = localStorage.getItem(KEY);
+    if (!raw) return;
+
+    try {
+      const data = JSON.parse(raw);
+
+      studentName.value = data.studentName || "";
+      studentClass.value = data.studentClass || "";
+      teacherName.value = data.teacherName || "";
+      archiveDate.value = data.archiveDate || "";
+
+      if (data.savedAt) {
+        status.textContent =
+          "Identity archive loaded: " +
+          new Date(data.savedAt).toLocaleTimeString();
+      }
+    } catch (err) {
+      console.warn("Student identity archive ignored.", err);
+    }
+  }
+
+  [studentName, studentClass, teacherName, archiveDate].forEach((field) => {
+    field.addEventListener("input", saveIdentity);
+    field.addEventListener("change", saveIdentity);
+  });
+
+  if (!archiveDate.value) {
+    archiveDate.value = new Date().toISOString().split("T")[0];
+  }
+
+  loadIdentity();
+})();
+</script>
+
+
+<script>
+// STEM_NATION_TEACHER_EVALUATION_FEEDBACK_LAYER_V1
+(function installTeacherEvaluationFeedbackLayer() {
+  const KEY = "STEM_NATION_TEACHER_EVALUATION_FEEDBACK_V1";
+
+  const fields = {
+    observationQuality: document.getElementById("evalObservationQuality"),
+    evidenceUse: document.getElementById("evalEvidenceUse"),
+    riskAwareness: document.getElementById("evalRiskAwareness"),
+    settlementLogic: document.getElementById("evalSettlementLogic"),
+    systemsThinking: document.getElementById("evalSystemsThinking"),
+    collaboration: document.getElementById("evalCollaboration"),
+    strengths: document.getElementById("evalTeacherStrengths"),
+    nextSteps: document.getElementById("evalTeacherNextSteps"),
+    notes: document.getElementById("evalTeacherNotes")
+  };
+
+  const status = document.getElementById("teacherEvaluationSaveStatus");
+
+  if (!status || Object.values(fields).some((field) => !field)) return;
+
+  function saveEvaluation() {
+    const payload = {
+      observationQuality: fields.observationQuality.value,
+      evidenceUse: fields.evidenceUse.value,
+      riskAwareness: fields.riskAwareness.value,
+      settlementLogic: fields.settlementLogic.value,
+      systemsThinking: fields.systemsThinking.value,
+      collaboration: fields.collaboration.value,
+      strengths: fields.strengths.value.trim(),
+      nextSteps: fields.nextSteps.value.trim(),
+      notes: fields.notes.value.trim(),
+      savedAt: new Date().toISOString()
+    };
+
+    localStorage.setItem(KEY, JSON.stringify(payload));
+    status.textContent = "Teacher evaluation saved: " + new Date(payload.savedAt).toLocaleTimeString();
+  }
+
+  function loadEvaluation() {
+    const raw = localStorage.getItem(KEY);
+    if (!raw) return;
+
+    try {
+      const data = JSON.parse(raw);
+
+      fields.observationQuality.value = data.observationQuality || "";
+      fields.evidenceUse.value = data.evidenceUse || "";
+      fields.riskAwareness.value = data.riskAwareness || "";
+      fields.settlementLogic.value = data.settlementLogic || "";
+      fields.systemsThinking.value = data.systemsThinking || "";
+      fields.collaboration.value = data.collaboration || "";
+      fields.strengths.value = data.strengths || "";
+      fields.nextSteps.value = data.nextSteps || "";
+      fields.notes.value = data.notes || "";
+
+      if (data.savedAt) {
+        status.textContent = "Teacher evaluation loaded: " + new Date(data.savedAt).toLocaleTimeString();
+      }
+    } catch (err) {
+      console.warn("Teacher evaluation ignored.", err);
+    }
+  }
+
+  Object.values(fields).forEach((field) => {
+    field.addEventListener("input", saveEvaluation);
+    field.addEventListener("change", saveEvaluation);
+  });
+
+  loadEvaluation();
+})();
+</script>
+
+
+<script>
+// STEM_NATION_CIVILIZATION_SCORE_BADGE_SUMMARY_V1
+(function installCivilizationScoreSummary() {
+
+  function readJSON(key) {
+    try {
+      return JSON.parse(localStorage.getItem(key) || "null");
+    } catch (err) {
+      return null;
+    }
+  }
+
+  const comparison = readJSON("STEM_NATION_STUDENT_COMPARISON_RESPONSE_V1");
+  const evaluation = readJSON("STEM_NATION_TEACHER_EVALUATION_FEEDBACK_V1");
+
+  const scoreMap = {
+    "4 · Strong": 95,
+    "3 · Proficient": 82,
+    "2 · Developing": 68,
+    "1 · Beginning": 52
+  };
+
+  function evalScore(value) {
+    return scoreMap[value] || 0;
+  }
+
+  const observation = document.getElementById("scoreObservation");
+  const evidence = document.getElementById("scoreEvidence");
+  const risk = document.getElementById("scoreRisk");
+  const settlement = document.getElementById("scoreSettlement");
+  const systems = document.getElementById("scoreSystems");
+  const teacherEval = document.getElementById("scoreTeacherEval");
+
+  const readiness = document.getElementById("civilizationReadinessSummary");
+  const badgeList = document.getElementById("civilizationBadgeList");
+
+  if (!observation || !evidence || !risk || !settlement || !systems || !teacherEval || !readiness || !badgeList) return;
+
+  const observationScore = evalScore(evaluation?.observationQuality);
+  const evidenceScore = evalScore(evaluation?.evidenceUse);
+  const riskScore = evalScore(evaluation?.riskAwareness);
+  const settlementScore = evalScore(evaluation?.settlementLogic);
+  const systemsScore = evalScore(evaluation?.systemsThinking);
+
+  // STEM_NATION_SCORE_AVERAGING_COMPLETED_ONLY_V1
+  const completedScores = [
+    observationScore,
+    evidenceScore,
+    riskScore,
+    settlementScore,
+    systemsScore
+  ].filter((score) => score > 0);
+
+  const completedCount = completedScores.length;
+
+  const teacherAverage = completedCount
+    ? Math.round(completedScores.reduce((sum, score) => sum + score, 0) / completedCount)
+    : 0;
+
+  observation.textContent = observationScore || "--";
+  evidence.textContent = evidenceScore || "--";
+  risk.textContent = riskScore || "--";
+  settlement.textContent = settlementScore || "--";
+  systems.textContent = systemsScore || "--";
+  teacherEval.textContent = teacherAverage
+    ? `${teacherAverage} (${completedCount} / 5 complete)`
+    : "--";
+
+  // STEM_NATION_READINESS_THRESHOLD_LOGIC_V1
+  let readinessLabel = "Rubric Pending";
+
+  if (completedCount >= 4 && teacherAverage >= 90) {
+    readinessLabel = "Advanced Civilization Readiness";
+  } else if (completedCount >= 3 && teacherAverage >= 75) {
+    readinessLabel = "Stable Civilization Readiness";
+  } else if (completedCount >= 2 && teacherAverage >= 60) {
+    readinessLabel = "Developing Civilization Readiness";
+  } else if (completedCount >= 1) {
+    readinessLabel = "Emerging Civilization";
+  }
+
+  readiness.textContent =
+    completedCount
+      ? "Civilization Readiness: " + readinessLabel
+      : "Civilization Readiness: Rubric Pending";
+
+  // STEM_NATION_BADGE_ELIGIBILITY_THRESHOLDS_V1
+  const badges = [];
+
+  if (comparison?.regions?.includes("River Corridor")) {
+    badges.push("🌊 Water Systems Thinker");
+  }
+
+  if (riskScore >= 75 && completedCount >= 2) {
+    badges.push("⚖️ Risk Awareness Builder");
+  }
+
+  if (settlementScore >= 75 && completedCount >= 2) {
+    badges.push("🛖 Settlement Strategist");
+  }
+
+  if (systemsScore >= 75 && completedCount >= 2) {
+    badges.push("🧠 Systems Thinker");
+  }
+
+  if (evidenceScore >= 75 && completedCount >= 2) {
+    badges.push("📜 Evidence-Based Reasoner");
+  }
+
+  if (teacherAverage >= 90 && completedCount >= 4) {
+    badges.push("🏛️ Civilization Architect");
+  }
+
+  if (!badges.length) {
+    badges.push("🌱 Founding Civilization");
+  }
+
+  badgeList.innerHTML = badges.map((badge) => {
+    return `<div class="civilization-badge">${badge}</div>`;
+  }).join("");
+})();
+</script>
+
+
+<script>
+// STEM_NATION_CIVILIZATION_COMPETENCY_PROFILE_V1
+(function installCivilizationCompetencyProfile() {
+  const grid = document.getElementById("competencyProfileGrid");
+  if (!grid) return;
+
+  function readJSON(key) {
+    try {
+      return JSON.parse(localStorage.getItem(key) || "null");
+    } catch (err) {
+      return null;
+    }
+  }
+
+  const evaluation = readJSON("STEM_NATION_TEACHER_EVALUATION_FEEDBACK_V1");
+  const comparison = readJSON("STEM_NATION_STUDENT_COMPARISON_RESPONSE_V1");
+  const defense = readJSON("STEM_NATION_SETTLEMENT_DEFENSE_V1");
+
+  const scoreMap = {
+    "4 · Strong": 4,
+    "3 · Proficient": 3,
+    "2 · Developing": 2,
+    "1 · Beginning": 1
+  };
+
+  function levelFromScore(score) {
+    if (score >= 4) return "Strongly Developing";
+    if (score >= 3) return "Developing";
+    if (score >= 2) return "Emerging";
+    if (score >= 1) return "Beginning";
+    return "Not Yet Scored";
+  }
+
+  const observation = scoreMap[evaluation?.observationQuality] || 0;
+  const evidence = scoreMap[evaluation?.evidenceUse] || 0;
+  const risk = scoreMap[evaluation?.riskAwareness] || 0;
+  const settlement = scoreMap[evaluation?.settlementLogic] || 0;
+  const systems = scoreMap[evaluation?.systemsThinking] || 0;
+  const collaboration = scoreMap[evaluation?.collaboration] || 0;
+
+  const chosenRegion = defense?.chosenRegion || "";
+  const comparedRegions = Array.isArray(comparison?.regions) ? comparison.regions.join(" vs ") : "";
+
+  const competencies = [
+    {
+      title: "Risk Awareness",
+      level: levelFromScore(risk),
+      description: risk
+        ? "The student identifies danger, consequence, and tradeoff when evaluating civilization choices."
+        : "This competency will strengthen when the student explains risks, dangers, and long-term consequences."
+    },
+    {
+      title: "Systems Thinking",
+      level: levelFromScore(systems),
+      description: systems
+        ? "The student connects food, defense, trade, movement, environment, and growth as related systems."
+        : "This competency will strengthen when the student connects multiple civilization systems together."
+    },
+    {
+      title: "Settlement Strategy",
+      level: levelFromScore(settlement),
+      description: settlement
+        ? `The student explains why ${chosenRegion || "the selected region"} can support survival and growth.`
+        : "This competency will strengthen when the student gives a clear settlement plan tied to geography."
+    },
+    {
+      title: "Evidence Reasoning",
+      level: levelFromScore(evidence || observation),
+      description: evidence || observation
+        ? "The student uses observation and map evidence to support civilization decisions."
+        : "This competency will strengthen when the student cites visible map evidence."
+    },
+    {
+      title: "Trade & Movement Logic",
+      level: comparedRegions.includes("Coastal") || comparedRegions.includes("Crossroads") || chosenRegion.includes("Coastal") || chosenRegion.includes("Crossroads")
+        ? "Emerging"
+        : "Not Yet Scored",
+      description: "The student begins recognizing how waterways, roads, coastlines, and crossroads shape movement, contact, trade, and exposure."
+    },
+    {
+      title: "Defense Logic",
+      level: comparedRegions.includes("Highland") || chosenRegion.includes("Highland") || risk || settlement
+        ? "Emerging"
+        : "Not Yet Scored",
+      description: "The student begins recognizing how terrain, elevation, barriers, and exposure affect security and protection."
+    },
+    {
+      title: "Environmental Adaptation",
+      level: chosenRegion || comparedRegions
+        ? "Emerging"
+        : "Not Yet Scored",
+      description: "The student begins explaining how civilizations adapt to rivers, storms, floods, forests, plains, mountains, and coastlines."
+    },
+    {
+      title: "Collaboration & Discussion",
+      level: levelFromScore(collaboration),
+      description: collaboration
+        ? "The student contributes to shared reasoning, discussion, and collective decision-making."
+        : "This competency will strengthen when discussion and collaboration are evaluated."
+    }
+  ];
+
+  grid.innerHTML = competencies.map((item) => `
+    <article class="competency-card">
+      <h3>${item.title}</h3>
+      <div class="competency-level">${item.level}</div>
+      <div class="competency-description">${item.description}</div>
+    </article>
+  `).join("");
+})();
+</script>
+
+
+<script>
+// STEM_NATION_STUDENT_REFLECTION_GROWTH_V1
+(function installStudentReflectionGrowthLayer() {
+
+  const STORAGE_KEY = "STEM_NATION_STUDENT_REFLECTION_GROWTH_V1";
+
+  const fields = {
+    thinkingChange: document.getElementById("reflectionThinkingChange"),
+    strongestDecision: document.getElementById("reflectionStrongestDecision"),
+    improvement: document.getElementById("reflectionImprovement"),
+    competencyGoal: document.getElementById("reflectionCompetencyGoal"),
+    lesson: document.getElementById("reflectionLesson")
+  };
+
+  const saveBtn = document.getElementById("saveReflectionBtn");
+  const clearBtn = document.getElementById("clearReflectionBtn");
+  const status = document.getElementById("reflectionSaveStatus");
+
+  if (!saveBtn || !clearBtn || !status) return;
+
+  function loadReflection() {
+    try {
+      const raw = localStorage.getItem(STORAGE_KEY);
+      if (!raw) return;
+
+      const data = JSON.parse(raw);
+
+      Object.keys(fields).forEach((key) => {
+        if (fields[key]) {
+          fields[key].value = data[key] || "";
+        }
+      });
+
+      if (data.savedAt) {
+        status.textContent =
+          "Last reflection saved: " +
+          new Date(data.savedAt).toLocaleString();
+      }
+
+    } catch (err) {
+      console.log("Could not load reflection.", err);
+    }
+  }
+
+  function saveReflection() {
+    try {
+      const payload = {
+        thinkingChange: fields.thinkingChange?.value || "",
+        strongestDecision: fields.strongestDecision?.value || "",
+        improvement: fields.improvement?.value || "",
+        competencyGoal: fields.competencyGoal?.value || "",
+        lesson: fields.lesson?.value || "",
+        savedAt: new Date().toISOString()
+      };
+
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(payload));
+
+      status.textContent =
+        "Reflection saved: " +
+        new Date(payload.savedAt).toLocaleString();
+
+    } catch (err) {
+      console.log("Could not save reflection.", err);
+    }
+  }
+
+  function clearReflection() {
+    localStorage.removeItem(STORAGE_KEY);
+
+    Object.values(fields).forEach((field) => {
+      if (field) field.value = "";
+    });
+
+    status.textContent = "Reflection cleared.";
+  }
+
+  saveBtn.addEventListener("click", saveReflection);
+  clearBtn.addEventListener("click", clearReflection);
+
+  loadReflection();
+})();
+</script>
+
+
+<script>
+/* CI-3F_STUDENT_HUB_FRONT_LAYER */
+(function installStudentHubFrontLayer() {
+  const IDENTITY_KEY = "stemNationStudentIdentity";
+  const AVATAR_KEY = "stemNationAvatar";
+  const OBSERVATION_KEY = "stemNationObservationV1";
+  const RANKING_KEY = "stemNationQuestionPriorityRankingV1";
+  const JUSTIFICATION_KEY = "stemNationQuestionJustificationV1";
+  const REACTION_KEY = "stemNationAdvisorReactionV1";
+  const DEBRIEF_KEY = "stemNationMissionDebriefV1";
+
+  function readJson(key) {
+    try {
+      return JSON.parse(localStorage.getItem(key) || "null");
+    } catch (err) {
+      console.warn("Student hub front layer ignored invalid storage:", key, err);
+      return null;
+    }
+  }
+
+  function isImageSource(value) {
+    return typeof value === "string" && (
+      value.startsWith("/") ||
+      value.startsWith("data:image") ||
+      value.startsWith("http://") ||
+      value.startsWith("https://")
+    );
+  }
+
+  const identity = readJson(IDENTITY_KEY);
+  const avatar = readJson(AVATAR_KEY);
+  const observation = readJson(OBSERVATION_KEY);
+  const ranking = readJson(RANKING_KEY);
+  const justification = readJson(JUSTIFICATION_KEY);
+  const reaction = readJson(REACTION_KEY);
+  const debrief = readJson(DEBRIEF_KEY);
+
+  const displayName =
+    identity?.teacherApprovedName ||
+    identity?.approvedName ||
+    identity?.name ||
+    avatar?.name ||
+    "Academy Learner";
+
+  const portrait =
+    identity?.portrait ||
+    avatar?.portrait ||
+    avatar?.fallback ||
+    "/static/avatars/student_scout.svg";
+
+  const portraitBox = document.getElementById("hubStudentPortrait");
+  if (portraitBox) {
+    if (isImageSource(portrait)) {
+      portraitBox.innerHTML = `<img src="${portrait}" alt="Student avatar">`;
+    } else {
+      portraitBox.textContent = portrait || "🧭";
+    }
+  }
+
+  const welcome = document.getElementById("hubStudentWelcome");
+  if (welcome) {
+    welcome.textContent =
+      `${displayName}, your Academy inquiry has entered the Civilization Command Center.`;
+  }
+
+  const identityBox = document.getElementById("hubStudentIdentity");
+  if (identityBox) {
+    identityBox.textContent = displayName;
+  }
+
+  const trialStatus = document.getElementById("hubTrialStatus");
+  if (trialStatus) {
+    trialStatus.textContent = debrief
+      ? "Academy Readiness Debrief complete."
+      : "Mission Debrief pending.";
+  }
+
+  const inquiryStatus = document.getElementById("hubInquiryStatus");
+  if (inquiryStatus) {
+    const pieces = [
+      observation ? "observations" : "",
+      ranking ? "ranked questions" : "",
+      justification ? "justification" : "",
+      reaction ? "Council reaction" : ""
+    ].filter(Boolean);
+
+    inquiryStatus.textContent = pieces.length
+      ? `Saved: ${pieces.join(", ")}.`
+      : "Observation and question record pending.";
+  }
+
+  const nextAction = document.getElementById("hubNextAction");
+  if (nextAction) {
+    nextAction.textContent = debrief
+      ? "Begin the first world decision or review civilization records."
+      : "Complete Mission Debrief before advancing.";
+  }
+})();
+</script>
+
+</body>
+</html>

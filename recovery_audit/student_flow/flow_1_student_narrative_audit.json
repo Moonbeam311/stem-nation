@@ -1,0 +1,1491 @@
+{
+  "audit": "FLOW-1 \u2014 Full Student Narrative Continuity Audit",
+  "generated": "2026-06-13T08:09:19",
+  "candidate_files": [
+    "templates\\academy_arrival.html",
+    "templates\\academy_cinematic.html",
+    "templates\\academy_identity.html",
+    "templates\\academy_opening.html",
+    "templates\\academy_transition.html",
+    "templates\\baseline_inquiry.html",
+    "templates\\baseline_inquiry_original_archive.html",
+    "templates\\class_session.html",
+    "templates\\council_stage.html",
+    "templates\\council_stage_clean.html",
+    "templates\\dev_reset.html",
+    "templates\\first_gathering.html",
+    "templates\\map_mode.html",
+    "templates\\project_hub.html",
+    "templates\\region_river.html",
+    "templates\\river_crossing_lab.html",
+    "templates\\student_hub.html",
+    "templates\\student_landing.html",
+    "templates\\visual_layer_preview.html",
+    "templates\\washed_out_crossing_intro.html",
+    "templates\\washed_out_crossing_visual.html",
+    "templates\\world_board.html"
+  ],
+  "pages": [
+    {
+      "file": "templates\\academy_arrival.html",
+      "page_type": "Arrival",
+      "title": "Academy Arrival | STEM Nation",
+      "headings": [
+        "Welcome to the Academy."
+      ],
+      "links": [
+        "/first_gathering",
+        "/academy_identity"
+      ],
+      "buttons": [
+        "Enter the First Gathering",
+        "Review Identity"
+      ],
+      "route_terms": [
+        "/academy_identity",
+        "/first_gathering"
+      ],
+      "sector_references": [],
+      "crossing_references": [],
+      "region_references": [],
+      "council_references": [],
+      "evidence_references": [],
+      "completion_references": [
+        "return"
+      ],
+      "inquiry_council_present": false,
+      "mishoe_council_present": false,
+      "council_full_intro_markers": [],
+      "recommendation": "REVIEW"
+    },
+    {
+      "file": "templates\\academy_cinematic.html",
+      "page_type": "Cinematic",
+      "title": "STEM Nation | Journey to the Academy",
+      "headings": [
+        "Your first inquiry begins now.",
+        "Academy Learner"
+      ],
+      "links": [
+        "/academy_arrival"
+      ],
+      "buttons": [
+        "Skip Cinematic"
+      ],
+      "route_terms": [
+        "/academy_arrival"
+      ],
+      "sector_references": [],
+      "crossing_references": [],
+      "region_references": [],
+      "council_references": [],
+      "evidence_references": [
+        "question"
+      ],
+      "completion_references": [
+        "next",
+        "return"
+      ],
+      "inquiry_council_present": false,
+      "mishoe_council_present": false,
+      "council_full_intro_markers": [],
+      "recommendation": "REVIEW"
+    },
+    {
+      "file": "templates\\academy_identity.html",
+      "page_type": "Identity",
+      "title": "Create Academy Identity | STEM Nation",
+      "headings": [
+        "Create Your Academy Identity",
+        "Or upload your own avatar"
+      ],
+      "links": [
+        "/academy_cinematic"
+      ],
+      "buttons": [
+        "Lock Identity & Begin Journey",
+        "Clear Current Identity",
+        "${visual} ${avatar.label} Choose this Academy avatar \u201c${avatar.motto}\u201d"
+      ],
+      "route_terms": [
+        "/academy_cinematic"
+      ],
+      "sector_references": [],
+      "crossing_references": [],
+      "region_references": [],
+      "council_references": [],
+      "evidence_references": [
+        "rank"
+      ],
+      "completion_references": [
+        "complete",
+        "return"
+      ],
+      "inquiry_council_present": false,
+      "mishoe_council_present": false,
+      "council_full_intro_markers": [],
+      "recommendation": "REVIEW"
+    },
+    {
+      "file": "templates\\academy_opening.html",
+      "page_type": "Unclassified",
+      "title": "Welcome to STEM Nation",
+      "headings": [
+        "Welcome to STEM Nation",
+        "Before your journey begins..."
+      ],
+      "links": [
+        "/academy_identity"
+      ],
+      "buttons": [
+        "Skip Intro"
+      ],
+      "route_terms": [
+        "/academy_identity"
+      ],
+      "sector_references": [],
+      "crossing_references": [],
+      "region_references": [],
+      "council_references": [],
+      "evidence_references": [
+        "evidence",
+        "question"
+      ],
+      "completion_references": [
+        "next"
+      ],
+      "inquiry_council_present": false,
+      "mishoe_council_present": false,
+      "council_full_intro_markers": [],
+      "recommendation": "REVIEW"
+    },
+    {
+      "file": "templates\\academy_transition.html",
+      "page_type": "Unclassified",
+      "title": "STEM Nation | Academy Transition",
+      "headings": [
+        "The Invitation",
+        "Quick Thinking Can Fail",
+        "The Inquiry Principle",
+        "Your First Evaluation"
+      ],
+      "links": [
+        "/baseline_inquiry"
+      ],
+      "buttons": [
+        "Back",
+        "Continue",
+        "Begin Inquiry"
+      ],
+      "route_terms": [
+        "/baseline_inquiry"
+      ],
+      "sector_references": [],
+      "crossing_references": [
+        "river"
+      ],
+      "region_references": [],
+      "council_references": [],
+      "evidence_references": [
+        "question"
+      ],
+      "completion_references": [
+        "complete",
+        "continue",
+        "next"
+      ],
+      "inquiry_council_present": false,
+      "mishoe_council_present": false,
+      "council_full_intro_markers": [],
+      "recommendation": "REVIEW"
+    },
+    {
+      "file": "templates\\baseline_inquiry.html",
+      "page_type": "Inquiry Activity",
+      "title": "STEM Nation Academy | Academy Readiness Evaluation \u2014 Survival Scenario 1: The Washed-Out Crossing",
+      "headings": [
+        "Academy Readiness Evaluation",
+        "Mission Briefing",
+        "Ask Leader Question",
+        "Rank 3 Priorities",
+        "Scout Order",
+        "Builder Order",
+        "Gatherer Order",
+        "Caretaker Order",
+        "Send Specialists",
+        "Ask Main Survival Question",
+        "Place Survival Bundles",
+        "Test Survival Plan",
+        "Reflect",
+        "Leadership Debrief"
+      ],
+      "links": [
+        "/world_select.html"
+      ],
+      "buttons": [
+        "Send Scout",
+        "Send Builder",
+        "Send Gatherer",
+        "Send Caretaker",
+        "Test Survival Plan",
+        "Back",
+        "Begin Briefing"
+      ],
+      "route_terms": [],
+      "sector_references": [],
+      "crossing_references": [
+        "Washed-Out Crossing",
+        "crossing",
+        "river",
+        "washed out"
+      ],
+      "region_references": [
+        "region selection"
+      ],
+      "council_references": [
+        "Scout",
+        "Builder"
+      ],
+      "evidence_references": [
+        "what changed",
+        "rank",
+        "question"
+      ],
+      "completion_references": [
+        "complete",
+        "completed",
+        "continue",
+        "next",
+        "debrief",
+        "readiness",
+        "return"
+      ],
+      "inquiry_council_present": true,
+      "mishoe_council_present": false,
+      "council_full_intro_markers": [],
+      "recommendation": "REBUILD \u2014 mechanics may be useful, but narrative does not continue Sector 7A"
+    },
+    {
+      "file": "templates\\baseline_inquiry_original_archive.html",
+      "page_type": "Inquiry Activity",
+      "title": "STEM Nation | Baseline Inquiry",
+      "headings": [
+        "Inquiry Notebook"
+      ],
+      "links": [],
+      "buttons": [
+        "Test My Plan",
+        "Try New Plan",
+        "Compare Attempts",
+        "Field Journal"
+      ],
+      "route_terms": [],
+      "sector_references": [],
+      "crossing_references": [
+        "river",
+        "floodplain"
+      ],
+      "region_references": [],
+      "council_references": [],
+      "evidence_references": [
+        "evidence",
+        "what changed",
+        "what do you notice",
+        "compare",
+        "question"
+      ],
+      "completion_references": [
+        "next",
+        "unlock",
+        "return"
+      ],
+      "inquiry_council_present": false,
+      "mishoe_council_present": false,
+      "council_full_intro_markers": [],
+      "recommendation": "REBUILD \u2014 mechanics may be useful, but narrative does not continue Sector 7A"
+    },
+    {
+      "file": "templates\\class_session.html",
+      "page_type": "Unclassified",
+      "title": "Class Session Controls \u00b7 STEM Nation",
+      "headings": [
+        "Class Session Controls",
+        "Guided Lesson Presets",
+        "Session Setup",
+        "Live Instruction Timeline",
+        "Timeline Focus Presets",
+        "Region Comparison Mode",
+        "Teacher Region Focus"
+      ],
+      "links": [
+        "/map",
+        "/hub",
+        "/teacher_dashboard"
+      ],
+      "buttons": [
+        "Apply Preset",
+        "Week 1 \u00b7 Settlement Guided map decision lab",
+        "Evidence & Reflection Review settlement reasoning",
+        "Teacher Live Demo Walk the class through the system",
+        "Investor Walkthrough Show the student journey",
+        "Independent Work Student self-guided reasoning",
+        "Discussion / Debrief Consequence and reflection talk",
+        "Start Session",
+        "Pause Session",
+        "End Session",
+        "1 \u00b7 Launch Session Set purpose and activate the room.",
+        "2 \u00b7 Observe Terrain Students study regions, risks, and resources.",
+        "3 \u00b7 Student Decision Students choose a settlement strategy.",
+        "4 \u00b7 Evidence Defense Students explain and defend their reasoning.",
+        "5 \u00b7 Reflection / Debrief Class reviews consequence and next moves.",
+        "Previous Step",
+        "Next Step",
+        "Reset Timeline",
+        "\ud83c\udf0d Observe All",
+        "\ud83c\udf0a Water / Flood",
+        "\ud83c\udf32 Shelter / Visibility",
+        "\u26f0\ufe0f Defense / Movement",
+        "\u2693 Trade / Storm",
+        "\ud83c\udf3e Food / Exposure",
+        "\ud83d\udee4\ufe0f Trade Pressure",
+        "Compare Regions",
+        "\ud83c\udf0a River",
+        "\ud83c\udf32 Forest",
+        "\u26f0\ufe0f Highland",
+        "\u2693 Coast"
+      ],
+      "route_terms": [],
+      "sector_references": [],
+      "crossing_references": [
+        "river"
+      ],
+      "region_references": [
+        "Select a Region",
+        "River Corridor",
+        "Highland Ridge",
+        "claim the land"
+      ],
+      "council_references": [],
+      "evidence_references": [
+        "evidence",
+        "compare",
+        "question"
+      ],
+      "completion_references": [
+        "next",
+        "debrief",
+        "return"
+      ],
+      "inquiry_council_present": false,
+      "mishoe_council_present": false,
+      "council_full_intro_markers": [],
+      "recommendation": "REVIEW"
+    },
+    {
+      "file": "templates\\council_stage.html",
+      "page_type": "Inquiry Council / Sector 7A",
+      "title": "STEM Nation \u00b7 Clean Council Stage",
+      "headings": [
+        "Ice Break Detected",
+        "You made it.",
+        "The Council Opens the Evidence",
+        "Prepare Your First Look",
+        "Compare Only What You Can See",
+        "Select exactly 3 visible observations",
+        "Ask the next investigation question",
+        "Rank Council Questions"
+      ],
+      "links": [
+        "/student_hub",
+        "/advisor_reactions"
+      ],
+      "buttons": [
+        "Enter Council Hall",
+        "Play Guardian Welcome",
+        "Enter Council Briefing",
+        "Listen First",
+        "Begin First Look",
+        "Save First Look",
+        "Open Question Ranking",
+        "Save Question Ranking",
+        "Continue to Advisor Reactions",
+        "Resume at First Look"
+      ],
+      "route_terms": [],
+      "sector_references": [
+        "Sector 7A",
+        "ice break",
+        "previous scan",
+        "current scan"
+      ],
+      "crossing_references": [
+        "crossing"
+      ],
+      "region_references": [],
+      "council_references": [
+        "Scout",
+        "Mapkeeper",
+        "Builder",
+        "Healer",
+        "Guardian"
+      ],
+      "evidence_references": [
+        "evidence",
+        "previous scan",
+        "current scan",
+        "what changed",
+        "observe first",
+        "compare",
+        "rank",
+        "question"
+      ],
+      "completion_references": [
+        "continue",
+        "next",
+        "unlock",
+        "return"
+      ],
+      "inquiry_council_present": true,
+      "mishoe_council_present": false,
+      "council_full_intro_markers": [
+        "Council, the Chief Investigator in Training has arrived"
+      ],
+      "recommendation": "KEEP / CONSOLIDATE \u2014 primary home for Sector 7A narrative, Council, evidence, and questions"
+    },
+    {
+      "file": "templates\\council_stage_clean.html",
+      "page_type": "Inquiry Council / Sector 7A",
+      "title": "STEM Nation \u00b7 Clean Council Stage",
+      "headings": [
+        "Ice Break Detected",
+        "You made it.",
+        "The Council Opens the Evidence",
+        "Prepare Your First Look",
+        "Compare Only What You Can See",
+        "Select exactly 3 visible observations",
+        "Ask the next investigation question",
+        "Rank Council Questions"
+      ],
+      "links": [
+        "/student_hub",
+        "/advisor_reactions"
+      ],
+      "buttons": [
+        "Enter Council Hall",
+        "Play Guardian Welcome",
+        "Enter Council Briefing",
+        "Listen First",
+        "Begin First Look",
+        "Save First Look",
+        "Open Question Ranking",
+        "Save Question Ranking",
+        "Continue to Advisor Reactions",
+        "Resume at First Look"
+      ],
+      "route_terms": [],
+      "sector_references": [
+        "Sector 7A",
+        "ice break",
+        "previous scan",
+        "current scan"
+      ],
+      "crossing_references": [
+        "crossing"
+      ],
+      "region_references": [],
+      "council_references": [
+        "Scout",
+        "Mapkeeper",
+        "Builder",
+        "Healer",
+        "Guardian"
+      ],
+      "evidence_references": [
+        "evidence",
+        "previous scan",
+        "current scan",
+        "what changed",
+        "observe first",
+        "compare",
+        "rank",
+        "question"
+      ],
+      "completion_references": [
+        "continue",
+        "next",
+        "unlock",
+        "return"
+      ],
+      "inquiry_council_present": true,
+      "mishoe_council_present": false,
+      "council_full_intro_markers": [
+        "Council, the Chief Investigator in Training has arrived"
+      ],
+      "recommendation": "KEEP / CONSOLIDATE \u2014 primary home for Sector 7A narrative, Council, evidence, and questions"
+    },
+    {
+      "file": "templates\\dev_reset.html",
+      "page_type": "Unclassified",
+      "title": "STEM Nation | Development Reset",
+      "headings": [
+        "Reset STEM Nation Test Data"
+      ],
+      "links": [
+        "/academy_identity",
+        "/student"
+      ],
+      "buttons": [
+        "Reset Test Data",
+        "Return to Academy Identity",
+        "Return to Student Landing"
+      ],
+      "route_terms": [
+        "/academy_identity"
+      ],
+      "sector_references": [],
+      "crossing_references": [],
+      "region_references": [],
+      "council_references": [],
+      "evidence_references": [
+        "rank",
+        "question"
+      ],
+      "completion_references": [
+        "debrief",
+        "readiness",
+        "return"
+      ],
+      "inquiry_council_present": false,
+      "mishoe_council_present": false,
+      "council_full_intro_markers": [],
+      "recommendation": "REVIEW"
+    },
+    {
+      "file": "templates\\first_gathering.html",
+      "page_type": "First Gathering",
+      "title": "First Gathering | STEM Nation",
+      "headings": [
+        "The Council Hall",
+        "Meet the Inquiry Council",
+        "What do you notice?"
+      ],
+      "links": [
+        "{{ url_for(",
+        "/academy_observation",
+        "static"
+      ],
+      "buttons": [
+        "Continue",
+        "Replay Gathering",
+        "Enter Observation Chamber"
+      ],
+      "route_terms": [],
+      "sector_references": [],
+      "crossing_references": [
+        "river"
+      ],
+      "region_references": [],
+      "council_references": [
+        "Guardian",
+        "Inquiry Council"
+      ],
+      "evidence_references": [
+        "evidence",
+        "earlier image",
+        "new image",
+        "what changed",
+        "what do you notice",
+        "question"
+      ],
+      "completion_references": [
+        "continue",
+        "next",
+        "return"
+      ],
+      "inquiry_council_present": true,
+      "mishoe_council_present": false,
+      "council_full_intro_markers": [
+        "Meet the Inquiry Council",
+        "The Council Is Assembled",
+        "Your Inquiry Guides"
+      ],
+      "recommendation": "REVISE \u2014 keep as transition; avoid duplicating full Council Stage introduction"
+    },
+    {
+      "file": "templates\\map_mode.html",
+      "page_type": "World / Region Selection",
+      "title": "STEM Nation World Board | Strategic Map & Founding Archive",
+      "headings": [
+        "First World Decision",
+        "CLAIM THE LAND",
+        "Strategic Map & Founding Archive",
+        "Mission 1 \u00b7 Claim the Land",
+        "Mission Brief: Choose the First Settlement Site",
+        "CIVILIZATION GROWTH \u26fa Survivor Camp Your people have not yet formed a permanent settlement. Camp Village Town City Nation Mission Terrain Council Archive Unlocks Mission Objective",
+        "Terrain Intel",
+        "Council Task",
+        "Founding Archive",
+        "Unlock Path",
+        "1. Observe the Land",
+        "2. Identify Resources",
+        "3. Name the Risk",
+        "4. Defend the Decision",
+        "Choose Your First 3 Survival Priorities",
+        "Advisor Warning",
+        "Settlement Decision Defense",
+        "AUT0MAN State Check",
+        "Settlement Consequence",
+        "Nation Updated"
+      ],
+      "links": [
+        "#compactMissionPanel",
+        "/student_hub",
+        "/world_select.html",
+        "/",
+        "/hub"
+      ],
+      "buttons": [
+        "Begin Observation",
+        "\ud83c\udf0a River",
+        "\ud83c\udf32 Forest",
+        "\u26f0\ufe0f Highland",
+        "\u2693 Coast",
+        "\ud83c\udf3e Plain",
+        "\ud83d\udee4\ufe0f Crossroads",
+        "Save Comparison Response",
+        "\u2753 Ask Question",
+        "\u2696\ufe0f Respond",
+        "\ud83d\udcdc Record",
+        "\ud83d\udcdd Evidence Note",
+        "Save Reflection to Archive",
+        "Save Evidence to Archive",
+        "Save Response to Archive",
+        "Save Question to Archive",
+        "\u270d\ufe0f Write Reflection",
+        "All",
+        "\u2753 Questions",
+        "\u2696\ufe0f Responses",
+        "\ud83d\udcdd Evidence",
+        "\ud83d\udcdc Events",
+        "\u270d\ufe0f Reflections",
+        "\ud83c\udfdb\ufe0f Founding",
+        "Show More Records",
+        "\u23ed Advance Turn",
+        "\ud83c\udf0d Region Intel",
+        "\ud83e\udde0 Advisor",
+        "\ud83d\udcdc Archive",
+        "\ud83e\uddf9 Reset View"
+      ],
+      "route_terms": [],
+      "sector_references": [],
+      "crossing_references": [
+        "river"
+      ],
+      "region_references": [
+        "Select a Region",
+        "Choose a Region",
+        "region selection",
+        "River Corridor",
+        "Highland Ridge",
+        "claim the land"
+      ],
+      "council_references": [
+        "Scout"
+      ],
+      "evidence_references": [
+        "evidence",
+        "compare",
+        "rank",
+        "question"
+      ],
+      "completion_references": [
+        "complete",
+        "completed",
+        "next",
+        "finish",
+        "unlock",
+        "debrief",
+        "readiness",
+        "return",
+        "advance"
+      ],
+      "inquiry_council_present": true,
+      "mishoe_council_present": false,
+      "council_full_intro_markers": [],
+      "recommendation": "RELOCATE \u2014 reserve for later World Orientation / Region Selection module"
+    },
+    {
+      "file": "templates\\project_hub.html",
+      "page_type": "Progress / Hub",
+      "title": "STEM Nation \u2014 Civilization Command Center",
+      "headings": [
+        "Current Mission Status",
+        "Civilization Command Center",
+        "Week 1 Founding Record",
+        "Active Class Session",
+        "Civilization Score / Badge Summary",
+        "Civilization Competency Profile",
+        "Governance Actions",
+        "Saved Settlement Decision Defense",
+        "Student Identity Archive",
+        "Teacher Evaluation / Feedback",
+        "Student Reflection / Growth Statement",
+        "Region Comparison Response",
+        "Decision Log",
+        "Archive Summary",
+        "Active World Events",
+        "Civilization Pressure Analysis",
+        "Active Alerts",
+        "Continue Student Progress",
+        "Demo Cleanup Options",
+        "Student Mode Reset"
+      ],
+      "links": [
+        "/map",
+        "/mission_debrief",
+        "/founding_archive_print",
+        "/founding_complete",
+        "/academy_individual",
+        "/"
+      ],
+      "buttons": [
+        "Open Civilization Records",
+        "Expand Farms Increase food production, but use more territory.",
+        "Build Granaries Protect food reserves and improve stability.",
+        "Open Trade Routes Increase wealth, but expose the civilization to outside pressure.",
+        "Invest in Knowledge Improve knowledge systems while consuming wealth.",
+        "Stabilize Population Improve unity and stability, but slow expansion.",
+        "Strengthen Defense Improve stability and territory control, but reduce wealth.",
+        "Download Text Archive",
+        "Clear / Reset Archive",
+        "Advance Turn",
+        "CONTINUE STUDENT PROGRESS",
+        "Clear Archive Only",
+        "Clear Alerts Only",
+        "Clear Turn History Only",
+        "Clear Active Events Only",
+        "Demo Soft Reset",
+        "RESET STUDENT MODE",
+        "CONFIRM RESET",
+        "CANCEL",
+        "Save Reflection",
+        "Clear Reflection",
+        "Live Class Session",
+        "Printable / Save as PDF",
+        "Complete Week 1",
+        "Restart Academy Readiness Flow",
+        "Return to Strategic Map",
+        "Back to Landing"
+      ],
+      "route_terms": [],
+      "sector_references": [],
+      "crossing_references": [
+        "bridge",
+        "river"
+      ],
+      "region_references": [
+        "River Corridor"
+      ],
+      "council_references": [
+        "Scout",
+        "Builder"
+      ],
+      "evidence_references": [
+        "evidence",
+        "what changed",
+        "compare",
+        "rank",
+        "question"
+      ],
+      "completion_references": [
+        "complete",
+        "completed",
+        "continue",
+        "next",
+        "debrief",
+        "readiness",
+        "return",
+        "advance"
+      ],
+      "inquiry_council_present": true,
+      "mishoe_council_present": false,
+      "council_full_intro_markers": [],
+      "recommendation": "KEEP \u2014 likely destination after Sector 7A debrief"
+    },
+    {
+      "file": "templates\\region_river.html",
+      "page_type": "Crossing Activity",
+      "title": "STEM Nation | River Region",
+      "headings": [
+        "River Region"
+      ],
+      "links": [
+        "/world_select.html",
+        "/baseline_inquiry"
+      ],
+      "buttons": [],
+      "route_terms": [
+        "/baseline_inquiry"
+      ],
+      "sector_references": [],
+      "crossing_references": [
+        "river"
+      ],
+      "region_references": [],
+      "council_references": [],
+      "evidence_references": [],
+      "completion_references": [
+        "readiness",
+        "return"
+      ],
+      "inquiry_council_present": false,
+      "mishoe_council_present": false,
+      "council_full_intro_markers": [],
+      "recommendation": "RENAME / REWRITE \u2014 convert into a Sector 7A field-response challenge"
+    },
+    {
+      "file": "templates\\river_crossing_lab.html",
+      "page_type": "Crossing Activity",
+      "title": "The River Crossing Inquiry",
+      "headings": [
+        "The River Crossing Inquiry",
+        "Mission",
+        "Observation Log",
+        "Inquiry Complete",
+        "Puzzle Board",
+        "1. Ask + Predict",
+        "2. Test One Move",
+        "3. Observe",
+        "4. Try Next",
+        "Start Bank",
+        "Safe Bank"
+      ],
+      "links": [
+        "/"
+      ],
+      "buttons": [
+        "Take goat across",
+        "Take wolf across",
+        "Take wheat across",
+        "Return alone",
+        "Bring goat back",
+        "Test Move",
+        "Use Starter Question",
+        "Run My Sequence",
+        "Reset",
+        "Use My Next Move",
+        "Remove Last Move",
+        "Finish Inquiry Reflection"
+      ],
+      "route_terms": [],
+      "sector_references": [],
+      "crossing_references": [
+        "crossing",
+        "river"
+      ],
+      "region_references": [],
+      "council_references": [],
+      "evidence_references": [
+        "question"
+      ],
+      "completion_references": [
+        "complete",
+        "next",
+        "finish",
+        "unlock",
+        "return"
+      ],
+      "inquiry_council_present": false,
+      "mishoe_council_present": false,
+      "council_full_intro_markers": [],
+      "recommendation": "RENAME / REWRITE \u2014 convert into a Sector 7A field-response challenge"
+    },
+    {
+      "file": "templates\\student_hub.html",
+      "page_type": "Progress / Hub",
+      "title": "STEM Nation | Student Hub",
+      "headings": [
+        "Readiness Record",
+        "Academy Investigator",
+        "Council Hall",
+        "World Board Preview",
+        "Mission 2 Locked",
+        "You completed the Council Hall trial."
+      ],
+      "links": [
+        "/council_stage",
+        "/map",
+        "/",
+        "/council_stage?skip=firstlook",
+        "/advisor_reactions",
+        "/mission_debrief"
+      ],
+      "buttons": [
+        "Next Mission Connects Later",
+        "Replay Council Trial",
+        "Preview World Board",
+        "Return Home"
+      ],
+      "route_terms": [
+        "/council_stage"
+      ],
+      "sector_references": [
+        "ice break"
+      ],
+      "crossing_references": [],
+      "region_references": [],
+      "council_references": [
+        "Scout",
+        "Mapkeeper",
+        "Builder",
+        "Healer",
+        "Guardian"
+      ],
+      "evidence_references": [
+        "evidence",
+        "what changed",
+        "rank",
+        "question"
+      ],
+      "completion_references": [
+        "complete",
+        "completed",
+        "continue",
+        "next",
+        "unlock",
+        "debrief",
+        "readiness",
+        "return"
+      ],
+      "inquiry_council_present": true,
+      "mishoe_council_present": false,
+      "council_full_intro_markers": [],
+      "recommendation": "KEEP \u2014 likely destination after Sector 7A debrief"
+    },
+    {
+      "file": "templates\\student_landing.html",
+      "page_type": "Unclassified",
+      "title": "STEM Nation | Student Entry",
+      "headings": [
+        "STEM Nation"
+      ],
+      "links": [
+        "/academy_opening"
+      ],
+      "buttons": [
+        "Enter STEM Nation"
+      ],
+      "route_terms": [
+        "/academy_opening"
+      ],
+      "sector_references": [],
+      "crossing_references": [
+        "river"
+      ],
+      "region_references": [],
+      "council_references": [],
+      "evidence_references": [
+        "question"
+      ],
+      "completion_references": [
+        "next"
+      ],
+      "inquiry_council_present": false,
+      "mishoe_council_present": false,
+      "council_full_intro_markers": [],
+      "recommendation": "REVIEW"
+    },
+    {
+      "file": "templates\\visual_layer_preview.html",
+      "page_type": "Unclassified",
+      "title": "VIS-1 Preview \u00b7 STEM Nation Visual Layer",
+      "headings": [
+        "STEM Nation Visual Layer",
+        "The Washed-Out Crossing"
+      ],
+      "links": [
+        "{{ url_for(",
+        "static"
+      ],
+      "buttons": [
+        "Test Checkpoint Reveal",
+        "Test Warning Shake"
+      ],
+      "route_terms": [],
+      "sector_references": [],
+      "crossing_references": [
+        "Washed-Out Crossing",
+        "crossing"
+      ],
+      "region_references": [],
+      "council_references": [
+        "Guardian"
+      ],
+      "evidence_references": [
+        "what changed"
+      ],
+      "completion_references": [
+        "next"
+      ],
+      "inquiry_council_present": true,
+      "mishoe_council_present": false,
+      "council_full_intro_markers": [],
+      "recommendation": "REVIEW"
+    },
+    {
+      "file": "templates\\washed_out_crossing_intro.html",
+      "page_type": "Crossing Activity",
+      "title": "STEM Nation Academy | Academy Readiness Evaluation \u2014 Survival Scenario 1: The Washed-Out Crossing",
+      "headings": [
+        "Academy Readiness Evaluation Survival Scenario 1: The Washed-Out Crossing",
+        "Incoming Leadership Intel"
+      ],
+      "links": [
+        "/world_select.html",
+        "/baseline_inquiry"
+      ],
+      "buttons": [
+        "Observe the Land",
+        "Review Supplies",
+        "Begin Leadership Trial"
+      ],
+      "route_terms": [
+        "/baseline_inquiry"
+      ],
+      "sector_references": [],
+      "crossing_references": [
+        "Washed-Out Crossing",
+        "crossing",
+        "river"
+      ],
+      "region_references": [],
+      "council_references": [],
+      "evidence_references": [],
+      "completion_references": [
+        "readiness"
+      ],
+      "inquiry_council_present": false,
+      "mishoe_council_present": false,
+      "council_full_intro_markers": [],
+      "recommendation": "RENAME / REWRITE \u2014 convert into a Sector 7A field-response challenge"
+    },
+    {
+      "file": "templates\\washed_out_crossing_visual.html",
+      "page_type": "Crossing Activity",
+      "title": "The Washed-Out Crossing \u00b7 STEM Nation",
+      "headings": [
+        "{{ mission.title }}",
+        "The crossing is not safe yet.",
+        "Incident Report",
+        "Choose Your Three Priorities",
+        "Mission Summary",
+        "Explain Your Choices"
+      ],
+      "links": [
+        "{{ url_for(",
+        "static"
+      ],
+      "buttons": [
+        "Begin Mission",
+        "Speak Aloud",
+        "Stop Voice",
+        "{{ item.icon }} {{ item.label }} {{ item.student_prompt }}",
+        "Test My Plan",
+        "Start Over"
+      ],
+      "route_terms": [
+        "/washed_out_crossing"
+      ],
+      "sector_references": [],
+      "crossing_references": [
+        "Washed-Out Crossing",
+        "crossing",
+        "bridge",
+        "river",
+        "washed out"
+      ],
+      "region_references": [],
+      "council_references": [
+        "Guardian"
+      ],
+      "evidence_references": [
+        "question"
+      ],
+      "completion_references": [
+        "complete",
+        "continue",
+        "next",
+        "unlock",
+        "readiness"
+      ],
+      "inquiry_council_present": true,
+      "mishoe_council_present": false,
+      "council_full_intro_markers": [],
+      "recommendation": "RENAME / REWRITE \u2014 convert into a Sector 7A field-response challenge"
+    },
+    {
+      "file": "templates\\world_board.html",
+      "page_type": "World / Region Selection",
+      "title": "STEM Nation | World Board v1.3",
+      "headings": [
+        "Select a Region",
+        "LIVE WORLD EVENT",
+        "OBJECTIVE",
+        "Mission Checklist",
+        "Survival Planning Actions",
+        "Turn 2 Readiness",
+        "Turn 2 Crisis",
+        "Crisis Resolution Archive",
+        "Recovery & Growth Actions",
+        "Growth Readiness",
+        "Village Expansion Actions",
+        "Town Readiness",
+        "Town Formation Actions",
+        "City Readiness",
+        "City Planning Actions",
+        "Regional Capital Readiness",
+        "Regional Capital Actions",
+        "Nation Readiness",
+        "Nation Formation Actions",
+        "Legacy Victory Readiness"
+      ],
+      "links": [
+        "/gameboard",
+        "/scout/",
+        "static"
+      ],
+      "buttons": [
+        "River Corridor",
+        "Forest Belt",
+        "Highland Ridge",
+        "Coastal Exchange",
+        "Valley Basin",
+        "Advance to Survival Planning",
+        "Deploy Medicine Research",
+        "Protect Water Sources",
+        "Organize Health Response",
+        "Call Civic Council",
+        "Archive Crisis Resolution",
+        "Advance to Recovery & Growth",
+        "Advance to Village Expansion",
+        "Advance to Town Formation",
+        "Advance to City Planning",
+        "Advance to Regional Capital",
+        "Advance to Nation Formation",
+        "Generate Civilization Report",
+        "Place Settlement",
+        "Scout Region",
+        "Build Infrastructure",
+        "Open Trade Route",
+        "Preserve Sacred Site",
+        "Secure Food Supply",
+        "Prepare Health Response",
+        "Strengthen Shelter",
+        "Assign Civic Roles",
+        "Rebuild Community Trust",
+        "Expand Food Resilience",
+        "Establish Healing Center"
+      ],
+      "route_terms": [],
+      "sector_references": [],
+      "crossing_references": [
+        "river"
+      ],
+      "region_references": [
+        "Select a Region",
+        "Choose a Region",
+        "River Corridor",
+        "Forest Belt",
+        "Highland Ridge",
+        "Coastal Exchange",
+        "Valley Basin",
+        "place settlement"
+      ],
+      "council_references": [
+        "Scout"
+      ],
+      "evidence_references": [
+        "evidence"
+      ],
+      "completion_references": [
+        "complete",
+        "completed",
+        "next",
+        "finish",
+        "unlock",
+        "readiness",
+        "return",
+        "advance"
+      ],
+      "inquiry_council_present": true,
+      "mishoe_council_present": false,
+      "council_full_intro_markers": [],
+      "recommendation": "RELOCATE \u2014 reserve for later World Orientation / Region Selection module"
+    }
+  ],
+  "routes": [
+    {
+      "app_file": "web_app.py",
+      "route": "/council_stage",
+      "template": "council_stage.html"
+    },
+    {
+      "app_file": "web_app.py",
+      "route": "/world_select.html",
+      "template": "world_select.html"
+    },
+    {
+      "app_file": "web_app.py",
+      "route": "/academy_individual",
+      "template": "academy_individual.html"
+    },
+    {
+      "app_file": "web_app.py",
+      "route": "/academy_memory_preview",
+      "template": "academy_memory_preview.html"
+    },
+    {
+      "app_file": "web_app.py",
+      "route": "/academy_role",
+      "template": "academy_role.html"
+    },
+    {
+      "app_file": "web_app.py",
+      "route": "/academy_thinking",
+      "template": "academy_thinking.html"
+    },
+    {
+      "app_file": "web_app.py",
+      "route": "/academy_decision",
+      "template": "academy_decision.html"
+    },
+    {
+      "app_file": "web_app.py",
+      "route": "/map",
+      "template": "map_mode.html"
+    },
+    {
+      "app_file": "web_app.py",
+      "route": "/region_river",
+      "template": "region_river.html"
+    },
+    {
+      "app_file": "web_app.py",
+      "route": "/world-board",
+      "template": "world_board.html"
+    },
+    {
+      "app_file": "web_app.py",
+      "route": "/scout/<region>",
+      "template": "scout_region.html"
+    },
+    {
+      "app_file": "web_app.py",
+      "route": "/academy_observation",
+      "template": "academy_observation.html"
+    },
+    {
+      "app_file": "web_app.py",
+      "route": "/baseline_inquiry",
+      "template": "baseline_inquiry.html"
+    },
+    {
+      "app_file": "web_app.py",
+      "route": "/academy_transition",
+      "template": "academy_transition.html"
+    },
+    {
+      "app_file": "web_app.py",
+      "route": "/washed_out_crossing_intro",
+      "template": "washed_out_crossing_intro.html"
+    },
+    {
+      "app_file": "web_app.py",
+      "route": "/baseline_inquiry_original",
+      "template": "baseline_inquiry_original_archive.html"
+    },
+    {
+      "app_file": "web_app.py",
+      "route": "/river-crossing-lab",
+      "template": "river_crossing_lab.html"
+    },
+    {
+      "app_file": "web_app.py",
+      "route": "/academy_opening",
+      "template": "academy_opening.html"
+    },
+    {
+      "app_file": "web_app.py",
+      "route": "/academy_identity",
+      "template": "academy_identity.html"
+    },
+    {
+      "app_file": "web_app.py",
+      "route": "/student_identity",
+      "template": "academy_identity.html"
+    },
+    {
+      "app_file": "web_app.py",
+      "route": "/academy_cinematic",
+      "template": "academy_cinematic.html"
+    },
+    {
+      "app_file": "web_app.py",
+      "route": "/academy_arrival",
+      "template": "academy_arrival.html"
+    },
+    {
+      "app_file": "web_app.py",
+      "route": "/first_gathering",
+      "template": "first_gathering.html"
+    },
+    {
+      "app_file": "web_app.py",
+      "route": "/council_stage_clean",
+      "template": "council_stage_clean.html"
+    }
+  ],
+  "continuity_issues": [
+    {
+      "severity": "HIGH",
+      "file": "templates\\baseline_inquiry.html",
+      "issue": "Crossing activity does not visibly continue the Sector 7A incident.",
+      "action": "Rewrite scenario, evidence, role, and completion language around Sector 7A."
+    },
+    {
+      "severity": "MEDIUM",
+      "file": "templates\\baseline_inquiry.html",
+      "issue": "Region-selection language appears before the dedicated world-orientation stage.",
+      "action": "Relocate region choice to a later module."
+    },
+    {
+      "severity": "HIGH",
+      "file": "templates\\baseline_inquiry_original_archive.html",
+      "issue": "Crossing activity does not visibly continue the Sector 7A incident.",
+      "action": "Rewrite scenario, evidence, role, and completion language around Sector 7A."
+    },
+    {
+      "severity": "MEDIUM",
+      "file": "templates\\class_session.html",
+      "issue": "Region-selection language appears before the dedicated world-orientation stage.",
+      "action": "Relocate region choice to a later module."
+    },
+    {
+      "severity": "MEDIUM",
+      "file": "templates\\first_gathering.html",
+      "issue": "First Gathering may duplicate the full Inquiry Council reveal.",
+      "action": "Reduce to arrival/handoff unless this is intentionally the first Council reveal."
+    },
+    {
+      "severity": "HIGH",
+      "file": "templates\\region_river.html",
+      "issue": "Crossing activity does not visibly continue the Sector 7A incident.",
+      "action": "Rewrite scenario, evidence, role, and completion language around Sector 7A."
+    },
+    {
+      "severity": "HIGH",
+      "file": "templates\\river_crossing_lab.html",
+      "issue": "Crossing activity does not visibly continue the Sector 7A incident.",
+      "action": "Rewrite scenario, evidence, role, and completion language around Sector 7A."
+    },
+    {
+      "severity": "HIGH",
+      "file": "templates\\washed_out_crossing_intro.html",
+      "issue": "Crossing activity does not visibly continue the Sector 7A incident.",
+      "action": "Rewrite scenario, evidence, role, and completion language around Sector 7A."
+    },
+    {
+      "severity": "HIGH",
+      "file": "templates\\washed_out_crossing_visual.html",
+      "issue": "Crossing activity does not visibly continue the Sector 7A incident.",
+      "action": "Rewrite scenario, evidence, role, and completion language around Sector 7A."
+    }
+  ],
+  "proposed_flow": [
+    {
+      "order": 1,
+      "stage": "Student Landing",
+      "purpose": "Enter STEM Nation"
+    },
+    {
+      "order": 2,
+      "stage": "Academy Opening",
+      "purpose": "Establish mission and inquiry identity"
+    },
+    {
+      "order": 3,
+      "stage": "Create Academy Identity",
+      "purpose": "Create learner identity"
+    },
+    {
+      "order": 4,
+      "stage": "Opening Cinematic",
+      "purpose": "Enter the Academy world"
+    },
+    {
+      "order": 5,
+      "stage": "Academy Arrival",
+      "purpose": "Physical and narrative arrival"
+    },
+    {
+      "order": 6,
+      "stage": "First Gathering",
+      "purpose": "Brief handoff into the investigation"
+    },
+    {
+      "order": 7,
+      "stage": "Inquiry Council",
+      "purpose": "Introduce Scout, Mapkeeper, Builder, Healer, and Guardian"
+    },
+    {
+      "order": 8,
+      "stage": "Sector 7A Alert",
+      "purpose": "Establish one continuous incident"
+    },
+    {
+      "order": 9,
+      "stage": "Earlier / Current Evidence",
+      "purpose": "Observe and compare before interpretation"
+    },
+    {
+      "order": 10,
+      "stage": "Question Ranking",
+      "purpose": "Choose and defend the three most important questions"
+    },
+    {
+      "order": 11,
+      "stage": "Sector 7A Field Response",
+      "purpose": "Replace unrelated crossing narrative with Sector 7A access challenge"
+    },
+    {
+      "order": 12,
+      "stage": "Test and Revise",
+      "purpose": "Use evidence, materials, and specialist reports"
+    },
+    {
+      "order": 13,
+      "stage": "Sector 7A Debrief",
+      "purpose": "Defend decision and record readiness progress"
+    },
+    {
+      "order": 14,
+      "stage": "Academy Progress Hub",
+      "purpose": "Return learner to a clear completion point"
+    },
+    {
+      "order": 15,
+      "stage": "Later Legacy Council Module",
+      "purpose": "Introduce Dr. and Mrs. Mishoe in a separate institutional/legacy context"
+    },
+    {
+      "order": 16,
+      "stage": "Later World Orientation",
+      "purpose": "Teach regions, terrain, resources, and responsibilities"
+    },
+    {
+      "order": 17,
+      "stage": "Later Region Selection",
+      "purpose": "Choose a region after orientation and readiness"
+    }
+  ]
+}

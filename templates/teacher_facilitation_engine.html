@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Teacher Facilitation Engine</title>
+
+  <style>
+    html, body {
+      margin: 0;
+      width: 100%;
+      min-height: 100%;
+      background:
+        radial-gradient(circle at center, rgba(212,175,55,0.10), transparent 46%),
+        linear-gradient(135deg, #050505 0%, #101827 55%, #050505 100%);
+      color: white;
+      font-family: Arial, sans-serif;
+      overflow-x: hidden;
+    }
+
+    .academy-line {
+      height: 3px;
+      background: linear-gradient(90deg, transparent, #d4af37, transparent);
+      opacity: 0.82;
+    }
+
+    .container {
+      max-width: 1240px;
+      margin: 0 auto;
+      padding: 42px 22px 70px;
+      box-sizing: border-box;
+    }
+
+    .label {
+      text-align: center;
+      font-size: 13px;
+      letter-spacing: 4px;
+      text-transform: uppercase;
+      color: #d4af37;
+      margin-bottom: 12px;
+    }
+
+    h1 {
+      text-align: center;
+      font-size: clamp(40px, 6vw, 74px);
+      color: #f0df9a;
+      margin: 0 0 18px;
+      line-height: 1.04;
+    }
+
+    .subtitle {
+      max-width: 960px;
+      margin: 0 auto 40px;
+      text-align: center;
+      font-size: 20px;
+      line-height: 1.7;
+      opacity: 0.94;
+    }
+
+    .section {
+      background: rgba(0,0,0,0.34);
+      border: 1px solid rgba(212,175,55,0.20);
+      border-radius: 22px;
+      padding: 28px;
+      margin-bottom: 26px;
+      box-shadow: 0 14px 50px rgba(0,0,0,0.45);
+    }
+
+    .section h2 {
+      margin-top: 0;
+      color: #d4af37;
+      font-size: 28px;
+      margin-bottom: 18px;
+    }
+
+    .section p,
+    .section li {
+      line-height: 1.75;
+      font-size: 16px;
+      opacity: 0.95;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 18px;
+    }
+
+    .card {
+      background: rgba(255,255,255,0.055);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 16px;
+      padding: 20px;
+    }
+
+    .card h3 {
+      margin-top: 0;
+      color: #f0df9a;
+      font-size: 20px;
+    }
+
+    .planned {
+      color: #d4af37;
+      font-size: 14px;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      opacity: 0.85;
+      margin-top: 14px;
+    }
+
+    .note {
+      margin-top: 16px;
+      font-size: 14px;
+      line-height: 1.6;
+      opacity: 0.76;
+    }
+
+    .btn-row {
+      margin-top: 26px;
+      text-align: center;
+    }
+
+    .btn {
+      display: inline-block;
+      text-decoration: none;
+      border-radius: 999px;
+      border: 1px solid rgba(212,175,55,0.55);
+      color: #f0df9a;
+      padding: 12px 20px;
+      margin: 6px;
+      background: rgba(0,0,0,0.32);
+      letter-spacing: 0.5px;
+    }
+
+    .btn.primary {
+      background: #d4af37;
+      color: #111;
+      font-weight: bold;
+    }
+
+    .btn:hover {
+      background: rgba(212,175,55,0.14);
+    }
+
+    .btn.primary:hover {
+      background: #f0df9a;
+    }
+
+  </style>
+</head>
+
+<body>
+
+<div class="academy-line"></div>
+
+<div class="container">
+
+  <div class="label">STEM Nation · Teacher Facilitation System</div>
+
+  <h1>Teacher Facilitation Engine</h1>
+
+  <div class="subtitle">
+    STEM Nation is designed as a teacher-guided civilization inquiry experience. The Facilitation Engine helps educators orchestrate discussion, challenge reasoning, deepen inquiry, and guide consequence-based thinking during the simulation.
+  </div>
+
+  <!-- Core Philosophy -->
+
+  <div class="section">
+
+    <h2>Facilitation Philosophy</h2>
+
+    <p>
+      The teacher is not merely delivering information. The teacher is guiding students through observation, evidence, consequence, tradeoffs, and systems thinking. The simulation creates decisions. The facilitation engine deepens reasoning.
+    </p>
+
+    <div class="planned">
+      Human Facilitation Architecture · AI-Assisted Support Planned For Later Integration
+    </div>
+
+  </div>
+
+  <!-- Teacher Moves -->
+
+  <div class="section">
+
+    <h2>Teacher Moves</h2>
+
+    <div class="grid">
+
+      <div class="card">
+        <h3>Pause & Probe</h3>
+        <p>
+          Pause student momentum and ask groups to explain the reasoning behind a decision.
+        </p>
+      </div>
+
+      <div class="card">
+        <h3>Evidence Challenge</h3>
+        <p>
+          Ask students to defend a decision using evidence from maps, archives, or attached resources.
+        </p>
+      </div>
+
+      <div class="card">
+        <h3>Consequence Prediction</h3>
+        <p>
+          Ask groups to predict what may happen several turns or weeks into the future.
+        </p>
+      </div>
+
+      <div class="card">
+        <h3>Compare Civilizations</h3>
+        <p>
+          Compare the strategies, priorities, and tradeoffs between student civilizations.
+        </p>
+      </div>
+
+      <div class="card">
+        <h3>Redirect Assumptions</h3>
+        <p>
+          Challenge oversimplified thinking or unsupported conclusions.
+        </p>
+      </div>
+
+      <div class="card">
+        <h3>Archive Checkpoint</h3>
+        <p>
+          Pause and review student archives to analyze evidence, reasoning, and reflection quality.
+        </p>
+      </div>
+
+    </div>
+
+  </div>
+
+  <!-- Pause Points -->
+
+  <div class="section">
+
+    <h2>Suggested Pause Points</h2>
+
+    <div class="grid">
+
+      <div class="card">
+        <h3>Week 1</h3>
+
+        <ul>
+          <li>After Baseline Inquiry observations</li>
+          <li>Before Strategic Map Defense</li>
+          <li>After Founding Archive export</li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <h3>Week 2</h3>
+
+        <ul>
+          <li>Before survival plan submission</li>
+          <li>After scarcity-rule discussion</li>
+          <li>After Survival Archive review</li>
+        </ul>
+      </div>
+
+    </div>
+
+  </div>
+
+  <!-- Discussion Prompts -->
+
+  <div class="section">
+
+    <h2>Discussion Prompts</h2>
+
+    <div class="grid">
+
+      <div class="card">
+        <h3>Settlement & Geography</h3>
+
+        <ul>
+          <li>What evidence supports your settlement choice?</li>
+          <li>What risk did your group underestimate?</li>
+          <li>Can civilizations fail even on strong land?</li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <h3>Survival & Scarcity</h3>
+
+        <ul>
+          <li>What happens if food fails before shelter stabilizes?</li>
+          <li>Is survival more important than expansion?</li>
+          <li>What tradeoffs did your civilization accept?</li>
+        </ul>
+      </div>
+
+    </div>
+
+  </div>
+
+  <!-- Misconceptions -->
+
+  <div class="section">
+
+    <h2>Common Misconceptions To Watch For</h2>
+
+    <div class="grid">
+
+      <div class="card">
+        <h3>Geography Misconceptions</h3>
+
+        <ul>
+          <li>Good land guarantees survival.</li>
+          <li>Resources solve every problem.</li>
+          <li>Defense matters more than trade.</li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <h3>Systems Thinking Misconceptions</h3>
+
+        <ul>
+          <li>One decision cannot affect the future.</li>
+          <li>Scarcity only means food shortage.</li>
+          <li>Expansion always improves civilization strength.</li>
+        </ul>
+      </div>
+
+    </div>
+
+  </div>
+
+  <!-- Differentiation -->
+
+  <div class="section">
+
+    <h2>Differentiation & Support</h2>
+
+    <div class="grid">
+
+      <div class="card">
+        <h3>Support Strategies</h3>
+
+        <ul>
+          <li>Sentence starters</li>
+          <li>Partner discussion before writing</li>
+          <li>Visual evidence cards</li>
+          <li>Role-based responsibilities</li>
+          <li>Oral-response option</li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <h3>Advanced Extensions</h3>
+
+        <ul>
+          <li>Long-term consequence prediction</li>
+          <li>Cross-civilization comparison</li>
+          <li>Alternative settlement defense</li>
+          <li>Evidence rebuttal challenge</li>
+          <li>Policy and governance extension tasks</li>
+        </ul>
+      </div>
+
+    </div>
+
+  </div>
+
+  <!-- Evidence Checks -->
+
+  <div class="section">
+
+    <h2>Evidence & Reasoning Checks</h2>
+
+    <ul>
+      <li>Did students use evidence?</li>
+      <li>Did students identify realistic risk?</li>
+      <li>Did students explain tradeoffs?</li>
+      <li>Did students connect decisions to future consequence?</li>
+      <li>Did archive responses demonstrate reasoning instead of short answers?</li>
+    </ul>
+
+  </div>
+
+  <!-- Navigation -->
+
+  <div class="btn-row">
+    <a class="btn primary" href="/teacher">Return to Teacher Command Center</a>
+    <a class="btn" href="/teacher_resource_library">Teacher Resource Library</a>
+    <a class="btn" href="/teacher_resource_attach">Resource Attachment Workflow</a>
+    <a class="btn" href="/hub">Week 1 Founding Archive</a>
+    <a class="btn" href="/week2_survival_archive">Week 2 Survival Archive</a>
+  </div>
+
+</div>
+
+</body>
+</html>

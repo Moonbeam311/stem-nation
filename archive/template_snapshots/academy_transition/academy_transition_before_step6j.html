@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>STEM Nation | Academy Transition</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- STEM_NATION_ACADEMY_TRANSITION_TEMPLATE_V1 -->
+
+  <style>
+    :root {
+      --gold: #d6b85a;
+      --gold-soft: rgba(214, 184, 90, 0.22);
+      --text: #f5ecd1;
+      --muted: rgba(245, 236, 209, 0.72);
+      --deep: #090d0b;
+      --panel: rgba(8, 12, 10, 0.62);
+      --blue: rgba(54, 132, 168, 0.28);
+      --green: rgba(48, 112, 70, 0.24);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      overflow: hidden;
+      background:
+        radial-gradient(circle at 20% 20%, rgba(214,184,90,0.16), transparent 24%),
+        radial-gradient(circle at 78% 28%, rgba(58,136,92,0.18), transparent 28%),
+        linear-gradient(135deg, #060807, #101810 52%, #070908);
+      color: var(--text);
+      font-family: Georgia, "Times New Roman", serif;
+    }
+
+    .academy {
+      position: relative;
+      min-height: 100vh;
+      display: grid;
+      place-items: center;
+      padding: 32px;
+      isolation: isolate;
+    }
+
+    .terrain {
+      position: absolute;
+      inset: 0;
+      z-index: -5;
+      background:
+        linear-gradient(105deg, transparent 0 24%, rgba(49,126,162,0.42) 25% 31%, transparent 32% 100%),
+        radial-gradient(circle at 18% 72%, rgba(60,139,178,0.22), transparent 18%),
+        radial-gradient(circle at 50% 58%, rgba(166,135,70,0.18), transparent 22%),
+        radial-gradient(circle at 80% 62%, rgba(37,108,55,0.24), transparent 28%);
+      filter: saturate(1.05);
+    }
+
+    .terrain::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background:
+        repeating-linear-gradient(100deg, rgba(255,255,255,0.035) 0 2px, transparent 2px 18px),
+        radial-gradient(circle at center, transparent 42%, rgba(0,0,0,0.55) 100%);
+      opacity: 0.72;
+    }
+
+    .terrain::after {
+      content: "";
+      position: absolute;
+      left: -12%;
+      top: -8%;
+      width: 48%;
+      height: 120%;
+      border-radius: 48%;
+      background:
+        linear-gradient(105deg,
+          transparent,
+          rgba(71,160,204,0.16) 20%,
+          rgba(103,185,220,0.45) 42%,
+          rgba(39,111,147,0.42) 58%,
+          transparent
+        );
+      transform: rotate(10deg);
+      animation: riverBreath 7s ease-in-out infinite alternate;
+    }
+
+    @keyframes riverBreath {
+      from {
+        transform: rotate(10deg) translateY(0);
+        filter: brightness(0.95);
+      }
+      to {
+        transform: rotate(10deg) translateY(16px);
+        filter: brightness(1.15);
+      }
+    }
+
+    .wind {
+      position: absolute;
+      inset: 0;
+      z-index: -4;
+      background:
+        radial-gradient(circle at 82% 42%, rgba(88,155,92,0.16), transparent 18%),
+        radial-gradient(circle at 74% 70%, rgba(41,112,61,0.16), transparent 18%);
+      animation: windDrift 9s ease-in-out infinite alternate;
+    }
+
+    @keyframes windDrift {
+      from {
+        transform: translateX(-8px);
+        opacity: 0.45;
+      }
+      to {
+        transform: translateX(18px);
+        opacity: 0.82;
+      }
+    }
+
+    .stars {
+      position: absolute;
+      inset: 0;
+      z-index: -3;
+      background:
+        radial-gradient(circle at 16% 18%, rgba(255,255,255,0.24) 0 1px, transparent 2px),
+        radial-gradient(circle at 38% 12%, rgba(255,255,255,0.18) 0 1px, transparent 2px),
+        radial-gradient(circle at 71% 16%, rgba(255,255,255,0.20) 0 1px, transparent 2px),
+        radial-gradient(circle at 88% 22%, rgba(255,255,255,0.16) 0 1px, transparent 2px);
+      opacity: 0.6;
+    }
+
+    .card {
+      width: min(880px, 92vw);
+      min-height: 520px;
+      border: 1px solid var(--gold-soft);
+      border-radius: 28px;
+      background:
+        linear-gradient(180deg, rgba(0,0,0,0.54), rgba(0,0,0,0.36)),
+        var(--panel);
+      box-shadow:
+        0 28px 90px rgba(0,0,0,0.52),
+        inset 0 0 80px rgba(214,184,90,0.05);
+      padding: 38px;
+      display: grid;
+      grid-template-rows: auto 1fr auto;
+      gap: 22px;
+      backdrop-filter: blur(8px);
+    }
+
+    .kicker {
+      color: var(--gold);
+      text-transform: uppercase;
+      letter-spacing: 0.22em;
+      font-size: 0.78rem;
+      text-align: center;
+    }
+
+    .screen {
+      display: none;
+      place-items: center;
+      text-align: center;
+      padding: 12px;
+    }
+
+    .screen.active {
+      display: grid;
+      animation: fadeIn 0.9s ease both;
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(12px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    h1 {
+      margin: 0 0 22px;
+      color: var(--text);
+      font-size: clamp(2rem, 4vw, 3.6rem);
+      line-height: 1.05;
+      font-weight: 500;
+    }
+
+    p {
+      margin: 12px auto;
+      max-width: 720px;
+      color: var(--muted);
+      font-size: clamp(1.05rem, 1.65vw, 1.32rem);
+      line-height: 1.55;
+    }
+
+    .doctrine {
+      margin-top: 24px;
+      display: grid;
+      gap: 10px;
+      color: var(--text);
+      font-size: clamp(1rem, 1.45vw, 1.18rem);
+    }
+
+    .doctrine span {
+      padding: 9px 12px;
+      border: 1px solid rgba(214,184,90,0.16);
+      background: rgba(255,255,255,0.045);
+      border-radius: 999px;
+    }
+
+    .controls {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 14px;
+    }
+
+    .progress {
+      color: var(--muted);
+      font-size: 0.84rem;
+      letter-spacing: 0.08em;
+    }
+
+    button, a.button {
+      border: 1px solid rgba(214,184,90,0.45);
+      background: rgba(214,184,90,0.16);
+      color: var(--text);
+      padding: 12px 20px;
+      border-radius: 999px;
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 1rem;
+      cursor: pointer;
+      text-decoration: none;
+      transition: 0.25s ease;
+    }
+
+    button:hover, a.button:hover {
+      background: rgba(214,184,90,0.28);
+      transform: translateY(-1px);
+    }
+
+    .back {
+      opacity: 0.72;
+    }
+
+    .hidden {
+      visibility: hidden;
+      pointer-events: none;
+    }
+
+    .small {
+      font-size: 0.95rem;
+      color: rgba(245,236,209,0.62);
+    }
+
+    @media (max-width: 760px) {
+      .card {
+        padding: 24px;
+        min-height: 560px;
+      }
+
+      .controls {
+        flex-direction: column;
+      }
+
+      .back, .next, .button {
+        width: 100%;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <main class="academy">
+    <div class="terrain"></div>
+    <div class="wind"></div>
+    <div class="stars"></div>
+
+    <section class="card">
+      <div class="kicker">STEM Nation Academy</div>
+
+      <div class="screen active" data-screen="0">
+        <div>
+          <h1>The Invitation</h1>
+          <p>Nations rise and fall through decisions.</p>
+          <p>But before decisions come observation, questions, and the ability to recognize patterns.</p>
+          <p>Not everyone is ready to guide a nation.</p>
+        </div>
+      </div>
+
+      <div class="screen" data-screen="1">
+        <div>
+          <h1>Quick Thinking Can Fail</h1>
+          <p>Some leaders act too quickly.</p>
+          <p>Some stop questioning.</p>
+          <p>Some mistake confidence for understanding.</p>
+          <p>Nations often fail long before they collapse.</p>
+        </div>
+      </div>
+
+      <div class="screen" data-screen="2">
+        <div>
+          <h1>The Inquiry Principle</h1>
+          <p>Science begins with observation.</p>
+          <p>Better questions do not appear by accident.</p>
+
+          <div class="doctrine">
+            <span>They grow from what you observe.</span>
+            <span>They grow from the patterns you recognize.</span>
+            <span>They grow from your willingness to test ideas.</span>
+            <span>They grow from your ability to refine your thinking.</span>
+          </div>
+
+          <p class="small">The quality of your questions depends on what you are willing to notice.</p>
+        </div>
+      </div>
+
+      <div class="screen" data-screen="3">
+        <div>
+          <h1>Your First Evaluation</h1>
+          <p>Before entering the world, you must complete your first inquiry evaluation.</p>
+          <p>Observe carefully. Ask questions. Test ideas. Notice what changes.</p>
+          <p>Your decisions will shape what happens next.</p>
+        </div>
+      </div>
+
+      <div class="controls">
+        <button id="backBtn" class="back hidden" type="button">Back</button>
+        <div id="progress" class="progress">1 / 4</div>
+        <button id="nextBtn" class="next" type="button">Continue</button>
+        <a id="beginBtn" class="button hidden" href="/baseline_inquiry">Begin Inquiry</a>
+      </div>
+    </section>
+  </main>
+
+  <script>
+    const screens = Array.from(document.querySelectorAll(".screen"));
+    const backBtn = document.getElementById("backBtn");
+    const nextBtn = document.getElementById("nextBtn");
+    const beginBtn = document.getElementById("beginBtn");
+    const progress = document.getElementById("progress");
+
+    let current = 0;
+
+    function renderScreen() {
+      screens.forEach((screen, index) => {
+        screen.classList.toggle("active", index === current);
+      });
+
+      progress.textContent = `${current + 1} / ${screens.length}`;
+
+      backBtn.classList.toggle("hidden", current === 0);
+      nextBtn.classList.toggle("hidden", current === screens.length - 1);
+      beginBtn.classList.toggle("hidden", current !== screens.length - 1);
+    }
+
+    nextBtn.addEventListener("click", () => {
+      if (current < screens.length - 1) {
+        current += 1;
+        renderScreen();
+      }
+    });
+
+    backBtn.addEventListener("click", () => {
+      if (current > 0) {
+        current -= 1;
+        renderScreen();
+      }
+    });
+
+    renderScreen();
+  </script>
+</body>
+</html>

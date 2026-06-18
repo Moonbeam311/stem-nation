@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="420" height="520" viewBox="0 0 420 520">
+  <defs><linearGradient id="bg" x1="0" x2="1" y1="0" y2="1"><stop stop-color="#10233f"/><stop offset="1" stop-color="#805ad5"/></linearGradient></defs>
+  <rect width="420" height="520" rx="42" fill="url(#bg)"/>
+  <circle cx="210" cy="182" r="104" fill="#a06f4d"/>
+  <path d="M122 160c25-70 151-82 178 2-36-22-131-24-178-2z" fill="#2d1b14"/>
+  <circle cx="174" cy="188" r="12" fill="#1b1716"/><circle cx="246" cy="188" r="12" fill="#1b1716"/>
+  <path d="M174 238c26 18 56 18 72 0" stroke="#2b1710" stroke-width="9" fill="none" stroke-linecap="round"/>
+  <path d="M100 392c18-78 202-78 220 0v80H100z" fill="#3d2c69"/>
+  <path d="M142 345h136v78H142z" fill="#f4d35e" opacity=".3"/>
+  <path d="M160 364c35 20 65-20 100 0" stroke="#f4d35e" stroke-width="6" fill="none"/>
+  <text x="210" y="454" text-anchor="middle" font-family="Georgia" font-size="27" fill="#f4d35e">MAPKEEPER</text>
+  <text x="210" y="84" text-anchor="middle" font-family="Georgia" font-size="58" fill="#f4d35e">⌖</text>
+</svg>
