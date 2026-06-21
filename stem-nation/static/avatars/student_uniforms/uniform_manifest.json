@@ -26,7 +26,7 @@
       "id": "academy_research",
       "name": "Academy Research Uniform",
       "filename": "academy_research_uniform.png",
-      "status": "awaiting_distinct_final_artwork",
+      "status": "approved_final_artwork",
       "visual_requirements": [
         "transparent PNG background",
         "consistent full-body framing",
@@ -37,15 +37,16 @@
         "student equipment, not an advisor role"
       ],
       "placeholder_reference": "reference/academy_uniform_body_reference.png",
-      "requires_visual_replacement": true,
+      "requires_visual_replacement": false,
       "production_brief": "production_briefs/academy_research_brief.md",
-      "approved_for_ui": false
+      "approved_for_ui": true,
+      "visual_direction": "White Academy research uniform with cyan accents, gold insignia, technical research equipment, and no face."
     },
     {
       "id": "academy_builder",
       "name": "Academy Builder Uniform",
       "filename": "academy_builder_uniform.png",
-      "status": "awaiting_distinct_final_artwork",
+      "status": "approved_final_artwork",
       "visual_requirements": [
         "transparent PNG background",
         "consistent full-body framing",
@@ -56,9 +57,10 @@
         "student equipment, not an advisor role"
       ],
       "placeholder_reference": "reference/academy_uniform_body_reference.png",
-      "requires_visual_replacement": true,
+      "requires_visual_replacement": false,
       "production_brief": "production_briefs/academy_builder_brief.md",
-      "approved_for_ui": false
+      "approved_for_ui": true,
+      "visual_direction": "Graphite grey Academy Builder uniform with reinforced protective panels, compact safe tools, restrained gold insignia, cyan utility accents, transparent background, and no face."
     }
   ],
   "locked_rules": [
