@@ -1,0 +1,73 @@
+{
+  "version": "ID-4B-1",
+  "purpose": "Independent Academy uniform selection assets",
+  "reference_asset": "../student_choices/academy_investigator_body.png",
+  "uniforms": [
+    {
+      "id": "academy_field",
+      "name": "Academy Field Uniform",
+      "filename": "academy_field_uniform.png",
+      "status": "approved_final_artwork",
+      "visual_requirements": [
+        "transparent PNG background",
+        "consistent full-body framing",
+        "expedition investigation jacket",
+        "utility pockets",
+        "compass or map equipment",
+        "Academy insignia",
+        "student equipment, not an advisor role"
+      ],
+      "placeholder_reference": "reference/academy_uniform_body_reference.png",
+      "requires_visual_replacement": false,
+      "production_brief": "production_briefs/academy_field_brief.md",
+      "approved_for_ui": true
+    },
+    {
+      "id": "academy_research",
+      "name": "Academy Research Uniform",
+      "filename": "academy_research_uniform.png",
+      "status": "awaiting_distinct_final_artwork",
+      "visual_requirements": [
+        "transparent PNG background",
+        "consistent full-body framing",
+        "technical research jacket",
+        "evidence tools",
+        "scanner or tablet",
+        "Academy insignia",
+        "student equipment, not an advisor role"
+      ],
+      "placeholder_reference": "reference/academy_uniform_body_reference.png",
+      "requires_visual_replacement": true,
+      "production_brief": "production_briefs/academy_research_brief.md",
+      "approved_for_ui": false
+    },
+    {
+      "id": "academy_builder",
+      "name": "Academy Builder Uniform",
+      "filename": "academy_builder_uniform.png",
+      "status": "awaiting_distinct_final_artwork",
+      "visual_requirements": [
+        "transparent PNG background",
+        "consistent full-body framing",
+        "reinforced project jacket",
+        "tool harness",
+        "protective equipment",
+        "Academy insignia",
+        "student equipment, not an advisor role"
+      ],
+      "placeholder_reference": "reference/academy_uniform_body_reference.png",
+      "requires_visual_replacement": true,
+      "production_brief": "production_briefs/academy_builder_brief.md",
+      "approved_for_ui": false
+    }
+  ],
+  "locked_rules": [
+    "Uniform selection remains separate from avatar identity.",
+    "Uniforms represent issued Academy equipment, not student roles.",
+    "All three assets must share a consistent body scale and framing.",
+    "Final files must be transparent PNG images."
+  ],
+  "production_stage": "artwork_briefs_ready",
+  "ui_wiring_allowed": false,
+  "placeholder_lock": "PLACEHOLDERS_NOT_FOR_UI.txt"
+}
