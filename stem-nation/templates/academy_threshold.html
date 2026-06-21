@@ -714,35 +714,20 @@
     .character-body {
       position: absolute;
       left: 50%;
-      top: 74px;
-      width: 67px;
-      height: 118px;
+      top: 58px;
+      z-index: 2;
+      width: 120px;
+      height: 194px;
       transform: translateX(-50%);
-      border: 1px solid rgba(117,220,255,.35);
-      border-radius: 32px 32px 20px 20px;
-      background:
-        linear-gradient(
-          145deg,
-          rgba(117,220,255,.24),
-          rgba(244,211,94,.10)
-        ),
-        #102f49;
-      box-shadow:
-        inset 0 0 24px rgba(255,255,255,.05),
-        0 0 24px rgba(117,220,255,.08);
+      display: block;
+      object-fit: contain;
+      object-position: center top;
+      filter: drop-shadow(0 0 12px rgba(117,220,255,.16));
     }
 
-    .character-body::before {
-      content: "";
-      position: absolute;
-      left: 50%;
-      top: 14px;
-      width: 29px;
-      height: 29px;
-      transform: translateX(-50%) rotate(45deg);
-      border: 1px solid rgba(244,211,94,.58);
-      background: rgba(244,211,94,.10);
-      box-shadow: 0 0 14px rgba(244,211,94,.18);
+    .student-character.has-uniform-body .character-arm,
+    .student-character.has-uniform-body .character-leg {
+      display: none;
     }
 
     .character-head {
@@ -1260,6 +1245,2344 @@
       }
     }
   </style>
+
+<style id="thr3b2-dynamic-identity-css">
+.thr-identity-projection{
+  position: fixed;
+  left: 50%;
+  bottom: 7vh;
+  transform: translateX(-50%) translateY(30px);
+  width: min(430px, 88vw);
+  padding: 22px 24px;
+  border: 1px solid rgba(118,210,255,.55);
+  border-radius: 26px;
+  background:
+    linear-gradient(180deg, rgba(7,18,34,.72), rgba(2,7,15,.56)),
+    radial-gradient(circle at 50% 0%, rgba(245,189,74,.22), transparent 55%);
+  box-shadow:
+    0 0 34px rgba(58,178,255,.32),
+    inset 0 0 26px rgba(255,201,86,.12);
+  color: #f7e9c3;
+  text-align: center;
+  opacity: 0;
+  pointer-events: none;
+  z-index: 40;
+  backdrop-filter: blur(10px);
+}
+
+.thr-identity-projection.active{
+  animation: thrProjectionRise 1.2s ease forwards;
+}
+
+.thr-projection-header{
+  font-size: .78rem;
+  letter-spacing: .22em;
+  color: #73d9ff;
+  margin-bottom: 14px;
+}
+
+.thr-portrait-ring{
+  position: relative;
+  width: 118px;
+  height: 118px;
+  margin: 0 auto 14px;
+  border-radius: 50%;
+  border: 2px solid rgba(255,204,92,.75);
+  box-shadow: 0 0 28px rgba(79,191,255,.55);
+  overflow: hidden;
+}
+
+.thr-portrait-ring img{
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: none;
+}
+
+.thr-portrait-ring.has-image img{
+  display: block;
+}
+
+.thr-portrait-glow{
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(111,215,255,.38), rgba(255,205,95,.14), transparent 70%);
+  z-index: 2;
+  pointer-events: none;
+}
+
+.thr-student-name{
+  font-size: clamp(1.5rem, 4vw, 2.1rem);
+  letter-spacing: .08em;
+  font-weight: 800;
+  color: #fff8dc;
+  text-transform: uppercase;
+}
+
+.thr-student-rank{
+  margin-top: 4px;
+  color: #f5c76f;
+  font-size: 1rem;
+}
+
+.thr-uniform-meaning{
+  max-width: 520px;
+  margin: 12px auto 8px;
+  color: rgba(232,247,255,.88);
+  font-size: clamp(.82rem, 1.35vw, .98rem);
+  line-height: 1.55;
+  text-align: center;
+  text-wrap: balance;
+}
+
+.thr-student-reason{
+  margin: 12px auto 0;
+  max-width: 330px;
+  color: rgba(235,246,255,.82);
+  font-style: italic;
+  line-height: 1.4;
+}
+
+.thr-status{
+  margin-top: 16px;
+  padding-top: 12px;
+  border-top: 1px solid rgba(118,210,255,.28);
+  color: #8ee7ff;
+  font-weight: 700;
+  letter-spacing: .16em;
+  font-size: .76rem;
+}
+
+.thr-scan-line{
+  position: absolute;
+  left: 8%;
+  right: 8%;
+  top: 0;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, #8ee7ff, #ffd56f, transparent);
+  opacity: .85;
+  animation: thrScan 2.2s linear infinite;
+}
+
+@keyframes thrProjectionRise{
+  from{ opacity: 0; transform: translateX(-50%) translateY(44px) scale(.95); }
+  to{ opacity: 1; transform: translateX(-50%) translateY(0) scale(1); }
+}
+
+@keyframes thrScan{
+  0%{ top: 8%; opacity: .1; }
+  50%{ opacity: .9; }
+  100%{ top: 92%; opacity: .1; }
+}
+</style>
+
+
+<style id="thr3b2r-locked-environment">
+/* THR-3B-2R LOCKED ENVIRONMENT */
+
+html,
+body {
+  width: 100%;
+  min-height: 100%;
+  margin: 0;
+  background: #020912;
+}
+
+body {
+  overflow-x: hidden;
+}
+
+#threshold.threshold {
+  position: relative;
+  min-height: 100svh;
+  isolation: isolate;
+  overflow: hidden;
+  background:
+    linear-gradient(
+      180deg,
+      rgba(1, 7, 16, 0.08) 0%,
+      rgba(1, 8, 18, 0.02) 44%,
+      rgba(1, 7, 15, 0.52) 100%
+    ),
+    url("/static/images/academy/threshold/academy_threshold_recognition_gate.png?v=thr3b2r")
+      center center / cover no-repeat !important;
+}
+
+#threshold.threshold::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  pointer-events: none;
+  background:
+    linear-gradient(
+      90deg,
+      rgba(0, 5, 13, 0.30),
+      transparent 20%,
+      transparent 80%,
+      rgba(0, 5, 13, 0.30)
+    ),
+    linear-gradient(
+      180deg,
+      rgba(0, 4, 12, 0.14),
+      transparent 42%,
+      rgba(0, 4, 12, 0.56)
+    );
+}
+
+#threshold .mountains,
+#threshold .mountain,
+#threshold .academy-complex,
+#threshold .academy-tower,
+#threshold .tower,
+#threshold .academy-wing,
+#threshold .wing,
+#threshold .approach-path,
+#threshold .path,
+#threshold .path-lights,
+#threshold .gate:not(#academyGate),
+#threshold .gate-structure,
+#threshold .gate-arch,
+#threshold .gate-pillars {
+  opacity: 0 !important;
+  visibility: hidden !important;
+  pointer-events: none !important;
+}
+
+#academyGate {
+  background: transparent !important;
+  border-color: transparent !important;
+  box-shadow: none !important;
+}
+
+#academyGate::before,
+#academyGate::after {
+  background: transparent !important;
+  border-color: transparent !important;
+  box-shadow: none !important;
+}
+
+#threshold .recognition-field,
+#threshold .identity-card,
+#threshold .identity-projection,
+#threshold .threshold-copy,
+#threshold .approach-panel,
+#threshold .gate-dialogue,
+#threshold .gate-action,
+#threshold button,
+#thrIdentityProjection {
+  position: relative;
+  z-index: 10;
+}
+
+#thrIdentityProjection {
+  position: fixed !important;
+  left: 50% !important;
+  bottom: clamp(20px, 5vh, 64px) !important;
+  transform: translateX(-50%) translateY(30px);
+  width: min(430px, 88vw);
+  z-index: 30 !important;
+}
+
+#thrStudentPortrait:not([src]),
+#thrStudentPortrait[src=""] {
+  display: none !important;
+}
+
+@media (max-width: 760px) {
+  #threshold.threshold {
+    background-position: center center !important;
+  }
+
+  #thrIdentityProjection {
+    bottom: 16px !important;
+    width: min(390px, 92vw);
+  }
+}
+</style>
+
+
+<style id="thr3b3-holographic-projection-cleanup">
+/* THR-3B-3 HOLOGRAPHIC PROJECTION CLEANUP */
+
+/*
+  Remove any legacy full-body student presentation.
+  The Threshold uses a holographic bust projection only.
+*/
+#threshold .student-body,
+#threshold .student-figure,
+#threshold .avatar-body,
+#threshold .full-student-avatar,
+#threshold .identity-character,
+#threshold .learner-figure {
+  display: none !important;
+}
+
+/*
+  Projection placement:
+  centered directly above the illuminated platform,
+  without obscuring the Academy gate.
+*/
+#thrIdentityProjection {
+  position: fixed !important;
+  left: 50% !important;
+  bottom: clamp(20px, 3vh, 42px) !important;
+
+  width: min(390px, 88vw) !important;
+  min-height: auto !important;
+
+  padding: 16px 22px 18px !important;
+
+  transform:
+    translateX(-50%)
+    translateY(24px)
+    perspective(900px)
+    rotateX(2deg) !important;
+
+  border: 1px solid rgba(88, 218, 255, 0.45) !important;
+  border-radius: 22px !important;
+
+  background:
+    linear-gradient(
+      180deg,
+      rgba(4, 25, 46, 0.70),
+      rgba(2, 12, 27, 0.48)
+    ) !important;
+
+  box-shadow:
+    0 0 18px rgba(67, 204, 255, 0.28),
+    0 0 50px rgba(45, 171, 255, 0.18),
+    inset 0 0 26px rgba(105, 224, 255, 0.08) !important;
+
+  backdrop-filter: blur(7px);
+  -webkit-backdrop-filter: blur(7px);
+
+  overflow: hidden;
+  z-index: 40 !important;
+}
+
+/* Projection activation */
+#thrIdentityProjection.active {
+  animation:
+    thrHologramArrival 1.05s ease-out forwards,
+    thrHologramPulse 4.5s ease-in-out 1.1s infinite;
+}
+
+/*
+  Portrait is a cropped holographic bust,
+  not a full-body avatar.
+*/
+#thrIdentityProjection .thr-portrait-ring {
+  position: relative !important;
+
+  width: 104px !important;
+  height: 104px !important;
+
+  margin: 0 auto 10px !important;
+
+  border-radius: 50% !important;
+  overflow: hidden !important;
+
+  border:
+    1px solid rgba(119, 229, 255, 0.84) !important;
+
+  background:
+    radial-gradient(
+      circle at 50% 42%,
+      rgba(79, 217, 255, 0.30),
+      rgba(8, 54, 92, 0.20) 58%,
+      rgba(1, 11, 24, 0.08) 78%
+    ) !important;
+
+  box-shadow:
+    0 0 12px rgba(99, 224, 255, 0.75),
+    0 0 34px rgba(52, 184, 255, 0.46),
+    inset 0 0 20px rgba(166, 244, 255, 0.18) !important;
+}
+
+/*
+  Force full-body source avatars to crop around the face and shoulders.
+*/
+#thrStudentPortrait {
+  display: block;
+  width: 100% !important;
+  height: 100% !important;
+
+  object-fit: cover !important;
+  object-position: center 18% !important;
+
+  border-radius: 50% !important;
+
+  opacity: 0.82 !important;
+  filter:
+    grayscale(0.15)
+    contrast(1.14)
+    brightness(1.08)
+    saturate(0.72)
+    hue-rotate(154deg) !important;
+
+  mix-blend-mode: screen;
+
+  transform: scale(1.18);
+}
+
+/*
+  If no portrait exists, show an abstract energy form rather than
+  a broken or default hard-coded student image.
+*/
+#thrIdentityProjection .thr-portrait-ring:not(.has-image)::before {
+  content: "";
+  position: absolute;
+  inset: 16%;
+  border-radius: 50% 50% 44% 44%;
+
+  background:
+    radial-gradient(
+      circle at 50% 30%,
+      rgba(184, 244, 255, 0.72),
+      rgba(78, 206, 255, 0.30) 42%,
+      transparent 70%
+    );
+
+  filter: blur(1px);
+  animation: thrUnknownIdentityPulse 2.8s ease-in-out infinite;
+}
+
+/* Cyan holographic glow layer */
+#thrIdentityProjection .thr-portrait-glow {
+  position: absolute !important;
+  inset: 0 !important;
+  z-index: 4 !important;
+  pointer-events: none !important;
+
+  border-radius: 50% !important;
+
+  background:
+    repeating-linear-gradient(
+      180deg,
+      rgba(150, 241, 255, 0.08) 0,
+      rgba(150, 241, 255, 0.08) 1px,
+      transparent 1px,
+      transparent 4px
+    ),
+    radial-gradient(
+      circle,
+      transparent 42%,
+      rgba(71, 209, 255, 0.22) 72%,
+      transparent 76%
+    ) !important;
+
+  box-shadow:
+    inset 0 0 28px rgba(115, 231, 255, 0.14) !important;
+}
+
+/* Header is quiet and cinematic */
+#thrIdentityProjection .thr-projection-header {
+  margin: 0 0 9px !important;
+
+  font-size: 0.68rem !important;
+  font-weight: 700 !important;
+  letter-spacing: 0.24em !important;
+
+  color: rgba(141, 232, 255, 0.86) !important;
+  text-shadow:
+    0 0 8px rgba(87, 216, 255, 0.72) !important;
+}
+
+/* Student name */
+#thrStudentName {
+  margin-top: 2px !important;
+
+  font-size: clamp(1.18rem, 3vw, 1.62rem) !important;
+  line-height: 1.1 !important;
+
+  letter-spacing: 0.08em !important;
+  text-transform: none !important;
+
+  color: #effcff !important;
+
+  text-shadow:
+    0 0 8px rgba(100, 225, 255, 0.82),
+    0 0 20px rgba(76, 190, 255, 0.38) !important;
+}
+
+/* Rank / arrival status */
+#thrStudentRank {
+  margin-top: 5px !important;
+
+  font-size: 0.82rem !important;
+  letter-spacing: 0.12em !important;
+  text-transform: uppercase !important;
+
+  color: rgba(250, 207, 111, 0.94) !important;
+}
+
+/* Reason for arrival should remain secondary */
+#thrStudentReason {
+  max-width: 300px !important;
+  margin: 9px auto 0 !important;
+
+  font-size: 0.82rem !important;
+  line-height: 1.35 !important;
+  font-style: normal !important;
+
+  color: rgba(222, 244, 255, 0.72) !important;
+}
+
+/* Accepted status */
+#thrIdentityProjection .thr-status {
+  margin-top: 11px !important;
+  padding-top: 9px !important;
+
+  border-top:
+    1px solid rgba(105, 218, 255, 0.18) !important;
+
+  font-size: 0.66rem !important;
+  letter-spacing: 0.22em !important;
+
+  color: rgba(128, 235, 255, 0.86) !important;
+}
+
+/* Moving hologram scan line */
+#thrIdentityProjection .thr-scan-line {
+  position: absolute !important;
+  left: 5% !important;
+  right: 5% !important;
+
+  height: 1px !important;
+
+  background:
+    linear-gradient(
+      90deg,
+      transparent,
+      rgba(123, 232, 255, 0.94),
+      rgba(255, 218, 129, 0.72),
+      transparent
+    ) !important;
+
+  box-shadow:
+    0 0 8px rgba(105, 226, 255, 0.74) !important;
+
+  animation: thrProjectionScan 2.8s linear infinite !important;
+}
+
+/*
+  Soft energy column connecting the projection to the platform.
+*/
+#thrIdentityProjection::before {
+  content: "";
+  position: absolute;
+
+  left: 18%;
+  right: 18%;
+  bottom: -62px;
+  height: 78px;
+
+  pointer-events: none;
+
+  background:
+    linear-gradient(
+      180deg,
+      rgba(102, 226, 255, 0.18),
+      rgba(63, 191, 255, 0.06) 60%,
+      transparent
+    );
+
+  clip-path:
+    polygon(
+      20% 0,
+      80% 0,
+      100% 100%,
+      0 100%
+    );
+
+  filter: blur(5px);
+  opacity: 0.72;
+}
+
+/* Subtle holographic interference */
+#thrIdentityProjection::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+
+  pointer-events: none;
+
+  background:
+    repeating-linear-gradient(
+      180deg,
+      transparent 0,
+      transparent 4px,
+      rgba(106, 225, 255, 0.025) 5px,
+      transparent 6px
+    );
+
+  animation: thrHologramInterference 7s linear infinite;
+}
+
+@keyframes thrHologramArrival {
+  0% {
+    opacity: 0;
+    transform:
+      translateX(-50%)
+      translateY(42px)
+      perspective(900px)
+      rotateX(8deg)
+      scaleY(0.82);
+    filter: blur(5px);
+  }
+
+  45% {
+    opacity: 0.72;
+    filter: blur(1.5px);
+  }
+
+  72% {
+    opacity: 0.42;
+  }
+
+  100% {
+    opacity: 1;
+    transform:
+      translateX(-50%)
+      translateY(0)
+      perspective(900px)
+      rotateX(2deg)
+      scaleY(1);
+    filter: blur(0);
+  }
+}
+
+@keyframes thrHologramPulse {
+  0%,
+  100% {
+    box-shadow:
+      0 0 18px rgba(67, 204, 255, 0.28),
+      0 0 50px rgba(45, 171, 255, 0.18),
+      inset 0 0 26px rgba(105, 224, 255, 0.08);
+  }
+
+  50% {
+    box-shadow:
+      0 0 24px rgba(91, 223, 255, 0.42),
+      0 0 64px rgba(55, 181, 255, 0.26),
+      inset 0 0 32px rgba(125, 232, 255, 0.13);
+  }
+}
+
+@keyframes thrProjectionScan {
+  0% {
+    top: 7%;
+    opacity: 0;
+  }
+
+  12% {
+    opacity: 0.92;
+  }
+
+  88% {
+    opacity: 0.92;
+  }
+
+  100% {
+    top: 93%;
+    opacity: 0;
+  }
+}
+
+@keyframes thrHologramInterference {
+  0% {
+    transform: translateY(-8px);
+  }
+
+  100% {
+    transform: translateY(8px);
+  }
+}
+
+@keyframes thrUnknownIdentityPulse {
+  0%,
+  100% {
+    opacity: 0.42;
+    transform: scale(0.94);
+  }
+
+  50% {
+    opacity: 0.78;
+    transform: scale(1.04);
+  }
+}
+
+/* Keep the platform and gateway visible on smaller screens */
+@media (max-width: 760px) {
+  #thrIdentityProjection {
+    width: min(350px, 91vw) !important;
+    bottom: 14px !important;
+    padding: 13px 16px 15px !important;
+  }
+
+  #thrIdentityProjection .thr-portrait-ring {
+    width: 86px !important;
+    height: 86px !important;
+  }
+
+  #thrStudentReason {
+    display: none !important;
+  }
+}
+
+/* Respect accessibility settings */
+@media (prefers-reduced-motion: reduce) {
+  #thrIdentityProjection,
+  #thrIdentityProjection *,
+  #thrIdentityProjection::before,
+  #thrIdentityProjection::after {
+    animation: none !important;
+  }
+}
+</style>
+
+
+<style id="thr3b4-circular-gate-hologram">
+/* THR-3B-4 — CIRCULAR GATE FULL-BODY HOLOGRAM RECOMPOSITION */
+
+#thrGateHologram {
+  --gate-hologram-width: clamp(170px, 19vw, 350px);
+  --gate-hologram-height: clamp(285px, 47vh, 590px);
+
+  position: absolute;
+  left: 50%;
+  top: 48%;
+
+  width: var(--gate-hologram-width);
+  height: var(--gate-hologram-height);
+
+  transform: translate(-50%, -50%);
+  z-index: 22;
+
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+
+  pointer-events: none;
+  opacity: 0;
+  visibility: hidden;
+
+  filter:
+    drop-shadow(0 0 12px rgba(107, 224, 255, 0.48))
+    drop-shadow(0 0 32px rgba(38, 155, 255, 0.30));
+
+  transition:
+    opacity 700ms ease,
+    filter 700ms ease;
+}
+
+#thrGateHologram.is-active {
+  opacity: 1;
+  visibility: visible;
+}
+
+#thrGateHologram.is-stable {
+  filter:
+    drop-shadow(0 0 9px rgba(121, 229, 255, 0.42))
+    drop-shadow(0 0 25px rgba(52, 166, 255, 0.22));
+}
+
+/*
+  Energy field inside the circular doorway.
+*/
+#thrGateHologram::before {
+  content: "";
+  position: absolute;
+  left: 7%;
+  right: 7%;
+  top: 1%;
+  bottom: 4%;
+
+  border-radius: 50% 50% 42% 42% / 34% 34% 62% 62%;
+
+  background:
+    radial-gradient(
+      ellipse at 50% 48%,
+      rgba(143, 236, 255, 0.15) 0%,
+      rgba(65, 178, 255, 0.10) 45%,
+      transparent 73%
+    ),
+    repeating-linear-gradient(
+      180deg,
+      rgba(160, 241, 255, 0.04) 0,
+      rgba(160, 241, 255, 0.04) 1px,
+      transparent 1px,
+      transparent 6px
+    );
+
+  border:
+    1px solid rgba(103, 219, 255, 0.14);
+
+  box-shadow:
+    inset 0 0 40px rgba(77, 193, 255, 0.11),
+    0 0 28px rgba(57, 181, 255, 0.10);
+
+  opacity: 0.85;
+}
+
+/*
+  Projection floor glow.
+*/
+#thrGateHologram::after {
+  content: "";
+  position: absolute;
+  left: 18%;
+  right: 18%;
+  bottom: 1%;
+
+  height: 8%;
+
+  border-radius: 50%;
+
+  background:
+    radial-gradient(
+      ellipse,
+      rgba(178, 244, 255, 0.70) 0%,
+      rgba(69, 194, 255, 0.30) 42%,
+      transparent 76%
+    );
+
+  filter: blur(5px);
+
+  transform: perspective(190px) rotateX(66deg);
+  transform-origin: center;
+
+  opacity: 0.88;
+}
+
+/*
+  The existing identity projection becomes a transparent,
+  compact gate-mounted layer rather than a foreground card.
+*/
+#thrGateHologram #thrIdentityProjection {
+  position: relative !important;
+  inset: auto !important;
+
+  left: auto !important;
+  right: auto !important;
+  top: auto !important;
+  bottom: auto !important;
+
+  width: 100% !important;
+  height: 100% !important;
+  min-height: 0 !important;
+
+  margin: 0 !important;
+  padding: 0 !important;
+
+  transform: none !important;
+
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: center !important;
+  justify-content: flex-end !important;
+
+  overflow: visible !important;
+
+  border: 0 !important;
+  border-radius: 0 !important;
+
+  background: transparent !important;
+
+  box-shadow: none !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+
+  opacity: 1 !important;
+  visibility: visible !important;
+
+  pointer-events: none !important;
+}
+
+/* Remove the earlier rectangular card presentation. */
+#thrGateHologram #thrIdentityProjection::before,
+#thrGateHologram #thrIdentityProjection::after {
+  display: none !important;
+}
+
+/*
+  Hide long-form identity details at the gate.
+  They remain stored in the student record.
+*/
+#thrGateHologram .thr-projection-header,
+#thrGateHologram #thrStudentReason,
+#thrGateHologram .thr-status,
+#thrGateHologram .thr-scan-line {
+  display: none !important;
+}
+
+/*
+  Full-body hologram stage.
+*/
+#thrGateHologram .thr-portrait-ring {
+  position: absolute !important;
+  left: 50% !important;
+  top: 47% !important;
+
+  width: 66% !important;
+  height: 82% !important;
+
+  margin: 0 !important;
+
+  transform: translate(-50%, -50%) !important;
+
+  overflow: visible !important;
+
+  border: 0 !important;
+  border-radius: 0 !important;
+
+  background: transparent !important;
+  box-shadow: none !important;
+
+  isolation: isolate;
+}
+
+/*
+  Neutral Academy-form body behind portrait-only assets.
+
+  This provides believable body proportions without stretching
+  the learner portrait. When a saved avatar already contains a
+  full body, the avatar naturally covers this subtle form.
+*/
+#thrGateHologram .thr-portrait-ring::before {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: 26%;
+
+  width: 54%;
+  height: 68%;
+
+  transform: translateX(-50%);
+
+  clip-path: polygon(
+    39% 0%,
+    61% 0%,
+    68% 8%,
+    76% 16%,
+    84% 38%,
+    78% 42%,
+    69% 26%,
+    67% 55%,
+    75% 100%,
+    57% 100%,
+    51% 60%,
+    49% 60%,
+    43% 100%,
+    25% 100%,
+    33% 55%,
+    31% 26%,
+    22% 42%,
+    16% 38%,
+    24% 16%,
+    32% 8%
+  );
+
+  background:
+    linear-gradient(
+      90deg,
+      rgba(43, 156, 215, 0.18),
+      rgba(171, 240, 255, 0.48) 48%,
+      rgba(58, 174, 230, 0.20)
+    );
+
+  border-top:
+    1px solid rgba(177, 242, 255, 0.42);
+
+  box-shadow:
+    inset 0 0 28px rgba(142, 234, 255, 0.16),
+    0 0 24px rgba(71, 190, 255, 0.20);
+
+  opacity: 0.58;
+
+  filter:
+    blur(0.35px)
+    drop-shadow(0 0 8px rgba(105, 220, 255, 0.40));
+
+  z-index: 0;
+}
+
+/*
+  Soft head-energy shape beneath the actual student image.
+*/
+#thrGateHologram .thr-portrait-ring::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: 4%;
+
+  width: 31%;
+  aspect-ratio: 0.82;
+
+  transform: translateX(-50%);
+
+  border-radius: 48% 48% 45% 45%;
+
+  background:
+    radial-gradient(
+      ellipse at 50% 38%,
+      rgba(198, 248, 255, 0.55),
+      rgba(75, 191, 247, 0.24) 58%,
+      transparent 76%
+    );
+
+  filter:
+    blur(0.7px)
+    drop-shadow(0 0 9px rgba(110, 226, 255, 0.48));
+
+  opacity: 0.62;
+  z-index: 1;
+}
+
+/*
+  Preserve the source image proportions.
+
+  object-fit: contain prevents the distorted body problem.
+  Full-body avatars remain full-body.
+  Portrait-only avatars remain portraits and sit over the
+  subtle Academy-form projection.
+*/
+#thrGateHologram #thrStudentPortrait {
+  position: absolute !important;
+  left: 50% !important;
+  top: 0 !important;
+
+  width: 100% !important;
+  height: 100% !important;
+
+  transform: translateX(-50%) !important;
+
+  display: block !important;
+
+  object-fit: contain !important;
+  object-position: center top !important;
+
+  border: 0 !important;
+  border-radius: 0 !important;
+
+  opacity: 0.88 !important;
+
+  mix-blend-mode: screen !important;
+
+  filter:
+    grayscale(0.15)
+    brightness(1.14)
+    contrast(1.18)
+    saturate(0.55)
+    hue-rotate(148deg)
+    drop-shadow(0 0 7px rgba(132, 231, 255, 0.82)) !important;
+
+  -webkit-mask-image:
+    linear-gradient(
+      to bottom,
+      black 0%,
+      black 66%,
+      rgba(0, 0, 0, 0.72) 80%,
+      transparent 100%
+    );
+
+  mask-image:
+    linear-gradient(
+      to bottom,
+      black 0%,
+      black 66%,
+      rgba(0, 0, 0, 0.72) 80%,
+      transparent 100%
+    );
+
+  z-index: 3;
+}
+
+/*
+  Moving scan texture over the assembled student.
+*/
+#thrGateHologram .thr-portrait-glow {
+  position: absolute !important;
+  inset: 0 !important;
+
+  display: block !important;
+
+  border-radius: 0 !important;
+
+  background:
+    repeating-linear-gradient(
+      180deg,
+      transparent 0,
+      transparent 5px,
+      rgba(150, 237, 255, 0.10) 6px,
+      transparent 7px
+    ),
+    linear-gradient(
+      180deg,
+      transparent,
+      rgba(114, 226, 255, 0.08),
+      transparent
+    ) !important;
+
+  mix-blend-mode: screen;
+
+  animation:
+    thrGateScanTexture 5.5s linear infinite;
+
+  opacity: 0.64;
+  z-index: 5 !important;
+}
+
+/*
+  Compact identity recognition label.
+*/
+#thrGateRecognitionLabel {
+  position: absolute;
+  left: 50%;
+  bottom: -1%;
+
+  width: min(320px, 92vw);
+
+  transform: translateX(-50%);
+
+  padding: 8px 14px 9px;
+
+  text-align: center;
+
+  border-top:
+    1px solid rgba(110, 223, 255, 0.46);
+
+  background:
+    linear-gradient(
+      90deg,
+      transparent,
+      rgba(4, 25, 44, 0.55) 18%,
+      rgba(4, 25, 44, 0.55) 82%,
+      transparent
+    );
+
+  text-shadow:
+    0 0 8px rgba(97, 220, 255, 0.74);
+
+  z-index: 9;
+}
+
+#thrGateRecognitionLabel .thr-recognition-kicker {
+  display: block;
+
+  margin-bottom: 3px;
+
+  font-size: clamp(0.52rem, 0.8vw, 0.68rem);
+  font-weight: 700;
+  letter-spacing: 0.24em;
+
+  color: rgba(141, 232, 255, 0.82);
+}
+
+#thrGateRecognitionLabel #thrStudentName {
+  display: block;
+
+  margin: 0 !important;
+
+  font-size: clamp(0.92rem, 1.45vw, 1.28rem) !important;
+  font-weight: 700 !important;
+  line-height: 1.1 !important;
+
+  letter-spacing: 0.07em !important;
+
+  color: #effdff !important;
+
+  text-shadow:
+    0 0 7px rgba(119, 229, 255, 0.85),
+    0 0 17px rgba(59, 178, 255, 0.38) !important;
+}
+
+#thrGateRecognitionLabel #thrStudentRank {
+  display: block;
+
+  margin-top: 4px !important;
+
+  font-size: clamp(0.55rem, 0.8vw, 0.70rem) !important;
+  font-weight: 700 !important;
+
+  letter-spacing: 0.17em !important;
+  text-transform: uppercase !important;
+
+  color: rgba(249, 207, 114, 0.92) !important;
+}
+
+/*
+  Hologram assembly animation.
+*/
+#thrGateHologram.is-active .thr-portrait-ring {
+  animation:
+    thrGateBodyAssemble 1.25s cubic-bezier(.18,.78,.24,1) both;
+}
+
+#thrGateHologram.is-active #thrGateRecognitionLabel {
+  animation:
+    thrGateLabelReveal 650ms ease 850ms both;
+}
+
+#thrGateHologram.is-stable .thr-portrait-ring {
+  animation:
+    thrGateStableFloat 4.6s ease-in-out infinite;
+}
+
+@keyframes thrGateBodyAssemble {
+  0% {
+    opacity: 0;
+    transform:
+      translate(-50%, -44%)
+      scaleY(0.18)
+      scaleX(0.72);
+    filter: blur(7px);
+  }
+
+  35% {
+    opacity: 0.72;
+    transform:
+      translate(-50%, -50%)
+      scaleY(1.04)
+      scaleX(0.96);
+    filter: blur(2px);
+  }
+
+  54% {
+    opacity: 0.34;
+  }
+
+  72% {
+    opacity: 0.94;
+  }
+
+  100% {
+    opacity: 1;
+    transform:
+      translate(-50%, -50%)
+      scale(1);
+    filter: blur(0);
+  }
+}
+
+@keyframes thrGateLabelReveal {
+  from {
+    opacity: 0;
+    transform: translate(-50%, 10px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translate(-50%, 0);
+  }
+}
+
+@keyframes thrGateStableFloat {
+  0%,
+  100% {
+    transform:
+      translate(-50%, -50%)
+      translateY(0);
+  }
+
+  50% {
+    transform:
+      translate(-50%, -50%)
+      translateY(-3px);
+  }
+}
+
+@keyframes thrGateScanTexture {
+  from {
+    background-position:
+      0 -18px,
+      0 0;
+  }
+
+  to {
+    background-position:
+      0 18px,
+      0 0;
+  }
+}
+
+/*
+  Suppress legacy foreground learner figures and old projection cards.
+*/
+#threshold .student-body,
+#threshold .student-figure,
+#threshold .avatar-body,
+#threshold .full-student-avatar,
+#threshold .identity-character,
+#threshold .learner-figure,
+#threshold > #thrIdentityProjection {
+  display: none !important;
+}
+
+/*
+  Responsive gate registration.
+*/
+@media (max-width: 1100px) {
+  #thrGateHologram {
+    top: 48%;
+    --gate-hologram-width: clamp(155px, 23vw, 285px);
+    --gate-hologram-height: clamp(270px, 43vh, 490px);
+  }
+}
+
+@media (max-width: 760px) {
+  #thrGateHologram {
+    top: 48%;
+    --gate-hologram-width: clamp(145px, 38vw, 220px);
+    --gate-hologram-height: clamp(245px, 39vh, 390px);
+  }
+
+  #thrGateRecognitionLabel {
+    width: min(270px, 88vw);
+  }
+}
+
+@media (max-height: 720px) and (min-width: 761px) {
+  #thrGateHologram {
+    top: 49%;
+    --gate-hologram-width: clamp(145px, 16vw, 240px);
+    --gate-hologram-height: clamp(235px, 46vh, 370px);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  #thrGateHologram,
+  #thrGateHologram *,
+  #thrGateHologram::before,
+  #thrGateHologram::after {
+    animation: none !important;
+    transition: none !important;
+  }
+}
+</style>
+
+
+<style id="thr3b4a-centering-cleanup">
+/* THR-3B-4A — GATE CENTERING + SKIP BUTTON CONTAINMENT */
+
+:root {
+  /*
+    Fine-position controls for the circular gateway.
+    These values can be adjusted later without rebuilding the hologram.
+  */
+  --thr-gate-hologram-x: 50%;
+  --thr-gate-hologram-y: 43.5%;
+}
+
+/*
+  Reposition the entire hologram assembly into the center
+  of the circular entrance gateway.
+*/
+#thrGateHologram {
+  left: var(--thr-gate-hologram-x) !important;
+  top: var(--thr-gate-hologram-y) !important;
+
+  transform: translate(-50%, -50%) !important;
+
+  align-items: center !important;
+  justify-content: center !important;
+}
+
+/*
+  Center the student projection inside the hologram field.
+*/
+#thrGateHologram .thr-portrait-ring {
+  left: 50% !important;
+  top: 45% !important;
+
+  width: 62% !important;
+  height: 76% !important;
+
+  transform: translate(-50%, -50%) !important;
+}
+
+/*
+  Keep the actual student image centered and proportional.
+*/
+#thrGateHologram #thrStudentPortrait {
+  left: 50% !important;
+  top: 50% !important;
+
+  width: 100% !important;
+  height: 100% !important;
+
+  transform: translate(-50%, -50%) !important;
+
+  object-fit: contain !important;
+  object-position: center center !important;
+}
+
+/*
+  Keep the projected Academy-form body aligned beneath the portrait.
+*/
+#thrGateHologram .thr-portrait-ring::before {
+  left: 50% !important;
+  top: 27% !important;
+  transform: translateX(-50%) !important;
+}
+
+#thrGateHologram .thr-portrait-ring::after {
+  left: 50% !important;
+  transform: translateX(-50%) !important;
+}
+
+/*
+  Recognition label remains centered beneath the learner,
+  but stays within the circular gateway composition.
+*/
+#thrGateRecognitionLabel {
+  left: 50% !important;
+  bottom: 2% !important;
+
+  transform: translateX(-50%) !important;
+
+  max-width: calc(100vw - 32px) !important;
+}
+
+/*
+  Keep the Skip Threshold control inside the viewport.
+  The JavaScript below assigns #thrSkipThresholdButton to the
+  existing control without changing its route or click behavior.
+*/
+#thrSkipThresholdButton {
+  position: fixed !important;
+
+  right: max(14px, env(safe-area-inset-right)) !important;
+  bottom: max(14px, env(safe-area-inset-bottom)) !important;
+
+  left: auto !important;
+  top: auto !important;
+
+  width: auto !important;
+  max-width: min(240px, calc(100vw - 28px)) !important;
+
+  margin: 0 !important;
+  padding: 10px 15px !important;
+
+  transform: none !important;
+
+  white-space: normal !important;
+  overflow-wrap: anywhere !important;
+  text-align: center !important;
+
+  box-sizing: border-box !important;
+
+  z-index: 100 !important;
+}
+
+/*
+  Prevent any parent positioning rule from pushing the button
+  beyond the page edge.
+*/
+#thrSkipThresholdButton * {
+  max-width: 100% !important;
+  box-sizing: border-box !important;
+}
+
+/*
+  Tablet adjustment.
+*/
+@media (max-width: 1100px) {
+  :root {
+    --thr-gate-hologram-y: 44%;
+  }
+
+  #thrGateHologram .thr-portrait-ring {
+    width: 64% !important;
+    height: 75% !important;
+  }
+}
+
+/*
+  Mobile placement.
+*/
+@media (max-width: 760px) {
+  :root {
+    --thr-gate-hologram-y: 44.5%;
+  }
+
+  #thrGateHologram .thr-portrait-ring {
+    top: 44% !important;
+    width: 68% !important;
+    height: 73% !important;
+  }
+
+  #thrGateRecognitionLabel {
+    bottom: 1% !important;
+    width: min(250px, calc(100vw - 38px)) !important;
+  }
+
+  #thrSkipThresholdButton {
+    right: 10px !important;
+    bottom: 10px !important;
+
+    max-width: calc(100vw - 20px) !important;
+
+    padding: 9px 12px !important;
+    font-size: 0.78rem !important;
+  }
+}
+
+/*
+  Short laptop screens need slightly less vertical projection height.
+*/
+@media (max-height: 720px) and (min-width: 761px) {
+  :root {
+    --thr-gate-hologram-y: 44%;
+  }
+
+  #thrGateHologram .thr-portrait-ring {
+    top: 44% !important;
+    height: 72% !important;
+  }
+
+  #thrSkipThresholdButton {
+    right: 12px !important;
+    bottom: 12px !important;
+  }
+}
+</style>
+
+
+
+
+<style id="thr3b4c-student-card-recomposition">
+/* THR-3B-4C — STUDENT DIRECTLY ABOVE IDENTITY CARD */
+
+#thrGateHologram {
+  --thr-student-width: clamp(120px, 10vw, 178px);
+  --thr-student-height: clamp(165px, 25vh, 255px);
+  --thr-card-width: clamp(225px, 20vw, 310px);
+
+  position: absolute !important;
+
+  left: 50% !important;
+  top: 45% !important;
+
+  width: var(--thr-card-width) !important;
+  height: auto !important;
+  min-height: 0 !important;
+
+  transform: translate(-50%, -50%) !important;
+
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: center !important;
+  justify-content: flex-end !important;
+  gap: 0 !important;
+
+  opacity: 0;
+  visibility: hidden;
+
+  pointer-events: none;
+  z-index: 40 !important;
+}
+
+#thrGateHologram.is-active,
+#thrGateHologram.is-stable {
+  opacity: 1;
+  visibility: visible;
+}
+
+/*
+  Remove the oversized oval field from the former body treatment.
+*/
+#thrGateHologram::before {
+  left: 50% !important;
+  top: 2% !important;
+  bottom: auto !important;
+
+  width: calc(var(--thr-student-width) + 56px) !important;
+  height: calc(var(--thr-student-height) + 58px) !important;
+
+  transform: translateX(-50%) !important;
+
+  border-radius: 48% 48% 38% 38% / 38% 38% 22% 22% !important;
+
+  background:
+    radial-gradient(
+      ellipse at 50% 44%,
+      rgba(153, 238, 255, 0.18),
+      rgba(60, 177, 241, 0.08) 54%,
+      transparent 76%
+    ),
+    repeating-linear-gradient(
+      180deg,
+      transparent 0,
+      transparent 5px,
+      rgba(139, 232, 255, 0.045) 6px,
+      transparent 7px
+    ) !important;
+
+  border:
+    1px solid rgba(105, 220, 255, 0.16) !important;
+
+  box-shadow:
+    inset 0 0 32px rgba(92, 211, 255, 0.10),
+    0 0 25px rgba(67, 192, 255, 0.13) !important;
+}
+
+/*
+  Small floor glow beneath the card.
+*/
+#thrGateHologram::after {
+  left: 14% !important;
+  right: 14% !important;
+  bottom: -12px !important;
+
+  height: 20px !important;
+
+  opacity: 0.55 !important;
+}
+
+/*
+  The projection becomes a simple vertical composition.
+*/
+#thrGateHologram #thrIdentityProjection {
+  position: relative !important;
+
+  width: 100% !important;
+  height: auto !important;
+
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: center !important;
+  justify-content: flex-end !important;
+
+  margin: 0 !important;
+  padding: 0 !important;
+
+  transform: none !important;
+
+  overflow: visible !important;
+
+  background: transparent !important;
+  border: 0 !important;
+  box-shadow: none !important;
+}
+
+/*
+  Student image stage.
+
+  This is intentionally a clean holographic portrait/bust rather
+  than a fabricated body assembled from CSS shapes.
+*/
+#thrGateHologram .thr-portrait-ring {
+  position: relative !important;
+
+  left: auto !important;
+  right: auto !important;
+  top: auto !important;
+  bottom: auto !important;
+
+  width: var(--thr-student-width) !important;
+  height: var(--thr-student-height) !important;
+
+  margin: 0 auto -2px !important;
+
+  transform: none !important;
+
+  display: flex !important;
+  align-items: flex-end !important;
+  justify-content: center !important;
+
+  overflow: hidden !important;
+
+  border:
+    1px solid rgba(122, 229, 255, 0.34) !important;
+
+  border-bottom: 0 !important;
+
+  border-radius:
+    48% 48% 14px 14px /
+    30% 30% 10px 10px !important;
+
+  background:
+    radial-gradient(
+      ellipse at 50% 38%,
+      rgba(144, 234, 255, 0.20),
+      rgba(42, 145, 216, 0.08) 60%,
+      transparent 78%
+    ) !important;
+
+  box-shadow:
+    0 0 15px rgba(83, 207, 255, 0.30),
+    inset 0 0 24px rgba(124, 228, 255, 0.08) !important;
+
+  z-index: 5 !important;
+}
+
+/*
+  Completely remove the former fake Academy body and head.
+*/
+#thrGateHologram .thr-portrait-ring::before,
+#thrGateHologram .thr-portrait-ring::after {
+  display: none !important;
+  content: none !important;
+}
+
+/*
+  Use the actual learner image without stretching.
+
+  The bottom fade makes portrait assets feel like holographic busts.
+*/
+#thrGateHologram #thrStudentPortrait {
+  position: absolute !important;
+
+  left: 50% !important;
+  top: 50% !important;
+
+  width: 100% !important;
+  height: 100% !important;
+
+  margin: 0 !important;
+
+  transform:
+    translate(-50%, -50%)
+    scale(1.02) !important;
+
+  object-fit: contain !important;
+  object-position: center bottom !important;
+
+  border: 0 !important;
+  border-radius: 0 !important;
+
+  opacity: 0.92 !important;
+
+  mix-blend-mode: screen !important;
+
+  filter:
+    grayscale(0.10)
+    brightness(1.11)
+    contrast(1.12)
+    saturate(0.72)
+    hue-rotate(145deg)
+    drop-shadow(0 0 7px rgba(129, 231, 255, 0.78)) !important;
+
+  -webkit-mask-image:
+    linear-gradient(
+      to bottom,
+      black 0%,
+      black 72%,
+      rgba(0, 0, 0, 0.88) 84%,
+      transparent 100%
+    ) !important;
+
+  mask-image:
+    linear-gradient(
+      to bottom,
+      black 0%,
+      black 72%,
+      rgba(0, 0, 0, 0.88) 84%,
+      transparent 100%
+    ) !important;
+
+  z-index: 3 !important;
+}
+
+/*
+  Holographic scan lines remain attached to the student image.
+*/
+#thrGateHologram .thr-portrait-glow {
+  position: absolute !important;
+  inset: 0 !important;
+
+  display: block !important;
+
+  background:
+    repeating-linear-gradient(
+      180deg,
+      transparent 0,
+      transparent 5px,
+      rgba(152, 239, 255, 0.10) 6px,
+      transparent 7px
+    ) !important;
+
+  mix-blend-mode: screen !important;
+  opacity: 0.55 !important;
+
+  pointer-events: none !important;
+  z-index: 6 !important;
+}
+
+/*
+  Identity card sits directly beneath the student.
+*/
+#thrGateRecognitionLabel {
+  position: relative !important;
+
+  left: auto !important;
+  right: auto !important;
+  top: auto !important;
+  bottom: auto !important;
+
+  width: var(--thr-card-width) !important;
+  max-width: calc(100vw - 32px) !important;
+
+  margin: 0 auto !important;
+  padding: 10px 16px 11px !important;
+
+  transform: none !important;
+
+  box-sizing: border-box !important;
+
+  border:
+    1px solid rgba(104, 220, 255, 0.42) !important;
+
+  border-radius: 0 0 14px 14px !important;
+
+  background:
+    linear-gradient(
+      180deg,
+      rgba(4, 29, 51, 0.88),
+      rgba(2, 14, 29, 0.82)
+    ) !important;
+
+  box-shadow:
+    0 8px 24px rgba(0, 5, 15, 0.46),
+    0 0 20px rgba(69, 193, 255, 0.16),
+    inset 0 0 18px rgba(114, 226, 255, 0.06) !important;
+
+  text-align: center !important;
+
+  z-index: 10 !important;
+}
+
+#thrGateRecognitionLabel .thr-recognition-kicker {
+  margin-bottom: 4px !important;
+
+  font-size: 0.58rem !important;
+  letter-spacing: 0.22em !important;
+
+  color: rgba(144, 231, 255, 0.80) !important;
+}
+
+#thrGateRecognitionLabel #thrStudentName {
+  margin: 0 !important;
+
+  font-size: clamp(0.96rem, 1.3vw, 1.20rem) !important;
+  line-height: 1.12 !important;
+
+  color: #effcff !important;
+}
+
+#thrGateRecognitionLabel #thrStudentRank {
+  margin-top: 4px !important;
+
+  font-size: 0.62rem !important;
+  letter-spacing: 0.16em !important;
+
+  color: rgba(249, 208, 118, 0.94) !important;
+}
+
+/*
+  Do not allow older centering rules to shift the portrait.
+*/
+#thrGateHologram #thrStudentPortrait {
+  --thr-avatar-optical-shift-x: 0% !important;
+}
+
+/*
+  Cleaner reveal: image and card appear as one unit.
+*/
+#thrGateHologram.is-active {
+  animation:
+    thrStudentCardUnitReveal 900ms cubic-bezier(.18,.78,.24,1) both !important;
+}
+
+#thrGateHologram.is-stable {
+  animation:
+    thrStudentCardUnitFloat 4.8s ease-in-out infinite !important;
+}
+
+#thrGateHologram.is-active .thr-portrait-ring,
+#thrGateHologram.is-active #thrGateRecognitionLabel,
+#thrGateHologram.is-stable .thr-portrait-ring {
+  animation: none !important;
+}
+
+@keyframes thrStudentCardUnitReveal {
+  from {
+    opacity: 0;
+    transform:
+      translate(-50%, -45%)
+      scaleY(0.72);
+    filter: blur(5px);
+  }
+
+  58% {
+    opacity: 0.74;
+    filter: blur(1px);
+  }
+
+  to {
+    opacity: 1;
+    transform:
+      translate(-50%, -50%)
+      scaleY(1);
+    filter: blur(0);
+  }
+}
+
+@keyframes thrStudentCardUnitFloat {
+  0%,
+  100% {
+    transform:
+      translate(-50%, -50%)
+      translateY(0);
+  }
+
+  50% {
+    transform:
+      translate(-50%, -50%)
+      translateY(-3px);
+  }
+}
+
+/*
+  Tablet and mobile alignment.
+*/
+@media (max-width: 1100px) {
+  #thrGateHologram {
+    top: 45% !important;
+
+    --thr-student-width: clamp(112px, 15vw, 160px);
+    --thr-student-height: clamp(155px, 23vh, 225px);
+    --thr-card-width: clamp(215px, 28vw, 285px);
+  }
+}
+
+@media (max-width: 760px) {
+  #thrGateHologram {
+    top: 44% !important;
+
+    --thr-student-width: clamp(105px, 31vw, 145px);
+    --thr-student-height: clamp(145px, 22vh, 205px);
+    --thr-card-width: min(260px, calc(100vw - 34px));
+  }
+
+  #thrGateRecognitionLabel {
+    padding: 8px 12px 9px !important;
+  }
+}
+
+@media (max-height: 720px) and (min-width: 761px) {
+  #thrGateHologram {
+    top: 46% !important;
+
+    --thr-student-width: 110px;
+    --thr-student-height: 160px;
+    --thr-card-width: 225px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  #thrGateHologram,
+  #thrGateHologram * {
+    animation: none !important;
+    transition: none !important;
+  }
+}
+</style>
+
+
+<style id="thr3b5-full-body-system">
+/* THR-3B-5 — REMOVE GENERIC BODY AND WALK / PREPARE FULL-BODY SYSTEM */
+
+/*
+  Remove every fabricated learner-body layer created by earlier
+  Threshold experiments. The saved student image remains untouched.
+*/
+#thrGateHologram .thr-portrait-ring::before,
+#thrGateHologram .thr-portrait-ring::after,
+#thrGateHologram .student-body,
+#thrGateHologram .student-figure,
+#thrGateHologram .avatar-body,
+#thrGateHologram .full-student-avatar,
+#thrGateHologram .identity-character,
+#thrGateHologram .learner-figure,
+#thrGateHologram .academy-form-body,
+#thrGateHologram .projected-body,
+#thrGateHologram .hologram-body,
+#thrGateHologram .body-silhouette,
+#thrGateHologram .head-energy {
+  display: none !important;
+  content: none !important;
+  background: none !important;
+  border: 0 !important;
+  box-shadow: none !important;
+}
+
+/*
+  Stop the former walk, step, sway, bob, and floating-body motion.
+  Recognition may still fade in, but the learner does not walk.
+*/
+#thrGateHologram,
+#thrGateHologram.is-active,
+#thrGateHologram.is-stable,
+#thrGateHologram .thr-portrait-ring,
+#thrGateHologram #thrStudentPortrait {
+  animation-name: none !important;
+  animation-duration: 0s !important;
+  animation-delay: 0s !important;
+  animation-iteration-count: 1 !important;
+}
+
+/*
+  Keep the learner-and-card unit stationary.
+*/
+#thrGateHologram.is-active,
+#thrGateHologram.is-stable {
+  transform: translate(-50%, -50%) !important;
+}
+
+/*
+  The learner stage contains only an actual image asset.
+*/
+#thrGateHologram .thr-portrait-ring {
+  display: flex !important;
+  align-items: flex-end !important;
+  justify-content: center !important;
+
+  overflow: visible !important;
+
+  background: transparent !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+}
+
+/*
+  Shared student-image rules.
+
+  No CSS-generated torso.
+  No stretched limbs.
+  No simulated walking.
+*/
+#thrGateHologram #thrStudentPortrait {
+  position: relative !important;
+
+  left: auto !important;
+  right: auto !important;
+  top: auto !important;
+  bottom: auto !important;
+
+  display: block !important;
+
+  margin: 0 auto !important;
+
+  transform: none !important;
+
+  object-fit: contain !important;
+  object-position: center bottom !important;
+
+  border: 0 !important;
+  border-radius: 0 !important;
+
+  opacity: 0.92 !important;
+
+  animation: none !important;
+  transition:
+    opacity 450ms ease,
+    filter 450ms ease !important;
+}
+
+/*
+  Temporary portrait fallback.
+
+  This presentation remains compact and does not pretend that
+  the portrait is a complete body.
+*/
+#thrGateHologram[data-avatar-mode="portrait"]
+  .thr-portrait-ring {
+  width: clamp(120px, 11vw, 178px) !important;
+  height: clamp(155px, 24vh, 245px) !important;
+
+  overflow: hidden !important;
+
+  border:
+    1px solid rgba(119, 228, 255, 0.30) !important;
+
+  border-bottom: 0 !important;
+
+  border-radius:
+    48% 48% 12px 12px /
+    28% 28% 8px 8px !important;
+
+  background:
+    radial-gradient(
+      ellipse at 50% 42%,
+      rgba(133, 229, 255, 0.16),
+      rgba(43, 143, 208, 0.06) 62%,
+      transparent 80%
+    ) !important;
+
+  box-shadow:
+    0 0 14px rgba(76, 197, 255, 0.23),
+    inset 0 0 18px rgba(116, 226, 255, 0.06) !important;
+}
+
+#thrGateHologram[data-avatar-mode="portrait"]
+  #thrStudentPortrait {
+  width: 100% !important;
+  height: 100% !important;
+
+  object-fit: contain !important;
+  object-position: center bottom !important;
+
+  -webkit-mask-image:
+    linear-gradient(
+      to bottom,
+      black 0%,
+      black 74%,
+      rgba(0, 0, 0, 0.82) 86%,
+      transparent 100%
+    ) !important;
+
+  mask-image:
+    linear-gradient(
+      to bottom,
+      black 0%,
+      black 74%,
+      rgba(0, 0, 0, 0.82) 86%,
+      transparent 100%
+    ) !important;
+}
+
+/*
+  Future full-body mode.
+
+  When avatar_XX_full.png exists, the script switches to this
+  presentation automatically.
+*/
+#thrGateHologram[data-avatar-mode="full-body"]
+  .thr-portrait-ring {
+  width: clamp(155px, 14vw, 235px) !important;
+  height: clamp(280px, 42vh, 465px) !important;
+
+  overflow: visible !important;
+
+  background: transparent !important;
+  border: 0 !important;
+  box-shadow: none !important;
+}
+
+#thrGateHologram[data-avatar-mode="full-body"]
+  #thrStudentPortrait {
+  width: 100% !important;
+  height: 100% !important;
+
+  object-fit: contain !important;
+  object-position: center bottom !important;
+
+  -webkit-mask-image:
+    linear-gradient(
+      to bottom,
+      black 0%,
+      black 83%,
+      rgba(0, 0, 0, 0.84) 92%,
+      transparent 100%
+    ) !important;
+
+  mask-image:
+    linear-gradient(
+      to bottom,
+      black 0%,
+      black 83%,
+      rgba(0, 0, 0, 0.84) 92%,
+      transparent 100%
+    ) !important;
+}
+
+/*
+  A restrained hologram treatment is retained for both modes.
+  It affects the actual image only.
+*/
+#thrGateHologram #thrStudentPortrait {
+  mix-blend-mode: screen !important;
+
+  filter:
+    grayscale(0.08)
+    brightness(1.08)
+    contrast(1.10)
+    saturate(0.76)
+    hue-rotate(144deg)
+    drop-shadow(0 0 6px rgba(126, 230, 255, 0.70)) !important;
+}
+
+/*
+  Scan texture may remain, but it does not move the learner.
+*/
+#thrGateHologram .thr-portrait-glow {
+  animation: none !important;
+  pointer-events: none !important;
+}
+
+/*
+  Keep the identity card immediately beneath the student image.
+*/
+#thrGateHologram #thrIdentityProjection {
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: center !important;
+  justify-content: flex-end !important;
+
+  gap: 0 !important;
+}
+
+#thrGateRecognitionLabel {
+  margin-top: 0 !important;
+}
+
+/*
+  Responsive sizing only. No responsive walking or positional sway.
+*/
+@media (max-width: 760px) {
+  #thrGateHologram[data-avatar-mode="portrait"]
+    .thr-portrait-ring {
+    width: clamp(105px, 31vw, 145px) !important;
+    height: clamp(142px, 22vh, 200px) !important;
+  }
+
+  #thrGateHologram[data-avatar-mode="full-body"]
+    .thr-portrait-ring {
+    width: clamp(135px, 36vw, 185px) !important;
+    height: clamp(235px, 37vh, 335px) !important;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  #thrGateHologram,
+  #thrGateHologram *,
+  #thrGateHologram::before,
+  #thrGateHologram::after {
+    animation: none !important;
+    transition: none !important;
+  }
+}
+</style>
+
+
+<style id="thr3b5a-rounded-student-image">
+/* THR-3B-5A — ROUND STUDENT IMAGE ONLY */
+
+/*
+  Round the visible student-image frame while preserving its
+  current size, position, hologram treatment, and identity card.
+*/
+#thrGateHologram[data-avatar-mode="portrait"]
+  .thr-portrait-ring {
+  overflow: hidden !important;
+
+  border-radius:
+    44px 44px 24px 24px !important;
+
+  border:
+    1px solid rgba(125, 229, 255, 0.36) !important;
+
+  box-shadow:
+    0 0 16px rgba(82, 204, 255, 0.27),
+    inset 0 0 20px rgba(120, 229, 255, 0.07) !important;
+}
+
+/*
+  Match the actual image to its rounded frame.
+*/
+#thrGateHologram[data-avatar-mode="portrait"]
+  #thrStudentPortrait {
+  border-radius:
+    42px 42px 22px 22px !important;
+
+  overflow: hidden !important;
+}
+
+/*
+  Keep scan lines and hologram glow inside the rounded image.
+*/
+#thrGateHologram[data-avatar-mode="portrait"]
+  .thr-portrait-glow {
+  border-radius:
+    42px 42px 22px 22px !important;
+
+  overflow: hidden !important;
+}
+
+/*
+  Future full-body assets receive softer rounding without
+  cutting off arms, legs, or feet.
+*/
+#thrGateHologram[data-avatar-mode="full-body"]
+  #thrStudentPortrait {
+  border-radius: 28px !important;
+}
+</style>
+
+
+<style id="thr3b5b-true-oval-portrait">
+/* THR-3B-5B — TRUE OVAL STUDENT PORTRAIT ONLY */
+
+#thrGateHologram[data-avatar-mode="portrait"]
+  .thr-portrait-ring {
+  width: clamp(150px, 12vw, 190px) !important;
+  height: clamp(185px, 25vh, 235px) !important;
+
+  overflow: hidden !important;
+
+  border-radius: 50% !important;
+
+  border:
+    2px solid rgba(132, 234, 255, 0.62) !important;
+
+  background:
+    radial-gradient(
+      ellipse at 50% 42%,
+      rgba(153, 239, 255, 0.19),
+      rgba(38, 135, 205, 0.06) 68%,
+      transparent 82%
+    ) !important;
+
+  box-shadow:
+    0 0 18px rgba(77, 203, 255, 0.38),
+    0 0 34px rgba(44, 150, 224, 0.20),
+    inset 0 0 22px rgba(135, 231, 255, 0.10) !important;
+}
+
+#thrGateHologram[data-avatar-mode="portrait"]
+  #thrStudentPortrait {
+  width: 100% !important;
+  height: 100% !important;
+
+  border-radius: 50% !important;
+
+  object-fit: cover !important;
+  object-position: center 18% !important;
+
+  -webkit-mask-image: none !important;
+  mask-image: none !important;
+}
+
+#thrGateHologram[data-avatar-mode="portrait"]
+  .thr-portrait-glow {
+  border-radius: 50% !important;
+  overflow: hidden !important;
+}
+
+@media (max-width: 760px) {
+  #thrGateHologram[data-avatar-mode="portrait"]
+    .thr-portrait-ring {
+    width: 135px !important;
+    height: 165px !important;
+  }
+}
+</style>
+
 </head>
 
 <body>
@@ -1327,7 +3650,14 @@
       <div class="character-leg left"></div>
       <div class="character-leg right"></div>
 
-      <div class="character-body"></div>
+      <img
+        class="character-body"
+        id="characterBody"
+        alt="Selected Academy uniform"
+        aria-hidden="true"
+        decoding="async"
+        draggable="false"
+      >
 
       <div class="character-head" id="characterHead">
         <div class="character-head-fallback">
@@ -1392,7 +3722,28 @@
       id="transitionCover"
       aria-hidden="true"
     ></div>
-  </main>
+  
+<div class="thr-identity-projection" id="thrIdentityProjection" aria-live="polite">
+  <div class="thr-scan-line"></div>
+  <div class="thr-projection-header">IDENTITY RECOGNIZED</div>
+
+  <div class="thr-portrait-ring">
+    <div class="thr-portrait-glow"></div>
+    <img id="thrStudentPortrait" alt="Student identity portrait" />
+  </div>
+
+  <div class="thr-student-name" id="thrStudentName">Academy Learner</div>
+  <div class="thr-student-rank" id="thrStudentRank">New Arrival</div>
+  <div class="thr-uniform-meaning" id="thrUniformMeaning">
+    You begin in white because your inquiry record is still unwritten. What
+    you notice, question, test, revise, and protect will shape what comes next.
+  </div>
+  <div class="thr-student-reason" id="thrStudentReason">Reason for arrival not recorded.</div>
+
+  <div class="thr-status">STATUS: ACCEPTED</div>
+</div>
+
+</main>
 
   <script>
     const IDENTITY_KEY = "stemNationStudentIdentity";
@@ -1719,5 +4070,1075 @@
     }, 2800);
   </script>
   <script src="{{ url_for('static', filename='js/academy_mission_record.js') }}?v=step2c1"></script>
+
+<script id="thr3b2-dynamic-identity-js">
+(function(){
+  function getStudentIdentity(){
+    try {
+      return JSON.parse(localStorage.getItem("stemNationStudentIdentity") || "{}");
+    } catch(e) {
+      return {};
+    }
+  }
+
+  function setIdentityProjection(){
+    const identity = getStudentIdentity();
+
+    const name = identity.studentName || identity.name || "Academy Learner";
+    const rank = identity.rank || identity.title || "New Arrival";
+    const reason = identity.academyMotivation || identity.reason || "Reason for arrival not recorded.";
+    const portrait = identity.portrait || identity.avatar || identity.photo || "";
+
+    const nameEl = document.getElementById("thrStudentName");
+    const rankEl = document.getElementById("thrStudentRank");
+    const reasonEl = document.getElementById("thrStudentReason");
+    const portraitEl = document.getElementById("thrStudentPortrait");
+    const ringEl = portraitEl ? portraitEl.closest(".thr-portrait-ring") : null;
+
+    if(nameEl) nameEl.textContent = name;
+    if(rankEl) rankEl.textContent = rank;
+    if(reasonEl) reasonEl.textContent = '"' + reason + '"';
+
+    if(portraitEl && portrait){
+      portraitEl.src = portrait;
+      if(ringEl) ringEl.classList.add("has-image");
+    }
+  }
+
+  function activateProjection(){
+    setIdentityProjection();
+    const projection = document.getElementById("thrIdentityProjection");
+    if(projection) projection.classList.add("active");
+  }
+
+  window.thrActivateIdentityProjection = activateProjection;
+
+  document.addEventListener("DOMContentLoaded", function(){
+    setIdentityProjection();
+
+    const approachBtn = document.querySelector("#approachButton, #approachAcademy, .approach-button, .approach-academy, [data-threshold-approach]");
+    if(approachBtn){
+      approachBtn.addEventListener("click", function(){
+        setTimeout(activateProjection, 650);
+      });
+    }
+
+    const seal = document.querySelector("#academySeal, .academy-seal, [data-academy-seal]");
+    if(seal){
+      seal.addEventListener("click", function(){
+        setTimeout(activateProjection, 250);
+      });
+    }
+  });
+})();
+</script>
+
+
+<script id="thr3b4-circular-gate-script">
+/* THR-3B-4 — CIRCULAR GATE FULL-BODY HOLOGRAM RECOMPOSITION */
+
+document.addEventListener("DOMContentLoaded", function () {
+  const threshold =
+    document.getElementById("threshold") ||
+    document.querySelector(".threshold");
+
+  const projection =
+    document.getElementById("thrIdentityProjection");
+
+  const portrait =
+    document.getElementById("thrStudentPortrait");
+
+  const studentName =
+    document.getElementById("thrStudentName");
+
+  const studentRank =
+    document.getElementById("thrStudentRank");
+
+  if (!threshold || !projection) {
+    console.warn(
+      "THR-3B-4: Threshold or identity projection was not found."
+    );
+    return;
+  }
+
+  let mount =
+    document.getElementById("thrGateHologram");
+
+  if (!mount) {
+    mount = document.createElement("section");
+    mount.id = "thrGateHologram";
+    mount.setAttribute("aria-live", "polite");
+    mount.setAttribute("aria-label", "Academy identity recognition");
+    threshold.appendChild(mount);
+  }
+
+  let label =
+    document.getElementById("thrGateRecognitionLabel");
+
+  if (!label) {
+    label = document.createElement("div");
+    label.id = "thrGateRecognitionLabel";
+
+    const kicker = document.createElement("span");
+    kicker.className = "thr-recognition-kicker";
+    kicker.textContent = "IDENTITY RECOGNIZED";
+
+    label.appendChild(kicker);
+
+    if (studentName) {
+      label.appendChild(studentName);
+    }
+
+    if (studentRank) {
+      label.appendChild(studentRank);
+    }
+  }
+
+  mount.appendChild(projection);
+  mount.appendChild(label);
+
+  function activateGateHologram() {
+    mount.classList.remove("is-stable");
+    mount.classList.add("is-active");
+
+    window.setTimeout(function () {
+      mount.classList.add("is-stable");
+    }, 1450);
+  }
+
+  function deactivateGateHologram() {
+    mount.classList.remove("is-active", "is-stable");
+  }
+
+  /*
+    Detect whether the student's saved image has loaded.
+    Broken images remain hidden rather than displaying an icon.
+  */
+  if (portrait) {
+    portrait.addEventListener("load", function () {
+      portrait.hidden = false;
+
+      const ring = portrait.closest(".thr-portrait-ring");
+      if (ring) {
+        ring.classList.add("has-image");
+      }
+    });
+
+    portrait.addEventListener("error", function () {
+      portrait.hidden = true;
+
+      const ring = portrait.closest(".thr-portrait-ring");
+      if (ring) {
+        ring.classList.remove("has-image");
+      }
+    });
+
+    if (portrait.complete && portrait.naturalWidth > 0) {
+      portrait.hidden = false;
+
+      const ring = portrait.closest(".thr-portrait-ring");
+      if (ring) {
+        ring.classList.add("has-image");
+      }
+    }
+  }
+
+  const approachControls = [
+    document.getElementById("approachButton"),
+    document.getElementById("approachAcademy"),
+    document.querySelector(".approach-academy"),
+    document.querySelector("[data-threshold-approach]")
+  ].filter(Boolean);
+
+  approachControls.forEach(function (control) {
+    control.addEventListener("click", function () {
+      window.setTimeout(activateGateHologram, 380);
+    });
+  });
+
+  /*
+    Also watch for the Threshold's existing recognition states.
+    This preserves compatibility with its current gate logic.
+  */
+  const observer = new MutationObserver(function () {
+    const stateText = [
+      threshold.className,
+      threshold.getAttribute("data-state") || "",
+      projection.className
+    ].join(" ").toLowerCase();
+
+    const recognized =
+      stateText.includes("recogn") ||
+      stateText.includes("approach") ||
+      stateText.includes("active") ||
+      stateText.includes("accepted");
+
+    const entering =
+      stateText.includes("opening") ||
+      stateText.includes("entered") ||
+      stateText.includes("complete");
+
+    if (recognized && !entering) {
+      activateGateHologram();
+    }
+
+    if (entering) {
+      mount.classList.remove("is-stable");
+      mount.style.opacity = "0";
+    }
+  });
+
+  observer.observe(threshold, {
+    attributes: true,
+    attributeFilter: ["class", "data-state"]
+  });
+
+  observer.observe(projection, {
+    attributes: true,
+    attributeFilter: ["class", "hidden", "aria-hidden"]
+  });
+
+  /*
+    The projection remains hidden at initial arrival.
+    It activates through Approach the Academy.
+  */
+  deactivateGateHologram();
+
+  window.stemNationThresholdGateHologram = {
+    activate: activateGateHologram,
+    deactivate: deactivateGateHologram,
+    mount: mount
+  };
+});
+</script>
+
+
+<script id="thr3b4a-skip-button-cleanup">
+/* THR-3B-4A — locate and contain the existing Skip Threshold control */
+
+document.addEventListener("DOMContentLoaded", function () {
+  const candidates = Array.from(
+    document.querySelectorAll(
+      "a, button, input[type='button'], input[type='submit']"
+    )
+  );
+
+  const skipControl = candidates.find(function (element) {
+    const text = (
+      element.textContent ||
+      element.value ||
+      element.getAttribute("aria-label") ||
+      ""
+    )
+      .trim()
+      .toLowerCase();
+
+    return (
+      text === "skip threshold" ||
+      text.includes("skip threshold")
+    );
+  });
+
+  if (!skipControl) {
+    console.warn(
+      "THR-3B-4A: Skip Threshold control was not found."
+    );
+    return;
+  }
+
+  skipControl.id = "thrSkipThresholdButton";
+
+  /*
+    Preserve the existing href, click handler, and route.
+    Only the visual positioning is changed.
+  */
+  skipControl.setAttribute(
+    "data-threshold-contained",
+    "true"
+  );
+});
+</script>
+
+
+
+
+<script id="thr3b4c-student-card-script">
+/* THR-3B-4C — keep learner image immediately above identity card */
+
+document.addEventListener("DOMContentLoaded", function () {
+  const mount =
+    document.getElementById("thrGateHologram");
+
+  const projection =
+    document.getElementById("thrIdentityProjection");
+
+  const portraitRing =
+    projection
+      ? projection.querySelector(".thr-portrait-ring")
+      : null;
+
+  const label =
+    document.getElementById("thrGateRecognitionLabel");
+
+  if (!mount || !projection || !portraitRing || !label) {
+    console.warn(
+      "THR-3B-4C: Required learner/card elements were not found."
+    );
+    return;
+  }
+
+  /*
+    Force a predictable DOM order:
+      1. student image
+      2. identity card
+  */
+  projection.appendChild(portraitRing);
+  mount.appendChild(projection);
+  mount.appendChild(label);
+
+  mount.setAttribute(
+    "data-student-card-layout",
+    "vertical"
+  );
+
+  console.info(
+    "THR-3B-4C: Student positioned directly above identity card."
+  );
+});
+</script>
+
+
+<script id="thr3b5-full-body-system-script">
+/* THR-3B-5 — FULL-BODY AVATAR ASSET DETECTION */
+
+document.addEventListener("DOMContentLoaded", function () {
+  const mount =
+    document.getElementById("thrGateHologram");
+
+  const portrait =
+    document.getElementById("thrStudentPortrait");
+
+  if (!mount || !portrait) {
+    console.warn(
+      "THR-3B-5: Gate hologram or student portrait was not found."
+    );
+    return;
+  }
+
+  const originalSource =
+    portrait.getAttribute("src") || "";
+
+  /*
+    Expected portrait:
+      /static/avatars/student_choices/avatar_03.png
+
+    Expected full-body counterpart:
+      /static/avatars/student_choices/avatar_03_full.png
+  */
+  function fullBodySourceFrom(source) {
+    if (!source) {
+      return "";
+    }
+
+    const cleanSource = source.split("?")[0];
+
+    if (/_full\.png$/i.test(cleanSource)) {
+      return cleanSource;
+    }
+
+    if (/\.png$/i.test(cleanSource)) {
+      return cleanSource.replace(
+        /\.png$/i,
+        "_full.png"
+      );
+    }
+
+    return "";
+  }
+
+  function usePortraitFallback() {
+    mount.dataset.avatarMode = "portrait";
+    portrait.dataset.avatarAssetMode = "portrait";
+    portrait.setAttribute("src", originalSource);
+  }
+
+  function useFullBodyAsset(source) {
+    mount.dataset.avatarMode = "full-body";
+    portrait.dataset.avatarAssetMode = "full-body";
+    portrait.setAttribute("src", source);
+  }
+
+  const fullBodySource =
+    fullBodySourceFrom(originalSource);
+
+  if (!fullBodySource) {
+    usePortraitFallback();
+    return;
+  }
+
+  /*
+    Probe the matching full-body file without disturbing the visible
+    portrait. The current portrait remains until the file is proven
+    to exist.
+  */
+  const probe = new Image();
+
+  probe.onload = function () {
+    useFullBodyAsset(fullBodySource);
+
+    console.info(
+      "THR-3B-5: Full-body student asset loaded:",
+      fullBodySource
+    );
+  };
+
+  probe.onerror = function () {
+    usePortraitFallback();
+
+    console.info(
+      "THR-3B-5: Matching full-body asset is not installed. " +
+      "Using the existing portrait without a fabricated body."
+    );
+  };
+
+  probe.src =
+    fullBodySource +
+    (fullBodySource.includes("?") ? "&" : "?") +
+    "v=thr3b5";
+
+  /*
+    Keep this API available for later asset installation and testing.
+  */
+  window.stemNationThresholdAvatarSystem = {
+    mount: mount,
+    portrait: portrait,
+    originalSource: originalSource,
+    expectedFullBodySource: fullBodySource,
+    usePortrait: usePortraitFallback,
+    useFullBody: useFullBodyAsset
+  };
+});
+</script>
+
+
+
+
+
+
+
+
+<style id="thr-3b-6d-composite-style">
+  /*
+   * THR-3B-6D — Avatar Head + Academy Body Composite
+   * The original selected portrait remains the identity source.
+   * The reusable body shell supplies the Academy uniform.
+   */
+
+  .thr-portrait-ring.thr-composite-enabled {
+    position: relative !important;
+    width: min(31vw, 320px) !important;
+    height: min(62vh, 610px) !important;
+    min-width: 230px;
+    min-height: 440px;
+    overflow: visible !important;
+    border-radius: 0 !important;
+    border: 0 !important;
+    background: transparent !important;
+    box-shadow: none !important;
+    isolation: isolate;
+  }
+
+  .thr-composite-body {
+    position: absolute;
+    z-index: 1;
+    left: 50%;
+    bottom: 0;
+    width: 100%;
+    height: 88%;
+    object-fit: contain;
+    object-position: center bottom;
+    transform: translateX(-50%);
+    pointer-events: none;
+    user-select: none;
+    -webkit-user-drag: none;
+    filter:
+      drop-shadow(0 0 8px rgba(96, 225, 255, 0.24))
+      drop-shadow(0 0 20px rgba(77, 166, 255, 0.13));
+  }
+
+  .thr-portrait-ring.thr-composite-enabled #thrStudentPortrait {
+    position: absolute !important;
+    z-index: 3;
+    left: 50% !important;
+    top: 0 !important;
+    width: 35% !important;
+    aspect-ratio: 1 / 1;
+    height: auto !important;
+    max-width: none !important;
+    object-fit: cover !important;
+    object-position: center 25% !important;
+    transform: translateX(-50%) !important;
+    border-radius: 50% !important;
+    border: 2px solid rgba(177, 239, 255, 0.76) !important;
+    background: rgba(5, 18, 35, 0.9) !important;
+    box-shadow:
+      0 0 0 5px rgba(71, 192, 255, 0.10),
+      0 0 18px rgba(93, 219, 255, 0.42) !important;
+  }
+
+  .thr-composite-neck-bridge {
+    position: absolute;
+    z-index: 2;
+    left: 50%;
+    top: 14%;
+    width: 15%;
+    height: 9%;
+    transform: translateX(-50%);
+    border-radius: 40% 40% 24% 24%;
+    background:
+      linear-gradient(
+        180deg,
+        rgba(125, 135, 145, 0.96),
+        rgba(57, 64, 74, 0.98)
+      );
+    box-shadow: 0 0 9px rgba(100, 220, 255, 0.18);
+    pointer-events: none;
+  }
+
+  .thr-composite-enabled::after {
+    content: "";
+    position: absolute;
+    z-index: 4;
+    left: 50%;
+    bottom: 1%;
+    width: 82%;
+    height: 6%;
+    transform: translateX(-50%);
+    border-radius: 50%;
+    background:
+      radial-gradient(
+        ellipse,
+        rgba(91, 222, 255, 0.20) 0%,
+        rgba(91, 222, 255, 0.06) 42%,
+        transparent 72%
+      );
+    filter: blur(5px);
+    pointer-events: none;
+  }
+
+  @media (max-width: 760px) {
+    .thr-portrait-ring.thr-composite-enabled {
+      width: min(58vw, 285px) !important;
+      height: min(54vh, 520px) !important;
+      min-width: 205px;
+      min-height: 390px;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .thr-composite-body,
+    .thr-portrait-ring.thr-composite-enabled #thrStudentPortrait {
+      animation: none !important;
+      transition: none !important;
+    }
+  }
+</style>
+
+
+<script id="thr-3b-6d-composite-script">
+(() => {
+  "use strict";
+
+  const IDENTITY_KEY = "stemNationStudentIdentity";
+
+  const ISSUED_UNIFORM_BODY =
+    "/static/avatars/student_uniforms/academy_research_uniform.png";
+
+  function resolveUniformBody() {
+    return ISSUED_UNIFORM_BODY;
+  }
+
+  function readIdentity() {
+    try {
+      return JSON.parse(localStorage.getItem(IDENTITY_KEY) || "{}");
+    } catch (error) {
+      console.warn(
+        "THR-3B-6D: Could not read student identity.",
+        error
+      );
+      return {};
+    }
+  }
+
+  function normalizeAvatarPath(value) {
+    if (typeof value !== "string" || !value.trim()) {
+      return "/static/avatars/student_choices/avatar_01.png";
+    }
+
+    let path = value.trim();
+
+    /*
+     * The head must always use the original portrait.
+     * Convert any prior avatar_XX_full.png selection back to avatar_XX.png.
+     */
+    path = path.replace(/_full\.png(?:\?.*)?$/i, ".png");
+
+    if (!path.startsWith("/") && !path.startsWith("http")) {
+      path = "/" + path.replace(/^\.?\//, "");
+    }
+
+    return path;
+  }
+
+  function installComposite() {
+    const portrait = document.getElementById("thrStudentPortrait");
+
+    if (!portrait) {
+      console.warn(
+        "THR-3B-6D: #thrStudentPortrait was not found."
+      );
+      return false;
+    }
+
+    const ring = portrait.closest(".thr-portrait-ring") || portrait.parentElement;
+
+    if (!ring) {
+      console.warn(
+        "THR-3B-6D: Portrait container was not found."
+      );
+      return false;
+    }
+
+    const identity = readIdentity();
+
+    const storedAvatar =
+      identity.avatar ||
+      identity.avatarPath ||
+      identity.portrait ||
+      portrait.getAttribute("src");
+
+    portrait.src = normalizeAvatarPath(storedAvatar);
+    portrait.alt =
+      `${identity.name || "Academy learner"} identity portrait`;
+
+    ring.classList.add("thr-composite-enabled");
+
+    let body = ring.querySelector(".thr-composite-body");
+
+    if (!body) {
+      body = document.createElement("img");
+      body.className = "thr-composite-body";
+      body.src = resolveUniformBody(identity);
+      body.alt =
+        identity.uniformName ||
+        "Selected Academy uniform";
+      body.setAttribute("aria-hidden", "true");
+      body.decoding = "async";
+      body.draggable = false;
+
+      body.addEventListener("error", () => {
+        console.error(
+          "THR-3B-6D: Academy body asset failed to load."
+        );
+        body.hidden = true;
+        ring.classList.remove("thr-composite-enabled");
+      });
+
+      ring.insertBefore(body, portrait);
+    }
+
+    const resolvedUniformBody =
+      resolveUniformBody(identity);
+
+    const visibleCharacter =
+      document.getElementById("studentCharacter");
+
+    const visibleBody =
+      document.getElementById("characterBody");
+
+    if (visibleCharacter && visibleBody) {
+      visibleBody.src = resolvedUniformBody;
+      visibleBody.alt =
+        "Academy Entry Uniform";
+      visibleBody.hidden = false;
+      visibleBody.dataset.uniformId = "academy_entry";
+      visibleCharacter.classList.add("has-uniform-body");
+    }
+
+    body.src = resolvedUniformBody;
+    body.alt =
+      identity.uniformName ||
+      "Selected Academy uniform";
+    body.hidden = false;
+    body.dataset.uniformId =
+      identity.uniformId ||
+      identity.uniform ||
+      "academy_field";
+
+    let bridge = ring.querySelector(".thr-composite-neck-bridge");
+
+    if (!bridge) {
+      bridge = document.createElement("span");
+      bridge.className = "thr-composite-neck-bridge";
+      bridge.setAttribute("aria-hidden", "true");
+      ring.insertBefore(bridge, portrait);
+    }
+
+    ring.dataset.thrCompositeState = "installed";
+
+    console.info(
+      "THR-3B-6D: Avatar head + Academy body composite installed.",
+      {
+        avatar: portrait.src,
+        body: body.src
+      }
+    );
+
+    return true;
+  }
+
+  function beginInstall() {
+    /*
+     * Existing Threshold identity scripts may update the portrait shortly
+     * after DOMContentLoaded. Install after that first pass, then verify once.
+     */
+    window.setTimeout(installComposite, 120);
+    window.setTimeout(installComposite, 600);
+  }
+
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", beginInstall, {
+      once: true
+    });
+  } else {
+    beginInstall();
+  }
+})();
+</script>
+
+
+
+<style id="thr-3b-6d-r1-repair-style">
+  /*
+   * THR-3B-6D-R1
+   * Final override for the composite learner.
+   * This intentionally outranks all legacy portrait-mode rules.
+   */
+
+  #thrGateHologram[data-avatar-mode="composite"] {
+    --thr-student-width: clamp(220px, 24vw, 330px) !important;
+    --thr-student-height: clamp(420px, 58vh, 620px) !important;
+  }
+
+  #thrGateHologram[data-avatar-mode="composite"]
+  #thrIdentityProjection {
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    justify-content: flex-end !important;
+    width: auto !important;
+    min-width: 0 !important;
+    overflow: visible !important;
+  }
+
+  #thrGateHologram[data-avatar-mode="composite"]
+  .thr-portrait-ring.thr-composite-enabled {
+    position: relative !important;
+    display: block !important;
+    flex: 0 0 auto !important;
+
+    width: var(--thr-student-width) !important;
+    height: var(--thr-student-height) !important;
+    min-width: 0 !important;
+    min-height: 0 !important;
+
+    margin: 0 auto !important;
+    padding: 0 !important;
+
+    overflow: visible !important;
+    border: 0 !important;
+    border-radius: 0 !important;
+    background: transparent !important;
+    box-shadow: none !important;
+    mask-image: none !important;
+    clip-path: none !important;
+    isolation: isolate !important;
+  }
+
+  #thrGateHologram[data-avatar-mode="composite"]
+  .thr-portrait-ring.thr-composite-enabled
+  .thr-portrait-glow {
+    display: none !important;
+  }
+
+  #thrGateHologram[data-avatar-mode="composite"]
+  .thr-composite-body {
+    position: absolute !important;
+    z-index: 1 !important;
+
+    left: 50% !important;
+    bottom: 0 !important;
+
+    width: 100% !important;
+    height: 90% !important;
+
+    object-fit: contain !important;
+    object-position: center bottom !important;
+
+    transform: translateX(-50%) !important;
+
+    border: 0 !important;
+    border-radius: 0 !important;
+    background: transparent !important;
+    box-shadow: none !important;
+    mask-image: none !important;
+    clip-path: none !important;
+
+    filter:
+      drop-shadow(0 0 7px rgba(103, 224, 255, 0.30))
+      drop-shadow(0 0 18px rgba(70, 160, 255, 0.15)) !important;
+  }
+
+  #thrGateHologram[data-avatar-mode="composite"]
+  .thr-portrait-ring.thr-composite-enabled
+  #thrStudentPortrait {
+    position: absolute !important;
+    z-index: 4 !important;
+
+    left: 50% !important;
+    top: 1.5% !important;
+
+    width: 34% !important;
+    height: auto !important;
+    aspect-ratio: 1 / 1 !important;
+
+    transform: translateX(-50%) !important;
+
+    object-fit: cover !important;
+    object-position: center 18% !important;
+
+    border-radius: 50% !important;
+    border: 2px solid rgba(174, 238, 255, 0.78) !important;
+
+    overflow: hidden !important;
+    background: rgba(8, 23, 39, 0.98) !important;
+
+    mask-image: none !important;
+    clip-path: none !important;
+
+    mix-blend-mode: normal !important;
+
+    filter:
+      brightness(1.02)
+      contrast(1.04)
+      saturate(0.95)
+      drop-shadow(0 0 7px rgba(112, 224, 255, 0.58)) !important;
+
+    box-shadow:
+      0 0 0 4px rgba(75, 191, 255, 0.10),
+      0 0 16px rgba(91, 218, 255, 0.40) !important;
+  }
+
+  #thrGateHologram[data-avatar-mode="composite"]
+  .thr-composite-neck-bridge {
+    position: absolute !important;
+    z-index: 3 !important;
+
+    left: 50% !important;
+    top: 15.5% !important;
+
+    width: 16% !important;
+    height: 8% !important;
+
+    transform: translateX(-50%) !important;
+
+    border-radius: 42% 42% 24% 24% !important;
+
+    background:
+      linear-gradient(
+        180deg,
+        rgba(148, 153, 160, 0.98),
+        rgba(68, 72, 82, 0.98)
+      ) !important;
+
+    pointer-events: none !important;
+  }
+
+  #thrGateHologram[data-avatar-mode="composite"]
+  .thr-composite-enabled::after {
+    display: none !important;
+  }
+
+  #thrGateHologram[data-avatar-mode="composite"]
+  #thrGateRecognitionLabel {
+    position: relative !important;
+    z-index: 8 !important;
+    display: block !important;
+    margin-top: -4px !important;
+    text-align: center !important;
+  }
+
+  #thrGateHologram[data-avatar-mode="composite"]
+  .thr-student-name,
+  #thrGateHologram[data-avatar-mode="composite"]
+  .thr-student-rank {
+    display: block !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+  }
+
+  @media (max-width: 760px) {
+    #thrGateHologram[data-avatar-mode="composite"] {
+      --thr-student-width: clamp(195px, 55vw, 275px) !important;
+      --thr-student-height: clamp(365px, 53vh, 510px) !important;
+    }
+  }
+</style>
+
+
+<script id="thr-3b-6d-r1-repair-script">
+(() => {
+  "use strict";
+
+  const IDENTITY_KEY = "stemNationStudentIdentity";
+
+  function readIdentity() {
+    try {
+      return JSON.parse(
+        window.localStorage.getItem(IDENTITY_KEY) || "{}"
+      );
+    } catch (error) {
+      console.warn("THR-3B-6D-R1 identity read failed.", error);
+      return {};
+    }
+  }
+
+  function originalPortraitPath(value) {
+    const fallback =
+      "/static/avatars/student_choices/avatar_01.png";
+
+    if (typeof value !== "string" || !value.trim()) {
+      return fallback;
+    }
+
+    let path = value.trim()
+      .replace(/_full\.png(?:\?.*)?$/i, ".png");
+
+    if (!path.startsWith("/") && !path.startsWith("http")) {
+      path = "/" + path.replace(/^\.?\//, "");
+    }
+
+    return path;
+  }
+
+  function repairComposite() {
+    const hologram =
+      document.getElementById("thrGateHologram");
+
+    const portrait =
+      document.getElementById("thrStudentPortrait");
+
+    const body =
+      document.querySelector(".thr-composite-body");
+
+    const ring =
+      portrait?.closest(".thr-portrait-ring");
+
+    if (!hologram || !portrait || !body || !ring) {
+      console.error(
+        "THR-3B-6D-R1: Required composite elements missing.",
+        {
+          hologram: Boolean(hologram),
+          portrait: Boolean(portrait),
+          body: Boolean(body),
+          ring: Boolean(ring)
+        }
+      );
+      return false;
+    }
+
+    const identity = readIdentity();
+
+    const selectedPortrait =
+      identity.portrait ||
+      identity.avatar ||
+      identity.avatarPath ||
+      identity.avatarChoice ||
+      portrait.getAttribute("src");
+
+    portrait.src = originalPortraitPath(selectedPortrait);
+
+    portrait.alt =
+      `${identity.name || "Academy learner"} identity portrait`;
+
+    hologram.dataset.avatarMode = "composite";
+    ring.classList.add("thr-composite-enabled");
+
+    body.src =
+      "/static/avatars/student_uniforms/academy_research_uniform.png";
+
+    body.alt = "Academy Entry Uniform";
+
+    body.dataset.uniformId = "academy_entry";
+    body.hidden = false;
+
+    const studentName =
+      document.getElementById("thrStudentName");
+
+    const studentRank =
+      document.getElementById("thrStudentRank");
+
+    if (studentName) {
+      studentName.textContent =
+        identity.name || "Academy Learner";
+    }
+
+    if (studentRank) {
+      studentRank.textContent =
+        identity.status ||
+        identity.leadershipStage ||
+        "New Arrival";
+    }
+
+    console.info(
+      "THR-3B-6D-R1 composite repaired.",
+      {
+        mode: hologram.dataset.avatarMode,
+        portrait: portrait.src,
+        body: body.src,
+        name: studentName?.textContent || ""
+      }
+    );
+
+    return true;
+  }
+
+  function startRepair() {
+    repairComposite();
+
+    window.setTimeout(repairComposite, 150);
+    window.setTimeout(repairComposite, 700);
+    window.setTimeout(repairComposite, 1500);
+  }
+
+  if (document.readyState === "loading") {
+    document.addEventListener(
+      "DOMContentLoaded",
+      startRepair,
+      { once: true }
+    );
+  } else {
+    startRepair();
+  }
+
+  window.addEventListener("storage", event => {
+    if (event.key === IDENTITY_KEY) {
+      repairComposite();
+    }
+  });
+})();
+</script>
+
+
 </body>
 </html>
