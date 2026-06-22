@@ -389,6 +389,35 @@
       font-weight: 900;
     }
 
+    .world-reaction {
+      margin-top: 12px;
+      color: rgba(232, 246, 255, .9);
+      font-size: .9rem;
+      line-height: 1.45;
+    }
+
+    .tool-unlock {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-top: 12px;
+      color: #f8f0d5;
+    }
+
+    .tool-unlock span {
+      color: #7dd3fc;
+      font-size: .72rem;
+      font-weight: 900;
+      text-transform: uppercase;
+    }
+
+    .tool-unlock strong {
+      display: inline;
+      margin: 0;
+      color: #f4d35e;
+      font-size: .95rem;
+    }
+
     .change-signal {
       flex: 0 0 auto;
       border: 1px solid rgba(125,211,252,.3);
@@ -446,82 +475,30 @@
         <h1 id="arrivalTitle">Welcome to the Academy.</h1>
 
         <p class="lead" id="arrivalLead">
-          You have crossed the Academy threshold. Your avatar is ready, and the first gathering is about to begin.
+          Your identity has been recognized. The Academy's First Gathering
+          begins with the Ice Break Mystery.
         </p>
 
-        <!-- PHASE_1A_FIRST_SIGNAL_CHOICE -->
-        <section class="signal-section" aria-labelledby="signalHeading">
+        <section class="signal-section" aria-labelledby="icebreakerTitle">
           <div class="signal-heading">
-            <span class="signal-status">Incoming Academy Signals</span>
-            <h2 id="signalHeading">Choose what you will investigate first.</h2>
+            <span class="signal-status">Next: First Gathering</span>
+            <h2 id="icebreakerTitle">Begin the Ice Break Mystery.</h2>
             <p>
-              The Academy has detected three developing situations. Your choice
-              will be recorded and will shape how the Council receives you.
+              You will meet the other new arrivals through a short activity
+              before the Academy introduces how investigators approach
+              questions, evidence, and inquiry.
             </p>
-          </div>
-
-          <div class="signal-grid" role="radiogroup" aria-label="First Academy signal">
-            <button class="signal-card" type="button"
-                    data-signal="crossing"
-                    data-title="Damaged Crossing"
-                    data-advisor="Builder"
-                    data-summary="A route has failed after severe weather. People and supplies may be cut off.">
-              <span class="signal-icon" aria-hidden="true">🌉</span>
-              <span class="signal-label">Structural Signal</span>
-              <strong>Damaged Crossing</strong>
-              <span>A route has failed after severe weather. People and supplies may be cut off.</span>
-              <em>Builder will respond first.</em>
-            </button>
-
-            <button class="signal-card" type="button"
-                    data-signal="water"
-                    data-title="Water Shortage"
-                    data-advisor="Healer"
-                    data-summary="A settlement reports that its water supply is falling faster than expected.">
-              <span class="signal-icon" aria-hidden="true">💧</span>
-              <span class="signal-label">Community Signal</span>
-              <strong>Water Shortage</strong>
-              <span>A settlement reports that its water supply is falling faster than expected.</span>
-              <em>Healer will respond first.</em>
-            </button>
-
-            <button class="signal-card" type="button"
-                    data-signal="settlement"
-                    data-title="Unknown Settlement Signal"
-                    data-advisor="Scout"
-                    data-summary="A distant signal appears beyond the mapped region. Its source is unknown.">
-              <span class="signal-icon" aria-hidden="true">📡</span>
-              <span class="signal-label">Exploration Signal</span>
-              <strong>Unknown Settlement Signal</strong>
-              <span>A distant signal appears beyond the mapped region. Its source is unknown.</span>
-              <em>Scout will respond first.</em>
-            </button>
-          </div>
-
-          <div class="signal-confirmation" id="signalConfirmation" hidden>
-            <div>
-              <span class="confirmation-label">First Assignment Selected</span>
-              <strong id="selectedSignalTitle"></strong>
-              <p id="selectedSignalSummary"></p>
-              <small id="selectedAdvisor"></small>
-            </div>
-            <button class="change-signal" id="changeSignalBtn" type="button">
-              Change Signal
-            </button>
           </div>
         </section>
 
         <div class="actions">
-          <a class="btn primary disabled" id="enterGatheringBtn"
-             href="/first_gathering" aria-disabled="true">
-            Select a Signal to Continue
+          <a class="btn primary" id="enterGatheringBtn"
+             href="/first_gathering">
+            Continue to Ice Break Mystery
           </a>
           <a class="btn secondary" href="/academy_identity">Review Identity</a>
         </div>
 
-        <p class="note">
-          Student progress is saved on this device. Teacher tools remain separate from the student arrival experience.
-        </p>
       </section>
     </section>
   </main>
@@ -535,15 +512,6 @@
     const avatarBadge = document.getElementById("avatarBadge");
     const arrivalTitle = document.getElementById("arrivalTitle");
     const arrivalLead = document.getElementById("arrivalLead");
-
-    const SIGNAL_KEY = "stemNationFirstSignal";
-    const signalCards = Array.from(document.querySelectorAll(".signal-card"));
-    const signalConfirmation = document.getElementById("signalConfirmation");
-    const selectedSignalTitle = document.getElementById("selectedSignalTitle");
-    const selectedSignalSummary = document.getElementById("selectedSignalSummary");
-    const selectedAdvisor = document.getElementById("selectedAdvisor");
-    const changeSignalBtn = document.getElementById("changeSignalBtn");
-    const enterGatheringBtn = document.getElementById("enterGatheringBtn");
 
     let identity = {
       name: "Academy Learner",
@@ -571,6 +539,7 @@
       return String(
         record.teacherApprovedName ||
         record.approvedName ||
+        record.studentName ||
         record.name ||
         "Academy Learner"
       )
@@ -602,69 +571,10 @@
 
     avatarLearnerName.textContent = displayName;
     avatarLearnerRole.textContent = learnerRole;
-    avatarBadge.textContent = `${avatarChoice} locked`;
+    avatarBadge.textContent = "Academy avatar selected";
     arrivalTitle.textContent = `Welcome, ${displayName}.`;
-    arrivalLead.textContent = "You have crossed the Academy threshold. Your avatar is ready, and the first gathering is about to begin.";
-
-    function saveSignal(card) {
-      const signal = {
-        id: card.dataset.signal,
-        title: card.dataset.title,
-        advisor: card.dataset.advisor,
-        summary: card.dataset.summary,
-        selectedAt: new Date().toISOString()
-      };
-
-      localStorage.setItem(SIGNAL_KEY, JSON.stringify(signal));
-      renderSignal(signal);
-    }
-
-    function renderSignal(signal) {
-      signalCards.forEach(card => {
-        const selected = card.dataset.signal === signal.id;
-        card.classList.toggle("selected", selected);
-        card.setAttribute("aria-checked", String(selected));
-      });
-
-      selectedSignalTitle.textContent = signal.title;
-      selectedSignalSummary.textContent = signal.summary;
-      selectedAdvisor.textContent = `${signal.advisor} will respond first in the Council sequence.`;
-
-      signalConfirmation.hidden = false;
-      enterGatheringBtn.classList.remove("disabled");
-      enterGatheringBtn.removeAttribute("aria-disabled");
-      enterGatheringBtn.textContent = "Confirm Assignment and Enter";
-    }
-
-    signalCards.forEach(card => {
-      card.setAttribute("role", "radio");
-      card.setAttribute("aria-checked", "false");
-
-      card.addEventListener("click", () => {
-        saveSignal(card);
-      });
-    });
-
-    changeSignalBtn.addEventListener("click", () => {
-      localStorage.removeItem(SIGNAL_KEY);
-
-      signalCards.forEach(card => {
-        card.classList.remove("selected");
-        card.setAttribute("aria-checked", "false");
-      });
-
-      signalConfirmation.hidden = true;
-      enterGatheringBtn.classList.add("disabled");
-      enterGatheringBtn.setAttribute("aria-disabled", "true");
-      enterGatheringBtn.textContent = "Select a Signal to Continue";
-    });
-
-    try {
-      const savedSignal = JSON.parse(localStorage.getItem(SIGNAL_KEY) || "null");
-      if (savedSignal && savedSignal.id) {
-        renderSignal(savedSignal);
-      }
-    } catch (err) {}
+    arrivalLead.textContent =
+      "Your identity has been recognized. The Academy's First Gathering begins with the Ice Break Mystery.";
   </script>
   <script src="{{ url_for('static', filename='js/academy_mission_record.js') }}?v=step2c1"></script>
 </body>
