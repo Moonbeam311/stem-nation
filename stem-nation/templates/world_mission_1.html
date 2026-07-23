@@ -1,0 +1,1043 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>World Mission 1 | Claim the Land</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <!-- CI-STAGE-53B GUIDED WORLD MISSION 1 WIZARD -->
+  <!-- CI-STAGE-53F GUIDED WORLD MISSION REGION TEACHING STEP REBUILD -->
+  <!-- CI-STAGE-53G GUIDED WIZARD BASH RESET TRIGGER -->
+  <script>
+    (function(){
+      const params = new URLSearchParams(window.location.search);
+      if (params.get("reset") === "1") {
+        localStorage.removeItem("stemNationWorldMission1WizardV1");
+        localStorage.removeItem("stemNationWorldFoundingArchiveV1");
+        localStorage.removeItem("stemNationWorldSelectedRegionV1");
+        window.location.replace("/world_mission_1");
+      }
+    })();
+  </script>
+
+  <style>
+    :root {
+      --bg: #09111f;
+      --panel: rgba(11, 22, 39, 0.92);
+      --panel-2: rgba(18, 36, 60, 0.88);
+      --gold: #f5d77a;
+      --blue: #7dd3fc;
+      --green: #86efac;
+      --text: #f8fafc;
+      --muted: #cbd5e1;
+      --danger: #fca5a5;
+      --line: rgba(255,255,255,.16);
+      --shadow: 0 24px 70px rgba(0,0,0,.34);
+      --radius: 24px;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      color: var(--text);
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background:
+        radial-gradient(circle at 10% 10%, rgba(125,211,252,.18), transparent 30%),
+        radial-gradient(circle at 90% 20%, rgba(245,215,122,.13), transparent 28%),
+        linear-gradient(135deg, #07101d 0%, #0b1324 45%, #111827 100%);
+    }
+
+    a { color: inherit; }
+
+    .page {
+      width: min(1120px, calc(100% - 32px));
+      margin: 0 auto;
+      padding: 28px 0 44px;
+    }
+
+    .topbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 14px;
+      margin-bottom: 18px;
+      flex-wrap: wrap;
+    }
+
+    .return-link {
+      text-decoration: none;
+      color: var(--muted);
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      padding: 10px 14px;
+      background: rgba(255,255,255,.06);
+      font-size: 14px;
+    }
+
+    .mission-shell {
+      border: 1px solid var(--line);
+      border-radius: 30px;
+      background: rgba(6, 14, 28, .78);
+      box-shadow: var(--shadow);
+      overflow: hidden;
+    }
+
+    .hero {
+      padding: clamp(24px, 5vw, 44px);
+      background:
+        linear-gradient(135deg, rgba(125,211,252,.18), rgba(245,215,122,.1)),
+        rgba(255,255,255,.04);
+      border-bottom: 1px solid var(--line);
+    }
+
+    .kicker {
+      color: var(--gold);
+      text-transform: uppercase;
+      letter-spacing: .16em;
+      font-weight: 900;
+      font-size: 12px;
+      margin-bottom: 10px;
+    }
+
+    h1 {
+      margin: 0;
+      font-size: clamp(34px, 6vw, 64px);
+      line-height: .95;
+      letter-spacing: -0.05em;
+    }
+
+    .hero p {
+      max-width: 800px;
+      color: var(--muted);
+      line-height: 1.65;
+      font-size: 17px;
+      margin: 18px 0 0;
+    }
+
+    .progress-wrap {
+      padding: 18px clamp(18px, 4vw, 34px);
+      border-bottom: 1px solid var(--line);
+      background: rgba(255,255,255,.035);
+    }
+
+    .progress-label {
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      color: var(--muted);
+      font-size: 13px;
+      margin-bottom: 10px;
+      flex-wrap: wrap;
+    }
+
+    .progress-bar {
+      height: 12px;
+      border-radius: 999px;
+      background: rgba(255,255,255,.10);
+      overflow: hidden;
+    }
+
+    .progress-fill {
+      width: 12.5%;
+      height: 100%;
+      background: linear-gradient(90deg, var(--blue), var(--gold));
+      transition: width .25s ease;
+    }
+
+    .content {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) 330px;
+      gap: 24px;
+      padding: clamp(18px, 4vw, 34px);
+    }
+
+    .card, .side-card {
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: var(--panel);
+      padding: clamp(20px, 4vw, 34px);
+    }
+
+    .side-card {
+      background: var(--panel-2);
+      padding: 18px;
+    }
+
+    .step-card[hidden] { display: none; }
+
+    .step-title {
+      font-size: clamp(26px, 4vw, 42px);
+      line-height: 1.05;
+      margin: 0;
+    }
+
+    .step-instruction {
+      color: var(--muted);
+      line-height: 1.65;
+      font-size: 17px;
+      margin: 14px 0 22px;
+    }
+
+    .region-teaching-grid,
+    .map-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 16px;
+    }
+
+    .region-teach-card,
+    .region-card {
+      border: 1px solid var(--line);
+      border-radius: 22px;
+      background: rgba(255,255,255,.055);
+      padding: 18px;
+      color: var(--text);
+      text-align: left;
+    }
+
+    .region-card {
+      cursor: pointer;
+      transition: transform .15s ease, border-color .15s ease, background .15s ease, box-shadow .15s ease;
+    }
+
+    .region-card:hover,
+    .region-card.selected {
+      transform: translateY(-2px);
+      border-color: rgba(245,215,122,.72);
+      background: rgba(245,215,122,.11);
+      box-shadow: 0 16px 36px rgba(0,0,0,.26);
+    }
+
+    .region-head {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 10px;
+    }
+
+    .region-icon {
+      width: 46px;
+      height: 46px;
+      display: grid;
+      place-items: center;
+      border-radius: 16px;
+      background: rgba(125,211,252,.13);
+      border: 1px solid rgba(125,211,252,.25);
+      font-size: 27px;
+      flex: 0 0 auto;
+    }
+
+    .region-title {
+      display: block;
+      font-size: 20px;
+      line-height: 1.1;
+      font-weight: 950;
+    }
+
+    .region-plain {
+      display: block;
+      color: var(--muted);
+      font-size: 13px;
+      margin-top: 3px;
+    }
+
+    .region-explain,
+    .region-summary {
+      color: var(--muted);
+      line-height: 1.5;
+      font-size: 14px;
+      margin: 10px 0 0;
+    }
+
+    .region-mini-grid {
+      display: grid;
+      gap: 8px;
+      margin-top: 12px;
+    }
+
+    .region-mini {
+      border: 1px solid rgba(255,255,255,.12);
+      border-radius: 14px;
+      background: rgba(255,255,255,.05);
+      padding: 10px;
+      color: var(--muted);
+      line-height: 1.4;
+      font-size: 13px;
+    }
+
+    .region-mini b {
+      color: var(--gold);
+      display: block;
+      margin-bottom: 3px;
+      font-size: 12px;
+      letter-spacing: .06em;
+      text-transform: uppercase;
+    }
+
+    .intel-grid {
+      display: grid;
+      gap: 14px;
+    }
+
+    .intel-box {
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      background: rgba(255,255,255,.055);
+      padding: 15px;
+      line-height: 1.55;
+    }
+
+    .intel-box strong {
+      display: block;
+      color: var(--gold);
+      margin-bottom: 5px;
+    }
+
+    textarea,
+    input[type="text"] {
+      width: 100%;
+      min-height: 112px;
+      border: 1px solid rgba(255,255,255,.18);
+      border-radius: 18px;
+      background: rgba(255,255,255,.08);
+      color: var(--text);
+      padding: 15px;
+      font: inherit;
+      line-height: 1.5;
+      outline: none;
+    }
+
+    input[type="text"] {
+      min-height: 0;
+      height: 52px;
+    }
+
+    label {
+      display: block;
+      color: var(--gold);
+      font-weight: 850;
+      margin: 16px 0 8px;
+    }
+
+    .choice-row {
+      display: grid;
+      gap: 12px;
+      margin: 18px 0;
+    }
+
+    .decision-choice {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      background: rgba(255,255,255,.055);
+      padding: 16px;
+      cursor: pointer;
+      line-height: 1.45;
+    }
+
+    .actions {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+      margin-top: 22px;
+    }
+
+    button,
+    .button {
+      border: 0;
+      border-radius: 999px;
+      padding: 13px 18px;
+      font-weight: 900;
+      cursor: pointer;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      min-height: 46px;
+    }
+
+    .primary {
+      background: linear-gradient(135deg, var(--gold), #fbbf24);
+      color: #1f1300;
+    }
+
+    .secondary {
+      background: rgba(255,255,255,.08);
+      color: var(--text);
+      border: 1px solid var(--line);
+    }
+
+    button:disabled {
+      opacity: .45;
+      cursor: not-allowed;
+    }
+
+    .status {
+      margin-top: 16px;
+      color: var(--muted);
+      line-height: 1.5;
+      min-height: 24px;
+    }
+
+    .status.good { color: var(--green); }
+
+    .side {
+      display: grid;
+      gap: 16px;
+      align-content: start;
+    }
+
+    .side-card h3 {
+      margin: 0 0 10px;
+      color: var(--gold);
+      font-size: 15px;
+      letter-spacing: .06em;
+      text-transform: uppercase;
+    }
+
+    .side-card p,
+    .side-card li {
+      color: var(--muted);
+      line-height: 1.55;
+      font-size: 14px;
+    }
+
+    .visual-step-track {
+      display: grid;
+      gap: 10px;
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
+
+    .visual-step-track li {
+      display: grid;
+      grid-template-columns: 34px 1fr;
+      gap: 10px;
+      align-items: center;
+      border: 1px solid rgba(255,255,255,.12);
+      border-radius: 16px;
+      background: rgba(255,255,255,.05);
+      padding: 10px;
+      color: var(--muted);
+      line-height: 1.25;
+      font-size: 13px;
+    }
+
+    .visual-step-track .step-dot {
+      width: 34px;
+      height: 34px;
+      display: grid;
+      place-items: center;
+      border-radius: 12px;
+      background: rgba(125,211,252,.14);
+      border: 1px solid rgba(125,211,252,.28);
+      color: #e0f2fe;
+      font-weight: 950;
+    }
+
+    .visual-step-track li.active {
+      border-color: rgba(245,215,122,.6);
+      background: rgba(245,215,122,.10);
+      color: #ffffff;
+    }
+
+    .visual-step-track li.active .step-dot {
+      background: linear-gradient(135deg, var(--gold), #fbbf24);
+      color: #1f1300;
+      border-color: transparent;
+    }
+
+    .archive-result {
+      border: 1px solid rgba(134,239,172,.38);
+      border-radius: 22px;
+      background: rgba(22, 101, 52, .18);
+      padding: 18px;
+      line-height: 1.65;
+      white-space: pre-wrap;
+    }
+
+    @media (max-width: 900px) {
+      .content { grid-template-columns: 1fr; }
+      .region-teaching-grid,
+      .map-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+  <main class="page">
+    <div class="topbar">
+      <a class="return-link" href="/student_hub">← Return to Student Hub</a>
+      <a class="return-link" href="/map">View Full World Board Prototype</a>
+    </div>
+
+    <section class="mission-shell">
+      <header class="hero">
+        <div class="kicker">World Mission 1 · Guided Lesson</div>
+        <h1>Claim the Land</h1>
+        <p>
+          Your people need a safe beginning. Move one step at a time: observe the World Board,
+          learn the region types, choose one region, read the intel, record evidence, and defend the founding decision.
+        </p>
+      </header>
+
+      <div class="progress-wrap">
+        <div class="progress-label">
+          <strong id="stepLabel">Step 1 of 8 — Observe the World Board</strong>
+          <span id="saveLabel">Mission record not saved yet</span>
+        </div>
+        <div class="progress-bar" aria-hidden="true">
+          <div class="progress-fill" id="progressFill"></div>
+        </div>
+      </div>
+
+      <section class="content">
+        <div class="card">
+          <article class="step-card" data-step="1">
+            <h2 class="step-title">Step 1 — Observe the World Board</h2>
+            <p class="step-instruction">
+              Before choosing land, look for what a nation needs: water, food, safety,
+              movement, shelter, and risk. Do not decide yet.
+            </p>
+            <div class="intel-grid">
+              <div class="intel-box"><strong>Investigator Rule</strong> Observation comes before decision.</div>
+              <div class="intel-box"><strong>Your Job</strong> Notice what each region may offer and what danger it may bring.</div>
+            </div>
+            <div class="actions">
+              <button class="primary" type="button" data-next>Learn the Region Types</button>
+            </div>
+          </article>
+
+          <article class="step-card" data-step="2" hidden>
+            <h2 class="step-title">Step 2 — Learn the Region Types</h2>
+            <p class="step-instruction">
+              A region is a type of land. Each region gives people advantages, but each region also brings risks.
+              Read these first. Then you will choose one region to investigate.
+            </p>
+            <div class="region-teaching-grid" id="regionTeachingGrid"></div>
+            <div class="actions">
+              <button class="secondary" type="button" data-back>Back</button>
+              <button class="primary" type="button" data-next>Choose One Region</button>
+            </div>
+          </article>
+
+          <article class="step-card" data-step="3" hidden>
+            <h2 class="step-title">Step 3 — Choose One Region to Investigate</h2>
+            <p class="step-instruction">
+              Select one region to investigate first. This is not the final founding decision.
+              It only opens the evidence.
+            </p>
+            <div class="map-grid" id="regionGrid"></div>
+            <div class="status" id="regionStatus">Choose one region to continue.</div>
+            <div class="actions">
+              <button class="secondary" type="button" data-back>Back</button>
+              <button class="primary" type="button" id="regionNextBtn" data-next disabled>Read Region Intel</button>
+            </div>
+          </article>
+
+          <article class="step-card" data-step="4" hidden>
+            <h2 class="step-title">Step 4 — Read Region Intel</h2>
+            <p class="step-instruction">
+              Study the advantage, risk, and clue. A strong founding choice includes both
+              opportunity and danger.
+            </p>
+            <div class="intel-grid">
+              <div class="intel-box"><strong id="intelName">Region</strong><span id="intelDescription"></span></div>
+              <div class="intel-box"><strong>Advantage</strong><span id="intelAdvantage"></span></div>
+              <div class="intel-box"><strong>Risk</strong><span id="intelRisk"></span></div>
+              <div class="intel-box"><strong>Observation Clue</strong><span id="intelClue"></span></div>
+            </div>
+            <div class="actions">
+              <button class="secondary" type="button" data-back>Back</button>
+              <button class="primary" type="button" data-next>Record Evidence</button>
+            </div>
+          </article>
+
+          <article class="step-card" data-step="5" hidden>
+            <h2 class="step-title">Step 5 — Record Evidence</h2>
+            <p class="step-instruction">
+              Write one careful note. Use the region teaching and region intel, not a guess.
+            </p>
+            <label for="evidenceNote">What evidence could help people survive here?</label>
+            <textarea id="evidenceNote" placeholder="Example: I noticed water, farming land, and travel routes. I also noticed the risk of flooding."></textarea>
+            <div class="status" id="evidenceStatus">Write at least one complete thought.</div>
+            <div class="actions">
+              <button class="secondary" type="button" data-back>Back</button>
+              <button class="primary" type="button" id="evidenceNextBtn" data-next disabled>Make Founding Decision</button>
+            </div>
+          </article>
+
+          <article class="step-card" data-step="6" hidden>
+            <h2 class="step-title">Step 6 — Make the Founding Decision</h2>
+            <p class="step-instruction">
+              Decide whether this region should become the first settlement. You may approve it
+              or send the Council back to investigate another region.
+            </p>
+            <div class="choice-row">
+              <label class="decision-choice">
+                <input type="radio" name="foundingDecision" value="approve">
+                <span><strong>Yes — make this our first settlement.</strong><br>This region has enough evidence to begin.</span>
+              </label>
+              <label class="decision-choice">
+                <input type="radio" name="foundingDecision" value="revise">
+                <span><strong>Not yet — investigate another region.</strong><br>The risk or evidence is not clear enough.</span>
+              </label>
+            </div>
+            <div class="status" id="decisionStatus">Choose one decision to continue.</div>
+            <div class="actions">
+              <button class="secondary" type="button" data-back>Back</button>
+              <button class="primary" type="button" id="decisionNextBtn" data-next disabled>Defend the Decision</button>
+            </div>
+          </article>
+
+          <article class="step-card" data-step="7" hidden>
+            <h2 class="step-title">Step 7 — Defend the Decision</h2>
+            <p class="step-instruction">
+              Complete the sentence frame. This turns your choice into a founding record.
+            </p>
+
+            <label for="defenseRegion">Chosen Region</label>
+            <input id="defenseRegion" type="text" readonly>
+
+            <label for="defenseAdvantage">I chose this because...</label>
+            <textarea id="defenseAdvantage" placeholder="Example: The region gives my people water, food, and movement routes."></textarea>
+
+            <label for="defenseRisk">The biggest risk is...</label>
+            <textarea id="defenseRisk" placeholder="Example: The biggest risk is flooding, exposure, storms, or conflict."></textarea>
+
+            <label for="defensePlan">We will protect the nation by...</label>
+            <textarea id="defensePlan" placeholder="Example: We will build away from danger, protect food, and watch for warning signs."></textarea>
+
+            <div class="status" id="defenseStatus">Complete all three defense fields.</div>
+            <div class="actions">
+              <button class="secondary" type="button" data-back>Back</button>
+              <button class="primary" type="button" id="defenseNextBtn" data-next disabled>Open Founding Archive</button>
+            </div>
+          </article>
+
+          <article class="step-card" data-step="8" hidden>
+            <h2 class="step-title">Step 8 — Founding Archive</h2>
+            <p class="step-instruction">
+              Your first World Board mission is complete. This record can connect to the full
+              World Board later.
+            </p>
+            <div class="archive-result" id="archiveResult"></div>
+            <div class="actions">
+              <a class="button primary" href="/student_hub">Return to Student Hub</a>
+              <a class="button secondary" href="/map">Open Full World Board</a>
+            </div>
+          </article>
+        </div>
+
+        <aside class="side">
+          <div class="side-card">
+            <h3>Mission Path</h3>
+            <ol class="visual-step-track" id="stepList">
+              <li data-track-step="1"><span class="step-dot">1</span><span>Observe the World Board</span></li>
+              <li data-track-step="2"><span class="step-dot">2</span><span>Learn Region Types</span></li>
+              <li data-track-step="3"><span class="step-dot">3</span><span>Choose One Region</span></li>
+              <li data-track-step="4"><span class="step-dot">4</span><span>Read Region Intel</span></li>
+              <li data-track-step="5"><span class="step-dot">5</span><span>Record Evidence</span></li>
+              <li data-track-step="6"><span class="step-dot">6</span><span>Make Founding Decision</span></li>
+              <li data-track-step="7"><span class="step-dot">7</span><span>Defend the Decision</span></li>
+              <li data-track-step="8"><span class="step-dot">8</span><span>Founding Archive</span></li>
+            </ol>
+          </div>
+
+          <div class="side-card">
+            <h3>Current Record</h3>
+            <p><strong>Region:</strong> <span id="sideRegion">Not chosen yet</span></p>
+            <p><strong>Decision:</strong> <span id="sideDecision">Pending</span></p>
+            <p><strong>Evidence:</strong> <span id="sideEvidence">Pending</span></p>
+          </div>
+
+          <div class="side-card">
+            <h3>Student Reminder</h3>
+            <p>
+              A strong nation decision names both the advantage and the risk.
+              Do not choose land only because it looks useful.
+            </p>
+          </div>
+        </aside>
+      </section>
+    </section>
+  </main>
+
+  <script>
+    // CI-STAGE-53F GUIDED WORLD MISSION REGION TEACHING STEP REBUILD
+    const STORAGE_KEY = "stemNationWorldMission1WizardV1";
+    const SELECTED_REGION_KEY = "stemNationWorldSelectedRegionV1";
+    const FOUNDING_ARCHIVE_KEY = "stemNationWorldFoundingArchiveV1";
+
+    const regions = {
+      "River Corridor": {
+        icon: "🌊",
+        simple: "Land near moving water.",
+        explain: "A river corridor is land near moving water. It can help people drink, farm, fish, travel, and trade. It can also flood.",
+        short: "Water, food, farming, and travel.",
+        description: "Fresh water, fertile soil, fish, and travel routes make the river powerful, but rising water can flood early settlements.",
+        advantage: "Fresh water, farming, fishing, travel, and trade routes.",
+        risk: "Flooding, disease, and competition from other groups.",
+        clue: "Watch how water shapes movement, farming, and danger."
+      },
+      "Forest Edge": {
+        icon: "🌲",
+        simple: "Land near trees and shelter.",
+        explain: "A forest edge is land near trees and shelter. It can provide wood, food, medicine, tools, and protection. It can also hide danger.",
+        short: "Wood, shelter, medicine, and hidden food.",
+        description: "Wood, shelter, medicine, and hidden food sources can support a people, but limited visibility can hide danger.",
+        advantage: "Wood, shelter, animals, tools, and concealment.",
+        risk: "Limited visibility, harder movement, and hidden danger.",
+        clue: "Watch what the forest protects and what it conceals."
+      },
+      "Highland Ridge": {
+        icon: "⛰️",
+        simple: "Raised land above lower ground.",
+        explain: "A highland ridge is raised land. It helps people see far and defend themselves. It can make farming, water access, and travel harder.",
+        short: "Defense, visibility, and high ground.",
+        description: "High ground improves visibility and defense, but steep land can make farming, water access, and supply movement harder.",
+        advantage: "Defense, visibility, and protection from flooding.",
+        risk: "Less farming land, harder travel, and exposure to weather.",
+        clue: "Watch how elevation changes safety, food, and travel."
+      },
+      "Coastal Bay": {
+        icon: "⚓",
+        simple: "Land near protected ocean water.",
+        explain: "A coastal bay is land near protected ocean water. It can help fishing, travel, and trade. It can also face storms and outside threats.",
+        short: "Fishing, travel, trade, and exchange.",
+        description: "Fishing, travel, trade, and exchange make the coast valuable, but storms and outside routes can create danger.",
+        advantage: "Fishing, travel, trade, and contact with other groups.",
+        risk: "Storms, exposure, invasion routes, and saltwater limits.",
+        clue: "Watch how the coast connects opportunity with danger."
+      },
+      "Open Plain": {
+        icon: "🌾",
+        simple: "Wide, flat, open land.",
+        explain: "An open plain is wide, flat land. It can help farming, animals, movement, and growth. It can be exposed and harder to defend.",
+        short: "Farming, growth, livestock, and movement.",
+        description: "Open land supports farming, growth, and movement, but exposure can make defense more difficult.",
+        advantage: "Farming space, expansion, visibility, and herd movement.",
+        risk: "Weak natural defense, drought, and exposure.",
+        clue: "Watch how open space helps growth but creates vulnerability."
+      },
+      "Balanced Crossroads": {
+        icon: "🛤️",
+        simple: "Land where paths meet.",
+        explain: "A crossroads is where paths meet. It can help trade, communication, cooperation, and movement. It can also bring conflict and pressure.",
+        short: "Trade, communication, and flexibility.",
+        description: "Crossroads connect people, goods, and ideas, but contact can also bring conflict, pressure, and competition.",
+        advantage: "Access to several resources and movement routes.",
+        risk: "More competition, harder defense, and divided priorities.",
+        clue: "Watch how connection brings both opportunity and responsibility."
+      }
+    };
+
+    const TOTAL_STEPS = 8;
+
+    const state = {
+      step: 1,
+      selectedRegion: "",
+      evidenceNote: "",
+      decision: "",
+      defenseAdvantage: "",
+      defenseRisk: "",
+      defensePlan: "",
+      completedAt: ""
+    };
+
+    const stepTitles = [
+      "Observe the World Board",
+      "Learn the Region Types",
+      "Choose One Region",
+      "Read Region Intel",
+      "Record Evidence",
+      "Make Founding Decision",
+      "Defend the Decision",
+      "Founding Archive"
+    ];
+
+    function readSaved(){
+      try{
+        const saved = JSON.parse(localStorage.getItem(STORAGE_KEY) || "null");
+        if(saved && typeof saved === "object"){
+          Object.assign(state, saved);
+          if(state.step > TOTAL_STEPS){ state.step = TOTAL_STEPS; }
+        }
+      }catch(error){}
+    }
+
+    function saveState(){
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+      document.getElementById("saveLabel").textContent = "Mission record saved locally";
+      updateSide();
+    }
+
+    function showStep(step){
+      state.step = Math.max(1, Math.min(TOTAL_STEPS, step));
+
+      document.querySelectorAll(".step-card").forEach(card => {
+        card.hidden = Number(card.dataset.step) !== state.step;
+      });
+
+      document.getElementById("stepLabel").textContent =
+        `Step ${state.step} of ${TOTAL_STEPS} — ${stepTitles[state.step - 1]}`;
+
+      document.getElementById("progressFill").style.width =
+        `${(state.step / TOTAL_STEPS) * 100}%`;
+
+      document.querySelectorAll("[data-track-step]").forEach(item => {
+        item.classList.toggle("active", Number(item.dataset.trackStep) === state.step);
+      });
+
+      saveState();
+
+      if(state.step === 4){ renderIntel(); }
+      if(state.step === 7){ renderDefenseRegion(); }
+      if(state.step === 8){ renderArchive(); }
+
+      window.scrollTo({top: 0, behavior: "smooth"});
+    }
+
+    function buildRegionTeaching(){
+      const grid = document.getElementById("regionTeachingGrid");
+      grid.innerHTML = Object.entries(regions).map(([name, data]) => `
+        <section class="region-teach-card">
+          <div class="region-head">
+            <span class="region-icon">${data.icon}</span>
+            <div>
+              <strong class="region-title">${name}</strong>
+              <span class="region-plain">${data.simple}</span>
+            </div>
+          </div>
+          <p class="region-explain">${data.explain}</p>
+          <div class="region-mini-grid">
+            <span class="region-mini"><b>Possible Advantage</b>${data.advantage}</span>
+            <span class="region-mini"><b>Possible Risk</b>${data.risk}</span>
+          </div>
+        </section>
+      `).join("");
+    }
+
+    function buildRegions(){
+      const grid = document.getElementById("regionGrid");
+      grid.innerHTML = Object.entries(regions).map(([name, data]) => `
+        <button class="region-card" type="button" data-region="${name}" aria-label="Investigate ${name}">
+          <div class="region-head">
+            <span class="region-icon">${data.icon}</span>
+            <div>
+              <strong class="region-title">${name}</strong>
+              <span class="region-plain">${data.simple}</span>
+            </div>
+          </div>
+          <span class="region-summary">${data.short}</span>
+          <div class="region-mini-grid">
+            <span class="region-mini"><b>Advantage</b>${data.advantage}</span>
+            <span class="region-mini"><b>Risk</b>${data.risk}</span>
+          </div>
+        </button>
+      `).join("");
+
+      grid.querySelectorAll("[data-region]").forEach(btn => {
+        btn.addEventListener("click", () => {
+          state.selectedRegion = btn.dataset.region;
+          grid.querySelectorAll("[data-region]").forEach(b => {
+            b.classList.toggle("selected", b.dataset.region === state.selectedRegion);
+          });
+
+          document.getElementById("regionStatus").textContent =
+            `${state.selectedRegion} selected. Continue to read the intel.`;
+          document.getElementById("regionStatus").className = "status good";
+          document.getElementById("regionNextBtn").disabled = false;
+
+          localStorage.setItem(SELECTED_REGION_KEY, JSON.stringify({
+            region: state.selectedRegion,
+            source: "world_mission_1_guided_wizard_region_teaching",
+            syncedAt: new Date().toISOString()
+          }));
+
+          saveState();
+          updateSide();
+        });
+      });
+    }
+
+    function renderIntel(){
+      const data = regions[state.selectedRegion];
+      if(!data){ return; }
+
+      document.getElementById("intelName").textContent = `${data.icon} ${state.selectedRegion}`;
+      document.getElementById("intelDescription").textContent = data.description;
+      document.getElementById("intelAdvantage").textContent = data.advantage;
+      document.getElementById("intelRisk").textContent = data.risk;
+      document.getElementById("intelClue").textContent = data.clue;
+    }
+
+    function renderDefenseRegion(){
+      document.getElementById("defenseRegion").value = state.selectedRegion || "No region selected";
+    }
+
+    function checkEvidence(){
+      state.evidenceNote = document.getElementById("evidenceNote").value.trim();
+      const ready = state.evidenceNote.length >= 20;
+
+      document.getElementById("evidenceNextBtn").disabled = !ready;
+      document.getElementById("evidenceStatus").textContent = ready
+        ? "Evidence recorded. You may continue."
+        : "Write at least one complete thought.";
+      document.getElementById("evidenceStatus").className = ready ? "status good" : "status";
+
+      saveState();
+    }
+
+    function checkDecision(){
+      const checked = document.querySelector("input[name='foundingDecision']:checked");
+      state.decision = checked ? checked.value : "";
+      const ready = Boolean(state.decision);
+
+      document.getElementById("decisionNextBtn").disabled = !ready;
+      document.getElementById("decisionStatus").textContent = ready
+        ? "Decision selected. Now defend your reasoning."
+        : "Choose one decision to continue.";
+      document.getElementById("decisionStatus").className = ready ? "status good" : "status";
+
+      saveState();
+    }
+
+    function checkDefense(){
+      state.defenseAdvantage = document.getElementById("defenseAdvantage").value.trim();
+      state.defenseRisk = document.getElementById("defenseRisk").value.trim();
+      state.defensePlan = document.getElementById("defensePlan").value.trim();
+
+      const ready =
+        state.defenseAdvantage.length >= 10 &&
+        state.defenseRisk.length >= 10 &&
+        state.defensePlan.length >= 10;
+
+      document.getElementById("defenseNextBtn").disabled = !ready;
+      document.getElementById("defenseStatus").textContent = ready
+        ? "Defense complete. Open the Founding Archive."
+        : "Complete all three defense fields.";
+      document.getElementById("defenseStatus").className = ready ? "status good" : "status";
+
+      saveState();
+    }
+
+    function decisionLabel(value){
+      if(value === "approve") return "Approved as first settlement";
+      if(value === "revise") return "Needs more investigation";
+      return "Pending";
+    }
+
+    function renderArchive(){
+      state.completedAt = state.completedAt || new Date().toISOString();
+
+      const data = regions[state.selectedRegion] || {};
+      const archive = {
+        title: "World Mission 1 · Founding Archive",
+        mission: "Claim the Land",
+        selectedRegion: state.selectedRegion,
+        decision: decisionLabel(state.decision),
+        evidenceNote: state.evidenceNote,
+        advantage: state.defenseAdvantage,
+        risk: state.defenseRisk,
+        protectionPlan: state.defensePlan,
+        regionTeaching: data.explain || "",
+        regionIntel: data,
+        completedAt: state.completedAt
+      };
+
+      localStorage.setItem(FOUNDING_ARCHIVE_KEY, JSON.stringify(archive));
+      saveState();
+
+      document.getElementById("archiveResult").textContent =
+`FOUNDING ARCHIVE RECORDED
+
+Mission: Claim the Land
+Region: ${archive.selectedRegion}
+Decision: ${archive.decision}
+
+Region Meaning:
+${archive.regionTeaching}
+
+Evidence:
+${archive.evidenceNote}
+
+I chose this because:
+${archive.advantage}
+
+The biggest risk is:
+${archive.risk}
+
+We will protect the nation by:
+${archive.protectionPlan}`;
+    }
+
+    function updateSide(){
+      document.getElementById("sideRegion").textContent = state.selectedRegion || "Not chosen yet";
+      document.getElementById("sideDecision").textContent = decisionLabel(state.decision);
+      document.getElementById("sideEvidence").textContent =
+        state.evidenceNote ? "Recorded" : "Pending";
+    }
+
+    function restoreInputs(){
+      if(state.selectedRegion){
+        document.querySelectorAll("[data-region]").forEach(b => {
+          b.classList.toggle("selected", b.dataset.region === state.selectedRegion);
+        });
+        document.getElementById("regionNextBtn").disabled = false;
+        document.getElementById("regionStatus").textContent =
+          `${state.selectedRegion} selected. Continue to read the intel.`;
+      }
+
+      document.getElementById("evidenceNote").value = state.evidenceNote || "";
+      document.getElementById("defenseAdvantage").value = state.defenseAdvantage || "";
+      document.getElementById("defenseRisk").value = state.defenseRisk || "";
+      document.getElementById("defensePlan").value = state.defensePlan || "";
+
+      if(state.decision){
+        const radio = document.querySelector(`input[name='foundingDecision'][value='${state.decision}']`);
+        if(radio){ radio.checked = true; }
+      }
+
+      checkEvidence();
+      checkDecision();
+      checkDefense();
+    }
+
+    document.addEventListener("DOMContentLoaded", () => {
+      readSaved();
+      buildRegionTeaching();
+      buildRegions();
+      restoreInputs();
+      updateSide();
+
+      document.querySelectorAll("[data-next]").forEach(btn => {
+        btn.addEventListener("click", () => showStep(state.step + 1));
+      });
+
+      document.querySelectorAll("[data-back]").forEach(btn => {
+        btn.addEventListener("click", () => showStep(state.step - 1));
+      });
+
+      document.getElementById("evidenceNote").addEventListener("input", checkEvidence);
+
+      document.querySelectorAll("input[name='foundingDecision']").forEach(radio => {
+        radio.addEventListener("change", checkDecision);
+      });
+
+      ["defenseAdvantage", "defenseRisk", "defensePlan"].forEach(id => {
+        document.getElementById(id).addEventListener("input", checkDefense);
+      });
+
+      showStep(state.step || 1);
+
+      console.log("CI-STAGE-53F GUIDED WORLD MISSION REGION TEACHING STEP REBUILD ACTIVE");
+    });
+  </script>
+</body>
+</html>

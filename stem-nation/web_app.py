@@ -153,6 +153,11 @@ def class_session():
 def session_control():
     return render_template("session_control.html")
 
+
+@app.route("/world_mission_1")
+def world_mission_1():
+    return render_template("world_mission_1.html")
+
 @app.route("/map")
 def map_mode():
     return render_template("map_mode.html")
