@@ -363,6 +363,16 @@ def first_gathering():
 
 
 
+
+
+@app.route("/active_investigation")
+def active_investigation():
+    return render_template("active_investigation.html")
+
+@app.route("/council_command_table")
+def council_command_table():
+    return render_template("council_command_table.html")
+
 @app.route("/student_command_entry")
 def student_command_entry():
     return render_template("student_command_entry.html")

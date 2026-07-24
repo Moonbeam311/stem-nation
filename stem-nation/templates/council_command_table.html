@@ -1,0 +1,774 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Council Command Table | STEM Nation</title>
+
+  <!-- MI-2D COUNCIL COMMAND TABLE CREATION BUILD -->
+
+  <style>
+    :root {
+      color-scheme: dark;
+      --bg: #050b16;
+      --panel: rgba(8, 18, 34, 0.94);
+      --panel2: rgba(18, 34, 58, 0.9);
+      --line: rgba(255,255,255,.16);
+      --text: #f8fafc;
+      --muted: rgba(226,232,240,.75);
+      --gold: #f6d56f;
+      --blue: #8bd3ff;
+      --green: #86efac;
+      --red: #fda4af;
+      --shadow: 0 28px 90px rgba(0,0,0,.48);
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      color: var(--text);
+      background:
+        radial-gradient(circle at 18% 10%, rgba(139,211,255,.14), transparent 32%),
+        radial-gradient(circle at 86% 16%, rgba(246,213,111,.15), transparent 30%),
+        linear-gradient(135deg, #030712, #07111f 55%, #0f172a);
+    }
+
+    a { color: inherit; }
+
+    .shell {
+      width: min(1180px, calc(100% - 28px));
+      margin: 0 auto;
+      padding: 28px 0 46px;
+    }
+
+    .topbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 18px;
+      flex-wrap: wrap;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 44px;
+      border-radius: 999px;
+      padding: 11px 18px;
+      border: 1px solid var(--line);
+      background: rgba(255,255,255,.07);
+      color: var(--text);
+      text-decoration: none;
+      font-weight: 900;
+      cursor: pointer;
+    }
+
+    .btn.primary {
+      border: 0;
+      background: linear-gradient(135deg, #f6d56f, #ffc83d);
+      color: #111827;
+    }
+
+    .btn.success {
+      border: 0;
+      background: linear-gradient(135deg, #bbf7d0, #6ee7b7);
+      color: #052e16;
+    }
+
+    .hero {
+      border: 1px solid rgba(246,213,111,.24);
+      border-radius: 30px;
+      background:
+        linear-gradient(135deg, rgba(8,18,34,.96), rgba(15,23,42,.86)),
+        url("/static/storyboards/council_hall_mission_briefing.png") center/cover no-repeat;
+      box-shadow: var(--shadow);
+      overflow: hidden;
+      position: relative;
+      padding: clamp(24px, 4vw, 38px);
+      isolation: isolate;
+    }
+
+    .hero::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(90deg, rgba(3,7,18,.92), rgba(3,7,18,.62));
+      z-index: -1;
+    }
+
+    .kicker {
+      color: var(--blue);
+      text-transform: uppercase;
+      letter-spacing: .14em;
+      font-size: 13px;
+      font-weight: 950;
+    }
+
+    h1 {
+      margin: 8px 0 10px;
+      font-size: clamp(42px, 7vw, 82px);
+      line-height: .9;
+      letter-spacing: -.06em;
+      color: var(--gold);
+      max-width: 900px;
+    }
+
+    .hero p {
+      color: rgba(248,250,252,.84);
+      font-size: 19px;
+      line-height: 1.45;
+      max-width: 780px;
+      margin: 0;
+    }
+
+    .active-question {
+      margin-top: 20px;
+      border: 1px solid rgba(139,211,255,.28);
+      background: rgba(8,18,34,.78);
+      border-radius: 24px;
+      padding: 18px;
+    }
+
+    .active-question strong {
+      display: block;
+      color: var(--blue);
+      text-transform: uppercase;
+      letter-spacing: .1em;
+      font-size: 13px;
+      margin-bottom: 8px;
+    }
+
+    .active-question span {
+      display: block;
+      font-size: clamp(28px, 4vw, 46px);
+      font-weight: 950;
+      line-height: 1;
+    }
+
+    .layout {
+      display: grid;
+      grid-template-columns: minmax(0, 1.35fr) minmax(300px, .65fr);
+      gap: 18px;
+      margin-top: 18px;
+      align-items: start;
+    }
+
+    .panel {
+      border: 1px solid var(--line);
+      border-radius: 28px;
+      background: var(--panel);
+      box-shadow: var(--shadow);
+      padding: 20px;
+    }
+
+    .panel h2 {
+      margin: 0 0 10px;
+      color: var(--gold);
+      font-size: 28px;
+      letter-spacing: -.03em;
+    }
+
+    .brief {
+      color: var(--muted);
+      line-height: 1.5;
+      margin: 0 0 16px;
+      font-size: 16px;
+    }
+
+    .command-grid {
+      display: grid;
+      grid-template-columns: repeat(5, minmax(0, 1fr));
+      gap: 12px;
+    }
+
+    .advisor-card {
+      border: 1px solid rgba(255,255,255,.13);
+      border-radius: 22px;
+      background: var(--panel2);
+      padding: 14px;
+      min-height: 250px;
+      display: grid;
+      gap: 10px;
+      align-content: start;
+    }
+
+    .advisor-card.active {
+      border-color: rgba(246,213,111,.85);
+      box-shadow: 0 0 0 4px rgba(246,213,111,.12);
+    }
+
+    .advisor-avatar {
+      width: 70px;
+      height: 70px;
+      border-radius: 20px;
+      object-fit: cover;
+      border: 1px solid rgba(246,213,111,.42);
+      background: rgba(255,255,255,.07);
+    }
+
+    .advisor-card h3 {
+      margin: 0;
+      font-size: 20px;
+      line-height: 1;
+    }
+
+    .verb {
+      color: var(--blue);
+      font-weight: 950;
+      text-transform: uppercase;
+      letter-spacing: .08em;
+      font-size: 12px;
+    }
+
+    .mission-chip {
+      border: 1px solid rgba(255,255,255,.14);
+      border-radius: 14px;
+      padding: 9px;
+      color: rgba(248,250,252,.84);
+      line-height: 1.35;
+      min-height: 76px;
+    }
+
+    .advisor-card button {
+      width: 100%;
+    }
+
+    .status {
+      font-size: 13px;
+      font-weight: 900;
+      color: var(--muted);
+    }
+
+    .status.assigned { color: var(--green); }
+
+    .casefile {
+      display: grid;
+      gap: 12px;
+    }
+
+    .record {
+      border: 1px solid rgba(255,255,255,.12);
+      border-radius: 18px;
+      background: rgba(255,255,255,.055);
+      padding: 13px;
+    }
+
+    .record strong {
+      display: block;
+      color: var(--blue);
+      text-transform: uppercase;
+      letter-spacing: .08em;
+      font-size: 12px;
+      margin-bottom: 6px;
+    }
+
+    .record span,
+    .record div {
+      color: rgba(248,250,252,.88);
+      line-height: 1.38;
+      white-space: pre-wrap;
+    }
+
+    .actions {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-top: 16px;
+    }
+
+    .command-output {
+      margin-top: 16px;
+      border: 1px solid rgba(134,239,172,.38);
+      background: rgba(6,78,59,.22);
+      border-radius: 22px;
+      padding: 16px;
+      white-space: pre-wrap;
+      color: rgba(248,250,252,.92);
+      line-height: 1.5;
+      min-height: 150px;
+    }
+
+    .empty {
+      color: var(--red);
+      font-weight: 850;
+    }
+
+
+    /* MI-2E-R1 ACTIVE INVESTIGATION LAUNCH PATH BUILD */
+    .launch-panel {
+      margin-top: 16px;
+      border: 1px solid rgba(139,211,255,.35);
+      border-radius: 22px;
+      background: linear-gradient(135deg, rgba(14,165,233,.16), rgba(15,23,42,.82));
+      padding: 16px;
+      box-shadow: 0 18px 50px rgba(0,0,0,.26);
+    }
+
+    .launch-panel.hidden { display: none; }
+
+    .launch-panel h3 {
+      margin: 0 0 8px;
+      color: var(--gold);
+      font-size: 24px;
+      letter-spacing: -.03em;
+    }
+
+    .launch-panel p {
+      color: rgba(248,250,252,.82);
+      line-height: 1.45;
+      margin: 0 0 12px;
+    }
+
+    .launch-panel .launch-meta {
+      display: grid;
+      gap: 8px;
+      margin: 12px 0;
+      color: rgba(248,250,252,.86);
+    }
+
+    @media (max-width: 1050px) {
+      .layout { grid-template-columns: 1fr; }
+      .command-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    }
+
+    @media (max-width: 640px) {
+      .command-grid { grid-template-columns: 1fr; }
+      .hero { padding: 20px; }
+    }
+  </style>
+</head>
+
+<body>
+  <main class="shell">
+    <div class="topbar">
+      <a class="btn" href="/student_command_entry">← Command Center Entry</a>
+      <div>
+        <a class="btn" href="/mission_debrief">Review Debrief</a>
+        <a class="btn" href="/student_hub">Student Hub</a>
+      </div>
+    </div>
+
+    <section class="hero">
+      <div class="kicker">Council Command Table</div>
+      <h1>Lead the First Investigation</h1>
+      <p>
+        The Academy has accepted your active investigation question. Now assign Council advisors to the first action table.
+      </p>
+
+      <div class="active-question">
+        <strong>Active Investigation Question</strong>
+        <span id="activeQuestionText">Loading question...</span>
+      </div>
+    </section>
+
+    <section class="layout">
+      <article class="panel">
+        <h2>Advisor Command Rows</h2>
+        <p class="brief">
+          Choose which advisors should begin the investigation. Each advisor receives a different kind of command.
+        </p>
+
+        <div class="command-grid" id="advisorGrid"></div>
+
+        <div class="actions">
+          <button class="btn primary" type="button" id="assignRecommendedBtn">Assign Recommended Council</button>
+          <button class="btn success" type="button" id="saveCommandTableBtn">Save Command Table</button>
+          <button class="btn" type="button" id="clearCommandTableBtn">Clear Assignments</button>
+        </div>
+
+        <div class="command-output" id="commandOutput">Command table not saved yet.</div>
+
+        <!-- MI-2E-R1 ACTIVE INVESTIGATION LAUNCH PATH BUILD -->
+        <div class="launch-panel hidden" id="activeInvestigationLaunchPanel">
+          <h3>Active Investigation Ready</h3>
+          <p>
+            Your Council Command Table has been saved. Continue by sending the assigned advisors into the investigation.
+          </p>
+          <div class="launch-meta">
+            <div><strong>Question:</strong> <span id="launchQuestionText">Pending</span></div>
+            <div><strong>Assigned:</strong> <span id="launchAssignedText">Pending</span></div>
+          </div>
+          <a class="btn primary" href="/active_investigation">Continue: Send Advisors to Investigate</a>
+        </div>
+
+      </article>
+
+      <aside class="panel">
+        <h2>Case File</h2>
+        <div class="casefile">
+          <div class="record">
+            <strong>Question Source</strong>
+            <span id="sourceSummary">Pending</span>
+          </div>
+          <div class="record">
+            <strong>Question Ranking</strong>
+            <div id="rankingSummary">Pending</div>
+          </div>
+          <div class="record">
+            <strong>Advisor Reaction</strong>
+            <div id="reactionSummary">Pending</div>
+          </div>
+          <div class="record">
+            <strong>Command Status</strong>
+            <span id="commandStatus">Not saved</span>
+          </div>
+        </div>
+      </aside>
+    </section>
+  </main>
+
+  <script>
+    // MI-2D COUNCIL COMMAND TABLE CREATION BUILD
+
+    const ACTIVE_INVESTIGATION_KEY = "stemNationActiveInvestigationQuestionV1";
+    const RANKING_KEY = "stemNationQuestionPriorityRankingV1";
+    const REACTION_KEY = "stemNationAdvisorReactionV1";
+    const DEBRIEF_KEY = "stemNationMissionDebriefV1";
+    const COMMAND_TABLE_KEY = "stemNationCouncilCommandTableV1";
+
+    const advisors = [
+      {
+        id: "scout",
+        name: "Scout",
+        verb: "Discover",
+        img: "/static/avatars/student/scout.png",
+        command: "Gather visible evidence first. Name what changed, what stayed the same, and what cannot be confirmed yet."
+      },
+      {
+        id: "mapkeeper",
+        name: "Mapkeeper",
+        verb: "Remember / Map",
+        img: "/static/avatars/student/mapkeeper.png",
+        command: "Check memory, maps, older records, and patterns before the group accepts a cause."
+      },
+      {
+        id: "builder",
+        name: "Builder",
+        verb: "Create",
+        img: "/static/avatars/student/builder.png",
+        command: "Identify the cause-and-effect chain. Show what system or structure could fail if the cause is wrong."
+      },
+      {
+        id: "healer",
+        name: "Healer",
+        verb: "Restore",
+        img: "/static/avatars/student/healer.png",
+        command: "Look for harm, repair needs, and the safest next step for people affected by the mystery."
+      },
+      {
+        id: "guardian",
+        name: "Guardian",
+        verb: "Protect",
+        img: "/static/avatars/student/guardian.png",
+        command: "Name the risk before action. Protect the team from moving too fast without enough evidence."
+      }
+    ];
+
+    let assigned = new Set();
+
+    function readJson(key) {
+      try {
+        return JSON.parse(localStorage.getItem(key) || "null");
+      } catch (error) {
+        return null;
+      }
+    }
+
+    function escapeHtml(value) {
+      return String(value || "")
+        .replaceAll("&", "&amp;")
+        .replaceAll("<", "&lt;")
+        .replaceAll(">", "&gt;")
+        .replaceAll('"', "&quot;");
+    }
+
+    function findQuestion(value) {
+      if (!value) return "";
+
+      if (typeof value === "string") {
+        return value.trim();
+      }
+
+      if (Array.isArray(value)) {
+        for (const item of value) {
+          const found = findQuestion(item);
+          if (found) return found;
+        }
+        return "";
+      }
+
+      if (typeof value === "object") {
+        const direct = [
+          "activeInvestigationQuestion",
+          "activeQuestion",
+          "topQuestion",
+          "selectedQuestion",
+          "question",
+          "text",
+          "label",
+          "value"
+        ];
+
+        for (const field of direct) {
+          const found = findQuestion(value[field]);
+          if (found) return found;
+        }
+
+        const collections = [
+          "ranking",
+          "rankedQuestions",
+          "selectedQuestions",
+          "priorities",
+          "questions"
+        ];
+
+        for (const field of collections) {
+          const found = findQuestion(value[field]);
+          if (found) return found;
+        }
+      }
+
+      return "";
+    }
+
+    function getActiveQuestion() {
+      return (
+        findQuestion(readJson(ACTIVE_INVESTIGATION_KEY)) ||
+        findQuestion(readJson(RANKING_KEY)) ||
+        "No active investigation question found yet."
+      );
+    }
+
+    function getRankingList() {
+      const active = readJson(ACTIVE_INVESTIGATION_KEY) || {};
+      const ranking = readJson(RANKING_KEY) || {};
+      const list =
+        active.ranking ||
+        ranking.ranking ||
+        ranking.rankedQuestions ||
+        ranking.selectedQuestions ||
+        [];
+
+      return Array.isArray(list) ? list.slice(0, 3) : [];
+    }
+
+    function renderAdvisorGrid() {
+      const grid = document.getElementById("advisorGrid");
+
+      grid.innerHTML = advisors.map(advisor => {
+        const isAssigned = assigned.has(advisor.id);
+        return `
+          <section class="advisor-card ${isAssigned ? "active" : ""}" data-advisor="${advisor.id}">
+            <img class="advisor-avatar" src="${advisor.img}" alt="${advisor.name}">
+            <div>
+              <h3>${advisor.name}</h3>
+              <div class="verb">${advisor.verb}</div>
+            </div>
+            <div class="mission-chip">${escapeHtml(advisor.command)}</div>
+            <button class="btn ${isAssigned ? "success" : ""}" type="button" data-assign="${advisor.id}">
+              ${isAssigned ? "Assigned" : "Assign"}
+            </button>
+            <div class="status ${isAssigned ? "assigned" : ""}">
+              ${isAssigned ? "Ready for action" : "Waiting"}
+            </div>
+          </section>
+        `;
+      }).join("");
+    }
+
+    function renderCaseFile() {
+      const activeRecord = readJson(ACTIVE_INVESTIGATION_KEY);
+      const reactionRecord = readJson(REACTION_KEY);
+      const debriefRecord = readJson(DEBRIEF_KEY);
+      const ranking = getRankingList();
+      const question = getActiveQuestion();
+
+      document.getElementById("activeQuestionText").textContent = question;
+
+      document.getElementById("sourceSummary").textContent =
+        activeRecord?.sourceKey || ACTIVE_INVESTIGATION_KEY;
+
+      document.getElementById("rankingSummary").textContent =
+        ranking.length
+          ? ranking.map((item, index) => `${index + 1}. ${item}`).join("\n")
+          : "No ranking list found.";
+
+      if (reactionRecord?.reactions?.length) {
+        document.getElementById("reactionSummary").textContent =
+          reactionRecord.reactions
+            .slice(0, 3)
+            .map((item, index) => `${index + 1}. ${item.advisor || "Advisor"} — ${item.verb || ""}`)
+            .join("\n");
+      } else {
+        document.getElementById("reactionSummary").textContent =
+          reactionRecord ? "Advisor reaction record found." : "Advisor reaction pending.";
+      }
+
+      const saved = readJson(COMMAND_TABLE_KEY);
+      if (saved?.savedAt) {
+        document.getElementById("commandStatus").textContent =
+          `Saved · ${saved.assignments?.length || 0} advisor command rows`;
+      }
+
+      if (debriefRecord?.reflectQuestion) {
+        document.getElementById("commandOutput").textContent =
+          "Debrief reflection found. Council Command Table is ready for assignment.";
+      }
+    }
+
+    function saveCommandTable() {
+      const question = getActiveQuestion();
+      const selected = advisors.filter(advisor => assigned.has(advisor.id));
+
+      const record = {
+        activeInvestigationQuestion: question,
+        activeInvestigationQuestionKey: ACTIVE_INVESTIGATION_KEY,
+        assignments: selected.map(advisor => ({
+          advisor: advisor.name,
+          advisorId: advisor.id,
+          verb: advisor.verb,
+          command: advisor.command
+        })),
+        ranking: getRankingList(),
+        status: selected.length ? "command_table_saved" : "no_advisors_assigned",
+        savedAt: new Date().toISOString()
+      };
+
+      localStorage.setItem(COMMAND_TABLE_KEY, JSON.stringify(record));
+
+      document.getElementById("commandStatus").textContent =
+        `Saved · ${record.assignments.length} advisor command rows`;
+
+      document.getElementById("commandOutput").textContent =
+`COUNCIL COMMAND TABLE SAVED
+
+Active Investigation Question:
+${record.activeInvestigationQuestion}
+
+Assigned Advisors:
+${record.assignments.length
+  ? record.assignments.map(item => `• ${item.advisor} — ${item.verb}\n  ${item.command}`).join("\n\n")
+  : "No advisors assigned yet."}
+
+Next:
+The Council can now move from question ranking into active investigation.`;
+
+      window.STEMNationCouncilCommandTable = record;
+    }
+
+    document.addEventListener("click", event => {
+      const assign = event.target.closest("[data-assign]");
+      if (assign) {
+        const id = assign.dataset.assign;
+        if (assigned.has(id)) {
+          assigned.delete(id);
+        } else {
+          assigned.add(id);
+        }
+        renderAdvisorGrid();
+        return;
+      }
+
+      if (event.target.id === "assignRecommendedBtn") {
+        assigned = new Set(["scout", "mapkeeper", "builder"]);
+        renderAdvisorGrid();
+        saveCommandTable();
+        return;
+      }
+
+      if (event.target.id === "saveCommandTableBtn") {
+        saveCommandTable();
+        return;
+      }
+
+      if (event.target.id === "clearCommandTableBtn") {
+        assigned.clear();
+        localStorage.removeItem(COMMAND_TABLE_KEY);
+        document.getElementById("commandStatus").textContent = "Not saved";
+        document.getElementById("commandOutput").textContent = "Command table cleared.";
+        renderAdvisorGrid();
+      }
+    });
+
+    function loadSavedAssignments() {
+      const saved = readJson(COMMAND_TABLE_KEY);
+      if (saved?.assignments?.length) {
+        assigned = new Set(saved.assignments.map(item => item.advisorId).filter(Boolean));
+      }
+    }
+
+    loadSavedAssignments();
+    renderAdvisorGrid();
+    renderCaseFile();
+
+    window.addEventListener("focus", renderCaseFile);
+    window.addEventListener("storage", renderCaseFile);
+
+    console.log("MI-2D COUNCIL COMMAND TABLE CREATION BUILD ACTIVE");
+  </script>
+
+  <script>
+    // MI-2E-R1 ACTIVE INVESTIGATION LAUNCH PATH BUILD
+    (function () {
+      const COMMAND_TABLE_KEY = "stemNationCouncilCommandTableV1";
+
+      function readJson(key) {
+        try {
+          return JSON.parse(localStorage.getItem(key) || "null");
+        } catch (error) {
+          return null;
+        }
+      }
+
+      function renderActiveInvestigationLaunch() {
+        const panel = document.getElementById("activeInvestigationLaunchPanel");
+        if (!panel) return;
+
+        const record = readJson(COMMAND_TABLE_KEY);
+        const hasAssignments = !!(record && Array.isArray(record.assignments) && record.assignments.length);
+
+        panel.classList.toggle("hidden", !hasAssignments);
+
+        const questionEl = document.getElementById("launchQuestionText");
+        const assignedEl = document.getElementById("launchAssignedText");
+
+        if (questionEl) {
+          questionEl.textContent = record?.activeInvestigationQuestion || "Pending";
+        }
+
+        if (assignedEl) {
+          assignedEl.textContent = hasAssignments
+            ? record.assignments.map(item => item.advisor).join(", ")
+            : "Pending";
+        }
+      }
+
+      document.addEventListener("DOMContentLoaded", renderActiveInvestigationLaunch);
+      window.addEventListener("focus", renderActiveInvestigationLaunch);
+      window.addEventListener("storage", renderActiveInvestigationLaunch);
+
+      document.addEventListener("click", function (event) {
+        if (
+          event.target.closest("#saveCommandTableBtn") ||
+          event.target.closest("#assignRecommendedBtn") ||
+          event.target.closest("#clearCommandTableBtn")
+        ) {
+          setTimeout(renderActiveInvestigationLaunch, 120);
+        }
+      });
+
+      window.STEMNationActiveInvestigationLaunchPanel = {
+        update: renderActiveInvestigationLaunch
+      };
+
+      console.log("MI-2E-R1 ACTIVE INVESTIGATION LAUNCH PATH BUILD ACTIVE");
+    })();
+  </script>
+
+</body>
+</html>
