@@ -1,0 +1,623 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Evidence Comparison | STEM Nation</title>
+
+  <!-- MI-2H-R2 SAVE WIRING + ANIMATED CONSEQUENCE LAYER -->
+
+  <style>
+    :root {
+      color-scheme: dark;
+      --text: #f8fafc;
+      --gold: #f6d56f;
+      --blue: #8bd3ff;
+      --green: #86efac;
+      --panel: rgba(8,18,34,.94);
+      --panel2: rgba(13,27,48,.96);
+      --line: rgba(255,255,255,.16);
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      font-family: Inter, system-ui, sans-serif;
+      color: var(--text);
+      background:
+        radial-gradient(circle at 18% 12%, rgba(139,211,255,.12), transparent 32%),
+        radial-gradient(circle at 86% 16%, rgba(246,213,111,.14), transparent 30%),
+        linear-gradient(135deg,#030712,#07111f 55%,#0f172a);
+    }
+
+    main {
+      width: min(1180px, calc(100% - 28px));
+      margin: 0 auto;
+      padding: 32px 0 48px;
+    }
+
+    a, .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 42px;
+      border-radius: 999px;
+      padding: 10px 16px;
+      border: 1px solid var(--line);
+      background: rgba(255,255,255,.06);
+      color: var(--text);
+      text-decoration: none;
+      font-weight: 900;
+      cursor: pointer;
+    }
+
+    .btn.primary {
+      border: 0;
+      background: linear-gradient(135deg,#f6d56f,#ffc83d);
+      color: #111827;
+    }
+
+    .btn.success {
+      border: 0;
+      background: linear-gradient(135deg,#bbf7d0,#6ee7b7);
+      color: #052e16;
+    }
+
+    .btn.locked {
+      opacity: .48;
+      filter: grayscale(.5);
+      cursor: not-allowed;
+    }
+
+    .topbar {
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      flex-wrap: wrap;
+      margin-bottom: 18px;
+    }
+
+    .hero, .panel {
+      border: 1px solid var(--line);
+      border-radius: 28px;
+      background: var(--panel);
+      padding: 24px;
+      box-shadow: 0 24px 80px rgba(0,0,0,.35);
+    }
+
+    .kicker {
+      color: var(--blue);
+      text-transform: uppercase;
+      letter-spacing: .14em;
+      font-size: 13px;
+      font-weight: 950;
+    }
+
+    h1 {
+      margin: 8px 0 12px;
+      color: var(--gold);
+      font-size: clamp(42px,7vw,78px);
+      line-height: .92;
+      letter-spacing: -.055em;
+    }
+
+    h2 {
+      margin: 0 0 10px;
+      color: var(--gold);
+      font-size: 30px;
+    }
+
+    .hero p, .brief {
+      color: rgba(248,250,252,.84);
+      line-height: 1.45;
+      font-size: 18px;
+    }
+
+    .question {
+      margin-top: 16px;
+      border: 1px solid rgba(139,211,255,.28);
+      border-radius: 20px;
+      background: rgba(255,255,255,.05);
+      padding: 14px;
+    }
+
+    .question strong, .role, .step strong {
+      display: block;
+      color: var(--blue);
+      text-transform: uppercase;
+      letter-spacing: .08em;
+      font-size: 12px;
+      margin-bottom: 6px;
+    }
+
+    .question span {
+      color: var(--gold);
+      font-size: clamp(24px,4vw,40px);
+      font-weight: 950;
+    }
+
+    .layout {
+      margin-top: 18px;
+      display: grid;
+      grid-template-columns: minmax(0,1.15fr) minmax(310px,.85fr);
+      gap: 18px;
+      align-items: start;
+    }
+
+    .signals {
+      display: grid;
+      gap: 12px;
+    }
+
+    .signal {
+      border: 1px solid rgba(139,211,255,.24);
+      border-radius: 22px;
+      background: var(--panel2);
+      padding: 16px;
+      display: grid;
+      grid-template-columns: auto 1fr;
+      gap: 14px;
+      transition: transform .2s ease, border-color .2s ease, box-shadow .2s ease;
+    }
+
+    .signal.selected {
+      border-color: rgba(246,213,111,.78);
+      box-shadow: 0 0 0 4px rgba(246,213,111,.12), 0 0 42px rgba(246,213,111,.18);
+      transform: translateY(-2px) scale(1.01);
+      animation: signalPulse .55s ease;
+    }
+
+    @keyframes signalPulse {
+      0% { transform: scale(.99); }
+      55% { transform: scale(1.025); }
+      100% { transform: translateY(-2px) scale(1.01); }
+    }
+
+    .signal img {
+      width: 58px;
+      height: 58px;
+      object-fit: cover;
+      border-radius: 18px;
+      border: 1px solid rgba(246,213,111,.35);
+    }
+
+    .signal h3 {
+      margin: 0 0 6px;
+      color: var(--gold);
+      font-size: 24px;
+    }
+
+    .signal p {
+      margin: 0;
+      color: rgba(248,250,252,.86);
+      line-height: 1.4;
+    }
+
+    .signal button {
+      grid-column: 1 / -1;
+      width: max-content;
+    }
+
+    .step {
+      border: 1px solid rgba(255,255,255,.13);
+      border-radius: 18px;
+      background: rgba(255,255,255,.055);
+      padding: 14px;
+      margin-bottom: 12px;
+      transition: border-color .2s ease, box-shadow .2s ease;
+    }
+
+    .step.completed {
+      border-color: rgba(134,239,172,.46);
+      box-shadow: 0 0 28px rgba(134,239,172,.1);
+    }
+
+    .choice {
+      display: block;
+      width: 100%;
+      text-align: left;
+      margin-top: 8px;
+      border: 1px solid rgba(255,255,255,.15);
+      border-radius: 14px;
+      background: rgba(8,18,34,.74);
+      color: var(--text);
+      padding: 11px;
+      font-weight: 850;
+      cursor: pointer;
+      transition: transform .18s ease, border-color .18s ease, background .18s ease;
+    }
+
+    .choice:hover {
+      transform: translateX(3px);
+      border-color: rgba(139,211,255,.42);
+    }
+
+    .choice.selected {
+      border-color: rgba(246,213,111,.62);
+      background: rgba(246,213,111,.12);
+      color: var(--gold);
+      animation: choicePop .32s ease;
+    }
+
+    @keyframes choicePop {
+      0% { transform: scale(.98); }
+      70% { transform: scale(1.02); }
+      100% { transform: scale(1); }
+    }
+
+    .meter {
+      margin-top: 14px;
+      border: 1px solid rgba(255,255,255,.14);
+      border-radius: 18px;
+      background: rgba(8,18,34,.74);
+      padding: 12px;
+    }
+
+    .meter-row {
+      display: flex;
+      justify-content: space-between;
+      font-weight: 900;
+      margin-bottom: 8px;
+    }
+
+    .track {
+      height: 14px;
+      border-radius: 999px;
+      overflow: hidden;
+      background: rgba(255,255,255,.1);
+    }
+
+    .fill {
+      height: 100%;
+      width: 0%;
+      border-radius: 999px;
+      background: linear-gradient(90deg,#8bd3ff,#86efac,#f6d56f);
+      transition: width .35s ease;
+    }
+
+    .consequence {
+      margin-top: 14px;
+      border: 1px solid rgba(139,211,255,.25);
+      border-radius: 22px;
+      background: rgba(139,211,255,.08);
+      padding: 16px;
+      min-height: 92px;
+      line-height: 1.45;
+    }
+
+    .consequence.reward {
+      border-color: rgba(134,239,172,.46);
+      background: rgba(6,78,59,.22);
+      animation: rewardGlow .75s ease;
+    }
+
+    @keyframes rewardGlow {
+      0% { box-shadow: 0 0 0 rgba(134,239,172,0); }
+      50% { box-shadow: 0 0 45px rgba(134,239,172,.22); }
+      100% { box-shadow: 0 0 0 rgba(134,239,172,0); }
+    }
+
+    .output {
+      margin-top: 16px;
+      border: 1px solid rgba(134,239,172,.38);
+      background: rgba(6,78,59,.2);
+      border-radius: 22px;
+      padding: 16px;
+      white-space: pre-wrap;
+      line-height: 1.5;
+      min-height: 150px;
+    }
+
+    @media(max-width:980px) {
+      .layout { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+
+<body>
+  <main>
+    <div class="topbar">
+      <a href="/evidence_review">← Evidence Review</a>
+      <div>
+        <a href="/council_reports">Council Reports</a>
+        <a href="/student_hub">Student Hub</a>
+      </div>
+    </div>
+
+    <section class="hero">
+      <div class="kicker">Evidence Comparison</div>
+      <h1>Compare Before You Claim</h1>
+      <p>The Council has returned three evidence signals. A Chief Investigator compares the signals before naming the strongest cause.</p>
+      <div class="question">
+        <strong>Active Investigation Question</strong>
+        <span id="activeQuestionText">Loading question...</span>
+      </div>
+    </section>
+
+    <section class="layout">
+      <article class="panel">
+        <h2>Evidence Signals</h2>
+        <p class="brief">Choose the signal that gives the strongest explanation right now.</p>
+        <div class="signals" id="signalGrid"></div>
+
+        <div class="meter">
+          <div class="meter-row">
+            <span>Comparison Readiness</span>
+            <span id="readinessLabel">0 / 3 decisions</span>
+          </div>
+          <div class="track"><div class="fill" id="readinessFill"></div></div>
+        </div>
+
+        <div class="consequence" id="consequencePanel">
+          Council Signal: Choose evidence carefully. The training chamber will respond to each decision.
+        </div>
+
+        <div class="output" id="comparisonOutput">Evidence comparison not saved yet.</div>
+      </article>
+
+      <aside class="panel">
+        <h2>Decision Board</h2>
+
+        <div class="step" id="stepStrongest">
+          <strong>1. Strongest Evidence Signal</strong>
+          <span id="strongestSignalText">Not chosen yet.</span>
+        </div>
+
+        <div class="step" id="stepMissing">
+          <strong>2. Missing Evidence</strong>
+          <div id="missingEvidenceChoices"></div>
+        </div>
+
+        <div class="step" id="stepRisk">
+          <strong>3. Remaining Risk</strong>
+          <div id="riskChoices"></div>
+        </div>
+
+        <button class="btn success" type="button" id="saveComparisonBtn">Save Evidence Comparison</button>
+        <button class="btn locked" type="button" disabled>Name the Cause — Next Build</button>
+      </aside>
+    </section>
+  </main>
+
+  <script>
+    const REPORTS_KEY = "stemNationCouncilReportsV1";
+    const ACTIVE_KEY = "stemNationActiveInvestigationQuestionV1";
+    const COMPARISON_KEY = "stemNationEvidenceComparisonV1";
+
+    const images = {
+      scout: "/static/avatars/student/scout.png",
+      mapkeeper: "/static/avatars/student/mapkeeper.png",
+      builder: "/static/avatars/student/builder.png",
+      healer: "/static/avatars/student/healer.png",
+      guardian: "/static/avatars/student/guardian.png"
+    };
+
+    const missingOptions = [
+      "A second scan or image comparison",
+      "Older map or memory record",
+      "Direct test of the cause-and-effect chain"
+    ];
+
+    const riskOptions = [
+      "The cause may be guessed too quickly",
+      "The pattern may be incomplete",
+      "The plan may solve the wrong problem"
+    ];
+
+    const state = {
+      strongestSignal: "",
+      strongestAdvisor: "",
+      missingEvidence: "",
+      remainingRisk: ""
+    };
+
+    function readJson(key) {
+      try { return JSON.parse(localStorage.getItem(key) || "null"); }
+      catch(e) { return null; }
+    }
+
+    function esc(v) {
+      return String(v ?? "")
+        .replaceAll("&","&amp;")
+        .replaceAll("<","&lt;")
+        .replaceAll(">","&gt;")
+        .replaceAll('"',"&quot;")
+        .replaceAll("'","&#039;");
+    }
+
+    function advisorId(r) {
+      return String(r.advisorId || r.advisor || "").toLowerCase().replace(/[^a-z]/g,"");
+    }
+
+    function reports() {
+      const r = readJson(REPORTS_KEY);
+      return Array.isArray(r?.reports) ? r.reports : [];
+    }
+
+    function question() {
+      const r = readJson(REPORTS_KEY);
+      const a = readJson(ACTIVE_KEY);
+      return r?.activeInvestigationQuestion || a?.activeInvestigationQuestion || a?.question || "No active investigation question found yet.";
+    }
+
+    function count() {
+      return [state.strongestSignal, state.missingEvidence, state.remainingRisk].filter(Boolean).length;
+    }
+
+    function setConsequence(message, reward=false) {
+      const panel = document.getElementById("consequencePanel");
+      panel.textContent = message;
+      panel.classList.remove("reward");
+      void panel.offsetWidth;
+      if (reward) panel.classList.add("reward");
+    }
+
+    function renderSignals() {
+      const list = reports();
+      const grid = document.getElementById("signalGrid");
+
+      if (!list.length) {
+        grid.innerHTML = "<section class='signal'><div><h3>No reports found</h3><p>Return to Council Reports and receive advisor reports first.</p></div></section>";
+        return;
+      }
+
+      grid.innerHTML = list.map(r => {
+        const selected = state.strongestSignal === r.evidenceType;
+        const id = advisorId(r);
+        return `<section class="signal ${selected ? "selected" : ""}">
+          <img src="${images[id] || images.guardian}" alt="${esc(r.advisor || "Advisor")} advisor">
+          <div>
+            <div class="role">${esc(r.advisor || "Advisor")} · ${esc(r.verb || "Investigate")}</div>
+            <h3>${esc(r.evidenceType || "Evidence")}</h3>
+            <p>${esc(r.signal || "Review this evidence before naming a cause.")}</p>
+          </div>
+          <button class="btn primary" type="button" data-signal="${esc(r.evidenceType || "")}" data-advisor="${esc(r.advisor || "")}">
+            Choose as strongest signal
+          </button>
+        </section>`;
+      }).join("");
+
+      document.querySelectorAll("[data-signal]").forEach(btn => {
+        btn.addEventListener("click", () => {
+          state.strongestSignal = btn.dataset.signal || "";
+          state.strongestAdvisor = btn.dataset.advisor || "";
+          setConsequence("Council Signal: Strong evidence selected. The chamber rewards careful comparison before claiming a cause.", true);
+          render();
+        });
+      });
+    }
+
+    function renderChoices(id, options, selected, setter, consequenceText) {
+      const box = document.getElementById(id);
+
+      box.innerHTML = options.map(o => `
+        <button class="choice ${selected === o ? "selected" : ""}" type="button" data-choice="${esc(o)}">
+          ${esc(o)}
+        </button>
+      `).join("");
+
+      box.querySelectorAll("[data-choice]").forEach(btn => {
+        btn.addEventListener("click", () => {
+          setter(btn.dataset.choice || "");
+          setConsequence(consequenceText, true);
+          render();
+        });
+      });
+    }
+
+    function updateSteps() {
+      document.getElementById("stepStrongest").classList.toggle("completed", !!state.strongestSignal);
+      document.getElementById("stepMissing").classList.toggle("completed", !!state.missingEvidence);
+      document.getElementById("stepRisk").classList.toggle("completed", !!state.remainingRisk);
+    }
+
+    function render() {
+      document.getElementById("activeQuestionText").textContent = question();
+
+      document.getElementById("strongestSignalText").textContent =
+        state.strongestSignal
+          ? `${state.strongestSignal} from ${state.strongestAdvisor || "Council"}`
+          : "Not chosen yet.";
+
+      renderSignals();
+
+      renderChoices(
+        "missingEvidenceChoices",
+        missingOptions,
+        state.missingEvidence,
+        v => state.missingEvidence = v,
+        "Council Signal: Missing evidence named. The chamber marks this as strong investigator thinking."
+      );
+
+      renderChoices(
+        "riskChoices",
+        riskOptions,
+        state.remainingRisk,
+        v => state.remainingRisk = v,
+        "Council Signal: Remaining risk identified. The chamber rewards caution before action."
+      );
+
+      updateSteps();
+
+      const c = count();
+      document.getElementById("readinessLabel").textContent = `${c} / 3 decisions`;
+      document.getElementById("readinessFill").style.width = Math.round((c / 3) * 100) + "%";
+
+      if (c === 3) {
+        setConsequence("Council Signal: Evidence comparison complete. You may now save the investigation record.", true);
+      }
+    }
+
+    function saveComparison() {
+      const c = count();
+
+      if (c < 3) {
+        document.getElementById("comparisonOutput").textContent =
+          "The Council pauses. Choose the strongest signal, missing evidence, and remaining risk before saving.";
+        setConsequence("Council Signal: Save blocked. Complete all three decisions first.", false);
+        return;
+      }
+
+      const record = {
+        activeInvestigationQuestion: question(),
+        strongestSignal: state.strongestSignal,
+        strongestAdvisor: state.strongestAdvisor,
+        missingEvidence: state.missingEvidence,
+        remainingRisk: state.remainingRisk,
+        sourceReportsKey: REPORTS_KEY,
+        status: "evidence_comparison_saved",
+        nextPhase: "name_the_cause",
+        savedAt: new Date().toISOString()
+      };
+
+      localStorage.setItem(COMPARISON_KEY, JSON.stringify(record));
+
+      document.getElementById("comparisonOutput").textContent =
+`EVIDENCE COMPARISON SAVED
+
+Question:
+${record.activeInvestigationQuestion}
+
+Strongest signal:
+${record.strongestSignal} from ${record.strongestAdvisor}
+
+Missing evidence:
+${record.missingEvidence}
+
+Remaining risk:
+${record.remainingRisk}
+
+Next:
+Name the Cause.`;
+
+      setConsequence("Council Signal: Record saved. The next chamber begins to unlock.", true);
+      window.STEMNationEvidenceComparison = record;
+    }
+
+    function loadSaved() {
+      const saved = readJson(COMPARISON_KEY);
+
+      if (saved) {
+        state.strongestSignal = saved.strongestSignal || "";
+        state.strongestAdvisor = saved.strongestAdvisor || "";
+        state.missingEvidence = saved.missingEvidence || "";
+        state.remainingRisk = saved.remainingRisk || "";
+      }
+
+      render();
+    }
+
+    document.addEventListener("DOMContentLoaded", () => {
+      document.getElementById("saveComparisonBtn").addEventListener("click", saveComparison);
+      loadSaved();
+    });
+
+    window.addEventListener("focus", loadSaved);
+    window.addEventListener("storage", loadSaved);
+
+    console.log("MI-2H-R2 SAVE WIRING + ANIMATED CONSEQUENCE LAYER ACTIVE");
+  </script>
+</body>
+</html>
