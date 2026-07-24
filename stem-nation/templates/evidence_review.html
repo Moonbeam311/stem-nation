@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Evidence Review | STEM Nation</title>
+
+  <!-- MI-2G-R6 CLEAN EVIDENCE REVIEW PAGE -->
+
+  <style>
+    :root {
+      color-scheme: dark;
+      --bg: #050b16;
+      --panel: rgba(8,18,34,.94);
+      --panel2: rgba(13,27,48,.96);
+      --line: rgba(255,255,255,.16);
+      --text: #f8fafc;
+      --muted: rgba(226,232,240,.76);
+      --gold: #f6d56f;
+      --blue: #8bd3ff;
+      --green: #86efac;
+      --shadow: 0 24px 80px rgba(0,0,0,.42);
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      color: var(--text);
+      background:
+        radial-gradient(circle at 15% 12%, rgba(139,211,255,.12), transparent 30%),
+        radial-gradient(circle at 90% 10%, rgba(246,213,111,.12), transparent 28%),
+        linear-gradient(135deg, #030712, #07111f 55%, #0f172a);
+    }
+
+    .shell {
+      width: min(1180px, calc(100% - 28px));
+      margin: 0 auto;
+      padding: 32px 0 48px;
+    }
+
+    .topbar {
+      margin-bottom: 18px;
+    }
+
+    .topbar a {
+      color: var(--gold);
+      font-weight: 900;
+      text-decoration: none;
+    }
+
+    .hero {
+      border: 1px solid rgba(246,213,111,.28);
+      border-radius: 30px;
+      padding: clamp(24px, 4vw, 38px);
+      background:
+        linear-gradient(135deg, rgba(8,18,34,.98), rgba(15,23,42,.96));
+      box-shadow: var(--shadow);
+    }
+
+    .kicker {
+      color: var(--blue);
+      text-transform: uppercase;
+      letter-spacing: .14em;
+      font-size: 13px;
+      font-weight: 950;
+      margin-bottom: 10px;
+    }
+
+    h1 {
+      margin: 0 0 12px;
+      color: var(--gold);
+      font-size: clamp(44px, 7vw, 82px);
+      line-height: .92;
+      letter-spacing: -.055em;
+    }
+
+    .hero p {
+      max-width: 850px;
+      margin: 0;
+      color: rgba(248,250,252,.86);
+      font-size: 19px;
+      line-height: 1.45;
+    }
+
+    .signal-summary {
+      margin-top: 18px;
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 12px;
+    }
+
+    .signal-chip {
+      border: 1px solid rgba(134,239,172,.36);
+      border-radius: 20px;
+      background: rgba(6,78,59,.18);
+      padding: 14px;
+    }
+
+    .signal-chip strong {
+      display: block;
+      color: var(--green);
+      text-transform: uppercase;
+      letter-spacing: .08em;
+      font-size: 12px;
+      margin-bottom: 6px;
+    }
+
+    .signal-chip span {
+      color: rgba(248,250,252,.9);
+      font-weight: 850;
+    }
+
+    .board {
+      margin-top: 18px;
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 14px;
+    }
+
+    .card {
+      border: 1px solid rgba(139,211,255,.26);
+      border-radius: 24px;
+      padding: 18px;
+      background: var(--panel2);
+      box-shadow: 0 18px 50px rgba(0,0,0,.24);
+      min-height: 190px;
+    }
+
+    .card strong {
+      display: block;
+      color: var(--blue);
+      text-transform: uppercase;
+      letter-spacing: .08em;
+      font-size: 12px;
+      margin-bottom: 10px;
+    }
+
+    .card h2 {
+      color: var(--gold);
+      margin: 0 0 10px;
+      font-size: 27px;
+      letter-spacing: -.03em;
+    }
+
+    .card p {
+      color: rgba(248,250,252,.86);
+      line-height: 1.45;
+      margin: 0;
+    }
+
+    /* MI-2G-R7 EVIDENCE REVIEW BOTTOM PANEL POLISH */
+    .next-panel {
+      margin-top: 18px;
+      border: 1px solid rgba(246,213,111,.34);
+      border-radius: 24px;
+      background: linear-gradient(135deg, rgba(246,213,111,.12), rgba(8,18,34,.92));
+      padding: 18px;
+      color: rgba(248,250,252,.96);
+      line-height: 1.45;
+      box-shadow: 0 18px 50px rgba(0,0,0,.22);
+    }
+
+    .next-panel strong {
+      color: var(--gold);
+    }
+
+    @media (max-width: 900px) {
+      .signal-summary,
+      .board {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <main class="shell">
+    <div class="topbar">
+      <a href="/council_reports">← Council Reports</a>
+    </div>
+
+    <section class="hero">
+      <div class="kicker">Evidence Review</div>
+      <h1>Review What Changed</h1>
+      <p>
+        The Council reports are now visual evidence signals. The Chief Investigator must compare the signals before accepting a cause.
+      </p>
+
+      <div class="signal-summary">
+        <div class="signal-chip">
+          <strong>Signal 1 Active</strong>
+          <span>Visible Evidence</span>
+        </div>
+        <div class="signal-chip">
+          <strong>Signal 2 Active</strong>
+          <span>Pattern / History</span>
+        </div>
+        <div class="signal-chip">
+          <strong>Signal 3 Active</strong>
+          <span>Cause-and-Effect</span>
+        </div>
+      </div>
+    </section>
+
+    <section class="board" id="evidenceBoard"></section>
+
+    <section class="next-panel" id="nextPanel">
+      <strong>Next Build:</strong> Compare the evidence signals and decide which cause is strongest, which evidence is missing, and what risk remains.
+    </section>
+  </main>
+
+  <script>
+    // MI-2G-R6 CLEAN EVIDENCE REVIEW PAGE
+
+    const REPORTS_KEY = "stemNationCouncilReportsV1";
+
+    function readJson(key) {
+      try {
+        return JSON.parse(localStorage.getItem(key) || "null");
+      } catch (error) {
+        return null;
+      }
+    }
+
+    function render() {
+      const record = readJson(REPORTS_KEY);
+      const reports = Array.isArray(record?.reports) ? record.reports : [];
+      const board = document.getElementById("evidenceBoard");
+      const nextPanel = document.getElementById("nextPanel");
+
+      if (!reports.length) {
+        board.innerHTML = `
+          <article class="card">
+            <strong>Evidence Locked</strong>
+            <h2>No reports found</h2>
+            <p>Return to Council Reports and receive the advisor reports first.</p>
+          </article>
+        `;
+        nextPanel.innerHTML = "<strong>Locked:</strong> Evidence Review is waiting for Council Reports.";
+        return;
+      }
+
+      board.innerHTML = reports.map(report => `
+        <article class="card">
+          <strong>${report.advisor || "Advisor"} · ${report.verb || "Investigate"}</strong>
+          <h2>${report.evidenceType || "Evidence Signal"}</h2>
+          <p>${report.signal || "Review this evidence before naming a cause."}</p>
+        </article>
+      `).join("");
+
+      nextPanel.innerHTML =
+        "<strong>Evidence Review Ready:</strong><br>The board has visible evidence, pattern/history, and cause-and-effect signals. The next build should let the student compare them before naming a cause.";
+    }
+
+    render();
+    window.addEventListener("focus", render);
+    window.addEventListener("storage", render);
+
+    console.log("MI-2G-R6 CLEAN EVIDENCE REVIEW PAGE ACTIVE");
+  </script>
+</body>
+</html>

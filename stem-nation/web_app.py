@@ -365,6 +365,16 @@ def first_gathering():
 
 
 
+
+
+@app.route("/evidence_review")
+def evidence_review():
+    return render_template("evidence_review.html")
+
+@app.route("/council_reports")
+def council_reports():
+    return render_template("council_reports.html")
+
 @app.route("/active_investigation")
 def active_investigation():
     return render_template("active_investigation.html")
