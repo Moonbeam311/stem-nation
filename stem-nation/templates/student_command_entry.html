@@ -401,5 +401,98 @@
     document.getElementById("statusLine").textContent =
       `Command entry ready. ${readyPieces} of 5 mission records detected in this browser.`;
   </script>
+
+<script>
+  // MI-2B-R1 ACTIVE INVESTIGATION QUESTION BRIDGE
+  (function () {
+    const ACTIVE_INVESTIGATION_KEY = "stemNationActiveInvestigationQuestionV1";
+    const RANKING_KEY = "stemNationQuestionPriorityRankingV1";
+
+    function readJson(key) {
+      try {
+        return JSON.parse(localStorage.getItem(key) || "null");
+      } catch (error) {
+        return null;
+      }
+    }
+
+    function findQuestion(value) {
+      if (!value) return "";
+
+      if (typeof value === "string") return value.trim();
+
+      if (Array.isArray(value)) {
+        for (const item of value) {
+          const found = findQuestion(item);
+          if (found) return found;
+        }
+        return "";
+      }
+
+      if (typeof value === "object") {
+        const direct = [
+          "activeInvestigationQuestion",
+          "activeQuestion",
+          "topQuestion",
+          "selectedQuestion",
+          "question",
+          "text",
+          "label",
+          "value"
+        ];
+
+        for (const field of direct) {
+          const found = findQuestion(value[field]);
+          if (found) return found;
+        }
+
+        const collections = [
+          "ranking",
+          "rankedQuestions",
+          "selectedQuestions",
+          "priorities",
+          "questions"
+        ];
+
+        for (const field of collections) {
+          const found = findQuestion(value[field]);
+          if (found) return found;
+        }
+      }
+
+      return "";
+    }
+
+    function renderActiveQuestion() {
+      const activeRecord = readJson(ACTIVE_INVESTIGATION_KEY);
+      const rankingRecord = readJson(RANKING_KEY);
+      const question = findQuestion(activeRecord) || findQuestion(rankingRecord);
+
+      if (!question) return;
+
+      const targets = [
+        document.getElementById("questionSummary"),
+        document.getElementById("activeQuestionDisplay")
+      ].filter(Boolean);
+
+      targets.forEach(target => {
+        target.textContent = question;
+      });
+
+      window.STEMNationActiveInvestigationQuestion = {
+        key: ACTIVE_INVESTIGATION_KEY,
+        question,
+        record: activeRecord
+      };
+    }
+
+    document.addEventListener("DOMContentLoaded", renderActiveQuestion);
+    window.addEventListener("focus", renderActiveQuestion);
+    window.addEventListener("storage", renderActiveQuestion);
+
+    console.log("MI-2B-R1 ACTIVE INVESTIGATION QUESTION BRIDGE ACTIVE");
+  })();
+</script>
+
 </body>
 </html>

@@ -730,5 +730,96 @@
     renderStudentIdentity();
   </script>
   <script src="{{ url_for('static', filename='js/academy_mission_record.js') }}?v=step2c1"></script>
+
+<script>
+  // MI-2B-R1 ACTIVE INVESTIGATION QUESTION BRIDGE
+  (function () {
+    const ACTIVE_INVESTIGATION_KEY = "stemNationActiveInvestigationQuestionV1";
+    const RANKING_KEY = "stemNationQuestionPriorityRankingV1";
+
+    function readJson(key) {
+      try {
+        return JSON.parse(localStorage.getItem(key) || "null");
+      } catch (error) {
+        return null;
+      }
+    }
+
+    function findQuestion(value) {
+      if (!value) return "";
+      if (typeof value === "string") return value.trim();
+
+      if (Array.isArray(value)) {
+        for (const item of value) {
+          const found = findQuestion(item);
+          if (found) return found;
+        }
+        return "";
+      }
+
+      if (typeof value === "object") {
+        const direct = [
+          "activeInvestigationQuestion",
+          "activeQuestion",
+          "topQuestion",
+          "selectedQuestion",
+          "question"
+        ];
+
+        for (const field of direct) {
+          const found = findQuestion(value[field]);
+          if (found) return found;
+        }
+
+        const collections = [
+          "ranking",
+          "rankedQuestions",
+          "selectedQuestions",
+          "priorities",
+          "questions"
+        ];
+
+        for (const field of collections) {
+          const found = findQuestion(value[field]);
+          if (found) return found;
+        }
+      }
+
+      return "";
+    }
+
+    function renderActiveInvestigationPanel() {
+      const question =
+        findQuestion(readJson(ACTIVE_INVESTIGATION_KEY)) ||
+        findQuestion(readJson(RANKING_KEY));
+
+      if (!question) return;
+
+      if (document.getElementById("mi2bR1ActiveInvestigationPanel")) {
+        document.querySelector("#mi2bR1ActiveInvestigationPanel [data-active-question]").textContent = question;
+        return;
+      }
+
+      const panel = document.createElement("section");
+      panel.id = "mi2bR1ActiveInvestigationPanel";
+      panel.className = "debrief-card";
+      panel.innerHTML = `
+        <div class="kicker">Active Investigation Question</div>
+        <h2 data-active-question>${question}</h2>
+        <p>This question was carried forward from the Council ranking as the investigation focus.</p>
+      `;
+
+      const main = document.querySelector("main") || document.body;
+      main.insertBefore(panel, main.firstChild);
+    }
+
+    document.addEventListener("DOMContentLoaded", renderActiveInvestigationPanel);
+    window.addEventListener("focus", renderActiveInvestigationPanel);
+    window.addEventListener("storage", renderActiveInvestigationPanel);
+
+    console.log("MI-2B-R1 ACTIVE INVESTIGATION QUESTION BRIDGE ACTIVE");
+  })();
+</script>
+
 </body>
 </html>

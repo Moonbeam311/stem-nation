@@ -987,6 +987,7 @@
     const RANKING_KEY = "stemNationQuestionPriorityRankingV1";
     const JUSTIFICATION_KEY = "stemNationQuestionJustificationV1";
     const REACTION_KEY = "stemNationAdvisorReactionV1";
+    const ACTIVE_INVESTIGATION_KEY = "stemNationActiveInvestigationQuestionV1";
 
     const reactionFeed = document.getElementById("reactionFeed");
     const hud = document.getElementById("hud");
@@ -1177,6 +1178,62 @@
       Healer: "/static/animations/healer_top_text_removed_crop_only.png",
       Guardian: "/static/animations/guardian_face_centered_crop_only.png"
     };
+
+
+    // MI-2B-R1 ACTIVE INVESTIGATION QUESTION BRIDGE
+    function mi2bR1SaveActiveInvestigationQuestion() {
+      const question = Array.isArray(ranking) && ranking.length ? ranking[0] : "";
+
+      if (!question) {
+        return null;
+      }
+
+      let savedRanking = {};
+      let savedJustification = {};
+
+      try {
+        savedRanking = JSON.parse(localStorage.getItem(RANKING_KEY) || "{}") || {};
+      } catch (error) {
+        savedRanking = {};
+      }
+
+      try {
+        savedJustification = JSON.parse(localStorage.getItem(JUSTIFICATION_KEY) || "{}") || {};
+      } catch (error) {
+        savedJustification = {};
+      }
+
+      const activeRecord = {
+        activeInvestigationQuestion: question,
+        question,
+        sourceKey: RANKING_KEY,
+        ranking: Array.isArray(ranking) ? ranking.slice(0, 3) : [],
+        justifications: Array.isArray(justifications) ? justifications : [],
+        justificationRecord: savedJustification,
+        activatedFrom: "advisor_reactions",
+        activatedAt: new Date().toISOString(),
+        status: "active"
+      };
+
+      localStorage.setItem(ACTIVE_INVESTIGATION_KEY, JSON.stringify(activeRecord));
+
+      const bridgedRanking = {
+        ...savedRanking,
+        ranking: activeRecord.ranking,
+        rankedQuestions: activeRecord.ranking,
+        selectedQuestions: activeRecord.ranking,
+        topQuestion: question,
+        selectedQuestion: question,
+        activeQuestion: question,
+        activeInvestigationQuestion: question,
+        activeInvestigationQuestionKey: ACTIVE_INVESTIGATION_KEY,
+        bridgedAt: activeRecord.activatedAt
+      };
+
+      localStorage.setItem(RANKING_KEY, JSON.stringify(bridgedRanking));
+
+      return activeRecord;
+    }
 
     function buildReaction(question, index) {
       const reaction = advisorMap[question] || advisorMap["What changed?"];
