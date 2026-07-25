@@ -1,0 +1,662 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Revise or Act | STEM Nation</title>
+
+  <!-- MI-2K REVISE OR ACT DECISION CHAMBER -->
+
+  <style>
+    :root {
+      color-scheme: dark;
+      --text: #f8fafc;
+      --muted: rgba(226,232,240,.76);
+      --gold: #f6d56f;
+      --blue: #8bd3ff;
+      --green: #86efac;
+      --red: #fda4af;
+      --panel: rgba(8,18,34,.94);
+      --panel2: rgba(13,27,48,.96);
+      --line: rgba(255,255,255,.16);
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      font-family: Inter, system-ui, sans-serif;
+      color: var(--text);
+      background:
+        radial-gradient(circle at 16% 12%, rgba(139,211,255,.14), transparent 32%),
+        radial-gradient(circle at 86% 18%, rgba(246,213,111,.16), transparent 30%),
+        linear-gradient(135deg,#030712,#07111f 55%,#0f172a);
+    }
+
+    main {
+      width: min(1180px, calc(100% - 28px));
+      margin: 0 auto;
+      padding: 32px 0 48px;
+    }
+
+    a, .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 42px;
+      border-radius: 999px;
+      padding: 10px 16px;
+      border: 1px solid var(--line);
+      background: rgba(255,255,255,.06);
+      color: var(--text);
+      text-decoration: none;
+      font-weight: 900;
+      cursor: pointer;
+    }
+
+    .btn.primary {
+      border: 0;
+      background: linear-gradient(135deg,#f6d56f,#ffc83d);
+      color: #111827;
+    }
+
+    .btn.success {
+      border: 0;
+      background: linear-gradient(135deg,#bbf7d0,#6ee7b7);
+      color: #052e16;
+    }
+
+    .topbar {
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      flex-wrap: wrap;
+      margin-bottom: 18px;
+    }
+
+    .audio-state {
+      display: inline-flex;
+      align-items: center;
+      border-radius: 999px;
+      border: 1px solid rgba(139,211,255,.25);
+      background: rgba(139,211,255,.08);
+      color: var(--blue);
+      padding: 7px 10px;
+      font-weight: 950;
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: .08em;
+    }
+
+    .hero, .panel {
+      border: 1px solid var(--line);
+      border-radius: 28px;
+      background: var(--panel);
+      padding: 24px;
+      box-shadow: 0 24px 80px rgba(0,0,0,.35);
+    }
+
+    .kicker {
+      color: var(--blue);
+      text-transform: uppercase;
+      letter-spacing: .14em;
+      font-size: 13px;
+      font-weight: 950;
+    }
+
+    h1 {
+      margin: 8px 0 12px;
+      color: var(--gold);
+      font-size: clamp(42px,7vw,78px);
+      line-height: .92;
+      letter-spacing: -.055em;
+    }
+
+    h2 {
+      margin: 0 0 10px;
+      color: var(--gold);
+      font-size: 30px;
+    }
+
+    .hero p, .brief {
+      color: rgba(248,250,252,.84);
+      line-height: 1.45;
+      font-size: 18px;
+    }
+
+    .source-grid {
+      margin-top: 16px;
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 12px;
+    }
+
+    .source-card {
+      border: 1px solid rgba(139,211,255,.22);
+      border-radius: 18px;
+      background: rgba(255,255,255,.055);
+      padding: 14px;
+      line-height: 1.4;
+    }
+
+    .source-card strong {
+      color: var(--blue);
+      display: block;
+      text-transform: uppercase;
+      letter-spacing: .08em;
+      font-size: 12px;
+      margin-bottom: 5px;
+    }
+
+    .layout {
+      margin-top: 18px;
+      display: grid;
+      grid-template-columns: minmax(0, 1.1fr) minmax(310px, .9fr);
+      gap: 18px;
+      align-items: start;
+    }
+
+    .move-grid {
+      display: grid;
+      gap: 12px;
+    }
+
+    .move-card {
+      border: 1px solid rgba(139,211,255,.24);
+      border-radius: 22px;
+      background: var(--panel2);
+      padding: 16px;
+      transition: transform .2s ease, border-color .2s ease, box-shadow .2s ease;
+    }
+
+    .move-card.selected {
+      border-color: rgba(246,213,111,.78);
+      box-shadow: 0 0 0 4px rgba(246,213,111,.12), 0 0 42px rgba(246,213,111,.18);
+      transform: translateY(-2px) scale(1.01);
+      animation: movePulse .55s ease;
+    }
+
+    @keyframes movePulse {
+      0% { transform: scale(.99); }
+      55% { transform: scale(1.025); }
+      100% { transform: translateY(-2px) scale(1.01); }
+    }
+
+    .move-card h3 {
+      margin: 0 0 8px;
+      color: var(--gold);
+      font-size: 25px;
+    }
+
+    .move-card p {
+      margin: 0 0 12px;
+      color: rgba(248,250,252,.86);
+      line-height: 1.45;
+    }
+
+    .tag {
+      display: inline-flex;
+      border-radius: 999px;
+      padding: 6px 10px;
+      background: rgba(255,255,255,.07);
+      border: 1px solid rgba(255,255,255,.12);
+      color: var(--blue);
+      font-weight: 950;
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: .08em;
+      margin-bottom: 10px;
+    }
+
+    .step {
+      border: 1px solid rgba(255,255,255,.13);
+      border-radius: 18px;
+      background: rgba(255,255,255,.055);
+      padding: 14px;
+      margin-bottom: 12px;
+    }
+
+    .step.completed {
+      border-color: rgba(134,239,172,.46);
+      box-shadow: 0 0 28px rgba(134,239,172,.1);
+    }
+
+    .step strong {
+      display: block;
+      color: var(--blue);
+      text-transform: uppercase;
+      letter-spacing: .08em;
+      font-size: 12px;
+      margin-bottom: 6px;
+    }
+
+    textarea {
+      width: 100%;
+      min-height: 110px;
+      border-radius: 16px;
+      border: 1px solid rgba(255,255,255,.16);
+      background: rgba(3,7,18,.72);
+      color: var(--text);
+      padding: 12px;
+      font: inherit;
+      resize: vertical;
+      line-height: 1.4;
+    }
+
+    .meter {
+      margin-top: 14px;
+      border: 1px solid rgba(255,255,255,.14);
+      border-radius: 18px;
+      background: rgba(8,18,34,.74);
+      padding: 12px;
+    }
+
+    .meter-row {
+      display: flex;
+      justify-content: space-between;
+      font-weight: 900;
+      margin-bottom: 8px;
+    }
+
+    .track {
+      height: 14px;
+      border-radius: 999px;
+      overflow: hidden;
+      background: rgba(255,255,255,.1);
+    }
+
+    .fill {
+      height: 100%;
+      width: 0%;
+      border-radius: 999px;
+      background: linear-gradient(90deg,#8bd3ff,#86efac,#f6d56f);
+      transition: width .35s ease;
+    }
+
+    .chamber-visual {
+      margin-top: 14px;
+      border: 1px solid rgba(139,211,255,.25);
+      border-radius: 22px;
+      background: rgba(139,211,255,.08);
+      padding: 18px;
+      min-height: 132px;
+      line-height: 1.45;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .chamber-visual.reward {
+      border-color: rgba(134,239,172,.46);
+      background: rgba(6,78,59,.22);
+      animation: rewardGlow .75s ease;
+    }
+
+    .chamber-visual.caution {
+      border-color: rgba(253,164,175,.46);
+      background: rgba(127,29,29,.22);
+      animation: cautionPulse .75s ease;
+    }
+
+    @keyframes rewardGlow {
+      0% { box-shadow: 0 0 0 rgba(134,239,172,0); }
+      50% { box-shadow: 0 0 45px rgba(134,239,172,.22); }
+      100% { box-shadow: 0 0 0 rgba(134,239,172,0); }
+    }
+
+    @keyframes cautionPulse {
+      0% { box-shadow: 0 0 0 rgba(253,164,175,0); }
+      50% { box-shadow: 0 0 45px rgba(253,164,175,.18); }
+      100% { box-shadow: 0 0 0 rgba(253,164,175,0); }
+    }
+
+    .output {
+      margin-top: 16px;
+      border: 1px solid rgba(134,239,172,.38);
+      background: rgba(6,78,59,.2);
+      border-radius: 22px;
+      padding: 16px;
+      white-space: pre-wrap;
+      line-height: 1.5;
+      min-height: 150px;
+    }
+
+    @media(max-width:980px) {
+      .layout, .source-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+
+<body>
+  <main>
+    <div class="topbar">
+      <a href="/test_the_claim">← Test the Claim</a>
+      <div>
+        <span class="audio-state" id="audioState">Audio ready on click</span>
+        <a href="/student_hub">Student Hub</a>
+      </div>
+    </div>
+
+    <section class="hero">
+      <div class="kicker">Revise or Act</div>
+      <h1>Decide the Next Move</h1>
+      <p>
+        After testing a claim, the Chief Investigator must decide whether to revise the claim, gather more evidence, or act with caution.
+      </p>
+
+      <div class="source-grid">
+        <div class="source-card">
+          <strong>Claim Test Record</strong>
+          <span id="testSummary">Loading claim test...</span>
+        </div>
+        <div class="source-card">
+          <strong>Cause Decision</strong>
+          <span id="causeSummary">Loading cause decision...</span>
+        </div>
+      </div>
+    </section>
+
+    <section class="layout">
+      <article class="panel">
+        <h2>Choose the Next Move</h2>
+        <p class="brief">
+          A responsible investigator does not rush after one test. Choose the next move and explain why.
+        </p>
+
+        <div class="move-grid" id="moveGrid"></div>
+
+        <div class="meter">
+          <div class="meter-row">
+            <span>Decision Readiness</span>
+            <span id="readinessLabel">0 / 2 decisions</span>
+          </div>
+          <div class="track"><div class="fill" id="readinessFill"></div></div>
+        </div>
+
+        <div class="chamber-visual" id="chamberVisual">
+          Chamber Signal: Choose whether to revise, gather more evidence, or act with caution.
+        </div>
+
+        <div class="output" id="decisionOutput">Revise or act decision not saved yet.</div>
+      </article>
+
+      <aside class="panel">
+        <h2>Decision Record</h2>
+
+        <div class="step" id="stepMove">
+          <strong>1. Next Move</strong>
+          <span id="moveText">Not chosen yet.</span>
+        </div>
+
+        <div class="step" id="stepReason">
+          <strong>2. Reason</strong>
+          <textarea id="reasonText" placeholder="Explain why this is the responsible next move."></textarea>
+        </div>
+
+        <button class="btn success" type="button" id="saveDecisionBtn">Save Revise or Act Decision</button>
+      </aside>
+    </section>
+  </main>
+
+  <script>
+    const CLAIM_TEST_KEY = "stemNationClaimTestV1";
+    const CAUSE_KEY = "stemNationCauseDecisionV1";
+    const REVISE_OR_ACT_KEY = "stemNationReviseOrActV1";
+
+    const state = {
+      move: "",
+      moveType: "",
+      reason: ""
+    };
+
+    const moveOptions = [
+      {
+        label: "Revise the Claim",
+        type: "revise_claim",
+        summary: "Change the cause claim because the test revealed uncertainty or a better direction.",
+        consequence: "Revision is responsible. The chamber rewards changing your mind when evidence requires it.",
+        tone: "reward"
+      },
+      {
+        label: "Gather More Evidence",
+        type: "gather_more_evidence",
+        summary: "Pause action and collect one more piece of evidence before deciding.",
+        consequence: "Strong caution. The chamber marks this as careful leadership before action.",
+        tone: "reward"
+      },
+      {
+        label: "Act With Caution",
+        type: "act_with_caution",
+        summary: "Move forward, but protect the team by naming the remaining risk and limiting the action.",
+        consequence: "Action allowed with limits. The chamber warns that risk must stay visible.",
+        tone: "caution"
+      }
+    ];
+
+    let audioContext = null;
+
+    function ensureAudio() {
+      const AudioContextClass = window.AudioContext || window.webkitAudioContext;
+      if (!AudioContextClass) return null;
+      if (!audioContext) audioContext = new AudioContextClass();
+      if (audioContext.state === "suspended") audioContext.resume();
+      document.getElementById("audioState").textContent = "Audio active";
+      return audioContext;
+    }
+
+    function playTone(kind) {
+      const ctx = ensureAudio();
+      if (!ctx) return;
+
+      const now = ctx.currentTime;
+      const gain = ctx.createGain();
+      const osc = ctx.createOscillator();
+
+      gain.connect(ctx.destination);
+      osc.connect(gain);
+
+      if (kind === "caution") {
+        osc.type = "sawtooth";
+        osc.frequency.setValueAtTime(220, now);
+        osc.frequency.exponentialRampToValueAtTime(150, now + 0.22);
+        gain.gain.setValueAtTime(0.0001, now);
+        gain.gain.exponentialRampToValueAtTime(0.16, now + 0.02);
+        gain.gain.exponentialRampToValueAtTime(0.0001, now + 0.28);
+        osc.start(now);
+        osc.stop(now + 0.3);
+        return;
+      }
+
+      if (kind === "save") {
+        osc.type = "sine";
+        osc.frequency.setValueAtTime(392, now);
+        osc.frequency.exponentialRampToValueAtTime(784, now + 0.18);
+        gain.gain.setValueAtTime(0.0001, now);
+        gain.gain.exponentialRampToValueAtTime(0.18, now + 0.03);
+        gain.gain.exponentialRampToValueAtTime(0.0001, now + 0.34);
+        osc.start(now);
+        osc.stop(now + 0.36);
+        return;
+      }
+
+      osc.type = "triangle";
+      osc.frequency.setValueAtTime(330, now);
+      osc.frequency.exponentialRampToValueAtTime(520, now + 0.16);
+      gain.gain.setValueAtTime(0.0001, now);
+      gain.gain.exponentialRampToValueAtTime(0.14, now + 0.03);
+      gain.gain.exponentialRampToValueAtTime(0.0001, now + 0.26);
+      osc.start(now);
+      osc.stop(now + 0.28);
+    }
+
+    function readJson(key) {
+      try { return JSON.parse(localStorage.getItem(key) || "null"); }
+      catch(e) { return null; }
+    }
+
+    function esc(value) {
+      return String(value ?? "")
+        .replaceAll("&","&amp;")
+        .replaceAll("<","&lt;")
+        .replaceAll(">","&gt;")
+        .replaceAll('"',"&quot;")
+        .replaceAll("'","&#039;");
+    }
+
+    function count() {
+      return [state.move, document.getElementById("reasonText")?.value.trim()].filter(Boolean).length;
+    }
+
+    function setVisual(message, tone) {
+      const visual = document.getElementById("chamberVisual");
+      visual.textContent = "Chamber Signal: " + message;
+      visual.classList.remove("reward", "caution");
+      void visual.offsetWidth;
+
+      if (tone === "caution") {
+        visual.classList.add("caution");
+        playTone("caution");
+      } else {
+        visual.classList.add("reward");
+        playTone("reward");
+      }
+    }
+
+    function renderSource() {
+      const test = readJson(CLAIM_TEST_KEY) || {};
+      const cause = readJson(CAUSE_KEY) || {};
+
+      document.getElementById("testSummary").textContent =
+        test.testMethod
+          ? `${test.testMethod} | Result: ${test.result || "not recorded"}`
+          : "No claim test record found yet.";
+
+      document.getElementById("causeSummary").textContent =
+        cause.selectedCause
+          ? `${cause.selectedCause} | ${cause.claimType || "claim"}`
+          : "No cause decision found yet.";
+    }
+
+    function renderMoves() {
+      const grid = document.getElementById("moveGrid");
+
+      grid.innerHTML = moveOptions.map(option => `
+        <section class="move-card ${state.move === option.label ? "selected" : ""}">
+          <span class="tag">${esc(option.type.replaceAll("_", " "))}</span>
+          <h3>${esc(option.label)}</h3>
+          <p>${esc(option.summary)}</p>
+          <button class="btn primary" type="button"
+            data-move="${esc(option.label)}"
+            data-type="${esc(option.type)}"
+            data-tone="${esc(option.tone)}"
+            data-message="${esc(option.consequence)}">
+            Choose This Move
+          </button>
+        </section>
+      `).join("");
+    }
+
+    function updateSteps() {
+      document.getElementById("moveText").textContent = state.move || "Not chosen yet.";
+      document.getElementById("stepMove").classList.toggle("completed", !!state.move);
+      document.getElementById("stepReason").classList.toggle("completed", !!document.getElementById("reasonText").value.trim());
+
+      const c = count();
+      document.getElementById("readinessLabel").textContent = `${c} / 2 decisions`;
+      document.getElementById("readinessFill").style.width = Math.round((c / 2) * 100) + "%";
+    }
+
+    function saveDecision() {
+      state.reason = document.getElementById("reasonText").value.trim();
+
+      if (!state.move || !state.reason) {
+        setVisual("Save blocked. Choose a next move and explain why.", "caution");
+        document.getElementById("decisionOutput").textContent =
+          "The Council pauses. Choose the next move and write a reason before saving.";
+        return;
+      }
+
+      const test = readJson(CLAIM_TEST_KEY) || {};
+      const cause = readJson(CAUSE_KEY) || {};
+
+      const record = {
+        activeInvestigationQuestion: test.activeInvestigationQuestion || cause.activeInvestigationQuestion || "No active question found.",
+        claimTest: test,
+        causeDecision: cause,
+        nextMove: state.move,
+        nextMoveType: state.moveType,
+        reason: state.reason,
+        status: "revise_or_act_saved",
+        nextPhase: "mission_resolution",
+        savedAt: new Date().toISOString()
+      };
+
+      localStorage.setItem(REVISE_OR_ACT_KEY, JSON.stringify(record));
+
+      document.getElementById("decisionOutput").textContent =
+`REVISE OR ACT DECISION SAVED
+
+Question:
+${record.activeInvestigationQuestion}
+
+Next move:
+${record.nextMove}
+
+Reason:
+${record.reason}
+
+Next:
+Mission Resolution.`;
+
+      setVisual("Decision saved. The mission can now move toward resolution.", "reward");
+      playTone("save");
+      window.STEMNationReviseOrAct = record;
+    }
+
+    function loadSaved() {
+      const saved = readJson(REVISE_OR_ACT_KEY);
+      if (saved) {
+        state.move = saved.nextMove || "";
+        state.moveType = saved.nextMoveType || "";
+        document.getElementById("reasonText").value = saved.reason || "";
+      }
+      render();
+    }
+
+    function render() {
+      renderSource();
+      renderMoves();
+      updateSteps();
+    }
+
+    document.addEventListener("DOMContentLoaded", () => {
+      document.addEventListener("click", function(event) {
+        const moveBtn = event.target.closest("button[data-move]");
+        if (moveBtn) {
+          event.preventDefault();
+          state.move = moveBtn.getAttribute("data-move") || "";
+          state.moveType = moveBtn.getAttribute("data-type") || "";
+          setVisual(moveBtn.getAttribute("data-message") || "Next move selected.", moveBtn.getAttribute("data-tone") || "reward");
+          render();
+          return;
+        }
+
+        const saveBtn = event.target.closest("#saveDecisionBtn");
+        if (saveBtn) {
+          event.preventDefault();
+          saveDecision();
+          return;
+        }
+      }, true);
+
+      document.getElementById("reasonText").addEventListener("input", updateSteps);
+      loadSaved();
+    });
+
+    window.addEventListener("focus", loadSaved);
+    window.addEventListener("storage", loadSaved);
+
+    console.log("MI-2K REVISE OR ACT DECISION CHAMBER ACTIVE");
+  </script>
+</body>
+</html>

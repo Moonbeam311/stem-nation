@@ -370,6 +370,11 @@ def first_gathering():
 
 
 
+
+@app.route("/revise_or_act")
+def revise_or_act():
+    return render_template("revise_or_act.html")
+
 @app.route("/test_the_claim")
 def test_the_claim():
     return render_template("test_the_claim.html")
