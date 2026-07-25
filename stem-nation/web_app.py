@@ -371,6 +371,11 @@ def first_gathering():
 
 
 
+
+@app.route("/mission_resolution")
+def mission_resolution():
+    return render_template("mission_resolution.html")
+
 @app.route("/revise_or_act")
 def revise_or_act():
     return render_template("revise_or_act.html")
