@@ -1,0 +1,608 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Name the Cause | STEM Nation</title>
+
+  <!-- MI-2I NAME THE CAUSE DECISION CHAMBER + AUDIO FEEDBACK -->
+
+  <style>
+    :root {
+      color-scheme: dark;
+      --text: #f8fafc;
+      --muted: rgba(226,232,240,.76);
+      --gold: #f6d56f;
+      --blue: #8bd3ff;
+      --green: #86efac;
+      --red: #fda4af;
+      --panel: rgba(8,18,34,.94);
+      --panel2: rgba(13,27,48,.96);
+      --line: rgba(255,255,255,.16);
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      font-family: Inter, system-ui, sans-serif;
+      color: var(--text);
+      background:
+        radial-gradient(circle at 16% 12%, rgba(139,211,255,.14), transparent 32%),
+        radial-gradient(circle at 86% 18%, rgba(246,213,111,.16), transparent 30%),
+        linear-gradient(135deg,#030712,#07111f 55%,#0f172a);
+    }
+
+    main {
+      width: min(1180px, calc(100% - 28px));
+      margin: 0 auto;
+      padding: 32px 0 48px;
+    }
+
+    a, .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 42px;
+      border-radius: 999px;
+      padding: 10px 16px;
+      border: 1px solid var(--line);
+      background: rgba(255,255,255,.06);
+      color: var(--text);
+      text-decoration: none;
+      font-weight: 900;
+      cursor: pointer;
+    }
+
+    .btn.primary {
+      border: 0;
+      background: linear-gradient(135deg,#f6d56f,#ffc83d);
+      color: #111827;
+    }
+
+    .btn.success {
+      border: 0;
+      background: linear-gradient(135deg,#bbf7d0,#6ee7b7);
+      color: #052e16;
+    }
+
+    .topbar {
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      flex-wrap: wrap;
+      margin-bottom: 18px;
+    }
+
+    .hero, .panel {
+      border: 1px solid var(--line);
+      border-radius: 28px;
+      background: var(--panel);
+      padding: 24px;
+      box-shadow: 0 24px 80px rgba(0,0,0,.35);
+    }
+
+    .kicker {
+      color: var(--blue);
+      text-transform: uppercase;
+      letter-spacing: .14em;
+      font-size: 13px;
+      font-weight: 950;
+    }
+
+    h1 {
+      margin: 8px 0 12px;
+      color: var(--gold);
+      font-size: clamp(42px,7vw,78px);
+      line-height: .92;
+      letter-spacing: -.055em;
+    }
+
+    h2 {
+      margin: 0 0 10px;
+      color: var(--gold);
+      font-size: 30px;
+    }
+
+    .hero p, .brief {
+      color: rgba(248,250,252,.84);
+      line-height: 1.45;
+      font-size: 18px;
+    }
+
+    .layout {
+      margin-top: 18px;
+      display: grid;
+      grid-template-columns: minmax(0, 1.1fr) minmax(310px, .9fr);
+      gap: 18px;
+      align-items: start;
+    }
+
+    .source-panel {
+      margin-top: 16px;
+      display: grid;
+      gap: 10px;
+    }
+
+    .source-card {
+      border: 1px solid rgba(139,211,255,.22);
+      border-radius: 18px;
+      background: rgba(255,255,255,.055);
+      padding: 14px;
+      line-height: 1.4;
+    }
+
+    .source-card strong {
+      color: var(--blue);
+      display: block;
+      text-transform: uppercase;
+      letter-spacing: .08em;
+      font-size: 12px;
+      margin-bottom: 5px;
+    }
+
+    .cause-grid {
+      display: grid;
+      gap: 12px;
+    }
+
+    .cause-card {
+      border: 1px solid rgba(139,211,255,.24);
+      border-radius: 22px;
+      background: var(--panel2);
+      padding: 16px;
+      transition: transform .2s ease, border-color .2s ease, box-shadow .2s ease;
+    }
+
+    .cause-card.selected {
+      border-color: rgba(246,213,111,.78);
+      box-shadow: 0 0 0 4px rgba(246,213,111,.12), 0 0 42px rgba(246,213,111,.18);
+      transform: translateY(-2px) scale(1.01);
+      animation: causePulse .55s ease;
+    }
+
+    @keyframes causePulse {
+      0% { transform: scale(.99); }
+      55% { transform: scale(1.025); }
+      100% { transform: translateY(-2px) scale(1.01); }
+    }
+
+    .cause-card h3 {
+      margin: 0 0 8px;
+      color: var(--gold);
+      font-size: 25px;
+    }
+
+    .cause-card p {
+      margin: 0 0 12px;
+      color: rgba(248,250,252,.86);
+      line-height: 1.45;
+    }
+
+    .tag {
+      display: inline-flex;
+      border-radius: 999px;
+      padding: 6px 10px;
+      background: rgba(255,255,255,.07);
+      border: 1px solid rgba(255,255,255,.12);
+      color: var(--blue);
+      font-weight: 950;
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: .08em;
+    }
+
+    .decision-step {
+      border: 1px solid rgba(255,255,255,.13);
+      border-radius: 18px;
+      background: rgba(255,255,255,.055);
+      padding: 14px;
+      margin-bottom: 12px;
+    }
+
+    .decision-step.completed {
+      border-color: rgba(134,239,172,.46);
+      box-shadow: 0 0 28px rgba(134,239,172,.1);
+    }
+
+    .decision-step strong {
+      display: block;
+      color: var(--blue);
+      text-transform: uppercase;
+      letter-spacing: .08em;
+      font-size: 12px;
+      margin-bottom: 6px;
+    }
+
+    textarea {
+      width: 100%;
+      min-height: 110px;
+      border-radius: 16px;
+      border: 1px solid rgba(255,255,255,.16);
+      background: rgba(3,7,18,.72);
+      color: var(--text);
+      padding: 12px;
+      font: inherit;
+      resize: vertical;
+      line-height: 1.4;
+    }
+
+    .consequence {
+      margin-top: 14px;
+      border: 1px solid rgba(139,211,255,.25);
+      border-radius: 22px;
+      background: rgba(139,211,255,.08);
+      padding: 16px;
+      min-height: 92px;
+      line-height: 1.45;
+    }
+
+    .consequence.reward {
+      border-color: rgba(134,239,172,.46);
+      background: rgba(6,78,59,.22);
+      animation: rewardGlow .75s ease;
+    }
+
+    .consequence.caution {
+      border-color: rgba(253,164,175,.46);
+      background: rgba(127,29,29,.22);
+      animation: cautionPulse .75s ease;
+    }
+
+    @keyframes rewardGlow {
+      0% { box-shadow: 0 0 0 rgba(134,239,172,0); }
+      50% { box-shadow: 0 0 45px rgba(134,239,172,.22); }
+      100% { box-shadow: 0 0 0 rgba(134,239,172,0); }
+    }
+
+    @keyframes cautionPulse {
+      0% { box-shadow: 0 0 0 rgba(253,164,175,0); }
+      50% { box-shadow: 0 0 45px rgba(253,164,175,.18); }
+      100% { box-shadow: 0 0 0 rgba(253,164,175,0); }
+    }
+
+    .output {
+      margin-top: 16px;
+      border: 1px solid rgba(134,239,172,.38);
+      background: rgba(6,78,59,.2);
+      border-radius: 22px;
+      padding: 16px;
+      white-space: pre-wrap;
+      line-height: 1.5;
+      min-height: 150px;
+    }
+
+    .audio-state {
+      display: inline-flex;
+      align-items: center;
+      border-radius: 999px;
+      border: 1px solid rgba(139,211,255,.25);
+      background: rgba(139,211,255,.08);
+      color: var(--blue);
+      padding: 7px 10px;
+      font-weight: 950;
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: .08em;
+    }
+
+    @media(max-width:980px) {
+      .layout { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+
+<body>
+  <main>
+    <div class="topbar">
+      <a href="/evidence_comparison">← Evidence Comparison</a>
+      <div>
+        <span class="audio-state" id="audioState">Audio ready on click</span>
+        <a href="/student_hub">Student Hub</a>
+      </div>
+    </div>
+
+    <section class="hero">
+      <div class="kicker">Name the Cause</div>
+      <h1>Make a Claim Carefully</h1>
+      <p>
+        The Chief Investigator has compared evidence. Now name the most careful cause claim and explain what evidence supports it.
+      </p>
+
+      <div class="source-panel">
+        <div class="source-card">
+          <strong>Active Question</strong>
+          <span id="questionText">Loading...</span>
+        </div>
+        <div class="source-card">
+          <strong>Evidence Comparison Record</strong>
+          <span id="comparisonText">Loading...</span>
+        </div>
+      </div>
+    </section>
+
+    <section class="layout">
+      <article class="panel">
+        <h2>Cause Claim Options</h2>
+        <p class="brief">
+          Choose the cause claim that best fits the evidence. The chamber will respond to the strength of your reasoning.
+        </p>
+
+        <div class="cause-grid" id="causeGrid"></div>
+
+        <div class="consequence" id="consequencePanel">
+          Council Signal: Choose carefully. A strong claim uses evidence and still names what remains uncertain.
+        </div>
+
+        <div class="output" id="causeOutput">Cause decision not saved yet.</div>
+      </article>
+
+      <aside class="panel">
+        <h2>Decision Record</h2>
+
+        <div class="decision-step" id="stepClaim">
+          <strong>1. Cause Claim</strong>
+          <span id="claimText">Not chosen yet.</span>
+        </div>
+
+        <div class="decision-step" id="stepExplain">
+          <strong>2. Evidence Explanation</strong>
+          <textarea id="explanationText" placeholder="Explain why this cause fits the evidence."></textarea>
+        </div>
+
+        <button class="btn success" type="button" id="saveCauseBtn">Save Cause Decision</button>
+        <button class="btn" type="button" id="audioTestBtn">Test Audio Feedback</button>
+      </aside>
+    </section>
+  </main>
+
+  <script>
+    const COMPARISON_KEY = "stemNationEvidenceComparisonV1";
+    const CAUSE_KEY = "stemNationCauseDecisionV1";
+
+    const state = {
+      selectedCause: "",
+      claimType: "",
+      explanation: ""
+    };
+
+    const causeOptions = [
+      {
+        label: "Careful Evidence Claim",
+        type: "strong_claim",
+        summary: "The visible change is the best current cause clue, but more evidence is still needed before final action.",
+        consequence: "Strong claim: You used evidence while keeping uncertainty visible.",
+        tone: "reward"
+      },
+      {
+        label: "Fast Guess Claim",
+        type: "caution_claim",
+        summary: "The first visible clue must be the cause because it appears first.",
+        consequence: "Caution: This claim moves too quickly. The chamber warns that first evidence is not always the cause.",
+        tone: "caution"
+      },
+      {
+        label: "Pattern-Based Claim",
+        type: "developing_claim",
+        summary: "The cause is probably connected to the pattern/history signal, but the test is not complete yet.",
+        consequence: "Developing claim: You are using patterns, but the chamber asks for one more test before full confidence.",
+        tone: "reward"
+      }
+    ];
+
+    let audioContext = null;
+
+    function ensureAudio() {
+      const AudioContextClass = window.AudioContext || window.webkitAudioContext;
+      if (!AudioContextClass) return null;
+      if (!audioContext) audioContext = new AudioContextClass();
+      if (audioContext.state === "suspended") audioContext.resume();
+      document.getElementById("audioState").textContent = "Audio active";
+      return audioContext;
+    }
+
+    function playTone(kind) {
+      const ctx = ensureAudio();
+      if (!ctx) return;
+
+      const now = ctx.currentTime;
+      const gain = ctx.createGain();
+      const osc = ctx.createOscillator();
+
+      gain.connect(ctx.destination);
+      osc.connect(gain);
+
+      if (kind === "caution") {
+        osc.type = "sawtooth";
+        osc.frequency.setValueAtTime(220, now);
+        osc.frequency.exponentialRampToValueAtTime(150, now + 0.22);
+        gain.gain.setValueAtTime(0.0001, now);
+        gain.gain.exponentialRampToValueAtTime(0.16, now + 0.02);
+        gain.gain.exponentialRampToValueAtTime(0.0001, now + 0.28);
+        osc.start(now);
+        osc.stop(now + 0.3);
+        return;
+      }
+
+      if (kind === "save") {
+        osc.type = "sine";
+        osc.frequency.setValueAtTime(392, now);
+        osc.frequency.exponentialRampToValueAtTime(784, now + 0.18);
+        gain.gain.setValueAtTime(0.0001, now);
+        gain.gain.exponentialRampToValueAtTime(0.18, now + 0.03);
+        gain.gain.exponentialRampToValueAtTime(0.0001, now + 0.34);
+        osc.start(now);
+        osc.stop(now + 0.36);
+        return;
+      }
+
+      osc.type = "triangle";
+      osc.frequency.setValueAtTime(330, now);
+      osc.frequency.exponentialRampToValueAtTime(520, now + 0.16);
+      gain.gain.setValueAtTime(0.0001, now);
+      gain.gain.exponentialRampToValueAtTime(0.14, now + 0.03);
+      gain.gain.exponentialRampToValueAtTime(0.0001, now + 0.26);
+      osc.start(now);
+      osc.stop(now + 0.28);
+    }
+
+    function readJson(key) {
+      try { return JSON.parse(localStorage.getItem(key) || "null"); }
+      catch(e) { return null; }
+    }
+
+    function esc(value) {
+      return String(value ?? "")
+        .replaceAll("&","&amp;")
+        .replaceAll("<","&lt;")
+        .replaceAll(">","&gt;")
+        .replaceAll('"',"&quot;")
+        .replaceAll("'","&#039;");
+    }
+
+    function comparisonRecord() {
+      return readJson(COMPARISON_KEY) || {};
+    }
+
+    function renderSource() {
+      const record = comparisonRecord();
+
+      document.getElementById("questionText").textContent =
+        record.activeInvestigationQuestion || "No active question found.";
+
+      document.getElementById("comparisonText").textContent =
+        record.strongestSignal
+          ? `${record.strongestSignal} from ${record.strongestAdvisor || "Council"} | Missing: ${record.missingEvidence || "not named"} | Risk: ${record.remainingRisk || "not named"}`
+          : "No evidence comparison record found yet.";
+    }
+
+    function setConsequence(message, tone) {
+      const panel = document.getElementById("consequencePanel");
+      panel.textContent = "Council Signal: " + message;
+      panel.classList.remove("reward", "caution");
+      void panel.offsetWidth;
+
+      if (tone === "caution") {
+        panel.classList.add("caution");
+        playTone("caution");
+      } else {
+        panel.classList.add("reward");
+        playTone("reward");
+      }
+    }
+
+    function renderCauses() {
+      const grid = document.getElementById("causeGrid");
+
+      grid.innerHTML = causeOptions.map(option => `
+        <section class="cause-card ${state.selectedCause === option.label ? "selected" : ""}">
+          <span class="tag">${esc(option.type.replaceAll("_", " "))}</span>
+          <h3>${esc(option.label)}</h3>
+          <p>${esc(option.summary)}</p>
+          <button class="btn primary" type="button" data-cause="${esc(option.label)}" data-type="${esc(option.type)}" data-tone="${esc(option.tone)}" data-message="${esc(option.consequence)}">
+            Choose this cause
+          </button>
+        </section>
+      `).join("");
+
+      document.querySelectorAll("[data-cause]").forEach(button => {
+        button.addEventListener("click", () => {
+          state.selectedCause = button.dataset.cause || "";
+          state.claimType = button.dataset.type || "";
+          setConsequence(button.dataset.message || "Cause claim selected.", button.dataset.tone || "reward");
+          render();
+        });
+      });
+    }
+
+    function renderSteps() {
+      document.getElementById("claimText").textContent =
+        state.selectedCause || "Not chosen yet.";
+
+      document.getElementById("stepClaim").classList.toggle("completed", !!state.selectedCause);
+      document.getElementById("stepExplain").classList.toggle("completed", !!document.getElementById("explanationText").value.trim());
+    }
+
+    function render() {
+      renderSource();
+      renderCauses();
+      renderSteps();
+    }
+
+    function saveCause() {
+      state.explanation = document.getElementById("explanationText").value.trim();
+
+      if (!state.selectedCause || !state.explanation) {
+        document.getElementById("causeOutput").textContent =
+          "The Council pauses. Choose a cause and write an evidence explanation before saving.";
+        setConsequence("Save blocked. The claim needs both a choice and an explanation.", "caution");
+        return;
+      }
+
+      const comparison = comparisonRecord();
+
+      const record = {
+        activeInvestigationQuestion: comparison.activeInvestigationQuestion || "No active question found.",
+        evidenceComparison: {
+          strongestSignal: comparison.strongestSignal || "",
+          strongestAdvisor: comparison.strongestAdvisor || "",
+          missingEvidence: comparison.missingEvidence || "",
+          remainingRisk: comparison.remainingRisk || ""
+        },
+        selectedCause: state.selectedCause,
+        claimType: state.claimType,
+        explanation: state.explanation,
+        status: "cause_decision_saved",
+        nextPhase: "test_the_claim",
+        savedAt: new Date().toISOString()
+      };
+
+      localStorage.setItem(CAUSE_KEY, JSON.stringify(record));
+
+      document.getElementById("causeOutput").textContent =
+`CAUSE DECISION SAVED
+
+Question:
+${record.activeInvestigationQuestion}
+
+Cause claim:
+${record.selectedCause}
+
+Claim type:
+${record.claimType}
+
+Explanation:
+${record.explanation}
+
+Next:
+Test the Claim.`;
+
+      setConsequence("Cause decision saved. The next chamber begins to unlock.", "reward");
+      playTone("save");
+      window.STEMNationCauseDecision = record;
+    }
+
+    function loadSaved() {
+      const saved = readJson(CAUSE_KEY);
+      if (saved) {
+        state.selectedCause = saved.selectedCause || "";
+        state.claimType = saved.claimType || "";
+        document.getElementById("explanationText").value = saved.explanation || "";
+      }
+      render();
+    }
+
+    document.addEventListener("DOMContentLoaded", () => {
+      document.getElementById("saveCauseBtn").addEventListener("click", saveCause);
+      document.getElementById("audioTestBtn").addEventListener("click", () => {
+        setConsequence("Audio test received. The chamber confirms sound feedback is active.", "reward");
+      });
+      document.getElementById("explanationText").addEventListener("input", renderSteps);
+      loadSaved();
+    });
+
+    console.log("MI-2I NAME THE CAUSE DECISION CHAMBER + AUDIO FEEDBACK ACTIVE");
+  </script>
+</body>
+</html>
