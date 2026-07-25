@@ -414,6 +414,153 @@
 
 /* CI-STAGE-54A GUIDED MISSION RETURN AND PROTOTYPE LINK POLISH */
 </style>
+
+<style>
+  /* MI-2M STUDENT HUB INVESTIGATION ARCHIVE CARD */
+  .mi2m-investigation-archive {
+    margin: 24px auto;
+    width: min(1120px, calc(100% - 28px));
+  }
+
+  .mi2m-archive-shell {
+    border: 1px solid rgba(255,255,255,.16);
+    border-radius: 28px;
+    background:
+      radial-gradient(circle at 12% 12%, rgba(139,211,255,.14), transparent 34%),
+      radial-gradient(circle at 86% 18%, rgba(246,213,111,.13), transparent 30%),
+      rgba(8,18,34,.92);
+    box-shadow: 0 24px 80px rgba(0,0,0,.34);
+    padding: 24px;
+    color: #f8fafc;
+  }
+
+  .mi2m-kicker {
+    color: #8bd3ff;
+    text-transform: uppercase;
+    letter-spacing: .14em;
+    font-size: 13px;
+    font-weight: 950;
+  }
+
+  .mi2m-archive-shell h2 {
+    margin: 8px 0 10px;
+    color: #f6d56f;
+    font-size: clamp(30px, 4vw, 48px);
+    line-height: 1;
+  }
+
+  .mi2m-archive-intro {
+    margin: 0 0 16px;
+    color: rgba(248,250,252,.82);
+    line-height: 1.45;
+    max-width: 850px;
+  }
+
+  .mi2m-status {
+    border: 1px solid rgba(139,211,255,.22);
+    border-radius: 18px;
+    background: rgba(139,211,255,.08);
+    padding: 12px 14px;
+    color: #8bd3ff;
+    font-weight: 900;
+    margin-bottom: 14px;
+  }
+
+  .mi2m-status.complete {
+    border-color: rgba(134,239,172,.42);
+    background: rgba(6,78,59,.22);
+    color: #bbf7d0;
+    animation: mi2mCompleteGlow .85s ease;
+  }
+
+  @keyframes mi2mCompleteGlow {
+    0% { box-shadow: 0 0 0 rgba(134,239,172,0); }
+    50% { box-shadow: 0 0 48px rgba(134,239,172,.18); }
+    100% { box-shadow: 0 0 0 rgba(134,239,172,0); }
+  }
+
+  .mi2m-archive-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 12px;
+    margin-bottom: 14px;
+  }
+
+  .mi2m-archive-card {
+    border: 1px solid rgba(255,255,255,.13);
+    border-radius: 20px;
+    background: rgba(255,255,255,.055);
+    padding: 14px;
+    min-height: 96px;
+  }
+
+  .mi2m-archive-card strong {
+    display: block;
+    color: #8bd3ff;
+    text-transform: uppercase;
+    letter-spacing: .08em;
+    font-size: 12px;
+    margin-bottom: 7px;
+  }
+
+  .mi2m-archive-card span {
+    color: #f8fafc;
+    line-height: 1.45;
+    white-space: pre-wrap;
+  }
+
+  .mi2m-sequence {
+    display: grid;
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+    gap: 8px;
+    margin: 14px 0 16px;
+  }
+
+  .mi2m-step {
+    border: 1px solid rgba(246,213,111,.24);
+    background: rgba(120,83,12,.16);
+    color: #fff4d0;
+    border-radius: 999px;
+    padding: 8px 10px;
+    font-size: 12px;
+    font-weight: 900;
+    text-align: center;
+  }
+
+  .mi2m-actions {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+  }
+
+  .mi2m-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 42px;
+    border-radius: 999px;
+    padding: 10px 16px;
+    border: 1px solid rgba(255,255,255,.16);
+    background: rgba(255,255,255,.06);
+    color: #f8fafc;
+    text-decoration: none;
+    font-weight: 900;
+  }
+
+  .mi2m-btn.mi2m-primary {
+    border: 0;
+    background: linear-gradient(135deg,#f6d56f,#ffc83d);
+    color: #111827;
+  }
+
+  @media(max-width: 840px) {
+    .mi2m-archive-grid,
+    .mi2m-sequence {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>
+
 </head>
 <body>
   <!-- CI-STAGE-9 — Student Hub Cleanup -->
@@ -639,6 +786,139 @@ function ciStage48BuildMissionCheckpoint(){
 
 document.addEventListener("DOMContentLoaded", ciStage48BuildMissionCheckpoint);
 console.log("CI-STAGE-48 MISSION CHECKPOINT STUDENT HUB POLISH ACTIVE");
+</script>
+
+
+<!-- MI-2M STUDENT HUB INVESTIGATION ARCHIVE CARD -->
+<section class="mi2m-investigation-archive" id="mi2mInvestigationArchive">
+  <div class="mi2m-archive-shell">
+    <div class="mi2m-kicker">Investigation Archive</div>
+    <h2>Completed Active Investigation</h2>
+    <p class="mi2m-archive-intro">
+      When a mission is resolved, the Student Hub keeps the record here. This shows what the Chief Investigator asked,
+      tested, decided, and still needs to remember.
+    </p>
+
+    <div class="mi2m-status" id="mi2mArchiveStatus">
+      No completed investigation archive found yet.
+    </div>
+
+    <div class="mi2m-archive-grid">
+      <article class="mi2m-archive-card">
+        <strong>Question</strong>
+        <span id="mi2mArchiveQuestion">Not recorded yet.</span>
+      </article>
+
+      <article class="mi2m-archive-card">
+        <strong>Resolution</strong>
+        <span id="mi2mArchiveResolution">Not recorded yet.</span>
+      </article>
+
+      <article class="mi2m-archive-card">
+        <strong>Final Lesson</strong>
+        <span id="mi2mArchiveLesson">Not recorded yet.</span>
+      </article>
+
+      <article class="mi2m-archive-card">
+        <strong>Remaining Uncertainty</strong>
+        <span id="mi2mArchiveUncertainty">Not recorded yet.</span>
+      </article>
+    </div>
+
+    <div class="mi2m-sequence" id="mi2mArchiveSequence"></div>
+
+    <div class="mi2m-actions">
+      <a class="mi2m-btn mi2m-primary" href="/mission_resolution">Review Mission Resolution</a>
+      <a class="mi2m-btn" href="/revise_or_act">Review Revise or Act</a>
+      <a class="mi2m-btn" href="/active_investigation">Review Investigation Chain</a>
+    </div>
+  </div>
+</section>
+
+
+<script>
+  // MI-2M STUDENT HUB INVESTIGATION ARCHIVE CARD
+  (function(){
+    const RESOLUTION_KEY = "stemNationMissionResolutionV1";
+    const REVISE_OR_ACT_KEY = "stemNationReviseOrActV1";
+    const CLAIM_TEST_KEY = "stemNationClaimTestV1";
+    const CAUSE_KEY = "stemNationCauseDecisionV1";
+
+    function readJson(key) {
+      try { return JSON.parse(localStorage.getItem(key) || "null"); }
+      catch(error) { return null; }
+    }
+
+    function text(id, value) {
+      const el = document.getElementById(id);
+      if (el) el.textContent = value || "Not recorded yet.";
+    }
+
+    function labelStep(step) {
+      return String(step || "")
+        .replaceAll("_", " ")
+        .replace(/\b\w/g, c => c.toUpperCase());
+    }
+
+    function renderArchive() {
+      const resolution = readJson(RESOLUTION_KEY);
+      const revise = readJson(REVISE_OR_ACT_KEY);
+      const test = readJson(CLAIM_TEST_KEY);
+      const cause = readJson(CAUSE_KEY);
+
+      const status = document.getElementById("mi2mArchiveStatus");
+      const sequence = document.getElementById("mi2mArchiveSequence");
+
+      if (!status || !sequence) return;
+
+      if (!resolution) {
+        status.textContent = "No completed investigation archive found yet. Complete Mission Resolution to unlock this card.";
+        status.classList.remove("complete");
+
+        text("mi2mArchiveQuestion", revise?.activeInvestigationQuestion || test?.activeInvestigationQuestion || cause?.activeInvestigationQuestion || "Not recorded yet.");
+        text("mi2mArchiveResolution", "Mission Resolution not saved yet.");
+        text("mi2mArchiveLesson", "Not recorded yet.");
+        text("mi2mArchiveUncertainty", "Not recorded yet.");
+        sequence.innerHTML = "";
+        return;
+      }
+
+      status.textContent = "Archive complete. This investigation sequence has been saved in the Student Hub.";
+      status.classList.add("complete");
+
+      text("mi2mArchiveQuestion", resolution.activeInvestigationQuestion);
+      text("mi2mArchiveResolution", resolution.resolution);
+      text("mi2mArchiveLesson", resolution.finalLesson);
+      text("mi2mArchiveUncertainty", resolution.remainingUncertainty);
+
+      const completed = Array.isArray(resolution.completedSequence)
+        ? resolution.completedSequence
+        : [
+            "active_investigation_question",
+            "council_command_table",
+            "active_investigation_launch",
+            "council_reports",
+            "evidence_review",
+            "evidence_comparison",
+            "name_the_cause",
+            "test_the_claim",
+            "revise_or_act",
+            "mission_resolution"
+          ];
+
+      sequence.innerHTML = completed
+        .map(step => `<div class="mi2m-step">${labelStep(step)}</div>`)
+        .join("");
+
+      window.STEMNationInvestigationArchiveCard = resolution;
+    }
+
+    document.addEventListener("DOMContentLoaded", renderArchive);
+    window.addEventListener("focus", renderArchive);
+    window.addEventListener("storage", renderArchive);
+
+    console.log("MI-2M STUDENT HUB INVESTIGATION ARCHIVE CARD ACTIVE");
+  })();
 </script>
 
 </body>
