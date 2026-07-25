@@ -369,6 +369,11 @@ def first_gathering():
 
 
 
+
+@app.route("/test_the_claim")
+def test_the_claim():
+    return render_template("test_the_claim.html")
+
 @app.route("/name_the_cause")
 def name_the_cause():
     return render_template("name_the_cause.html")

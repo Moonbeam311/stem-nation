@@ -1,0 +1,859 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Test the Claim | STEM Nation</title>
+
+  <!-- MI-2J TEST THE CLAIM CHAMBER -->
+
+  <style>
+    :root {
+      color-scheme: dark;
+      --text: #f8fafc;
+      --muted: rgba(226,232,240,.76);
+      --gold: #f6d56f;
+      --blue: #8bd3ff;
+      --green: #86efac;
+      --red: #fda4af;
+      --panel: rgba(8,18,34,.94);
+      --panel2: rgba(13,27,48,.96);
+      --line: rgba(255,255,255,.16);
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      font-family: Inter, system-ui, sans-serif;
+      color: var(--text);
+      background:
+        radial-gradient(circle at 16% 12%, rgba(139,211,255,.14), transparent 32%),
+        radial-gradient(circle at 86% 18%, rgba(246,213,111,.16), transparent 30%),
+        linear-gradient(135deg,#030712,#07111f 55%,#0f172a);
+    }
+
+    main {
+      width: min(1180px, calc(100% - 28px));
+      margin: 0 auto;
+      padding: 32px 0 48px;
+    }
+
+    a, .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 42px;
+      border-radius: 999px;
+      padding: 10px 16px;
+      border: 1px solid var(--line);
+      background: rgba(255,255,255,.06);
+      color: var(--text);
+      text-decoration: none;
+      font-weight: 900;
+      cursor: pointer;
+    }
+
+    .btn.primary {
+      border: 0;
+      background: linear-gradient(135deg,#f6d56f,#ffc83d);
+      color: #111827;
+    }
+
+    .btn.success {
+      border: 0;
+      background: linear-gradient(135deg,#bbf7d0,#6ee7b7);
+      color: #052e16;
+    }
+
+    .topbar {
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      flex-wrap: wrap;
+      margin-bottom: 18px;
+    }
+
+    .audio-state {
+      display: inline-flex;
+      align-items: center;
+      border-radius: 999px;
+      border: 1px solid rgba(139,211,255,.25);
+      background: rgba(139,211,255,.08);
+      color: var(--blue);
+      padding: 7px 10px;
+      font-weight: 950;
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: .08em;
+    }
+
+    .hero, .panel {
+      border: 1px solid var(--line);
+      border-radius: 28px;
+      background: var(--panel);
+      padding: 24px;
+      box-shadow: 0 24px 80px rgba(0,0,0,.35);
+    }
+
+    .kicker {
+      color: var(--blue);
+      text-transform: uppercase;
+      letter-spacing: .14em;
+      font-size: 13px;
+      font-weight: 950;
+    }
+
+    h1 {
+      margin: 8px 0 12px;
+      color: var(--gold);
+      font-size: clamp(42px,7vw,78px);
+      line-height: .92;
+      letter-spacing: -.055em;
+    }
+
+    h2 {
+      margin: 0 0 10px;
+      color: var(--gold);
+      font-size: 30px;
+    }
+
+    .hero p, .brief {
+      color: rgba(248,250,252,.84);
+      line-height: 1.45;
+      font-size: 18px;
+    }
+
+    .source-grid {
+      margin-top: 16px;
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 12px;
+    }
+
+    .source-card {
+      border: 1px solid rgba(139,211,255,.22);
+      border-radius: 18px;
+      background: rgba(255,255,255,.055);
+      padding: 14px;
+      line-height: 1.4;
+    }
+
+    .source-card strong {
+      color: var(--blue);
+      display: block;
+      text-transform: uppercase;
+      letter-spacing: .08em;
+      font-size: 12px;
+      margin-bottom: 5px;
+    }
+
+    .layout {
+      margin-top: 18px;
+      display: grid;
+      grid-template-columns: minmax(0, 1.1fr) minmax(310px, .9fr);
+      gap: 18px;
+      align-items: start;
+    }
+
+    .test-grid {
+      display: grid;
+      gap: 12px;
+    }
+
+    .test-card {
+      border: 1px solid rgba(139,211,255,.24);
+      border-radius: 22px;
+      background: var(--panel2);
+      padding: 16px;
+      transition: transform .2s ease, border-color .2s ease, box-shadow .2s ease;
+    }
+
+    .test-card.selected {
+      border-color: rgba(246,213,111,.78);
+      box-shadow: 0 0 0 4px rgba(246,213,111,.12), 0 0 42px rgba(246,213,111,.18);
+      transform: translateY(-2px) scale(1.01);
+      animation: testPulse .55s ease;
+    }
+
+    @keyframes testPulse {
+      0% { transform: scale(.99); }
+      55% { transform: scale(1.025); }
+      100% { transform: translateY(-2px) scale(1.01); }
+    }
+
+    .test-card h3 {
+      margin: 0 0 8px;
+      color: var(--gold);
+      font-size: 25px;
+    }
+
+    .test-card p {
+      margin: 0 0 12px;
+      color: rgba(248,250,252,.86);
+      line-height: 1.45;
+    }
+
+    .tag {
+      display: inline-flex;
+      border-radius: 999px;
+      padding: 6px 10px;
+      background: rgba(255,255,255,.07);
+      border: 1px solid rgba(255,255,255,.12);
+      color: var(--blue);
+      font-weight: 950;
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: .08em;
+      margin-bottom: 10px;
+    }
+
+    .step {
+      border: 1px solid rgba(255,255,255,.13);
+      border-radius: 18px;
+      background: rgba(255,255,255,.055);
+      padding: 14px;
+      margin-bottom: 12px;
+    }
+
+    .step.completed {
+      border-color: rgba(134,239,172,.46);
+      box-shadow: 0 0 28px rgba(134,239,172,.1);
+    }
+
+    .step strong {
+      display: block;
+      color: var(--blue);
+      text-transform: uppercase;
+      letter-spacing: .08em;
+      font-size: 12px;
+      margin-bottom: 6px;
+    }
+
+    .choice {
+      display: block;
+      width: 100%;
+      text-align: left;
+      margin-top: 8px;
+      border: 1px solid rgba(255,255,255,.15);
+      border-radius: 14px;
+      background: rgba(8,18,34,.74);
+      color: var(--text);
+      padding: 11px;
+      font-weight: 850;
+      cursor: pointer;
+      transition: transform .18s ease, border-color .18s ease, background .18s ease;
+    }
+
+    .choice:hover {
+      transform: translateX(3px);
+      border-color: rgba(139,211,255,.42);
+    }
+
+    .choice.selected {
+      border-color: rgba(246,213,111,.62);
+      background: rgba(246,213,111,.12);
+      color: var(--gold);
+      animation: choicePop .32s ease;
+    }
+
+    @keyframes choicePop {
+      0% { transform: scale(.98); }
+      70% { transform: scale(1.02); }
+      100% { transform: scale(1); }
+    }
+
+    .meter {
+      margin-top: 14px;
+      border: 1px solid rgba(255,255,255,.14);
+      border-radius: 18px;
+      background: rgba(8,18,34,.74);
+      padding: 12px;
+    }
+
+    .meter-row {
+      display: flex;
+      justify-content: space-between;
+      font-weight: 900;
+      margin-bottom: 8px;
+    }
+
+    .track {
+      height: 14px;
+      border-radius: 999px;
+      overflow: hidden;
+      background: rgba(255,255,255,.1);
+    }
+
+    .fill {
+      height: 100%;
+      width: 0%;
+      border-radius: 999px;
+      background: linear-gradient(90deg,#8bd3ff,#86efac,#f6d56f);
+      transition: width .35s ease;
+    }
+
+    .chamber-visual {
+      margin-top: 14px;
+      border: 1px solid rgba(139,211,255,.25);
+      border-radius: 22px;
+      background: rgba(139,211,255,.08);
+      padding: 18px;
+      min-height: 132px;
+      line-height: 1.45;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .chamber-visual::after {
+      content: "";
+      position: absolute;
+      inset: auto -20% 0 -20%;
+      height: 5px;
+      background: linear-gradient(90deg, transparent, rgba(246,213,111,.9), transparent);
+      opacity: .25;
+    }
+
+    .chamber-visual.reward {
+      border-color: rgba(134,239,172,.46);
+      background: rgba(6,78,59,.22);
+      animation: rewardGlow .75s ease;
+    }
+
+    .chamber-visual.caution {
+      border-color: rgba(253,164,175,.46);
+      background: rgba(127,29,29,.22);
+      animation: cautionPulse .75s ease;
+    }
+
+    @keyframes rewardGlow {
+      0% { box-shadow: 0 0 0 rgba(134,239,172,0); }
+      50% { box-shadow: 0 0 45px rgba(134,239,172,.22); }
+      100% { box-shadow: 0 0 0 rgba(134,239,172,0); }
+    }
+
+    @keyframes cautionPulse {
+      0% { box-shadow: 0 0 0 rgba(253,164,175,0); }
+      50% { box-shadow: 0 0 45px rgba(253,164,175,.18); }
+      100% { box-shadow: 0 0 0 rgba(253,164,175,0); }
+    }
+
+    .output {
+      margin-top: 16px;
+      border: 1px solid rgba(134,239,172,.38);
+      background: rgba(6,78,59,.2);
+      border-radius: 22px;
+      padding: 16px;
+      white-space: pre-wrap;
+      line-height: 1.5;
+      min-height: 150px;
+    }
+
+    @media(max-width:980px) {
+      .layout, .source-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+
+<body>
+  <main>
+    <div class="topbar">
+      <a href="/name_the_cause">← Name the Cause</a>
+      <div>
+        <span class="audio-state" id="audioState">Audio ready on click</span>
+        <a href="/student_hub">Student Hub</a>
+      </div>
+    </div>
+
+    <section class="hero">
+      <div class="kicker">Test the Claim</div>
+      <h1>Test Before Action</h1>
+      <p>
+        A claim is not finished when it sounds right. The Chief Investigator must choose how to test it before the Council acts.
+      </p>
+
+      <div class="source-grid">
+        <div class="source-card">
+          <strong>Cause Decision</strong>
+          <span id="causeSummary">Loading cause decision...</span>
+        </div>
+        <div class="source-card">
+          <strong>Evidence Comparison</strong>
+          <span id="comparisonSummary">Loading evidence comparison...</span>
+        </div>
+      </div>
+    </section>
+
+    <section class="layout">
+      <article class="panel">
+        <h2>Choose a Test Method</h2>
+        <p class="brief">
+          Pick the test that best checks the claim before anyone takes action.
+        </p>
+
+        <div class="test-grid" id="testGrid"></div>
+
+        <div class="meter">
+          <div class="meter-row">
+            <span>Claim Test Readiness</span>
+            <span id="readinessLabel">0 / 3 decisions</span>
+          </div>
+          <div class="track"><div class="fill" id="readinessFill"></div></div>
+        </div>
+
+        <div class="chamber-visual" id="chamberVisual">
+          Chamber Signal: Choose a test, make a prediction, then run the chamber test.
+        </div>
+
+        <div class="output" id="testOutput">Claim test not saved yet.</div>
+      </article>
+
+      <aside class="panel">
+        <h2>Test Record</h2>
+
+        <div class="step" id="stepMethod">
+          <strong>1. Test Method</strong>
+          <span id="methodText">Not chosen yet.</span>
+        </div>
+
+        <div class="step" id="stepPrediction">
+          <strong>2. Prediction</strong>
+          <div id="predictionChoices"></div>
+        </div>
+
+        <div class="step" id="stepRun">
+          <strong>3. Run Test</strong>
+          <button class="btn primary" type="button" id="runTestBtn">Run Chamber Test</button>
+        </div>
+
+        <button class="btn success" type="button" id="saveTestBtn">Save Claim Test</button>
+      </aside>
+    </section>
+  </main>
+
+  <script>
+    const CAUSE_KEY = "stemNationCauseDecisionV1";
+    const COMPARISON_KEY = "stemNationEvidenceComparisonV1";
+    const CLAIM_TEST_KEY = "stemNationClaimTestV1";
+
+    const state = {
+      method: "",
+      methodType: "",
+      prediction: "",
+      result: "",
+      resultStrength: ""
+    };
+
+    const testOptions = [
+      {
+        label: "Second Scan Comparison",
+        type: "strong_test",
+        summary: "Compare a second scan or image against the current evidence before acting.",
+        consequence: "Strong test: A second scan reduces guesswork and checks whether the claim survives new evidence.",
+        result: "The chamber brightens. The claim is not final yet, but the test makes the next action safer.",
+        tone: "reward"
+      },
+      {
+        label: "Map and Memory Check",
+        type: "pattern_test",
+        summary: "Check older maps, records, or memory logs for the same pattern.",
+        consequence: "Useful test: Pattern history can support the claim, but it still needs one current confirmation.",
+        result: "The chamber opens a pattern layer. The claim gains context, but current evidence is still needed.",
+        tone: "reward"
+      },
+      {
+        label: "Act Without Testing",
+        type: "unsafe_test",
+        summary: "Move forward because the claim seems likely enough.",
+        consequence: "Caution: Acting without testing risks solving the wrong problem.",
+        result: "The chamber flashes caution. The Council blocks action until a real test is chosen.",
+        tone: "caution"
+      }
+    ];
+
+    const predictionOptions = [
+      "The test will support the claim.",
+      "The test may reveal a different cause.",
+      "The test may show that more evidence is still needed."
+    ];
+
+    let audioContext = null;
+
+    function ensureAudio() {
+      const AudioContextClass = window.AudioContext || window.webkitAudioContext;
+      if (!AudioContextClass) return null;
+      if (!audioContext) audioContext = new AudioContextClass();
+      if (audioContext.state === "suspended") audioContext.resume();
+      document.getElementById("audioState").textContent = "Audio active";
+      return audioContext;
+    }
+
+    function playTone(kind) {
+      const ctx = ensureAudio();
+      if (!ctx) return;
+
+      const now = ctx.currentTime;
+      const gain = ctx.createGain();
+      const osc = ctx.createOscillator();
+
+      gain.connect(ctx.destination);
+      osc.connect(gain);
+
+      if (kind === "caution") {
+        osc.type = "sawtooth";
+        osc.frequency.setValueAtTime(220, now);
+        osc.frequency.exponentialRampToValueAtTime(150, now + 0.22);
+        gain.gain.setValueAtTime(0.0001, now);
+        gain.gain.exponentialRampToValueAtTime(0.16, now + 0.02);
+        gain.gain.exponentialRampToValueAtTime(0.0001, now + 0.28);
+        osc.start(now);
+        osc.stop(now + 0.3);
+        return;
+      }
+
+      if (kind === "save") {
+        osc.type = "sine";
+        osc.frequency.setValueAtTime(392, now);
+        osc.frequency.exponentialRampToValueAtTime(784, now + 0.18);
+        gain.gain.setValueAtTime(0.0001, now);
+        gain.gain.exponentialRampToValueAtTime(0.18, now + 0.03);
+        gain.gain.exponentialRampToValueAtTime(0.0001, now + 0.34);
+        osc.start(now);
+        osc.stop(now + 0.36);
+        return;
+      }
+
+      osc.type = "triangle";
+      osc.frequency.setValueAtTime(330, now);
+      osc.frequency.exponentialRampToValueAtTime(520, now + 0.16);
+      gain.gain.setValueAtTime(0.0001, now);
+      gain.gain.exponentialRampToValueAtTime(0.14, now + 0.03);
+      gain.gain.exponentialRampToValueAtTime(0.0001, now + 0.26);
+      osc.start(now);
+      osc.stop(now + 0.28);
+    }
+
+    function readJson(key) {
+      try { return JSON.parse(localStorage.getItem(key) || "null"); }
+      catch(e) { return null; }
+    }
+
+    function esc(value) {
+      return String(value ?? "")
+        .replaceAll("&","&amp;")
+        .replaceAll("<","&lt;")
+        .replaceAll(">","&gt;")
+        .replaceAll('"',"&quot;")
+        .replaceAll("'","&#039;");
+    }
+
+    function count() {
+      return [state.method, state.prediction, state.result].filter(Boolean).length;
+    }
+
+    function setVisual(message, tone) {
+      const visual = document.getElementById("chamberVisual");
+      visual.textContent = "Chamber Signal: " + message;
+      visual.classList.remove("reward", "caution");
+      void visual.offsetWidth;
+
+      if (tone === "caution") {
+        visual.classList.add("caution");
+        playTone("caution");
+      } else {
+        visual.classList.add("reward");
+        playTone("reward");
+      }
+    }
+
+    function renderSource() {
+      const cause = readJson(CAUSE_KEY) || {};
+      const comparison = readJson(COMPARISON_KEY) || {};
+
+      document.getElementById("causeSummary").textContent =
+        cause.selectedCause
+          ? `${cause.selectedCause} | ${cause.claimType || "claim"}`
+          : "No cause decision found yet.";
+
+      document.getElementById("comparisonSummary").textContent =
+        comparison.strongestSignal
+          ? `${comparison.strongestSignal} from ${comparison.strongestAdvisor || "Council"} | Risk: ${comparison.remainingRisk || "not named"}`
+          : "No evidence comparison record found yet.";
+    }
+
+    function renderTests() {
+      const grid = document.getElementById("testGrid");
+
+      grid.innerHTML = testOptions.map(option => `
+        <section class="test-card ${state.method === option.label ? "selected" : ""}">
+          <span class="tag">${esc(option.type.replaceAll("_", " "))}</span>
+          <h3>${esc(option.label)}</h3>
+          <p>${esc(option.summary)}</p>
+          <button class="btn primary" type="button"
+            data-method="${esc(option.label)}"
+            data-type="${esc(option.type)}"
+            data-tone="${esc(option.tone)}"
+            data-message="${esc(option.consequence)}">
+            Choose This Test
+          </button>
+        </section>
+      `).join("");
+
+      document.querySelectorAll("[data-method]").forEach(button => {
+        button.addEventListener("click", () => {
+          state.method = button.dataset.method || "";
+          state.methodType = button.dataset.type || "";
+          state.result = "";
+          state.resultStrength = "";
+          setVisual(button.dataset.message || "Test selected.", button.dataset.tone || "reward");
+          render();
+        });
+      });
+    }
+
+    function renderPredictionChoices() {
+      const box = document.getElementById("predictionChoices");
+
+      box.innerHTML = predictionOptions.map(option => `
+        <button class="choice ${state.prediction === option ? "selected" : ""}" type="button" data-prediction="${esc(option)}">
+          ${esc(option)}
+        </button>
+      `).join("");
+
+      box.querySelectorAll("[data-prediction]").forEach(button => {
+        button.addEventListener("click", () => {
+          state.prediction = button.dataset.prediction || "";
+          setVisual("Prediction recorded. The chamber is ready for a test run.", "reward");
+          render();
+        });
+      });
+    }
+
+    function runTest() {
+      if (!state.method || !state.prediction) {
+        setVisual("Run blocked. Choose a test method and prediction first.", "caution");
+        document.getElementById("testOutput").textContent =
+          "The Council pauses. Choose a test method and prediction before running the chamber test.";
+        return;
+      }
+
+      const chosen = testOptions.find(option => option.label === state.method);
+      state.result = chosen ? chosen.result : "The chamber records a test result.";
+      state.resultStrength = chosen ? chosen.type : "test_result";
+
+      setVisual(state.result, chosen?.tone || "reward");
+      render();
+    }
+
+    function updateSteps() {
+      document.getElementById("methodText").textContent = state.method || "Not chosen yet.";
+      document.getElementById("stepMethod").classList.toggle("completed", !!state.method);
+      document.getElementById("stepPrediction").classList.toggle("completed", !!state.prediction);
+      document.getElementById("stepRun").classList.toggle("completed", !!state.result);
+
+      const c = count();
+      document.getElementById("readinessLabel").textContent = `${c} / 3 decisions`;
+      document.getElementById("readinessFill").style.width = Math.round((c / 3) * 100) + "%";
+    }
+
+    function saveTest() {
+      if (count() < 3) {
+        setVisual("Save blocked. Run the test before saving the claim test record.", "caution");
+        document.getElementById("testOutput").textContent =
+          "The Council pauses. Choose a method, make a prediction, and run the chamber test before saving.";
+        return;
+      }
+
+      const cause = readJson(CAUSE_KEY) || {};
+      const comparison = readJson(COMPARISON_KEY) || {};
+
+      const record = {
+        activeInvestigationQuestion: cause.activeInvestigationQuestion || comparison.activeInvestigationQuestion || "No active question found.",
+        causeDecision: cause,
+        evidenceComparison: comparison,
+        testMethod: state.method,
+        testType: state.methodType,
+        prediction: state.prediction,
+        result: state.result,
+        resultStrength: state.resultStrength,
+        status: "claim_test_saved",
+        nextPhase: "revise_or_act",
+        savedAt: new Date().toISOString()
+      };
+
+      localStorage.setItem(CLAIM_TEST_KEY, JSON.stringify(record));
+
+      document.getElementById("testOutput").textContent =
+`CLAIM TEST SAVED
+
+Question:
+${record.activeInvestigationQuestion}
+
+Cause claim:
+${record.causeDecision.selectedCause || "No cause decision found."}
+
+Test method:
+${record.testMethod}
+
+Prediction:
+${record.prediction}
+
+Result:
+${record.result}
+
+Next:
+Revise or Act.`;
+
+      setVisual("Claim test saved. The next chamber begins to unlock.", "reward");
+      playTone("save");
+      window.STEMNationClaimTest = record;
+    }
+
+    function loadSaved() {
+      const saved = readJson(CLAIM_TEST_KEY);
+      if (saved) {
+        state.method = saved.testMethod || "";
+        state.methodType = saved.testType || "";
+        state.prediction = saved.prediction || "";
+        state.result = saved.result || "";
+        state.resultStrength = saved.resultStrength || "";
+      }
+      render();
+    }
+
+    function render() {
+      renderSource();
+      renderTests();
+      renderPredictionChoices();
+      updateSteps();
+    }
+
+    document.addEventListener("DOMContentLoaded", () => {
+      document.getElementById("runTestBtn").addEventListener("click", runTest);
+      document.getElementById("saveTestBtn").addEventListener("click", saveTest);
+      loadSaved();
+    });
+
+    window.addEventListener("focus", loadSaved);
+    window.addEventListener("storage", loadSaved);
+
+    console.log("MI-2J TEST THE CLAIM CHAMBER ACTIVE");
+  </script>
+
+  <script>
+    // MI-2J-R1 TEST METHOD BUTTON WIRING REPAIR
+    // Uses event delegation so buttons still work after render() rebuilds the page.
+
+    document.addEventListener("click", function(event) {
+      const methodBtn = event.target.closest("[data-method]");
+      if (methodBtn) {
+        event.preventDefault();
+        state.method = methodBtn.dataset.method || "";
+        state.methodType = methodBtn.dataset.type || "";
+        state.result = "";
+        state.resultStrength = "";
+        setVisual(methodBtn.dataset.message || "Test selected.", methodBtn.dataset.tone || "reward");
+        render();
+        console.log("MI-2J-R1 METHOD SELECTED:", state.method);
+        return;
+      }
+
+      const predictionBtn = event.target.closest("[data-prediction]");
+      if (predictionBtn) {
+        event.preventDefault();
+        state.prediction = predictionBtn.dataset.prediction || "";
+        setVisual("Prediction recorded. The chamber is ready for a test run.", "reward");
+        render();
+        console.log("MI-2J-R1 PREDICTION SELECTED:", state.prediction);
+        return;
+      }
+
+      const runBtn = event.target.closest("#runTestBtn");
+      if (runBtn) {
+        event.preventDefault();
+        runTest();
+        console.log("MI-2J-R1 RUN TEST CLICKED:", state.result);
+        return;
+      }
+
+      const saveBtn = event.target.closest("#saveTestBtn");
+      if (saveBtn) {
+        event.preventDefault();
+        saveTest();
+        console.log("MI-2J-R1 SAVE TEST CLICKED");
+        return;
+      }
+    });
+
+    console.log("MI-2J-R1 TEST METHOD BUTTON WIRING REPAIR ACTIVE");
+  </script>
+
+
+  <script>
+    // MI-2J-R2 HARD BUTTON WIRING REPAIR
+    // Final delegated wiring layer. This catches clicks even if render() rebuilds the cards.
+
+    function mi2jR2RefreshOutput(message) {
+      const output = document.getElementById("testOutput");
+      if (output) output.textContent = message;
+    }
+
+    document.addEventListener("click", function(event) {
+      const methodButton = event.target.closest("button[data-method]");
+      if (methodButton) {
+        event.preventDefault();
+        event.stopPropagation();
+
+        state.method = methodButton.getAttribute("data-method") || "";
+        state.methodType = methodButton.getAttribute("data-type") || "";
+        state.result = "";
+        state.resultStrength = "";
+
+        setVisual(methodButton.getAttribute("data-message") || "Test selected.", methodButton.getAttribute("data-tone") || "reward");
+        render();
+
+        mi2jR2RefreshOutput("Test method selected: " + state.method + ". Now choose a prediction.");
+        console.log("MI-2J-R2 METHOD SELECTED:", state.method);
+        return;
+      }
+
+      const predictionButton = event.target.closest("button[data-prediction]");
+      if (predictionButton) {
+        event.preventDefault();
+        event.stopPropagation();
+
+        state.prediction = predictionButton.getAttribute("data-prediction") || "";
+
+        setVisual("Prediction recorded. The chamber is ready for a test run.", "reward");
+        render();
+
+        mi2jR2RefreshOutput("Prediction selected: " + state.prediction + ". Now run the chamber test.");
+        console.log("MI-2J-R2 PREDICTION SELECTED:", state.prediction);
+        return;
+      }
+
+      const runButton = event.target.closest("#runTestBtn");
+      if (runButton) {
+        event.preventDefault();
+        event.stopPropagation();
+        runTest();
+        console.log("MI-2J-R2 RUN TEST:", state.result);
+        return;
+      }
+
+      const saveButton = event.target.closest("#saveTestBtn");
+      if (saveButton) {
+        event.preventDefault();
+        event.stopPropagation();
+        saveTest();
+        console.log("MI-2J-R2 SAVE TEST");
+        return;
+      }
+    }, true);
+
+    console.log("MI-2J-R2 HARD BUTTON WIRING REPAIR ACTIVE");
+  </script>
+
+</body>
+</html>
