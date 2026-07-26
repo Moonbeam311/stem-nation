@@ -957,6 +957,124 @@
   }
 </style>
 
+
+<style>
+  /* MI-2V STUDENT HUB COMPLETION SECTION CONSOLIDATION */
+
+  .mi2v-control-panel {
+    margin: 18px 24px 0;
+    border: 1px solid rgba(246,213,111,.28);
+    border-radius: 24px;
+    background:
+      radial-gradient(circle at 12% 18%, rgba(246,213,111,.13), transparent 34%),
+      rgba(15,23,42,.74);
+    padding: 16px;
+    color: #f8fafc;
+  }
+
+  .mi2v-control-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 14px;
+    flex-wrap: wrap;
+  }
+
+  .mi2v-control-head h3 {
+    margin: 0 0 6px;
+    color: #f6d56f;
+    font-size: clamp(24px, 3vw, 34px);
+    line-height: 1;
+  }
+
+  .mi2v-control-head p {
+    margin: 0;
+    color: rgba(248,250,252,.78);
+    line-height: 1.42;
+    max-width: 760px;
+  }
+
+  .mi2v-status-pill {
+    border: 1px solid rgba(134,239,172,.28);
+    background: rgba(134,239,172,.10);
+    color: #bbf7d0;
+    border-radius: 999px;
+    padding: 9px 13px;
+    font-weight: 1000;
+    white-space: nowrap;
+  }
+
+  .mi2v-tabs {
+    margin-top: 14px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+
+  .mi2v-tab {
+    border: 1px solid rgba(255,255,255,.14);
+    background: rgba(255,255,255,.07);
+    color: #f8fafc;
+    border-radius: 999px;
+    padding: 10px 14px;
+    font-weight: 950;
+    cursor: pointer;
+  }
+
+  .mi2v-tab.active {
+    border-color: rgba(246,213,111,.55);
+    background: linear-gradient(135deg,#f6d56f,#ffc83d);
+    color: #111827;
+  }
+
+  .mi2v-panel-note {
+    margin-top: 12px;
+    border-top: 1px solid rgba(255,255,255,.12);
+    padding-top: 12px;
+    color: rgba(248,250,252,.76);
+    line-height: 1.42;
+  }
+
+  .mi2q-archive-zone.mi2v-consolidated .mi2p-badge-wrap,
+  .mi2q-archive-zone.mi2v-consolidated .mi2t-reflection-badge-wrap,
+  .mi2q-archive-zone.mi2v-consolidated .mi2u-ledger-wrap,
+  .mi2q-archive-zone.mi2v-consolidated .mi2m-investigation-archive {
+    display: none;
+  }
+
+  .mi2q-archive-zone.mi2v-show-badges .mi2p-badge-wrap.active,
+  .mi2q-archive-zone.mi2v-show-badges .mi2t-reflection-badge-wrap.active {
+    display: block;
+  }
+
+  .mi2q-archive-zone.mi2v-show-ledger .mi2u-ledger-wrap {
+    display: block;
+  }
+
+  .mi2q-archive-zone.mi2v-show-archive .mi2m-investigation-archive {
+    display: block;
+  }
+
+  .mi2q-archive-zone.mi2v-consolidated .mi2p-badge-wrap,
+  .mi2q-archive-zone.mi2v-consolidated .mi2t-reflection-badge-wrap,
+  .mi2q-archive-zone.mi2v-consolidated .mi2u-ledger-wrap,
+  .mi2q-archive-zone.mi2v-consolidated .mi2m-investigation-archive {
+    animation: mi2vPanelIn .42s ease;
+  }
+
+  @keyframes mi2vPanelIn {
+    0% { opacity: 0; transform: translateY(8px); }
+    100% { opacity: 1; transform: translateY(0); }
+  }
+
+  @media(max-width: 760px) {
+    .mi2v-control-panel {
+      margin-left: 14px;
+      margin-right: 14px;
+    }
+  }
+</style>
+
 </head>
 <body>
   <!-- CI-STAGE-9 — Student Hub Cleanup -->
@@ -1188,6 +1306,31 @@ console.log("CI-STAGE-48 MISSION CHECKPOINT STUDENT HUB POLISH ACTIVE");
 <!-- MI-2M STUDENT HUB INVESTIGATION ARCHIVE CARD -->
 
 <!-- MI-2P INVESTIGATION ARCHIVE COMPLETION BADGE -->
+
+<!-- MI-2V STUDENT HUB COMPLETION SECTION CONSOLIDATION -->
+<section class="mi2v-control-panel" id="mi2vCompletionControls">
+  <div class="mi2v-control-head">
+    <div>
+      <h3>Completion Review Controls</h3>
+      <p>
+        Choose what to review from the completed investigation record. The saved records stay unchanged.
+      </p>
+    </div>
+    <div class="mi2v-status-pill" id="mi2vStatusPill">Completion record ready</div>
+  </div>
+
+  <div class="mi2v-tabs" role="group" aria-label="Completed investigation review controls">
+    <button type="button" class="mi2v-tab active" data-mi2v-view="badges">Completion Badges</button>
+    <button type="button" class="mi2v-tab" data-mi2v-view="ledger">Progress Ledger</button>
+    <button type="button" class="mi2v-tab" data-mi2v-view="archive">Full Archive</button>
+    <button type="button" class="mi2v-tab" data-mi2v-view="all">Show All</button>
+  </div>
+
+  <div class="mi2v-panel-note" id="mi2vPanelNote">
+    Showing completion badges first so the student sees the earned record before the details.
+  </div>
+</section>
+
 <div class="mi2p-badge-wrap" id="mi2pBadgeWrap">
   <div class="mi2p-badge">
     <div class="mi2p-seal">✓</div>
@@ -2007,6 +2150,110 @@ console.log("CI-STAGE-48 MISSION CHECKPOINT STUDENT HUB POLISH ACTIVE");
     window.addEventListener("storage", rebuildLedgerR1);
 
     console.log("MI-2U-R1 ACTIVE QUESTION FALLBACK AND LEDGER PLACEMENT REPAIR ACTIVE");
+  })();
+</script>
+
+
+<script>
+  // MI-2V STUDENT HUB COMPLETION SECTION CONSOLIDATION
+  (function(){
+    const VIEW_KEY = "stemNationCompletionSectionViewV1";
+
+    function getZone() {
+      return document.getElementById("mi2qArchiveZone");
+    }
+
+    function getControls() {
+      return document.getElementById("mi2vCompletionControls");
+    }
+
+    function ensureControlsPlacement() {
+      const zone = getZone();
+      const controls = getControls();
+      const badge = document.getElementById("mi2pBadgeWrap");
+      const ledger = document.getElementById("mi2uProgressLedger");
+
+      if (!zone || !controls) return;
+
+      if (controls.parentNode !== zone) {
+        if (badge && badge.parentNode === zone) {
+          zone.insertBefore(controls, badge);
+        } else if (ledger && ledger.parentNode === zone) {
+          zone.insertBefore(controls, ledger);
+        } else {
+          zone.appendChild(controls);
+        }
+      }
+    }
+
+    function setCompletionView(view) {
+      const zone = getZone();
+      const note = document.getElementById("mi2vPanelNote");
+      const pill = document.getElementById("mi2vStatusPill");
+
+      if (!zone) return;
+
+      zone.classList.add("mi2v-consolidated");
+      zone.classList.remove("mi2v-show-badges", "mi2v-show-ledger", "mi2v-show-archive");
+
+      if (view === "ledger") {
+        zone.classList.add("mi2v-show-ledger");
+        if (note) note.textContent = "Showing the progress ledger so the student can verify every saved investigation milestone.";
+        if (pill) pill.textContent = "Progress ledger selected";
+      } else if (view === "archive") {
+        zone.classList.add("mi2v-show-archive");
+        if (note) note.textContent = "Showing the full archive record with the final question, resolution, lesson, uncertainty, and review links.";
+        if (pill) pill.textContent = "Full archive selected";
+      } else if (view === "all") {
+        zone.classList.add("mi2v-show-badges", "mi2v-show-ledger", "mi2v-show-archive");
+        if (note) note.textContent = "Showing badges, ledger, and archive together for full review.";
+        if (pill) pill.textContent = "Full completion record shown";
+      } else {
+        view = "badges";
+        zone.classList.add("mi2v-show-badges");
+        if (note) note.textContent = "Showing completion badges first so the student sees the earned record before the details.";
+        if (pill) pill.textContent = "Completion badges selected";
+      }
+
+      document.querySelectorAll("[data-mi2v-view]").forEach(btn => {
+        btn.classList.toggle("active", btn.dataset.mi2vView === view);
+      });
+
+      localStorage.setItem(VIEW_KEY, view);
+
+      window.STEMNationCompletionSectionView = {
+        view,
+        status: "completion_section_view_updated",
+        updatedAt: new Date().toISOString()
+      };
+    }
+
+    function activateControls() {
+      ensureControlsPlacement();
+
+      const saved = localStorage.getItem(VIEW_KEY) || "badges";
+      setCompletionView(saved);
+
+      document.querySelectorAll("[data-mi2v-view]").forEach(btn => {
+        if (btn.dataset.mi2vBound === "true") return;
+        btn.dataset.mi2vBound = "true";
+        btn.addEventListener("click", function(){
+          setCompletionView(btn.dataset.mi2vView || "badges");
+        });
+      });
+    }
+
+    document.addEventListener("DOMContentLoaded", function(){
+      setTimeout(activateControls, 320);
+      setTimeout(activateControls, 800);
+      setTimeout(activateControls, 1300);
+    });
+
+    window.addEventListener("focus", function(){
+      setTimeout(activateControls, 260);
+    });
+
+    console.log("MI-2V STUDENT HUB COMPLETION SECTION CONSOLIDATION ACTIVE");
   })();
 </script>
 
