@@ -470,8 +470,150 @@
   
 /* CI-STAGE-54A GUIDED MISSION RETURN AND PROTOTYPE LINK POLISH */
 </style>
+
+<style>
+  /* MI-2X WORLD MISSION 1 ENTRY CONTEXT RECOGNITION */
+
+  .mi2x-context-banner {
+    width: min(1120px, calc(100% - 28px));
+    margin: 22px auto;
+    border: 1px solid rgba(246,213,111,.34);
+    border-radius: 28px;
+    background:
+      radial-gradient(circle at 12% 18%, rgba(246,213,111,.16), transparent 34%),
+      radial-gradient(circle at 92% 24%, rgba(139,211,255,.15), transparent 34%),
+      rgba(15,23,42,.88);
+    padding: 20px;
+    color: #f8fafc;
+    box-shadow: 0 22px 70px rgba(0,0,0,.28);
+    display: none;
+  }
+
+  .mi2x-context-banner.active {
+    display: block;
+    animation: mi2xContextIn .55s ease;
+  }
+
+  @keyframes mi2xContextIn {
+    0% { opacity: 0; transform: translateY(12px); }
+    100% { opacity: 1; transform: translateY(0); }
+  }
+
+  .mi2x-kicker {
+    color: #8bd3ff;
+    text-transform: uppercase;
+    letter-spacing: .14em;
+    font-size: 13px;
+    font-weight: 950;
+    margin-bottom: 8px;
+  }
+
+  .mi2x-context-banner h2 {
+    margin: 0 0 10px;
+    color: #f6d56f;
+    font-size: clamp(28px, 4vw, 48px);
+    line-height: .95;
+  }
+
+  .mi2x-context-banner p {
+    margin: 0;
+    color: rgba(248,250,252,.82);
+    line-height: 1.45;
+  }
+
+  .mi2x-context-grid {
+    margin-top: 14px;
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0,1fr));
+    gap: 10px;
+  }
+
+  .mi2x-context-chip {
+    border: 1px solid rgba(139,211,255,.22);
+    border-radius: 16px;
+    background: rgba(139,211,255,.08);
+    padding: 10px;
+    color: rgba(248,250,252,.84);
+    font-size: 13px;
+    line-height: 1.35;
+  }
+
+  .mi2x-context-chip b {
+    display: block;
+    color: #8bd3ff;
+    margin-bottom: 4px;
+  }
+
+  .mi2x-context-actions {
+    margin-top: 16px;
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+  }
+
+  .mi2x-btn {
+    border-radius: 999px;
+    border: 1px solid rgba(255,255,255,.14);
+    background: rgba(255,255,255,.07);
+    color: #f8fafc;
+    padding: 10px 14px;
+    min-height: 42px;
+    text-decoration: none;
+    font-weight: 950;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .mi2x-btn.primary {
+    border: 0;
+    background: linear-gradient(135deg,#f6d56f,#ffc83d);
+    color: #111827;
+  }
+
+  @media(max-width: 860px) {
+    .mi2x-context-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>
+
 </head>
 <body>
+
+<!-- MI-2X WORLD MISSION 1 ENTRY CONTEXT RECOGNITION -->
+<section class="mi2x-context-banner" id="mi2xEntryContextBanner">
+  <div class="mi2x-kicker">Council Hall Record Carried Forward</div>
+  <h2>World Mission 1 recognizes your investigation record.</h2>
+  <p id="mi2xEntryContextText">
+    Checking completed Council Hall records...
+  </p>
+
+  <div class="mi2x-context-grid">
+    <div class="mi2x-context-chip">
+      <b>Archive</b>
+      Council Hall investigation saved.
+    </div>
+    <div class="mi2x-context-chip">
+      <b>Reflection</b>
+      Replay reflection carried forward.
+    </div>
+    <div class="mi2x-context-chip">
+      <b>Ledger</b>
+      Progress trail checked.
+    </div>
+    <div class="mi2x-context-chip">
+      <b>Bridge</b>
+      Ready for World Mission 1.
+    </div>
+  </div>
+
+  <div class="mi2x-context-actions">
+    <a class="mi2x-btn primary" href="/student_hub">Review Student Hub Record</a>
+    <a class="mi2x-btn" href="/investigation_replay">Replay Completed Investigation</a>
+  </div>
+</section>
+
   <main class="page">
     <div class="topbar">
       <a class="return-link" href="/student_hub">← Return to Student Hub</a>
@@ -1040,5 +1182,80 @@ ${archive.protectionPlan}`;
       console.log("CI-STAGE-53F GUIDED WORLD MISSION REGION TEACHING STEP REBUILD ACTIVE");
     });
   </script>
+
+<script>
+  // MI-2X WORLD MISSION 1 ENTRY CONTEXT RECOGNITION
+  (function(){
+    const CONTEXT_KEY = "stemNationWorldMission1EntryContextV1";
+
+    function readJson(key) {
+      try { return JSON.parse(localStorage.getItem(key) || "null"); }
+      catch(error) { return null; }
+    }
+
+    function recognizeCouncilHallContext() {
+      const banner = document.getElementById("mi2xEntryContextBanner");
+      const text = document.getElementById("mi2xEntryContextText");
+      if (!banner || !text) return;
+
+      const resolution = readJson("stemNationMissionResolutionV1");
+      const reflection = readJson("stemNationReplayReflectionV1");
+      const ledger = readJson("stemNationInvestigationProgressLedgerV1");
+      const bridge = readJson("stemNationMissionExitBridgeV1");
+
+      const hasResolution = Boolean(resolution && (resolution.status === "mission_resolution_saved" || resolution.resolution));
+      const hasReflection = Boolean(reflection && reflection.status === "replay_reflection_saved");
+      const hasLedger = Boolean(ledger && ledger.status === "ledger_complete");
+      const hasBridge = Boolean(bridge && bridge.status === "world_mission_bridge_ready");
+
+      const ready = hasResolution && hasReflection && hasLedger && hasBridge;
+
+      const context = {
+        contextName: "World Mission 1 Entry Context",
+        signalType: "council_hall_record_carried_forward",
+        hasResolution,
+        hasReflection,
+        hasLedger,
+        hasBridge,
+        ready,
+        question: resolution?.activeInvestigationQuestion || reflection?.activeInvestigationQuestion || "",
+        resolution: resolution?.resolution || reflection?.resolution || "",
+        reflection: reflection?.reflection || "",
+        ledgerStatus: ledger?.status || "ledger_not_found",
+        bridgeStatus: bridge?.status || "bridge_not_found",
+        status: ready ? "world_mission_entry_context_recognized" : "world_mission_entry_context_partial",
+        recognizedAt: new Date().toISOString()
+      };
+
+      localStorage.setItem(CONTEXT_KEY, JSON.stringify(context));
+
+      if (ready) {
+        text.textContent =
+          "Your Council Hall record is active here. World Mission 1 will begin with the same habits: observe evidence, ask better questions, test claims, name uncertainty, and lead carefully.";
+      } else {
+        text.textContent =
+          "Some Council Hall records are available, but the full bridge is not complete in this browser. You may continue, but reviewing the Student Hub record first is recommended.";
+      }
+
+      banner.classList.add("active");
+      window.STEMNationWorldMission1EntryContext = context;
+    }
+
+    document.addEventListener("DOMContentLoaded", function(){
+      setTimeout(recognizeCouncilHallContext, 220);
+      setTimeout(recognizeCouncilHallContext, 700);
+      setTimeout(recognizeCouncilHallContext, 1200);
+    });
+
+    window.addEventListener("focus", function(){
+      setTimeout(recognizeCouncilHallContext, 220);
+    });
+
+    window.addEventListener("storage", recognizeCouncilHallContext);
+
+    console.log("MI-2X WORLD MISSION 1 ENTRY CONTEXT RECOGNITION ACTIVE");
+  })();
+</script>
+
 </body>
 </html>
