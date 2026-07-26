@@ -180,6 +180,55 @@
       .summary-grid { grid-template-columns: 1fr; }
       .step-card { grid-template-columns: 1fr; }
     }
+  
+    /* MI-2S REPLAY MODE STUDENT REFLECTION EXIT */
+    .mi2s-reflection {
+      margin-top: 18px;
+      border: 1px solid rgba(134,239,172,.30);
+      border-radius: 24px;
+      background:
+        radial-gradient(circle at 12% 12%, rgba(134,239,172,.12), transparent 34%),
+        rgba(6,78,59,.16);
+      padding: 18px;
+    }
+
+    .mi2s-reflection textarea {
+      width: 100%;
+      min-height: 130px;
+      border-radius: 18px;
+      border: 1px solid rgba(255,255,255,.16);
+      background: rgba(3,7,18,.72);
+      color: var(--text);
+      padding: 12px;
+      font: inherit;
+      line-height: 1.45;
+      resize: vertical;
+      margin-top: 10px;
+    }
+
+    .mi2s-reflection-output {
+      margin-top: 12px;
+      border: 1px solid rgba(139,211,255,.24);
+      border-radius: 18px;
+      background: rgba(139,211,255,.08);
+      color: #dff6ff;
+      padding: 12px;
+      white-space: pre-wrap;
+      line-height: 1.45;
+    }
+
+    .mi2s-reflection-output.complete {
+      border-color: rgba(134,239,172,.42);
+      background: rgba(6,78,59,.24);
+      color: #bbf7d0;
+    }
+
+    .mi2s-reflection-output.warn {
+      border-color: rgba(253,164,175,.42);
+      background: rgba(127,29,29,.22);
+      color: #fecdd3;
+    }
+
   </style>
 </head>
 
@@ -216,6 +265,28 @@
       </div>
 
       <div class="timeline" id="timeline"></div>
+
+      
+      <!-- MI-2S REPLAY MODE STUDENT REFLECTION EXIT -->
+      <section class="mi2s-reflection">
+        <div class="kicker">Replay Reflection Exit</div>
+        <h2>What did you learn as Chief Investigator?</h2>
+        <p>
+          This reflection is saved separately from the original archive. It does not change the mission record.
+          Write one complete thought about evidence, risk, uncertainty, testing, or leadership.
+        </p>
+
+        <textarea id="mi2sReflectionText" placeholder="Example: I learned that a leader should test evidence before acting because a quick answer can miss risk or uncertainty."></textarea>
+
+        <div class="actions">
+          <button class="primary" type="button" id="mi2sSaveReflectionBtn">Save Replay Reflection</button>
+          <a href="/student_hub">Exit to Student Hub</a>
+        </div>
+
+        <div class="mi2s-reflection-output" id="mi2sReflectionOutput">
+          Replay reflection not saved yet.
+        </div>
+      </section>
 
       <div class="actions">
         <a class="primary" href="/student_hub">Return to Student Hub</a>
@@ -323,5 +394,133 @@
 
     console.log("MI-2R COMPLETED INVESTIGATION REPLAY / REVIEW MODE ACTIVE");
   </script>
+
+  <script>
+    // MI-2S REPLAY MODE STUDENT REFLECTION EXIT
+    (function(){
+      const REFLECTION_KEY = "stemNationReplayReflectionV1";
+      const RESOLUTION_KEY = "stemNationMissionResolutionV1";
+
+      function readJson(key) {
+        try { return JSON.parse(localStorage.getItem(key) || "null"); }
+        catch(error) { return null; }
+      }
+
+      function normalize(value) {
+        return String(value || "")
+          .trim()
+          .toLowerCase()
+          .replace(/[.!?;:,]/g, "")
+          .replace(/\s+/g, " ");
+      }
+
+      function quality(value) {
+        const raw = String(value || "").trim();
+        const words = raw.split(/\s+/).filter(Boolean);
+        const weak = new Set([
+          "i dont know",
+          "i do not know",
+          "idk",
+          "not sure",
+          "unsure",
+          "no idea",
+          "ii do not know"
+        ]);
+
+        const hasReasonWord = /(because|evidence|risk|uncertain|uncertainty|test|testing|leadership|leader|claim|cause|observe|pattern|protect|caution|record|decision)/i.test(raw);
+
+        if (!raw) return { ok:false, message:"Write a replay reflection before saving." };
+        if (weak.has(normalize(raw))) return { ok:false, message:"That reflection is too weak. Add one reason connected to evidence, risk, uncertainty, testing, or leadership." };
+        if (words.length < 8) return { ok:false, message:"Add more detail. Write at least one complete thought." };
+        if (!hasReasonWord) return { ok:false, message:"Connect the reflection to evidence, risk, uncertainty, testing, leadership, or decision-making." };
+
+        return { ok:true, message:"Replay reflection accepted." };
+      }
+
+      function saveReplayReflection() {
+        const box = document.getElementById("mi2sReflectionText");
+        const output = document.getElementById("mi2sReflectionOutput");
+        if (!box || !output) return;
+
+        const reflection = box.value.trim();
+        const check = quality(reflection);
+
+        output.classList.remove("complete", "warn");
+
+        if (!check.ok) {
+          output.classList.add("warn");
+          output.textContent =
+            "The Guardian pauses. " + check.message +
+            "\n\nQuality check: Use one complete thought. Include evidence, risk, uncertainty, testing, or leadership.";
+          return;
+        }
+
+        const resolution = readJson(RESOLUTION_KEY) || {};
+
+        const record = {
+          activeInvestigationQuestion: resolution.activeInvestigationQuestion || "No active question found.",
+          resolution: resolution.resolution || "Mission resolved.",
+          reflection,
+          status: "replay_reflection_saved",
+          savedAt: new Date().toISOString()
+        };
+
+        localStorage.setItem(REFLECTION_KEY, JSON.stringify(record));
+
+        output.classList.add("complete");
+        output.textContent =
+`REPLAY REFLECTION SAVED
+
+Question:
+${record.activeInvestigationQuestion}
+
+Resolution:
+${record.resolution}
+
+Reflection:
+${record.reflection}
+
+Next:
+Exit to Student Hub.`;
+
+        window.STEMNationReplayReflection = record;
+      }
+
+      document.addEventListener("click", function(event){
+        const btn = event.target.closest("#mi2sSaveReflectionBtn");
+        if (!btn) return;
+        event.preventDefault();
+        saveReplayReflection();
+      }, true);
+
+      document.addEventListener("DOMContentLoaded", function(){
+        const saved = readJson(REFLECTION_KEY);
+        const box = document.getElementById("mi2sReflectionText");
+        const output = document.getElementById("mi2sReflectionOutput");
+
+        if (saved && box && output) {
+          box.value = saved.reflection || "";
+          output.classList.add("complete");
+          output.textContent =
+`REPLAY REFLECTION SAVED
+
+Question:
+${saved.activeInvestigationQuestion || "No active question found."}
+
+Resolution:
+${saved.resolution || "Mission resolved."}
+
+Reflection:
+${saved.reflection || ""}
+
+Next:
+Exit to Student Hub.`;
+        }
+      });
+
+      console.log("MI-2S REPLAY MODE STUDENT REFLECTION EXIT ACTIVE");
+    })();
+  </script>
+
 </body>
 </html>
