@@ -625,8 +625,11 @@
     }
 
     function saveResolution() {
-      state.lesson = document.getElementById("lessonText").value.trim();
-      state.uncertainty = document.getElementById("uncertaintyText").value.trim();
+      state.lesson = mi2oCleanResolutionText(document.getElementById("lessonText").value);
+      state.uncertainty = mi2oCleanResolutionText(document.getElementById("uncertaintyText").value);
+
+      document.getElementById("lessonText").value = state.lesson;
+      document.getElementById("uncertaintyText").value = state.uncertainty;
 
       const mi2nLessonQuality = mi2nAnswerQuality(state.lesson);
       const mi2nUncertaintyQuality = mi2nAnswerQuality(state.uncertainty);
@@ -834,6 +837,33 @@ Return to Student Hub.`;
       return "Quality check: Use one complete thought. Include evidence, risk, uncertainty, testing, or cause-and-effect.";
     }
 
+  
+    // MI-2O RESOLUTION TEXT CLEANUP POLISH
+    function mi2oCleanResolutionText(value) {
+      let text = String(value || "").trim();
+      const patterns = [
+        /^final\s*lesson\s*:\s*/i,
+        /^remaining\s*uncertainty\s*:\s*/i,
+        /^uncertainty\s*:\s*/i,
+        /^resolution\s*:\s*/i,
+        /^question\s*:\s*/i,
+        /^answer\s*:\s*/i
+      ];
+
+      let changed = true;
+      while (changed) {
+        changed = false;
+        for (const pattern of patterns) {
+          const next = text.replace(pattern, "").trim();
+          if (next !== text) {
+            text = next;
+            changed = true;
+          }
+        }
+      }
+      return text;
+    }
+
   </script>
 
   <script>
@@ -911,5 +941,6 @@ Return to Student Hub.`;
     console.log("MI-2N-R1 MISSION RESOLUTION SAVE BUTTON WIRING REPAIR ACTIVE");
   </script>
 
+<!-- MI-2O RESOLUTION TEXT CLEANUP POLISH -->
 </body>
 </html>

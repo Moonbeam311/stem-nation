@@ -921,5 +921,55 @@ console.log("CI-STAGE-48 MISSION CHECKPOINT STUDENT HUB POLISH ACTIVE");
   })();
 </script>
 
+
+<script>
+  // MI-2O STUDENT HUB ARCHIVE DISPLAY CLEANUP
+  (function(){
+    function mi2oCleanArchiveText(value) {
+      let text = String(value || "").trim();
+      const patterns = [
+        /^final\s*lesson\s*:\s*/i,
+        /^remaining\s*uncertainty\s*:\s*/i,
+        /^uncertainty\s*:\s*/i,
+        /^resolution\s*:\s*/i,
+        /^question\s*:\s*/i,
+        /^answer\s*:\s*/i
+      ];
+
+      let changed = true;
+      while (changed) {
+        changed = false;
+        for (const pattern of patterns) {
+          const next = text.replace(pattern, "").trim();
+          if (next !== text) {
+            text = next;
+            changed = true;
+          }
+        }
+      }
+      return text;
+    }
+
+    function mi2oPolishArchiveCard() {
+      const lesson = document.getElementById("mi2mArchiveLesson");
+      const uncertainty = document.getElementById("mi2mArchiveUncertainty");
+      if (lesson) lesson.textContent = mi2oCleanArchiveText(lesson.textContent);
+      if (uncertainty) uncertainty.textContent = mi2oCleanArchiveText(uncertainty.textContent);
+    }
+
+    document.addEventListener("DOMContentLoaded", function(){
+      setTimeout(mi2oPolishArchiveCard, 80);
+      setTimeout(mi2oPolishArchiveCard, 300);
+    });
+
+    window.addEventListener("focus", function(){
+      setTimeout(mi2oPolishArchiveCard, 80);
+    });
+
+    console.log("MI-2O STUDENT HUB ARCHIVE DISPLAY CLEANUP ACTIVE");
+  })();
+</script>
+<!-- MI-2O RESOLUTION TEXT CLEANUP POLISH -->
+
 </body>
 </html>
