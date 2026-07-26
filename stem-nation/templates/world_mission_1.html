@@ -8,6 +8,10 @@
   <!-- CI-STAGE-53B GUIDED WORLD MISSION 1 WIZARD -->
   <!-- CI-STAGE-53F GUIDED WORLD MISSION REGION TEACHING STEP REBUILD -->
   <!-- CI-STAGE-53G GUIDED WIZARD BASH RESET TRIGGER -->
+  <!-- MI-3E WORLD MISSION 1 EVIDENCE PACKET TEST ACTION LAYER -->
+  <!-- MI-3E-R1 CSS ALPHA BROWSER GATE REPAIR -->
+  <!-- MI-3E-R2 PAGE START MISSION BOARD COMPRESSION -->
+  <!-- MI-3E-R3 REMOVE LEGACY CARRYOVER MARKUP -->
   <script>
     (function(){
       const params = new URLSearchParams(window.location.search);
@@ -15,6 +19,8 @@
         localStorage.removeItem("stemNationWorldMission1WizardV1");
         localStorage.removeItem("stemNationWorldFoundingArchiveV1");
         localStorage.removeItem("stemNationWorldSelectedRegionV1");
+        localStorage.removeItem("stemNationWorldMission1EvidencePacketV1");
+        localStorage.removeItem("stemNationWorldMission1TestActionV1");
         window.location.replace("/world_mission_1");
       }
     })();
@@ -295,6 +301,76 @@
       text-transform: uppercase;
     }
 
+    .scout-toggle { margin-top: 12px; width: 100%; }
+    .scout-drawer[hidden] { display: none; }
+
+    .survival-board {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 10px;
+      margin: 18px 0;
+    }
+
+    .survival-signal {
+      border: 1px solid rgba(125,211,252,.24);
+      border-radius: 16px;
+      background: rgba(125,211,252,.075);
+      padding: 13px;
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.35;
+    }
+
+    .survival-signal strong {
+      display: block;
+      color: var(--gold);
+      font-size: 15px;
+      margin-bottom: 4px;
+    }
+
+    .evidence-grid,
+    .test-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 12px;
+      margin: 16px 0;
+    }
+
+    .evidence-card,
+    .test-choice {
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      background: rgba(255,255,255,.055);
+      color: var(--text);
+      padding: 15px;
+      text-align: left;
+      line-height: 1.4;
+      cursor: pointer;
+    }
+
+    .evidence-card strong,
+    .test-choice strong {
+      display: block;
+      color: var(--gold);
+      margin-bottom: 4px;
+    }
+
+    .evidence-card.selected,
+    .test-choice.selected {
+      border-color: var(--green);
+      background: rgba(134,239,172,.12);
+      box-shadow: 0 0 0 2px rgba(134,239,172,.12);
+    }
+
+    .test-result {
+      border: 1px solid rgba(125,211,252,.35);
+      border-radius: 18px;
+      background: rgba(125,211,252,.09);
+      padding: 16px;
+      margin-top: 16px;
+      line-height: 1.5;
+    }
+
     .intel-grid {
       display: grid;
       gap: 14px;
@@ -484,7 +560,10 @@
     @media (max-width: 900px) {
       .content { grid-template-columns: 1fr; }
       .region-teaching-grid,
-      .map-grid { grid-template-columns: 1fr; }
+      .map-grid,
+      .evidence-grid,
+      .test-grid,
+      .survival-board { grid-template-columns: 1fr; }
     }
   
 /* CI-STAGE-54A GUIDED MISSION RETURN AND PROTOTYPE LINK POLISH */
@@ -715,23 +794,20 @@
 
   .mi2z-carryover-shell {
     width: min(1120px, calc(100% - 28px));
-    margin: 22px auto 24px;
+    margin: 14px auto;
     border: 1px solid rgba(246,213,111,.34);
-    border-radius: 30px;
+    border-radius: 20px;
     background:
       radial-gradient(circle at 12% 18%, rgba(246,213,111,.15), transparent 34%),
       radial-gradient(circle at 88% 24%, rgba(139,211,255,.14), transparent 34%),
       rgba(15,23,42,.90);
     color: #f8fafc;
     box-shadow: 0 24px 76px rgba(0,0,0,.30);
-    padding: 22px;
+    padding: 14px 18px;
   }
 
   .mi2z-carryover-grid {
-    display: grid;
-    grid-template-columns: 1.15fr .85fr;
-    gap: 18px;
-    align-items: stretch;
+    display: block;
   }
 
   .mi2z-kicker {
@@ -744,11 +820,11 @@
   }
 
   .mi2z-carryover-shell h2 {
-    margin: 0 0 10px;
+    margin: 0 0 4px;
     color: #f6d56f;
-    font-size: clamp(32px, 5vw, 58px);
-    line-height: .92;
-    letter-spacing: -.04em;
+    font-size: clamp(20px, 3vw, 28px);
+    line-height: 1.05;
+    letter-spacing: -.02em;
   }
 
   .mi2z-carryover-shell p {
@@ -758,12 +834,7 @@
   }
 
   .mi2z-status-card {
-    border: 1px solid rgba(134,239,172,.30);
-    border-radius: 24px;
-    background:
-      radial-gradient(circle at 14% 14%, rgba(134,239,172,.16), transparent 36%),
-      rgba(6,78,59,.18);
-    padding: 16px;
+    display: none;
   }
 
   .mi2z-status-card strong {
@@ -775,7 +846,7 @@
   }
 
   .mi2z-habit-row {
-    margin-top: 16px;
+    margin-top: 10px;
     display: flex;
     flex-wrap: wrap;
     gap: 8px;
@@ -794,10 +865,7 @@
   }
 
   .mi2z-actions {
-    margin-top: 16px;
-    display: flex;
-    gap: 10px;
-    flex-wrap: wrap;
+    display: none;
   }
 
   .mi2z-btn {
@@ -820,6 +888,8 @@
     color: #111827;
   }
 
+  .mi2x-context-banner,
+  .mi2y-carryover-badge-wrap,
   .mi2x-context-banner.mi2z-suppressed,
   .mi2y-carryover-badge-wrap.mi2z-suppressed {
     display: none !important;
@@ -843,10 +913,9 @@
 <section class="mi2z-carryover-shell" id="mi2zCarryoverShell">
   <div class="mi2z-carryover-grid">
     <div>
-      <div class="mi2z-kicker">Council Hall Carryover</div>
-      <h2>Your investigation record travels with you.</h2>
+      <h2>Council Hall Record Ready</h2>
       <p id="mi2zCarryoverText">
-        Checking your Council Hall record before World Mission 1 begins...
+        Your investigation habits travel into World Mission 1.
       </p>
 
       <div class="mi2z-habit-row">
@@ -872,59 +941,6 @@
   </div>
 </section>
 
-<section class="mi2x-context-banner" id="mi2xEntryContextBanner">
-  <div class="mi2x-kicker">Council Hall Record Carried Forward</div>
-  <h2>World Mission 1 recognizes your investigation record.</h2>
-  <p id="mi2xEntryContextText">
-    Checking completed Council Hall records...
-  </p>
-
-  <div class="mi2x-context-grid">
-    <div class="mi2x-context-chip">
-      <b>Archive</b>
-      Council Hall investigation saved.
-    </div>
-    <div class="mi2x-context-chip">
-      <b>Reflection</b>
-      Replay reflection carried forward.
-    </div>
-    <div class="mi2x-context-chip">
-      <b>Ledger</b>
-      Progress trail checked.
-    </div>
-    <div class="mi2x-context-chip">
-      <b>Bridge</b>
-      Ready for World Mission 1.
-    </div>
-  </div>
-
-  <div class="mi2x-context-actions">
-    <a class="mi2x-btn primary" href="/student_hub">Review Student Hub Record</a>
-    <a class="mi2x-btn" href="/investigation_replay">Replay Completed Investigation</a>
-  </div>
-</section>
-
-<!-- MI-2Y WORLD MISSION 1 INVESTIGATION HABIT CARRYOVER BADGE -->
-<section class="mi2y-carryover-badge-wrap" id="mi2yHabitCarryoverBadge">
-  <div class="mi2y-badge">
-    <div class="mi2y-seal">↗</div>
-    <div>
-      <h3>Investigation Habit Carried Forward</h3>
-      <p id="mi2yHabitCarryoverText">
-        Checking whether the Council Hall investigation record is ready to carry into World Mission 1...
-      </p>
-      <div class="mi2y-pill-row">
-        <span class="mi2y-pill">Observe First</span>
-        <span class="mi2y-pill">Question Before Claim</span>
-        <span class="mi2y-pill">Test Evidence</span>
-        <span class="mi2y-pill">Name Uncertainty</span>
-        <span class="mi2y-pill">Lead With Caution</span>
-      </div>
-    </div>
-  </div>
-</section>
-
-
   <main class="page">
     <div class="topbar">
       <a class="return-link" href="/student_hub">← Return to Student Hub</a>
@@ -935,8 +951,7 @@
         <div class="kicker">World Mission 1 · Guided Lesson</div>
         <h1>Claim the Land</h1>
         <p>
-          Your people need a safe beginning. Move one step at a time: observe the World Board,
-          learn the region types, choose one region, read the intel, record evidence, and defend the founding decision.
+          Choose a region, inspect evidence cards, run one test, then decide whether the land is ready.
         </p>
       </header>
 
@@ -955,13 +970,17 @@
           <article class="step-card" data-step="1">
             <h2 class="step-title">Step 1 — Observe the World Board</h2>
             <p class="step-instruction">
-              Before choosing land, look for what a nation needs: water, food, safety,
-              movement, shelter, and risk. Do not decide yet.
+              Scan the survival signals. Do not choose land yet.
             </p>
-            <div class="intel-grid">
-              <div class="intel-box"><strong>Investigator Rule</strong> Observation comes before decision.</div>
-              <div class="intel-box"><strong>Your Job</strong> Notice what each region may offer and what danger it may bring.</div>
+            <div class="survival-board" aria-label="Survival Signals">
+              <div class="survival-signal"><strong>Water</strong>Can people drink and farm?</div>
+              <div class="survival-signal"><strong>Food</strong>Can people find or grow food?</div>
+              <div class="survival-signal"><strong>Shelter</strong>Can people stay protected?</div>
+              <div class="survival-signal"><strong>Movement</strong>Can people travel and trade?</div>
+              <div class="survival-signal"><strong>Safety</strong>Can the site be defended?</div>
+              <div class="survival-signal"><strong>Risk</strong>What could go wrong?</div>
             </div>
+            <div class="status good">Mission rule: observe first. Decide after the evidence and test.</div>
             <div class="actions">
               <button class="primary" type="button" data-next>Learn the Region Types</button>
             </div>
@@ -970,8 +989,7 @@
           <article class="step-card" data-step="2" hidden>
             <h2 class="step-title">Step 2 — Learn the Region Types</h2>
             <p class="step-instruction">
-              A region is a type of land. Each region gives people advantages, but each region also brings risks.
-              Read these first. Then you will choose one region to investigate.
+              Scout any region to reveal its advantage and risk.
             </p>
             <div class="region-teaching-grid" id="regionTeachingGrid"></div>
             <div class="actions">
@@ -1008,37 +1026,45 @@
             </div>
             <div class="actions">
               <button class="secondary" type="button" data-back>Back</button>
-              <button class="primary" type="button" data-next>Record Evidence</button>
+              <button class="primary" type="button" data-next>Inspect Evidence Cards</button>
             </div>
           </article>
 
           <article class="step-card" data-step="5" hidden>
-            <h2 class="step-title">Step 5 — Record Evidence</h2>
+            <h2 class="step-title">Step 5 — Inspect Evidence Cards</h2>
             <p class="step-instruction">
-              Write one careful note. Use the region teaching and region intel, not a guess.
+              Select at least three cards. Your packet must include a risk, hazard, uncertainty, or conflict.
             </p>
-            <label for="evidenceNote">What evidence could help people survive here?</label>
-            <textarea id="evidenceNote" placeholder="Example: I noticed water, farming land, and travel routes. I also noticed the risk of flooding."></textarea>
-            <div class="status" id="evidenceStatus">Write at least one complete thought.</div>
+            <div class="evidence-grid" id="evidenceGrid"></div>
+            <label for="evidenceNote">Connect the evidence cards in one careful note.</label>
+            <textarea id="evidenceNote" placeholder="Explain what the selected evidence shows, including the risk or uncertainty."></textarea>
+            <div class="status" id="evidenceStatus" role="status" aria-live="polite">Inspect at least three evidence cards, including one risk or uncertainty.</div>
             <div class="actions">
               <button class="secondary" type="button" data-back>Back</button>
-              <button class="primary" type="button" id="evidenceNextBtn" data-next disabled>Make Founding Decision</button>
+              <button class="primary" type="button" id="evidenceNextBtn" data-next disabled>Go to Test Station</button>
             </div>
           </article>
 
           <article class="step-card" data-step="6" hidden>
-            <h2 class="step-title">Step 6 — Make the Founding Decision</h2>
+            <h2 class="step-title">Step 6 — Run One Test, Then Decide</h2>
             <p class="step-instruction">
-              Decide whether this region should become the first settlement. You may approve it
-              or send the Council back to investigate another region.
+              Choose one test for your evidence packet. Read the test result before making the founding decision.
             </p>
+            <div class="test-grid" id="testGrid"></div>
+            <label for="testReason">Why is this the right test?</label>
+            <input id="testReason" type="text" placeholder="I predict this test will show...">
+            <div class="actions">
+              <button class="primary" type="button" id="runTestBtn" disabled>Run Test</button>
+            </div>
+            <div class="test-result" id="testResult" role="status" aria-live="polite" hidden></div>
+            <div class="status" id="foundingGateStatus">Founding decision locked: inspect evidence and run one test first.</div>
             <div class="choice-row">
               <label class="decision-choice">
-                <input type="radio" name="foundingDecision" value="approve">
+                <input type="radio" name="foundingDecision" value="approve" disabled>
                 <span><strong>Yes — make this our first settlement.</strong><br>This region has enough evidence to begin.</span>
               </label>
               <label class="decision-choice">
-                <input type="radio" name="foundingDecision" value="revise">
+                <input type="radio" name="foundingDecision" value="revise" disabled>
                 <span><strong>Not yet — investigate another region.</strong><br>The risk or evidence is not clear enough.</span>
               </label>
             </div>
@@ -1096,8 +1122,8 @@
               <li data-track-step="2"><span class="step-dot">2</span><span>Learn Region Types</span></li>
               <li data-track-step="3"><span class="step-dot">3</span><span>Choose One Region</span></li>
               <li data-track-step="4"><span class="step-dot">4</span><span>Read Region Intel</span></li>
-              <li data-track-step="5"><span class="step-dot">5</span><span>Record Evidence</span></li>
-              <li data-track-step="6"><span class="step-dot">6</span><span>Make Founding Decision</span></li>
+              <li data-track-step="5"><span class="step-dot">5</span><span>Inspect Evidence Cards</span></li>
+              <li data-track-step="6"><span class="step-dot">6</span><span>Run Test + Decide</span></li>
               <li data-track-step="7"><span class="step-dot">7</span><span>Defend the Decision</span></li>
               <li data-track-step="8"><span class="step-dot">8</span><span>Founding Archive</span></li>
             </ol>
@@ -1108,6 +1134,7 @@
             <p><strong>Region:</strong> <span id="sideRegion">Not chosen yet</span></p>
             <p><strong>Decision:</strong> <span id="sideDecision">Pending</span></p>
             <p><strong>Evidence:</strong> <span id="sideEvidence">Pending</span></p>
+            <p><strong>Test:</strong> <span id="sideTest">Pending</span></p>
           </div>
 
           <div class="side-card">
@@ -1128,6 +1155,8 @@
     const SELECTED_REGION_KEY = "stemNationWorldSelectedRegionV1";
     const FOUNDING_ARCHIVE_KEY = "stemNationWorldFoundingArchiveV1";
     const DECISION_CONSEQUENCE_KEY = "stemNationWorldMission1FoundingDecisionConsequenceV1";
+    const EVIDENCE_PACKET_KEY = "stemNationWorldMission1EvidencePacketV1";
+    const TEST_ACTION_KEY = "stemNationWorldMission1TestActionV1";
     let returnedRegionForComparison = "";
 
     const regions = {
@@ -1199,12 +1228,103 @@
       }
     };
 
+    const evidencePackets = {
+      "River Corridor": [
+        ["river-resource", "resource", "Resource Evidence", "Fresh water nearby."],
+        ["river-access", "access", "Access / Movement Evidence", "A travel route follows the river."],
+        ["river-hazard", "hazard", "Hazard Evidence", "Flood warning on low banks."],
+        ["river-uncertain", "uncertainty", "Uncertain / Conflicting Evidence", "Disease and competition are uncertain."]
+      ],
+      "Forest Edge": [
+        ["forest-resource", "resource", "Resource Evidence", "Wood and shelter are nearby."],
+        ["forest-access", "access", "Access / Movement Evidence", "Hidden food and medicine signs appear along narrow paths."],
+        ["forest-hazard", "hazard", "Hazard Evidence", "Limited visibility raises risk."],
+        ["forest-uncertain", "uncertainty", "Uncertain / Conflicting Evidence", "Hidden danger remains uncertain."]
+      ],
+      "Highland Ridge": [
+        ["highland-resource", "resource", "Resource Evidence", "High ground gives a wide view."],
+        ["highland-access", "access", "Access / Movement Evidence", "The ridge offers a defense advantage."],
+        ["highland-hazard", "hazard", "Hazard Evidence", "Water access is difficult."],
+        ["highland-uncertain", "uncertainty", "Uncertain / Conflicting Evidence", "Weather and travel patterns are uncertain."]
+      ],
+      "Coastal Bay": [
+        ["coast-resource", "resource", "Resource Evidence", "Fish and protected water are nearby."],
+        ["coast-access", "access", "Access / Movement Evidence", "The bay opens a trade and travel route."],
+        ["coast-hazard", "hazard", "Hazard Evidence", "The shore has storm exposure."],
+        ["coast-uncertain", "uncertainty", "Uncertain / Conflicting Evidence", "Outside contact is uncertain."]
+      ],
+      "Open Plain": [
+        ["plain-resource", "resource", "Resource Evidence", "Wide farming space is available."],
+        ["plain-access", "access", "Access / Movement Evidence", "Herd and movement routes cross the plain."],
+        ["plain-hazard", "hazard", "Hazard Evidence", "Natural defense is weak."],
+        ["plain-uncertain", "uncertainty", "Uncertain / Conflicting Evidence", "Drought exposure is uncertain."]
+      ],
+      "Balanced Crossroads": [
+        ["crossroads-resource", "resource", "Resource Evidence", "Multiple routes provide access."],
+        ["crossroads-access", "access", "Access / Movement Evidence", "Trade and communication can move quickly."],
+        ["crossroads-hazard", "conflict", "Hazard Evidence", "Competition pressure follows the routes."],
+        ["crossroads-uncertain", "uncertainty", "Uncertain / Conflicting Evidence", "Divided priorities remain uncertain."]
+      ]
+    };
+
+    const testMethods = [
+      "Water / Supply Check",
+      "Route / Access Check",
+      "Shelter / Exposure Check",
+      "Seasonal / Pattern Check"
+    ];
+
+    const testOutcomes = {
+      "River Corridor": [
+        ["claim_strengthened", "Water signs confirm a dependable nearby supply.", "Keep the flood warning in the protection plan."],
+        ["claim_strengthened", "The river connects movement and supply routes.", "Plan crossings away from low banks."],
+        ["new_risk_revealed", "Low ground shows greater flood exposure than expected.", "Inspect higher shelter sites before approving."],
+        ["more_evidence_required", "One observation cannot show the full flood or disease pattern.", "Collect evidence from another season."]
+      ],
+      "Forest Edge": [
+        ["claim_strengthened", "Wood, food, and medicine signs support the supply claim.", "Protect access to these resources."],
+        ["claim_weakened", "Dense growth slows movement along the route.", "Mark a safer path before approving."],
+        ["new_risk_revealed", "Limited sight lines hide danger near shelter.", "Create a watch and clearing plan."],
+        ["more_evidence_required", "Food and danger signs may change by season.", "Inspect the forest in another season."]
+      ],
+      "Highland Ridge": [
+        ["claim_weakened", "The nearest dependable water is difficult to reach.", "Find a safe supply route or inspect another region."],
+        ["claim_weakened", "Steep travel makes supply movement slower.", "Test a second route before approving."],
+        ["claim_strengthened", "High ground reduces flood exposure and improves defense.", "Plan shelter against wind and cold."],
+        ["new_risk_revealed", "Weather changes quickly on exposed high ground.", "Prepare a seasonal shelter plan."]
+      ],
+      "Coastal Bay": [
+        ["claim_strengthened", "Fish and protected water support the supply claim.", "Secure fresh water as well as food."],
+        ["claim_strengthened", "The bay provides a workable travel and trade route.", "Watch outside contact along the route."],
+        ["new_risk_revealed", "Shore shelter is exposed to storm surge.", "Move founding shelters farther inland."],
+        ["more_evidence_required", "One calm day cannot show the storm pattern.", "Inspect signs from another season."]
+      ],
+      "Open Plain": [
+        ["more_evidence_required", "Farming space is clear, but water supply is not.", "Inspect a dependable water source."],
+        ["claim_strengthened", "Open ground supports herd and movement routes.", "Pair access with a defense plan."],
+        ["claim_weakened", "The site has little natural protection.", "Test a sheltered edge or prepare defenses."],
+        ["new_risk_revealed", "Dry-ground signs point to drought exposure.", "Create a seasonal water plan."]
+      ],
+      "Balanced Crossroads": [
+        ["more_evidence_required", "Routes are clear, but a dependable supply is not.", "Inspect nearby water and food sources."],
+        ["claim_strengthened", "Multiple routes support trade and communication.", "Choose which routes the settlement can protect."],
+        ["claim_weakened", "Many approaches make the site harder to defend.", "Plan protected shelter before approving."],
+        ["new_risk_revealed", "Traffic patterns show changing competition pressure.", "Prepare rules for contact and shared routes."]
+      ]
+    };
+
     const TOTAL_STEPS = 8;
 
     const state = {
       step: 1,
       selectedRegion: "",
+      selectedEvidenceCards: [],
       evidenceNote: "",
+      testMethod: "",
+      testReason: "",
+      testResult: "",
+      testResultType: "",
+      testRecommendation: "",
       decision: "",
       defenseAdvantage: "",
       defenseRisk: "",
@@ -1217,8 +1337,8 @@
       "Learn the Region Types",
       "Choose One Region",
       "Read Region Intel",
-      "Record Evidence",
-      "Make Founding Decision",
+      "Inspect Evidence Cards",
+      "Run Test + Decide",
       "Defend the Decision",
       "Founding Archive"
     ];
@@ -1228,6 +1348,7 @@
         const saved = JSON.parse(localStorage.getItem(STORAGE_KEY) || "null");
         if(saved && typeof saved === "object"){
           Object.assign(state, saved);
+          if(!Array.isArray(state.selectedEvidenceCards)){ state.selectedEvidenceCards = []; }
           if(state.step > TOTAL_STEPS){ state.step = TOTAL_STEPS; }
         }
       }catch(error){}
@@ -1259,6 +1380,8 @@
       saveState();
 
       if(state.step === 4){ renderIntel(); }
+      if(state.step === 5){ renderEvidenceCards(); }
+      if(state.step === 6){ renderTestStation(); }
       if(state.step === 7){ renderDefenseRegion(); }
       if(state.step === 8){ renderArchive(); }
 
@@ -1273,16 +1396,27 @@
             <span class="region-icon">${data.icon}</span>
             <div>
               <strong class="region-title">${name}</strong>
-              <span class="region-plain">${data.simple}</span>
+              <span class="region-plain">${data.tile}</span>
             </div>
           </div>
-          <p class="region-explain">${data.explain}</p>
-          <div class="region-mini-grid">
-            <span class="region-mini"><b>Possible Advantage</b>${data.advantage}</span>
-            <span class="region-mini"><b>Possible Risk</b>${data.risk}</span>
+          <button class="secondary scout-toggle" type="button" data-scout="${name}" aria-expanded="false">Scout this region</button>
+          <div class="scout-drawer" data-scout-drawer="${name}" hidden>
+            <p class="region-explain"><strong>Meaning:</strong> ${data.simple}</p>
+            <div class="region-mini-grid">
+              <span class="region-mini"><b>Possible Advantage</b>${data.advantage}</span>
+              <span class="region-mini"><b>Possible Risk</b>${data.risk}</span>
+            </div>
           </div>
         </section>
       `).join("");
+      grid.querySelectorAll("[data-scout]").forEach(button => {
+        button.addEventListener("click", () => {
+          const drawer = grid.querySelector(`[data-scout-drawer="${button.dataset.scout}"]`);
+          drawer.hidden = !drawer.hidden;
+          button.setAttribute("aria-expanded", String(!drawer.hidden));
+          button.textContent = drawer.hidden ? "Scout this region" : "Close region intel";
+        });
+      });
     }
 
     function buildRegions(){
@@ -1316,7 +1450,14 @@
           returnedRegionForComparison = "";
 
           if(changedRegion){
+            state.selectedEvidenceCards = [];
             state.evidenceNote = "";
+            state.testMethod = "";
+            state.testReason = "";
+            state.testResult = "";
+            state.testResultType = "";
+            state.testRecommendation = "";
+            localStorage.removeItem(TEST_ACTION_KEY);
             state.decision = "";
             state.defenseAdvantage = "";
             state.defenseRisk = "";
@@ -1330,7 +1471,7 @@
             document.getElementById("defenseRisk").value = "";
             document.getElementById("defensePlan").value = "";
             document.getElementById("evidenceNextBtn").disabled = true;
-            document.getElementById("evidenceStatus").textContent = "Write at least one complete thought.";
+            document.getElementById("evidenceStatus").textContent = "Inspect at least three evidence cards, including one risk or uncertainty.";
             document.getElementById("evidenceStatus").className = "status";
             document.getElementById("decisionNextBtn").disabled = true;
             document.getElementById("decisionNextBtn").textContent = "Defend the Decision";
@@ -1377,20 +1518,175 @@
       document.getElementById("defenseRegion").value = state.selectedRegion || "No region selected";
     }
 
-    function checkEvidence(){
-      state.evidenceNote = document.getElementById("evidenceNote").value.trim();
-      const ready = state.evidenceNote.length >= 20;
+    function evidenceCardRecords(){
+      return (evidencePackets[state.selectedRegion] || []).map(card => ({
+        id: card[0], type: card[1], label: card[2], detail: card[3]
+      }));
+    }
 
+    function selectedEvidenceRecords(){
+      return evidenceCardRecords().filter(card => state.selectedEvidenceCards.includes(card.id));
+    }
+
+    function evidencePacketReady(){
+      const selected = selectedEvidenceRecords();
+      const riskIncluded = selected.some(card =>
+        ["risk", "hazard", "uncertainty", "conflict"].includes(card.type));
+      return selected.length >= 3 && riskIncluded && state.evidenceNote.length >= 20;
+    }
+
+    function saveEvidencePacket(dispatchFeedback){
+      const selected = selectedEvidenceRecords();
+      const riskIncluded = selected.some(card =>
+        ["risk", "hazard", "uncertainty", "conflict"].includes(card.type));
+      const record = {
+        selectedRegion: state.selectedRegion,
+        selectedEvidenceCards: selected.map(card => card.id),
+        evidenceTypes: [...new Set(selected.map(card => card.type))],
+        riskOrUncertaintyIncluded: riskIncluded,
+        evidenceNote: state.evidenceNote,
+        status: evidencePacketReady() ? "evidence_packet_ready" : "evidence_packet_incomplete",
+        savedAt: new Date().toISOString()
+      };
+      localStorage.setItem(EVIDENCE_PACKET_KEY, JSON.stringify(record));
+      if(dispatchFeedback){
+        window.dispatchEvent(new CustomEvent("stemNationWorldMission1EvidenceFeedback", {
+          detail: {status: record.status, evidenceCount: selected.length, selectedRegion: state.selectedRegion}
+        }));
+      }
+      return record;
+    }
+
+    function renderEvidenceCards(){
+      const grid = document.getElementById("evidenceGrid");
+      grid.innerHTML = evidenceCardRecords().map(card => `
+        <button class="evidence-card ${state.selectedEvidenceCards.includes(card.id) ? "selected" : ""}"
+                type="button" data-evidence-id="${card.id}" aria-pressed="${state.selectedEvidenceCards.includes(card.id)}">
+          <strong>${card.label}</strong>${card.detail}
+        </button>
+      `).join("");
+      grid.querySelectorAll("[data-evidence-id]").forEach(button => {
+        button.addEventListener("click", () => {
+          const id = button.dataset.evidenceId;
+          state.selectedEvidenceCards = state.selectedEvidenceCards.includes(id)
+            ? state.selectedEvidenceCards.filter(value => value !== id)
+            : [...state.selectedEvidenceCards, id];
+          state.testMethod = "";
+          state.testResult = "";
+          state.testResultType = "";
+          state.testRecommendation = "";
+          state.decision = "";
+          localStorage.removeItem(TEST_ACTION_KEY);
+          renderEvidenceCards();
+          checkEvidence(true);
+        });
+      });
+    }
+
+    function checkEvidence(dispatchFeedback = false){
+      state.evidenceNote = document.getElementById("evidenceNote").value.trim();
+      const selected = selectedEvidenceRecords();
+      const riskIncluded = selected.some(card =>
+        ["risk", "hazard", "uncertainty", "conflict"].includes(card.type));
+      const ready = evidencePacketReady();
       document.getElementById("evidenceNextBtn").disabled = !ready;
       document.getElementById("evidenceStatus").textContent = ready
-        ? "Evidence recorded. You may continue."
-        : "Write at least one complete thought.";
+        ? `Evidence packet ready: ${selected.length} cards selected, including risk or uncertainty.`
+        : `${selected.length} of 3 evidence cards selected. ${riskIncluded ? "Risk or uncertainty included." : "Include one risk or uncertainty."} ${state.evidenceNote.length >= 20 ? "" : "Connect the cards in one complete note."}`;
       document.getElementById("evidenceStatus").className = ready ? "status good" : "status";
-
+      saveEvidencePacket(dispatchFeedback);
       saveState();
     }
 
+    function renderTestStation(){
+      const grid = document.getElementById("testGrid");
+      grid.innerHTML = testMethods.map(method => `
+        <button class="test-choice ${state.testMethod === method ? "selected" : ""}"
+                type="button" data-test-method="${method}" aria-pressed="${state.testMethod === method}">
+          <strong>${method}</strong>Inspect this part of the region evidence.
+        </button>
+      `).join("");
+      grid.querySelectorAll("[data-test-method]").forEach(button => {
+        button.addEventListener("click", () => {
+          state.testMethod = button.dataset.testMethod;
+          state.testResult = "";
+          state.testResultType = "";
+          renderTestStation();
+          checkTestControls();
+          saveState();
+        });
+      });
+      document.getElementById("testReason").value = state.testReason || "";
+      renderTestResult();
+      checkTestControls();
+    }
+
+    function checkTestControls(){
+      state.testReason = document.getElementById("testReason").value.trim();
+      document.getElementById("runTestBtn").disabled =
+        !evidencePacketReady() || !state.testMethod || state.testReason.length < 10;
+      updateFoundingGate();
+      saveState();
+    }
+
+    function runTest(){
+      if(document.getElementById("runTestBtn").disabled){ return; }
+      const methodIndex = testMethods.indexOf(state.testMethod);
+      const outcome = testOutcomes[state.selectedRegion][methodIndex];
+      state.testResultType = outcome[0];
+      state.testResult = outcome[1];
+      state.testRecommendation = outcome[2];
+      const record = {
+        selectedRegion: state.selectedRegion,
+        testMethod: state.testMethod,
+        selectedEvidenceCards: [...state.selectedEvidenceCards],
+        prediction: state.testReason,
+        testResult: state.testResult,
+        resultType: state.testResultType,
+        nextRecommendation: state.testRecommendation,
+        savedAt: new Date().toISOString()
+      };
+      localStorage.setItem(TEST_ACTION_KEY, JSON.stringify(record));
+      renderTestResult();
+      updateFoundingGate();
+      saveState();
+      window.dispatchEvent(new CustomEvent("stemNationWorldMission1TestFeedback", {
+        detail: {testMethod: record.testMethod, resultType: record.resultType, selectedRegion: record.selectedRegion}
+      }));
+    }
+
+    function renderTestResult(){
+      const panel = document.getElementById("testResult");
+      if(!state.testResult){
+        panel.hidden = true;
+        panel.textContent = "";
+        return;
+      }
+      const heading = state.testResultType.replaceAll("_", " ");
+      panel.innerHTML = `<strong>Test result — ${heading}</strong><br>${state.testResult}<br><strong>Next:</strong> ${state.testRecommendation}`;
+      panel.hidden = false;
+    }
+
+    function updateFoundingGate(){
+      const unlocked = Boolean(state.selectedRegion && evidencePacketReady() && state.testResult);
+      const gate = document.getElementById("foundingGateStatus");
+      gate.textContent = unlocked
+        ? "Founding decision unlocked: evidence packet and test result are ready."
+        : "Founding decision locked: inspect evidence and run one test first.";
+      gate.className = unlocked ? "status good" : "status";
+      document.querySelectorAll("input[name='foundingDecision']").forEach(radio => {
+        radio.disabled = !unlocked;
+        if(!unlocked){ radio.checked = false; }
+      });
+      if(!unlocked){ state.decision = ""; }
+      document.getElementById("decisionNextBtn").disabled = !unlocked || !state.decision;
+    }
+
     function checkDecision(){
+      if(!evidencePacketReady() || !state.testResult){
+        updateFoundingGate();
+        return;
+      }
       const checked = document.querySelector("input[name='foundingDecision']:checked");
       state.decision = checked ? checked.value : "";
       const ready = Boolean(state.decision);
@@ -1420,6 +1716,9 @@
           ? "approved_first_settlement"
           : "returned_for_more_investigation",
         evidenceNote: state.evidenceNote,
+        selectedEvidenceCards: [...state.selectedEvidenceCards],
+        testMethod: state.testMethod,
+        testResult: state.testResult,
         visibleConsequence: approved
           ? "Decision consequence saved: this region moves forward to founding defense."
           : "Decision consequence saved: the Council returns to compare another region before founding.",
@@ -1519,6 +1818,10 @@
         selectedRegion: state.selectedRegion,
         decision: decisionLabel(state.decision),
         evidenceNote: state.evidenceNote,
+        selectedEvidenceCards: [...state.selectedEvidenceCards],
+        testMethod: state.testMethod,
+        testResult: state.testResult,
+        testResultType: state.testResultType,
         advantage: state.defenseAdvantage,
         risk: state.defenseRisk,
         protectionPlan: state.defensePlan,
@@ -1543,6 +1846,9 @@ ${archive.regionTeaching}
 Evidence:
 ${archive.evidenceNote}
 
+Test:
+${archive.testMethod} — ${archive.testResult}
+
 I chose this because:
 ${archive.advantage}
 
@@ -1557,7 +1863,9 @@ ${archive.protectionPlan}`;
       document.getElementById("sideRegion").textContent = state.selectedRegion || "Not chosen yet";
       document.getElementById("sideDecision").textContent = decisionLabel(state.decision);
       document.getElementById("sideEvidence").textContent =
-        state.evidenceNote ? "Recorded" : "Pending";
+        `${selectedEvidenceRecords().length} card${selectedEvidenceRecords().length === 1 ? "" : "s"} selected`;
+      document.getElementById("sideTest").textContent =
+        state.testResult ? "Result ready" : "Pending";
     }
 
     function restoreInputs(){
@@ -1571,6 +1879,7 @@ ${archive.protectionPlan}`;
       }
 
       document.getElementById("evidenceNote").value = state.evidenceNote || "";
+      document.getElementById("testReason").value = state.testReason || "";
       document.getElementById("defenseAdvantage").value = state.defenseAdvantage || "";
       document.getElementById("defenseRisk").value = state.defenseRisk || "";
       document.getElementById("defensePlan").value = state.defensePlan || "";
@@ -1581,6 +1890,8 @@ ${archive.protectionPlan}`;
       }
 
       checkEvidence();
+      renderEvidenceCards();
+      renderTestStation();
       checkDecision();
       checkDefense();
     }
@@ -1616,6 +1927,8 @@ ${archive.protectionPlan}`;
       });
 
       document.getElementById("evidenceNote").addEventListener("input", checkEvidence);
+      document.getElementById("testReason").addEventListener("input", checkTestControls);
+      document.getElementById("runTestBtn").addEventListener("click", runTest);
 
       document.querySelectorAll("input[name='foundingDecision']").forEach(radio => {
         radio.addEventListener("change", () => {
@@ -1772,7 +2085,7 @@ ${archive.protectionPlan}`;
       const prior = readJson(BADGE_KEY);
 
       const badge = {
-        badgeName: "Investigation Habit Carried Forward",
+        badgeName: "Investigation Habit Ready",
         badgeType: "world_mission_1_entry_habit_carryover",
         habits: [
           "observe_first",
@@ -1866,10 +2179,10 @@ ${archive.protectionPlan}`;
         Boolean(reflection && reflection.status === "replay_reflection_saved");
 
       const readyMessage =
-        "World Mission 1 begins with the Council Hall record already carried forward. Keep the same investigation habits: observe first, ask better questions, test evidence, name uncertainty, and lead with caution.";
+        "Your investigation habits travel into World Mission 1.";
 
       const partialMessage =
-        "Some Council Hall records are available, but the full carryover record is not complete in this browser. Review the Student Hub record if anything looks missing.";
+        "Your investigation habits travel into World Mission 1.";
 
       mainText.textContent = ready ? readyMessage : partialMessage;
       statusTitle.textContent = ready ? "Carryover Ready" : "Carryover Partial";
