@@ -21,6 +21,7 @@
         localStorage.removeItem("stemNationWorldSelectedRegionV1");
         localStorage.removeItem("stemNationWorldMission1EvidencePacketV1");
         localStorage.removeItem("stemNationWorldMission1TestActionV1");
+        localStorage.removeItem("stemNationWorldMission1ArchiveRewardV1");
         window.location.replace("/world_mission_1");
       }
     })();
@@ -359,20 +360,61 @@
     .test-choice.selected {
       border-color: var(--green);
       background: rgba(134,239,172,.12);
-      box-shadow: 0 0 0 2px rgba(134,239,172,.12);
+      box-shadow: 0 0 0 3px rgba(134,239,172,.16), 0 12px 28px rgba(0,0,0,.2);
+      transform: translateY(-2px);
+    }
+
+    /* MI-3G WORLD MISSION 1 GAME FEEL POLISH */
+    .evidence-card {
+      position: relative;
+      min-height: 132px;
+      transition: transform .18s ease, box-shadow .18s ease, border-color .18s ease;
+    }
+
+    .evidence-card:hover { transform: translateY(-2px); }
+
+    .evidence-type,
+    .intel-type,
+    .result-type {
+      display: inline-flex;
+      width: fit-content;
+      align-items: center;
+      gap: 6px;
+      border: 1px solid rgba(125,211,252,.3);
+      border-radius: 999px;
+      background: rgba(125,211,252,.1);
+      color: #dff5ff;
+      padding: 4px 9px;
+      margin-bottom: 10px;
+      font-size: 11px;
+      font-weight: 950;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+    }
+
+    .evidence-selected {
+      display: block;
+      margin-top: 12px;
+      color: var(--green);
+      font-size: 12px;
+      font-weight: 950;
+      letter-spacing: .05em;
+      text-transform: uppercase;
     }
 
     .test-result {
-      border: 1px solid rgba(125,211,252,.35);
+      border: 2px solid rgba(125,211,252,.58);
       border-radius: 18px;
-      background: rgba(125,211,252,.09);
-      padding: 16px;
+      background: linear-gradient(145deg, rgba(14,116,144,.24), rgba(125,211,252,.08));
+      box-shadow: 0 16px 36px rgba(0,0,0,.22);
+      padding: 20px;
       margin-top: 16px;
       line-height: 1.5;
     }
 
     .intel-grid {
       display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
       gap: 14px;
     }
 
@@ -382,12 +424,71 @@
       background: rgba(255,255,255,.055);
       padding: 15px;
       line-height: 1.55;
+      min-height: 132px;
     }
 
     .intel-box strong {
       display: block;
       color: var(--gold);
       margin-bottom: 5px;
+    }
+
+    .readiness-meter {
+      display: grid;
+      gap: 12px;
+    }
+
+    .readiness-heading {
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      color: #fff;
+      font-weight: 950;
+    }
+
+    .readiness-track {
+      height: 12px;
+      overflow: hidden;
+      border-radius: 999px;
+      background: rgba(255,255,255,.09);
+    }
+
+    .readiness-fill {
+      width: 0;
+      height: 100%;
+      border-radius: inherit;
+      background: linear-gradient(90deg, var(--blue), var(--green));
+      transition: width .25s ease;
+    }
+
+    .readiness-checks {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 7px;
+      color: var(--muted);
+      font-size: 12px;
+    }
+
+    .readiness-checks span.ready { color: var(--green); }
+
+    .field-helper {
+      margin: -2px 0 8px;
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .archive-badge {
+      display: inline-flex;
+      border: 1px solid rgba(134,239,172,.45);
+      border-radius: 999px;
+      background: rgba(134,239,172,.12);
+      color: var(--green);
+      padding: 7px 12px;
+      margin-bottom: 10px;
+      font-size: 12px;
+      font-weight: 950;
+      letter-spacing: .06em;
+      text-transform: uppercase;
     }
 
     textarea,
@@ -563,7 +664,8 @@
       .map-grid,
       .evidence-grid,
       .test-grid,
-      .survival-board { grid-template-columns: 1fr; }
+      .survival-board,
+      .intel-grid { grid-template-columns: 1fr; }
     }
   
 /* CI-STAGE-54A GUIDED MISSION RETURN AND PROTOTYPE LINK POLISH */
@@ -1008,21 +1110,20 @@
             <div class="status" id="regionStatus">Choose one region to continue.</div>
             <div class="actions">
               <button class="secondary" type="button" data-back>Back</button>
-              <button class="primary" type="button" id="regionNextBtn" data-next disabled>Read Region Intel</button>
+              <button class="primary" type="button" id="regionNextBtn" data-next disabled>Open Intel Packet</button>
             </div>
           </article>
 
           <article class="step-card" data-step="4" hidden>
-            <h2 class="step-title">Step 4 — Read Region Intel</h2>
+            <h2 class="step-title">Step 4 — Open Region Intel Packet</h2>
             <p class="step-instruction">
-              Study the advantage, risk, and clue. A strong founding choice includes both
-              opportunity and danger.
+              Scan the packet before choosing evidence cards.
             </p>
             <div class="intel-grid">
-              <div class="intel-box"><strong id="intelName">Region</strong><span id="intelDescription"></span></div>
-              <div class="intel-box"><strong>Advantage</strong><span id="intelAdvantage"></span></div>
-              <div class="intel-box"><strong>Risk</strong><span id="intelRisk"></span></div>
-              <div class="intel-box"><strong>Observation Clue</strong><span id="intelClue"></span></div>
+              <div class="intel-box"><span class="intel-type">◈ Meaning</span><strong id="intelName">Region Meaning</strong><span id="intelDescription"></span></div>
+              <div class="intel-box"><span class="intel-type">✦ Advantage</span><strong>Survival Advantage</strong><span id="intelAdvantage"></span></div>
+              <div class="intel-box"><span class="intel-type">▲ Risk</span><strong>Survival Risk</strong><span id="intelRisk"></span></div>
+              <div class="intel-box"><span class="intel-type">⌕ Clue</span><strong>First Clue</strong><span id="intelClue"></span></div>
             </div>
             <div class="actions">
               <button class="secondary" type="button" data-back>Back</button>
@@ -1086,12 +1187,15 @@
             <input id="defenseRegion" type="text" readonly>
 
             <label for="defenseAdvantage">I chose this because...</label>
+            <p class="field-helper">Start with: “The strongest advantage is…”</p>
             <textarea id="defenseAdvantage" placeholder="Example: The region gives my people water, food, and movement routes."></textarea>
 
             <label for="defenseRisk">The biggest risk is...</label>
+            <p class="field-helper">Start with: “The biggest risk is…”</p>
             <textarea id="defenseRisk" placeholder="Example: The biggest risk is flooding, exposure, storms, or conflict."></textarea>
 
             <label for="defensePlan">We will protect the nation by...</label>
+            <p class="field-helper">Start with: “Our protection plan is…”</p>
             <textarea id="defensePlan" placeholder="Example: We will build away from danger, protect food, and watch for warning signs."></textarea>
 
             <div class="status" id="defenseStatus">Complete all three defense fields.</div>
@@ -1106,6 +1210,8 @@
             <p class="step-instruction">
               Your first World Board mission is complete. Return to the Student Hub to continue your Academy path.
             </p>
+            <div class="archive-badge">Founding Decision Archived</div>
+            <p>Evidence packet, test result, and decision saved.</p>
             <div class="archive-result" id="archiveResult"></div>
             <div class="actions">
               <a class="button primary" href="/student_hub">Return to Student Hub</a>
@@ -1121,7 +1227,7 @@
               <li data-track-step="1"><span class="step-dot">1</span><span>Observe the World Board</span></li>
               <li data-track-step="2"><span class="step-dot">2</span><span>Learn Region Types</span></li>
               <li data-track-step="3"><span class="step-dot">3</span><span>Choose One Region</span></li>
-              <li data-track-step="4"><span class="step-dot">4</span><span>Read Region Intel</span></li>
+              <li data-track-step="4"><span class="step-dot">4</span><span>Open Intel Packet</span></li>
               <li data-track-step="5"><span class="step-dot">5</span><span>Inspect Evidence Cards</span></li>
               <li data-track-step="6"><span class="step-dot">6</span><span>Run Test + Decide</span></li>
               <li data-track-step="7"><span class="step-dot">7</span><span>Defend the Decision</span></li>
@@ -1135,6 +1241,21 @@
             <p><strong>Decision:</strong> <span id="sideDecision">Pending</span></p>
             <p><strong>Evidence:</strong> <span id="sideEvidence">Pending</span></p>
             <p><strong>Test:</strong> <span id="sideTest">Pending</span></p>
+          </div>
+
+          <div class="side-card readiness-meter" aria-live="polite">
+            <div class="readiness-heading">
+              <span>Founding Readiness</span>
+              <span id="readinessScore">0 / 5</span>
+            </div>
+            <div class="readiness-track" aria-hidden="true"><div class="readiness-fill" id="readinessFill"></div></div>
+            <div class="readiness-checks" id="readinessChecks">
+              <span data-readiness="region">○ Region chosen</span>
+              <span data-readiness="evidence">○ Evidence packet</span>
+              <span data-readiness="risk">○ Risk named</span>
+              <span data-readiness="note">○ Evidence note</span>
+              <span data-readiness="test">○ Test complete</span>
+            </div>
           </div>
 
           <div class="side-card">
@@ -1157,6 +1278,7 @@
     const DECISION_CONSEQUENCE_KEY = "stemNationWorldMission1FoundingDecisionConsequenceV1";
     const EVIDENCE_PACKET_KEY = "stemNationWorldMission1EvidencePacketV1";
     const TEST_ACTION_KEY = "stemNationWorldMission1TestActionV1";
+    const ARCHIVE_REWARD_KEY = "stemNationWorldMission1ArchiveRewardV1";
     let returnedRegionForComparison = "";
 
     const regions = {
@@ -1336,7 +1458,7 @@
       "Observe the World Board",
       "Learn the Region Types",
       "Choose One Region",
-      "Read Region Intel",
+      "Open Region Intel Packet",
       "Inspect Evidence Cards",
       "Run Test + Decide",
       "Defend the Decision",
@@ -1407,6 +1529,7 @@
               <span class="region-mini"><b>Possible Risk</b>${data.risk}</span>
             </div>
           </div>
+
         </section>
       `).join("");
       grid.querySelectorAll("[data-scout]").forEach(button => {
@@ -1562,7 +1685,9 @@
       grid.innerHTML = evidenceCardRecords().map(card => `
         <button class="evidence-card ${state.selectedEvidenceCards.includes(card.id) ? "selected" : ""}"
                 type="button" data-evidence-id="${card.id}" aria-pressed="${state.selectedEvidenceCards.includes(card.id)}">
+          <span class="evidence-type">${evidenceTypeDisplay(card.type)}</span>
           <strong>${card.label}</strong>${card.detail}
+          ${state.selectedEvidenceCards.includes(card.id) ? '<span class="evidence-selected">✓ Evidence Card Selected</span>' : ""}
         </button>
       `).join("");
       grid.querySelectorAll("[data-evidence-id]").forEach(button => {
@@ -1580,6 +1705,44 @@
           renderEvidenceCards();
           checkEvidence(true);
         });
+      });
+    }
+
+    function evidenceTypeDisplay(type){
+      const labels = {
+        resource: "◆ Resource",
+        access: "↗ Access",
+        hazard: "▲ Hazard",
+        uncertainty: "? Uncertainty",
+        conflict: "⚔ Conflict"
+      };
+      return labels[type] || type;
+    }
+
+    function readinessDetails(){
+      const selected = selectedEvidenceRecords();
+      return {
+        region: Boolean(state.selectedRegion),
+        evidence: selected.length >= 3,
+        risk: selected.some(card => ["risk", "hazard", "uncertainty", "conflict"].includes(card.type)),
+        note: state.evidenceNote.length >= 20,
+        test: Boolean(state.testResult)
+      };
+    }
+
+    function readinessScore(){
+      return Object.values(readinessDetails()).filter(Boolean).length;
+    }
+
+    function updateReadiness(){
+      const details = readinessDetails();
+      const score = readinessScore();
+      document.getElementById("readinessScore").textContent = `${score} / 5`;
+      document.getElementById("readinessFill").style.width = `${score * 20}%`;
+      document.querySelectorAll("[data-readiness]").forEach(item => {
+        const ready = details[item.dataset.readiness];
+        item.classList.toggle("ready", ready);
+        item.textContent = `${ready ? "✓" : "○"} ${item.textContent.slice(2)}`;
       });
     }
 
@@ -1662,8 +1825,14 @@
         panel.textContent = "";
         return;
       }
-      const heading = state.testResultType.replaceAll("_", " ");
-      panel.innerHTML = `<strong>Test result — ${heading}</strong><br>${state.testResult}<br><strong>Next:</strong> ${state.testRecommendation}`;
+      const resultLabels = {
+        claim_strengthened: "Claim Strengthened",
+        claim_weakened: "Claim Weakened",
+        new_risk_revealed: "New Risk Revealed",
+        more_evidence_required: "More Evidence Required"
+      };
+      const heading = resultLabels[state.testResultType] || state.testResultType.replaceAll("_", " ");
+      panel.innerHTML = `<span class="result-type">${heading}</span><strong>Test Result</strong><br>${state.testResult}<br><strong>Next recommendation:</strong> ${state.testRecommendation}<br><strong>Decision Gate Updated</strong>`;
       panel.hidden = false;
     }
 
@@ -1831,10 +2000,23 @@
       };
 
       localStorage.setItem(FOUNDING_ARCHIVE_KEY, JSON.stringify(archive));
+      const reward = {
+        selectedRegion: state.selectedRegion,
+        decision: state.decision,
+        readinessScore: readinessScore(),
+        evidenceCardCount: selectedEvidenceRecords().length,
+        testMethod: state.testMethod,
+        testResultType: state.testResultType,
+        status: "founding_archive_reward_saved",
+        savedAt: new Date().toISOString()
+      };
+      localStorage.setItem(ARCHIVE_REWARD_KEY, JSON.stringify(reward));
       saveState();
 
       document.getElementById("archiveResult").textContent =
-`FOUNDING ARCHIVE RECORDED
+`FOUNDING READINESS: ${reward.readinessScore} / 5
+
+FOUNDING ARCHIVE
 
 Mission: Claim the Land
 Region: ${archive.selectedRegion}
@@ -1857,6 +2039,9 @@ ${archive.risk}
 
 We will protect the nation by:
 ${archive.protectionPlan}`;
+      window.dispatchEvent(new CustomEvent("stemNationWorldMission1ArchiveFeedback", {
+        detail: reward
+      }));
     }
 
     function updateSide(){
@@ -1866,6 +2051,7 @@ ${archive.protectionPlan}`;
         `${selectedEvidenceRecords().length} card${selectedEvidenceRecords().length === 1 ? "" : "s"} selected`;
       document.getElementById("sideTest").textContent =
         state.testResult ? "Result ready" : "Pending";
+      updateReadiness();
     }
 
     function restoreInputs(){
