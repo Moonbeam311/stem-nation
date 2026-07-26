@@ -1075,6 +1075,132 @@
   }
 </style>
 
+
+<style>
+  /* MI-2W STUDENT HUB MISSION EXIT WORLD MISSION BRIDGE POLISH */
+
+  .mi2w-exit-bridge {
+    margin: 22px 24px 0;
+    border: 1px solid rgba(246,213,111,.32);
+    border-radius: 28px;
+    background:
+      radial-gradient(circle at 12% 18%, rgba(246,213,111,.16), transparent 34%),
+      radial-gradient(circle at 92% 24%, rgba(139,211,255,.14), transparent 34%),
+      rgba(15,23,42,.82);
+    padding: 20px;
+    color: #f8fafc;
+    box-shadow: 0 18px 54px rgba(0,0,0,.24);
+  }
+
+  .mi2w-exit-grid {
+    display: grid;
+    grid-template-columns: 1.2fr .8fr;
+    gap: 18px;
+    align-items: stretch;
+  }
+
+  .mi2w-kicker {
+    color: #8bd3ff;
+    text-transform: uppercase;
+    letter-spacing: .14em;
+    font-size: 13px;
+    font-weight: 950;
+    margin-bottom: 8px;
+  }
+
+  .mi2w-exit-bridge h3 {
+    margin: 0 0 10px;
+    color: #f6d56f;
+    font-size: clamp(28px, 4vw, 46px);
+    line-height: .95;
+  }
+
+  .mi2w-exit-bridge p {
+    margin: 0;
+    color: rgba(248,250,252,.80);
+    line-height: 1.45;
+  }
+
+  .mi2w-readiness-card {
+    border: 1px solid rgba(134,239,172,.28);
+    border-radius: 24px;
+    background: rgba(6,78,59,.18);
+    padding: 16px;
+  }
+
+  .mi2w-readiness-card strong {
+    display: block;
+    color: #86efac;
+    font-size: 20px;
+    margin-bottom: 8px;
+  }
+
+  .mi2w-actions {
+    margin-top: 16px;
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+  }
+
+  .mi2w-btn {
+    border-radius: 999px;
+    border: 1px solid rgba(255,255,255,.14);
+    background: rgba(255,255,255,.07);
+    color: #f8fafc;
+    padding: 11px 15px;
+    min-height: 44px;
+    text-decoration: none;
+    font-weight: 950;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .mi2w-btn.primary {
+    border: 0;
+    background: linear-gradient(135deg,#f6d56f,#ffc83d);
+    color: #111827;
+  }
+
+  .mi2w-mini-ledger {
+    margin-top: 14px;
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 10px;
+  }
+
+  .mi2w-mini-chip {
+    border: 1px solid rgba(139,211,255,.22);
+    background: rgba(139,211,255,.08);
+    border-radius: 16px;
+    padding: 10px;
+    color: rgba(248,250,252,.82);
+    font-size: 13px;
+    line-height: 1.35;
+  }
+
+  .mi2w-mini-chip b {
+    display: block;
+    color: #8bd3ff;
+    margin-bottom: 4px;
+  }
+
+  @media(max-width: 860px) {
+    .mi2w-exit-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .mi2w-mini-ledger {
+      grid-template-columns: 1fr;
+    }
+
+    .mi2w-exit-bridge {
+      margin-left: 14px;
+      margin-right: 14px;
+    }
+  }
+</style>
+
 </head>
 <body>
   <!-- CI-STAGE-9 — Student Hub Cleanup -->
@@ -1685,6 +1811,50 @@ console.log("CI-STAGE-48 MISSION CHECKPOINT STUDENT HUB POLISH ACTIVE");
     console.log("MI-2Q STUDENT HUB ARCHIVE PLACEMENT POLISH ACTIVE");
   })();
 </script>
+
+<!-- MI-2W STUDENT HUB MISSION EXIT WORLD MISSION BRIDGE POLISH -->
+<section class="mi2w-exit-bridge" id="mi2wMissionExitBridge">
+  <div class="mi2w-exit-grid">
+    <div>
+      <div class="mi2w-kicker">Mission Exit Bridge</div>
+      <h3>Ready for World Mission 1</h3>
+      <p>
+        The Council Hall investigation is complete. The Chief Investigator has a saved record,
+        a replay reflection, and a progress ledger. The next step is to carry that investigation
+        habit into the larger STEM Nation world.
+      </p>
+
+      <div class="mi2w-actions">
+        <a class="mi2w-btn primary" href="/world_mission_1">Start World Mission 1</a>
+        <a class="mi2w-btn" href="/investigation_replay">Replay Completed Investigation</a>
+        <a class="mi2w-btn" href="/student_landing">Return Home</a>
+      </div>
+    </div>
+
+    <div class="mi2w-readiness-card">
+      <strong>Chief Investigator Readiness</strong>
+      <p id="mi2wReadinessText">
+        Checking completed investigation records...
+      </p>
+
+      <div class="mi2w-mini-ledger">
+        <div class="mi2w-mini-chip">
+          <b>Archive</b>
+          Mission record saved.
+        </div>
+        <div class="mi2w-mini-chip">
+          <b>Reflection</b>
+          Replay reflection saved.
+        </div>
+        <div class="mi2w-mini-chip">
+          <b>Ledger</b>
+          Progress record checked.
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
 <!-- MI-2Q STUDENT HUB ARCHIVE PLACEMENT POLISH -->
 
 
@@ -2254,6 +2424,72 @@ console.log("CI-STAGE-48 MISSION CHECKPOINT STUDENT HUB POLISH ACTIVE");
     });
 
     console.log("MI-2V STUDENT HUB COMPLETION SECTION CONSOLIDATION ACTIVE");
+  })();
+</script>
+
+
+<script>
+  // MI-2W STUDENT HUB MISSION EXIT WORLD MISSION BRIDGE POLISH
+  (function(){
+    const BRIDGE_KEY = "stemNationMissionExitBridgeV1";
+
+    function readJson(key) {
+      try { return JSON.parse(localStorage.getItem(key) || "null"); }
+      catch(error) { return null; }
+    }
+
+    function updateMissionExitBridge() {
+      const text = document.getElementById("mi2wReadinessText");
+      if (!text) return;
+
+      const resolution = readJson("stemNationMissionResolutionV1");
+      const badge = readJson("stemNationInvestigationArchiveBadgeV1");
+      const reflection = readJson("stemNationReplayReflectionV1");
+      const ledger = readJson("stemNationInvestigationProgressLedgerV1");
+
+      const ready =
+        Boolean(resolution && (resolution.status === "mission_resolution_saved" || resolution.resolution)) &&
+        Boolean(badge && badge.status === "badge_awarded") &&
+        Boolean(reflection && reflection.status === "replay_reflection_saved") &&
+        Boolean(ledger && ledger.status === "ledger_complete");
+
+      const signal = {
+        signalName: "World Mission Bridge Ready",
+        signalType: "completed_investigation_to_world_mission_bridge",
+        ready,
+        resolution: resolution?.resolution || "",
+        reflection: reflection?.reflection || "",
+        ledgerStatus: ledger?.status || "ledger_not_found",
+        status: ready ? "world_mission_bridge_ready" : "world_mission_bridge_waiting",
+        savedAt: new Date().toISOString()
+      };
+
+      localStorage.setItem(BRIDGE_KEY, JSON.stringify(signal));
+
+      if (ready) {
+        text.textContent =
+          "Ready. The saved archive, replay reflection, and 12 / 12 progress ledger show that the Chief Investigator can move into World Mission 1.";
+      } else {
+        text.textContent =
+          "Almost ready. Complete the mission archive, replay reflection, and progress ledger before moving forward.";
+      }
+
+      window.STEMNationMissionExitBridge = signal;
+    }
+
+    document.addEventListener("DOMContentLoaded", function(){
+      setTimeout(updateMissionExitBridge, 220);
+      setTimeout(updateMissionExitBridge, 700);
+      setTimeout(updateMissionExitBridge, 1200);
+    });
+
+    window.addEventListener("focus", function(){
+      setTimeout(updateMissionExitBridge, 220);
+    });
+
+    window.addEventListener("storage", updateMissionExitBridge);
+
+    console.log("MI-2W STUDENT HUB MISSION EXIT WORLD MISSION BRIDGE POLISH ACTIVE");
   })();
 </script>
 
