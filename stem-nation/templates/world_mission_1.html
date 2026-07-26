@@ -199,7 +199,26 @@
 
     .region-card {
       cursor: pointer;
+      min-height: 112px;
       transition: transform .15s ease, border-color .15s ease, background .15s ease, box-shadow .15s ease;
+    }
+
+    /* MI-3C-R2 REGION CHOICE TILE SIMPLIFICATION */
+    .region-card .region-head {
+      gap: 16px;
+      margin-bottom: 0;
+    }
+
+    .region-card .region-icon {
+      width: 60px;
+      height: 60px;
+      border-radius: 18px;
+      font-size: 34px;
+    }
+
+    .region-card .region-plain {
+      margin-top: 6px;
+      font-size: 14px;
     }
 
     .region-card:hover,
@@ -1024,9 +1043,10 @@
               </label>
             </div>
             <div class="status" id="decisionStatus">Choose one decision to continue.</div>
+            <div class="status good" id="decisionConsequence" role="status" aria-live="polite" hidden></div>
             <div class="actions">
               <button class="secondary" type="button" data-back>Back</button>
-              <button class="primary" type="button" id="decisionNextBtn" data-next disabled>Defend the Decision</button>
+              <button class="primary" type="button" id="decisionNextBtn" disabled>Defend the Decision</button>
             </div>
           </article>
 
@@ -1107,10 +1127,13 @@
     const STORAGE_KEY = "stemNationWorldMission1WizardV1";
     const SELECTED_REGION_KEY = "stemNationWorldSelectedRegionV1";
     const FOUNDING_ARCHIVE_KEY = "stemNationWorldFoundingArchiveV1";
+    const DECISION_CONSEQUENCE_KEY = "stemNationWorldMission1FoundingDecisionConsequenceV1";
+    let returnedRegionForComparison = "";
 
     const regions = {
       "River Corridor": {
         icon: "🌊",
+        tile: "Moving water nearby",
         simple: "Land near moving water.",
         explain: "A river corridor is land near moving water. It can help people drink, farm, fish, travel, and trade. It can also flood.",
         short: "Water, food, farming, and travel.",
@@ -1121,6 +1144,7 @@
       },
       "Forest Edge": {
         icon: "🌲",
+        tile: "Trees and shelter",
         simple: "Land near trees and shelter.",
         explain: "A forest edge is land near trees and shelter. It can provide wood, food, medicine, tools, and protection. It can also hide danger.",
         short: "Wood, shelter, medicine, and hidden food.",
@@ -1131,6 +1155,7 @@
       },
       "Highland Ridge": {
         icon: "⛰️",
+        tile: "High ground",
         simple: "Raised land above lower ground.",
         explain: "A highland ridge is raised land. It helps people see far and defend themselves. It can make farming, water access, and travel harder.",
         short: "Defense, visibility, and high ground.",
@@ -1141,6 +1166,7 @@
       },
       "Coastal Bay": {
         icon: "⚓",
+        tile: "Protected ocean water",
         simple: "Land near protected ocean water.",
         explain: "A coastal bay is land near protected ocean water. It can help fishing, travel, and trade. It can also face storms and outside threats.",
         short: "Fishing, travel, trade, and exchange.",
@@ -1151,6 +1177,7 @@
       },
       "Open Plain": {
         icon: "🌾",
+        tile: "Wide open land",
         simple: "Wide, flat, open land.",
         explain: "An open plain is wide, flat land. It can help farming, animals, movement, and growth. It can be exposed and harder to defend.",
         short: "Farming, growth, livestock, and movement.",
@@ -1161,6 +1188,7 @@
       },
       "Balanced Crossroads": {
         icon: "🛤️",
+        tile: "Paths meet here",
         simple: "Land where paths meet.",
         explain: "A crossroads is where paths meet. It can help trade, communication, cooperation, and movement. It can also bring conflict and pressure.",
         short: "Trade, communication, and flexibility.",
@@ -1259,26 +1287,60 @@
 
     function buildRegions(){
       const grid = document.getElementById("regionGrid");
+      // MI-3C-R1 REGION CARD DENSITY CLEANUP
+      // MI-3C-R2 REGION CHOICE TILE SIMPLIFICATION
       grid.innerHTML = Object.entries(regions).map(([name, data]) => `
         <button class="region-card" type="button" data-region="${name}" aria-label="Investigate ${name}">
           <div class="region-head">
             <span class="region-icon">${data.icon}</span>
             <div>
               <strong class="region-title">${name}</strong>
-              <span class="region-plain">${data.simple}</span>
+              <span class="region-plain">${data.tile}</span>
             </div>
-          </div>
-          <span class="region-summary">${data.short}</span>
-          <div class="region-mini-grid">
-            <span class="region-mini"><b>Advantage</b>${data.advantage}</span>
-            <span class="region-mini"><b>Risk</b>${data.risk}</span>
           </div>
         </button>
       `).join("");
 
       grid.querySelectorAll("[data-region]").forEach(btn => {
         btn.addEventListener("click", () => {
+          if(returnedRegionForComparison === btn.dataset.region){
+            document.getElementById("regionStatus").textContent =
+              `The Council already reviewed ${btn.dataset.region}. Choose another region to compare.`;
+            document.getElementById("regionStatus").className = "status";
+            document.getElementById("regionNextBtn").disabled = true;
+            return;
+          }
+
+          const changedRegion = Boolean(state.selectedRegion && state.selectedRegion !== btn.dataset.region);
           state.selectedRegion = btn.dataset.region;
+          returnedRegionForComparison = "";
+
+          if(changedRegion){
+            state.evidenceNote = "";
+            state.decision = "";
+            state.defenseAdvantage = "";
+            state.defenseRisk = "";
+            state.defensePlan = "";
+            state.completedAt = "";
+            document.getElementById("evidenceNote").value = "";
+            document.querySelectorAll("input[name='foundingDecision']").forEach(radio => {
+              radio.checked = false;
+            });
+            document.getElementById("defenseAdvantage").value = "";
+            document.getElementById("defenseRisk").value = "";
+            document.getElementById("defensePlan").value = "";
+            document.getElementById("evidenceNextBtn").disabled = true;
+            document.getElementById("evidenceStatus").textContent = "Write at least one complete thought.";
+            document.getElementById("evidenceStatus").className = "status";
+            document.getElementById("decisionNextBtn").disabled = true;
+            document.getElementById("decisionNextBtn").textContent = "Defend the Decision";
+            document.getElementById("decisionStatus").textContent = "Choose one decision to continue.";
+            document.getElementById("decisionStatus").className = "status";
+            document.getElementById("defenseNextBtn").disabled = true;
+            document.getElementById("defenseStatus").textContent = "Complete all three defense fields.";
+            document.getElementById("defenseStatus").className = "status";
+          }
+
           grid.querySelectorAll("[data-region]").forEach(b => {
             b.classList.toggle("selected", b.dataset.region === state.selectedRegion);
           });
@@ -1335,11 +1397,91 @@
 
       document.getElementById("decisionNextBtn").disabled = !ready;
       document.getElementById("decisionStatus").textContent = ready
-        ? "Decision selected. Now defend your reasoning."
+        ? (state.decision === "approve"
+          ? "Decision selected. Continue to defend your reasoning."
+          : "Decision selected. Continue to compare another region.")
         : "Choose one decision to continue.";
       document.getElementById("decisionStatus").className = ready ? "status good" : "status";
+      document.getElementById("decisionNextBtn").textContent =
+        state.decision === "revise" ? "Compare Another Region" : "Defend the Decision";
 
       saveState();
+    }
+
+    function saveDecisionConsequence(){
+      if(!state.decision){ return; }
+
+      const approved = state.decision === "approve";
+      const record = {
+        selectedRegion: state.selectedRegion,
+        decision: state.decision,
+        decisionLabel: decisionLabel(state.decision),
+        consequenceType: approved
+          ? "approved_first_settlement"
+          : "returned_for_more_investigation",
+        evidenceNote: state.evidenceNote,
+        visibleConsequence: approved
+          ? "Decision consequence saved: this region moves forward to founding defense."
+          : "Decision consequence saved: the Council returns to compare another region before founding.",
+        nextStep: approved
+          ? "Step 7 — Defend the Decision"
+          : "Step 3 — Choose One Region to Investigate",
+        savedAt: new Date().toISOString()
+      };
+
+      localStorage.setItem(DECISION_CONSEQUENCE_KEY, JSON.stringify(record));
+      renderDecisionConsequence(record);
+      window.dispatchEvent(new CustomEvent("stemNationWorldMission1DecisionFeedback", {
+        detail: {
+          decision: record.decision,
+          consequenceType: record.consequenceType
+        }
+      }));
+    }
+
+    function renderDecisionConsequence(record){
+      const panel = document.getElementById("decisionConsequence");
+      if(!record || !record.visibleConsequence){
+        panel.hidden = true;
+        panel.textContent = "";
+        return;
+      }
+      panel.textContent = record.visibleConsequence;
+      panel.hidden = false;
+    }
+
+    function readDecisionConsequence(){
+      try{
+        return JSON.parse(localStorage.getItem(DECISION_CONSEQUENCE_KEY) || "null");
+      }catch(error){
+        return null;
+      }
+    }
+
+    function continueAfterDecision(){
+      if(state.decision === "approve"){
+        showStep(7);
+        return;
+      }
+      if(state.decision === "revise"){
+        returnedRegionForComparison = state.selectedRegion;
+        state.decision = "";
+        document.querySelectorAll("input[name='foundingDecision']").forEach(radio => {
+          radio.checked = false;
+        });
+        showStep(3);
+        document.querySelectorAll("[data-region]").forEach(btn => {
+          btn.classList.remove("selected");
+        });
+        document.getElementById("regionNextBtn").disabled = true;
+        document.getElementById("regionStatus").textContent =
+          `The Council sent back ${returnedRegionForComparison}. Choose another region to compare.`;
+        document.getElementById("regionStatus").className = "status good";
+        document.getElementById("decisionNextBtn").disabled = true;
+        document.getElementById("decisionNextBtn").textContent = "Defend the Decision";
+        document.getElementById("decisionStatus").textContent = "Choose one decision to continue.";
+        document.getElementById("decisionStatus").className = "status";
+      }
     }
 
     function checkDefense(){
@@ -1448,6 +1590,21 @@ ${archive.protectionPlan}`;
       buildRegionTeaching();
       buildRegions();
       restoreInputs();
+      const savedDecisionConsequence = readDecisionConsequence();
+      renderDecisionConsequence(savedDecisionConsequence);
+      if(savedDecisionConsequence &&
+          savedDecisionConsequence.consequenceType === "returned_for_more_investigation" &&
+          state.step === 3 &&
+          !state.decision){
+        returnedRegionForComparison = savedDecisionConsequence.selectedRegion || "";
+        document.querySelectorAll("[data-region]").forEach(btn => {
+          btn.classList.remove("selected");
+        });
+        document.getElementById("regionNextBtn").disabled = true;
+        document.getElementById("regionStatus").textContent =
+          `The Council sent back ${returnedRegionForComparison}. Choose another region to compare.`;
+        document.getElementById("regionStatus").className = "status good";
+      }
       updateSide();
 
       document.querySelectorAll("[data-next]").forEach(btn => {
@@ -1461,8 +1618,13 @@ ${archive.protectionPlan}`;
       document.getElementById("evidenceNote").addEventListener("input", checkEvidence);
 
       document.querySelectorAll("input[name='foundingDecision']").forEach(radio => {
-        radio.addEventListener("change", checkDecision);
+        radio.addEventListener("change", () => {
+          checkDecision();
+          saveDecisionConsequence();
+        });
       });
+
+      document.getElementById("decisionNextBtn").addEventListener("click", continueAfterDecision);
 
       ["defenseAdvantage", "defenseRisk", "defensePlan"].forEach(id => {
         document.getElementById(id).addEventListener("input", checkDefense);
