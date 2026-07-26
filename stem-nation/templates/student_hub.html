@@ -746,6 +746,98 @@
   }
 </style>
 
+
+<style>
+  /* MI-2T STUDENT HUB REFLECTION BADGE */
+
+  .mi2t-reflection-badge-wrap {
+    display: none;
+    margin: 14px 24px 0;
+  }
+
+  .mi2t-reflection-badge-wrap.active {
+    display: block;
+    animation: mi2tGlowIn .65s ease;
+  }
+
+  @keyframes mi2tGlowIn {
+    0% { opacity: 0; transform: translateY(12px); }
+    100% { opacity: 1; transform: translateY(0); }
+  }
+
+  .mi2t-reflection-badge {
+    border: 1px solid rgba(134,239,172,.34);
+    border-radius: 22px;
+    background:
+      radial-gradient(circle at 10% 18%, rgba(134,239,172,.18), transparent 34%),
+      radial-gradient(circle at 88% 18%, rgba(139,211,255,.13), transparent 34%),
+      rgba(6,78,59,.19);
+    color: #f8fafc;
+    padding: 16px;
+    display: grid;
+    grid-template-columns: 70px 1fr;
+    gap: 14px;
+    align-items: center;
+    box-shadow: 0 14px 44px rgba(0,0,0,.22), 0 0 32px rgba(134,239,172,.08);
+  }
+
+  .mi2t-seal {
+    width: 62px;
+    height: 62px;
+    border-radius: 999px;
+    display: grid;
+    place-items: center;
+    background: linear-gradient(135deg,#86efac,#8bd3ff);
+    color: #052e2b;
+    font-size: 30px;
+    font-weight: 1000;
+    box-shadow: 0 0 0 6px rgba(134,239,172,.12);
+  }
+
+  .mi2t-reflection-badge h3 {
+    margin: 0 0 6px;
+    color: #86efac;
+    font-size: clamp(22px, 3vw, 32px);
+    line-height: 1;
+  }
+
+  .mi2t-reflection-badge p {
+    margin: 0;
+    color: rgba(248,250,252,.82);
+    line-height: 1.42;
+  }
+
+  .mi2t-meta {
+    margin-top: 10px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  .mi2t-pill {
+    border: 1px solid rgba(134,239,172,.26);
+    background: rgba(134,239,172,.08);
+    color: #bbf7d0;
+    border-radius: 999px;
+    padding: 6px 10px;
+    font-size: 12px;
+    font-weight: 950;
+    text-transform: uppercase;
+    letter-spacing: .08em;
+  }
+
+  @media(max-width: 680px) {
+    .mi2t-reflection-badge-wrap {
+      margin-left: 14px;
+      margin-right: 14px;
+    }
+
+    .mi2t-reflection-badge {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>
+
 </head>
 <body>
   <!-- CI-STAGE-9 — Student Hub Cleanup -->
@@ -989,6 +1081,25 @@ console.log("CI-STAGE-48 MISSION CHECKPOINT STUDENT HUB POLISH ACTIVE");
         <span class="mi2p-pill">Badge Earned</span>
         <span class="mi2p-pill">Archive Complete</span>
         <span class="mi2p-pill">Council Record Saved</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- MI-2T STUDENT HUB REFLECTION BADGE -->
+<div class="mi2t-reflection-badge-wrap" id="mi2tReflectionBadgeWrap">
+  <div class="mi2t-reflection-badge">
+    <div class="mi2t-seal">★</div>
+    <div>
+      <h3>Replay Reflection Complete</h3>
+      <p id="mi2tReflectionBadgeText">
+        The Chief Investigator reviewed the completed investigation and saved a final replay reflection.
+      </p>
+      <div class="mi2t-meta">
+        <span class="mi2t-pill">Reflection Saved</span>
+        <span class="mi2t-pill">Replay Complete</span>
+        <span class="mi2t-pill">Leadership Record Updated</span>
       </div>
     </div>
   </div>
@@ -1292,6 +1403,141 @@ console.log("CI-STAGE-48 MISSION CHECKPOINT STUDENT HUB POLISH ACTIVE");
   })();
 </script>
 <!-- MI-2Q STUDENT HUB ARCHIVE PLACEMENT POLISH -->
+
+
+<script>
+  // MI-2T STUDENT HUB REFLECTION BADGE
+  (function(){
+    const REFLECTION_KEY = "stemNationReplayReflectionV1";
+    const SIGNAL_KEY = "stemNationReplayCompletionSignalV1";
+
+    function readJson(key) {
+      try { return JSON.parse(localStorage.getItem(key) || "null"); }
+      catch(error) { return null; }
+    }
+
+    function clean(value) {
+      return String(value || "").trim();
+    }
+
+    function showReflectionBadge() {
+      const reflection = readJson(REFLECTION_KEY);
+      const wrap = document.getElementById("mi2tReflectionBadgeWrap");
+      const text = document.getElementById("mi2tReflectionBadgeText");
+
+      if (!wrap || !text) return;
+
+      if (!reflection || reflection.status !== "replay_reflection_saved") {
+        wrap.classList.remove("active");
+        return;
+      }
+
+      const signal = {
+        signalName: "Replay Reflection Complete",
+        signalType: "completed_investigation_replay_reflection",
+        question: reflection.activeInvestigationQuestion || "No active question found.",
+        resolution: reflection.resolution || "Mission resolved.",
+        reflection: reflection.reflection || "",
+        status: "replay_completion_signal_saved",
+        savedAt: new Date().toISOString()
+      };
+
+      localStorage.setItem(SIGNAL_KEY, JSON.stringify(signal));
+
+      text.textContent =
+        "The Chief Investigator reviewed the completed investigation and saved this reflection: " +
+        clean(signal.reflection);
+
+      wrap.classList.add("active");
+      window.STEMNationReplayCompletionSignal = signal;
+    }
+
+    document.addEventListener("DOMContentLoaded", function(){
+      setTimeout(showReflectionBadge, 120);
+      setTimeout(showReflectionBadge, 360);
+    });
+
+    window.addEventListener("focus", function(){
+      setTimeout(showReflectionBadge, 120);
+    });
+
+    window.addEventListener("storage", showReflectionBadge);
+
+    console.log("MI-2T STUDENT HUB REFLECTION BADGE ACTIVE");
+  })();
+</script>
+
+
+<script>
+  // MI-2T-R1 REFLECTION BADGE DISPLAY REPAIR
+  (function(){
+    const REFLECTION_KEY = "stemNationReplayReflectionV1";
+    const SIGNAL_KEY = "stemNationReplayCompletionSignalV1";
+
+    function readJson(key) {
+      try { return JSON.parse(localStorage.getItem(key) || "null"); }
+      catch(error) { return null; }
+    }
+
+    function ensureReflectionBadgePlacement() {
+      const zone = document.getElementById("mi2qArchiveZone");
+      const archive = document.getElementById("mi2mInvestigationArchive");
+      const badge = document.getElementById("mi2tReflectionBadgeWrap");
+
+      if (zone && archive && badge && badge.parentNode !== zone) {
+        zone.insertBefore(badge, archive);
+      }
+    }
+
+    function showReflectionBadgeRepair() {
+      const reflection = readJson(REFLECTION_KEY);
+      const wrap = document.getElementById("mi2tReflectionBadgeWrap");
+      const text = document.getElementById("mi2tReflectionBadgeText");
+
+      if (!wrap || !text) return;
+
+      ensureReflectionBadgePlacement();
+
+      if (!reflection || reflection.status !== "replay_reflection_saved") {
+        wrap.classList.remove("active");
+        return;
+      }
+
+      const signal = {
+        signalName: "Replay Reflection Complete",
+        signalType: "completed_investigation_replay_reflection",
+        question: reflection.activeInvestigationQuestion || "No active question found.",
+        resolution: reflection.resolution || "Mission resolved.",
+        reflection: reflection.reflection || "",
+        status: "replay_completion_signal_saved",
+        savedAt: new Date().toISOString()
+      };
+
+      localStorage.setItem(SIGNAL_KEY, JSON.stringify(signal));
+
+      text.textContent =
+        "The Chief Investigator reviewed the completed investigation and saved this reflection: " +
+        String(signal.reflection || "").trim();
+
+      wrap.classList.add("active");
+      window.STEMNationReplayCompletionSignal = signal;
+    }
+
+    document.addEventListener("DOMContentLoaded", function(){
+      setTimeout(showReflectionBadgeRepair, 160);
+      setTimeout(showReflectionBadgeRepair, 440);
+      setTimeout(showReflectionBadgeRepair, 900);
+    });
+
+    window.addEventListener("focus", function(){
+      setTimeout(showReflectionBadgeRepair, 160);
+    });
+
+    window.addEventListener("storage", showReflectionBadgeRepair);
+
+    console.log("MI-2T-R1 REFLECTION BADGE DISPLAY REPAIR ACTIVE");
+  })();
+</script>
 
 </body>
 </html>
