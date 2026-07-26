@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Completed Investigation Replay | STEM Nation</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- MI-2R COMPLETED INVESTIGATION REPLAY / REVIEW MODE -->
+
+  <style>
+    :root {
+      color-scheme: dark;
+      --text: #f8fafc;
+      --muted: rgba(248,250,252,.76);
+      --gold: #f6d56f;
+      --blue: #8bd3ff;
+      --green: #86efac;
+      --panel: rgba(8,18,34,.94);
+      --line: rgba(255,255,255,.15);
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      font-family: Inter, system-ui, sans-serif;
+      color: var(--text);
+      background:
+        radial-gradient(circle at 15% 10%, rgba(139,211,255,.16), transparent 34%),
+        radial-gradient(circle at 88% 18%, rgba(246,213,111,.15), transparent 32%),
+        linear-gradient(135deg,#030712,#07111f 58%,#111827);
+    }
+
+    main {
+      width: min(1180px, calc(100% - 28px));
+      margin: 0 auto;
+      padding: 32px 0 54px;
+    }
+
+    a, button {
+      border-radius: 999px;
+      border: 1px solid var(--line);
+      background: rgba(255,255,255,.06);
+      color: var(--text);
+      padding: 10px 16px;
+      min-height: 42px;
+      text-decoration: none;
+      font-weight: 900;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .primary {
+      border: 0;
+      background: linear-gradient(135deg,#f6d56f,#ffc83d);
+      color: #111827;
+    }
+
+    .topbar {
+      display: flex;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-bottom: 18px;
+    }
+
+    .hero, .panel {
+      border: 1px solid var(--line);
+      border-radius: 28px;
+      background: var(--panel);
+      padding: 24px;
+      box-shadow: 0 24px 80px rgba(0,0,0,.34);
+    }
+
+    .kicker {
+      color: var(--blue);
+      text-transform: uppercase;
+      letter-spacing: .14em;
+      font-size: 13px;
+      font-weight: 950;
+    }
+
+    h1 {
+      color: var(--gold);
+      margin: 8px 0 12px;
+      font-size: clamp(42px, 7vw, 76px);
+      line-height: .92;
+      letter-spacing: -.055em;
+    }
+
+    h2 {
+      color: var(--gold);
+      margin: 0 0 12px;
+      font-size: 30px;
+    }
+
+    p { color: var(--muted); line-height: 1.45; }
+
+    .summary-grid {
+      margin-top: 16px;
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 12px;
+    }
+
+    .summary-card, .step-card {
+      border: 1px solid rgba(255,255,255,.13);
+      border-radius: 20px;
+      background: rgba(255,255,255,.055);
+      padding: 14px;
+      line-height: 1.4;
+    }
+
+    .summary-card strong, .step-card strong {
+      display: block;
+      color: var(--blue);
+      text-transform: uppercase;
+      letter-spacing: .08em;
+      font-size: 12px;
+      margin-bottom: 7px;
+    }
+
+    .timeline {
+      margin-top: 18px;
+      display: grid;
+      gap: 12px;
+    }
+
+    .step-card {
+      display: grid;
+      grid-template-columns: 58px 1fr;
+      gap: 14px;
+      align-items: start;
+    }
+
+    .step-num {
+      width: 48px;
+      height: 48px;
+      border-radius: 999px;
+      display: grid;
+      place-items: center;
+      background: linear-gradient(135deg,#8bd3ff,#86efac);
+      color: #06202f;
+      font-weight: 1000;
+      box-shadow: 0 0 0 6px rgba(139,211,255,.12);
+    }
+
+    .step-card h3 {
+      margin: 0 0 6px;
+      color: var(--gold);
+      font-size: 23px;
+    }
+
+    .step-card p {
+      margin: 0;
+      white-space: pre-wrap;
+    }
+
+    .empty {
+      border: 1px solid rgba(253,164,175,.35);
+      background: rgba(127,29,29,.20);
+      color: #fecdd3;
+      border-radius: 20px;
+      padding: 16px;
+      margin-top: 16px;
+      line-height: 1.45;
+    }
+
+    .actions {
+      margin-top: 18px;
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    @media(max-width: 900px) {
+      .summary-grid { grid-template-columns: 1fr; }
+      .step-card { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+
+<body>
+  <main>
+    <div class="topbar">
+      <a href="/student_hub">← Student Hub</a>
+      <a href="/mission_resolution">Mission Resolution</a>
+    </div>
+
+    <section class="hero">
+      <div class="kicker">Completed Investigation Replay</div>
+      <h1>Review the Investigation</h1>
+      <p>
+        This replay is read-only. It lets the Chief Investigator review the completed record without changing any saved decisions.
+      </p>
+
+      <div class="summary-grid">
+        <div class="summary-card"><strong>Question</strong><span id="summaryQuestion">Loading...</span></div>
+        <div class="summary-card"><strong>Resolution</strong><span id="summaryResolution">Loading...</span></div>
+        <div class="summary-card"><strong>Final Lesson</strong><span id="summaryLesson">Loading...</span></div>
+        <div class="summary-card"><strong>Remaining Uncertainty</strong><span id="summaryUncertainty">Loading...</span></div>
+      </div>
+    </section>
+
+    <section class="panel" style="margin-top:18px;">
+      <h2>Investigation Path</h2>
+      <p>
+        Each card shows one saved step from the active investigation sequence.
+      </p>
+
+      <div id="emptyState" class="empty" style="display:none;">
+        No completed mission resolution was found in this browser. Return to Mission Resolution and save the investigation first.
+      </div>
+
+      <div class="timeline" id="timeline"></div>
+
+      <div class="actions">
+        <a class="primary" href="/student_hub">Return to Student Hub</a>
+        <a href="/mission_resolution">Review Mission Resolution</a>
+        <a href="/active_investigation">Review Launch</a>
+      </div>
+    </section>
+  </main>
+
+  <script>
+    const KEYS = {
+      active: "stemNationActiveInvestigationQuestionV1",
+      command: "stemNationCouncilCommandTableV1",
+      launch: "stemNationActiveInvestigationLaunchV1",
+      reports: "stemNationCouncilReportsV1",
+      comparison: "stemNationEvidenceComparisonV1",
+      cause: "stemNationCauseDecisionV1",
+      test: "stemNationClaimTestV1",
+      revise: "stemNationReviseOrActV1",
+      resolution: "stemNationMissionResolutionV1",
+      badge: "stemNationInvestigationArchiveBadgeV1"
+    };
+
+    function readJson(key) {
+      try { return JSON.parse(localStorage.getItem(key) || "null"); }
+      catch(error) { return null; }
+    }
+
+    function clean(value) {
+      return String(value || "Not recorded.")
+        .replace(/^final\s*lesson\s*:\s*/i, "")
+        .replace(/^remaining\s*uncertainty\s*:\s*/i, "")
+        .trim();
+    }
+
+    function setText(id, value) {
+      const el = document.getElementById(id);
+      if (el) el.textContent = clean(value);
+    }
+
+    function step(number, title, body) {
+      return `
+        <article class="step-card">
+          <div class="step-num">${number}</div>
+          <div>
+            <strong>Saved Record</strong>
+            <h3>${title}</h3>
+            <p>${clean(body)}</p>
+          </div>
+        </article>
+      `;
+    }
+
+    function renderReplay() {
+      const data = {};
+      for (const [name, key] of Object.entries(KEYS)) data[name] = readJson(key);
+
+      const resolution = data.resolution;
+      const empty = document.getElementById("emptyState");
+      const timeline = document.getElementById("timeline");
+
+      if (!resolution) {
+        empty.style.display = "block";
+        timeline.innerHTML = "";
+        return;
+      }
+
+      empty.style.display = "none";
+
+      setText("summaryQuestion", resolution.activeInvestigationQuestion);
+      setText("summaryResolution", resolution.resolution);
+      setText("summaryLesson", resolution.finalLesson);
+      setText("summaryUncertainty", resolution.remainingUncertainty);
+
+      const assignments = Array.isArray(data.command?.assignments)
+        ? data.command.assignments.map(a => `${a.advisor || a.name || "Advisor"} — ${a.verb || a.role || "assigned"}`).join("\n")
+        : "Council advisor assignments saved.";
+
+      const reports = Array.isArray(data.reports?.reports)
+        ? data.reports.reports.map(r => `${r.advisor || "Advisor"}: ${r.signal || r.reportType || r.title || "Report saved"}`).join("\n")
+        : "Council reports received.";
+
+      timeline.innerHTML = [
+        step(1, "Active Investigation Question", data.active?.activeInvestigationQuestion || resolution.activeInvestigationQuestion),
+        step(2, "Council Command Table", assignments),
+        step(3, "Active Investigation Launch", data.launch?.status || "Investigation launched."),
+        step(4, "Council Reports", reports),
+        step(5, "Evidence Comparison", `${data.comparison?.strongestSignal || "Evidence compared."}\nRisk: ${data.comparison?.remainingRisk || "Risk recorded."}`),
+        step(6, "Name the Cause", `${data.cause?.selectedCause || data.cause?.causeDecision || "Cause claim saved."}\n${data.cause?.explanation || ""}`),
+        step(7, "Test the Claim", `${data.test?.testMethod || "Test method saved."}\n${data.test?.result || ""}`),
+        step(8, "Revise or Act", `${data.revise?.nextMove || "Next move saved."}\n${data.revise?.reason || ""}`),
+        step(9, "Mission Resolution", `${resolution.resolution}\nLesson: ${resolution.finalLesson}\nUncertainty: ${resolution.remainingUncertainty}`),
+        step(10, "Archive Badge", data.badge?.badgeName || "Investigation Archived")
+      ].join("");
+
+      window.STEMNationCompletedInvestigationReplay = {
+        status: "replay_loaded",
+        loadedAt: new Date().toISOString(),
+        resolution
+      };
+    }
+
+    document.addEventListener("DOMContentLoaded", renderReplay);
+    window.addEventListener("focus", renderReplay);
+
+    console.log("MI-2R COMPLETED INVESTIGATION REPLAY / REVIEW MODE ACTIVE");
+  </script>
+</body>
+</html>

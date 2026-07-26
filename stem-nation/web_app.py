@@ -372,6 +372,11 @@ def first_gathering():
 
 
 
+
+@app.route("/investigation_replay")
+def investigation_replay():
+    return render_template("investigation_replay.html")
+
 @app.route("/mission_resolution")
 def mission_resolution():
     return render_template("mission_resolution.html")
