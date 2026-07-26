@@ -838,6 +838,125 @@
   }
 </style>
 
+
+<style>
+  /* MI-2U INVESTIGATION COMPLETION PROGRESS LEDGER */
+
+  .mi2u-ledger-wrap {
+    margin: 16px 24px 0;
+    border: 1px solid rgba(139,211,255,.26);
+    border-radius: 24px;
+    background:
+      radial-gradient(circle at 12% 18%, rgba(139,211,255,.12), transparent 34%),
+      rgba(15,23,42,.72);
+    padding: 18px;
+    color: #f8fafc;
+  }
+
+  .mi2u-ledger-head {
+    display: flex;
+    justify-content: space-between;
+    gap: 14px;
+    align-items: flex-start;
+    flex-wrap: wrap;
+    margin-bottom: 14px;
+  }
+
+  .mi2u-ledger-head h3 {
+    margin: 0 0 6px;
+    color: #8bd3ff;
+    font-size: clamp(24px, 3vw, 34px);
+    line-height: 1;
+  }
+
+  .mi2u-ledger-head p {
+    margin: 0;
+    color: rgba(248,250,252,.78);
+    line-height: 1.42;
+    max-width: 760px;
+  }
+
+  .mi2u-ledger-score {
+    border: 1px solid rgba(246,213,111,.32);
+    background: rgba(246,213,111,.10);
+    color: #f6d56f;
+    border-radius: 999px;
+    padding: 9px 13px;
+    font-weight: 1000;
+    white-space: nowrap;
+  }
+
+  .mi2u-ledger-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 10px;
+  }
+
+  .mi2u-ledger-item {
+    border: 1px solid rgba(255,255,255,.13);
+    border-radius: 18px;
+    background: rgba(255,255,255,.055);
+    padding: 12px;
+    display: grid;
+    grid-template-columns: 38px 1fr;
+    gap: 10px;
+    align-items: start;
+  }
+
+  .mi2u-ledger-icon {
+    width: 34px;
+    height: 34px;
+    border-radius: 999px;
+    display: grid;
+    place-items: center;
+    font-weight: 1000;
+    background: rgba(148,163,184,.16);
+    color: #cbd5e1;
+  }
+
+  .mi2u-ledger-item.complete .mi2u-ledger-icon {
+    background: linear-gradient(135deg,#86efac,#8bd3ff);
+    color: #052e2b;
+  }
+
+  .mi2u-ledger-item.missing .mi2u-ledger-icon {
+    background: rgba(253,164,175,.16);
+    color: #fecdd3;
+  }
+
+  .mi2u-ledger-item strong {
+    display: block;
+    color: #f8fafc;
+    margin-bottom: 3px;
+  }
+
+  .mi2u-ledger-item span {
+    display: block;
+    color: rgba(248,250,252,.72);
+    font-size: 13px;
+    line-height: 1.35;
+  }
+
+  .mi2u-ledger-note {
+    margin-top: 12px;
+    border-top: 1px solid rgba(255,255,255,.12);
+    padding-top: 12px;
+    color: rgba(248,250,252,.78);
+    line-height: 1.42;
+  }
+
+  @media(max-width: 760px) {
+    .mi2u-ledger-wrap {
+      margin-left: 14px;
+      margin-right: 14px;
+    }
+
+    .mi2u-ledger-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>
+
 </head>
 <body>
   <!-- CI-STAGE-9 — Student Hub Cleanup -->
@@ -1104,6 +1223,27 @@ console.log("CI-STAGE-48 MISSION CHECKPOINT STUDENT HUB POLISH ACTIVE");
     </div>
   </div>
 </div>
+
+
+<!-- MI-2U INVESTIGATION COMPLETION PROGRESS LEDGER -->
+<section class="mi2u-ledger-wrap" id="mi2uProgressLedger">
+  <div class="mi2u-ledger-head">
+    <div>
+      <h3>Investigation Progress Ledger</h3>
+      <p>
+        This ledger checks the saved records from the Chief Investigator’s completed mission.
+        It shows which milestones are complete without changing the archive.
+      </p>
+    </div>
+    <div class="mi2u-ledger-score" id="mi2uLedgerScore">Checking...</div>
+  </div>
+
+  <div class="mi2u-ledger-grid" id="mi2uLedgerGrid"></div>
+
+  <div class="mi2u-ledger-note" id="mi2uLedgerNote">
+    Ledger loading...
+  </div>
+</section>
 
 <section class="mi2m-investigation-archive" id="mi2mInvestigationArchive">
   <div class="mi2m-archive-shell">
@@ -1536,6 +1676,337 @@ console.log("CI-STAGE-48 MISSION CHECKPOINT STUDENT HUB POLISH ACTIVE");
     window.addEventListener("storage", showReflectionBadgeRepair);
 
     console.log("MI-2T-R1 REFLECTION BADGE DISPLAY REPAIR ACTIVE");
+  })();
+</script>
+
+
+<script>
+  // MI-2U INVESTIGATION COMPLETION PROGRESS LEDGER
+  (function(){
+    const LEDGER_KEY = "stemNationInvestigationProgressLedgerV1";
+
+    const milestones = [
+      {
+        label: "Active Question",
+        key: "stemNationActiveInvestigationQuestionV1",
+        detail: "Investigation question selected."
+      },
+      {
+        label: "Council Command",
+        key: "stemNationCouncilCommandTableV1",
+        detail: "Advisor assignments saved."
+      },
+      {
+        label: "Investigation Launch",
+        key: "stemNationActiveInvestigationLaunchV1",
+        detail: "Investigation launched."
+      },
+      {
+        label: "Council Reports",
+        key: "stemNationCouncilReportsV1",
+        detail: "Advisor reports reviewed."
+      },
+      {
+        label: "Evidence Comparison",
+        key: "stemNationEvidenceComparisonV1",
+        detail: "Evidence and risk compared."
+      },
+      {
+        label: "Cause Decision",
+        key: "stemNationCauseDecisionV1",
+        detail: "Cause claim recorded."
+      },
+      {
+        label: "Claim Test",
+        key: "stemNationClaimTestV1",
+        detail: "Claim test selected."
+      },
+      {
+        label: "Revise or Act",
+        key: "stemNationReviseOrActV1",
+        detail: "Next move chosen."
+      },
+      {
+        label: "Mission Resolution",
+        key: "stemNationMissionResolutionV1",
+        detail: "Resolution, lesson, and uncertainty saved."
+      },
+      {
+        label: "Archive Badge",
+        key: "stemNationInvestigationArchiveBadgeV1",
+        detail: "Investigation archive badge earned."
+      },
+      {
+        label: "Replay Reflection",
+        key: "stemNationReplayReflectionV1",
+        detail: "Replay reflection saved."
+      },
+      {
+        label: "Replay Completion Signal",
+        key: "stemNationReplayCompletionSignalV1",
+        detail: "Replay completion badge earned."
+      }
+    ];
+
+    function readJson(key) {
+      try { return JSON.parse(localStorage.getItem(key) || "null"); }
+      catch(error) { return null; }
+    }
+
+    function recordLooksComplete(key, value) {
+      if (!value || typeof value !== "object") return false;
+
+      if (key === "stemNationMissionResolutionV1") {
+        return value.status === "mission_resolution_saved" || Boolean(value.resolution);
+      }
+
+      if (key === "stemNationReplayReflectionV1") {
+        return value.status === "replay_reflection_saved" && Boolean(value.reflection);
+      }
+
+      if (key === "stemNationReplayCompletionSignalV1") {
+        return value.status === "replay_completion_signal_saved";
+      }
+
+      if (key === "stemNationInvestigationArchiveBadgeV1") {
+        return value.status === "badge_awarded";
+      }
+
+      return Object.keys(value).length > 0;
+    }
+
+    function buildLedger() {
+      const grid = document.getElementById("mi2uLedgerGrid");
+      const score = document.getElementById("mi2uLedgerScore");
+      const note = document.getElementById("mi2uLedgerNote");
+
+      if (!grid || !score || !note) return;
+
+      const checked = milestones.map(item => {
+        const value = readJson(item.key);
+        return {
+          ...item,
+          complete: recordLooksComplete(item.key, value),
+          value
+        };
+      });
+
+      const completeCount = checked.filter(item => item.complete).length;
+      const total = checked.length;
+
+      grid.innerHTML = checked.map(item => `
+        <article class="mi2u-ledger-item ${item.complete ? "complete" : "missing"}">
+          <div class="mi2u-ledger-icon">${item.complete ? "✓" : "!"}</div>
+          <div>
+            <strong>${item.label}</strong>
+            <span>${item.complete ? item.detail : "Missing or not saved in this browser."}</span>
+          </div>
+        </article>
+      `).join("");
+
+      score.textContent = `${completeCount} / ${total} complete`;
+
+      const ledger = {
+        ledgerName: "Investigation Completion Progress Ledger",
+        completeCount,
+        total,
+        percentComplete: Math.round((completeCount / total) * 100),
+        milestones: checked.map(item => ({
+          label: item.label,
+          key: item.key,
+          complete: item.complete
+        })),
+        status: completeCount === total ? "ledger_complete" : "ledger_incomplete",
+        savedAt: new Date().toISOString()
+      };
+
+      localStorage.setItem(LEDGER_KEY, JSON.stringify(ledger));
+
+      if (completeCount === total) {
+        note.textContent =
+          "Ledger complete. The Chief Investigator has a full saved trail from active question through replay reflection.";
+      } else {
+        const missing = checked.filter(item => !item.complete).map(item => item.label).join(", ");
+        note.textContent =
+          "Ledger incomplete. Missing saved records: " + missing + ". Return to the listed step if this was not intentional.";
+      }
+
+      window.STEMNationInvestigationProgressLedger = ledger;
+    }
+
+    document.addEventListener("DOMContentLoaded", function(){
+      setTimeout(buildLedger, 180);
+      setTimeout(buildLedger, 520);
+      setTimeout(buildLedger, 1000);
+    });
+
+    window.addEventListener("focus", function(){
+      setTimeout(buildLedger, 180);
+    });
+
+    window.addEventListener("storage", buildLedger);
+
+    console.log("MI-2U INVESTIGATION COMPLETION PROGRESS LEDGER ACTIVE");
+  })();
+</script>
+
+
+<script>
+  // MI-2U-R1 ACTIVE QUESTION FALLBACK AND LEDGER PLACEMENT REPAIR
+  (function(){
+    const LEDGER_KEY = "stemNationInvestigationProgressLedgerV1";
+
+    const milestones = [
+      ["Active Question", "active_question", "Investigation question selected."],
+      ["Council Command", "stemNationCouncilCommandTableV1", "Advisor assignments saved."],
+      ["Investigation Launch", "stemNationActiveInvestigationLaunchV1", "Investigation launched."],
+      ["Council Reports", "stemNationCouncilReportsV1", "Advisor reports reviewed."],
+      ["Evidence Comparison", "stemNationEvidenceComparisonV1", "Evidence and risk compared."],
+      ["Cause Decision", "stemNationCauseDecisionV1", "Cause claim recorded."],
+      ["Claim Test", "stemNationClaimTestV1", "Claim test selected."],
+      ["Revise or Act", "stemNationReviseOrActV1", "Next move chosen."],
+      ["Mission Resolution", "stemNationMissionResolutionV1", "Resolution, lesson, and uncertainty saved."],
+      ["Archive Badge", "stemNationInvestigationArchiveBadgeV1", "Investigation archive badge earned."],
+      ["Replay Reflection", "stemNationReplayReflectionV1", "Replay reflection saved."],
+      ["Replay Completion Signal", "stemNationReplayCompletionSignalV1", "Replay completion badge earned."]
+    ];
+
+    function readJson(key) {
+      try { return JSON.parse(localStorage.getItem(key) || "null"); }
+      catch(error) { return null; }
+    }
+
+    function hasText(value) {
+      return Boolean(String(value || "").trim());
+    }
+
+    function recoverActiveQuestion() {
+      const direct = readJson("stemNationActiveInvestigationQuestionV1");
+      const launch = readJson("stemNationActiveInvestigationLaunchV1");
+      const command = readJson("stemNationCouncilCommandTableV1");
+      const resolution = readJson("stemNationMissionResolutionV1");
+      const badge = readJson("stemNationInvestigationArchiveBadgeV1");
+
+      return (
+        direct?.activeInvestigationQuestion ||
+        direct?.question ||
+        launch?.activeInvestigationQuestion ||
+        command?.activeInvestigationQuestion ||
+        resolution?.activeInvestigationQuestion ||
+        resolution?.question ||
+        badge?.question ||
+        ""
+      );
+    }
+
+    function recordComplete(key) {
+      if (key === "active_question") return hasText(recoverActiveQuestion());
+
+      const value = readJson(key);
+      if (!value || typeof value !== "object") return false;
+
+      if (key === "stemNationMissionResolutionV1") {
+        return value.status === "mission_resolution_saved" || hasText(value.resolution);
+      }
+
+      if (key === "stemNationReplayReflectionV1") {
+        return value.status === "replay_reflection_saved" && hasText(value.reflection);
+      }
+
+      if (key === "stemNationReplayCompletionSignalV1") {
+        return value.status === "replay_completion_signal_saved";
+      }
+
+      if (key === "stemNationInvestigationArchiveBadgeV1") {
+        return value.status === "badge_awarded";
+      }
+
+      return Object.keys(value).length > 0;
+    }
+
+    function placeLedgerInsideArchiveZone() {
+      const zone = document.getElementById("mi2qArchiveZone");
+      const archive = document.getElementById("mi2mInvestigationArchive");
+      const ledger = document.getElementById("mi2uProgressLedger");
+
+      if (zone && archive && ledger && ledger.parentNode !== zone) {
+        zone.insertBefore(ledger, archive);
+      }
+    }
+
+    function rebuildLedgerR1() {
+      const grid = document.getElementById("mi2uLedgerGrid");
+      const score = document.getElementById("mi2uLedgerScore");
+      const note = document.getElementById("mi2uLedgerNote");
+
+      if (!grid || !score || !note) return;
+
+      placeLedgerInsideArchiveZone();
+
+      const checked = milestones.map(([label, key, detail]) => ({
+        label,
+        key,
+        detail,
+        complete: recordComplete(key)
+      }));
+
+      const completeCount = checked.filter(item => item.complete).length;
+      const total = checked.length;
+
+      grid.innerHTML = checked.map(item => `
+        <article class="mi2u-ledger-item ${item.complete ? "complete" : "missing"}">
+          <div class="mi2u-ledger-icon">${item.complete ? "✓" : "!"}</div>
+          <div>
+            <strong>${item.label}</strong>
+            <span>${item.complete ? item.detail : "Missing or not saved in this browser."}</span>
+          </div>
+        </article>
+      `).join("");
+
+      score.textContent = `${completeCount} / ${total} complete`;
+
+      const ledger = {
+        ledgerName: "Investigation Completion Progress Ledger",
+        completeCount,
+        total,
+        percentComplete: Math.round((completeCount / total) * 100),
+        recoveredActiveQuestion: recoverActiveQuestion(),
+        milestones: checked.map(item => ({
+          label: item.label,
+          key: item.key,
+          complete: item.complete
+        })),
+        status: completeCount === total ? "ledger_complete" : "ledger_incomplete",
+        savedAt: new Date().toISOString()
+      };
+
+      localStorage.setItem(LEDGER_KEY, JSON.stringify(ledger));
+
+      if (completeCount === total) {
+        note.textContent =
+          "Ledger complete. The Chief Investigator has a full saved trail from active question through replay reflection.";
+      } else {
+        const missing = checked.filter(item => !item.complete).map(item => item.label).join(", ");
+        note.textContent =
+          "Ledger incomplete. Missing saved records: " + missing + ". Return to the listed step if this was not intentional.";
+      }
+
+      window.STEMNationInvestigationProgressLedger = ledger;
+    }
+
+    document.addEventListener("DOMContentLoaded", function(){
+      setTimeout(rebuildLedgerR1, 260);
+      setTimeout(rebuildLedgerR1, 700);
+      setTimeout(rebuildLedgerR1, 1200);
+    });
+
+    window.addEventListener("focus", function(){
+      setTimeout(rebuildLedgerR1, 220);
+    });
+
+    window.addEventListener("storage", rebuildLedgerR1);
+
+    console.log("MI-2U-R1 ACTIVE QUESTION FALLBACK AND LEDGER PLACEMENT REPAIR ACTIVE");
   })();
 </script>
 
