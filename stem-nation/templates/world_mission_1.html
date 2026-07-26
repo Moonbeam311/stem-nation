@@ -578,6 +578,118 @@
   }
 </style>
 
+
+<style>
+  /* MI-2Y WORLD MISSION 1 INVESTIGATION HABIT CARRYOVER BADGE */
+
+  .mi2y-carryover-badge-wrap {
+    width: min(1120px, calc(100% - 28px));
+    margin: -6px auto 22px;
+    display: none;
+  }
+
+  .mi2y-carryover-badge-wrap.active {
+    display: block;
+    animation: mi2yBadgeIn .55s ease;
+  }
+
+  @keyframes mi2yBadgeIn {
+    0% { opacity: 0; transform: translateY(12px) scale(.99); }
+    100% { opacity: 1; transform: translateY(0) scale(1); }
+  }
+
+  .mi2y-badge {
+    border: 1px solid rgba(134,239,172,.36);
+    border-radius: 28px;
+    background:
+      radial-gradient(circle at 12% 18%, rgba(134,239,172,.18), transparent 34%),
+      radial-gradient(circle at 88% 18%, rgba(246,213,111,.15), transparent 34%),
+      rgba(6,78,59,.20);
+    color: #f8fafc;
+    padding: 18px;
+    box-shadow: 0 18px 54px rgba(0,0,0,.24), 0 0 34px rgba(134,239,172,.08);
+    display: grid;
+    grid-template-columns: 78px 1fr;
+    gap: 16px;
+    align-items: center;
+  }
+
+  .mi2y-seal {
+    width: 70px;
+    height: 70px;
+    border-radius: 999px;
+    display: grid;
+    place-items: center;
+    background: linear-gradient(135deg,#86efac,#8bd3ff);
+    color: #052e2b;
+    font-size: 34px;
+    font-weight: 1000;
+    box-shadow: 0 0 0 7px rgba(134,239,172,.12);
+  }
+
+  .mi2y-badge h3 {
+    margin: 0 0 7px;
+    color: #86efac;
+    font-size: clamp(25px, 3vw, 40px);
+    line-height: 1;
+  }
+
+  .mi2y-badge p {
+    margin: 0;
+    color: rgba(248,250,252,.82);
+    line-height: 1.42;
+  }
+
+  .mi2y-pill-row {
+    margin-top: 11px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  .mi2y-pill {
+    border: 1px solid rgba(139,211,255,.24);
+    background: rgba(139,211,255,.08);
+    color: #8bd3ff;
+    border-radius: 999px;
+    padding: 6px 10px;
+    font-size: 12px;
+    font-weight: 950;
+    text-transform: uppercase;
+    letter-spacing: .08em;
+  }
+
+  @media(max-width: 760px) {
+    .mi2y-badge {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>
+
+
+<style>
+  /* MI-2Y-R1 CARRYOVER BADGE STABILITY REPAIR */
+  .mi2y-carryover-badge-wrap.active {
+    animation: none !important;
+  }
+
+  .mi2y-carryover-badge-wrap {
+    transition: none !important;
+  }
+</style>
+
+
+<style>
+  /* MI-2X-R1 CONTEXT BANNER STABILITY REPAIR */
+  .mi2x-context-banner.active {
+    animation: none !important;
+  }
+
+  .mi2x-context-banner {
+    transition: none !important;
+  }
+</style>
+
 </head>
 <body>
 
@@ -613,6 +725,27 @@
     <a class="mi2x-btn" href="/investigation_replay">Replay Completed Investigation</a>
   </div>
 </section>
+
+<!-- MI-2Y WORLD MISSION 1 INVESTIGATION HABIT CARRYOVER BADGE -->
+<section class="mi2y-carryover-badge-wrap" id="mi2yHabitCarryoverBadge">
+  <div class="mi2y-badge">
+    <div class="mi2y-seal">↗</div>
+    <div>
+      <h3>Investigation Habit Carried Forward</h3>
+      <p id="mi2yHabitCarryoverText">
+        Checking whether the Council Hall investigation record is ready to carry into World Mission 1...
+      </p>
+      <div class="mi2y-pill-row">
+        <span class="mi2y-pill">Observe First</span>
+        <span class="mi2y-pill">Question Before Claim</span>
+        <span class="mi2y-pill">Test Evidence</span>
+        <span class="mi2y-pill">Name Uncertainty</span>
+        <span class="mi2y-pill">Lead With Caution</span>
+      </div>
+    </div>
+  </div>
+</section>
+
 
   <main class="page">
     <div class="topbar">
@@ -1183,17 +1316,27 @@ ${archive.protectionPlan}`;
     });
   </script>
 
+
 <script>
-  // MI-2X WORLD MISSION 1 ENTRY CONTEXT RECOGNITION
+  // MI-2X-R1 CONTEXT BANNER STABILITY REPAIR
   (function(){
     const CONTEXT_KEY = "stemNationWorldMission1EntryContextV1";
+    let mi2xRecognizedOnce = false;
 
     function readJson(key) {
       try { return JSON.parse(localStorage.getItem(key) || "null"); }
       catch(error) { return null; }
     }
 
-    function recognizeCouncilHallContext() {
+    function writeJsonIfChanged(key, value) {
+      const next = JSON.stringify(value);
+      const current = localStorage.getItem(key);
+      if (current !== next) {
+        localStorage.setItem(key, next);
+      }
+    }
+
+    function recognizeCouncilHallContextStable() {
       const banner = document.getElementById("mi2xEntryContextBanner");
       const text = document.getElementById("mi2xEntryContextText");
       if (!banner || !text) return;
@@ -1202,6 +1345,7 @@ ${archive.protectionPlan}`;
       const reflection = readJson("stemNationReplayReflectionV1");
       const ledger = readJson("stemNationInvestigationProgressLedgerV1");
       const bridge = readJson("stemNationMissionExitBridgeV1");
+      const prior = readJson(CONTEXT_KEY);
 
       const hasResolution = Boolean(resolution && (resolution.status === "mission_resolution_saved" || resolution.resolution));
       const hasReflection = Boolean(reflection && reflection.status === "replay_reflection_saved");
@@ -1218,44 +1362,141 @@ ${archive.protectionPlan}`;
         hasLedger,
         hasBridge,
         ready,
-        question: resolution?.activeInvestigationQuestion || reflection?.activeInvestigationQuestion || "",
-        resolution: resolution?.resolution || reflection?.resolution || "",
-        reflection: reflection?.reflection || "",
-        ledgerStatus: ledger?.status || "ledger_not_found",
-        bridgeStatus: bridge?.status || "bridge_not_found",
+        question: resolution?.activeInvestigationQuestion || reflection?.activeInvestigationQuestion || prior?.question || "",
+        resolution: resolution?.resolution || reflection?.resolution || prior?.resolution || "",
+        reflection: reflection?.reflection || prior?.reflection || "",
+        ledgerStatus: ledger?.status || prior?.ledgerStatus || "ledger_not_found",
+        bridgeStatus: bridge?.status || prior?.bridgeStatus || "bridge_not_found",
         status: ready ? "world_mission_entry_context_recognized" : "world_mission_entry_context_partial",
-        recognizedAt: new Date().toISOString()
+        recognizedAt: prior?.recognizedAt || new Date().toISOString()
       };
 
-      localStorage.setItem(CONTEXT_KEY, JSON.stringify(context));
+      writeJsonIfChanged(CONTEXT_KEY, context);
 
-      if (ready) {
-        text.textContent =
-          "Your Council Hall record is active here. World Mission 1 will begin with the same habits: observe evidence, ask better questions, test claims, name uncertainty, and lead carefully.";
-      } else {
-        text.textContent =
-          "Some Council Hall records are available, but the full bridge is not complete in this browser. You may continue, but reviewing the Student Hub record first is recommended.";
+      const readyMessage =
+        "Your Council Hall record is active here. World Mission 1 will begin with the same habits: observe evidence, ask better questions, test claims, name uncertainty, and lead carefully.";
+
+      const partialMessage =
+        "Some Council Hall records are available, but the full bridge is not complete in this browser. You may continue, but reviewing the Student Hub record first is recommended.";
+
+      const message = ready ? readyMessage : partialMessage;
+
+      if (text.textContent !== message) {
+        text.textContent = message;
       }
 
-      banner.classList.add("active");
+      if (!banner.classList.contains("active")) {
+        banner.classList.add("active");
+      }
+
       window.STEMNationWorldMission1EntryContext = context;
+      mi2xRecognizedOnce = true;
     }
 
     document.addEventListener("DOMContentLoaded", function(){
-      setTimeout(recognizeCouncilHallContext, 220);
-      setTimeout(recognizeCouncilHallContext, 700);
-      setTimeout(recognizeCouncilHallContext, 1200);
+      setTimeout(recognizeCouncilHallContextStable, 350);
     });
 
     window.addEventListener("focus", function(){
-      setTimeout(recognizeCouncilHallContext, 220);
+      if (!mi2xRecognizedOnce) {
+        setTimeout(recognizeCouncilHallContextStable, 300);
+      }
     });
 
-    window.addEventListener("storage", recognizeCouncilHallContext);
-
-    console.log("MI-2X WORLD MISSION 1 ENTRY CONTEXT RECOGNITION ACTIVE");
+    console.log("MI-2X-R1 CONTEXT BANNER STABILITY REPAIR ACTIVE");
   })();
 </script>
+
+
+
+
+<script>
+  // MI-2Y-R1 CARRYOVER BADGE STABILITY REPAIR
+  (function(){
+    const BADGE_KEY = "stemNationWorldMission1HabitCarryoverBadgeV1";
+    let mi2yAwardedOnce = false;
+
+    function readJson(key) {
+      try { return JSON.parse(localStorage.getItem(key) || "null"); }
+      catch(error) { return null; }
+    }
+
+    function writeJsonIfChanged(key, value) {
+      const next = JSON.stringify(value);
+      const current = localStorage.getItem(key);
+      if (current !== next) {
+        localStorage.setItem(key, next);
+      }
+    }
+
+    function awardCarryoverBadgeStable() {
+      const wrap = document.getElementById("mi2yHabitCarryoverBadge");
+      const text = document.getElementById("mi2yHabitCarryoverText");
+
+      if (!wrap || !text) return;
+
+      const context = readJson("stemNationWorldMission1EntryContextV1");
+      const bridge = readJson("stemNationMissionExitBridgeV1");
+      const ledger = readJson("stemNationInvestigationProgressLedgerV1");
+      const reflection = readJson("stemNationReplayReflectionV1");
+
+      const ready =
+        Boolean(context && context.status === "world_mission_entry_context_recognized") ||
+        Boolean(bridge && bridge.status === "world_mission_bridge_ready" && ledger && ledger.status === "ledger_complete");
+
+      if (!ready) {
+        wrap.classList.remove("active");
+        return;
+      }
+
+      const prior = readJson(BADGE_KEY);
+
+      const badge = {
+        badgeName: "Investigation Habit Carried Forward",
+        badgeType: "world_mission_1_entry_habit_carryover",
+        habits: [
+          "observe_first",
+          "question_before_claim",
+          "test_evidence",
+          "name_uncertainty",
+          "lead_with_caution"
+        ],
+        reflection: reflection?.reflection || prior?.reflection || "",
+        status: "world_mission_1_habit_carryover_badge_awarded",
+        awardedAt: prior?.awardedAt || new Date().toISOString()
+      };
+
+      writeJsonIfChanged(BADGE_KEY, badge);
+
+      const message =
+        "World Mission 1 recognizes the investigation habits earned in Council Hall: observe first, question before claiming, test evidence, name uncertainty, and lead with caution.";
+
+      if (text.textContent !== message) {
+        text.textContent = message;
+      }
+
+      if (!wrap.classList.contains("active")) {
+        wrap.classList.add("active");
+      }
+
+      window.STEMNationWorldMission1HabitCarryoverBadge = badge;
+      mi2yAwardedOnce = true;
+    }
+
+    document.addEventListener("DOMContentLoaded", function(){
+      setTimeout(awardCarryoverBadgeStable, 350);
+    });
+
+    window.addEventListener("focus", function(){
+      if (!mi2yAwardedOnce) {
+        setTimeout(awardCarryoverBadgeStable, 300);
+      }
+    });
+
+    console.log("MI-2Y-R1 CARRYOVER BADGE STABILITY REPAIR ACTIVE");
+  })();
+</script>
+
 
 </body>
 </html>
