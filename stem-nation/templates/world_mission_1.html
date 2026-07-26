@@ -690,10 +690,169 @@
   }
 </style>
 
+
+<style>
+  /* MI-2Z WORLD MISSION 1 ENTRY SCREEN HIERARCHY CLEANUP */
+
+  .mi2z-carryover-shell {
+    width: min(1120px, calc(100% - 28px));
+    margin: 22px auto 24px;
+    border: 1px solid rgba(246,213,111,.34);
+    border-radius: 30px;
+    background:
+      radial-gradient(circle at 12% 18%, rgba(246,213,111,.15), transparent 34%),
+      radial-gradient(circle at 88% 24%, rgba(139,211,255,.14), transparent 34%),
+      rgba(15,23,42,.90);
+    color: #f8fafc;
+    box-shadow: 0 24px 76px rgba(0,0,0,.30);
+    padding: 22px;
+  }
+
+  .mi2z-carryover-grid {
+    display: grid;
+    grid-template-columns: 1.15fr .85fr;
+    gap: 18px;
+    align-items: stretch;
+  }
+
+  .mi2z-kicker {
+    color: #8bd3ff;
+    text-transform: uppercase;
+    letter-spacing: .14em;
+    font-size: 13px;
+    font-weight: 950;
+    margin-bottom: 8px;
+  }
+
+  .mi2z-carryover-shell h2 {
+    margin: 0 0 10px;
+    color: #f6d56f;
+    font-size: clamp(32px, 5vw, 58px);
+    line-height: .92;
+    letter-spacing: -.04em;
+  }
+
+  .mi2z-carryover-shell p {
+    margin: 0;
+    color: rgba(248,250,252,.82);
+    line-height: 1.45;
+  }
+
+  .mi2z-status-card {
+    border: 1px solid rgba(134,239,172,.30);
+    border-radius: 24px;
+    background:
+      radial-gradient(circle at 14% 14%, rgba(134,239,172,.16), transparent 36%),
+      rgba(6,78,59,.18);
+    padding: 16px;
+  }
+
+  .mi2z-status-card strong {
+    display: block;
+    color: #86efac;
+    font-size: 22px;
+    line-height: 1.05;
+    margin-bottom: 8px;
+  }
+
+  .mi2z-habit-row {
+    margin-top: 16px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  .mi2z-habit-pill {
+    border: 1px solid rgba(139,211,255,.24);
+    background: rgba(139,211,255,.08);
+    color: #8bd3ff;
+    border-radius: 999px;
+    padding: 7px 10px;
+    font-size: 12px;
+    font-weight: 950;
+    text-transform: uppercase;
+    letter-spacing: .08em;
+  }
+
+  .mi2z-actions {
+    margin-top: 16px;
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+  }
+
+  .mi2z-btn {
+    border-radius: 999px;
+    border: 1px solid rgba(255,255,255,.14);
+    background: rgba(255,255,255,.07);
+    color: #f8fafc;
+    padding: 10px 14px;
+    min-height: 42px;
+    text-decoration: none;
+    font-weight: 950;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .mi2z-btn.primary {
+    border: 0;
+    background: linear-gradient(135deg,#f6d56f,#ffc83d);
+    color: #111827;
+  }
+
+  .mi2x-context-banner.mi2z-suppressed,
+  .mi2y-carryover-badge-wrap.mi2z-suppressed {
+    display: none !important;
+    animation: none !important;
+    transition: none !important;
+  }
+
+  @media(max-width: 860px) {
+    .mi2z-carryover-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>
+
 </head>
 <body>
 
 <!-- MI-2X WORLD MISSION 1 ENTRY CONTEXT RECOGNITION -->
+
+<!-- MI-2Z WORLD MISSION 1 ENTRY SCREEN HIERARCHY CLEANUP -->
+<section class="mi2z-carryover-shell" id="mi2zCarryoverShell">
+  <div class="mi2z-carryover-grid">
+    <div>
+      <div class="mi2z-kicker">Council Hall Carryover</div>
+      <h2>Your investigation record travels with you.</h2>
+      <p id="mi2zCarryoverText">
+        Checking your Council Hall record before World Mission 1 begins...
+      </p>
+
+      <div class="mi2z-habit-row">
+        <span class="mi2z-habit-pill">Observe First</span>
+        <span class="mi2z-habit-pill">Question Before Claim</span>
+        <span class="mi2z-habit-pill">Test Evidence</span>
+        <span class="mi2z-habit-pill">Name Uncertainty</span>
+        <span class="mi2z-habit-pill">Lead With Caution</span>
+      </div>
+
+      <div class="mi2z-actions">
+        <a class="mi2z-btn primary" href="/student_hub">Review Student Hub Record</a>
+        <a class="mi2z-btn" href="/investigation_replay">Replay Completed Investigation</a>
+      </div>
+    </div>
+
+    <div class="mi2z-status-card">
+      <strong id="mi2zStatusTitle">Carryover Status</strong>
+      <p id="mi2zStatusText">
+        Checking archive, reflection, ledger, and bridge records...
+      </p>
+    </div>
+  </div>
+</section>
+
 <section class="mi2x-context-banner" id="mi2xEntryContextBanner">
   <div class="mi2x-kicker">Council Hall Record Carried Forward</div>
   <h2>World Mission 1 recognizes your investigation record.</h2>
@@ -1497,6 +1656,97 @@ ${archive.protectionPlan}`;
   })();
 </script>
 
+
+
+<script>
+  // MI-2Z WORLD MISSION 1 ENTRY SCREEN HIERARCHY CLEANUP
+  (function(){
+    const CLEANUP_KEY = "stemNationWorldMission1EntryHierarchyCleanupV1";
+    let mi2zAppliedOnce = false;
+
+    function readJson(key) {
+      try { return JSON.parse(localStorage.getItem(key) || "null"); }
+      catch(error) { return null; }
+    }
+
+    function writeJsonIfChanged(key, value) {
+      const next = JSON.stringify(value);
+      const current = localStorage.getItem(key);
+      if (current !== next) {
+        localStorage.setItem(key, next);
+      }
+    }
+
+    function applyEntryHierarchyCleanup() {
+      const shell = document.getElementById("mi2zCarryoverShell");
+      const mainText = document.getElementById("mi2zCarryoverText");
+      const statusTitle = document.getElementById("mi2zStatusTitle");
+      const statusText = document.getElementById("mi2zStatusText");
+
+      if (!shell || !mainText || !statusTitle || !statusText) return;
+
+      const oldContext = document.getElementById("mi2xEntryContextBanner");
+      const oldBadge = document.getElementById("mi2yHabitCarryoverBadge");
+
+      if (oldContext) oldContext.classList.add("mi2z-suppressed");
+      if (oldBadge) oldBadge.classList.add("mi2z-suppressed");
+
+      const context = readJson("stemNationWorldMission1EntryContextV1");
+      const habitBadge = readJson("stemNationWorldMission1HabitCarryoverBadgeV1");
+      const bridge = readJson("stemNationMissionExitBridgeV1");
+      const ledger = readJson("stemNationInvestigationProgressLedgerV1");
+      const reflection = readJson("stemNationReplayReflectionV1");
+
+      const ready =
+        Boolean(context && context.status === "world_mission_entry_context_recognized") &&
+        Boolean(habitBadge && habitBadge.status === "world_mission_1_habit_carryover_badge_awarded") &&
+        Boolean(bridge && bridge.status === "world_mission_bridge_ready") &&
+        Boolean(ledger && ledger.status === "ledger_complete") &&
+        Boolean(reflection && reflection.status === "replay_reflection_saved");
+
+      const readyMessage =
+        "World Mission 1 begins with the Council Hall record already carried forward. Keep the same investigation habits: observe first, ask better questions, test evidence, name uncertainty, and lead with caution.";
+
+      const partialMessage =
+        "Some Council Hall records are available, but the full carryover record is not complete in this browser. Review the Student Hub record if anything looks missing.";
+
+      mainText.textContent = ready ? readyMessage : partialMessage;
+      statusTitle.textContent = ready ? "Carryover Ready" : "Carryover Partial";
+      statusText.textContent = ready
+        ? "Archive, reflection, progress ledger, mission bridge, and habit badge are recognized."
+        : "One or more carryover records are missing or not recognized.";
+
+      const cleanup = {
+        cleanupName: "World Mission 1 Entry Screen Hierarchy Cleanup",
+        status: ready ? "entry_hierarchy_cleanup_ready" : "entry_hierarchy_cleanup_partial",
+        ready,
+        contextStatus: context?.status || "missing",
+        habitBadgeStatus: habitBadge?.status || "missing",
+        bridgeStatus: bridge?.status || "missing",
+        ledgerStatus: ledger?.status || "missing",
+        reflectionStatus: reflection?.status || "missing",
+        updatedAt: new Date().toISOString()
+      };
+
+      writeJsonIfChanged(CLEANUP_KEY, cleanup);
+
+      window.STEMNationWorldMission1EntryHierarchyCleanup = cleanup;
+      mi2zAppliedOnce = true;
+    }
+
+    document.addEventListener("DOMContentLoaded", function(){
+      setTimeout(applyEntryHierarchyCleanup, 520);
+    });
+
+    window.addEventListener("focus", function(){
+      if (!mi2zAppliedOnce) {
+        setTimeout(applyEntryHierarchyCleanup, 360);
+      }
+    });
+
+    console.log("MI-2Z WORLD MISSION 1 ENTRY SCREEN HIERARCHY CLEANUP ACTIVE");
+  })();
+</script>
 
 </body>
 </html>
