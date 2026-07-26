@@ -647,6 +647,105 @@
   }
 </style>
 
+
+<style>
+  /* MI-2Q STUDENT HUB ARCHIVE PLACEMENT POLISH */
+
+  .mi2q-archive-zone {
+    width: min(1120px, calc(100% - 28px));
+    margin: 36px auto 42px;
+    padding: 0;
+  }
+
+  .mi2q-archive-heading {
+    border: 1px solid rgba(255,255,255,.14);
+    border-radius: 28px 28px 0 0;
+    background:
+      radial-gradient(circle at 12% 18%, rgba(139,211,255,.14), transparent 34%),
+      radial-gradient(circle at 88% 20%, rgba(246,213,111,.15), transparent 34%),
+      rgba(3,7,18,.90);
+    padding: 24px;
+    color: #f8fafc;
+    box-shadow: 0 22px 70px rgba(0,0,0,.25);
+  }
+
+  .mi2q-kicker {
+    color: #8bd3ff;
+    text-transform: uppercase;
+    letter-spacing: .14em;
+    font-size: 13px;
+    font-weight: 950;
+    margin-bottom: 8px;
+  }
+
+  .mi2q-archive-heading h2 {
+    margin: 0 0 10px;
+    color: #f6d56f;
+    font-size: clamp(32px, 4vw, 52px);
+    line-height: 1;
+  }
+
+  .mi2q-archive-heading p {
+    margin: 0;
+    max-width: 850px;
+    color: rgba(248,250,252,.82);
+    line-height: 1.45;
+    font-size: 17px;
+  }
+
+  .mi2q-archive-zone .mi2p-badge-wrap {
+    width: 100%;
+    margin: 0;
+    padding: 18px 24px 0;
+    background: rgba(3,7,18,.90);
+    border-left: 1px solid rgba(255,255,255,.14);
+    border-right: 1px solid rgba(255,255,255,.14);
+  }
+
+  .mi2q-archive-zone .mi2m-investigation-archive {
+    width: 100%;
+    margin: 0;
+    padding: 18px 24px 24px;
+    background: rgba(3,7,18,.90);
+    border-left: 1px solid rgba(255,255,255,.14);
+    border-right: 1px solid rgba(255,255,255,.14);
+    border-bottom: 1px solid rgba(255,255,255,.14);
+    border-radius: 0 0 28px 28px;
+  }
+
+  .mi2q-archive-zone .mi2m-archive-shell {
+    box-shadow: none;
+  }
+
+  .mi2q-archive-zone .mi2p-badge {
+    box-shadow: 0 12px 40px rgba(0,0,0,.24), 0 0 34px rgba(246,213,111,.10);
+  }
+
+  .mi2q-archive-zone .mi2m-archive-grid {
+    margin-top: 16px;
+  }
+
+  .mi2q-archive-zone .mi2m-actions {
+    border-top: 1px solid rgba(255,255,255,.12);
+    padding-top: 14px;
+    margin-top: 14px;
+  }
+
+  @media(max-width: 760px) {
+    .mi2q-archive-zone {
+      width: min(100% - 18px, 1120px);
+      margin-top: 24px;
+    }
+
+    .mi2q-archive-heading,
+    .mi2q-archive-zone .mi2p-badge-wrap,
+    .mi2q-archive-zone .mi2m-investigation-archive {
+      padding-left: 14px;
+      padding-right: 14px;
+    }
+  }
+</style>
+
 </head>
 <body>
   <!-- CI-STAGE-9 — Student Hub Cleanup -->
@@ -1136,6 +1235,59 @@ console.log("CI-STAGE-48 MISSION CHECKPOINT STUDENT HUB POLISH ACTIVE");
     console.log("MI-2P INVESTIGATION ARCHIVE COMPLETION BADGE ACTIVE");
   })();
 </script>
+
+
+<script>
+  // MI-2Q STUDENT HUB ARCHIVE PLACEMENT POLISH
+  (function(){
+    function placeArchiveZone() {
+      const badge = document.getElementById("mi2pBadgeWrap");
+      const archive = document.getElementById("mi2mInvestigationArchive");
+
+      if (!archive || document.getElementById("mi2qArchiveZone")) return;
+
+      const zone = document.createElement("section");
+      zone.className = "mi2q-archive-zone";
+      zone.id = "mi2qArchiveZone";
+
+      const heading = document.createElement("div");
+      heading.className = "mi2q-archive-heading";
+      heading.innerHTML = `
+        <div class="mi2q-kicker">Completed Investigation Record</div>
+        <h2>Mission Record Archived</h2>
+        <p>
+          This section keeps the completed investigation together: badge, resolution, lesson,
+          uncertainty, completed sequence, and review links.
+        </p>
+      `;
+
+      const parent = archive.parentNode;
+      parent.insertBefore(zone, archive);
+
+      zone.appendChild(heading);
+
+      if (badge) {
+        zone.appendChild(badge);
+      }
+
+      zone.appendChild(archive);
+
+      console.log("MI-2Q: archive badge and card moved into clean zone.");
+    }
+
+    document.addEventListener("DOMContentLoaded", function(){
+      setTimeout(placeArchiveZone, 80);
+      setTimeout(placeArchiveZone, 300);
+    });
+
+    window.addEventListener("focus", function(){
+      setTimeout(placeArchiveZone, 80);
+    });
+
+    console.log("MI-2Q STUDENT HUB ARCHIVE PLACEMENT POLISH ACTIVE");
+  })();
+</script>
+<!-- MI-2Q STUDENT HUB ARCHIVE PLACEMENT POLISH -->
 
 </body>
 </html>
