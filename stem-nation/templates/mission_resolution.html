@@ -431,7 +431,7 @@
           <textarea id="uncertaintyText" placeholder="What is still uncertain, even after the mission resolution?"></textarea>
         </div>
 
-        <button class="btn success" type="button" id="saveResolutionBtn">Save Mission Resolution</button>
+        <button class="btn success" type="button" id="saveResolutionBtn" onclick="saveResolution()">Save Mission Resolution</button>
       </aside>
     </section>
   </main>
@@ -628,10 +628,27 @@
       state.lesson = document.getElementById("lessonText").value.trim();
       state.uncertainty = document.getElementById("uncertaintyText").value.trim();
 
+      const mi2nLessonQuality = mi2nAnswerQuality(state.lesson);
+      const mi2nUncertaintyQuality = mi2nAnswerQuality(state.uncertainty);
+
       if (!state.resolution || !state.lesson || !state.uncertainty) {
         setVisual("Save blocked. Choose a resolution, name a lesson, and record uncertainty.", "caution");
         document.getElementById("resolutionOutput").textContent =
-          "The Council pauses. Complete the resolution statement, final lesson, and remaining uncertainty before saving.";
+          "The Council pauses. Complete the resolution statement, final lesson, and remaining uncertainty before saving.\n\n" + mi2nQualityHelpText();
+        return;
+      }
+
+      if (!mi2nLessonQuality.ok) {
+        setVisual(mi2nLessonQuality.message, "caution");
+        document.getElementById("resolutionOutput").textContent =
+          "The Council pauses at the final lesson. " + mi2nLessonQuality.message + "\n\n" + mi2nQualityHelpText();
+        return;
+      }
+
+      if (!mi2nUncertaintyQuality.ok) {
+        setVisual(mi2nUncertaintyQuality.message, "caution");
+        document.getElementById("resolutionOutput").textContent =
+          "The Council pauses at remaining uncertainty. " + mi2nUncertaintyQuality.message + "\n\n" + mi2nQualityHelpText();
         return;
       }
 
@@ -747,6 +764,152 @@ Return to Student Hub.`;
     window.addEventListener("storage", loadSaved);
 
     console.log("MI-2L MISSION RESOLUTION CHAMBER ACTIVE");
+  
+    // MI-2N INVESTIGATION ANSWER QUALITY GUARDRAILS
+    function mi2nNormalizeAnswer(value) {
+      return String(value || "")
+        .trim()
+        .toLowerCase()
+        .replace(/[.!?;:,]/g, "")
+        .replace(/\s+/g, " ");
+    }
+
+    function mi2nAnswerQuality(value) {
+      const raw = String(value || "").trim();
+      const normalized = mi2nNormalizeAnswer(raw);
+      const words = raw.split(/\s+/).filter(Boolean);
+
+      const weakExact = new Set([
+        "i dont know",
+        "i do not know",
+        "idk",
+        "dk",
+        "dont know",
+        "do not know",
+        "not sure",
+        "unsure",
+        "no idea",
+        "ii do not know",
+        "i dont no",
+        "i don't know"
+      ]);
+
+      const hasEvidenceWord = /(because|evidence|risk|uncertain|uncertainty|test|compare|observe|observed|pattern|claim|cause|scan|record|map|protect|caution|safe|safer|unknown|change|changed)/i.test(raw);
+
+      if (!raw) {
+        return {
+          ok: false,
+          message: "Write a response before saving."
+        };
+      }
+
+      if (weakExact.has(normalized)) {
+        return {
+          ok: false,
+          message: "That answer is too weak for the investigation record. Add one reason using evidence, risk, uncertainty, or what should be tested next."
+        };
+      }
+
+      if (words.length < 6) {
+        return {
+          ok: false,
+          message: "Add more detail. Write at least one complete thought, not just a few words."
+        };
+      }
+
+      if (!hasEvidenceWord) {
+        return {
+          ok: false,
+          message: "Connect your answer to evidence, risk, uncertainty, testing, or the cause claim."
+        };
+      }
+
+      return {
+        ok: true,
+        message: "Answer quality accepted."
+      };
+    }
+
+    function mi2nQualityHelpText() {
+      return "Quality check: Use one complete thought. Include evidence, risk, uncertainty, testing, or cause-and-effect.";
+    }
+
   </script>
+
+  <script>
+    // MI-2L-R1 MISSION RESOLUTION SAVE BUTTON REPAIR
+    // Direct fallback wiring in case the delegated listener is blocked.
+
+    document.addEventListener("click", function(event) {
+      const saveButton = event.target.closest("#saveResolutionBtn");
+      if (!saveButton) return;
+
+      event.preventDefault();
+      event.stopPropagation();
+
+      if (typeof saveResolution === "function") {
+        saveResolution();
+        console.log("MI-2L-R1: saveResolution fallback fired.");
+      } else {
+        const output = document.getElementById("resolutionOutput");
+        if (output) {
+          output.textContent = "Save repair warning: saveResolution function was not found.";
+        }
+        console.error("MI-2L-R1: saveResolution function missing.");
+      }
+    }, true);
+
+    console.log("MI-2L-R1 SAVE BUTTON REPAIR ACTIVE");
+  </script>
+
+
+  <script>
+    // MI-2N-R1 MISSION RESOLUTION SAVE BUTTON WIRING REPAIR
+    // Final delegated save wiring. Keeps MI-2N quality guardrails active.
+
+    document.addEventListener("click", function(event) {
+      const saveBtn = event.target.closest("#saveResolutionBtn");
+      if (!saveBtn) return;
+
+      event.preventDefault();
+      event.stopPropagation();
+
+      try {
+        if (typeof saveResolution === "function") {
+          saveResolution();
+          console.log("MI-2N-R1: saveResolution called.");
+          return;
+        }
+
+        const output = document.getElementById("resolutionOutput");
+        const visual = document.getElementById("chamberVisual");
+
+        if (output) {
+          output.textContent =
+            "The Council pauses. Save wiring could not find saveResolution(). Run MI-2N-R2 full stable repair.";
+        }
+
+        if (visual) {
+          visual.textContent =
+            "Chamber Signal: Save wiring needs full stable repair.";
+          visual.classList.remove("reward", "complete");
+          visual.classList.add("caution");
+        }
+
+        console.warn("MI-2N-R1: saveResolution function missing.");
+      } catch (error) {
+        console.error("MI-2N-R1 save error:", error);
+
+        const output = document.getElementById("resolutionOutput");
+        if (output) {
+          output.textContent =
+            "The Council pauses. Save failed because of a script error: " + error.message;
+        }
+      }
+    }, true);
+
+    console.log("MI-2N-R1 MISSION RESOLUTION SAVE BUTTON WIRING REPAIR ACTIVE");
+  </script>
+
 </body>
 </html>

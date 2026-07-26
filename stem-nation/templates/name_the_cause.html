@@ -536,6 +536,15 @@
     function saveCause() {
       state.explanation = document.getElementById("explanationText").value.trim();
 
+      
+      const mi2nCauseQuality = mi2nAnswerQuality(state.explanation);
+      if (!mi2nCauseQuality.ok) {
+        setVisual(mi2nCauseQuality.message, "caution");
+        document.getElementById("decisionOutput").textContent =
+          "The Council pauses. " + mi2nCauseQuality.message + "\n\n" + mi2nQualityHelpText();
+        return;
+      }
+
       if (!state.selectedCause || !state.explanation) {
         document.getElementById("causeOutput").textContent =
           "The Council pauses. Choose a cause and write an evidence explanation before saving.";
@@ -606,6 +615,76 @@ Test the Claim.`;
     });
 
     console.log("MI-2I NAME THE CAUSE DECISION CHAMBER + AUDIO FEEDBACK ACTIVE");
+  
+    // MI-2N INVESTIGATION ANSWER QUALITY GUARDRAILS
+    function mi2nNormalizeAnswer(value) {
+      return String(value || "")
+        .trim()
+        .toLowerCase()
+        .replace(/[.!?;:,]/g, "")
+        .replace(/\s+/g, " ");
+    }
+
+    function mi2nAnswerQuality(value) {
+      const raw = String(value || "").trim();
+      const normalized = mi2nNormalizeAnswer(raw);
+      const words = raw.split(/\s+/).filter(Boolean);
+
+      const weakExact = new Set([
+        "i dont know",
+        "i do not know",
+        "idk",
+        "dk",
+        "dont know",
+        "do not know",
+        "not sure",
+        "unsure",
+        "no idea",
+        "ii do not know",
+        "i dont no",
+        "i don't know"
+      ]);
+
+      const hasEvidenceWord = /(because|evidence|risk|uncertain|uncertainty|test|compare|observe|observed|pattern|claim|cause|scan|record|map|protect|caution|safe|safer|unknown|change|changed)/i.test(raw);
+
+      if (!raw) {
+        return {
+          ok: false,
+          message: "Write a response before saving."
+        };
+      }
+
+      if (weakExact.has(normalized)) {
+        return {
+          ok: false,
+          message: "That answer is too weak for the investigation record. Add one reason using evidence, risk, uncertainty, or what should be tested next."
+        };
+      }
+
+      if (words.length < 6) {
+        return {
+          ok: false,
+          message: "Add more detail. Write at least one complete thought, not just a few words."
+        };
+      }
+
+      if (!hasEvidenceWord) {
+        return {
+          ok: false,
+          message: "Connect your answer to evidence, risk, uncertainty, testing, or the cause claim."
+        };
+      }
+
+      return {
+        ok: true,
+        message: "Answer quality accepted."
+      };
+    }
+
+    function mi2nQualityHelpText() {
+      return "Quality check: Use one complete thought. Include evidence, risk, uncertainty, testing, or cause-and-effect.";
+    }
+
   </script>
 <!-- MI-2J TEST THE CLAIM LINK ACTIVATED -->
 </body>
