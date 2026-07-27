@@ -72,7 +72,7 @@
     }
     .interaction-panel { border-color: rgba(245,215,122,.42); }
     .interaction-panel h2 { font-size: clamp(22px, 4vw, 30px); }
-    .pressure-grid, .priority-grid {
+    .pressure-grid, .priority-grid, .role-grid {
       display: grid;
       grid-template-columns: repeat(5, minmax(0, 1fr));
       gap: 10px;
@@ -91,11 +91,32 @@
     }
     .pressure-card strong, .priority-card strong { display: block; margin-bottom: 8px; color: var(--ice); }
     .pressure-card span, .priority-card span { color: var(--soft); line-height: 1.4; }
+    .role-card {
+      min-height: 190px;
+      padding: 14px;
+      border: 2px solid rgba(255,255,255,.12);
+      border-radius: 16px;
+      background: rgba(255,255,255,.05);
+    }
+    .role-card strong { display: block; margin-bottom: 8px; color: var(--ice); }
+    .role-card p { min-height: 64px; margin: 0 0 12px; font-size: 14px; }
+    .role-card label { margin-top: 0; font-size: 14px; }
+    .role-card select {
+      width: 100%;
+      margin-top: 8px;
+      padding: 10px;
+      border: 1px solid rgba(255,255,255,.24);
+      border-radius: 10px;
+      color: white;
+      font: inherit;
+      background: #10243a;
+    }
     .pressure-card[aria-pressed="true"], .priority-card[aria-pressed="true"] {
       border-color: var(--gold);
       background: rgba(245,215,122,.16);
     }
-    .pressure-card:focus-visible, .priority-card:focus-visible, .button:focus-visible, textarea:focus-visible {
+    .pressure-card:focus-visible, .priority-card:focus-visible, .role-card select:focus-visible,
+    .button:focus-visible, textarea:focus-visible {
       outline: 3px solid var(--ice);
       outline-offset: 3px;
     }
@@ -163,11 +184,11 @@
     }
     [hidden] { display: none !important; }
     @media (max-width: 900px) {
-      .pressure-grid, .priority-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .pressure-grid, .priority-grid, .role-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
     }
     @media (max-width: 700px) {
       .carry-grid, .steps { grid-template-columns: 1fr; }
-      .pressure-grid, .priority-grid { grid-template-columns: 1fr; }
+      .pressure-grid, .priority-grid, .role-grid { grid-template-columns: 1fr; }
       main { padding-top: 26px; }
     }
   </style>
@@ -175,6 +196,7 @@
 <body>
   <!-- MI-3T MISSION 2 FIRST INTERACTION BUILD -->
   <!-- MI-3V MISSION 2 SURVIVAL PRIORITIES BUILD -->
+  <!-- MI-3X MISSION 2 LABOR AND ROLES BUILD -->
   <main>
     <div class="kicker">World Mission</div>
     <h1>World Mission 2 — First Survival Plan</h1>
@@ -280,7 +302,82 @@
         <div class="consequence" id="step3Consequence" role="status" hidden>
           Survival priorities saved. Labor and roles can open next.
         </div>
-        <p class="status" id="nextLockedMessage" hidden>Next: Labor and roles open in the next build.</p>
+      </section>
+
+      <section class="panel interaction-panel" id="step4Panel" hidden>
+        <h2>Step 4 — Assign Labor and Roles</h2>
+        <p>
+          The survival priorities are saved. Now assign first-season labor so the plan can work. The Chief
+          Investigator must make sure work is shared, urgent needs are covered, and no one group carries the
+          whole burden.
+        </p>
+        <div class="role-grid" id="roleGrid">
+          <div class="role-card">
+            <strong>Food Team</strong>
+            <p>Gathers, prepares, and protects food.</p>
+            <label for="foodTeamLevel">Labor level</label>
+            <select id="foodTeamLevel" data-role="Food Team">
+              <option value="">Choose a level</option>
+              <option value="Lead">Lead</option>
+              <option value="Support">Support</option>
+              <option value="Watch">Watch</option>
+            </select>
+          </div>
+          <div class="role-card">
+            <strong>Shelter Team</strong>
+            <p>Builds and repairs safe resting places.</p>
+            <label for="shelterTeamLevel">Labor level</label>
+            <select id="shelterTeamLevel" data-role="Shelter Team">
+              <option value="">Choose a level</option>
+              <option value="Lead">Lead</option>
+              <option value="Support">Support</option>
+              <option value="Watch">Watch</option>
+            </select>
+          </div>
+          <div class="role-card">
+            <strong>Water Team</strong>
+            <p>Finds, carries, and protects clean water.</p>
+            <label for="waterTeamLevel">Labor level</label>
+            <select id="waterTeamLevel" data-role="Water Team">
+              <option value="">Choose a level</option>
+              <option value="Lead">Lead</option>
+              <option value="Support">Support</option>
+              <option value="Watch">Watch</option>
+            </select>
+          </div>
+          <div class="role-card">
+            <strong>Safety Team</strong>
+            <p>Watches weather, injury, movement, and risk.</p>
+            <label for="safetyTeamLevel">Labor level</label>
+            <select id="safetyTeamLevel" data-role="Safety Team">
+              <option value="">Choose a level</option>
+              <option value="Lead">Lead</option>
+              <option value="Support">Support</option>
+              <option value="Watch">Watch</option>
+            </select>
+          </div>
+          <div class="role-card">
+            <strong>Care Team</strong>
+            <p>Helps young, sick, tired, or injured people.</p>
+            <label for="careTeamLevel">Labor level</label>
+            <select id="careTeamLevel" data-role="Care Team">
+              <option value="">Choose a level</option>
+              <option value="Lead">Lead</option>
+              <option value="Support">Support</option>
+              <option value="Watch">Watch</option>
+            </select>
+          </div>
+        </div>
+        <label for="laborReason">Why is this labor plan fair and safe for the first season?</label>
+        <textarea id="laborReason" maxlength="500"></textarea>
+        <p class="validation" id="laborValidation" role="alert"></p>
+        <div class="actions">
+          <button class="button primary" id="saveLaborButton" type="button">Save Labor and Roles</button>
+        </div>
+        <div class="consequence" id="step4Consequence" role="status" hidden>
+          Labor and roles saved. Resource and risk cards can open next.
+        </div>
+        <p class="status" id="nextLockedMessage" hidden>Next: Resource and risk cards open in the next build.</p>
       </section>
 
       <section class="panel">
@@ -289,7 +386,7 @@
           <div class="step" id="previewStep1"><span class="step-number">1</span><div><strong>Carry Forward the Founding Record</strong><span class="step-state"></span></div></div>
           <div class="step" id="previewStep2"><span class="step-number">2</span><div><strong>Read the First Season Pressure</strong><span class="step-state"></span></div></div>
           <div class="step" id="previewStep3" data-state="locked"><span class="step-number">3</span><div><strong>Choose Survival Priorities</strong><span class="step-state">Locked</span></div></div>
-          <div class="step" data-state="locked"><span class="step-number">4</span><div><strong>Assign Labor and Roles</strong><span class="step-state">Locked</span></div></div>
+          <div class="step" id="previewStep4" data-state="locked"><span class="step-number">4</span><div><strong>Assign Labor and Roles</strong><span class="step-state">Locked</span></div></div>
           <div class="step" data-state="locked"><span class="step-number">5</span><div><strong>Inspect Resource and Risk Cards</strong><span class="step-state">Locked</span></div></div>
           <div class="step" data-state="locked"><span class="step-number">6</span><div><strong>Test the Survival Plan</strong><span class="step-state">Locked</span></div></div>
           <div class="step" data-state="locked"><span class="step-number">7</span><div><strong>Revise or Approve</strong><span class="step-state">Locked</span></div></div>
@@ -310,6 +407,7 @@
       const MISSION_2_STATE_KEY = "stemNationWorldMission2StateV1";
       const FIRST_PRESSURE_READ_KEY = "stemNationWorldMission2FirstPressureReadV1";
       const PRIORITY_PLAN_KEY = "stemNationWorldMission2PriorityPlanV1";
+      const LABOR_PLAN_KEY = "stemNationWorldMission2LaborPlanV1";
       let mission1Reward = null;
       let selectedPressureSignals = [];
       let survivalPriorities = [];
@@ -339,6 +437,10 @@
         return Boolean(record && record.status === "world_mission_2_survival_priorities_saved");
       }
 
+      function isStep4Saved(record) {
+        return Boolean(record && record.status === "world_mission_2_labor_roles_saved");
+      }
+
       function setPreviewState(elementId, state) {
         const step = document.getElementById(elementId);
         step.dataset.state = state;
@@ -366,22 +468,27 @@
         const state = readRecord(MISSION_2_STATE_KEY);
         const pressureRead = readRecord(FIRST_PRESSURE_READ_KEY);
         const priorityPlan = readRecord(PRIORITY_PLAN_KEY);
+        const laborPlan = readRecord(LABOR_PLAN_KEY);
         const step1Saved = isStep1Saved(state);
         const step2Saved = step1Saved && isStep2Saved(pressureRead);
         const step3Saved = step2Saved && isStep3Saved(priorityPlan);
+        const step4Saved = step3Saved && isStep4Saved(laborPlan);
 
         document.getElementById("step2Panel").hidden = !step1Saved;
         document.getElementById("step3Panel").hidden = !step2Saved;
+        document.getElementById("step4Panel").hidden = !step3Saved;
         document.getElementById("step1Consequence").hidden = !step1Saved;
         document.getElementById("carryForwardButton").textContent =
           step1Saved ? "Founding Record Saved" : "Use This Founding Record";
         document.getElementById("step2Consequence").hidden = !step2Saved;
         document.getElementById("step3Consequence").hidden = !step3Saved;
-        document.getElementById("nextLockedMessage").hidden = !step3Saved;
+        document.getElementById("step4Consequence").hidden = !step4Saved;
+        document.getElementById("nextLockedMessage").hidden = !step4Saved;
 
         setPreviewState("previewStep1", step1Saved ? "saved" : "active");
         setPreviewState("previewStep2", step2Saved ? "saved" : step1Saved ? "active" : "locked");
         setPreviewState("previewStep3", step3Saved ? "saved" : step2Saved ? "active" : "locked");
+        setPreviewState("previewStep4", step4Saved ? "saved" : step3Saved ? "active" : "locked");
 
         if (step2Saved) {
           selectedPressureSignals = Array.isArray(pressureRead.selectedPressureSignals)
@@ -395,6 +502,16 @@
             ? priorityPlan.survivalPriorities.slice(0, 3)
             : [];
           document.getElementById("priorityReason").value = priorityPlan.priorityReason || "";
+        }
+
+        if (step4Saved) {
+          document.querySelectorAll("[data-role]").forEach(function(select) {
+            select.value = laborPlan.laborAssignments &&
+              hasValue(laborPlan.laborAssignments[select.dataset.role])
+              ? laborPlan.laborAssignments[select.dataset.role]
+              : "";
+          });
+          document.getElementById("laborReason").value = laborPlan.laborReason || "";
         }
 
         renderPressureSelection();
@@ -519,6 +636,64 @@
         });
       }
 
+      function saveLaborAndRoles() {
+        const validation = document.getElementById("laborValidation");
+        const priorityPlan = readRecord(PRIORITY_PLAN_KEY);
+        const laborAssignments = {};
+        document.querySelectorAll("[data-role]").forEach(function(select) {
+          laborAssignments[select.dataset.role] = select.value;
+        });
+        const levels = Object.values(laborAssignments);
+        const leadCount = levels.filter(function(level) { return level === "Lead"; }).length;
+        const watchCount = levels.filter(function(level) { return level === "Watch"; }).length;
+        const reason = document.getElementById("laborReason").value.trim();
+
+        if (levels.some(function(level) { return !hasValue(level); })) {
+          validation.textContent = "Choose a labor level for every role.";
+          return;
+        }
+        if (leadCount < 1) {
+          validation.textContent = "Assign at least 1 role to Lead.";
+          return;
+        }
+        if (leadCount > 2) {
+          validation.textContent = "No more than 2 roles may be Lead.";
+          return;
+        }
+        if (watchCount < 1) {
+          validation.textContent = "Assign at least 1 role to Watch.";
+          return;
+        }
+        if (reason.length < 18) {
+          validation.textContent = "Explain why the plan is fair and safe using at least 18 characters.";
+          return;
+        }
+
+        validation.textContent = "";
+        const laborPlan = {
+          sourceMission1Region: mission1Reward.selectedRegion,
+          sourceMission1Decision: mission1Reward.decision,
+          selectedPressureSignals: Array.isArray(priorityPlan.selectedPressureSignals)
+            ? priorityPlan.selectedPressureSignals.slice()
+            : [],
+          survivalPriorities: Array.isArray(priorityPlan.survivalPriorities)
+            ? priorityPlan.survivalPriorities.slice()
+            : [],
+          laborAssignments: laborAssignments,
+          laborReason: reason,
+          status: "world_mission_2_labor_roles_saved",
+          visibleConsequence: "Labor and roles saved. Resource and risk cards can open next.",
+          savedAt: new Date().toISOString()
+        };
+        localStorage.setItem(LABOR_PLAN_KEY, JSON.stringify(laborPlan));
+        renderInteractionState();
+        dispatchInteractionFeedback({
+          status: "world_mission_2_labor_roles_saved",
+          step: 4,
+          laborAssignments: Object.assign({}, laborAssignments)
+        });
+      }
+
       function renderEntryState() {
         const reward = readRecord(MISSION_1_REWARD_KEY);
         const unlocked = Boolean(
@@ -564,6 +739,7 @@
       document.getElementById("carryForwardButton").addEventListener("click", carryFoundingRecordForward);
       document.getElementById("savePressureButton").addEventListener("click", saveFirstPressureRead);
       document.getElementById("savePrioritiesButton").addEventListener("click", saveSurvivalPriorities);
+      document.getElementById("saveLaborButton").addEventListener("click", saveLaborAndRoles);
       document.querySelectorAll(".pressure-card").forEach(function(card) {
         card.addEventListener("click", togglePressureSignal);
       });
