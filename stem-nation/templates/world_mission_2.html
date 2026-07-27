@@ -72,7 +72,7 @@
     }
     .interaction-panel { border-color: rgba(245,215,122,.42); }
     .interaction-panel h2 { font-size: clamp(22px, 4vw, 30px); }
-    .pressure-grid, .priority-grid, .role-grid, .inspection-grid {
+    .pressure-grid, .priority-grid, .role-grid, .inspection-grid, .test-grid {
       display: grid;
       grid-template-columns: repeat(5, minmax(0, 1fr));
       gap: 10px;
@@ -89,6 +89,19 @@
       cursor: pointer;
       background: rgba(255,255,255,.05);
     }
+    .test-card {
+      min-height: 150px;
+      padding: 14px;
+      border: 2px solid rgba(255,255,255,.12);
+      border-radius: 16px;
+      color: white;
+      text-align: left;
+      font: inherit;
+      cursor: pointer;
+      background: rgba(255,255,255,.05);
+    }
+    .test-card strong { display: block; margin-bottom: 8px; color: var(--ice); }
+    .test-card span { color: var(--soft); line-height: 1.4; }
     .pressure-card strong, .priority-card strong, .inspection-card strong { display: block; margin-bottom: 8px; color: var(--ice); }
     .pressure-card span, .priority-card span, .inspection-card span { color: var(--soft); line-height: 1.4; }
     .role-card {
@@ -115,7 +128,11 @@
       border-color: var(--gold);
       background: rgba(245,215,122,.16);
     }
-    .pressure-card:focus-visible, .priority-card:focus-visible, .inspection-card:focus-visible, .role-card select:focus-visible,
+    .test-card[aria-pressed="true"] {
+      border-color: var(--gold);
+      background: rgba(245,215,122,.16);
+    }
+    .pressure-card:focus-visible, .priority-card:focus-visible, .inspection-card:focus-visible, .test-card:focus-visible, .role-card select:focus-visible,
     .button:focus-visible, textarea:focus-visible {
       outline: 3px solid var(--ice);
       outline-offset: 3px;
@@ -184,11 +201,11 @@
     }
     [hidden] { display: none !important; }
     @media (max-width: 900px) {
-      .pressure-grid, .priority-grid, .role-grid, .inspection-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .pressure-grid, .priority-grid, .role-grid, .inspection-grid, .test-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
     }
     @media (max-width: 700px) {
       .carry-grid, .steps { grid-template-columns: 1fr; }
-      .pressure-grid, .priority-grid, .role-grid, .inspection-grid { grid-template-columns: 1fr; }
+      .pressure-grid, .priority-grid, .role-grid, .inspection-grid, .test-grid { grid-template-columns: 1fr; }
       main { padding-top: 26px; }
     }
   </style>
@@ -198,6 +215,7 @@
   <!-- MI-3V MISSION 2 SURVIVAL PRIORITIES BUILD -->
   <!-- MI-3X MISSION 2 LABOR AND ROLES BUILD -->
   <!-- MI-3Z MISSION 2 RESOURCE AND RISK CARDS BUILD -->
+  <!-- MI-4D MISSION 2 TEST THE SURVIVAL PLAN BUILD -->
   <main>
     <div class="kicker">World Mission</div>
     <h1>World Mission 2 — First Survival Plan</h1>
@@ -420,7 +438,62 @@
         <div class="consequence" id="step5Consequence" role="status" hidden>
           Resource and risk inspection saved. The survival plan can be tested next.
         </div>
-        <p class="status" id="nextLockedMessage" hidden>Next: Test the survival plan opens in the next build.</p>
+      </section>
+
+      <section class="panel interaction-panel" id="step6Panel" hidden>
+        <h2>Step 6 — Test the Survival Plan</h2>
+        <p>
+          The resource and risk inspection is saved. Now test the survival plan before anyone approves it.
+          A good Chief Investigator checks whether the plan can hold up under pressure.
+        </p>
+        <p>The test should help answer:</p>
+        <ul>
+          <li>Can the plan protect people?</li>
+          <li>Can the teams do the work?</li>
+          <li>Can the nation respond if risk gets worse?</li>
+        </ul>
+        <h3>Test Focus</h3>
+        <p>Select exactly 1 test focus.</p>
+        <div class="test-grid" id="testFocusGrid">
+          <button class="test-card test-focus-card" type="button" data-test-focus="Food and Water Stress Test" aria-pressed="false">
+            <strong>Food and Water Stress Test</strong>
+            <span>Check whether the plan still works if food runs low or water needs protection.</span>
+          </button>
+          <button class="test-card test-focus-card" type="button" data-test-focus="Shelter and Storm Test" aria-pressed="false">
+            <strong>Shelter and Storm Test</strong>
+            <span>Check whether shelters and teams can respond if weather gets worse.</span>
+          </button>
+          <button class="test-card test-focus-card" type="button" data-test-focus="Labor and Care Test" aria-pressed="false">
+            <strong>Labor and Care Test</strong>
+            <span>Check whether work is fair and people can rest, heal, and help each other.</span>
+          </button>
+        </div>
+        <h3>Test Method</h3>
+        <p>Select exactly 1 test method.</p>
+        <div class="test-grid" id="testMethodGrid">
+          <button class="test-card test-method-card" type="button" data-test-method="Walk Through the Plan" aria-pressed="false">
+            <strong>Walk Through the Plan</strong>
+            <span>Trace each team’s job from first need to first response.</span>
+          </button>
+          <button class="test-card test-method-card" type="button" data-test-method="Find the Weak Point" aria-pressed="false">
+            <strong>Find the Weak Point</strong>
+            <span>Look for the part of the plan most likely to fail first.</span>
+          </button>
+          <button class="test-card test-method-card" type="button" data-test-method="Compare Two Outcomes" aria-pressed="false">
+            <strong>Compare Two Outcomes</strong>
+            <span>Compare what happens if risk stays steady versus if risk gets worse.</span>
+          </button>
+        </div>
+        <label for="testResult">What did the test show about the survival plan?</label>
+        <textarea id="testResult" maxlength="500"></textarea>
+        <p class="validation" id="testValidation" role="alert"></p>
+        <div class="actions">
+          <button class="button primary" id="saveTestButton" type="button">Save Survival Plan Test</button>
+        </div>
+        <div class="consequence" id="step6Consequence" role="status" hidden>
+          Survival plan test saved. The plan can be revised or approved next.
+        </div>
+        <p class="status" id="nextLockedMessage" hidden>Next: Revise or Approve opens in the next build.</p>
       </section>
 
       <section class="panel">
@@ -431,7 +504,7 @@
           <div class="step" id="previewStep3" data-state="locked"><span class="step-number">3</span><div><strong>Choose Survival Priorities</strong><span class="step-state">Locked</span></div></div>
           <div class="step" id="previewStep4" data-state="locked"><span class="step-number">4</span><div><strong>Assign Labor and Roles</strong><span class="step-state">Locked</span></div></div>
           <div class="step" id="previewStep5" data-state="locked"><span class="step-number">5</span><div><strong>Inspect Resource and Risk Cards</strong><span class="step-state">Locked</span></div></div>
-          <div class="step" data-state="locked"><span class="step-number">6</span><div><strong>Test the Survival Plan</strong><span class="step-state">Locked</span></div></div>
+          <div class="step" id="previewStep6" data-state="locked"><span class="step-number">6</span><div><strong>Test the Survival Plan</strong><span class="step-state">Locked</span></div></div>
           <div class="step" data-state="locked"><span class="step-number">7</span><div><strong>Revise or Approve</strong><span class="step-state">Locked</span></div></div>
           <div class="step" data-state="locked"><span class="step-number">8</span><div><strong>Save the Survival Archive</strong><span class="step-state">Locked</span></div></div>
         </div>
@@ -452,11 +525,14 @@
       const PRIORITY_PLAN_KEY = "stemNationWorldMission2PriorityPlanV1";
       const LABOR_PLAN_KEY = "stemNationWorldMission2LaborPlanV1";
       const EVIDENCE_PACKET_KEY = "stemNationWorldMission2EvidencePacketV1";
+      const TEST_ACTION_KEY = "stemNationWorldMission2TestActionV1";
       let mission1Reward = null;
       let selectedPressureSignals = [];
       let survivalPriorities = [];
       let selectedResources = [];
       let selectedRisks = [];
+      let selectedTestFocus = [];
+      let selectedTestMethod = [];
 
       function readRecord(key) {
         try {
@@ -491,6 +567,10 @@
         return Boolean(record && record.status === "world_mission_2_resource_risk_inspection_saved");
       }
 
+      function isStep6Saved(record) {
+        return Boolean(record && record.status === "world_mission_2_survival_plan_test_saved");
+      }
+
       function setPreviewState(elementId, state) {
         const step = document.getElementById(elementId);
         step.dataset.state = state;
@@ -523,22 +603,34 @@
         });
       }
 
+      function renderTestSelection() {
+        document.querySelectorAll(".test-focus-card").forEach(function(card) {
+          card.setAttribute("aria-pressed", String(selectedTestFocus.includes(card.dataset.testFocus)));
+        });
+        document.querySelectorAll(".test-method-card").forEach(function(card) {
+          card.setAttribute("aria-pressed", String(selectedTestMethod.includes(card.dataset.testMethod)));
+        });
+      }
+
       function renderInteractionState() {
         const state = readRecord(MISSION_2_STATE_KEY);
         const pressureRead = readRecord(FIRST_PRESSURE_READ_KEY);
         const priorityPlan = readRecord(PRIORITY_PLAN_KEY);
         const laborPlan = readRecord(LABOR_PLAN_KEY);
         const evidencePacket = readRecord(EVIDENCE_PACKET_KEY);
+        const testAction = readRecord(TEST_ACTION_KEY);
         const step1Saved = isStep1Saved(state);
         const step2Saved = step1Saved && isStep2Saved(pressureRead);
         const step3Saved = step2Saved && isStep3Saved(priorityPlan);
         const step4Saved = step3Saved && isStep4Saved(laborPlan);
         const step5Saved = step4Saved && isStep5Saved(evidencePacket);
+        const step6Saved = step5Saved && isStep6Saved(testAction);
 
         document.getElementById("step2Panel").hidden = !step1Saved;
         document.getElementById("step3Panel").hidden = !step2Saved;
         document.getElementById("step4Panel").hidden = !step3Saved;
         document.getElementById("step5Panel").hidden = !step4Saved;
+        document.getElementById("step6Panel").hidden = !step5Saved;
         document.getElementById("step1Consequence").hidden = !step1Saved;
         document.getElementById("carryForwardButton").textContent =
           step1Saved ? "Founding Record Saved" : "Use This Founding Record";
@@ -546,13 +638,15 @@
         document.getElementById("step3Consequence").hidden = !step3Saved;
         document.getElementById("step4Consequence").hidden = !step4Saved;
         document.getElementById("step5Consequence").hidden = !step5Saved;
-        document.getElementById("nextLockedMessage").hidden = !step5Saved;
+        document.getElementById("step6Consequence").hidden = !step6Saved;
+        document.getElementById("nextLockedMessage").hidden = !step6Saved;
 
         setPreviewState("previewStep1", step1Saved ? "saved" : "active");
         setPreviewState("previewStep2", step2Saved ? "saved" : step1Saved ? "active" : "locked");
         setPreviewState("previewStep3", step3Saved ? "saved" : step2Saved ? "active" : "locked");
         setPreviewState("previewStep4", step4Saved ? "saved" : step3Saved ? "active" : "locked");
         setPreviewState("previewStep5", step5Saved ? "saved" : step4Saved ? "active" : "locked");
+        setPreviewState("previewStep6", step6Saved ? "saved" : step5Saved ? "active" : "locked");
 
         if (step2Saved) {
           selectedPressureSignals = Array.isArray(pressureRead.selectedPressureSignals)
@@ -588,9 +682,16 @@
           document.getElementById("inspectionReason").value = evidencePacket.inspectionReason || "";
         }
 
+        if (step6Saved) {
+          selectedTestFocus = hasValue(testAction.testFocus) ? [testAction.testFocus] : [];
+          selectedTestMethod = hasValue(testAction.testMethod) ? [testAction.testMethod] : [];
+          document.getElementById("testResult").value = testAction.testResult || "";
+        }
+
         renderPressureSelection();
         renderPrioritySelection();
         renderInspectionSelection();
+        renderTestSelection();
       }
 
       function carryFoundingRecordForward() {
@@ -838,6 +939,73 @@
         });
       }
 
+      function toggleTestFocus(event) {
+        const focus = event.currentTarget.dataset.testFocus;
+        selectedTestFocus = selectedTestFocus.includes(focus) ? [] : [focus];
+        document.getElementById("testValidation").textContent = "";
+        renderTestSelection();
+      }
+
+      function toggleTestMethod(event) {
+        const method = event.currentTarget.dataset.testMethod;
+        selectedTestMethod = selectedTestMethod.includes(method) ? [] : [method];
+        document.getElementById("testValidation").textContent = "";
+        renderTestSelection();
+      }
+
+      function saveSurvivalPlanTest() {
+        const validation = document.getElementById("testValidation");
+        const testResult = document.getElementById("testResult").value.trim();
+        const evidencePacket = readRecord(EVIDENCE_PACKET_KEY);
+        if (selectedTestFocus.length !== 1) {
+          validation.textContent = "Select exactly 1 test focus.";
+          return;
+        }
+        if (selectedTestMethod.length !== 1) {
+          validation.textContent = "Select exactly 1 test method.";
+          return;
+        }
+        if (testResult.length < 25) {
+          validation.textContent = "Explain the test result using at least 25 characters.";
+          return;
+        }
+
+        validation.textContent = "";
+        const testAction = {
+          sourceMission1Region: evidencePacket.sourceMission1Region,
+          sourceMission1Decision: evidencePacket.sourceMission1Decision,
+          selectedPressureSignals: Array.isArray(evidencePacket.selectedPressureSignals)
+            ? evidencePacket.selectedPressureSignals.slice()
+            : [],
+          survivalPriorities: Array.isArray(evidencePacket.survivalPriorities)
+            ? evidencePacket.survivalPriorities.slice()
+            : [],
+          laborAssignments: evidencePacket.laborAssignments && typeof evidencePacket.laborAssignments === "object"
+            ? Object.assign({}, evidencePacket.laborAssignments)
+            : {},
+          selectedResources: Array.isArray(evidencePacket.selectedResources)
+            ? evidencePacket.selectedResources.slice()
+            : [],
+          selectedRisks: Array.isArray(evidencePacket.selectedRisks)
+            ? evidencePacket.selectedRisks.slice()
+            : [],
+          testFocus: selectedTestFocus[0],
+          testMethod: selectedTestMethod[0],
+          testResult: testResult,
+          status: "world_mission_2_survival_plan_test_saved",
+          visibleConsequence: "Survival plan test saved. The plan can be revised or approved next.",
+          savedAt: new Date().toISOString()
+        };
+        localStorage.setItem(TEST_ACTION_KEY, JSON.stringify(testAction));
+        renderInteractionState();
+        dispatchInteractionFeedback({
+          status: "world_mission_2_survival_plan_test_saved",
+          step: 6,
+          testFocus: selectedTestFocus[0],
+          testMethod: selectedTestMethod[0]
+        });
+      }
+
       function renderEntryState() {
         const reward = readRecord(MISSION_1_REWARD_KEY);
         const unlocked = Boolean(
@@ -885,6 +1053,7 @@
       document.getElementById("savePrioritiesButton").addEventListener("click", saveSurvivalPriorities);
       document.getElementById("saveLaborButton").addEventListener("click", saveLaborAndRoles);
       document.getElementById("saveInspectionButton").addEventListener("click", saveResourceRiskInspection);
+      document.getElementById("saveTestButton").addEventListener("click", saveSurvivalPlanTest);
       document.querySelectorAll(".pressure-card").forEach(function(card) {
         card.addEventListener("click", togglePressureSignal);
       });
@@ -896,6 +1065,12 @@
       });
       document.querySelectorAll(".risk-card").forEach(function(card) {
         card.addEventListener("click", toggleInspectionCard);
+      });
+      document.querySelectorAll(".test-focus-card").forEach(function(card) {
+        card.addEventListener("click", toggleTestFocus);
+      });
+      document.querySelectorAll(".test-method-card").forEach(function(card) {
+        card.addEventListener("click", toggleTestMethod);
       });
       document.addEventListener("DOMContentLoaded", renderEntryState);
       window.addEventListener("storage", renderEntryState);
