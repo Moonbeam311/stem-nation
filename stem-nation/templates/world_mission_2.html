@@ -72,13 +72,13 @@
     }
     .interaction-panel { border-color: rgba(245,215,122,.42); }
     .interaction-panel h2 { font-size: clamp(22px, 4vw, 30px); }
-    .pressure-grid {
+    .pressure-grid, .priority-grid {
       display: grid;
       grid-template-columns: repeat(5, minmax(0, 1fr));
       gap: 10px;
       margin-top: 18px;
     }
-    .pressure-card {
+    .pressure-card, .priority-card {
       min-height: 150px;
       padding: 14px;
       border: 2px solid rgba(255,255,255,.12);
@@ -89,13 +89,13 @@
       cursor: pointer;
       background: rgba(255,255,255,.05);
     }
-    .pressure-card strong { display: block; margin-bottom: 8px; color: var(--ice); }
-    .pressure-card span { color: var(--soft); line-height: 1.4; }
-    .pressure-card[aria-pressed="true"] {
+    .pressure-card strong, .priority-card strong { display: block; margin-bottom: 8px; color: var(--ice); }
+    .pressure-card span, .priority-card span { color: var(--soft); line-height: 1.4; }
+    .pressure-card[aria-pressed="true"], .priority-card[aria-pressed="true"] {
       border-color: var(--gold);
       background: rgba(245,215,122,.16);
     }
-    .pressure-card:focus-visible, .button:focus-visible, textarea:focus-visible {
+    .pressure-card:focus-visible, .priority-card:focus-visible, .button:focus-visible, textarea:focus-visible {
       outline: 3px solid var(--ice);
       outline-offset: 3px;
     }
@@ -163,17 +163,18 @@
     }
     [hidden] { display: none !important; }
     @media (max-width: 900px) {
-      .pressure-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .pressure-grid, .priority-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
     }
     @media (max-width: 700px) {
       .carry-grid, .steps { grid-template-columns: 1fr; }
-      .pressure-grid { grid-template-columns: 1fr; }
+      .pressure-grid, .priority-grid { grid-template-columns: 1fr; }
       main { padding-top: 26px; }
     }
   </style>
 </head>
 <body>
   <!-- MI-3T MISSION 2 FIRST INTERACTION BUILD -->
+  <!-- MI-3V MISSION 2 SURVIVAL PRIORITIES BUILD -->
   <main>
     <div class="kicker">World Mission</div>
     <h1>World Mission 2 — First Survival Plan</h1>
@@ -244,7 +245,42 @@
         <div class="consequence" id="step2Consequence" role="status" hidden>
           First pressure read saved. Survival priorities can open next.
         </div>
-        <p class="status" id="nextLockedMessage" hidden>Next: Survival priorities open in the next build.</p>
+      </section>
+
+      <section class="panel interaction-panel" id="step3Panel" hidden>
+        <h2>Step 3 — Choose Survival Priorities</h2>
+        <p>
+          The first pressure read is saved. Now choose the survival priorities that should guide the first plan.
+          The Chief Investigator must balance urgent needs with long-term safety.
+        </p>
+        <p>Select exactly 3 survival priorities.</p>
+        <div class="priority-grid" id="priorityGrid">
+          <button class="priority-card" type="button" data-priority="Food First" aria-pressed="false">
+            <strong>Food First</strong><span>Make sure people have a steady way to eat.</span>
+          </button>
+          <button class="priority-card" type="button" data-priority="Shelter First" aria-pressed="false">
+            <strong>Shelter First</strong><span>Build safe places to rest and recover.</span>
+          </button>
+          <button class="priority-card" type="button" data-priority="Clean Water First" aria-pressed="false">
+            <strong>Clean Water First</strong><span>Protect clean water before the plan grows.</span>
+          </button>
+          <button class="priority-card" type="button" data-priority="Shared Work First" aria-pressed="false">
+            <strong>Shared Work First</strong><span>Make sure work is divided fairly.</span>
+          </button>
+          <button class="priority-card" type="button" data-priority="Risk Watch First" aria-pressed="false">
+            <strong>Risk Watch First</strong><span>Watch weather, injury, scarcity, and changing conditions.</span>
+          </button>
+        </div>
+        <label for="priorityReason">Why should these three priorities guide the first survival plan?</label>
+        <textarea id="priorityReason" maxlength="500"></textarea>
+        <p class="validation" id="priorityValidation" role="alert"></p>
+        <div class="actions">
+          <button class="button primary" id="savePrioritiesButton" type="button">Save Survival Priorities</button>
+        </div>
+        <div class="consequence" id="step3Consequence" role="status" hidden>
+          Survival priorities saved. Labor and roles can open next.
+        </div>
+        <p class="status" id="nextLockedMessage" hidden>Next: Labor and roles open in the next build.</p>
       </section>
 
       <section class="panel">
@@ -252,7 +288,7 @@
         <div class="steps">
           <div class="step" id="previewStep1"><span class="step-number">1</span><div><strong>Carry Forward the Founding Record</strong><span class="step-state"></span></div></div>
           <div class="step" id="previewStep2"><span class="step-number">2</span><div><strong>Read the First Season Pressure</strong><span class="step-state"></span></div></div>
-          <div class="step" data-state="locked"><span class="step-number">3</span><div><strong>Choose Survival Priorities</strong><span class="step-state">Locked</span></div></div>
+          <div class="step" id="previewStep3" data-state="locked"><span class="step-number">3</span><div><strong>Choose Survival Priorities</strong><span class="step-state">Locked</span></div></div>
           <div class="step" data-state="locked"><span class="step-number">4</span><div><strong>Assign Labor and Roles</strong><span class="step-state">Locked</span></div></div>
           <div class="step" data-state="locked"><span class="step-number">5</span><div><strong>Inspect Resource and Risk Cards</strong><span class="step-state">Locked</span></div></div>
           <div class="step" data-state="locked"><span class="step-number">6</span><div><strong>Test the Survival Plan</strong><span class="step-state">Locked</span></div></div>
@@ -273,8 +309,10 @@
       const MISSION_1_REWARD_KEY = "stemNationWorldMission1ArchiveRewardV1";
       const MISSION_2_STATE_KEY = "stemNationWorldMission2StateV1";
       const FIRST_PRESSURE_READ_KEY = "stemNationWorldMission2FirstPressureReadV1";
+      const PRIORITY_PLAN_KEY = "stemNationWorldMission2PriorityPlanV1";
       let mission1Reward = null;
       let selectedPressureSignals = [];
+      let survivalPriorities = [];
 
       function readRecord(key) {
         try {
@@ -297,6 +335,10 @@
         return Boolean(record && record.status === "world_mission_2_first_pressure_read_saved");
       }
 
+      function isStep3Saved(record) {
+        return Boolean(record && record.status === "world_mission_2_survival_priorities_saved");
+      }
+
       function setPreviewState(elementId, state) {
         const step = document.getElementById(elementId);
         step.dataset.state = state;
@@ -314,21 +356,32 @@
         });
       }
 
+      function renderPrioritySelection() {
+        document.querySelectorAll(".priority-card").forEach(function(card) {
+          card.setAttribute("aria-pressed", String(survivalPriorities.includes(card.dataset.priority)));
+        });
+      }
+
       function renderInteractionState() {
         const state = readRecord(MISSION_2_STATE_KEY);
         const pressureRead = readRecord(FIRST_PRESSURE_READ_KEY);
+        const priorityPlan = readRecord(PRIORITY_PLAN_KEY);
         const step1Saved = isStep1Saved(state);
         const step2Saved = step1Saved && isStep2Saved(pressureRead);
+        const step3Saved = step2Saved && isStep3Saved(priorityPlan);
 
         document.getElementById("step2Panel").hidden = !step1Saved;
+        document.getElementById("step3Panel").hidden = !step2Saved;
         document.getElementById("step1Consequence").hidden = !step1Saved;
         document.getElementById("carryForwardButton").textContent =
           step1Saved ? "Founding Record Saved" : "Use This Founding Record";
         document.getElementById("step2Consequence").hidden = !step2Saved;
-        document.getElementById("nextLockedMessage").hidden = !step2Saved;
+        document.getElementById("step3Consequence").hidden = !step3Saved;
+        document.getElementById("nextLockedMessage").hidden = !step3Saved;
 
         setPreviewState("previewStep1", step1Saved ? "saved" : "active");
         setPreviewState("previewStep2", step2Saved ? "saved" : step1Saved ? "active" : "locked");
+        setPreviewState("previewStep3", step3Saved ? "saved" : step2Saved ? "active" : "locked");
 
         if (step2Saved) {
           selectedPressureSignals = Array.isArray(pressureRead.selectedPressureSignals)
@@ -337,7 +390,15 @@
           document.getElementById("pressureReason").value = pressureRead.pressureReason || "";
         }
 
+        if (step3Saved) {
+          survivalPriorities = Array.isArray(priorityPlan.survivalPriorities)
+            ? priorityPlan.survivalPriorities.slice(0, 3)
+            : [];
+          document.getElementById("priorityReason").value = priorityPlan.priorityReason || "";
+        }
+
         renderPressureSelection();
+        renderPrioritySelection();
       }
 
       function carryFoundingRecordForward() {
@@ -408,6 +469,56 @@
         });
       }
 
+      function toggleSurvivalPriority(event) {
+        const priority = event.currentTarget.dataset.priority;
+        const index = survivalPriorities.indexOf(priority);
+        if (index >= 0) {
+          survivalPriorities.splice(index, 1);
+        } else if (survivalPriorities.length < 3) {
+          survivalPriorities.push(priority);
+        } else {
+          document.getElementById("priorityValidation").textContent =
+            "Choose exactly 3 survival priorities. Remove one before adding another.";
+          return;
+        }
+        document.getElementById("priorityValidation").textContent = "";
+        renderPrioritySelection();
+      }
+
+      function saveSurvivalPriorities() {
+        const reason = document.getElementById("priorityReason").value.trim();
+        const validation = document.getElementById("priorityValidation");
+        const pressureRead = readRecord(FIRST_PRESSURE_READ_KEY);
+        if (survivalPriorities.length !== 3) {
+          validation.textContent = "Select exactly 3 survival priorities.";
+          return;
+        }
+        if (reason.length < 15) {
+          validation.textContent = "Explain your choice using at least 15 characters.";
+          return;
+        }
+        validation.textContent = "";
+        const priorityPlan = {
+          sourceMission1Region: mission1Reward.selectedRegion,
+          sourceMission1Decision: mission1Reward.decision,
+          selectedPressureSignals: Array.isArray(pressureRead.selectedPressureSignals)
+            ? pressureRead.selectedPressureSignals.slice()
+            : [],
+          survivalPriorities: survivalPriorities.slice(),
+          priorityReason: reason,
+          status: "world_mission_2_survival_priorities_saved",
+          visibleConsequence: "Survival priorities saved. Labor and roles can open next.",
+          savedAt: new Date().toISOString()
+        };
+        localStorage.setItem(PRIORITY_PLAN_KEY, JSON.stringify(priorityPlan));
+        renderInteractionState();
+        dispatchInteractionFeedback({
+          status: "world_mission_2_survival_priorities_saved",
+          step: 3,
+          survivalPriorities: survivalPriorities.slice()
+        });
+      }
+
       function renderEntryState() {
         const reward = readRecord(MISSION_1_REWARD_KEY);
         const unlocked = Boolean(
@@ -452,8 +563,12 @@
 
       document.getElementById("carryForwardButton").addEventListener("click", carryFoundingRecordForward);
       document.getElementById("savePressureButton").addEventListener("click", saveFirstPressureRead);
+      document.getElementById("savePrioritiesButton").addEventListener("click", saveSurvivalPriorities);
       document.querySelectorAll(".pressure-card").forEach(function(card) {
         card.addEventListener("click", togglePressureSignal);
+      });
+      document.querySelectorAll(".priority-card").forEach(function(card) {
+        card.addEventListener("click", toggleSurvivalPriority);
       });
       document.addEventListener("DOMContentLoaded", renderEntryState);
       window.addEventListener("storage", renderEntryState);
