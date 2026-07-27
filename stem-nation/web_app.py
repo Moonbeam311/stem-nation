@@ -158,6 +158,11 @@ def session_control():
 def world_mission_1():
     return render_template("world_mission_1.html")
 
+# MI-3R MISSION 2 STATIC SKELETON ROUTE
+@app.route("/world_mission_2")
+def world_mission_2():
+    return render_template("world_mission_2.html")
+
 @app.route("/map")
 def map_mode():
     return render_template("map_mode.html")

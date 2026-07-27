@@ -1289,13 +1289,17 @@
         </div>
       </article>
 
-      <article class="panel route-card locked">
+      <!-- MI-3R STUDENT HUB MISSION 2 STATIC ENTRY BRIDGE -->
+      <article class="panel route-card locked" id="worldMission2Card">
         <div>
-          <div class="section-title">Coming Next</div>
-          <h2>Mission 2 Locked</h2>
+          <div class="section-title" id="worldMission2SectionTitle">Locked</div>
+          <h2 id="worldMission2Title">Mission 2 Locked</h2>
           <p id="mission2LockedMessage">Complete World Mission 1 first.</p>
         </div>
-        <div class="btn-row"><a class="button continue" href="/">Return Home</a></div>
+        <div class="btn-row" id="worldMission2Actions" hidden>
+          <a class="button primary" href="/world_mission_2">Start World Mission 2</a>
+          <a class="button" href="/world_mission_1">Review World Mission 1</a>
+        </div>
       </article>
     </section>
 
@@ -1739,6 +1743,61 @@ console.log("CI-STAGE-48 MISSION CHECKPOINT STUDENT HUB POLISH ACTIVE");
     document.addEventListener("DOMContentLoaded", updateWorldMission1CompletionBridge);
     window.addEventListener("focus", updateWorldMission1CompletionBridge);
     window.addEventListener("storage", updateWorldMission1CompletionBridge);
+  })();
+</script>
+
+<script>
+  // MI-3R STUDENT HUB MISSION 2 STATIC ENTRY BRIDGE
+  (function(){
+    const MISSION_1_REWARD_KEY = "stemNationWorldMission1ArchiveRewardV1";
+
+    function readMission1Reward() {
+      try {
+        const reward = JSON.parse(localStorage.getItem(MISSION_1_REWARD_KEY) || "null");
+        return reward && typeof reward === "object" && !Array.isArray(reward) ? reward : null;
+      } catch(error) {
+        return null;
+      }
+    }
+
+    function mission2IsReady() {
+      const reward = readMission1Reward();
+      return Boolean(
+        reward &&
+        reward.status === "founding_archive_reward_saved" &&
+        String(reward.selectedRegion || "").trim() &&
+        String(reward.decision || "").trim()
+      );
+    }
+
+    function updateWorldMission2EntryBridge() {
+      const card = document.getElementById("worldMission2Card");
+      const sectionTitle = document.getElementById("worldMission2SectionTitle");
+      const title = document.getElementById("worldMission2Title");
+      const message = document.getElementById("mission2LockedMessage");
+      const actions = document.getElementById("worldMission2Actions");
+      if (!card || !sectionTitle || !title || !message || !actions) return;
+
+      if (!mission2IsReady()) {
+        card.classList.add("locked");
+        sectionTitle.textContent = "Locked";
+        title.textContent = "Mission 2 Locked";
+        message.textContent = "Complete World Mission 1 first.";
+        actions.hidden = true;
+        return;
+      }
+
+      card.classList.remove("locked");
+      sectionTitle.textContent = "Ready";
+      title.textContent = "World Mission 2 — First Survival Plan";
+      message.textContent =
+        "Your founding decision is archived. Start the first survival plan when you are ready.";
+      actions.hidden = false;
+    }
+
+    document.addEventListener("DOMContentLoaded", updateWorldMission2EntryBridge);
+    window.addEventListener("focus", updateWorldMission2EntryBridge);
+    window.addEventListener("storage", updateWorldMission2EntryBridge);
   })();
 </script>
 
