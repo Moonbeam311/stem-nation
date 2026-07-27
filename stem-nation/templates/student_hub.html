@@ -1906,20 +1906,21 @@ console.log("CI-STAGE-48 MISSION CHECKPOINT STUDENT HUB POLISH ACTIVE");
 </script>
 
 <!-- MI-2W STUDENT HUB MISSION EXIT WORLD MISSION BRIDGE POLISH -->
+<!-- MI-3M STUDENT HUB COMPLETION STATE CLEANUP -->
 <section class="mi2w-exit-bridge" id="mi2wMissionExitBridge">
   <div class="mi2w-exit-grid">
     <div>
       <div class="mi2w-kicker">Mission Exit Bridge</div>
-      <h3>Ready for World Mission 1</h3>
-      <p>
+      <h3 id="mi2wMissionExitTitle">Ready for World Mission 1</h3>
+      <p id="mi2wMissionExitBody">
         The Council Hall investigation is complete. The Chief Investigator has a saved record,
         a replay reflection, and a progress ledger. The next step is to carry that investigation
         habit into the larger STEM Nation world.
       </p>
 
       <div class="mi2w-actions">
-        <a class="mi2w-btn primary" href="/world_mission_1">Start World Mission 1</a>
-        <a class="mi2w-btn" href="/investigation_replay">Replay Completed Investigation</a>
+        <a class="mi2w-btn primary" id="mi2wMissionExitPrimaryAction" href="/world_mission_1">Start World Mission 1</a>
+        <a class="mi2w-btn" id="mi2wMissionExitSecondaryAction" href="/investigation_replay">Replay Completed Investigation</a>
         <a class="mi2w-btn" href="/student_landing">Return Home</a>
       </div>
     </div>
@@ -2525,16 +2526,32 @@ console.log("CI-STAGE-48 MISSION CHECKPOINT STUDENT HUB POLISH ACTIVE");
   // MI-2W STUDENT HUB MISSION EXIT WORLD MISSION BRIDGE POLISH
   (function(){
     const BRIDGE_KEY = "stemNationMissionExitBridgeV1";
+    const FOUNDING_ARCHIVE_KEY = "stemNationWorldFoundingArchiveV1";
+    const ARCHIVE_REWARD_KEY = "stemNationWorldMission1ArchiveRewardV1";
 
     function readJson(key) {
       try { return JSON.parse(localStorage.getItem(key) || "null"); }
       catch(error) { return null; }
     }
 
+    function worldMission1IsComplete() {
+      const reward = readJson(ARCHIVE_REWARD_KEY);
+      const archive = readJson(FOUNDING_ARCHIVE_KEY);
+      return Boolean(
+        (reward && reward.status === "founding_archive_reward_saved") ||
+        (archive && archive.selectedRegion && archive.decision)
+      );
+    }
+
     function updateMissionExitBridge() {
       const text = document.getElementById("mi2wReadinessText");
       if (!text) return;
 
+      const title = document.getElementById("mi2wMissionExitTitle");
+      const body = document.getElementById("mi2wMissionExitBody");
+      const primaryAction = document.getElementById("mi2wMissionExitPrimaryAction");
+      const secondaryAction = document.getElementById("mi2wMissionExitSecondaryAction");
+      const missionComplete = worldMission1IsComplete();
       const resolution = readJson("stemNationMissionResolutionV1");
       const badge = readJson("stemNationInvestigationArchiveBadgeV1");
       const reflection = readJson("stemNationReplayReflectionV1");
@@ -2559,10 +2576,28 @@ console.log("CI-STAGE-48 MISSION CHECKPOINT STUDENT HUB POLISH ACTIVE");
 
       localStorage.setItem(BRIDGE_KEY, JSON.stringify(signal));
 
-      if (ready) {
+      if (missionComplete) {
+        title.textContent = "World Mission 1 Archived";
+        body.textContent =
+          "World Mission 1 is complete. Your founding decision is saved in the Student Hub. Review the mission or continue checking your investigation archive.";
+        primaryAction.textContent = "Review World Mission 1";
+        secondaryAction.textContent = "Review Investigation Archive";
+        text.textContent =
+          "World Mission 1 is complete. Your mission record, reflection, and progress ledger remain available for review.";
+      } else if (ready) {
+        title.textContent = "Ready for World Mission 1";
+        body.textContent =
+          "The Council Hall investigation is complete. The Chief Investigator has a saved record, a replay reflection, and a progress ledger. The next step is to carry that investigation habit into the larger STEM Nation world.";
+        primaryAction.textContent = "Start World Mission 1";
+        secondaryAction.textContent = "Replay Completed Investigation";
         text.textContent =
           "Ready. The saved archive, replay reflection, and 12 / 12 progress ledger show that the Chief Investigator can move into World Mission 1.";
       } else {
+        title.textContent = "Ready for World Mission 1";
+        body.textContent =
+          "The Council Hall investigation is complete. The Chief Investigator has a saved record, a replay reflection, and a progress ledger. The next step is to carry that investigation habit into the larger STEM Nation world.";
+        primaryAction.textContent = "Start World Mission 1";
+        secondaryAction.textContent = "Replay Completed Investigation";
         text.textContent =
           "Almost ready. Complete the mission archive, replay reflection, and progress ledger before moving forward.";
       }
