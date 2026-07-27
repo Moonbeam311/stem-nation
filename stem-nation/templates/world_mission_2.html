@@ -12,6 +12,7 @@
       --gold: #f5d77a;
       --ice: #dff6ff;
       --soft: rgba(255, 255, 255, .76);
+      --green: #9fe3b1;
     }
     * { box-sizing: border-box; }
     body {
@@ -69,6 +70,64 @@
       border-radius: 16px;
       background: rgba(255,255,255,.05);
     }
+    .interaction-panel { border-color: rgba(245,215,122,.42); }
+    .interaction-panel h2 { font-size: clamp(22px, 4vw, 30px); }
+    .pressure-grid {
+      display: grid;
+      grid-template-columns: repeat(5, minmax(0, 1fr));
+      gap: 10px;
+      margin-top: 18px;
+    }
+    .pressure-card {
+      min-height: 150px;
+      padding: 14px;
+      border: 2px solid rgba(255,255,255,.12);
+      border-radius: 16px;
+      color: white;
+      text-align: left;
+      font: inherit;
+      cursor: pointer;
+      background: rgba(255,255,255,.05);
+    }
+    .pressure-card strong { display: block; margin-bottom: 8px; color: var(--ice); }
+    .pressure-card span { color: var(--soft); line-height: 1.4; }
+    .pressure-card[aria-pressed="true"] {
+      border-color: var(--gold);
+      background: rgba(245,215,122,.16);
+    }
+    .pressure-card:focus-visible, .button:focus-visible, textarea:focus-visible {
+      outline: 3px solid var(--ice);
+      outline-offset: 3px;
+    }
+    label { display: block; margin-top: 20px; color: var(--ice); font-weight: 900; }
+    textarea {
+      width: 100%;
+      min-height: 92px;
+      margin-top: 8px;
+      padding: 12px;
+      border: 1px solid rgba(255,255,255,.24);
+      border-radius: 12px;
+      color: white;
+      font: inherit;
+      background: rgba(0,0,0,.24);
+      resize: vertical;
+    }
+    .button { cursor: pointer; }
+    button.button:disabled { cursor: not-allowed; opacity: .5; }
+    .consequence {
+      margin-top: 16px;
+      padding: 12px 14px;
+      border-left: 4px solid var(--green);
+      border-radius: 8px;
+      color: var(--green);
+      font-weight: 900;
+      background: rgba(159,227,177,.08);
+    }
+    .validation { min-height: 1.4em; color: #ffd0c9; font-weight: 800; }
+    .step[data-state="active"] { border-color: var(--gold); }
+    .step[data-state="saved"] { border-color: var(--green); background: rgba(159,227,177,.08); }
+    .step[data-state="locked"] { opacity: .58; }
+    .step-state { display: block; margin-top: 5px; color: var(--soft); font-size: 12px; }
     .carry-item strong { color: var(--ice); }
     .step { display: flex; gap: 12px; align-items: flex-start; }
     .step-number {
@@ -103,14 +162,18 @@
       background: rgba(245,215,122,.15);
     }
     [hidden] { display: none !important; }
+    @media (max-width: 900px) {
+      .pressure-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    }
     @media (max-width: 700px) {
       .carry-grid, .steps { grid-template-columns: 1fr; }
+      .pressure-grid { grid-template-columns: 1fr; }
       main { padding-top: 26px; }
     }
   </style>
 </head>
 <body>
-  <!-- MI-3R MISSION 2 STATIC SKELETON BUILD -->
+  <!-- MI-3T MISSION 2 FIRST INTERACTION BUILD -->
   <main>
     <div class="kicker">World Mission</div>
     <h1>World Mission 2 — First Survival Plan</h1>
@@ -129,7 +192,9 @@
     </section>
 
     <div id="readyContent" hidden>
-      <section class="panel">
+      <section class="panel interaction-panel" id="step1Panel">
+        <h2>Step 1 — Carry Forward the Founding Record</h2>
+        <p>Confirm the record that will guide the settlement into its first season.</p>
         <h2>Founding Record Carried Forward</h2>
         <div class="carry-grid">
           <div class="carry-item"><strong>Founding Region:</strong> <span id="foundingRegion"></span></div>
@@ -137,21 +202,64 @@
           <div class="carry-item" id="readinessItem"><strong>Founding Readiness:</strong> <span id="foundingReadiness"></span> / 5</div>
           <div class="carry-item" id="testMethodItem"><strong>Test Used:</strong> <span id="foundingTestMethod"></span></div>
         </div>
+        <div class="actions">
+          <button class="button primary" id="carryForwardButton" type="button">Use This Founding Record</button>
+        </div>
+        <div class="consequence" id="step1Consequence" role="status" hidden>
+          Founding record carried forward. The first season pressure is now open.
+        </div>
+      </section>
+
+      <section class="panel interaction-panel" id="step2Panel" hidden>
+        <h2>Step 2 — Read the First Season Pressure</h2>
+        <p>
+          The settlement has entered its first season. People need food, shelter, clean water, safe movement,
+          and shared labor. Weather can change. Supplies can run low. The Chief Investigator must notice the
+          pressure before choosing a survival plan.
+        </p>
+        <p>Select exactly 2 pressure signals that should be watched first.</p>
+        <div class="pressure-grid" id="pressureGrid">
+          <button class="pressure-card" type="button" data-signal="Food Pressure" aria-pressed="false">
+            <strong>Food Pressure</strong><span>People need a steady way to eat.</span>
+          </button>
+          <button class="pressure-card" type="button" data-signal="Shelter Pressure" aria-pressed="false">
+            <strong>Shelter Pressure</strong><span>People need safe places to rest.</span>
+          </button>
+          <button class="pressure-card" type="button" data-signal="Water Pressure" aria-pressed="false">
+            <strong>Water Pressure</strong><span>People need clean water nearby.</span>
+          </button>
+          <button class="pressure-card" type="button" data-signal="Labor Pressure" aria-pressed="false">
+            <strong>Labor Pressure</strong><span>People must share work fairly.</span>
+          </button>
+          <button class="pressure-card" type="button" data-signal="Risk Pressure" aria-pressed="false">
+            <strong>Risk Pressure</strong><span>Weather, injury, and scarcity can change the plan.</span>
+          </button>
+        </div>
+        <label for="pressureReason">Why should the Council watch these pressure signals first?</label>
+        <textarea id="pressureReason" maxlength="500"></textarea>
+        <p class="validation" id="pressureValidation" role="alert"></p>
+        <div class="actions">
+          <button class="button primary" id="savePressureButton" type="button">Save First Pressure Read</button>
+        </div>
+        <div class="consequence" id="step2Consequence" role="status" hidden>
+          First pressure read saved. Survival priorities can open next.
+        </div>
+        <p class="status" id="nextLockedMessage" hidden>Next: Survival priorities open in the next build.</p>
       </section>
 
       <section class="panel">
         <h2>Mission Preview</h2>
         <div class="steps">
-          <div class="step"><span class="step-number">1</span><strong>Carry Forward the Founding Record</strong></div>
-          <div class="step"><span class="step-number">2</span><strong>Read the First Season Pressure</strong></div>
-          <div class="step"><span class="step-number">3</span><strong>Choose Survival Priorities</strong></div>
-          <div class="step"><span class="step-number">4</span><strong>Assign Labor and Roles</strong></div>
-          <div class="step"><span class="step-number">5</span><strong>Inspect Resource and Risk Cards</strong></div>
-          <div class="step"><span class="step-number">6</span><strong>Test the Survival Plan</strong></div>
-          <div class="step"><span class="step-number">7</span><strong>Revise or Approve</strong></div>
-          <div class="step"><span class="step-number">8</span><strong>Save the Survival Archive</strong></div>
+          <div class="step" id="previewStep1"><span class="step-number">1</span><div><strong>Carry Forward the Founding Record</strong><span class="step-state"></span></div></div>
+          <div class="step" id="previewStep2"><span class="step-number">2</span><div><strong>Read the First Season Pressure</strong><span class="step-state"></span></div></div>
+          <div class="step" data-state="locked"><span class="step-number">3</span><div><strong>Choose Survival Priorities</strong><span class="step-state">Locked</span></div></div>
+          <div class="step" data-state="locked"><span class="step-number">4</span><div><strong>Assign Labor and Roles</strong><span class="step-state">Locked</span></div></div>
+          <div class="step" data-state="locked"><span class="step-number">5</span><div><strong>Inspect Resource and Risk Cards</strong><span class="step-state">Locked</span></div></div>
+          <div class="step" data-state="locked"><span class="step-number">6</span><div><strong>Test the Survival Plan</strong><span class="step-state">Locked</span></div></div>
+          <div class="step" data-state="locked"><span class="step-number">7</span><div><strong>Revise or Approve</strong><span class="step-state">Locked</span></div></div>
+          <div class="step" data-state="locked"><span class="step-number">8</span><div><strong>Save the Survival Archive</strong><span class="step-state">Locked</span></div></div>
         </div>
-        <div class="status">Mission 2 entry ready. Full mission build comes next.</div>
+        <div class="status">Mission 2 has begun. Carry the founding record forward, then read the first season pressure.</div>
         <div class="actions">
           <a class="button primary" href="/student_hub">Return to Student Hub</a>
           <a class="button" href="/world_mission_1">Review World Mission 1</a>
@@ -163,11 +271,15 @@
   <script>
     (function(){
       const MISSION_1_REWARD_KEY = "stemNationWorldMission1ArchiveRewardV1";
+      const MISSION_2_STATE_KEY = "stemNationWorldMission2StateV1";
+      const FIRST_PRESSURE_READ_KEY = "stemNationWorldMission2FirstPressureReadV1";
+      let mission1Reward = null;
+      let selectedPressureSignals = [];
 
-      function readMission1Reward() {
+      function readRecord(key) {
         try {
-          const reward = JSON.parse(localStorage.getItem(MISSION_1_REWARD_KEY) || "null");
-          return reward && typeof reward === "object" && !Array.isArray(reward) ? reward : null;
+          const record = JSON.parse(localStorage.getItem(key) || "null");
+          return record && typeof record === "object" && !Array.isArray(record) ? record : null;
         } catch(error) {
           return null;
         }
@@ -177,8 +289,127 @@
         return Boolean(String(value || "").trim());
       }
 
+      function isStep1Saved(record) {
+        return Boolean(record && record.status === "world_mission_2_founding_record_carried_forward");
+      }
+
+      function isStep2Saved(record) {
+        return Boolean(record && record.status === "world_mission_2_first_pressure_read_saved");
+      }
+
+      function setPreviewState(elementId, state) {
+        const step = document.getElementById(elementId);
+        step.dataset.state = state;
+        step.querySelector(".step-state").textContent =
+          state === "saved" ? "Saved" : state === "active" ? "Active" : "Locked";
+      }
+
+      function dispatchInteractionFeedback(detail) {
+        window.dispatchEvent(new CustomEvent("stemNationWorldMission2InteractionFeedback", { detail: detail }));
+      }
+
+      function renderPressureSelection() {
+        document.querySelectorAll(".pressure-card").forEach(function(card) {
+          card.setAttribute("aria-pressed", String(selectedPressureSignals.includes(card.dataset.signal)));
+        });
+      }
+
+      function renderInteractionState() {
+        const state = readRecord(MISSION_2_STATE_KEY);
+        const pressureRead = readRecord(FIRST_PRESSURE_READ_KEY);
+        const step1Saved = isStep1Saved(state);
+        const step2Saved = step1Saved && isStep2Saved(pressureRead);
+
+        document.getElementById("step2Panel").hidden = !step1Saved;
+        document.getElementById("step1Consequence").hidden = !step1Saved;
+        document.getElementById("carryForwardButton").textContent =
+          step1Saved ? "Founding Record Saved" : "Use This Founding Record";
+        document.getElementById("step2Consequence").hidden = !step2Saved;
+        document.getElementById("nextLockedMessage").hidden = !step2Saved;
+
+        setPreviewState("previewStep1", step1Saved ? "saved" : "active");
+        setPreviewState("previewStep2", step2Saved ? "saved" : step1Saved ? "active" : "locked");
+
+        if (step2Saved) {
+          selectedPressureSignals = Array.isArray(pressureRead.selectedPressureSignals)
+            ? pressureRead.selectedPressureSignals.slice(0, 2)
+            : [];
+          document.getElementById("pressureReason").value = pressureRead.pressureReason || "";
+        }
+
+        renderPressureSelection();
+      }
+
+      function carryFoundingRecordForward() {
+        if (!mission1Reward) return;
+        const existingState = readRecord(MISSION_2_STATE_KEY);
+        const now = new Date().toISOString();
+        const state = {
+          currentStep: 2,
+          sourceMission1Region: mission1Reward.selectedRegion,
+          sourceMission1Decision: mission1Reward.decision,
+          sourceMission1ReadinessScore: mission1Reward.readinessScore,
+          sourceMission1TestMethod: mission1Reward.testMethod,
+          status: "world_mission_2_founding_record_carried_forward",
+          visibleConsequence: "Founding record carried forward. The first season pressure is now open.",
+          startedAt: existingState && existingState.startedAt ? existingState.startedAt : now,
+          updatedAt: now
+        };
+        localStorage.setItem(MISSION_2_STATE_KEY, JSON.stringify(state));
+        renderInteractionState();
+        dispatchInteractionFeedback({
+          status: "world_mission_2_founding_record_carried_forward",
+          step: 1
+        });
+      }
+
+      function togglePressureSignal(event) {
+        const signal = event.currentTarget.dataset.signal;
+        const index = selectedPressureSignals.indexOf(signal);
+        if (index >= 0) {
+          selectedPressureSignals.splice(index, 1);
+        } else if (selectedPressureSignals.length < 2) {
+          selectedPressureSignals.push(signal);
+        } else {
+          document.getElementById("pressureValidation").textContent =
+            "Choose exactly 2 pressure signals. Remove one before adding another.";
+          return;
+        }
+        document.getElementById("pressureValidation").textContent = "";
+        renderPressureSelection();
+      }
+
+      function saveFirstPressureRead() {
+        const reason = document.getElementById("pressureReason").value.trim();
+        const validation = document.getElementById("pressureValidation");
+        if (selectedPressureSignals.length !== 2) {
+          validation.textContent = "Select exactly 2 pressure signals.";
+          return;
+        }
+        if (reason.length < 12) {
+          validation.textContent = "Explain your choice using at least 12 characters.";
+          return;
+        }
+        validation.textContent = "";
+        const pressureRead = {
+          sourceMission1Region: mission1Reward.selectedRegion,
+          selectedPressureSignals: selectedPressureSignals.slice(),
+          pressureReason: reason,
+          status: "world_mission_2_first_pressure_read_saved",
+          visibleConsequence: "First pressure read saved. Survival priorities can open next.",
+          savedAt: new Date().toISOString()
+        };
+        localStorage.setItem(FIRST_PRESSURE_READ_KEY, JSON.stringify(pressureRead));
+        renderInteractionState();
+        dispatchInteractionFeedback({
+          status: "world_mission_2_first_pressure_read_saved",
+          step: 2,
+          selectedPressureSignals: selectedPressureSignals.slice()
+        });
+      }
+
       function renderEntryState() {
-        const reward = readMission1Reward();
+        const reward = readRecord(MISSION_1_REWARD_KEY);
         const unlocked = Boolean(
           reward &&
           reward.status === "founding_archive_reward_saved" &&
@@ -190,6 +421,7 @@
         document.getElementById("readyContent").hidden = !unlocked;
 
         if (unlocked) {
+          mission1Reward = reward;
           document.getElementById("foundingRegion").textContent = reward.selectedRegion;
           document.getElementById("foundingDecision").textContent = reward.decision;
 
@@ -206,6 +438,7 @@
           if (hasTestMethod) {
             document.getElementById("foundingTestMethod").textContent = reward.testMethod;
           }
+          renderInteractionState();
         }
 
         window.dispatchEvent(new CustomEvent("stemNationWorldMission2EntryFeedback", {
@@ -217,6 +450,11 @@
         }));
       }
 
+      document.getElementById("carryForwardButton").addEventListener("click", carryFoundingRecordForward);
+      document.getElementById("savePressureButton").addEventListener("click", saveFirstPressureRead);
+      document.querySelectorAll(".pressure-card").forEach(function(card) {
+        card.addEventListener("click", togglePressureSignal);
+      });
       document.addEventListener("DOMContentLoaded", renderEntryState);
       window.addEventListener("storage", renderEntryState);
     })();
