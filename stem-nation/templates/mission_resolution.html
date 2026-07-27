@@ -431,12 +431,13 @@
           <textarea id="uncertaintyText" placeholder="What is still uncertain, even after the mission resolution?"></textarea>
         </div>
 
-        <button class="btn success" type="button" id="saveResolutionBtn" onclick="saveResolution()">Save Mission Resolution</button>
+        <button class="btn success" type="button" id="saveMissionResolutionBtn">Save Mission Resolution</button>
       </aside>
     </section>
   </main>
 
   <script>
+    // MI-3K MISSION RESOLUTION SAVE BUTTON WIRING REPAIR
     const REVISE_OR_ACT_KEY = "stemNationReviseOrActV1";
     const CLAIM_TEST_KEY = "stemNationClaimTestV1";
     const CAUSE_KEY = "stemNationCauseDecisionV1";
@@ -716,6 +717,7 @@ Next:
 Return to Student Hub.`;
 
       document.getElementById("archiveLinks").classList.add("active");
+      document.getElementById("saveMissionResolutionBtn").textContent = "Mission Resolution Saved";
       setVisual("Mission resolution saved. The active investigation sequence is complete.", "complete");
       window.STEMNationMissionResolution = record;
     }
@@ -750,13 +752,12 @@ Return to Student Hub.`;
           return;
         }
 
-        const saveBtn = event.target.closest("#saveResolutionBtn");
-        if (saveBtn) {
-          event.preventDefault();
-          saveResolution();
-          return;
-        }
       }, true);
+
+      document.getElementById("saveMissionResolutionBtn").addEventListener("click", function(event) {
+        event.preventDefault();
+        saveResolution();
+      });
 
       document.getElementById("lessonText").addEventListener("input", updateSteps);
       document.getElementById("uncertaintyText").addEventListener("input", updateSteps);
@@ -864,81 +865,6 @@ Return to Student Hub.`;
       return text;
     }
 
-  </script>
-
-  <script>
-    // MI-2L-R1 MISSION RESOLUTION SAVE BUTTON REPAIR
-    // Direct fallback wiring in case the delegated listener is blocked.
-
-    document.addEventListener("click", function(event) {
-      const saveButton = event.target.closest("#saveResolutionBtn");
-      if (!saveButton) return;
-
-      event.preventDefault();
-      event.stopPropagation();
-
-      if (typeof saveResolution === "function") {
-        saveResolution();
-        console.log("MI-2L-R1: saveResolution fallback fired.");
-      } else {
-        const output = document.getElementById("resolutionOutput");
-        if (output) {
-          output.textContent = "Save repair warning: saveResolution function was not found.";
-        }
-        console.error("MI-2L-R1: saveResolution function missing.");
-      }
-    }, true);
-
-    console.log("MI-2L-R1 SAVE BUTTON REPAIR ACTIVE");
-  </script>
-
-
-  <script>
-    // MI-2N-R1 MISSION RESOLUTION SAVE BUTTON WIRING REPAIR
-    // Final delegated save wiring. Keeps MI-2N quality guardrails active.
-
-    document.addEventListener("click", function(event) {
-      const saveBtn = event.target.closest("#saveResolutionBtn");
-      if (!saveBtn) return;
-
-      event.preventDefault();
-      event.stopPropagation();
-
-      try {
-        if (typeof saveResolution === "function") {
-          saveResolution();
-          console.log("MI-2N-R1: saveResolution called.");
-          return;
-        }
-
-        const output = document.getElementById("resolutionOutput");
-        const visual = document.getElementById("chamberVisual");
-
-        if (output) {
-          output.textContent =
-            "The Council pauses. Save wiring could not find saveResolution(). Run MI-2N-R2 full stable repair.";
-        }
-
-        if (visual) {
-          visual.textContent =
-            "Chamber Signal: Save wiring needs full stable repair.";
-          visual.classList.remove("reward", "complete");
-          visual.classList.add("caution");
-        }
-
-        console.warn("MI-2N-R1: saveResolution function missing.");
-      } catch (error) {
-        console.error("MI-2N-R1 save error:", error);
-
-        const output = document.getElementById("resolutionOutput");
-        if (output) {
-          output.textContent =
-            "The Council pauses. Save failed because of a script error: " + error.message;
-        }
-      }
-    }, true);
-
-    console.log("MI-2N-R1 MISSION RESOLUTION SAVE BUTTON WIRING REPAIR ACTIVE");
   </script>
 
 <!-- MI-2O RESOLUTION TEXT CLEANUP POLISH -->

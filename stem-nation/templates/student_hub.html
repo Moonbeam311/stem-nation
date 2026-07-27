@@ -193,6 +193,17 @@
       font-size: 14px;
     }
 
+    .world-mission-completion {
+      display: grid;
+      gap: 6px;
+      margin: 0 0 18px;
+      color: var(--soft);
+      font-size: 14px;
+      line-height: 1.4;
+    }
+
+    .world-mission-completion strong { color: white; }
+
     .btn-row {
       display: flex;
       flex-wrap: wrap;
@@ -1260,19 +1271,29 @@
 
       <article class="panel route-card">
         <div>
-          <div class="section-title">Next</div>
+          <div class="section-title" id="worldMission1SectionTitle">Next</div>
           <!-- MI-3B WORLD MISSION 1 STUDENT LANGUAGE PROTOTYPE BOUNDARY CLEANUP -->
-          <h2>World Mission 1</h2>
-          <p>Enter the larger STEM Nation world, where future choices will affect regions, resources, and nation decisions.</p>
+          <!-- MI-3I STUDENT HUB WORLD MISSION 1 COMPLETION BRIDGE -->
+          <h2 id="worldMission1Title">World Mission 1</h2>
+          <p id="worldMission1Summary">Enter the larger STEM Nation world, where future choices will affect regions, resources, and nation decisions.</p>
+          <div class="world-mission-completion" id="worldMission1Completion" hidden>
+            <div><strong>Region:</strong> <span id="worldMission1Region"></span></div>
+            <div><strong>Decision:</strong> <span id="worldMission1Decision"></span></div>
+            <div id="worldMission1ReadinessRow"><strong>Founding Readiness:</strong> <span id="worldMission1Readiness"></span> / 5</div>
+            <div><strong>Archive Status:</strong> Saved</div>
+          </div>
         </div>
-        <div class="btn-row"><a class="button primary" href="/world_mission_1">Start World Mission 1</a></div>
+        <div class="btn-row">
+          <a class="button primary" id="worldMission1Action" href="/world_mission_1">Start World Mission 1</a>
+          <a class="button" id="worldMission1ArchiveAction" href="/investigation_replay" hidden>Review Investigation Archive</a>
+        </div>
       </article>
 
       <article class="panel route-card locked">
         <div>
           <div class="section-title">Coming Next</div>
           <h2>Mission 2 Locked</h2>
-          <p>The next mission will unlock after the Academy trial and World Mission 1 are complete.</p>
+          <p id="mission2LockedMessage">Complete World Mission 1 first.</p>
         </div>
         <div class="btn-row"><a class="button continue" href="/">Return Home</a></div>
       </article>
@@ -1646,6 +1667,78 @@ console.log("CI-STAGE-48 MISSION CHECKPOINT STUDENT HUB POLISH ACTIVE");
     window.addEventListener("storage", renderArchive);
 
     console.log("MI-2M STUDENT HUB INVESTIGATION ARCHIVE CARD ACTIVE");
+  })();
+</script>
+
+<script>
+  // MI-3I STUDENT HUB WORLD MISSION 1 COMPLETION BRIDGE
+  (function(){
+    const FOUNDING_ARCHIVE_KEY = "stemNationWorldFoundingArchiveV1";
+    const ARCHIVE_REWARD_KEY = "stemNationWorldMission1ArchiveRewardV1";
+
+    function readWorldMission1Record(key) {
+      try {
+        const record = JSON.parse(localStorage.getItem(key) || "null");
+        return record && typeof record === "object" && !Array.isArray(record) ? record : null;
+      } catch(error) {
+        return null;
+      }
+    }
+
+    function worldMission1Completion() {
+      const reward = readWorldMission1Record(ARCHIVE_REWARD_KEY);
+      const archive = readWorldMission1Record(FOUNDING_ARCHIVE_KEY);
+      const rewardComplete = Boolean(reward && reward.status === "founding_archive_reward_saved");
+      const olderArchiveComplete = Boolean(archive && archive.selectedRegion && archive.decision);
+
+      if (!rewardComplete && !olderArchiveComplete) return null;
+
+      return {
+        selectedRegion: reward?.selectedRegion || archive?.selectedRegion || "",
+        decision: reward?.decision || archive?.decision || "",
+        readinessScore: rewardComplete && Number.isFinite(Number(reward.readinessScore))
+          ? Number(reward.readinessScore)
+          : null
+      };
+    }
+
+    function displayDecision(value) {
+      if (value === "approve") return "Approved as first settlement";
+      if (value === "revise") return "Needs more investigation";
+      return String(value || "Saved");
+    }
+
+    function updateWorldMission1CompletionBridge() {
+      const completion = worldMission1Completion();
+      const mission2Message = document.getElementById("mission2LockedMessage");
+      if (!completion) {
+        mission2Message.textContent = "Complete World Mission 1 first.";
+        return;
+      }
+
+      document.getElementById("worldMission1SectionTitle").textContent = "Archived";
+      document.getElementById("worldMission1Title").textContent = "World Mission 1 Complete";
+      document.getElementById("worldMission1Summary").textContent =
+        "Your founding decision has been archived.";
+      document.getElementById("worldMission1Region").textContent = completion.selectedRegion || "Saved";
+      document.getElementById("worldMission1Decision").textContent = displayDecision(completion.decision);
+      document.getElementById("worldMission1Completion").hidden = false;
+      document.getElementById("worldMission1Action").textContent = "Review World Mission 1";
+      document.getElementById("worldMission1ArchiveAction").hidden = false;
+      mission2Message.textContent =
+        "World Mission 1 is complete. The next mission is not open yet.";
+
+      const readinessRow = document.getElementById("worldMission1ReadinessRow");
+      if (completion.readinessScore === null) {
+        readinessRow.hidden = true;
+      } else {
+        document.getElementById("worldMission1Readiness").textContent = completion.readinessScore;
+      }
+    }
+
+    document.addEventListener("DOMContentLoaded", updateWorldMission1CompletionBridge);
+    window.addEventListener("focus", updateWorldMission1CompletionBridge);
+    window.addEventListener("storage", updateWorldMission1CompletionBridge);
   })();
 </script>
 

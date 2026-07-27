@@ -373,6 +373,28 @@
 
     .evidence-card:hover { transform: translateY(-2px); }
 
+    /* MI-3J WORLD MISSION 1 EVIDENCE CARD LAYOUT CLEANUP */
+    /* MI-3J-R1 WORLD MISSION 1 DEFENSE PROMPT CLEANUP */
+    .evidence-grid {
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      align-items: stretch;
+    }
+
+    .evidence-card {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      min-height: 0;
+      padding: 16px;
+    }
+
+    .evidence-card-header {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      min-width: 0;
+    }
+
     .evidence-type,
     .intel-type,
     .result-type {
@@ -392,9 +414,31 @@
       text-transform: uppercase;
     }
 
+    .evidence-card .evidence-type {
+      position: static;
+      flex: 0 0 auto;
+      margin: 0;
+      white-space: nowrap;
+    }
+
+    .evidence-label {
+      min-width: 0;
+      color: var(--gold);
+      font-size: 13px;
+      font-weight: 850;
+      line-height: 1.3;
+    }
+
+    .evidence-card .evidence-detail {
+      margin: 0;
+      color: var(--text);
+      font-size: 15px;
+      line-height: 1.55;
+    }
+
     .evidence-selected {
       display: block;
-      margin-top: 12px;
+      margin-top: auto;
       color: var(--green);
       font-size: 12px;
       font-weight: 950;
@@ -1194,9 +1238,9 @@
             <p class="field-helper">Start with: “The biggest risk is…”</p>
             <textarea id="defenseRisk" placeholder="Example: The biggest risk is flooding, exposure, storms, or conflict."></textarea>
 
-            <label for="defensePlan">We will protect the nation by...</label>
-            <p class="field-helper">Start with: “Our protection plan is…”</p>
-            <textarea id="defensePlan" placeholder="Example: We will build away from danger, protect food, and watch for warning signs."></textarea>
+            <label for="defensePlan">The settlement plan should protect people by...</label>
+            <p class="field-helper">Shelter needs to be established first. Start with: “The safest plan is...”</p>
+            <textarea id="defensePlan" placeholder="The safest plan is to set up shelter, mark safe routes, share supplies, and watch changing conditions."></textarea>
 
             <div class="status" id="defenseStatus">Complete all three defense fields.</div>
             <div class="actions">
@@ -1685,8 +1729,11 @@
       grid.innerHTML = evidenceCardRecords().map(card => `
         <button class="evidence-card ${state.selectedEvidenceCards.includes(card.id) ? "selected" : ""}"
                 type="button" data-evidence-id="${card.id}" aria-pressed="${state.selectedEvidenceCards.includes(card.id)}">
-          <span class="evidence-type">${evidenceTypeDisplay(card.type)}</span>
-          <strong>${card.label}</strong>${card.detail}
+          <span class="evidence-card-header">
+            <span class="evidence-type">${evidenceTypeDisplay(card.type)}</span>
+            <span class="evidence-label">${card.label}</span>
+          </span>
+          <span class="evidence-detail">${card.detail}</span>
           ${state.selectedEvidenceCards.includes(card.id) ? '<span class="evidence-selected">✓ Evidence Card Selected</span>' : ""}
         </button>
       `).join("");
@@ -1710,11 +1757,11 @@
 
     function evidenceTypeDisplay(type){
       const labels = {
-        resource: "◆ Resource",
-        access: "↗ Access",
-        hazard: "▲ Hazard",
-        uncertainty: "? Uncertainty",
-        conflict: "⚔ Conflict"
+        resource: "RESOURCE",
+        access: "ACCESS",
+        hazard: "HAZARD",
+        uncertainty: "UNCERTAINTY",
+        conflict: "HAZARD"
       };
       return labels[type] || type;
     }
@@ -2037,7 +2084,7 @@ ${archive.advantage}
 The biggest risk is:
 ${archive.risk}
 
-We will protect the nation by:
+The settlement plan should protect people by:
 ${archive.protectionPlan}`;
       window.dispatchEvent(new CustomEvent("stemNationWorldMission1ArchiveFeedback", {
         detail: reward
