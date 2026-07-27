@@ -389,25 +389,25 @@
         <p>Select exactly 2 resource cards and exactly 2 risk cards.</p>
         <h3>Resource Cards</h3>
         <div class="inspection-grid" id="resourceGrid">
-          <button class="inspection-card resource-card" type="button" data-card-type="resource" data-card-value="Food Stores" aria-pressed="false">
+          <button class="inspection-card resource-card" type="button" data-resource="Food Stores" aria-pressed="false">
             <strong>Food Stores</strong><span>There is some food, but it may not last if gathering slows.</span>
           </button>
-          <button class="inspection-card resource-card" type="button" data-card-type="resource" data-card-value="Clean Water Source" aria-pressed="false">
+          <button class="inspection-card resource-card" type="button" data-resource="Clean Water Source" aria-pressed="false">
             <strong>Clean Water Source</strong><span>Water is nearby, but it must be protected from waste and overuse.</span>
           </button>
-          <button class="inspection-card resource-card" type="button" data-card-type="resource" data-card-value="Shelter Materials" aria-pressed="false">
+          <button class="inspection-card resource-card" type="button" data-resource="Shelter Materials" aria-pressed="false">
             <strong>Shelter Materials</strong><span>Wood, stone, and cloth can help build shelter, but labor time is limited.</span>
           </button>
         </div>
         <h3>Risk Cards</h3>
         <div class="inspection-grid" id="riskGrid">
-          <button class="inspection-card risk-card" type="button" data-card-type="risk" data-card-value="Storm Warning" aria-pressed="false">
+          <button class="inspection-card risk-card" type="button" data-risk="Storm Warning" aria-pressed="false">
             <strong>Storm Warning</strong><span>Weather may damage shelters or delay gathering.</span>
           </button>
-          <button class="inspection-card risk-card" type="button" data-card-type="risk" data-card-value="Injury Risk" aria-pressed="false">
+          <button class="inspection-card risk-card" type="button" data-risk="Injury Risk" aria-pressed="false">
             <strong>Injury Risk</strong><span>Heavy work can cause injury if teams rush or skip rest.</span>
           </button>
-          <button class="inspection-card risk-card" type="button" data-card-type="risk" data-card-value="Uneven Workload" aria-pressed="false">
+          <button class="inspection-card risk-card" type="button" data-risk="Uneven Workload" aria-pressed="false">
             <strong>Uneven Workload</strong><span>If too many tasks fall on one group, conflict can grow.</span>
           </button>
         </div>
@@ -515,11 +515,11 @@
       }
 
       function renderInspectionSelection() {
-        document.querySelectorAll('[data-card-type="resource"]').forEach(function(card) {
-          card.setAttribute("aria-pressed", String(selectedResources.includes(card.dataset.cardValue)));
+        document.querySelectorAll(".resource-card").forEach(function(card) {
+          card.setAttribute("aria-pressed", String(selectedResources.includes(card.dataset.resource)));
         });
-        document.querySelectorAll('[data-card-type="risk"]').forEach(function(card) {
-          card.setAttribute("aria-pressed", String(selectedRisks.includes(card.dataset.cardValue)));
+        document.querySelectorAll(".risk-card").forEach(function(card) {
+          card.setAttribute("aria-pressed", String(selectedRisks.includes(card.dataset.risk)));
         });
       }
 
@@ -769,10 +769,14 @@
         });
       }
 
-      function toggleInspectionSelection(event, selection, cardType) {
+      function toggleInspectionCard(event) {
         const card = event.currentTarget;
-        if (card.dataset.cardType !== cardType) return;
-        const value = card.dataset.cardValue;
+        const isResource = Boolean(card.dataset.resource);
+        const isRisk = Boolean(card.dataset.risk);
+        if (!isResource && !isRisk) return;
+        const selection = isResource ? selectedResources : selectedRisks;
+        const cardType = isResource ? "resource" : "risk";
+        const value = isResource ? card.dataset.resource : card.dataset.risk;
         const index = selection.indexOf(value);
         if (index >= 0) {
           selection.splice(index, 1);
@@ -785,14 +789,6 @@
         }
         document.getElementById("inspectionValidation").textContent = "";
         renderInspectionSelection();
-      }
-
-      function toggleResourceCard(event) {
-        toggleInspectionSelection(event, selectedResources, "resource");
-      }
-
-      function toggleRiskCard(event) {
-        toggleInspectionSelection(event, selectedRisks, "risk");
       }
 
       function saveResourceRiskInspection() {
@@ -895,11 +891,11 @@
       document.querySelectorAll(".priority-card").forEach(function(card) {
         card.addEventListener("click", toggleSurvivalPriority);
       });
-      document.querySelectorAll('[data-card-type="resource"]').forEach(function(card) {
-        card.addEventListener("click", toggleResourceCard);
+      document.querySelectorAll(".resource-card").forEach(function(card) {
+        card.addEventListener("click", toggleInspectionCard);
       });
-      document.querySelectorAll('[data-card-type="risk"]').forEach(function(card) {
-        card.addEventListener("click", toggleRiskCard);
+      document.querySelectorAll(".risk-card").forEach(function(card) {
+        card.addEventListener("click", toggleInspectionCard);
       });
       document.addEventListener("DOMContentLoaded", renderEntryState);
       window.addEventListener("storage", renderEntryState);
