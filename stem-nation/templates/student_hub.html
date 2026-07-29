@@ -204,6 +204,12 @@
 
     .world-mission-completion strong { color: white; }
 
+    #worldMission2CompletionDetail[hidden],
+    #worldMission2CarryForwardRow[hidden],
+    #worldMission2Actions[hidden] {
+      display: none;
+    }
+
     .btn-row {
       display: flex;
       flex-wrap: wrap;
@@ -1290,14 +1296,22 @@
       </article>
 
       <!-- MI-3R STUDENT HUB MISSION 2 STATIC ENTRY BRIDGE -->
+      <!-- MI-4K STUDENT HUB MISSION 2 COMPLETION BRIDGE BUILD -->
       <article class="panel route-card locked" id="worldMission2Card">
         <div>
           <div class="section-title" id="worldMission2SectionTitle">Locked</div>
           <h2 id="worldMission2Title">Mission 2 Locked</h2>
-          <p id="mission2LockedMessage">Complete World Mission 1 first.</p>
+          <p id="worldMission2Summary">Complete World Mission 1 first.</p>
+          <div class="world-mission-completion" id="worldMission2CompletionDetail" hidden>
+            <div><strong>Badge:</strong> <span id="worldMission2CompletionBadge">First Survival Plan Archived</span></div>
+            <div>Mission 2 complete. The first survival plan is archived.</div>
+            <div id="worldMission2CarryForwardRow" hidden>
+              <strong>Carry-forward lesson:</strong> <span id="worldMission2CarryForwardLesson"></span>
+            </div>
+          </div>
         </div>
         <div class="btn-row" id="worldMission2Actions" hidden>
-          <a class="button primary" href="/world_mission_2">Start World Mission 2</a>
+          <a class="button primary" id="worldMission2PrimaryAction" href="/world_mission_2">Start World Mission 2</a>
           <a class="button" href="/world_mission_1">Review World Mission 1</a>
         </div>
       </article>
@@ -1714,7 +1728,7 @@ console.log("CI-STAGE-48 MISSION CHECKPOINT STUDENT HUB POLISH ACTIVE");
 
     function updateWorldMission1CompletionBridge() {
       const completion = worldMission1Completion();
-      const mission2Message = document.getElementById("mission2LockedMessage");
+      const mission2Message = document.getElementById("worldMission2Summary");
       if (!completion) {
         mission2Message.textContent = "Complete World Mission 1 first.";
         return;
@@ -1748,12 +1762,14 @@ console.log("CI-STAGE-48 MISSION CHECKPOINT STUDENT HUB POLISH ACTIVE");
 
 <script>
   // MI-3R STUDENT HUB MISSION 2 STATIC ENTRY BRIDGE
+  // MI-4K STUDENT HUB MISSION 2 COMPLETION BRIDGE BUILD
   (function(){
     const MISSION_1_REWARD_KEY = "stemNationWorldMission1ArchiveRewardV1";
+    const MISSION_2_REWARD_KEY = "stemNationWorldMission2ArchiveRewardV1";
 
-    function readMission1Reward() {
+    function readReward(key) {
       try {
-        const reward = JSON.parse(localStorage.getItem(MISSION_1_REWARD_KEY) || "null");
+        const reward = JSON.parse(localStorage.getItem(key) || "null");
         return reward && typeof reward === "object" && !Array.isArray(reward) ? reward : null;
       } catch(error) {
         return null;
@@ -1761,7 +1777,7 @@ console.log("CI-STAGE-48 MISSION CHECKPOINT STUDENT HUB POLISH ACTIVE");
     }
 
     function mission2IsReady() {
-      const reward = readMission1Reward();
+      const reward = readReward(MISSION_1_REWARD_KEY);
       return Boolean(
         reward &&
         reward.status === "founding_archive_reward_saved" &&
@@ -1770,29 +1786,66 @@ console.log("CI-STAGE-48 MISSION CHECKPOINT STUDENT HUB POLISH ACTIVE");
       );
     }
 
+    function mission2Completion() {
+      const reward = readReward(MISSION_2_REWARD_KEY);
+      return reward && reward.status === "world_mission_2_archive_reward_saved"
+        ? reward
+        : null;
+    }
+
     function updateWorldMission2EntryBridge() {
       const card = document.getElementById("worldMission2Card");
       const sectionTitle = document.getElementById("worldMission2SectionTitle");
       const title = document.getElementById("worldMission2Title");
-      const message = document.getElementById("mission2LockedMessage");
+      const summary = document.getElementById("worldMission2Summary");
+      const completionDetail = document.getElementById("worldMission2CompletionDetail");
+      const carryForwardRow = document.getElementById("worldMission2CarryForwardRow");
+      const carryForwardLesson = document.getElementById("worldMission2CarryForwardLesson");
       const actions = document.getElementById("worldMission2Actions");
-      if (!card || !sectionTitle || !title || !message || !actions) return;
+      const primaryAction = document.getElementById("worldMission2PrimaryAction");
+      if (
+        !card || !sectionTitle || !title || !summary || !completionDetail ||
+        !carryForwardRow || !carryForwardLesson || !actions || !primaryAction
+      ) return;
+
+      const completion = mission2Completion();
+      if (completion) {
+        const lesson = String(completion.carryForwardLesson || "").trim();
+        card.classList.remove("locked");
+        sectionTitle.textContent = "Complete";
+        title.textContent = "World Mission 2 is complete.";
+        summary.textContent = "The first survival plan is archived.";
+        completionDetail.hidden = false;
+        carryForwardLesson.textContent = lesson;
+        carryForwardRow.hidden = !lesson;
+        actions.hidden = false;
+        primaryAction.textContent = "Review Mission 2";
+        return;
+      }
 
       if (!mission2IsReady()) {
         card.classList.add("locked");
         sectionTitle.textContent = "Locked";
         title.textContent = "Mission 2 Locked";
-        message.textContent = "Complete World Mission 1 first.";
+        summary.textContent = "Complete World Mission 1 first.";
+        completionDetail.hidden = true;
+        carryForwardLesson.textContent = "";
+        carryForwardRow.hidden = true;
         actions.hidden = true;
+        primaryAction.textContent = "Start World Mission 2";
         return;
       }
 
       card.classList.remove("locked");
       sectionTitle.textContent = "Ready";
       title.textContent = "World Mission 2 — First Survival Plan";
-      message.textContent =
+      summary.textContent =
         "Your founding decision is archived. Start the first survival plan when you are ready.";
+      completionDetail.hidden = true;
+      carryForwardLesson.textContent = "";
+      carryForwardRow.hidden = true;
       actions.hidden = false;
+      primaryAction.textContent = "Start World Mission 2";
     }
 
     document.addEventListener("DOMContentLoaded", updateWorldMission2EntryBridge);
